@@ -1,15 +1,13 @@
 # Conections-map
 
-> **LinkedIn Network Heatmap & Strategic Gap Analyzer**  
-> Classify, score, and visualize your LinkedIn network to guide your job search strategy.
+> **LinkedIn Network Intelligence Dashboard**  
+> Classify, score, visualize, and act on your LinkedIn network to accelerate your career strategy.
 
 ---
 
 > ⚠️ **Privacy Warning**  
-> If this repository is **public**, do **NOT** commit your raw LinkedIn export files (`Connections.csv`, `Invitations.csv`, `Company Follows.csv`).  
-> These files may contain personal data, email addresses, and profile URLs belonging to your connections.  
-> The `.gitignore` in this repo already excludes files in `data/raw/` by default.  
-> Move your raw exports to `data/raw/` and they will be excluded from version control automatically.
+> If this repository is **public**, do **NOT** commit your raw LinkedIn export files.  
+> The `.gitignore` in this repo already excludes files in `data/raw/` by default.
 
 ---
 
@@ -17,35 +15,31 @@
 
 This project reads your exported LinkedIn data and automatically:
 
-1. **Classifies** each connection by:
-   - Persona (Recruiter, Data Engineer, Head of Data, etc.)
-   - Functional area (Recruiting, Data Engineering, Analytics, etc.)
-   - Seniority level (Junior, Senior, Manager, Director, Executive, etc.)
-   - Strategic market (BRAZIL, LATAM_USD, US_CANADA_NEARSHORE, SPAIN_EU, EUROPE)
+1. **Classifies** each connection by persona, functional area, seniority, and strategic market
+2. **Scores** each connection 0–100 based on career relevance
+3. **Computes KPIs**: USD Opportunity Score, Spain Readiness Score, Market Readiness Score
+4. **Generates action plans**: 30/60/90-day prioritized outreach plans
+5. **Identifies strategic gaps**: where your network is under vs. over represented
+6. **Produces a Streamlit dashboard** with 7 pages of interactive analysis
+7. **Exports** Excel, CSV, and Markdown reports
 
-2. **Scores** each connection with a 0–100 priority score based on:
-   - How relevant their role is to your goals
-   - Which strategic market they are in
-   - Their seniority level
-   - How recently you connected
-   - Company signals (nearshore, global, tech, data, consulting, etc.)
+---
 
-3. **Generates heatmaps** showing your network distribution across:
-   - Persona × Market
-   - Area × Market
-   - Seniority × Market
-   - Top Companies
-   - Market overview
+## Quick Start
 
-4. **Identifies strategic gaps** by comparing your current network against target counts for your short-term (Brazil → USD remote job) and medium-term (Spain/Europe move) goals.
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
 
-5. **Exports**:
-   - `outputs/classified_connections.csv` — full classified dataset
-   - `outputs/network_heatmap_by_*.csv` — heatmap CSVs
-   - `outputs/strategic_gap_report.csv` — gap analysis
-   - `reports/dashboard_ready.xlsx` — multi-sheet Excel workbook
-   - `reports/daily_network_report.md` — Markdown report with recommendations
-   - `reports/strategic_gap_report.md` — Markdown gap report
+# 2. Run the core pipeline (classify + heatmaps)
+python src/build_network_heatmap.py
+
+# 3. Run the strategy layer (KPIs + action plans + reports)
+python src/build_strategy_layer.py
+
+# 4. Launch the dashboard
+streamlit run app/dashboard.py
+```
 
 ---
 
@@ -66,44 +60,81 @@ Place your LinkedIn export files in the **project root** (or in `data/raw/`):
 3. Download and unzip the archive
 4. Place the CSV files in the project root
 
-Expected columns in `Connections.csv`:
+---
+
+## Pipeline Architecture
+
 ```
-First Name, Last Name, URL, Email Address, Company, Position, Connected On
+[Connections.csv] ──► build_network_heatmap.py ──► classified_connections.csv
+                                                 ──► heatmap CSVs
+                                                 ──► daily_network_report.md
+                                                 ──► dashboard_ready.xlsx (base)
+
+[classified_connections.csv] ──► build_strategy_layer.py ──► kpi_summary.csv
+                                                          ──► action_plan_*.csv
+                                                          ──► connection_gap_matrix.csv
+                                                          ──► dashboard_metrics.json
+                                                          ──► executive_strategy_report.md
+                                                          ──► career_network_roadmap.md
+                                                          ──► dashboard_ready.xlsx (updated)
+
+[outputs/] ──► streamlit run app/dashboard.py ──► Interactive 7-page Dashboard
 ```
-Note: LinkedIn sometimes adds a 3-line "Notes:" block at the top — the loader handles this automatically.
 
 ---
 
-## How to Run Locally
+## Dashboard Pages
 
-### 1. Install dependencies
+| Page | Description |
+|------|-------------|
+| 1. Executive Overview | KPI gauges, market distribution, persona breakdown, concentration risk |
+| 2. Network Heatmap | 5 interactive heatmaps (Persona×Market, Area×Market, Seniority×Market, etc.) |
+| 3. Strategic Gap | Gap analysis with urgency levels, filter by market/urgency |
+| 4. Action Plan | 30/60/90-day plans with visual urgency breakdown |
+| 5. Top Priority Contacts | Filterable table of highest-priority existing connections |
+| 6. Company Intelligence | Top companies by segment (all, recruiting, data, LATAM USD, Spain/EU) |
+| 7. Data Quality | Missing data rates, confidence levels, LinkedIn limitations explained |
 
-```bash
-pip install -r requirements.txt
+---
+
+## Strategic Scores
+
+| Score | Formula | Interpretation |
+|-------|---------|---------------|
+| **USD Opportunity Score** | Weighted: recruiters+TA+HM+data leaders in LATAM/US markets | Readiness to land remote USD job from Brazil |
+| **Spain Readiness Score** | Weighted: recruiters+TA+HM+data leaders in SPAIN/EU markets | Readiness for Spain/Europe move |
+| **Market Readiness Score** | USD×0.6 + Spain×0.4 | Composite strategic score |
+
+---
+
+## Output Files
+
 ```
-
-### 2. Run the pipeline
-
-```bash
-python src/build_network_heatmap.py
-```
-
-### 3. View outputs
-
-```
-reports/
-  dashboard_ready.xlsx         ← Open in Excel / LibreOffice
-  daily_network_report.md      ← Open in any Markdown viewer
-  strategic_gap_report.md      ← Gap analysis with priorities
-
 outputs/
-  classified_connections.csv   ← Full classified dataset
-  network_heatmap_by_persona.csv
-  network_heatmap_by_area.csv
-  network_heatmap_by_seniority.csv
-  network_heatmap_by_market.csv
-  network_heatmap_by_company.csv
-  strategic_gap_report.csv
+  classified_connections.csv     ← All 10,780 connections classified + scored
+  network_heatmap_by_*.csv       ← 5 heatmap pivot CSVs
+  strategic_gap_report.csv       ← Gap analysis (original)
+  kpi_summary.csv                ← All KPIs as flat CSV
+  action_plan_30_days.csv        ← 30-day action plan
+  action_plan_60_days.csv        ← 60-day action plan
+  action_plan_90_days.csv        ← 90-day action plan
+  connection_gap_matrix.csv      ← Full gap matrix with urgency levels
+  market_strategy_matrix.csv     ← Market × persona pivot
+  persona_strategy_matrix.csv    ← Persona × market with gap data
+  dashboard_metrics.json         ← All dashboard data as JSON
+
+reports/
+  dashboard_ready.xlsx           ← 17-sheet Excel workbook
+  daily_network_report.md        ← Original daily report
+  strategic_gap_report.md        ← Original gap report
+  executive_strategy_report.md   ← NEW: Strategic analysis and recommendations
+  career_network_roadmap.md      ← NEW: 30/60/90 day roadmap
+  kpi_dashboard_report.md        ← NEW: KPI definitions and benchmarks
+
+docs/
+  dashboard_kpi_dictionary.md    ← Full KPI reference
+  strategy_playbook.md           ← Weekly cadences, target companies, message templates
+  data_limitations.md            ← LinkedIn export limitations explained
 ```
 
 ---
@@ -113,28 +144,32 @@ outputs/
 ```
 Conections-map/
 ├── src/
-│   ├── __init__.py
-│   ├── config.py                 # All configuration, keywords, and targets
-│   ├── load_data.py              # CSV file detection and loading
-│   ├── clean_data.py             # Data normalization and cleaning
-│   ├── classify_connections.py   # Persona / area / seniority / market classification
-│   ├── score_connections.py      # Priority scoring 0-100
-│   ├── generate_heatmaps.py      # Heatmap CSV generation + gap analysis
-│   ├── generate_reports.py       # Excel + Markdown report generation
-│   └── build_network_heatmap.py  # Main pipeline entry point
-├── data/
-│   ├── raw/                      # (Place LinkedIn exports here — gitignored)
-│   └── processed/
-├── outputs/                      # Generated CSV heatmaps
-├── reports/                      # Generated Excel + Markdown reports
+│   ├── config.py                   # Keywords, targets, paths
+│   ├── load_data.py                # CSV loader with preamble skip
+│   ├── clean_data.py               # Normalization and cleaning
+│   ├── classify_connections.py     # Persona / area / seniority / market
+│   ├── score_connections.py        # Priority score 0-100
+│   ├── generate_heatmaps.py        # Heatmap CSVs + gap report
+│   ├── generate_reports.py         # Excel + Markdown reports
+│   ├── build_network_heatmap.py    # Pipeline entry point (step 1)
+│   ├── calculate_kpis.py           # KPI computations
+│   ├── generate_action_plan.py     # 30/60/90-day plans
+│   ├── generate_dashboard_data.py  # JSON data for dashboard
+│   └── build_strategy_layer.py     # Strategy layer entry point (step 2)
+├── app/
+│   └── dashboard.py               # Streamlit 7-page dashboard
+├── docs/
+│   ├── dashboard_kpi_dictionary.md
+│   ├── strategy_playbook.md
+│   └── data_limitations.md
 ├── config/
-│   ├── classification_rules.yml  # Human-readable rule documentation
-│   └── strategic_targets.yml     # Strategic target counts
-├── .github/
-│   └── workflows/
-│       └── build-report.yml      # GitHub Actions CI/CD
+│   ├── classification_rules.yml
+│   └── strategic_targets.yml
+├── outputs/                        # Generated CSV + JSON files
+├── reports/                        # Generated Excel + Markdown reports
+├── data/raw/                       # LinkedIn exports (gitignored)
+├── .github/workflows/build-report.yml
 ├── requirements.txt
-├── .gitignore
 └── README.md
 ```
 
@@ -142,54 +177,43 @@ Conections-map/
 
 ## How GitHub Actions Works
 
-Every time you **push to `main`** (or trigger manually via **workflow_dispatch**):
+Every push to `main` (or manual trigger) runs:
 
-1. GitHub spins up an Ubuntu runner
-2. Installs Python 3.11 and all dependencies
-3. Runs `python src/build_network_heatmap.py`
-4. Uploads the generated `reports/` and `outputs/` folders as downloadable **workflow artifacts** (retained for 30 days)
-
-> **Note:** For the GitHub Actions pipeline to work, your `Connections.csv` file must be committed to the repository.  
-> If you want to keep raw data private, run the pipeline **locally only** and only commit the generated reports.
+1. `pip install -r requirements.txt`
+2. `python src/build_network_heatmap.py` — classify + heatmaps
+3. `python src/build_strategy_layer.py` — KPIs + action plans + reports
+4. Uploads `reports/` and `outputs/` as downloadable artifacts (30-day retention)
+5. Uploads `dashboard_ready.xlsx` separately (90-day retention)
 
 To trigger manually:
 1. Go to your repo → **Actions** tab
 2. Select **Build LinkedIn Network Report**
 3. Click **Run workflow**
 
----
-
-## How to Interpret the Strategic Gap Report
-
-The `strategic_gap_report.csv` and `reports/strategic_gap_report.md` show:
-
-| Column | Meaning |
-|--------|---------|
-| `market` | Strategic market (e.g., US_CANADA_NEARSHORE) |
-| `persona` | Connection type (e.g., Recruiter) |
-| `current_count` | How many you already have |
-| `short_term_target` | Target for your Brazil → USD goal |
-| `short_term_gap` | How many more you need (short term) |
-| `medium_term_target` | Target for your Spain/Europe move |
-| `medium_term_gap` | How many more you need (medium term) |
-| `priority` | CRITICAL / HIGH / MEDIUM / LOW |
-
-**Focus on CRITICAL rows first** — these are the biggest gaps blocking your strategic goals.
-
-### Strategic Context
-
-| Goal | Timeline | Focus Markets |
-|------|----------|---------------|
-| Remote USD job from Brazil | 3–6 months | US_CANADA_NEARSHORE, LATAM_USD |
-| Spain / Europe move | 6–18 months | SPAIN_EU, EUROPE |
+> **Note:** For GitHub Actions to work, `Connections.csv` must be committed.
+> To keep raw data private, run the pipeline locally and commit only the reports.
 
 ---
 
 ## Customization
 
-All classification keywords, scoring weights, and strategic targets live in:
-- **`src/config.py`** — edit this file to tune classification rules and scoring
-- **`config/strategic_targets.yml`** — human-readable documentation of targets
+| File | What to Edit |
+|------|-------------|
+| `src/config.py` | Classification keywords, scoring weights, strategic targets |
+| `src/generate_action_plan.py` | Target counts for 30/60/90-day plans |
+| `config/strategic_targets.yml` | Human-readable target documentation |
+
+---
+
+## How to Interpret Results
+
+- **High Priority (score ≥ 70)**: Reach out immediately with a personalized message
+- **Medium Priority (40-69)**: Engage with content regularly; reconnect when relevant
+- **Low Priority (< 40)**: No immediate action needed
+- **UNKNOWN market**: Not irrelevant — just unclassifiable from title/company keywords alone
+
+See [docs/data_limitations.md](docs/data_limitations.md) for a full explanation of
+LinkedIn's export limitations and how market inference works.
 
 ---
 

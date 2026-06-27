@@ -1,0 +1,119 @@
+﻿strategic_market,persona,count,avg_score,high_priority
+BRAZIL,BI Analyst,1,38.0,0
+BRAZIL,Consultant,21,33.0,0
+BRAZIL,Data Analyst,25,32.1,0
+BRAZIL,Data Engineer,98,39.5,0
+BRAZIL,Data Engineering Manager,1,58.0,0
+BRAZIL,Data Scientist,19,36.5,0
+BRAZIL,Director,42,56.7,0
+BRAZIL,Executive,14,54.8,0
+BRAZIL,Founder,2,44.0,0
+BRAZIL,HR,60,36.7,0
+BRAZIL,Head of Data,11,60.0,0
+BRAZIL,Hiring Manager,24,58.6,0
+BRAZIL,Machine Learning / AI,6,40.2,0
+BRAZIL,Operations,5,33.0,0
+BRAZIL,Other,447,25.6,0
+BRAZIL,Product,16,34.3,0
+BRAZIL,Project / Program Manager,14,30.7,0
+BRAZIL,Recruiter,41,57.4,2
+BRAZIL,Software Engineer,16,31.2,0
+BRAZIL,Talent Acquisition,35,56.2,0
+EUROPE,Consultant,43,42.6,0
+EUROPE,Data Analyst,1,39.0,0
+EUROPE,Data Engineer,5,48.6,0
+EUROPE,Data Engineering Manager,2,66.5,0
+EUROPE,Data Scientist,1,54.0,0
+EUROPE,Director,32,64.2,2
+EUROPE,Executive,8,66.2,1
+EUROPE,Founder,4,62.5,0
+EUROPE,HR,12,46.8,0
+EUROPE,Head of Data,4,67.5,1
+EUROPE,Hiring Manager,7,66.9,0
+EUROPE,Machine Learning / AI,4,51.2,0
+EUROPE,Operations,4,39.5,0
+EUROPE,Other,139,36.7,0
+EUROPE,Product,2,45.5,0
+EUROPE,Project / Program Manager,6,46.8,0
+EUROPE,Recruiter,29,69.6,12
+EUROPE,Software Engineer,4,41.5,0
+EUROPE,Sourcer,4,66.5,1
+EUROPE,Talent Acquisition,32,68.4,15
+LATAM_USD,Consultant,13,48.8,0
+LATAM_USD,Data Analyst,1,49.0,0
+LATAM_USD,Data Engineer,15,63.1,2
+LATAM_USD,Data Scientist,3,60.3,0
+LATAM_USD,Director,29,74.3,23
+LATAM_USD,Executive,8,70.6,2
+LATAM_USD,Founder,1,67.0,0
+LATAM_USD,HR,34,56.2,0
+LATAM_USD,Head of Data,1,72.0,1
+LATAM_USD,Machine Learning / AI,1,57.0,0
+LATAM_USD,Operations,4,45.0,0
+LATAM_USD,Other,152,46.0,0
+LATAM_USD,Partner,1,61.0,0
+LATAM_USD,Project / Program Manager,4,53.0,0
+LATAM_USD,Recruiter,40,74.7,31
+LATAM_USD,Software Engineer,4,57.0,0
+LATAM_USD,Sourcer,1,58.0,0
+LATAM_USD,Talent Acquisition,48,76.3,43
+SPAIN_EU,Consultant,6,47.5,0
+SPAIN_EU,Data Analyst,3,45.7,0
+SPAIN_EU,Data Engineer,2,56.0,0
+SPAIN_EU,Data Scientist,1,60.0,0
+SPAIN_EU,Director,5,68.6,1
+SPAIN_EU,Executive,2,68.5,1
+SPAIN_EU,HR,6,48.5,0
+SPAIN_EU,Other,45,41.5,0
+SPAIN_EU,Partner,1,59.0,0
+SPAIN_EU,Product,1,50.0,0
+SPAIN_EU,Project / Program Manager,1,56.0,0
+SPAIN_EU,Recruiter,7,71.7,4
+SPAIN_EU,Software Engineer,1,45.0,0
+SPAIN_EU,Sourcer,1,59.0,0
+SPAIN_EU,Talent Acquisition,18,71.2,10
+UNKNOWN,Analytics Engineer,5,28.2,0
+UNKNOWN,BI Analyst,11,21.0,0
+UNKNOWN,Consultant,500,23.3,0
+UNKNOWN,Data Analyst,211,23.8,0
+UNKNOWN,Data Engineer,445,30.5,0
+UNKNOWN,Data Engineering Manager,15,47.8,0
+UNKNOWN,Data Scientist,95,28.2,0
+UNKNOWN,Director,333,45.9,0
+UNKNOWN,Engineering Manager,1,42.0,0
+UNKNOWN,Executive,301,44.7,0
+UNKNOWN,Founder,160,43.0,0
+UNKNOWN,HR,921,26.1,0
+UNKNOWN,Head of Data,53,47.2,0
+UNKNOWN,Hiring Manager,40,49.9,0
+UNKNOWN,Machine Learning / AI,8,28.6,0
+UNKNOWN,Operations,57,19.6,0
+UNKNOWN,Other,3578,16.5,0
+UNKNOWN,Partner,17,40.2,0
+UNKNOWN,Product,64,26.3,0
+UNKNOWN,Project / Program Manager,85,24.9,0
+UNKNOWN,Recruiter,985,49.4,4
+UNKNOWN,Software Engineer,97,23.0,0
+UNKNOWN,Sourcer,62,42.6,0
+UNKNOWN,Talent Acquisition,773,48.8,0
+US_CANADA_NEARSHORE,Analytics Engineer,2,55.0,0
+US_CANADA_NEARSHORE,BI Analyst,1,49.0,0
+US_CANADA_NEARSHORE,Consultant,15,51.4,0
+US_CANADA_NEARSHORE,Data Analyst,8,50.1,0
+US_CANADA_NEARSHORE,Data Engineer,10,57.9,0
+US_CANADA_NEARSHORE,Data Scientist,2,60.5,0
+US_CANADA_NEARSHORE,Director,8,75.9,6
+US_CANADA_NEARSHORE,Executive,4,75.2,4
+US_CANADA_NEARSHORE,Founder,1,69.0,0
+US_CANADA_NEARSHORE,HR,10,53.6,0
+US_CANADA_NEARSHORE,Head of Data,1,77.0,1
+US_CANADA_NEARSHORE,Hiring Manager,5,76.0,5
+US_CANADA_NEARSHORE,Machine Learning / AI,2,52.5,0
+US_CANADA_NEARSHORE,Operations,7,51.4,0
+US_CANADA_NEARSHORE,Other,134,47.0,0
+US_CANADA_NEARSHORE,Product,3,52.7,0
+US_CANADA_NEARSHORE,Project / Program Manager,6,51.7,0
+US_CANADA_NEARSHORE,Recruiter,22,77.3,21
+US_CANADA_NEARSHORE,Software Engineer,6,46.7,0
+US_CANADA_NEARSHORE,Sourcer,1,63.0,0
+US_CANADA_NEARSHORE,Talent Acquisition,14,77.4,13

@@ -1,0 +1,5 @@
+﻿plan,market,persona,current_count,target_count,gap_count,gap_percentage,urgency_level,recommended_action,timeframe,strategic_reason
+30-Day Plan,US_CANADA_NEARSHORE,Talent Acquisition,14,60,46,77,High,HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.,30d,TA teams at nearshore-friendly US/Canada tech companies
+30-Day Plan,US_CANADA_NEARSHORE,Recruiter,22,80,58,72,High,HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.,30d,US/Canada recruiters who place LATAM contractors in USD-paying roles
+30-Day Plan,LATAM_USD,Talent Acquisition,48,60,12,20,Low,"LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",30d,TA specialists at LATAM companies that hire remote contractors
+30-Day Plan,LATAM_USD,Recruiter,40,80,40,50,Medium,MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.,30d,Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms

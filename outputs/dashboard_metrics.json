@@ -1,0 +1,3657 @@
+{
+  "kpis": {
+    "total_connections": 10780,
+    "high_priority": 206,
+    "medium_priority": 3626,
+    "low_priority": 6948,
+    "high_priority_pct": 1.9,
+    "medium_priority_pct": 33.6,
+    "recruiters_total": 1193,
+    "talent_hr_total": 1963,
+    "hiring_managers_total": 77,
+    "data_leaders_total": 874,
+    "data_peers_total": 986,
+    "brazil_count": 898,
+    "latam_usd_count": 360,
+    "us_nearshore_count": 262,
+    "spain_eu_count": 100,
+    "europe_count": 343,
+    "unknown_count": 8817,
+    "unknown_pct": 81.8,
+    "usd_opportunity_score": 83.3,
+    "spain_readiness_score": 87.0,
+    "market_readiness_score": 84.8,
+    "usd_recruiters": 64,
+    "usd_ta": 62,
+    "usd_hiring_mgrs": 5,
+    "usd_data_leaders": 51,
+    "usd_high_priority": 152,
+    "spain_recruiters": 41,
+    "spain_ta": 50,
+    "spain_hiring_mgrs": 7,
+    "spain_data_leaders": 53,
+    "spain_high_priority": 48,
+    "missing_company_count": 0,
+    "missing_company_pct": 0.0,
+    "missing_position_count": 0,
+    "missing_position_pct": 0.0,
+    "concentration_flags": [
+      "High unknown market (81.8% — market inference limited)"
+    ],
+    "brazil_pct": 8.3,
+    "recruiter_pct": 11.1,
+    "data_peer_pct": 9.1,
+    "hr_pct": 18.2,
+    "avg_priority_by_market": {
+      "BRAZIL": 34.9,
+      "EUROPE": 49.3,
+      "LATAM_USD": 58.4,
+      "SPAIN_EU": 52.9,
+      "UNKNOWN": 28.8,
+      "US_CANADA_NEARSHORE": 54.8
+    },
+    "top_personas": {
+      "Other": 4495,
+      "Recruiter": 1124,
+      "HR": 1043,
+      "Talent Acquisition": 920,
+      "Consultant": 598,
+      "Data Engineer": 575,
+      "Director": 449,
+      "Executive": 337,
+      "Data Analyst": 249,
+      "Founder": 168
+    },
+    "top_areas": {
+      "Other": 3085,
+      "Management": 2377,
+      "Recruiting": 2074,
+      "HR": 1016,
+      "Data Engineering": 595,
+      "Consulting": 580,
+      "Analytics": 462,
+      "Data Science / AI": 147
+    },
+    "top_seniority": {
+      "Unknown": 3553,
+      "Mid": 2166,
+      "Manager": 1520,
+      "Senior": 1178,
+      "Director": 756,
+      "Lead": 592,
+      "Executive": 435,
+      "Junior": 311,
+      "Founder": 196,
+      "Intern": 73
+    },
+    "connected_last_30_days": 697,
+    "connected_last_90_days": 2412,
+    "connected_last_365_days": 8838,
+    "network_is_usd_ready": true,
+    "network_is_spain_ready": true,
+    "top_priority_market": "LATAM_USD",
+    "report_date": "2026-06-27"
+  },
+  "heatmaps": {
+    "persona_market": [
+      {
+        "persona": "Analytics Engineer",
+        "BRAZIL": 0,
+        "EUROPE": 0,
+        "LATAM_USD": 0,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 5,
+        "US_CANADA_NEARSHORE": 2
+      },
+      {
+        "persona": "BI Analyst",
+        "BRAZIL": 1,
+        "EUROPE": 0,
+        "LATAM_USD": 0,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 11,
+        "US_CANADA_NEARSHORE": 1
+      },
+      {
+        "persona": "Consultant",
+        "BRAZIL": 21,
+        "EUROPE": 43,
+        "LATAM_USD": 13,
+        "SPAIN_EU": 6,
+        "UNKNOWN": 500,
+        "US_CANADA_NEARSHORE": 15
+      },
+      {
+        "persona": "Data Analyst",
+        "BRAZIL": 25,
+        "EUROPE": 1,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 3,
+        "UNKNOWN": 211,
+        "US_CANADA_NEARSHORE": 8
+      },
+      {
+        "persona": "Data Engineer",
+        "BRAZIL": 98,
+        "EUROPE": 5,
+        "LATAM_USD": 15,
+        "SPAIN_EU": 2,
+        "UNKNOWN": 445,
+        "US_CANADA_NEARSHORE": 10
+      },
+      {
+        "persona": "Data Engineering Manager",
+        "BRAZIL": 1,
+        "EUROPE": 2,
+        "LATAM_USD": 0,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 15,
+        "US_CANADA_NEARSHORE": 0
+      },
+      {
+        "persona": "Data Scientist",
+        "BRAZIL": 19,
+        "EUROPE": 1,
+        "LATAM_USD": 3,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 95,
+        "US_CANADA_NEARSHORE": 2
+      },
+      {
+        "persona": "Director",
+        "BRAZIL": 42,
+        "EUROPE": 32,
+        "LATAM_USD": 29,
+        "SPAIN_EU": 5,
+        "UNKNOWN": 333,
+        "US_CANADA_NEARSHORE": 8
+      },
+      {
+        "persona": "Engineering Manager",
+        "BRAZIL": 0,
+        "EUROPE": 0,
+        "LATAM_USD": 0,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 1,
+        "US_CANADA_NEARSHORE": 0
+      },
+      {
+        "persona": "Executive",
+        "BRAZIL": 14,
+        "EUROPE": 8,
+        "LATAM_USD": 8,
+        "SPAIN_EU": 2,
+        "UNKNOWN": 301,
+        "US_CANADA_NEARSHORE": 4
+      },
+      {
+        "persona": "Founder",
+        "BRAZIL": 2,
+        "EUROPE": 4,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 160,
+        "US_CANADA_NEARSHORE": 1
+      },
+      {
+        "persona": "HR",
+        "BRAZIL": 60,
+        "EUROPE": 12,
+        "LATAM_USD": 34,
+        "SPAIN_EU": 6,
+        "UNKNOWN": 921,
+        "US_CANADA_NEARSHORE": 10
+      },
+      {
+        "persona": "Head of Data",
+        "BRAZIL": 11,
+        "EUROPE": 4,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 53,
+        "US_CANADA_NEARSHORE": 1
+      },
+      {
+        "persona": "Hiring Manager",
+        "BRAZIL": 24,
+        "EUROPE": 7,
+        "LATAM_USD": 0,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 40,
+        "US_CANADA_NEARSHORE": 5
+      },
+      {
+        "persona": "Machine Learning / AI",
+        "BRAZIL": 6,
+        "EUROPE": 4,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 8,
+        "US_CANADA_NEARSHORE": 2
+      },
+      {
+        "persona": "Operations",
+        "BRAZIL": 5,
+        "EUROPE": 4,
+        "LATAM_USD": 4,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 57,
+        "US_CANADA_NEARSHORE": 7
+      },
+      {
+        "persona": "Other",
+        "BRAZIL": 447,
+        "EUROPE": 139,
+        "LATAM_USD": 152,
+        "SPAIN_EU": 45,
+        "UNKNOWN": 3578,
+        "US_CANADA_NEARSHORE": 134
+      },
+      {
+        "persona": "Partner",
+        "BRAZIL": 0,
+        "EUROPE": 0,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 17,
+        "US_CANADA_NEARSHORE": 0
+      },
+      {
+        "persona": "Product",
+        "BRAZIL": 16,
+        "EUROPE": 2,
+        "LATAM_USD": 0,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 64,
+        "US_CANADA_NEARSHORE": 3
+      },
+      {
+        "persona": "Project / Program Manager",
+        "BRAZIL": 14,
+        "EUROPE": 6,
+        "LATAM_USD": 4,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 85,
+        "US_CANADA_NEARSHORE": 6
+      },
+      {
+        "persona": "Recruiter",
+        "BRAZIL": 41,
+        "EUROPE": 29,
+        "LATAM_USD": 40,
+        "SPAIN_EU": 7,
+        "UNKNOWN": 985,
+        "US_CANADA_NEARSHORE": 22
+      },
+      {
+        "persona": "Software Engineer",
+        "BRAZIL": 16,
+        "EUROPE": 4,
+        "LATAM_USD": 4,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 97,
+        "US_CANADA_NEARSHORE": 6
+      },
+      {
+        "persona": "Sourcer",
+        "BRAZIL": 0,
+        "EUROPE": 4,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 62,
+        "US_CANADA_NEARSHORE": 1
+      },
+      {
+        "persona": "Talent Acquisition",
+        "BRAZIL": 35,
+        "EUROPE": 32,
+        "LATAM_USD": 48,
+        "SPAIN_EU": 18,
+        "UNKNOWN": 773,
+        "US_CANADA_NEARSHORE": 14
+      }
+    ],
+    "area_market": [
+      {
+        "area": "Analytics",
+        "BRAZIL": 59,
+        "EUROPE": 8,
+        "LATAM_USD": 13,
+        "SPAIN_EU": 3,
+        "UNKNOWN": 360,
+        "US_CANADA_NEARSHORE": 19
+      },
+      {
+        "area": "BI",
+        "BRAZIL": 6,
+        "EUROPE": 0,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 54,
+        "US_CANADA_NEARSHORE": 3
+      },
+      {
+        "area": "Consulting",
+        "BRAZIL": 19,
+        "EUROPE": 42,
+        "LATAM_USD": 13,
+        "SPAIN_EU": 5,
+        "UNKNOWN": 489,
+        "US_CANADA_NEARSHORE": 12
+      },
+      {
+        "area": "Data Engineering",
+        "BRAZIL": 104,
+        "EUROPE": 5,
+        "LATAM_USD": 15,
+        "SPAIN_EU": 2,
+        "UNKNOWN": 456,
+        "US_CANADA_NEARSHORE": 13
+      },
+      {
+        "area": "Data Science / AI",
+        "BRAZIL": 26,
+        "EUROPE": 7,
+        "LATAM_USD": 4,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 106,
+        "US_CANADA_NEARSHORE": 3
+      },
+      {
+        "area": "HR",
+        "BRAZIL": 75,
+        "EUROPE": 8,
+        "LATAM_USD": 20,
+        "SPAIN_EU": 7,
+        "UNKNOWN": 894,
+        "US_CANADA_NEARSHORE": 12
+      },
+      {
+        "area": "Management",
+        "BRAZIL": 220,
+        "EUROPE": 117,
+        "LATAM_USD": 110,
+        "SPAIN_EU": 26,
+        "UNKNOWN": 1854,
+        "US_CANADA_NEARSHORE": 50
+      },
+      {
+        "area": "Operations",
+        "BRAZIL": 12,
+        "EUROPE": 2,
+        "LATAM_USD": 2,
+        "SPAIN_EU": 2,
+        "UNKNOWN": 119,
+        "US_CANADA_NEARSHORE": 3
+      },
+      {
+        "area": "Other",
+        "BRAZIL": 268,
+        "EUROPE": 85,
+        "LATAM_USD": 89,
+        "SPAIN_EU": 28,
+        "UNKNOWN": 2516,
+        "US_CANADA_NEARSHORE": 99
+      },
+      {
+        "area": "Product",
+        "BRAZIL": 18,
+        "EUROPE": 3,
+        "LATAM_USD": 0,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 82,
+        "US_CANADA_NEARSHORE": 3
+      },
+      {
+        "area": "Recruiting",
+        "BRAZIL": 75,
+        "EUROPE": 62,
+        "LATAM_USD": 89,
+        "SPAIN_EU": 24,
+        "UNKNOWN": 1787,
+        "US_CANADA_NEARSHORE": 37
+      },
+      {
+        "area": "Software Engineering",
+        "BRAZIL": 16,
+        "EUROPE": 4,
+        "LATAM_USD": 4,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 100,
+        "US_CANADA_NEARSHORE": 8
+      }
+    ],
+    "seniority_market": [
+      {
+        "seniority": "Director",
+        "BRAZIL": 75,
+        "EUROPE": 52,
+        "LATAM_USD": 42,
+        "SPAIN_EU": 9,
+        "UNKNOWN": 566,
+        "US_CANADA_NEARSHORE": 12
+      },
+      {
+        "seniority": "Executive",
+        "BRAZIL": 19,
+        "EUROPE": 9,
+        "LATAM_USD": 11,
+        "SPAIN_EU": 2,
+        "UNKNOWN": 377,
+        "US_CANADA_NEARSHORE": 17
+      },
+      {
+        "seniority": "Founder",
+        "BRAZIL": 2,
+        "EUROPE": 6,
+        "LATAM_USD": 2,
+        "SPAIN_EU": 1,
+        "UNKNOWN": 184,
+        "US_CANADA_NEARSHORE": 1
+      },
+      {
+        "seniority": "Intern",
+        "BRAZIL": 7,
+        "EUROPE": 1,
+        "LATAM_USD": 1,
+        "SPAIN_EU": 0,
+        "UNKNOWN": 62,
+        "US_CANADA_NEARSHORE": 2
+      },
+      {
+        "seniority": "Junior",
+        "BRAZIL": 23,
+        "EUROPE": 2,
+        "LATAM_USD": 4,
+        "SPAIN_EU": 3,
+        "UNKNOWN": 276,
+        "US_CANADA_NEARSHORE": 3
+      },
+      {
+        "seniority": "Lead",
+        "BRAZIL": 48,
+        "EUROPE": 30,
+        "LATAM_USD": 33,
+        "SPAIN_EU": 3,
+        "UNKNOWN": 459,
+        "US_CANADA_NEARSHORE": 19
+      },
+      {
+        "seniority": "Manager",
+        "BRAZIL": 192,
+        "EUROPE": 59,
+        "LATAM_USD": 62,
+        "SPAIN_EU": 23,
+        "UNKNOWN": 1146,
+        "US_CANADA_NEARSHORE": 38
+      },
+      {
+        "seniority": "Mid",
+        "BRAZIL": 188,
+        "EUROPE": 35,
+        "LATAM_USD": 48,
+        "SPAIN_EU": 17,
+        "UNKNOWN": 1824,
+        "US_CANADA_NEARSHORE": 54
+      },
+      {
+        "seniority": "Senior",
+        "BRAZIL": 78,
+        "EUROPE": 43,
+        "LATAM_USD": 42,
+        "SPAIN_EU": 15,
+        "UNKNOWN": 961,
+        "US_CANADA_NEARSHORE": 39
+      },
+      {
+        "seniority": "Unknown",
+        "BRAZIL": 266,
+        "EUROPE": 106,
+        "LATAM_USD": 115,
+        "SPAIN_EU": 27,
+        "UNKNOWN": 2962,
+        "US_CANADA_NEARSHORE": 77
+      }
+    ],
+    "persona_priority": [
+      {
+        "persona": "Analytics Engineer",
+        "Low (<40)": 5,
+        "Medium (40-69)": 2,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "BI Analyst",
+        "Low (<40)": 12,
+        "Medium (40-69)": 1,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Consultant",
+        "Low (<40)": 526,
+        "Medium (40-69)": 72,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Data Analyst",
+        "Low (<40)": 236,
+        "Medium (40-69)": 13,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Data Engineer",
+        "Low (<40)": 482,
+        "Medium (40-69)": 91,
+        "High (>=70)": 2
+      },
+      {
+        "persona": "Data Engineering Manager",
+        "Low (<40)": 1,
+        "Medium (40-69)": 17,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Data Scientist",
+        "Low (<40)": 106,
+        "Medium (40-69)": 15,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Director",
+        "Low (<40)": 4,
+        "Medium (40-69)": 413,
+        "High (>=70)": 32
+      },
+      {
+        "persona": "Engineering Manager",
+        "Low (<40)": 0,
+        "Medium (40-69)": 1,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Executive",
+        "Low (<40)": 14,
+        "Medium (40-69)": 315,
+        "High (>=70)": 8
+      },
+      {
+        "persona": "Founder",
+        "Low (<40)": 27,
+        "Medium (40-69)": 141,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "HR",
+        "Low (<40)": 945,
+        "Medium (40-69)": 98,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Head of Data",
+        "Low (<40)": 1,
+        "Medium (40-69)": 66,
+        "High (>=70)": 3
+      },
+      {
+        "persona": "Hiring Manager",
+        "Low (<40)": 0,
+        "Medium (40-69)": 71,
+        "High (>=70)": 5
+      },
+      {
+        "persona": "Machine Learning / AI",
+        "Low (<40)": 11,
+        "Medium (40-69)": 10,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Operations",
+        "Low (<40)": 65,
+        "Medium (40-69)": 12,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Other",
+        "Low (<40)": 4186,
+        "Medium (40-69)": 309,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Partner",
+        "Low (<40)": 2,
+        "Medium (40-69)": 17,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Product",
+        "Low (<40)": 80,
+        "Medium (40-69)": 6,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Project / Program Manager",
+        "Low (<40)": 97,
+        "Medium (40-69)": 19,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Recruiter",
+        "Low (<40)": 0,
+        "Medium (40-69)": 1050,
+        "High (>=70)": 74
+      },
+      {
+        "persona": "Software Engineer",
+        "Low (<40)": 114,
+        "Medium (40-69)": 14,
+        "High (>=70)": 0
+      },
+      {
+        "persona": "Sourcer",
+        "Low (<40)": 17,
+        "Medium (40-69)": 51,
+        "High (>=70)": 1
+      },
+      {
+        "persona": "Talent Acquisition",
+        "Low (<40)": 17,
+        "Medium (40-69)": 822,
+        "High (>=70)": 81
+      }
+    ]
+  },
+  "company_intel": {
+    "top_companies": [
+      {
+        "company_clean": "Hays",
+        "count": 76,
+        "avg_score": 24.0,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Itaú Unibanco",
+        "count": 72,
+        "avg_score": 36.3,
+        "top_persona": "Other",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "GE Vernova",
+        "count": 55,
+        "avg_score": 21.9,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "SENAI CIMATEC",
+        "count": 53,
+        "avg_score": 14.4,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "NTT DATA Europe & Latam",
+        "count": 51,
+        "avg_score": 62.8,
+        "top_persona": "Other",
+        "top_market": "LATAM_USD"
+      },
+      {
+        "company_clean": "Deloitte",
+        "count": 49,
+        "avg_score": 28.3,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Grupo Boticário",
+        "count": 48,
+        "avg_score": 23.1,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Databricks",
+        "count": 47,
+        "avg_score": 59.8,
+        "top_persona": "Other",
+        "top_market": "US_CANADA_NEARSHORE"
+      },
+      {
+        "company_clean": "Tata Consultancy Services",
+        "count": 47,
+        "avg_score": 29.0,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Larco Petróleo",
+        "count": 40,
+        "avg_score": 13.5,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Randstad Brasil",
+        "count": 39,
+        "avg_score": 25.1,
+        "top_persona": "Other",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "Bradesco",
+        "count": 38,
+        "avg_score": 34.7,
+        "top_persona": "Other",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "Capgemini",
+        "count": 36,
+        "avg_score": 29.6,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "iFood",
+        "count": 36,
+        "avg_score": 29.9,
+        "top_persona": "Other",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "CI&T",
+        "count": 32,
+        "avg_score": 24.2,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "GE Renewable Energy",
+        "count": 32,
+        "avg_score": 15.0,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Michael Page",
+        "count": 31,
+        "avg_score": 25.4,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "EY",
+        "count": 30,
+        "avg_score": 31.3,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "IBM",
+        "count": 30,
+        "avg_score": 27.7,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "LM Soluções de Mobilidade",
+        "count": 29,
+        "avg_score": 14.4,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "AB InBev",
+        "count": 26,
+        "avg_score": 27.8,
+        "top_persona": "Data Engineer",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "act digital",
+        "count": 26,
+        "avg_score": 33.6,
+        "top_persona": "Recruiter",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Nubank",
+        "count": 24,
+        "avg_score": 38.8,
+        "top_persona": "Data Engineer",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "Ford Motor Company",
+        "count": 24,
+        "avg_score": 12.7,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "TOTVS",
+        "count": 23,
+        "avg_score": 31.1,
+        "top_persona": "Other",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "Zup Innovation",
+        "count": 23,
+        "avg_score": 43.5,
+        "top_persona": "Other",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "SAP",
+        "count": 22,
+        "avg_score": 45.4,
+        "top_persona": "Other",
+        "top_market": "EUROPE"
+      },
+      {
+        "company_clean": "GFT Technologies",
+        "count": 22,
+        "avg_score": 41.1,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Accenture",
+        "count": 21,
+        "avg_score": 28.0,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Amazon Web Services (AWS)",
+        "count": 20,
+        "avg_score": 47.6,
+        "top_persona": "Other",
+        "top_market": "US_CANADA_NEARSHORE"
+      },
+      {
+        "company_clean": "Serasa Experian",
+        "count": 20,
+        "avg_score": 27.3,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Indicium AI",
+        "count": 19,
+        "avg_score": 36.6,
+        "top_persona": "Data Engineer",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "Artefact",
+        "count": 19,
+        "avg_score": 29.7,
+        "top_persona": "Data Engineer",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Stone",
+        "count": 19,
+        "avg_score": 38.7,
+        "top_persona": "Data Engineer",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "Delivery Hero",
+        "count": 19,
+        "avg_score": 57.2,
+        "top_persona": "Other",
+        "top_market": "EUROPE"
+      },
+      {
+        "company_clean": "Globo",
+        "count": 19,
+        "avg_score": 20.3,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Mercado Livre",
+        "count": 18,
+        "avg_score": 25.0,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Accenture Brasil",
+        "count": 18,
+        "avg_score": 44.5,
+        "top_persona": "Other",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "Freelance",
+        "count": 18,
+        "avg_score": 28.9,
+        "top_persona": "Recruiter",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "PRINCIPIA",
+        "count": 18,
+        "avg_score": 12.5,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Google",
+        "count": 17,
+        "avg_score": 51.4,
+        "top_persona": "Other",
+        "top_market": "US_CANADA_NEARSHORE"
+      },
+      {
+        "company_clean": "Banco Itaú",
+        "count": 16,
+        "avg_score": 37.4,
+        "top_persona": "Data Engineer",
+        "top_market": "BRAZIL"
+      },
+      {
+        "company_clean": "TELUS Digital",
+        "count": 16,
+        "avg_score": 32.3,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "LM Mobilidade",
+        "count": 16,
+        "avg_score": 15.2,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Microsoft",
+        "count": 15,
+        "avg_score": 49.1,
+        "top_persona": "Other",
+        "top_market": "US_CANADA_NEARSHORE"
+      },
+      {
+        "company_clean": "Blip",
+        "count": 15,
+        "avg_score": 25.6,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Autônomo",
+        "count": 14,
+        "avg_score": 22.9,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Stefanini Group",
+        "count": 14,
+        "avg_score": 33.4,
+        "top_persona": "Other",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Inter",
+        "count": 14,
+        "avg_score": 27.4,
+        "top_persona": "Data Engineer",
+        "top_market": "UNKNOWN"
+      },
+      {
+        "company_clean": "Ambev Tech",
+        "count": 14,
+        "avg_score": 39.6,
+        "top_persona": "HR",
+        "top_market": "UNKNOWN"
+      }
+    ],
+    "top_recruiting_companies": [
+      {
+        "company_clean": "act digital",
+        "recruiter_count": 11
+      },
+      {
+        "company_clean": "K2 Partnering Solutions",
+        "recruiter_count": 9
+      },
+      {
+        "company_clean": "Leidos",
+        "recruiter_count": 8
+      },
+      {
+        "company_clean": "Freelance",
+        "recruiter_count": 8
+      },
+      {
+        "company_clean": "Capgemini",
+        "recruiter_count": 7
+      },
+      {
+        "company_clean": "Coforge",
+        "recruiter_count": 7
+      },
+      {
+        "company_clean": "TELUS Digital",
+        "recruiter_count": 7
+      },
+      {
+        "company_clean": "Decision",
+        "recruiter_count": 6
+      },
+      {
+        "company_clean": "Delivery Hero",
+        "recruiter_count": 6
+      },
+      {
+        "company_clean": "Concentrix",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "Andersen Lab",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "Hays",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "ICON Solutions do Brasil",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "EY",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "Epsilon Solutions Ltd. SA de CV",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "Randstad Enterprise",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "NTT DATA Europe & LATAM",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "Randstad",
+        "recruiter_count": 5
+      },
+      {
+        "company_clean": "E-Solutions",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "Korn Ferry",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "CWI Software",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "Hire With Near",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "GE Vernova",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "Deloitte",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "Avanade",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "HelloFresh",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "GFT Technologies",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "Dev.Pro",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "Keyrus",
+        "recruiter_count": 4
+      },
+      {
+        "company_clean": "NTConsult",
+        "recruiter_count": 4
+      }
+    ],
+    "top_data_companies": [
+      {
+        "company_clean": "Itaú Unibanco",
+        "data_count": 23
+      },
+      {
+        "company_clean": "NTT DATA Europe & Latam",
+        "data_count": 19
+      },
+      {
+        "company_clean": "CI&T",
+        "data_count": 18
+      },
+      {
+        "company_clean": "iFood",
+        "data_count": 16
+      },
+      {
+        "company_clean": "Bradesco",
+        "data_count": 16
+      },
+      {
+        "company_clean": "Grupo Boticário",
+        "data_count": 15
+      },
+      {
+        "company_clean": "AB InBev",
+        "data_count": 14
+      },
+      {
+        "company_clean": "Nubank",
+        "data_count": 13
+      },
+      {
+        "company_clean": "Artefact",
+        "data_count": 12
+      },
+      {
+        "company_clean": "Inter",
+        "data_count": 11
+      },
+      {
+        "company_clean": "Tata Consultancy Services",
+        "data_count": 11
+      },
+      {
+        "company_clean": "Stone",
+        "data_count": 10
+      },
+      {
+        "company_clean": "Factored",
+        "data_count": 8
+      },
+      {
+        "company_clean": "Indicium AI",
+        "data_count": 8
+      },
+      {
+        "company_clean": "Blip",
+        "data_count": 7
+      },
+      {
+        "company_clean": "Compass UOL",
+        "data_count": 7
+      },
+      {
+        "company_clean": "EloGroup",
+        "data_count": 7
+      },
+      {
+        "company_clean": "BTG Pactual",
+        "data_count": 6
+      },
+      {
+        "company_clean": "PicPay",
+        "data_count": 6
+      },
+      {
+        "company_clean": "act digital",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Accenture",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Ambev Tech",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Accenture Brasil",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Banco Itaú",
+        "data_count": 6
+      },
+      {
+        "company_clean": "EY",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Cadastra",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Google",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Data Mundo",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Serasa Experian",
+        "data_count": 6
+      },
+      {
+        "company_clean": "Qubika",
+        "data_count": 6
+      }
+    ],
+    "top_latam_companies": [
+      {
+        "company_clean": "NTT DATA Europe & Latam",
+        "count": 46,
+        "avg_score": 63.6
+      },
+      {
+        "company_clean": "GE Vernova",
+        "count": 11,
+        "avg_score": 46.5
+      },
+      {
+        "company_clean": "NTT DATA Europe & LATAM",
+        "count": 8,
+        "avg_score": 71.0
+      },
+      {
+        "company_clean": "Randstad Uruguay",
+        "count": 8,
+        "avg_score": 51.9
+      },
+      {
+        "company_clean": "Walmart Chile",
+        "count": 7,
+        "avg_score": 45.6
+      },
+      {
+        "company_clean": "Databricks",
+        "count": 5,
+        "avg_score": 54.4
+      },
+      {
+        "company_clean": "AgileEngine",
+        "count": 4,
+        "avg_score": 50.2
+      },
+      {
+        "company_clean": "Thoughtworks",
+        "count": 3,
+        "avg_score": 57.0
+      },
+      {
+        "company_clean": "TIVIT LATAM",
+        "count": 3,
+        "avg_score": 75.0
+      },
+      {
+        "company_clean": "Perficient Latin America",
+        "count": 3,
+        "avg_score": 64.7
+      },
+      {
+        "company_clean": "Scanntech Uruguay",
+        "count": 3,
+        "avg_score": 57.7
+      },
+      {
+        "company_clean": "Andela",
+        "count": 3,
+        "avg_score": 47.3
+      },
+      {
+        "company_clean": "Google",
+        "count": 3,
+        "avg_score": 47.0
+      },
+      {
+        "company_clean": "Turing",
+        "count": 3,
+        "avg_score": 55.3
+      },
+      {
+        "company_clean": "Tata Consultancy Services",
+        "count": 3,
+        "avg_score": 57.3
+      },
+      {
+        "company_clean": "Laidon Group, LLC",
+        "count": 2,
+        "avg_score": 75.0
+      },
+      {
+        "company_clean": "LATAM Airlines",
+        "count": 2,
+        "avg_score": 44.0
+      },
+      {
+        "company_clean": "RCI Latinoamérica",
+        "count": 2,
+        "avg_score": 46.5
+      },
+      {
+        "company_clean": "SAP",
+        "count": 2,
+        "avg_score": 57.0
+      },
+      {
+        "company_clean": "Nimble.LA",
+        "count": 2,
+        "avg_score": 74.5
+      },
+      {
+        "company_clean": "LatamCent",
+        "count": 2,
+        "avg_score": 72.5
+      },
+      {
+        "company_clean": "UST España & Latam",
+        "count": 2,
+        "avg_score": 57.5
+      },
+      {
+        "company_clean": "Ubiminds: You, International",
+        "count": 2,
+        "avg_score": 82.0
+      },
+      {
+        "company_clean": "Yazaki Uruguay SA",
+        "count": 2,
+        "avg_score": 51.0
+      },
+      {
+        "company_clean": "Wizeline",
+        "count": 2,
+        "avg_score": 81.0
+      }
+    ],
+    "top_spain_companies": [
+      {
+        "company_clean": "SAP",
+        "count": 19,
+        "avg_score": 45.1
+      },
+      {
+        "company_clean": "Delivery Hero",
+        "count": 19,
+        "avg_score": 57.2
+      },
+      {
+        "company_clean": "YER Deutschland",
+        "count": 12,
+        "avg_score": 39.5
+      },
+      {
+        "company_clean": "Minsait",
+        "count": 11,
+        "avg_score": 49.5
+      },
+      {
+        "company_clean": "Siemens Energy",
+        "count": 8,
+        "avg_score": 41.1
+      },
+      {
+        "company_clean": "Deloitte",
+        "count": 7,
+        "avg_score": 52.4
+      },
+      {
+        "company_clean": "Bonial Germany",
+        "count": 5,
+        "avg_score": 47.4
+      },
+      {
+        "company_clean": "adesso SE",
+        "count": 5,
+        "avg_score": 52.8
+      },
+      {
+        "company_clean": "Randstad Deutschland",
+        "count": 5,
+        "avg_score": 44.4
+      },
+      {
+        "company_clean": "Indra",
+        "count": 4,
+        "avg_score": 52.5
+      },
+      {
+        "company_clean": "Aubay Portugal",
+        "count": 4,
+        "avg_score": 55.8
+      },
+      {
+        "company_clean": "Hays",
+        "count": 4,
+        "avg_score": 42.0
+      },
+      {
+        "company_clean": "SEIDOR",
+        "count": 4,
+        "avg_score": 60.5
+      },
+      {
+        "company_clean": "Deloitte Deutschland",
+        "count": 4,
+        "avg_score": 40.8
+      },
+      {
+        "company_clean": "Deutsche Telekom",
+        "count": 4,
+        "avg_score": 60.0
+      },
+      {
+        "company_clean": "Stadtwerke München GmbH",
+        "count": 3,
+        "avg_score": 31.0
+      },
+      {
+        "company_clean": "IBM",
+        "count": 3,
+        "avg_score": 38.7
+      },
+      {
+        "company_clean": "Landeshauptstadt München",
+        "count": 3,
+        "avg_score": 31.0
+      },
+      {
+        "company_clean": "Portobello Grupo",
+        "count": 3,
+        "avg_score": 39.0
+      },
+      {
+        "company_clean": "Cobalt Deutschland GmbH",
+        "count": 3,
+        "avg_score": 48.7
+      },
+      {
+        "company_clean": "Porto",
+        "count": 3,
+        "avg_score": 48.3
+      },
+      {
+        "company_clean": "Randstad España",
+        "count": 3,
+        "avg_score": 62.0
+      },
+      {
+        "company_clean": "Randstad Professional Deutschland (vormals GULP)",
+        "count": 3,
+        "avg_score": 46.3
+      },
+      {
+        "company_clean": "Ruby Berlin HR Consulting",
+        "count": 3,
+        "avg_score": 57.7
+      },
+      {
+        "company_clean": "Zalando",
+        "count": 3,
+        "avg_score": 63.0
+      }
+    ]
+  },
+  "top_contacts": [
+    {
+      "full_name": "María de los Angeles Cusicanqui Rivero",
+      "company_clean": "XML International",
+      "position_clean": "Senior IT Recruiter/Administrator",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 93,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-23",
+      "url": "https://www.linkedin.com/in/mar%C3%ADa-de-los-angeles-cusicanqui-rivero",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Evelyn Castillo Blas",
+      "company_clean": "NTT DATA Europe & LATAM",
+      "position_clean": "IT Talent Acquisition Coordinator",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 90,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-22",
+      "url": "https://www.linkedin.com/in/evelyn-castillo-blas",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Ximena Quiroga",
+      "company_clean": "Yara International",
+      "position_clean": "Talent Acquisition Lead Latam",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 88,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-27",
+      "url": "https://www.linkedin.com/in/ximena-quiroga-arevalo",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Maria Fernanda Vega",
+      "company_clean": "Databricks",
+      "position_clean": "Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 88,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-12",
+      "url": "https://www.linkedin.com/in/maria-fernanda-vega-3aab4a1b3",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Marco Alves",
+      "company_clean": "Quantum World Technologies Inc",
+      "position_clean": "Senior Technical Recruiter / ATL (Latam/Mexico)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 88,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-20",
+      "url": "https://www.linkedin.com/in/marco-alves-897b7a21b",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Isis Isambertt",
+      "company_clean": "I2B Tech",
+      "position_clean": "Lead IT Talent Acquisition Latam",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 88,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-21",
+      "url": "https://www.linkedin.com/in/isis-isambertt-mindiola",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Mukesh Dayama",
+      "company_clean": "Avance Consulting",
+      "position_clean": "Senior Technical Recruiter ( Canada & USA)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 87,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-03-02",
+      "url": "https://www.linkedin.com/in/mukesh-dayama-427b52377",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Ragesh M",
+      "company_clean": "Infoplus Technologies UK Limited",
+      "position_clean": "Lead Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "EUROPE",
+      "priority_score": 87,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-12",
+      "url": "https://www.linkedin.com/in/rageshragu",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Ana Paula Sousa Sampaio",
+      "company_clean": "Talent Four Consulting",
+      "position_clean": "Tech Recruiter Senior | Talent Acquisition",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 87,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2025-07-13",
+      "url": "https://www.linkedin.com/in/ana-paula-sousa-sampaio-66319692",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Clecio Silva",
+      "company_clean": "Databricks",
+      "position_clean": "Field Engineering Manager",
+      "persona": "Hiring Manager",
+      "area": "Management",
+      "seniority": "Manager",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 86,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-03-17",
+      "url": "https://www.linkedin.com/in/cleciosilva",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Nicolas Ruiz",
+      "company_clean": "TIVIT LATAM",
+      "position_clean": "Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 86,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-11",
+      "url": "https://www.linkedin.com/in/nicolasruiz98",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Ravindra Chauhan",
+      "company_clean": "Onward Technologies Limited",
+      "position_clean": "Manager - Talent Acquisition",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "SPAIN_EU",
+      "priority_score": 85,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-03-04",
+      "url": "https://www.linkedin.com/in/ravindra-chauhan-148130121",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Natanael Carvalho",
+      "company_clean": "Ubiminds: You, International",
+      "position_clean": "Senior Tech Recruiter LATAM",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 85,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-03-05",
+      "url": "https://www.linkedin.com/in/natanaeltcarvalho",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Juliana Santos",
+      "company_clean": "Boston Consulting Group (BCG)",
+      "position_clean": "Senior Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 85,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-13",
+      "url": "https://www.linkedin.com/in/juliana-rsantos",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Alberto López Fernández",
+      "company_clean": "NTT Data Europe & Latam",
+      "position_clean": "IT Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 85,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-12",
+      "url": "https://www.linkedin.com/in/alberto-l%C3%B3pez-fern%C3%A1ndez-66ab4314b",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Mohammed Rizwan",
+      "company_clean": "ConfigUSA",
+      "position_clean": "Executive US IT Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Executive",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 84,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-02-27",
+      "url": "https://www.linkedin.com/in/mohammed-rizwan-6a0733201",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Iara Torres",
+      "company_clean": "Inclusion. The Cloud Company",
+      "position_clean": "LATAM ⇄ USA Tech Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-20",
+      "url": "https://www.linkedin.com/in/iara-torresr",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Eyvanna Connole",
+      "company_clean": "HIRECLOUT",
+      "position_clean": "Senior Recruiter & Business Development Associate, Tech & GTM (L5)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-27",
+      "url": "https://www.linkedin.com/in/eyvanna",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Thayna Sena",
+      "company_clean": "NTT DATA Europe & LATAM",
+      "position_clean": "Talent Acquisition",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-10",
+      "url": "https://www.linkedin.com/in/thayna-sena-064697139",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Natalia Abreu",
+      "company_clean": "Coforge",
+      "position_clean": "Talent Acquisition Executive @Coforge | IT Hiring | LatAm",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Executive",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-13",
+      "url": "https://www.linkedin.com/in/a-natalia-abreu",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Mara Luz Ruiz Bessola",
+      "company_clean": "Equifax",
+      "position_clean": "Talent Acquisition Manager Latinoamerica & University Relations",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-28",
+      "url": "https://www.linkedin.com/in/maraluzruizbessola",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Justin Sperry, MBA. CDR",
+      "company_clean": "MediaLab",
+      "position_clean": "Principal, Talent Acquisition Partner, Americas",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-16",
+      "url": "https://www.linkedin.com/in/justinsperry90",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Pablo Prieto Oyarce",
+      "company_clean": "TIVIT LATAM",
+      "position_clean": "Director Digital Business LATAM",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-05-19",
+      "url": "https://www.linkedin.com/in/pabloprietooyarce",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Lorena Marín Agudelo",
+      "company_clean": "TEAM International",
+      "position_clean": "Strategic Talent Management LATAM Director",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-04-30",
+      "url": "https://www.linkedin.com/in/lorena-mar%C3%ADn-agudelo-43b880140",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Jael Lezama",
+      "company_clean": "NTT DATA Europe & LATAM",
+      "position_clean": "Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 83,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-15",
+      "url": "https://www.linkedin.com/in/jael-lezama-a74953a6",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Roberto Souza",
+      "company_clean": "Databricks",
+      "position_clean": "Enterprise and Global account Sales Director",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-12-09",
+      "url": "https://www.linkedin.com/in/roberto-souza-832230",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Adnan Yousaf",
+      "company_clean": "HERE Technologies",
+      "position_clean": "Lead Talent Acquisition Specialist -EMEA",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2025-09-01",
+      "url": "https://www.linkedin.com/in/adnanyousaf7",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Thalia Bitencourt",
+      "company_clean": "Remotely.works",
+      "position_clean": "Tech Recruiter - LATAM",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-16",
+      "url": "https://www.linkedin.com/in/thalia-recruiter",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Gustavo Amici",
+      "company_clean": "Databricks",
+      "position_clean": "Director - Digital Natives / Startups",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-03-12",
+      "url": "https://www.linkedin.com/in/gustavoamici",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Ishika Srivastava",
+      "company_clean": "Otyms Consultings Services Inc",
+      "position_clean": "Technical Recruiter (LATAM)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-19",
+      "url": "https://www.linkedin.com/in/ishika-srivastava-373a4b50",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Marcio Arbex",
+      "company_clean": "Databricks",
+      "position_clean": "Director, Field Engineering",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-01-01",
+      "url": "https://www.linkedin.com/in/marcioarbex",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Maria De Los Angeles Oliveros Molano",
+      "company_clean": "Arroyo is becoming INSPYR Global Solutions",
+      "position_clean": "Talent Acquisition Manager",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-14",
+      "url": "https://www.linkedin.com/in/maria-oliveros-ta-manager",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Susana Arango",
+      "company_clean": "Committed Staff.AI",
+      "position_clean": "Information Technology Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-05",
+      "url": "https://www.linkedin.com/in/susana-arango-835b99241",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Marco Antonio Ojeda Cervantes",
+      "company_clean": "NTT DATA Services",
+      "position_clean": "Talent Acquisition - LATAM Corporate Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-28",
+      "url": "https://www.linkedin.com/in/marco-antonio-ojeda-cervantes-54453897",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Denny Lee",
+      "company_clean": "Databricks",
+      "position_clean": "Product Management Director, Developer Relations",
+      "persona": "Director",
+      "area": "Software Engineering",
+      "seniority": "Director",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 82,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-03-16",
+      "url": "https://www.linkedin.com/in/dennyglee",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Juan Burbano",
+      "company_clean": "Wizeline",
+      "position_clean": "Staff Talent Acquisition",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-09",
+      "url": "https://www.linkedin.com/in/juanpabloburbanobravo",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Daniela Reyes Calderon",
+      "company_clean": "Blue People",
+      "position_clean": "Talent Acquisition Lead",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-18",
+      "url": "https://www.linkedin.com/in/fernanda-daniela-reyes-calderon",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Srinivas Bikkavolu",
+      "company_clean": "Spruce InfoTech Inc",
+      "position_clean": "Technical Recruiter - Canada Staffing",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-03-09",
+      "url": "https://www.linkedin.com/in/srinivas-bikkavolu-a10a07392",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Os Payares",
+      "company_clean": "Wizeline",
+      "position_clean": "Staff Talent Acquisition",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-09",
+      "url": "https://www.linkedin.com/in/osnaider-payares",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Leandro Antunes Rodrigues",
+      "company_clean": "GFT Technologies",
+      "position_clean": "Chief Operating Officer (USA) & Global Delivery Platform Executive",
+      "persona": "Executive",
+      "area": "Management",
+      "seniority": "Executive",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Nurture this connection – engage with their posts regularly.",
+      "connected_on_clean": "2026-01-02",
+      "url": "https://www.linkedin.com/in/leandroa1",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Benhur Mente⧗",
+      "company_clean": "Atlantis IT Group",
+      "position_clean": "IT Recruiter (USA/Canada) (SVK Information Technology)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-02-25",
+      "url": "https://www.linkedin.com/in/benhur-mente%E2%A7%97-1944a9244",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Maynor Estrada",
+      "company_clean": "Tribal Worldwide Guatemala",
+      "position_clean": "Talent Acquisition Lead LATAM",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-09",
+      "url": "https://www.linkedin.com/in/maynorestrada93",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Ignacio Santos Rehermann",
+      "company_clean": "Practia Uruguay",
+      "position_clean": "IT Talent Acquisition Lead",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-28",
+      "url": "https://www.linkedin.com/in/nachosantos",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "✈ Kartheek Guntuku✅",
+      "company_clean": "SoftPath Technologies LLC",
+      "position_clean": "Manager – Talent Acquisition, HR Operations | Payroll, Compliance and Vendor Management",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "EUROPE",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-03-01",
+      "url": "https://www.linkedin.com/in/%E2%9C%88-kartheek-guntuku%E2%9C%85-56382375",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Bryan Chinchilla Barrantes",
+      "company_clean": "PGD LATAM",
+      "position_clean": "Talent Acquisition Lead-Manager",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 81,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-06-11",
+      "url": "https://www.linkedin.com/in/bryan-chinchilla-barrantes-478624b5",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Daniel Cicotti",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "IT Director",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-12-26",
+      "url": "https://www.linkedin.com/in/danielcicotti",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Paola Urueña P.",
+      "company_clean": "CINTE Colombia",
+      "position_clean": "Talent Acquisition Manager",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-04-13",
+      "url": "https://www.linkedin.com/in/paolauruenap",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Daniel Geraldeli",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Diretor Hiperautomação & Low-Code",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-12-28",
+      "url": "https://www.linkedin.com/in/geraldeli",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Mayara Oliveira",
+      "company_clean": "Montreal Oficial",
+      "position_clean": "Tech Recruiter Sênior",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-11",
+      "url": "https://www.linkedin.com/in/mayoliveiraa",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Bruno Silva",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Director",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-10-01",
+      "url": "https://www.linkedin.com/in/bsilva",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Georgia Tsalgini",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Senior Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2025-07-28",
+      "url": "https://www.linkedin.com/in/georgia-tsalgini-a7b9171b2",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Wescley Trajano",
+      "company_clean": "Ambev Tech",
+      "position_clean": "Diretor de Data & Analytics - LATAM",
+      "persona": "Director",
+      "area": "Analytics",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-12-09",
+      "url": "https://www.linkedin.com/in/wescleytrajano",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Sérgio Leão",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Director",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-12-28",
+      "url": "https://www.linkedin.com/in/sergioleao",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Marcelo Bellezo",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Diretor",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-02-17",
+      "url": "https://www.linkedin.com/in/marcelobellezo",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Virginia Silvero",
+      "company_clean": "Globant",
+      "position_clean": "Regional Recruiter Lead for South Of Latin America",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Send personalized outreach – share your profile & open to work status.",
+      "connected_on_clean": "2026-05-04",
+      "url": "https://www.linkedin.com/in/msilvero",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Bruno Oliveira",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Director Digital Architecture",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-01-27",
+      "url": "https://www.linkedin.com/in/brunoacks",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Rodrigo Sorriente",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Diretor Executivo Regional de Transformação com IA Generativa",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-12-29",
+      "url": "https://www.linkedin.com/in/rodrigosorriente",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Pedro Tarelho",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Director IT Solutions & Services - Banking",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2025-12-29",
+      "url": "https://www.linkedin.com/in/pedro-tarelho-3a87474",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Rômulo Sales Ragassi",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Diretor CRM Sales and Delivery | Telco | Media | Tech",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 80,
+      "recommended_action": "PRIORITY: Engage content, comment strategically, and consider a warm DM.",
+      "connected_on_clean": "2026-02-23",
+      "url": "https://www.linkedin.com/in/romuloragassi",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Sandeep Kampe",
+      "company_clean": "Cerebra Consulting Inc",
+      "position_clean": "Senior UK Recruiter - UK & Europe",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "EUROPE",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-09-18",
+      "url": "https://www.linkedin.com/in/sandeep-kampe-08a723226",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Azad Ahmadi",
+      "company_clean": "HypoVereinsbank - UniCredit - Deutschland",
+      "position_clean": "Senior Recruiter (ANÜ contract via Hays)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "EUROPE",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-09-21",
+      "url": "https://www.linkedin.com/in/azad-ahmadi",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Silvia Rage🏳️🌈",
+      "company_clean": "NTT DATA Europe & LATAM",
+      "position_clean": "Talent acquisition - Tech Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-12-19",
+      "url": "https://www.linkedin.com/in/silviarage",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Piyush Srivastava",
+      "company_clean": "Jconnect Infotech Inc",
+      "position_clean": "Senior SAP & IT Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "EUROPE",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-02-26",
+      "url": "https://www.linkedin.com/in/piyushsri48",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Raphael Saueia Bueno",
+      "company_clean": "NTT DATA Europe & Latam",
+      "position_clean": "Sócio Products & Resources",
+      "persona": "Executive",
+      "area": "Management",
+      "seniority": "Executive",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Monitor their activity; reach out when a relevant job post appears.",
+      "connected_on_clean": "2025-12-25",
+      "url": "https://www.linkedin.com/in/raphael-saueia-bueno-9878221b",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Stefany Porto",
+      "company_clean": "mazzatech",
+      "position_clean": "Recrutador de SAP Sênior",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "SPAIN_EU",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-06-09",
+      "url": "https://www.linkedin.com/in/stefanyporto",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Sapir Solomon Yehezkel",
+      "company_clean": "Elbit Systems Israel",
+      "position_clean": "Talent Acquisition Team Lead",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "EUROPE",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-09-03",
+      "url": "https://www.linkedin.com/in/sapir-solomon-yehezkel-5b7621211",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Martin Schultheis",
+      "company_clean": "Randstad Uruguay",
+      "position_clean": "Senior Talent Acquisition",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-01",
+      "url": "https://www.linkedin.com/in/martin-schultheis",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Bárbara Baliano",
+      "company_clean": "Ubiminds: You, International",
+      "position_clean": "Tech Recruiter LaTam",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-08-07",
+      "url": "https://www.linkedin.com/in/b%C3%A1rbara-baliano-7aaa9a105",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Elaine Cristine",
+      "company_clean": "NTT DATA Europe & LATAM",
+      "position_clean": "Talent Acquisition / Tech Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 79,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-11-03",
+      "url": "https://www.linkedin.com/in/elaine-cristinetechrecruiter",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Lobelia Jiménez Vargas",
+      "company_clean": "3Pillar",
+      "position_clean": "Talent Acquisition Lead",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 78,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-04-26",
+      "url": "https://www.linkedin.com/in/lobelia-jim%C3%A9nez-vargas-315648134",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Beatriz Miranda",
+      "company_clean": "Randstad",
+      "position_clean": "Recruiting Trainer at Randstad Enterprise supporting Google (Senior Talent Acquisition)",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 78,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-04-16",
+      "url": "https://www.linkedin.com/in/bea-mira",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Wladimir Toro Trobok",
+      "company_clean": "METRICA Chile",
+      "position_clean": "Head of IT Talent Acquisition Specialist / Reclutador TI Senior",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 78,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-18",
+      "url": "https://www.linkedin.com/in/wladimir-toro-trobok-66514450",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Juan David Bustos Torres",
+      "company_clean": "Gallagher",
+      "position_clean": "Senior Recruiter LatAm GCoE",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 78,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-04-29",
+      "url": "https://www.linkedin.com/in/juan-david-bustos-torres-226b4714a",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Javier Velázquez",
+      "company_clean": "Laidon Group, LLC",
+      "position_clean": "Sr. IT Recruiter LATAM",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 78,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-04-29",
+      "url": "https://www.linkedin.com/in/javierit",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Belen Vazquez",
+      "company_clean": "ERNI",
+      "position_clean": "IT Talent Lead, Senior Talent and Strategic Business Partner & Mentor",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "SPAIN_EU",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-25",
+      "url": "https://www.linkedin.com/in/maria-belen-vazquez",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Eduardo Felisberto",
+      "company_clean": "ZIVA",
+      "position_clean": "Talent Acquisition Manager LATAM & HR Operations Coordinator",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-08-05",
+      "url": "https://www.linkedin.com/in/eduardofelisberto",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Manikandan S",
+      "company_clean": "Bull IT Services",
+      "position_clean": "Delivery Head | LATAM Recruitment | Talent Acquisition",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-03-25",
+      "url": "https://www.linkedin.com/in/manikandan-s-086a08203",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Sanjay Rughwani",
+      "company_clean": "Google",
+      "position_clean": "Head of Analytics, Google Play",
+      "persona": "Head of Data",
+      "area": "Analytics",
+      "seniority": "Director",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Monitor their activity; reach out when a relevant job post appears.",
+      "connected_on_clean": "2026-03-30",
+      "url": "https://www.linkedin.com/in/sanjay-rughwani",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Inês Pereira",
+      "company_clean": "Adentis Portugal",
+      "position_clean": "Talent Manager & IT Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "SPAIN_EU",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-02-06",
+      "url": "https://www.linkedin.com/in/inesigpereira",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Puja Tiwari",
+      "company_clean": "Raas Infotek",
+      "position_clean": "Senior Technical Recruiter (USA/Canada)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-03-13",
+      "url": "https://www.linkedin.com/in/puja-tiwari-199809193",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Lakhan Joshi",
+      "company_clean": "E-Solutions",
+      "position_clean": "Senior IT Recruiter | Global Talent Acquisition (USA, Canada, LATAM & India)",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-12-01",
+      "url": "https://www.linkedin.com/in/lakhan-joshi-7468301a9",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Fabian Arizona",
+      "company_clean": "VALCE Talent Solutions",
+      "position_clean": "Talent Acquisition Manager LATAM",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-07-27",
+      "url": "https://www.linkedin.com/in/fabian-arizona-0641b11bb",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Rishna Valiyakath",
+      "company_clean": "Randstad",
+      "position_clean": "Senior Recruiter - Randstad Sourceright supporting Google",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-09-11",
+      "url": "https://www.linkedin.com/in/rishnav",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Thierry Sequeira",
+      "company_clean": "Massive Rocket | Global Braze & Snowflake Agency",
+      "position_clean": "CEO",
+      "persona": "Executive",
+      "area": "Management",
+      "seniority": "Executive",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Monitor their activity; reach out when a relevant job post appears.",
+      "connected_on_clean": "2026-06-25",
+      "url": "https://www.linkedin.com/in/thierrysequeira",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Jennifer Runkle",
+      "company_clean": "Re:Build Manufacturing",
+      "position_clean": "Principal Leadership Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Lead",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 77,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-03-15",
+      "url": "https://www.linkedin.com/in/jennifer-runkle-0aa1a4a7",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Candelaria De Ferrari",
+      "company_clean": "Coforge",
+      "position_clean": "Senior Executive Talent Acquisition",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-04-21",
+      "url": "https://www.linkedin.com/in/cdeferrari",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "João Henrique Moresco Jacques",
+      "company_clean": "Cint",
+      "position_clean": "Sr. Talent Acquisition Partner - US, EU & LATAM for R&D, AI & Analytics",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-04-21",
+      "url": "https://www.linkedin.com/in/joaohmj",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Flavio Hernandez",
+      "company_clean": "LatamCent",
+      "position_clean": "Jr. Talent Partner",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Junior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-24",
+      "url": "https://www.linkedin.com/in/flavio-hernandez-28065a178",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Rafael Crema Tobara",
+      "company_clean": "Medtronic",
+      "position_clean": "Sr Director Digital, Innovation for LATAM",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Monitor their activity; reach out when a relevant job post appears.",
+      "connected_on_clean": "2026-06-16",
+      "url": "https://www.linkedin.com/in/rafaeltobara",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Natalia Lara Martínez",
+      "company_clean": "SII Group Chile",
+      "position_clean": "Senior Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-03",
+      "url": "https://www.linkedin.com/in/natalialaram",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Cristian Ferreira",
+      "company_clean": "Infogain - LATAM",
+      "position_clean": "Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-03",
+      "url": "https://www.linkedin.com/in/cristian-ferreira-perdomo",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Gerónimo Palacios",
+      "company_clean": "Nimble.LA",
+      "position_clean": "Senior Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-16",
+      "url": "https://www.linkedin.com/in/geronimo-palacios",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Rohit Goyal",
+      "company_clean": "Amazon",
+      "position_clean": "Data Engineering Manager",
+      "persona": "Hiring Manager",
+      "area": "Management",
+      "seniority": "Manager",
+      "strategic_market": "US_CANADA_NEARSHORE",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Monitor their activity; reach out when a relevant job post appears.",
+      "connected_on_clean": "2026-03-22",
+      "url": "https://www.linkedin.com/in/rohit-goyal-6348baa1",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Manuela Martínez Sander",
+      "company_clean": "Kaizen Softworks",
+      "position_clean": "Talent Acquisition & People Care Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-15",
+      "url": "https://www.linkedin.com/in/manuelamartinezsander",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Armando Álvarez",
+      "company_clean": "Gensler Latinoamérica",
+      "position_clean": "Regional Talent Acquisition Specialist",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Mid",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-14",
+      "url": "https://www.linkedin.com/in/armando-alvarez-rodriguez",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Andrea Vina",
+      "company_clean": "E-Solutions",
+      "position_clean": "Director of Operations - LATAM Region",
+      "persona": "Director",
+      "area": "Management",
+      "seniority": "Director",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 76,
+      "recommended_action": "HIGH: Monitor their activity; reach out when a relevant job post appears.",
+      "connected_on_clean": "2026-06-08",
+      "url": "https://www.linkedin.com/in/andrea-vina",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Ana Paula Mendonça",
+      "company_clean": "SGF Global",
+      "position_clean": "Talent Acquisition Manager — Brazil, Portugal & Costa Rica",
+      "persona": "Talent Acquisition",
+      "area": "Recruiting",
+      "seniority": "Manager",
+      "strategic_market": "SPAIN_EU",
+      "priority_score": 75,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-09-01",
+      "url": "https://www.linkedin.com/in/ana-paula-mendonca",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Frederico Marques",
+      "company_clean": "HN Services Portugal",
+      "position_clean": "Talent Manager",
+      "persona": "Talent Acquisition",
+      "area": "Management",
+      "seniority": "Manager",
+      "strategic_market": "SPAIN_EU",
+      "priority_score": 75,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2025-12-09",
+      "url": "https://www.linkedin.com/in/frederico-marques-656981b3",
+      "market_confidence": 0.7
+    },
+    {
+      "full_name": "Fernando Zambrano",
+      "company_clean": "Practia Uruguay",
+      "position_clean": "IT Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Unknown",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 75,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-06-01",
+      "url": "https://www.linkedin.com/in/fernando-zambrano-8aa61220a",
+      "market_confidence": 0.5
+    },
+    {
+      "full_name": "Sabrina Diaz F.",
+      "company_clean": "Gorilla Logic",
+      "position_clean": "Senior Executive & Technical Recruiter",
+      "persona": "Recruiter",
+      "area": "Recruiting",
+      "seniority": "Senior",
+      "strategic_market": "LATAM_USD",
+      "priority_score": 75,
+      "recommended_action": "HIGH: Reconnect – share a brief update about your remote data engineering availability.",
+      "connected_on_clean": "2026-03-10",
+      "url": "https://www.linkedin.com/in/sabrinadiazferro",
+      "market_confidence": 0.5
+    }
+  ],
+  "plan_30": [
+    {
+      "plan": "30-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Talent Acquisition",
+      "current_count": 14,
+      "target_count": 60,
+      "gap_count": 46,
+      "gap_percentage": 77,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "30d",
+      "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies"
+    },
+    {
+      "plan": "30-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Recruiter",
+      "current_count": 22,
+      "target_count": 80,
+      "gap_count": 58,
+      "gap_percentage": 72,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "30d",
+      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles"
+    },
+    {
+      "plan": "30-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Talent Acquisition",
+      "current_count": 48,
+      "target_count": 60,
+      "gap_count": 12,
+      "gap_percentage": 20,
+      "urgency_level": "Low",
+      "recommended_action": "LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",
+      "timeframe": "30d",
+      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors"
+    },
+    {
+      "plan": "30-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Recruiter",
+      "current_count": 40,
+      "target_count": 80,
+      "gap_count": 40,
+      "gap_percentage": 50,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "timeframe": "30d",
+      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms"
+    }
+  ],
+  "plan_60": [
+    {
+      "plan": "60-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Hiring Manager",
+      "current_count": 0,
+      "target_count": 50,
+      "gap_count": 50,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "Hiring managers at LATAM companies paying USD compensation"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 30,
+      "gap_count": 30,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "DE managers who manage remote LATAM data teams"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 30,
+      "gap_count": 30,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "DE managers at LATAM-USD companies that value remote data engineers"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Recruiter",
+      "current_count": 7,
+      "target_count": 80,
+      "gap_count": 73,
+      "gap_percentage": 91,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Recruiter in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "60d",
+      "strategic_reason": "Spanish/EU recruiters who place international data engineering candidates"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Hiring Manager",
+      "current_count": 5,
+      "target_count": 50,
+      "gap_count": 45,
+      "gap_percentage": 90,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "Decision-makers at companies with active LATAM remote hiring"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Talent Acquisition",
+      "current_count": 14,
+      "target_count": 60,
+      "gap_count": 46,
+      "gap_percentage": 77,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "30d",
+      "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Recruiter",
+      "current_count": 22,
+      "target_count": 80,
+      "gap_count": 58,
+      "gap_percentage": 72,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "30d",
+      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Talent Acquisition",
+      "current_count": 18,
+      "target_count": 60,
+      "gap_count": 42,
+      "gap_percentage": 70,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Talent Acquisition in SPAIN_EU. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "60d",
+      "strategic_reason": "TA professionals at Spain/EU tech companies open to international hires"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Talent Acquisition",
+      "current_count": 48,
+      "target_count": 60,
+      "gap_count": 12,
+      "gap_percentage": 20,
+      "urgency_level": "Low",
+      "recommended_action": "LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",
+      "timeframe": "30d",
+      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors"
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Recruiter",
+      "current_count": 40,
+      "target_count": 80,
+      "gap_count": 40,
+      "gap_percentage": 50,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "timeframe": "30d",
+      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms"
+    }
+  ],
+  "plan_90": [
+    {
+      "plan": "90-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Hiring Manager",
+      "current_count": 0,
+      "target_count": 50,
+      "gap_count": 50,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "Hiring managers at LATAM companies paying USD compensation"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 30,
+      "gap_count": 30,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "DE managers who manage remote LATAM data teams"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 30,
+      "gap_count": 30,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "DE managers at LATAM-USD companies that value remote data engineers"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Hiring Manager",
+      "current_count": 0,
+      "target_count": 60,
+      "gap_count": 60,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "75d",
+      "strategic_reason": "Hiring managers at Madrid/Barcelona/Dublin companies with data roles"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Head of Data",
+      "current_count": 0,
+      "target_count": 50,
+      "gap_count": 50,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "75d",
+      "strategic_reason": "Heads of Data at Spain/EU companies who hire Data Engineers"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 40,
+      "gap_count": 40,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "75d",
+      "strategic_reason": "DE managers in Spain/EU who manage data infrastructure teams"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Head of Data",
+      "current_count": 1,
+      "target_count": 30,
+      "gap_count": 29,
+      "gap_percentage": 97,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "60d",
+      "strategic_reason": "Heads of Data who sponsor remote data engineering roles"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Head of Data",
+      "current_count": 1,
+      "target_count": 30,
+      "gap_count": 29,
+      "gap_percentage": 97,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "60d",
+      "strategic_reason": "Data leadership at LATAM-USD companies with open data engineering roles"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "EUROPE",
+      "persona": "Data Engineering Manager",
+      "current_count": 2,
+      "target_count": 30,
+      "gap_count": 28,
+      "gap_percentage": 93,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in EUROPE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "90d",
+      "strategic_reason": "DE managers at European companies building data platforms"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Recruiter",
+      "current_count": 7,
+      "target_count": 80,
+      "gap_count": 73,
+      "gap_percentage": 91,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Recruiter in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "60d",
+      "strategic_reason": "Spanish/EU recruiters who place international data engineering candidates"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Hiring Manager",
+      "current_count": 5,
+      "target_count": 50,
+      "gap_count": 45,
+      "gap_percentage": 90,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "45d",
+      "strategic_reason": "Decision-makers at companies with active LATAM remote hiring"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "EUROPE",
+      "persona": "Head of Data",
+      "current_count": 4,
+      "target_count": 40,
+      "gap_count": 36,
+      "gap_percentage": 90,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in EUROPE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "90d",
+      "strategic_reason": "European data leaders who can refer or hire for data engineering roles"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Director",
+      "current_count": 5,
+      "target_count": 40,
+      "gap_count": 35,
+      "gap_percentage": 88,
+      "urgency_level": "Critical",
+      "recommended_action": "URGENT: Search LinkedIn for Director in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "timeframe": "90d",
+      "strategic_reason": "Directors at Spain/EU tech companies with international hiring culture"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Talent Acquisition",
+      "current_count": 14,
+      "target_count": 60,
+      "gap_count": 46,
+      "gap_percentage": 77,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "30d",
+      "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Recruiter",
+      "current_count": 22,
+      "target_count": 80,
+      "gap_count": 58,
+      "gap_percentage": 72,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "30d",
+      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "SPAIN_EU",
+      "persona": "Talent Acquisition",
+      "current_count": 18,
+      "target_count": 60,
+      "gap_count": 42,
+      "gap_percentage": 70,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Talent Acquisition in SPAIN_EU. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "60d",
+      "strategic_reason": "TA professionals at Spain/EU tech companies open to international hires"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Director",
+      "current_count": 8,
+      "target_count": 25,
+      "gap_count": 17,
+      "gap_percentage": 68,
+      "urgency_level": "High",
+      "recommended_action": "HIGH: Prioritize Director in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "60d",
+      "strategic_reason": "Directors at US/Canada companies with nearshore-friendly culture"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Talent Acquisition",
+      "current_count": 48,
+      "target_count": 60,
+      "gap_count": 12,
+      "gap_percentage": 20,
+      "urgency_level": "Low",
+      "recommended_action": "LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",
+      "timeframe": "30d",
+      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "EUROPE",
+      "persona": "Recruiter",
+      "current_count": 29,
+      "target_count": 60,
+      "gap_count": 31,
+      "gap_percentage": 52,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Recruiter in EUROPE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "timeframe": "75d",
+      "strategic_reason": "European recruiters (Germany, Netherlands, Ireland) for data engineering"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Recruiter",
+      "current_count": 40,
+      "target_count": 80,
+      "gap_count": 40,
+      "gap_percentage": 50,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "timeframe": "30d",
+      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "EUROPE",
+      "persona": "Talent Acquisition",
+      "current_count": 32,
+      "target_count": 50,
+      "gap_count": 18,
+      "gap_percentage": 36,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Talent Acquisition in EUROPE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "timeframe": "75d",
+      "strategic_reason": "TA professionals at European tech companies open to Data Engineers"
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "LATAM_USD",
+      "persona": "Director",
+      "current_count": 29,
+      "target_count": 20,
+      "gap_count": 0,
+      "gap_percentage": 0,
+      "urgency_level": "Saturated",
+      "recommended_action": "Maintain existing Director connections in LATAM_USD. No new outreach needed.",
+      "timeframe": "60d",
+      "strategic_reason": "Directors at LATAM-USD companies with budget for remote data engineers"
+    }
+  ],
+  "gap_matrix": [
+    {
+      "market": "LATAM_USD",
+      "persona": "Hiring Manager",
+      "current_count": 0,
+      "target_count": 50,
+      "gap_count": 50,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "timeframe": "45d",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Hiring managers at LATAM companies paying USD compensation"
+    },
+    {
+      "market": "SPAIN_EU",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 40,
+      "gap_count": 40,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "timeframe": "75d",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "DE managers in Spain/EU who manage data infrastructure teams"
+    },
+    {
+      "market": "SPAIN_EU",
+      "persona": "Hiring Manager",
+      "current_count": 0,
+      "target_count": 60,
+      "gap_count": 60,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "timeframe": "75d",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Hiring managers at Madrid/Barcelona/Dublin companies with data roles"
+    },
+    {
+      "market": "SPAIN_EU",
+      "persona": "Head of Data",
+      "current_count": 0,
+      "target_count": 50,
+      "gap_count": 50,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "timeframe": "75d",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Heads of Data at Spain/EU companies who hire Data Engineers"
+    },
+    {
+      "market": "LATAM_USD",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 30,
+      "gap_count": 30,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "timeframe": "45d",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "DE managers at LATAM-USD companies that value remote data engineers"
+    },
+    {
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Data Engineering Manager",
+      "current_count": 0,
+      "target_count": 30,
+      "gap_count": 30,
+      "gap_percentage": 100,
+      "urgency_level": "Critical",
+      "timeframe": "45d",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "DE managers who manage remote LATAM data teams"
+    },
+    {
+      "market": "LATAM_USD",
+      "persona": "Head of Data",
+      "current_count": 1,
+      "target_count": 30,
+      "gap_count": 29,
+      "gap_percentage": 97,
+      "urgency_level": "Critical",
+      "timeframe": "60d",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in LATAM_USD. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Data leadership at LATAM-USD companies with open data engineering roles"
+    },
+    {
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Head of Data",
+      "current_count": 1,
+      "target_count": 30,
+      "gap_count": 29,
+      "gap_percentage": 97,
+      "urgency_level": "Critical",
+      "timeframe": "60d",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Heads of Data who sponsor remote data engineering roles"
+    },
+    {
+      "market": "EUROPE",
+      "persona": "Data Engineering Manager",
+      "current_count": 2,
+      "target_count": 30,
+      "gap_count": 28,
+      "gap_percentage": 93,
+      "urgency_level": "Critical",
+      "timeframe": "90d",
+      "recommended_action": "URGENT: Search LinkedIn for Data Engineering Manager in EUROPE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "DE managers at European companies building data platforms"
+    },
+    {
+      "market": "SPAIN_EU",
+      "persona": "Recruiter",
+      "current_count": 7,
+      "target_count": 80,
+      "gap_count": 73,
+      "gap_percentage": 91,
+      "urgency_level": "Critical",
+      "timeframe": "60d",
+      "recommended_action": "URGENT: Search LinkedIn for Recruiter in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Spanish/EU recruiters who place international data engineering candidates"
+    },
+    {
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Hiring Manager",
+      "current_count": 5,
+      "target_count": 50,
+      "gap_count": 45,
+      "gap_percentage": 90,
+      "urgency_level": "Critical",
+      "timeframe": "45d",
+      "recommended_action": "URGENT: Search LinkedIn for Hiring Manager in US_CANADA_NEARSHORE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Decision-makers at companies with active LATAM remote hiring"
+    },
+    {
+      "market": "EUROPE",
+      "persona": "Head of Data",
+      "current_count": 4,
+      "target_count": 40,
+      "gap_count": 36,
+      "gap_percentage": 90,
+      "urgency_level": "Critical",
+      "timeframe": "90d",
+      "recommended_action": "URGENT: Search LinkedIn for Head of Data in EUROPE. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "European data leaders who can refer or hire for data engineering roles"
+    },
+    {
+      "market": "SPAIN_EU",
+      "persona": "Director",
+      "current_count": 5,
+      "target_count": 40,
+      "gap_count": 35,
+      "gap_percentage": 88,
+      "urgency_level": "Critical",
+      "timeframe": "90d",
+      "recommended_action": "URGENT: Search LinkedIn for Director in SPAIN_EU. Send 5-10 personalized connection requests daily. Use keywords: remote data engineering, nearshore, LATAM, data platform.",
+      "strategic_reason": "Directors at Spain/EU tech companies with international hiring culture"
+    },
+    {
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Talent Acquisition",
+      "current_count": 14,
+      "target_count": 60,
+      "gap_count": 46,
+      "gap_percentage": 77,
+      "urgency_level": "High",
+      "timeframe": "30d",
+      "recommended_action": "HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies"
+    },
+    {
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Recruiter",
+      "current_count": 22,
+      "target_count": 80,
+      "gap_count": 58,
+      "gap_percentage": 72,
+      "urgency_level": "High",
+      "timeframe": "30d",
+      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles"
+    },
+    {
+      "market": "SPAIN_EU",
+      "persona": "Talent Acquisition",
+      "current_count": 18,
+      "target_count": 60,
+      "gap_count": 42,
+      "gap_percentage": 70,
+      "urgency_level": "High",
+      "timeframe": "60d",
+      "recommended_action": "HIGH: Prioritize Talent Acquisition in SPAIN_EU. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "strategic_reason": "TA professionals at Spain/EU tech companies open to international hires"
+    },
+    {
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Director",
+      "current_count": 8,
+      "target_count": 25,
+      "gap_count": 17,
+      "gap_percentage": 68,
+      "urgency_level": "High",
+      "timeframe": "60d",
+      "recommended_action": "HIGH: Prioritize Director in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "strategic_reason": "Directors at US/Canada companies with nearshore-friendly culture"
+    },
+    {
+      "market": "EUROPE",
+      "persona": "Recruiter",
+      "current_count": 29,
+      "target_count": 60,
+      "gap_count": 31,
+      "gap_percentage": 52,
+      "urgency_level": "Medium",
+      "timeframe": "75d",
+      "recommended_action": "MEDIUM: Add Recruiter in EUROPE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "strategic_reason": "European recruiters (Germany, Netherlands, Ireland) for data engineering"
+    },
+    {
+      "market": "LATAM_USD",
+      "persona": "Recruiter",
+      "current_count": 40,
+      "target_count": 80,
+      "gap_count": 40,
+      "gap_percentage": 50,
+      "urgency_level": "Medium",
+      "timeframe": "30d",
+      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms"
+    },
+    {
+      "market": "EUROPE",
+      "persona": "Talent Acquisition",
+      "current_count": 32,
+      "target_count": 50,
+      "gap_count": 18,
+      "gap_percentage": 36,
+      "urgency_level": "Medium",
+      "timeframe": "75d",
+      "recommended_action": "MEDIUM: Add Talent Acquisition in EUROPE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "strategic_reason": "TA professionals at European tech companies open to Data Engineers"
+    },
+    {
+      "market": "LATAM_USD",
+      "persona": "Talent Acquisition",
+      "current_count": 48,
+      "target_count": 60,
+      "gap_count": 12,
+      "gap_percentage": 20,
+      "urgency_level": "Low",
+      "timeframe": "30d",
+      "recommended_action": "LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",
+      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors"
+    },
+    {
+      "market": "LATAM_USD",
+      "persona": "Director",
+      "current_count": 29,
+      "target_count": 20,
+      "gap_count": 0,
+      "gap_percentage": 0,
+      "urgency_level": "Saturated",
+      "timeframe": "60d",
+      "recommended_action": "Maintain existing Director connections in LATAM_USD. No new outreach needed.",
+      "strategic_reason": "Directors at LATAM-USD companies with budget for remote data engineers"
+    }
+  ]
+}

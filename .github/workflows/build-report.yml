@@ -29,10 +29,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run pipeline
+      - name: Run pipeline (classify + heatmaps)
         run: python src/build_network_heatmap.py
 
-      - name: Upload reports as artifacts
+      - name: Run strategy layer (KPIs + action plans + reports)
+        run: python src/build_strategy_layer.py
+
+      - name: Verify dashboard imports (syntax check)
+        run: python -c "import ast; ast.parse(open('app/dashboard.py').read()); print('dashboard.py: OK')"
+
+      - name: Upload all reports as artifacts
         uses: actions/upload-artifact@v4
         with:
           name: network-reports-${{ github.run_number }}
@@ -41,9 +47,16 @@ jobs:
             outputs/
           retention-days: 30
 
-      - name: Upload daily report summary
+      - name: Upload Excel dashboard
         uses: actions/upload-artifact@v4
         with:
-          name: daily-report-${{ github.run_number }}
-          path: reports/daily_network_report.md
+          name: dashboard-excel-${{ github.run_number }}
+          path: reports/dashboard_ready.xlsx
+          retention-days: 90
+
+      - name: Upload executive strategy report
+        uses: actions/upload-artifact@v4
+        with:
+          name: executive-report-${{ github.run_number }}
+          path: reports/executive_strategy_report.md
           retention-days: 90
