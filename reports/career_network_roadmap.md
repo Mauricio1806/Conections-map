@@ -3,97 +3,107 @@
 
 ---
 
-## Context
+## Strategic Context
 
 | | |
 |--|--|
 | Current location | Brazil |
-| Short-term goal | Remote job paid in USD |
+| Short-term goal | Remote Data Engineering job paid in USD |
 | Medium-term goal | Relocate to Spain / Europe |
 | Network size | 10,780 connections |
-| USD Opportunity Score | 83.3/100 |
-| Spain Readiness Score | 87.0/100 |
+| High-confidence inferred | 1,952 |
+| USD Score (adjusted) | 82.0/100 |
+| Spain Score (adjusted) | 65.0/100 |
+
+> **Note:** Scores use only high-confidence market inference.
+> Market is inferred from company/title keywords — LinkedIn does not export location.
 
 ---
 
-## 30-Day Roadmap: USD Remote Job Focus (Brazil)
+## 7-Day Action Sprint
+
+| Day | Action | Target |
+|-----|--------|--------|
+| Mon | Search LATAM USD recruiters, send 7 requests | +7 LATAM USD recruiters |
+| Tue | Search US/Canada nearshore recruiters, send 7 requests | +7 US/CA recruiters |
+| Wed | Fill 20 rows in company_market_mapping_template.csv | +20 classified companies |
+| Thu | Message top 10 from action_backlog.csv (score >= 70) | 10 personalized DMs |
+| Fri | Post LinkedIn content (Data Engineering topic) | 1 post, target recruiter reach |
+| Sat | Review Spain/EU recruiters: ERNI, Stratesys, Capgemini Spain | +3 Spain connections |
+| Sun | Audit: review new connections, update pipeline outputs | 0 outreach, 1 pipeline run |
+
+---
+
+## 30-Day Plan: USD Remote Job Focus
 
 ### Goal
-Land or advance toward a remote Data Engineering contract paid in USD.
+Reach USD Adjusted Score >= 45.
 
-### Actions
-| Week | Focus | Daily Target | Weekly Goal |
-|------|-------|-------------|-------------|
-| Week 1 | LATAM USD Recruiters (AgileEngine, Andela, LatamCent, Wizeline) | 5 connections/day | 35 new connections |
-| Week 2 | US/Canada Nearshore Recruiters | 5 connections/day | 35 new connections |
-| Week 3 | US/Canada & LATAM Hiring Managers | 4 connections/day | 28 new connections |
-| Week 4 | Activate existing top-priority contacts | 10 DMs/day | 70 messages sent |
+### Weekly Connection Targets
+| Market | Persona | Weekly Target | Reason |
+|--------|---------|--------------|--------|
+| LATAM_USD | Recruiter | 8/week | Direct USD job pipeline |
+| US_CANADA_NEARSHORE | Recruiter | 6/week | Critical gap |
+| US_CANADA_NEARSHORE | Hiring Manager | 4/week | Decision-makers |
+| LATAM_USD | Talent Acquisition | 4/week | Secondary pipeline |
+| LATAM_USD | Hiring Manager | 3/week | Active hiring |
 
-### Key LinkedIn Search Strategies
-- `"data engineer" "nearshore" "LATAM" recruiter`
-- `"data engineering manager" "remote" "contractor"`
-- `site:linkedin.com "hiring data engineer" "remote" "LATAM"`
-
-### Saturated Areas (No Action Needed)
-- Brazil generic recruiters (41 existing — target already met)
-- LATAM USD Directors (29 existing — target met)
+### Search Queries
+- `"data engineer" "remote" "nearshore" recruiter`
+- `"data engineering" "LATAM" hiring manager`
+- `"staffing" "data" "remote" site:linkedin.com`
 
 ---
 
-## 60-Day Roadmap: Extend USD + Begin Spain/EU
+## 60-Day Plan: USD Stable + Spain Start
 
 ### USD Maintenance (Days 31-60)
-- Continue adding 2-3 US/Canada hiring managers per week
-- Engage existing high-priority USD contacts with content reactions
-- Track response rates from 30-day outreach
+- 3 US/Canada connections/week (maintenance)
+- 2 LATAM USD connections/week (maintenance)
+- Weekly DMs to top 15 existing high-priority contacts
 
 ### Spain/EU Launch (Days 31-60)
-| Week | Focus | Daily Target |
-|------|-------|-------------|
-| Week 5-6 | Spain/EU Recruiters (Madrid, Barcelona, Dublin) | 3 connections/day |
-| Week 7-8 | Spain/EU Talent Acquisition | 3 connections/day |
+| Persona | Company Examples | Weekly Target |
+|---------|-----------------|--------------|
+| Spain Recruiter | ERNI, Stratesys, Capgemini Spain | 4/week |
+| Spain TA | Seidor, Minsait | 2/week |
+| Spain Hiring Manager | Tech companies in Madrid/Barcelona | 2/week |
 
-### Key Spain/EU Companies to Target
-- **Spain**: Capgemini Spain, NTT Data Spain, ERNI, Seidor, Stratesys, Indra, Minsait
-- **Portugal**: Volkswagen Group Portugal, DataSmart, emagine Portugal
-- **Ireland**: Accenture Dublin, Google Dublin, Amazon AWS Dublin
-- **Germany**: Adesso SE, SAP, Deutsche Telekom, Zalando
+### KPI Targets at Day 60
+| KPI | Target |
+|-----|--------|
+| USD Adjusted Score | >= 45 |
+| Spain Adjusted Score | >= 20 |
+| High-confidence contacts | >= 700 |
+| LATAM USD Recruiters | 60 |
+| US/CA Nearshore Recruiters | 40 |
 
 ---
 
-## 90-Day Roadmap: Balance USD Income + EU Positioning
+## 90-Day Plan: Balance USD + EU Readiness
 
 ### USD Stability (Days 61-90)
-- Maintain recruiter relationships with monthly check-ins
+- Maintain weekly cadence at 2-3 connections/week
 - Target: 1 active USD job conversation by Day 90
-- Focus on Data Engineering Manager connections in US/CA nearshore
+- Activate Data Engineering Manager connections for referrals
 
 ### EU Deep Build (Days 61-90)
 | Week | Focus |
 |------|-------|
-| Week 9-10 | Spain/EU Hiring Managers + Heads of Data |
-| Week 11-12 | European Data Leaders + referral contacts (Germany, Netherlands) |
+| Week 9-10 | Spain Heads of Data + EU Recruiters (Dublin, Lisbon) |
+| Week 11-12 | European Data Leaders + Germany/Netherlands |
 
-### Success Metrics at Day 90
+### KPI Targets at Day 90
 | KPI | Target |
 |-----|--------|
+| USD Adjusted Score | >= 55 |
+| Spain Adjusted Score | >= 35 |
 | LATAM USD Recruiters | 80 |
 | US/CA Nearshore Recruiters | 50 |
-| USD Hiring Managers | 30 |
-| Spain/EU Recruiters | 20 |
+| Spain/EU Recruiters | 25 |
 | Spain/EU Hiring Managers | 15 |
-| USD Opportunity Score | >= 60 |
-| Spain Readiness Score | >= 35 |
+| High-confidence contacts | >= 900 |
 
 ---
 
-## Priority Market This Week
-**LATAM_USD** — This is where your biggest immediate gap is vs. your short-term goal.
-
-## Priority Market Before Moving to Spain
-**SPAIN_EU + EUROPE** — You need at minimum 20 Spain/EU recruiters and 15 hiring managers
-before relocating. Start this effort at Day 30 and sustain through Day 90.
-
----
-
-_Generated by LinkedIn Connections Heatmap — career intelligence layer._
+_Generated by LinkedIn Connections Heatmap — Market Inference V2._

@@ -1,0 +1,115 @@
+# company_market_overrides.yml
+# Manual company-to-market mapping. Confidence = 0.95 when used.
+# Add company names exactly as they appear in company_clean column (lowercase for matching).
+# Format:
+#   "company name": {market: MARKET, category: CATEGORY}
+
+overrides:
+
+  # ── LATAM USD / Nearshore Platforms ───────────────────────────────────────
+  agileengine:            {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  andela:                 {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  toptal:                 {market: US_CANADA_NEARSHORE, category: GLOBAL_STAFFING}
+  crossover:              {market: US_CANADA_NEARSHORE, category: GLOBAL_STAFFING}
+  turing:                 {market: US_CANADA_NEARSHORE, category: GLOBAL_STAFFING}
+  latamcent:              {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  nimble.la:              {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  blue people:            {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  wizeline:               {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  gorilla logic:          {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  unosquare:              {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  3pillar global:         {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  team international:     {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  globant:                {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  belatrix software:      {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  softserve:              {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  encora:                 {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  lemon.io:               {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  bairesdev:              {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  athyna:                 {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  willdom:                {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  plugg technologies:     {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  truss one partners:     {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  abstracta:              {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  golabs:                 {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  newfire global partners:   {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  oxigent technologies:   {market: LATAM_USD,           category: GLOBAL_STAFFING}
+
+  # ── US/Canada Specific ────────────────────────────────────────────────────
+  hireclout:              {market: US_CANADA_NEARSHORE, category: GLOBAL_STAFFING}
+  shopify:                {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  stripe:                 {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  twilio:                 {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  datadog:                {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  databricks:             {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  snowflake:              {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  dbt labs:               {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  fivetran:               {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  airbyte:                {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+
+  # ── Brazil ────────────────────────────────────────────────────────────────
+  zup innovation:         {market: BRAZIL,              category: GLOBAL_TECH}
+  c6 bank:                {market: BRAZIL,              category: GLOBAL_TECH}
+  extractta:              {market: BRAZIL,              category: GLOBAL_TECH}
+  indicium:               {market: BRAZIL,              category: GLOBAL_CONSULTING}
+  indicium ai:            {market: BRAZIL,              category: GLOBAL_CONSULTING}
+  xp inc:                 {market: BRAZIL,              category: GLOBAL_TECH}
+  nubank:                 {market: BRAZIL,              category: GLOBAL_TECH}
+  itau:                   {market: BRAZIL,              category: GLOBAL_TECH}
+  itaú:                   {market: BRAZIL,              category: GLOBAL_TECH}
+  totvs:                  {market: BRAZIL,              category: GLOBAL_TECH}
+  stone:                  {market: BRAZIL,              category: GLOBAL_TECH}
+  ifood:                  {market: BRAZIL,              category: GLOBAL_TECH}
+  pagbank:                {market: BRAZIL,              category: GLOBAL_TECH}
+  pagseguro:              {market: BRAZIL,              category: GLOBAL_TECH}
+  semantix:               {market: BRAZIL,              category: GLOBAL_CONSULTING}
+  dataside:               {market: BRAZIL,              category: GLOBAL_CONSULTING}
+  contabilizei:           {market: BRAZIL,              category: GLOBAL_TECH}
+  rdstation:              {market: BRAZIL,              category: GLOBAL_TECH}
+  act digital:            {market: BRAZIL,              category: GLOBAL_CONSULTING}
+  cwi software:           {market: BRAZIL,              category: GLOBAL_CONSULTING}
+  v4 company:             {market: BRAZIL,              category: GLOBAL_CONSULTING}
+  "superlógica tecnologias": {market: BRAZIL,              category: GLOBAL_TECH}
+  StackSpot:              {market: BRAZIL,              category: GLOBAL_TECH}
+  santander brasil:       {market: BRAZIL,              category: GLOBAL_TECH}
+  claro brasil:           {market: BRAZIL,              category: GLOBAL_TECH}
+  gramado parks:          {market: BRAZIL,              category: GLOBAL_TECH}
+
+  # ── Spain / EU ────────────────────────────────────────────────────────────
+  erni:                   {market: SPAIN_EU,            category: GLOBAL_CONSULTING}
+  stratesys:              {market: SPAIN_EU,            category: GLOBAL_CONSULTING}
+  seidor:                 {market: SPAIN_EU,            category: GLOBAL_CONSULTING}
+  minsait:                {market: SPAIN_EU,            category: GLOBAL_CONSULTING}
+  indra:                  {market: SPAIN_EU,            category: GLOBAL_CONSULTING}
+  syvantech:              {market: SPAIN_EU,            category: GLOBAL_STAFFING}
+  arelance:               {market: SPAIN_EU,            category: GLOBAL_STAFFING}
+
+  # ── Europe ────────────────────────────────────────────────────────────────
+  deutsche telekom:       {market: EUROPE,              category: GLOBAL_TECH}
+  schwarz digits:         {market: EUROPE,              category: GLOBAL_TECH}
+  booking.com:            {market: EUROPE,              category: GLOBAL_TECH}
+  adyen:                  {market: EUROPE,              category: GLOBAL_TECH}
+  zalando:                {market: EUROPE,              category: GLOBAL_TECH}
+  adesso:                 {market: EUROPE,              category: GLOBAL_CONSULTING}
+  massive rocket:         {market: EUROPE,              category: GLOBAL_CONSULTING}
+  personio:               {market: EUROPE,              category: GLOBAL_TECH}
+
+  # ── Global Tech (no specific market — can hire anywhere) ──────────────────
+  amazon web services:    {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  amazon:                 {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  aws:                    {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  google:                 {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  microsoft:              {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  apple:                  {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  meta:                   {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  netflix:                {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  lg ad solutions:        {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  appsflyer:              {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  semrush:                {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
+  hcltech:                {market: US_CANADA_NEARSHORE, category: GLOBAL_CONSULTING}
+  brillio:                {market: US_CANADA_NEARSHORE, category: GLOBAL_CONSULTING}
+  ntt data business solutions: {market: US_CANADA_NEARSHORE, category: GLOBAL_CONSULTING}
+  keyrus:                 {market: US_CANADA_NEARSHORE, category: GLOBAL_CONSULTING}
+  akkodis:                {market: EUROPE,              category: GLOBAL_STAFFING}
+  shopfully:              {market: EUROPE,              category: GLOBAL_TECH}
+  accenture:              {market: US_CANADA_NEARSHORE, category: GLOBAL_CONSULTING}

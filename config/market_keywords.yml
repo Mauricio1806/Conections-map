@@ -1,0 +1,232 @@
+# market_keywords.yml
+# Keyword rules for market inference V2.
+# Hierarchy: company_keywords > title_keywords
+# These supplement the Python-based inference in market_inference_v2.py.
+
+brazil:
+  company:
+    - brasil
+    - brazil
+    - brazilian
+    - sao paulo
+    - rio de janeiro
+    - belo horizonte
+    - curitiba
+    - porto alegre
+    - salvador
+    - bahia
+    - itau
+    - itaú
+    - nubank
+    - petrobras
+    - bradesco
+    - santander brasil
+    - zup innovation
+    - c6 bank
+    - movile
+    - totvs
+    - rdstation
+    - resultados digitais
+    - contabilizei
+    - semantix
+    - dataside
+    - indicium
+    - pagbank
+    - pagseguro
+    - stone
+    - ifood
+    - magazine luiza
+    - magalu
+    - xp inc
+    - btg pactual
+    - localiza
+    - ambev
+    - embraer
+    - petrobras
+    - vale do rio doce
+    - cia vale
+  title:
+    - brasil
+    - brazil
+    - sao paulo
+    - rio de janeiro
+
+latam_usd:
+  company:
+    - latam
+    - latin america
+    - latinoamerica
+    - agileengine
+    - toptal
+    - crossover
+    - andela
+    - lemon.io
+    - turing
+    - latamcent
+    - nimble.la
+    - blue people
+    - wizeline
+    - gorilla logic
+    - unosquare
+    - 3pillar
+    - perficient
+    - team international
+    - softserve
+    - globant
+    - belatrix
+    - ingenia
+    - nublit
+    - tekton labs
+    - athonet
+    - abstracta
+    - aviture
+    - prodigious
+    - encora
+    - slalom latam
+    - tcs latam
+    - infosys latam
+    - sap latam
+    - thoughtworks latam
+  title:
+    - latam
+    - latin america
+    - latinoamerica
+    - colombia
+    - argentina
+    - chile
+    - peru
+    - ecuador
+    - venezuela
+    - panama
+    - costa rica
+    - uruguay
+    - paraguay
+    - mexico
+    - nearshore
+    - near shore
+
+us_canada_nearshore:
+  company:
+    - united states
+    - north america
+    - hireclout
+    - rsm us
+    - crosslead
+    - nerd bench
+    - parallax staffing
+    - medialab
+    - bairesdev
+    - agiledigital
+    - clearscale
+    - thoughtworks
+  title:
+    - united states
+    - usa
+    - u.s.
+    - new york
+    - san francisco
+    - seattle
+    - chicago
+    - austin
+    - boston
+    - los angeles
+    - canada
+    - toronto
+    - vancouver
+    - montreal
+    - north america
+
+spain_eu:
+  company:
+    - spain
+    - espana
+    - madrid
+    - barcelona
+    - valencia
+    - sevilla
+    - bilbao
+    - malaga
+    - erni
+    - seidor
+    - stratesys
+    - indra
+    - minsait
+    - capgemini spain
+    - deloitte spain
+    - ntt data spain
+    - plain concepts
+    - logicalis spain
+    - luxoft spain
+    - emergya
+    - datasmarts
+    - sopra steria spain
+    - everis
+    - inetum spain
+    - accenture spain
+  title:
+    - spain
+    - espana
+    - madrid
+    - barcelona
+    - portugal
+    - lisbon
+    - lisboa
+
+europe:
+  company:
+    - germany
+    - deutschland
+    - berlin
+    - munich
+    - amsterdam
+    - netherlands
+    - ireland
+    - dublin
+    - united kingdom
+    - london
+    - paris
+    - france
+    - italy
+    - milan
+    - romania
+    - bucharest
+    - poland
+    - warsaw
+    - adesso
+    - schwarz digits
+    - deutsche telekom
+    - booking.com
+    - adyen
+    - philips
+    - siemens
+    - zalando
+    - delivery hero
+    - trivago
+    - xing
+    - personio
+    - n26
+    - spendesk
+    - vinted
+    - pipedrive
+    - wise
+    - revolut
+    - intercom
+    - workday europe
+  title:
+    - germany
+    - berlin
+    - munich
+    - netherlands
+    - amsterdam
+    - ireland
+    - dublin
+    - uk
+    - london
+    - france
+    - paris
+    - europe
+    - european
+    - italia
+    - milan
+    - romania
+    - poland

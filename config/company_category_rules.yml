@@ -1,0 +1,146 @@
+# company_category_rules.yml
+# Rules for classifying companies into categories regardless of market.
+# Used by market_inference_v2.py to assign company_category.
+
+global_staffing:
+  # Companies whose primary business is placing talent remotely / nearshore
+  keywords:
+    - staffing
+    - staff augmentation
+    - talent solutions
+    - recruiting firm
+    - talent agency
+    - outsourcing
+    - it outsourcing
+    - tech talent
+    - talent marketplace
+    - remote talent
+    - nearshore
+  known_companies:
+    - agileengine
+    - andela
+    - toptal
+    - crossover
+    - turing
+    - latamcent
+    - nimble.la
+    - blue people
+    - wizeline
+    - gorilla logic
+    - unosquare
+    - 3pillar global
+    - team international
+    - globant
+    - belatrix software
+    - softserve
+    - encora
+    - lemon.io
+    - bairesdev
+    - athyna
+    - willdom
+    - plugg technologies
+    - truss one partners
+    - abstracta
+    - golabs
+    - newfire global partners
+    - hireclout
+    - nerd bench
+    - parallax staffing
+    - alquemy search
+    - akkodis
+    - syvantech
+    - arelance
+    - fsp
+    - digisourced
+
+global_tech:
+  # Large tech companies that hire globally
+  keywords:
+    - technology company
+    - software company
+    - saas
+    - platform
+    - cloud platform
+  known_companies:
+    - amazon
+    - amazon web services
+    - aws
+    - google
+    - microsoft
+    - apple
+    - meta
+    - netflix
+    - shopify
+    - stripe
+    - twilio
+    - datadog
+    - databricks
+    - snowflake
+    - dbt labs
+    - fivetran
+    - airbyte
+    - lg ad solutions
+    - appsflyer
+    - semrush
+    - deutsche telekom
+    - schwarz digits
+    - booking.com
+    - adyen
+    - zalando
+    - shopfully
+    - personio
+    - zup innovation
+    - c6 bank
+    - nubank
+    - itau
+    - totvs
+    - stone
+    - ifood
+    - pagbank
+    - pagseguro
+    - xp inc
+    - rdstation
+    - contabilizei
+    - stackspot
+    - superlógica tecnologias
+
+global_consulting:
+  # Consulting and IT services firms operating globally
+  keywords:
+    - consulting
+    - consultancy
+    - professional services
+    - it services
+    - management consulting
+    - digital transformation
+  known_companies:
+    - accenture
+    - deloitte
+    - pwc
+    - kpmg
+    - ey
+    - ernst young
+    - capgemini
+    - tcs
+    - tata consultancy
+    - infosys
+    - wipro
+    - cognizant
+    - ntt data
+    - hcltech
+    - thoughtworks
+    - brillio
+    - keyrus
+    - erni
+    - stratesys
+    - seidor
+    - minsait
+    - indra
+    - adesso
+    - massive rocket
+    - indicium
+    - indicium ai
+    - semantix
+    - dataside
+    - act digital
+    - cwi software

@@ -1,101 +1,94 @@
 # Executive Strategy Report
-> Generated: **June 27, 2026**
+> Generated: **June 27, 2026**  
+> ⚠️ *LinkedIn exports do not include location data. Market classification is inferred from company/title keywords only.*
 
 ---
 
-## 1. What Does My Current LinkedIn Network Look Like?
+## 1. Network Summary
 
-You have **10,780 LinkedIn connections**, a large network by any standard.
-However, quantity does not equal quality — only **206 connections (1.9%)**
-score above 70 (high strategic priority) for your current career objectives.
+- **Total connections:** 10,780
+- **High-confidence inferred:** 1,952 (18.1%)
+- **Unknown market:** 8,828 (81.9%)
 
-| Segment | Count |
-|---------|-------|
-| Total Connections | 10,780 |
-| High Priority (>=70) | 206 |
-| Recruiters | 1,193 |
-| Talent Acquisition + HR | 1,963 |
-| Hiring Managers | 77 |
-| Data Leaders | 874 |
-| LATAM USD market | 360 |
-| US/Canada Nearshore | 262 |
-| Spain/EU | 100 |
-| Europe | 343 |
-| Market UNKNOWN | 8,817 (81.8%) |
-
-**Key insight:** The high UNKNOWN rate (81.8%) is a data limitation, not a true gap.
-LinkedIn does not export location data. Market inference runs on company/title keywords only.
+| Market (V2) | Count |
+|-------------|-------|
+| Brazil | 846 |
+| LATAM USD | 279 |
+| US/Canada Nearshore | 206 |
+| Spain/EU | 45 |
+| Europe | 176 |
+| Global Staffing | 44 |
+| Global Tech | 5 |
+| Global Consulting | 351 |
+| Unknown | 8,828 (81.9%) |
 
 ---
 
-## 2. Is My Network Aligned With My Short-Term USD Goal?
+## 2. Strategic Scores (Raw vs Confidence-Adjusted)
 
-**USD Opportunity Score: 83.3/100 — YES**
+> **Raw score**: uses all inferred connections.  
+> **Adjusted score**: uses only high-confidence connections (confidence >= 0.70).
 
-- LATAM USD recruiters: 64 | Target: 60
-- US/CA Nearshore recruiters: 62 | Target: 40
-- USD Hiring Managers: 5 | Target: 30
-- USD Data Leaders: 51 | Target: 20
-- High-priority USD contacts: 152
+| Score | Raw | Adjusted | Level |
+|-------|-----|----------|-------|
+| USD Opportunity | 82.0/100 | **82.0/100** | Strong |
+| Spain/EU Readiness | 65.0/100 | **65.0/100** | Developing |
+| Data Confidence | — | 18.1% | — |
 
-Your USD network is **developing but not mature**. You have a solid recruiter base in LATAM but need to aggressively grow US/Canada nearshore contacts and hiring manager relationships.
+**USD:** Your USD opportunity network is well-developed.
 
----
-
-## 3. Is My Network Aligned With My Spain/Europe Plan?
-
-**Spain Readiness Score: 87.0/100 — EARLY STAGE**
-
-- Spain/EU recruiters: 41 | Target: 40
-- Spain/EU Talent Acquisition: 50 | Target: 30
-- Spain/EU Hiring Managers: 7 | Target: 20
-- EU Data Leaders: 53 | Target: 15
-- High-priority Spain/EU contacts: 48
-
-Your Spain/EU network is **nascent**. You have some early contacts (ERNI, Stratesys, Deutsche Telekom) but far fewer than needed for a confident Europe job search. This is acceptable for now given your 6-18 month horizon.
+**Spain/EU:** Your Spain/EU network has a foundation but significant gaps remain.
 
 ---
 
-## 4. What Are the Biggest Gaps?
+## 3. Biggest Gaps (Critical Urgency)
 
-| Market | Persona | Current | Target | Gap | Urgency |
-|--------|---------|---------|--------|-----|---------|
-| LATAM_USD | Hiring Manager | 0 | 50 | 50 | **Critical** |
-| SPAIN_EU | Data Engineering Manager | 0 | 40 | 40 | **Critical** |
-| SPAIN_EU | Hiring Manager | 0 | 60 | 60 | **Critical** |
-| SPAIN_EU | Head of Data | 0 | 50 | 50 | **Critical** |
-| LATAM_USD | Data Engineering Manager | 0 | 30 | 30 | **Critical** |
-
----
-
-## 5. What Should I Stop Doing?
-
-- **Stop connecting with random HR professionals in Bolivia/regional markets** with no USD or EU relevance. These dilute your network quality.
-- **Stop accepting all inbound connection requests** without checking if they align with your LATAM USD or Spain/EU target.
-- **Stop treating data peer connections as strategic** — colleagues and peers cannot hire you; decision-makers and recruiters can.
-- **Stop passive LinkedIn presence** — you need to post content that attracts LATAM USD and nearshore recruiters to you.
+| Market | Persona | Current | Target | Gap |
+|--------|---------|---------|--------|-----|
+| LATAM_USD | Hiring Manager | 0 | 50 | **50** |
+| SPAIN_EU | Data Engineering Manager | 0 | 40 | **40** |
+| SPAIN_EU | Hiring Manager | 0 | 60 | **60** |
+| SPAIN_EU | Head of Data | 0 | 50 | **50** |
+| LATAM_USD | Data Engineering Manager | 0 | 30 | **30** |
 
 ---
 
-## 6. What Should I Start Doing?
+## 4. Data Quality Warning
 
-1. **Systematic outreach to US/Canada nearshore recruiters** — search for 'Data Engineering recruiter nearshore LATAM' and send 5-10 daily requests.
-2. **Engage hiring managers at remote-friendly companies** — Andela, AgileEngine, Toptal, Crossover, Wizeline, Gorilla Logic, Unosquare.
-3. **Post weekly content** on LinkedIn about your Data Engineering expertise to attract inbound from target recruiters.
-4. **Activate your top 50 high-priority contacts** from this report with a personalized, brief message about your availability.
-5. **Begin Spain/EU recruiter network in parallel** — even 5 Spain contacts per week will compound over 6 months.
+- **81.9% of your network has no market signal.**
+- This is normal for LinkedIn exports — location is NOT included.
+- Fix this by filling in `outputs/company_market_mapping_template.csv`.
+- Each company you map reduces UNKNOWN and improves score accuracy.
+
+---
+
+## 5. Top 10 Concrete Actions
+
+1. **Fill mapping template**: Open `outputs/company_market_mapping_template.csv`, classify the top 50 companies, re-run the pipeline.
+2. **You have 56 high-confidence USD recruiters (target: 60). Add 4 more to significantly improve this score.**
+3. **You have 16 high-confidence Spain/EU recruiters (target: 40). Add 24 more to unlock Spain readiness growth.**
+4. Activate top 50 contacts in `outputs/action_backlog.csv` (score >= 70).
+5. Send 5 personalized messages/day to LATAM USD recruiters.
+6. Search: `"data engineer" "remote" "nearshore" "LATAM"` on LinkedIn.
+7. Connect with US/Canada hiring managers at: AgileEngine, Andela, Wizeline, Gorilla Logic.
+8. Post weekly Data Engineering content to attract inbound recruiters.
+9. Begin Spain/EU recruiter connections at: ERNI, Stratesys, Capgemini Spain.
+10. Track weekly: USD adjusted score target >= 45 before Day 60.
 
 ---
 
-## 7. What Should I Prioritize for the Next 30 Days?
+## 6. What NOT to Do
 
-| Priority | Action | Target | Why |
-|----------|--------|--------|-----|
-| 1 | Connect with LATAM USD Recruiters | +40 new | Biggest direct USD job pipeline |
-| 2 | Connect with US/CA Nearshore Recruiters | +30 new | Critical gap at 72% unfilled |
-| 3 | Connect with US/CA Hiring Managers | +20 new | Decision-makers for remote roles |
-| 4 | Reactivate top 50 high-priority contacts | 50 messages | Direct activation of existing assets |
-| 5 | Post 4x LinkedIn content about Data Engineering | 4 posts | Attract inbound from target recruiters |
+- Do not use the raw USD score (82.0/100) as a reliable number — it includes low-confidence inferences.
+- Do not assume UNKNOWN connections are irrelevant (many may be in USD markets).
+- Do not focus exclusively on Brazil recruiters — they will not get you a USD role.
+- Do not send generic connection requests — personalization triples acceptance rate.
 
 ---
-_Generated by LinkedIn Connections Heatmap — strategic intelligence layer._
+
+## 7. Flags
+
+- HIGH UNKNOWN: 81.9% of network has no market signal. Use company_market_mapping_template.csv to reduce this.
+
+---
+_Generated by LinkedIn Connections Heatmap — Market Inference V2._

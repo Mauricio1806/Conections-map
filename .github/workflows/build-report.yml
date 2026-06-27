@@ -1,4 +1,4 @@
-﻿name: Build LinkedIn Network Report
+name: Build LinkedIn Network Report
 
 on:
   push:
@@ -37,26 +37,38 @@ jobs:
         run: |
           python src/build_network_heatmap.py
 
-      - name: Run strategy layer
+      - name: Run strategy layer (V2 inference + confidence KPIs)
         run: |
           python src/build_strategy_layer.py
 
-      - name: Verify dashboard imports
+      - name: Generate static HTML dashboard
+        run: |
+          python src/generate_static_dashboard.py
+
+      - name: Verify static dashboard files
         run: |
           python - <<'PY'
-          import ast
           from pathlib import Path
-
-          dashboard_path = Path("app/dashboard.py")
-
-          if not dashboard_path.exists():
-              raise FileNotFoundError("app/dashboard.py was not found")
-
-          ast.parse(dashboard_path.read_text(encoding="utf-8"))
-          print("dashboard.py OK")
+          required = [
+            "docs/index.html",
+            "docs/assets/dashboard_data.json",
+            "docs/assets/style.css",
+            "docs/assets/app.js",
+          ]
+          missing = [p for p in required if not Path(p).exists()]
+          if missing:
+              raise FileNotFoundError(f"Missing dashboard files: {missing}")
+          # Verify no email in public JSON
+          import json
+          data = json.loads(Path("docs/assets/dashboard_data.json").read_text(encoding="utf-8"))
+          contacts = data.get("top_contacts", [])
+          for c in contacts:
+              if "email address" in str(c).lower():
+                  raise ValueError("PII (email) found in public dashboard JSON!")
+          print(f"All {len(required)} required files present. No PII detected in {len(contacts)} contacts.")
           PY
 
-      - name: Upload reports and outputs as artifacts
+      - name: Upload reports and outputs
         uses: actions/upload-artifact@v4
         with:
           name: network-reports-${{ github.run_number }}
@@ -65,9 +77,9 @@ jobs:
             outputs/
           retention-days: 30
 
-      - name: Upload Excel dashboard
+      - name: Upload static dashboard
         uses: actions/upload-artifact@v4
         with:
-          name: dashboard-excel-${{ github.run_number }}
-          path: reports/dashboard_ready.xlsx
-          retention-days: 30
+          name: static-dashboard-${{ github.run_number }}
+          path: docs/
+          retention-days: 90

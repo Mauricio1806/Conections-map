@@ -16,12 +16,14 @@
 This project reads your exported LinkedIn data and automatically:
 
 1. **Classifies** each connection by persona, functional area, seniority, and strategic market
-2. **Scores** each connection 0–100 based on career relevance
-3. **Computes KPIs**: USD Opportunity Score, Spain Readiness Score, Market Readiness Score
-4. **Generates action plans**: 30/60/90-day prioritized outreach plans
-5. **Identifies strategic gaps**: where your network is under vs. over represented
-6. **Produces a Streamlit dashboard** with 7 pages of interactive analysis
-7. **Exports** Excel, CSV, and Markdown reports
+2. **Market Inference V2**: Infers opportunity market from company/title keywords + manual overrides + global company categories
+3. **Confidence-adjusted KPIs**: Raw vs. adjusted scores that penalize low-confidence inferences
+4. **Scores** each connection 0–100 based on career relevance
+5. **Generates action plans**: 30/60/90-day prioritized outreach plans
+6. **Identifies strategic gaps**: where your network is under vs. over represented
+7. **Produces a Streamlit dashboard** with interactive analysis (local development)
+8. **Generates a static HTML dashboard** served from `docs/` via GitHub Pages (no server required)
+9. **Exports** Excel, CSV, Markdown reports, and actionable contact backlog
 
 ---
 
@@ -220,3 +222,35 @@ LinkedIn's export limitations and how market inference works.
 ## License
 
 MIT — use freely, no warranty.
+
+---
+
+## Static HTML Dashboard / GitHub Pages
+
+The production dashboard is a static HTML dashboard served via GitHub Pages.
+It requires no server, no Python, and no Streamlit.
+
+### Weekly Update Workflow
+
+1. Export fresh LinkedIn data.
+2. Run: python src/build_network_heatmap.py
+3. Run: python src/build_strategy_layer.py
+4. Run: python src/generate_static_dashboard.py
+5. Run: git add . && git commit -m update && git push
+6. GitHub Pages serves docs/index.html automatically.
+
+### Reduce UNKNOWN %
+
+Open outputs/company_market_mapping_template.csv,
+fill manual_market for the top unknown companies, re-run pipeline.
+
+---
+
+## Market Inference V2
+
+LinkedIn exports do NOT include location data.
+Market is inferred from company/title keywords (confidence 0.85-0.95).
+Global companies (Accenture, AWS) get confidence 0.70.
+No signal = UNKNOWN (confidence 0.00).
+
+See docs/market_inference_methodology.md for details.
