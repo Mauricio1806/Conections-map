@@ -1,0 +1,55 @@
+# ─── Python cache ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# ─── Virtual environments ─────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.env/
+
+# ─── IDE / editor ─────────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ─── Jupyter ─────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ─── Raw LinkedIn data ────────────────────────────────────────────────────────
+# WARNING: Do NOT commit raw LinkedIn exports if this repo is public.
+# They may contain personal data, email addresses, and profile URLs.
+# Connections.csv
+# "Company Follows.csv"
+# Invitations.csv
+data/raw/*.csv
+data/raw/*.CSV
+
+# ─── Processed / output data ─────────────────────────────────────────────────
+# Uncomment the lines below if you do NOT want to commit output CSVs:
+# outputs/*.csv
+# reports/*.xlsx
+# reports/*.md
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ─── Temporary files ─────────────────────────────────────────────────────────
+*.tmp
+*.bak
+*.orig
+~$*

@@ -1,0 +1,74 @@
+# classification_rules.yml
+# These rules are documented for reference. The actual logic lives in src/config.py.
+# Edit src/config.py to change keyword rules; this file serves as human-readable documentation.
+
+personas:
+  - Recruiter
+  - Talent Acquisition
+  - Sourcer
+  - HR
+  - Hiring Manager
+  - Engineering Manager
+  - Data Engineering Manager
+  - Head of Data
+  - Director
+  - Executive
+  - Founder
+  - Partner
+  - Data Engineer
+  - Analytics Engineer
+  - Data Analyst
+  - BI Analyst
+  - Data Scientist
+  - "Machine Learning / AI"
+  - Software Engineer
+  - Product
+  - "Project / Program Manager"
+  - Operations
+  - Consultant
+  - Other
+
+areas:
+  - Recruiting
+  - Data Engineering
+  - Analytics
+  - BI
+  - "Data Science / AI"
+  - Software Engineering
+  - Product
+  - Management
+  - Consulting
+  - Operations
+  - HR
+  - Other
+
+seniority_levels:
+  - Intern
+  - Junior
+  - Mid
+  - Senior
+  - Lead
+  - Manager
+  - Director
+  - Executive
+  - Founder
+  - Unknown
+
+strategic_markets:
+  - BRAZIL
+  - LATAM_USD
+  - US_CANADA_NEARSHORE
+  - SPAIN_EU
+  - EUROPE
+  - UNKNOWN
+
+priority_score:
+  description: >
+    Score from 0 to 100 computed from:
+    - Persona relevance (max 35 pts)
+    - Strategic market relevance (max 30 pts)
+    - Seniority level (max 15 pts)
+    - Recency of connection (max 10 pts)
+    - Company signal (max 10 pts)
+  high_threshold: 70
+  medium_threshold: 40

@@ -1,0 +1,107 @@
+# strategic_targets.yml
+# Documents the strategic target counts for gap analysis.
+# Edit src/config.py (STRATEGIC_TARGETS) to change values.
+
+context:
+  owner: Mauricio Behrens
+  current_location: Brazil
+  short_term_goal: Remote job paid in USD (LATAM or US/Canada nearshore)
+  medium_term_goal: Relocate to Spain / Europe
+
+# Short-term = Brazil → USD remote job (priority window: next 3-6 months)
+# Medium-term = Spain / Europe move (priority window: 6-18 months)
+
+targets:
+  US_CANADA_NEARSHORE:
+    Recruiter:
+      short_term: 80
+      medium_term: 100
+    Talent Acquisition:
+      short_term: 60
+      medium_term: 80
+    Hiring Manager:
+      short_term: 50
+      medium_term: 70
+    Engineering Manager:
+      short_term: 40
+      medium_term: 60
+    Head of Data:
+      short_term: 30
+      medium_term: 50
+    Data Engineering Manager:
+      short_term: 30
+      medium_term: 50
+    Director:
+      short_term: 25
+      medium_term: 40
+
+  LATAM_USD:
+    Recruiter:
+      short_term: 80
+      medium_term: 100
+    Talent Acquisition:
+      short_term: 60
+      medium_term: 80
+    Hiring Manager:
+      short_term: 50
+      medium_term: 70
+    Data Engineering Manager:
+      short_term: 30
+      medium_term: 50
+    Head of Data:
+      short_term: 30
+      medium_term: 50
+    Director:
+      short_term: 20
+      medium_term: 40
+
+  SPAIN_EU:
+    Recruiter:
+      short_term: 20
+      medium_term: 80
+    Talent Acquisition:
+      short_term: 15
+      medium_term: 60
+    Hiring Manager:
+      short_term: 15
+      medium_term: 60
+    Head of Data:
+      short_term: 10
+      medium_term: 50
+    Director:
+      short_term: 10
+      medium_term: 40
+    Data Engineering Manager:
+      short_term: 10
+      medium_term: 40
+
+  EUROPE:
+    Recruiter:
+      short_term: 10
+      medium_term: 60
+    Talent Acquisition:
+      short_term: 10
+      medium_term: 50
+    Head of Data:
+      short_term: 5
+      medium_term: 40
+    Director:
+      short_term: 5
+      medium_term: 30
+    Data Engineering Manager:
+      short_term: 5
+      medium_term: 30
+
+  BRAZIL:
+    Recruiter:
+      short_term: 50
+      medium_term: 50
+    Data Engineer:
+      short_term: 30
+      medium_term: 30
+    Head of Data:
+      short_term: 30
+      medium_term: 30
+    Data Engineering Manager:
+      short_term: 20
+      medium_term: 20

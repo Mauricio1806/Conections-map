@@ -1,0 +1,70 @@
+﻿area,strategic_market,count
+Analytics,UNKNOWN,360
+Analytics,BRAZIL,59
+Analytics,US_CANADA_NEARSHORE,19
+Analytics,LATAM_USD,13
+Analytics,EUROPE,8
+Analytics,SPAIN_EU,3
+BI,UNKNOWN,54
+BI,BRAZIL,6
+BI,US_CANADA_NEARSHORE,3
+BI,LATAM_USD,1
+Consulting,UNKNOWN,489
+Consulting,EUROPE,42
+Consulting,BRAZIL,19
+Consulting,LATAM_USD,13
+Consulting,US_CANADA_NEARSHORE,12
+Consulting,SPAIN_EU,5
+Data Engineering,UNKNOWN,456
+Data Engineering,BRAZIL,104
+Data Engineering,LATAM_USD,15
+Data Engineering,US_CANADA_NEARSHORE,13
+Data Engineering,EUROPE,5
+Data Engineering,SPAIN_EU,2
+Data Science / AI,UNKNOWN,106
+Data Science / AI,BRAZIL,26
+Data Science / AI,EUROPE,7
+Data Science / AI,LATAM_USD,4
+Data Science / AI,US_CANADA_NEARSHORE,3
+Data Science / AI,SPAIN_EU,1
+HR,UNKNOWN,894
+HR,BRAZIL,75
+HR,LATAM_USD,20
+HR,US_CANADA_NEARSHORE,12
+HR,EUROPE,8
+HR,SPAIN_EU,7
+Management,UNKNOWN,1854
+Management,BRAZIL,220
+Management,EUROPE,117
+Management,LATAM_USD,110
+Management,US_CANADA_NEARSHORE,50
+Management,SPAIN_EU,26
+Operations,UNKNOWN,119
+Operations,BRAZIL,12
+Operations,US_CANADA_NEARSHORE,3
+Operations,EUROPE,2
+Operations,LATAM_USD,2
+Operations,SPAIN_EU,2
+Other,UNKNOWN,2516
+Other,BRAZIL,268
+Other,US_CANADA_NEARSHORE,99
+Other,LATAM_USD,89
+Other,EUROPE,85
+Other,SPAIN_EU,28
+Product,UNKNOWN,82
+Product,BRAZIL,18
+Product,EUROPE,3
+Product,US_CANADA_NEARSHORE,3
+Product,SPAIN_EU,1
+Recruiting,UNKNOWN,1787
+Recruiting,LATAM_USD,89
+Recruiting,BRAZIL,75
+Recruiting,EUROPE,62
+Recruiting,US_CANADA_NEARSHORE,37
+Recruiting,SPAIN_EU,24
+Software Engineering,UNKNOWN,100
+Software Engineering,BRAZIL,16
+Software Engineering,US_CANADA_NEARSHORE,8
+Software Engineering,EUROPE,4
+Software Engineering,LATAM_USD,4
+Software Engineering,SPAIN_EU,1
