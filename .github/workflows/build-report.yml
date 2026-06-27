@@ -1,8 +1,10 @@
-name: Build LinkedIn Network Report
+﻿name: Build LinkedIn Network Report
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -22,23 +24,39 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: pip-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-
+            pip-${{ runner.os }}-
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Run pipeline (classify + heatmaps)
-        run: python src/build_network_heatmap.py
+      - name: Run network heatmap pipeline
+        run: |
+          python src/build_network_heatmap.py
 
-      - name: Run strategy layer (KPIs + action plans + reports)
-        run: python src/build_strategy_layer.py
+      - name: Run strategy layer
+        run: |
+          python src/build_strategy_layer.py
 
-      - name: Verify dashboard imports (syntax check)
-        run: python -c "import ast; ast.parse(open('app/dashboard.py').read()); print('dashboard.py: OK')"
+      - name: Verify dashboard imports
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
 
-      - name: Upload all reports as artifacts
+          dashboard_path = Path("app/dashboard.py")
+
+          if not dashboard_path.exists():
+              raise FileNotFoundError("app/dashboard.py was not found")
+
+          ast.parse(dashboard_path.read_text(encoding="utf-8"))
+          print("dashboard.py OK")
+          PY
+
+      - name: Upload reports and outputs as artifacts
         uses: actions/upload-artifact@v4
         with:
           name: network-reports-${{ github.run_number }}
@@ -52,11 +70,4 @@ jobs:
         with:
           name: dashboard-excel-${{ github.run_number }}
           path: reports/dashboard_ready.xlsx
-          retention-days: 90
-
-      - name: Upload executive strategy report
-        uses: actions/upload-artifact@v4
-        with:
-          name: executive-report-${{ github.run_number }}
-          path: reports/executive_strategy_report.md
-          retention-days: 90
+          retention-days: 30
