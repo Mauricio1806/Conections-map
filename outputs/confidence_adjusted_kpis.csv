@@ -67,7 +67,7 @@ global_recruiters,112
 global_hiring_mgrs,0
 global_data_leaders,33
 actionable_contacts_score,100.0
-actionable_contacts,568
+actionable_contacts,565
 very_high_priority,206
 unknown_resolution_score,7.8
 unknown_resolution_potential,7.8
@@ -78,7 +78,7 @@ data_quality_risk_score,90.1
 data_quality_risk_level,High Risk
 data_quality_risk_desc,Most market inferences are unresolved. Readiness scores are conservative estimates.
 market_readiness_composite,73.4
-unknown_recruiters_highvalue,185
+unknown_recruiters_highvalue,184
 unknown_hiring_mgrs_highvalue,13
-unknown_data_leaders_highvalue,119
+unknown_data_leaders_highvalue,118
 unknown_peers,749

@@ -9,15 +9,15 @@ BRAZIL,Executive,12,54.2,0
 BRAZIL,Founder,2,44.0,0
 BRAZIL,HR,48,35.5,0
 BRAZIL,Head of Data,10,59.4,0
-BRAZIL,Hiring Manager,24,58.6,0
+BRAZIL,Hiring Manager,24,58.5,0
 BRAZIL,Machine Learning / AI,4,41.8,0
 BRAZIL,Operations,5,33.0,0
 BRAZIL,Other,416,24.4,0
 BRAZIL,Product,19,33.4,0
 BRAZIL,Project / Program Manager,12,31.2,0
-BRAZIL,Recruiter,47,54.6,1
+BRAZIL,Recruiter,47,54.5,1
 BRAZIL,Software Engineer,17,32.2,0
-BRAZIL,Talent Acquisition,24,54.4,0
+BRAZIL,Talent Acquisition,24,54.2,0
 EUROPE,Consultant,21,43.2,0
 EUROPE,Data Engineering Manager,1,66.0,0
 EUROPE,Data Scientist,1,54.0,0
@@ -28,7 +28,7 @@ EUROPE,HR,7,43.1,0
 EUROPE,Head of Data,3,68.0,1
 EUROPE,Hiring Manager,3,68.0,0
 EUROPE,Machine Learning / AI,4,51.2,0
-EUROPE,Operations,3,34.0,0
+EUROPE,Operations,3,33.0,0
 EUROPE,Other,67,34.3,0
 EUROPE,Product,2,45.5,0
 EUROPE,Project / Program Manager,3,38.3,0
@@ -37,9 +37,9 @@ EUROPE,Software Engineer,3,42.7,0
 EUROPE,Sourcer,1,66.0,0
 EUROPE,Talent Acquisition,21,61.9,5
 GLOBAL_CONSULTING,BI Analyst,1,15.0,0
-GLOBAL_CONSULTING,Consultant,92,33.4,0
+GLOBAL_CONSULTING,Consultant,92,33.3,0
 GLOBAL_CONSULTING,Data Analyst,9,27.6,0
-GLOBAL_CONSULTING,Data Engineer,24,34.5,0
+GLOBAL_CONSULTING,Data Engineer,24,34.1,0
 GLOBAL_CONSULTING,Data Scientist,3,48.7,0
 GLOBAL_CONSULTING,Director,21,51.7,0
 GLOBAL_CONSULTING,Executive,9,56.1,1
@@ -81,15 +81,15 @@ LATAM_USD,Project / Program Manager,3,52.3,0
 LATAM_USD,Recruiter,37,72.2,24
 LATAM_USD,Software Engineer,4,47.0,0
 LATAM_USD,Sourcer,1,58.0,0
-LATAM_USD,Talent Acquisition,47,70.5,31
+LATAM_USD,Talent Acquisition,47,70.4,31
 SPAIN_EU,Consultant,2,52.0,0
 SPAIN_EU,Data Analyst,2,47.0,0
 SPAIN_EU,Data Engineer,1,56.0,0
-SPAIN_EU,Data Scientist,1,60.0,0
+SPAIN_EU,Data Scientist,1,57.0,0
 SPAIN_EU,Director,5,65.8,1
 SPAIN_EU,HR,3,48.7,0
 SPAIN_EU,Other,15,40.2,0
-SPAIN_EU,Partner,1,59.0,0
+SPAIN_EU,Partner,1,56.0,0
 SPAIN_EU,Project / Program Manager,1,56.0,0
 SPAIN_EU,Recruiter,2,64.0,1
 SPAIN_EU,Talent Acquisition,12,69.7,7
@@ -97,12 +97,12 @@ UNKNOWN,Analytics Engineer,6,32.3,0
 UNKNOWN,BI Analyst,11,26.2,0
 UNKNOWN,Consultant,454,23.7,0
 UNKNOWN,Data Analyst,204,24.6,0
-UNKNOWN,Data Engineer,428,31.1,0
-UNKNOWN,Data Engineering Manager,16,49.0,0
+UNKNOWN,Data Engineer,428,31.0,0
+UNKNOWN,Data Engineering Manager,16,48.8,0
 UNKNOWN,Data Scientist,89,28.1,0
-UNKNOWN,Director,323,46.9,3
+UNKNOWN,Director,323,46.8,3
 UNKNOWN,Engineering Manager,1,42.0,0
-UNKNOWN,Executive,302,45.5,4
+UNKNOWN,Executive,302,45.4,4
 UNKNOWN,Founder,149,43.0,0
 UNKNOWN,HR,951,27.2,0
 UNKNOWN,Head of Data,54,47.9,0
@@ -114,7 +114,7 @@ UNKNOWN,Partner,17,40.2,0
 UNKNOWN,Product,62,26.6,0
 UNKNOWN,Project / Program Manager,78,25.5,0
 UNKNOWN,Recruiter,929,49.9,30
-UNKNOWN,Software Engineer,97,24.2,0
+UNKNOWN,Software Engineer,97,24.1,0
 UNKNOWN,Sourcer,65,44.1,1
 UNKNOWN,Talent Acquisition,765,50.0,30
 US_CANADA_NEARSHORE,Analytics Engineer,1,57.0,0
