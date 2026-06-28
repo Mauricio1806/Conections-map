@@ -1,0 +1,4 @@
+﻿market_resolution_status,unknown_reason,count,recruiters,hiring_mgrs,avg_score
+NEEDS_COMPANY_MAPPING,company exists but no geographic or category signal,4922,0,0,21.9
+GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,high-value persona but no region signal in company or title,2231,1572,39,48.4
+UNKNOWN_LOW_VALUE,"no company, no title signal, no high-value persona",26,0,0,22.2

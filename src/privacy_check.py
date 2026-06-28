@@ -40,8 +40,12 @@ FORBIDDEN_PATTERNS = [
     (r"@yahoo\.com",                   "Yahoo address found"),
     (r"@protonmail\.com",              "ProtonMail address found"),
     (r"\b\d{10,15}\b",                 "Possible phone number (10-15 digits)"),
-    (r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}", "Email address pattern"),
+    # Email pattern — exclude LinkedIn URLs to avoid false positives
+    (r"(?<!linkedin\.com)[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}", "Email address pattern"),
 ]
+
+# Raw message content field names that must NOT appear in top_contacts
+FORBIDDEN_RAW_FIELDS = {"content", "attachments", "raw_content", "raw_message"}
 
 # Keys in contact records that are explicitly allowed
 ALLOWED_CONTACT_FIELDS = {
@@ -51,6 +55,13 @@ ALLOWED_CONTACT_FIELDS = {
     "priority_score",
     "action_type", "message_angle", "why_priority",
     "recommended_action", "company_category", "url",
+    # Lead reactivation safe fields
+    "other_person_name", "other_person_profile_url",
+    "conversation_status", "lead_temperature",
+    "last_message_date", "days_since_last_message", "total_messages",
+    "reactivation_priority_score", "recommended_next_action",
+    "has_positive_signal", "has_interview_signal", "is_auto_reply",
+    "market_v4", "market_group", "market_resolution_status",
 }
 
 
@@ -69,16 +80,24 @@ def check_json(path: Path) -> list[str]:
 
     # ── 1. Field-level check on contact records ─────────────────────────────
     contacts = data.get("top_contacts", [])
-    for i, contact in enumerate(contacts):
-        for field in contact:
-            if field.lower() in FORBIDDEN_FIELDS:
+    leads    = (data.get("lead_reactivation", {}) or {}).get("top_reactivation_contacts", [])
+    all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
+                  [(i, c, "lead") for i, c in enumerate(leads)]
+
+    for i, record, record_type in all_records:
+        for field in record:
+            fl = field.lower()
+            if fl in FORBIDDEN_FIELDS:
                 violations.append(
-                    f"Contact #{i+1} ({contact.get('full_name','?')}): "
-                    f"forbidden field '{field}'"
+                    f"{record_type.capitalize()} #{i+1}: forbidden field '{field}'"
                 )
-            if field.lower() not in ALLOWED_CONTACT_FIELDS and "email" in field.lower():
+            if fl in FORBIDDEN_RAW_FIELDS:
                 violations.append(
-                    f"Contact #{i+1}: suspicious field '{field}'"
+                    f"{record_type.capitalize()} #{i+1}: raw message field '{field}' — must not be in public JSON"
+                )
+            if fl not in ALLOWED_CONTACT_FIELDS and "email" in fl:
+                violations.append(
+                    f"{record_type.capitalize()} #{i+1}: suspicious email-like field '{field}'"
                 )
 
     # ── 2. Regex scan of raw JSON text ────────────────────────────────────────

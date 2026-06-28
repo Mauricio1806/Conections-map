@@ -38,6 +38,13 @@ Thumbs.db
 data/raw/*.csv
 data/raw/*.CSV
 
+# ─── Private message data — NEVER commit ──────────────────────────────────────
+messages.csv
+Messages.csv
+*messages*.csv
+data/raw/messages.csv
+data/raw/Messages.csv
+
 # ─── Processed / output data ─────────────────────────────────────────────────
 # Uncomment the lines below if you do NOT want to commit output CSVs:
 # outputs/*.csv

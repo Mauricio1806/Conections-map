@@ -56,6 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
       renderContacts();
       renderCompanies();
       renderUnknownResolution();
+      renderLeads();
       renderQuality();
     })
     .catch(err => {
@@ -587,9 +588,14 @@ function renderUnknownResolution() {
   ].join('');
 
   // Top 25 companies table
-  const top25Companies = res.top25_companies || D.unknown_companies?.slice(0,25) || [];
+  const top25Companies = (res.top25_companies && Array.isArray(res.top25_companies))
+    ? res.top25_companies
+    : (D.unknown_companies || []).slice(0, 25);
   const tbody = document.getElementById('unk-companies-tbody');
   if (tbody) {
+    if (!top25Companies.length) {
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">No UNKNOWN companies found.</td></tr>';
+    } else {
     tbody.innerHTML = top25Companies.map((r, i) =>
       '<tr>'
       + '<td><strong>#' + (i+1) + '</strong></td>'
@@ -599,11 +605,12 @@ function renderUnknownResolution() {
       + '<td>' + fmt(r.talent_count||0) + '</td>'
       + '<td>' + fmt(r.hiring_manager_count||0) + '</td>'
       + '<td>' + fmt(r.data_leader_count||0) + '</td>'
-      + '<td>' + (r.avg_priority_score||0).toFixed ? Number(r.avg_priority_score||0).toFixed(0) : '—' + '</td>'
+      + '<td>' + (Number(r.avg_priority_score||0).toFixed(0)) + '</td>'
       + '<td>' + marketBadge(r.suggested_market||'UNKNOWN') + '</td>'
-      + '<td style="font-size:0.72rem;max-width:200px">' + ((r.suggested_reason||'')).substring(0,80) + '</td>'
+      + '<td style="font-size:0.72rem;max-width:200px">' + String(r.suggested_reason||'').substring(0,80) + '</td>'
       + '</tr>'
     ).join('');
+    } // end if top25Companies.length
   }
 
   // Unknown persona metrics
@@ -616,7 +623,159 @@ function renderUnknownResolution() {
   ].join('');
 }
 
-// ── PAGE 8: Data Quality ──────────────────────────────────────────────────────
+// ── PAGE 8: Lead Reactivation ─────────────────────────────────────────────────
+let filteredLeads = [];
+const LEAD_PAGE_SIZE = 50;
+
+const TEMP_COLORS = {
+  Hot:     '#ef4444',
+  Warm:    '#f97316',
+  Neutral: '#f59e0b',
+  Cold:    '#3b82f6',
+  Ignore:  '#4b5563',
+};
+
+const STATUS_ICONS = {
+  'Needs my response':              '&#128233;',
+  'Follow-up due':                  '&#9203;',
+  'Warm lead':                      '&#128293;',
+  'Dormant warm lead':              '&#128564;',
+  'Auto-reply / career site redirect': '&#129302;',
+  'Rejected / closed process':      '&#10060;',
+  'No response':                    '&#128260;',
+  'Low value / ignore':             '&#128374;',
+};
+
+function tempBadge(t) {
+  const c = TEMP_COLORS[t] || '#555';
+  return '<span class="urgency-badge" style="background:' + c + '20;color:' + c + ';border:1px solid ' + c + '">' + (t||'—') + '</span>';
+}
+
+function renderLeads() {
+  const lr = D.lead_reactivation || {};
+  const available = lr.messages_csv_available !== false;
+  const noData = document.getElementById('leads-no-data');
+  const mainContent = document.getElementById('leads-main-content');
+
+  if (!available || !lr.total_conversations) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  // Summary
+  const sumEl = document.getElementById('leads-summary');
+  if (sumEl) sumEl.innerHTML = [
+    makeCard('Conversations Analyzed', lr.total_conversations),
+    makeCard('Needs My Response',      lr.needs_my_response || 0, 'reply first', 'bad'),
+    makeCard('Follow-ups Due',         lr.follow_up_due     || 0, '>7 days since my last msg', 'warn'),
+  ].join('');
+
+  const pipeEl = document.getElementById('leads-pipeline');
+  if (pipeEl) pipeEl.innerHTML = [
+    makeCard('Hot Leads',           lr.hot_leads            || 0, 'positive signal + unread', 'good'),
+    makeCard('Warm Leads',          lr.warm_leads           || 0, 'opportunity signals found', 'good'),
+    makeCard('Dormant Warm Leads',  lr.dormant_warm_leads   || 0, 'positive but >30d ago', 'warn'),
+    makeCard('Auto-reply Leads',    lr.auto_reply_leads     || 0, 'career site only'),
+    makeCard('Rejected / Closed',   lr.rejected_closed_reusable || 0, 'reusable for future'),
+    makeCard('No Response',         lr.no_response_leads    || 0, 'sent, no reply'),
+  ].join('');
+
+  // Contacts table
+  filteredLeads = lr.top_reactivation_contacts || [];
+  renderLeadsTable();
+
+  // Weekly plan
+  const planEl = document.getElementById('leads-weekly-plan');
+  if (planEl && lr.weekly_action_plan) {
+    planEl.innerHTML = Object.entries(lr.weekly_action_plan).map(([day, action]) =>
+      '<div class="sprint-card">'
+      + '<div class="sprint-day">' + day + '</div>'
+      + '<div class="sprint-action">' + action + '</div>'
+      + '</div>'
+    ).join('');
+  }
+
+  // Needs reply table
+  const replyTbody = document.getElementById('leads-reply-tbody');
+  if (replyTbody) {
+    const replies = lr.needs_reply_contacts || [];
+    if (!replies.length) {
+      replyTbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">No contacts waiting for your reply.</td></tr>';
+    } else {
+      replyTbody.innerHTML = replies.map((r, i) => {
+        const url = r.other_person_profile_url || '';
+        return '<tr>'
+          + '<td><strong>#' + (i+1) + '</strong></td>'
+          + '<td style="white-space:nowrap">' + (r.other_person_name||'—') + '</td>'
+          + '<td>' + (r.company_clean||'—') + '</td>'
+          + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
+          + '<td><span class="score-badge score-high">' + (r.reactivation_priority_score||0) + '</span></td>'
+          + '<td style="font-size:0.72rem;max-width:260px">' + String(r.message_angle||'').substring(0,120) + '</td>'
+          + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+  }
+}
+
+window.applyLeadFilters = function() {
+  const temp    = document.getElementById('lead-temp-filter')?.value   || '';
+  const status  = document.getElementById('lead-status-filter')?.value || '';
+  const recOnly = document.getElementById('lead-recruiter-only')?.checked || false;
+  const contacts = (D.lead_reactivation || {}).top_reactivation_contacts || [];
+  filteredLeads = contacts.filter(c => {
+    if (temp   && c.lead_temperature    !== temp)   return false;
+    if (status && c.conversation_status !== status) return false;
+    if (recOnly && !['Recruiter','Talent Acquisition','Sourcer','Hiring Manager','Engineering Manager'].includes(c.persona)) return false;
+    return true;
+  });
+  renderLeadsTable();
+};
+
+window.resetLeadFilters = function() {
+  const t = document.getElementById('lead-temp-filter');    if (t) t.value = '';
+  const s = document.getElementById('lead-status-filter'); if (s) s.value = '';
+  const r = document.getElementById('lead-recruiter-only'); if (r) r.checked = false;
+  filteredLeads = (D.lead_reactivation || {}).top_reactivation_contacts || [];
+  renderLeadsTable();
+};
+
+function renderLeadsTable() {
+  const st = document.getElementById('leads-stats');
+  if (st) st.textContent = 'Showing ' + filteredLeads.length + ' contacts';
+  const tbody = document.getElementById('leads-tbody');
+  if (!tbody) return;
+  if (!filteredLeads.length) {
+    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filteredLeads.map((r, i) => {
+    const url    = r.other_person_profile_url || '';
+    const score  = parseInt(r.reactivation_priority_score) || 0;
+    const sCls   = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+    const icon   = STATUS_ICONS[r.conversation_status] || '';
+    return '<tr>'
+      + '<td><strong>#' + (i+1) + '</strong></td>'
+      + '<td style="white-space:nowrap">' + (r.other_person_name||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (r.company_clean||'—') + '</td>'
+      + '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.position_clean||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
+      + '<td>' + marketBadge(r.strategic_market||'UNKNOWN') + '</td>'
+      + '<td style="white-space:nowrap;font-size:0.78rem">' + icon + ' ' + (r.conversation_status||'—') + '</td>'
+      + '<td>' + tempBadge(r.lead_temperature||'—') + '</td>'
+      + '<td style="white-space:nowrap;font-size:0.78rem">' + (r.last_message_date||'—') + '</td>'
+      + '<td style="text-align:center">' + (r.days_since_last_message||'—') + '</td>'
+      + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+      + '<td style="font-size:0.72rem;max-width:200px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
+      + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+// ── PAGE 9: Data Quality ──────────────────────────────────────────────────────
 function renderQuality() {
   const mktConf = kpi('market_confidence_score');
   const risk    = kpi('data_quality_risk_score');

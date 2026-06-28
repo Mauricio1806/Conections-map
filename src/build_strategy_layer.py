@@ -547,6 +547,15 @@ def run_strategy_layer() -> None:
     # 2. Market Inference V2
     logger.info("Step 2/8: Applying Market Inference V2 …")
     df = apply_market_inference_v2(df)
+
+    # 2b. Market Inference V4 (enhanced UNKNOWN resolution)
+    logger.info("Step 2b/8: Applying Market Inference V4 …")
+    try:
+        from src.market_inference_v4 import apply_market_inference_v4
+        df = apply_market_inference_v4(df)
+    except Exception as exc:
+        logger.warning(f"  V4 inference failed (non-fatal): {exc}")
+
     _save_csv(df, ENRICHED_CSV, "Enriched Connections")
 
     # 3. Confidence-adjusted KPIs (V3 — 8 separate scores)
@@ -597,12 +606,25 @@ def run_strategy_layer() -> None:
     KPI_REPORT.write_text(_kpi_report(kpis), encoding="utf-8")
     logger.info("  Reports saved.")
 
-    # 7b. Export public dashboard JSON (for static GitHub Pages dashboard)
+    # 7b. Message Intelligence / Lead Reactivation
+    logger.info("  Running Message Intelligence / Lead Reactivation …")
+    lead_data = {}
+    try:
+        from src.lead_reactivation_engine import run_lead_reactivation_engine
+        lead_data = run_lead_reactivation_engine(classified_df=df)
+        logger.info(f"  Lead reactivation: {lead_data.get('total_conversations', 0)} conversations | "
+                    f"Hot={lead_data.get('hot_leads', 0)} Warm={lead_data.get('warm_leads', 0)} "
+                    f"NeedsReply={lead_data.get('needs_my_response', 0)}")
+    except Exception as exc:
+        logger.warning(f"  Lead reactivation failed (non-fatal): {exc}")
+
+    # 7c. Export public dashboard JSON (for static GitHub Pages dashboard)
     logger.info("  Exporting public dashboard JSON ...")
     try:
         from src.export_public_dashboard_data import export_public_dashboard_data
         export_public_dashboard_data(
-            df, kpis, gap_mat, plan_30, plan_60, plan_90, resolution_data
+            df, kpis, gap_mat, plan_30, plan_60, plan_90, resolution_data,
+            lead_data=lead_data
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

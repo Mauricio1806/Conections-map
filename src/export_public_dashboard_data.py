@@ -260,6 +260,50 @@ def build_unknown_companies_public(df: pd.DataFrame) -> list:
     return agg.to_dict(orient="records")
 
 
+def build_lead_reactivation_public(lead_data: dict) -> dict:
+    """Strip any private fields from lead reactivation data for public JSON."""
+    if not lead_data:
+        return {"messages_csv_available": False}
+
+    # Safe summary fields only
+    safe_summary = {
+        k: lead_data[k]
+        for k in [
+            "messages_csv_available", "total_conversations", "hot_leads",
+            "warm_leads", "follow_up_due", "needs_my_response",
+            "auto_reply_leads", "dormant_warm_leads",
+            "rejected_closed_reusable", "no_response_leads",
+            "weekly_action_plan",
+        ]
+        if k in lead_data
+    }
+
+    # Safe contact fields for public dashboard (no raw messages or emails)
+    SAFE_LEAD_COLS = {
+        "other_person_name", "company_clean", "position_clean", "persona",
+        "strategic_market", "conversation_status", "lead_temperature",
+        "last_message_date", "days_since_last_message", "total_messages",
+        "reactivation_priority_score", "recommended_next_action",
+        "message_angle", "other_person_profile_url",
+        "has_positive_signal", "has_interview_signal", "is_auto_reply",
+    }
+
+    def _sanitize_contacts(contacts: list) -> list:
+        result = []
+        for c in (contacts or []):
+            safe = {k: v for k, v in c.items() if k in SAFE_LEAD_COLS}
+            result.append(safe)
+        return result
+
+    safe_summary["top_reactivation_contacts"] = _sanitize_contacts(
+        lead_data.get("top_reactivation_contacts", [])
+    )
+    safe_summary["needs_reply_contacts"] = _sanitize_contacts(
+        lead_data.get("needs_reply_contacts", [])
+    )
+    return safe_summary
+
+
 def export_public_dashboard_data(
     df:      pd.DataFrame,
     kpis:    dict,
@@ -268,6 +312,7 @@ def export_public_dashboard_data(
     plan_60: pd.DataFrame,
     plan_90: pd.DataFrame,
     resolution_data: dict = None,
+    lead_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -291,10 +336,11 @@ def export_public_dashboard_data(
         "action_plan_30":     plan_30.to_dict(orient="records"),
         "action_plan_60":     plan_60.to_dict(orient="records"),
         "action_plan_90":     plan_90.to_dict(orient="records"),
-        "top_contacts":       build_public_contacts(df, n=200),
-        "company_intel":      build_public_company_intel(df),
-        "unknown_companies":  build_unknown_companies_public(df),
-        "unknown_resolution": resolution_data or {},
+        "top_contacts":        build_public_contacts(df, n=200),
+        "company_intel":       build_public_company_intel(df),
+        "unknown_companies":   build_unknown_companies_public(df),
+        "unknown_resolution":  resolution_data or {},
+        "lead_reactivation":   build_lead_reactivation_public(lead_data or {}),
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:

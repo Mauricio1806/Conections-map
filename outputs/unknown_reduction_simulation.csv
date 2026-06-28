@@ -1,0 +1,4 @@
+﻿resolution_status,label,count,recruiter_count,hiring_mgr_count,avg_score,pct_of_total
+GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,Global Opportunity (needs region tag),2231,1572,39,48.4,20.7
+NEEDS_COMPANY_MAPPING,Needs manual company mapping,4922,0,0,21.9,45.7
+UNKNOWN_LOW_VALUE,Low value — no action needed,26,0,0,22.2,0.2

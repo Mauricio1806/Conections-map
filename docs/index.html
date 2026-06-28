@@ -57,6 +57,9 @@
     <div class="nav-item" data-page="unknown">
       <span class="nav-icon">&#10067;</span> Unknown Resolution
     </div>
+    <div class="nav-item" data-page="leads">
+      <span class="nav-icon">&#128233;</span> Lead Reactivation
+    </div>
     <div class="nav-item" data-page="quality">
       <span class="nav-icon">&#128202;</span> Data Quality
     </div>
@@ -317,6 +320,87 @@
 
       <div class="section-label">High-Value UNKNOWN Contacts by Persona</div>
       <div class="metrics-grid" id="unk-persona-metrics"></div>
+    </div>
+
+    <!-- PAGE: Lead Reactivation -->
+    <div class="page" id="page-leads">
+      <div class="page-header">
+        <h2>Lead Reactivation &amp; Message Intelligence</h2>
+        <p>Based on your LinkedIn message history. Raw messages stay private — only sanitized summaries appear here.</p>
+      </div>
+
+      <div id="leads-no-data" style="display:none">
+        <div class="alert alert-info">
+          <span class="alert-icon">&#128233;</span>
+          <span><strong>No messages.csv found.</strong> Export your LinkedIn messages and place <code>messages.csv</code> in the project root, then re-run the pipeline to enable Lead Reactivation intelligence.</span>
+        </div>
+      </div>
+
+      <div id="leads-main-content">
+        <div class="section-label">Message Intelligence Summary</div>
+        <div class="metrics-grid" id="leads-summary"></div>
+
+        <div class="section-label">Lead Pipeline</div>
+        <div class="metrics-grid" id="leads-pipeline"></div>
+
+        <div class="section-label">Filters</div>
+        <div class="filters-bar">
+          <div class="filter-group"><label>Temperature</label>
+            <select id="lead-temp-filter">
+              <option value="">All</option>
+              <option value="Hot">Hot</option>
+              <option value="Warm">Warm</option>
+              <option value="Neutral">Neutral</option>
+              <option value="Cold">Cold</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Status</label>
+            <select id="lead-status-filter">
+              <option value="">All</option>
+              <option value="Needs my response">Needs my response</option>
+              <option value="Follow-up due">Follow-up due</option>
+              <option value="Warm lead">Warm lead</option>
+              <option value="Dormant warm lead">Dormant warm lead</option>
+              <option value="Auto-reply / career site redirect">Auto-reply</option>
+              <option value="Rejected / closed process">Rejected / closed</option>
+              <option value="No response">No response</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Recruiters only</label>
+            <input type="checkbox" id="lead-recruiter-only">
+          </div>
+          <button class="btn-primary" onclick="applyLeadFilters()">Apply</button>
+          <button class="btn-ghost" onclick="resetLeadFilters()">Reset</button>
+        </div>
+
+        <div class="section-label">Top 50 Reactivation Contacts</div>
+        <div class="table-stats" id="leads-stats"></div>
+        <div class="table-wrap">
+          <table id="leads-table">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Company</th><th>Role</th><th>Persona</th>
+              <th>Market</th><th>Status</th><th>Temp</th>
+              <th>Last Msg</th><th>Days</th><th>Score</th>
+              <th>Recommended Action</th><th>LinkedIn</th>
+            </tr></thead>
+            <tbody id="leads-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-label">This Week&apos;s Recommended Actions</div>
+        <div class="sprint-grid" id="leads-weekly-plan"></div>
+
+        <div class="section-label">Needs My Response — Priority Queue</div>
+        <div class="table-wrap">
+          <table id="leads-reply-table">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Company</th><th>Persona</th>
+              <th>Score</th><th>Message Angle</th><th>LinkedIn</th>
+            </tr></thead>
+            <tbody id="leads-reply-tbody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <!-- PAGE: Data Quality -->

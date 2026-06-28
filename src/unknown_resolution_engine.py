@@ -265,6 +265,14 @@ def run_unknown_resolution_engine(df: pd.DataFrame) -> dict:
 
     # ── 5. Save outputs ───────────────────────────────────────────────────────
 
+    override_cols = [
+        "company_clean", "connection_count",
+        "recruiter_count", "talent_count", "hiring_manager_count",
+        "data_leader_count", "avg_priority_score",
+        "suggested_market", "suggested_confidence", "suggested_reason",
+        "manual_market", "manual_category", "manual_notes",
+    ]
+
     # 5a. Full backlog
     backlog_path = OUTPUTS_DIR / "unknown_resolution_backlog.csv"
     agg.to_csv(backlog_path, index=False, encoding="utf-8-sig")
@@ -275,22 +283,19 @@ def run_unknown_resolution_engine(df: pd.DataFrame) -> dict:
     auto_sugg = agg[auto_mask].copy()
     auto_path = OUTPUTS_DIR / "unknown_company_auto_suggestions.csv"
     auto_sugg.to_csv(auto_path, index=False, encoding="utf-8-sig")
-    auto_count = auto_sugg["connection_count"].sum()
+    auto_count = int(auto_sugg["connection_count"].sum())
     logger.info(f"  Auto-suggestions: {len(auto_sugg)} companies / {auto_count:,} connections resolvable")
 
-    # 5c. Top 150 for manual override (includes empty manual_market column)
-    override_cols = [
-        "company_clean", "connection_count",
-        "recruiter_count", "talent_count", "hiring_manager_count",
-        "data_leader_count", "avg_priority_score",
-        "suggested_market", "suggested_confidence", "suggested_reason",
-        "manual_market", "manual_category", "manual_notes",
-    ]
+    # 5c. Top 150 for manual override with proper company name rows
+    top150 = agg[override_cols].head(150).copy()
+    top150["company_clean"] = top150["company_clean"].astype(str)
+    top150["connection_count"] = pd.to_numeric(top150["connection_count"], errors="coerce").fillna(0).astype(int)
+    top150["avg_priority_score"] = pd.to_numeric(top150["avg_priority_score"], errors="coerce").fillna(0).round(1)
     override_path = OUTPUTS_DIR / "company_override_candidates.csv"
-    agg[override_cols].head(150).to_csv(override_path, index=False, encoding="utf-8-sig")
-    logger.info(f"  Override candidates saved: {override_path.name}")
+    top150.to_csv(override_path, index=False, encoding="utf-8-sig")
+    logger.info(f"  Override candidates saved: {override_path.name} ({len(top150)} rows)")
 
-    # 5d. High-value UNKNOWN individuals
+    # 5d. High-value UNKNOWN individuals (alias + legacy path)
     hv_mask = (
         unk_mask &
         (df["priority_score"] >= 60) &
@@ -300,16 +305,33 @@ def run_unknown_resolution_engine(df: pd.DataFrame) -> dict:
             "Data Engineering Manager", "Head of Data", "Director",
         })
     )
-    hv_cols = [
+    hv_base_cols = [
         "full_name", "company_clean", "position_clean",
         "persona", "area", "seniority", "priority_score",
         mkt_col, "url",
     ]
-    hv_cols = [c for c in hv_cols if c in df.columns]
+    hv_cols = [c for c in hv_base_cols if c in df.columns]
     hv_df   = df[hv_mask][hv_cols].sort_values("priority_score", ascending=False)
-    hv_path = OUTPUTS_DIR / "unresolved_high_value_contacts.csv"
-    hv_df.to_csv(hv_path, index=False, encoding="utf-8-sig")
-    logger.info(f"  High-value UNKNOWN contacts: {len(hv_df):,} → {hv_path.name}")
+    for hv_path in [
+        OUTPUTS_DIR / "unknown_high_value_contacts.csv",
+        OUTPUTS_DIR / "unresolved_high_value_contacts.csv",
+    ]:
+        hv_df.to_csv(hv_path, index=False, encoding="utf-8-sig")
+    logger.info(f"  High-value UNKNOWN contacts: {len(hv_df):,}")
+
+    # 5e. V4 outputs (if V4 columns are available)
+    v4_available = "market_v4" in df.columns
+    if v4_available:
+        try:
+            from src.market_inference_v4 import (
+                build_unknown_by_reason, build_unknown_reduction_simulation,
+                export_market_v4_audit,
+            )
+            export_market_v4_audit(df)
+            build_unknown_by_reason(df)
+            build_unknown_reduction_simulation(df)
+        except Exception as exc:
+            logger.warning(f"  V4 audit export failed (non-fatal): {exc}")
 
     # ── 6. Summary stats for dashboard ───────────────────────────────────────
     top25_coverage = int(agg.head(25)["connection_count"].sum())
@@ -317,15 +339,31 @@ def run_unknown_resolution_engine(df: pd.DataFrame) -> dict:
 
     auto_by_market = auto_sugg.groupby("suggested_market")["connection_count"].sum().to_dict()
 
+    # Build top25_companies as clean list of dicts (no concatenation bugs)
+    top25_rows = []
+    for _, r in agg.head(25).iterrows():
+        top25_rows.append({
+            "company_clean":       str(r["company_clean"]),
+            "connection_count":    int(r["connection_count"]),
+            "recruiter_count":     int(r.get("recruiter_count", 0)),
+            "talent_count":        int(r.get("talent_count", 0)),
+            "hiring_manager_count":int(r.get("hiring_manager_count", 0)),
+            "data_leader_count":   int(r.get("data_leader_count", 0)),
+            "avg_priority_score":  round(float(r.get("avg_priority_score", 0)), 1),
+            "suggested_market":    str(r.get("suggested_market", "UNKNOWN")),
+            "suggested_confidence":str(r.get("suggested_confidence", "")),
+            "suggested_reason":    str(r.get("suggested_reason", "")),
+        })
+
     return {
-        "total_unknown_companies": int(agg["suggested_market"].count()),
-        "total_unknown_contacts":  int(len(unk_df)),
+        "total_unknown_companies":   int(len(agg)),
+        "total_unknown_contacts":    int(len(unk_df)),
         "auto_resolvable_companies": int(len(auto_sugg)),
-        "auto_resolvable_contacts":  int(auto_count),
-        "top25_coverage":          top25_coverage,
-        "top50_coverage":          top50_coverage,
-        "top25_pct_of_unknown":    round(top25_coverage / len(unk_df) * 100, 1) if len(unk_df) > 0 else 0,
+        "auto_resolvable_contacts":  auto_count,
+        "top25_coverage":            top25_coverage,
+        "top50_coverage":            top50_coverage,
+        "top25_pct_of_unknown":      round(top25_coverage / len(unk_df) * 100, 1) if len(unk_df) > 0 else 0,
         "high_value_unknown_contacts": int(len(hv_df)),
-        "auto_by_market":          auto_by_market,
-        "top25_companies":         agg.head(25)[override_cols].to_dict(orient="records"),
+        "auto_by_market":            auto_by_market,
+        "top25_companies":           top25_rows,
     }
