@@ -310,44 +310,45 @@
       </div>
     </div>
 
-    <!-- PAGE: Opportunity Market V5 / Resolution -->
+    <!-- PAGE: Opportunity Market V5 -->
     <div class="page" id="page-unknown">
       <div class="page-header">
         <h2>Opportunity Market V5</h2>
-        <p>18 actionable opportunity buckets — replacing raw UNKNOWN (81.9% V2) with meaningful market intelligence.</p>
+        <p>Business opportunity classification based on company, title, persona, language, and message intelligence — 18 actionable buckets replacing raw geographic UNKNOWN.</p>
       </div>
 
-      <div class="section-label">V5 Resolution Summary</div>
+      <div class="section-label">V5 Opportunity Classification</div>
       <div class="metrics-grid metrics-grid-wide" id="v5-resolution-summary"></div>
 
       <div class="alert alert-info" style="margin-top:1rem">
         <span class="alert-icon">&#128161;</span>
         <span>
-          <strong>To resolve "Needs Mapping" companies:</strong> Open <code>outputs/unresolved_opportunity_buckets.csv</code>,
+          <strong>To resolve "Needs Company Mapping":</strong> Open <code>outputs/unresolved_opportunity_buckets.csv</code>,
           add entries to <code>config/company_market_overrides.yml</code>, and re-run the pipeline.
-          Each company you classify resolves all its connections at once.
+          Each company you map resolves all its connections at once.
+          <em style="opacity:.7"> — Exact country/location cannot be guaranteed from LinkedIn exports.</em>
         </span>
       </div>
 
-      <div class="section-label">V2 UNKNOWN Analysis (raw data before V5)</div>
+      <div class="section-label">Contacts Needing Company Mapping (Action Backlog)</div>
       <div class="metrics-grid" id="unk-metrics"></div>
 
-      <div class="section-label">Resolution Potential</div>
+      <div class="section-label">Mapping Potential</div>
       <div class="metrics-grid" id="unk-resolution-metrics"></div>
 
-      <div class="section-label">Top 25 Companies to Classify First</div>
+      <div class="section-label">Top 25 Companies to Map First (by Connection Count)</div>
       <div class="table-wrap">
         <table id="unk-companies-table">
           <thead><tr>
             <th>#</th><th>Company</th><th>Connections</th>
             <th>Recruiters</th><th>TA</th><th>Hiring Mgrs</th><th>Data Leaders</th>
-            <th>Avg Score</th><th>Suggested Market</th><th>Reason</th>
+            <th>Avg Score</th><th>Suggested Bucket</th><th>Reason</th>
           </tr></thead>
           <tbody id="unk-companies-tbody"></tbody>
         </table>
       </div>
 
-      <div class="section-label">High-Value UNKNOWN Contacts by Persona</div>
+      <div class="section-label">High-Value Contacts Needing Mapping (by Persona)</div>
       <div class="metrics-grid" id="unk-persona-metrics"></div>
     </div>
 
@@ -450,46 +451,53 @@
     <!-- PAGE: Data Quality -->
     <div class="page" id="page-quality">
       <div class="page-header">
-        <h2>Data Quality &amp; Limitations</h2>
-        <p>Understanding what LinkedIn exports — and what it doesn&apos;t.</p>
+        <h2>Data Quality &amp; Classification</h2>
+        <p>Opportunity Bucket V5 classification based on company, title, persona, and language signals.</p>
       </div>
-      <div class="alert alert-warn">
-        <span class="alert-icon">&#9888;&#65039;</span>
-        <span>
-          <strong>UNKNOWN does NOT mean irrelevant.</strong>
-          LinkedIn&apos;s bulk export only includes: Name, URL, Company, Position, Connected On.
-          Location is never exported. UNKNOWN = no geographic keyword found — not worthless.
-        </span>
-      </div>
-      <div class="section-label">Data Quality Metrics</div>
-      <div class="metrics-grid" id="quality-metrics"></div>
-      <div class="chart-box" style="max-width:480px;margin-bottom:1.5rem">
-        <h4>Market Type Distribution</h4>
+
+      <div class="section-label">Section A — Business Classification Quality (Opportunity Bucket V5)</div>
+      <div class="metrics-grid metrics-grid-wide" id="quality-metrics-a"></div>
+
+      <div class="chart-box" style="max-width:520px;margin:1.5rem 0">
+        <h4>Opportunity Bucket Distribution V5</h4>
         <canvas id="chart-mkt-type"></canvas>
       </div>
-      <div class="section-label">How Market Inference Works</div>
+
+      <div class="section-label">Section B — Geographic Data Limitation (Technical)</div>
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#9432;</span>
+        <span>
+          <strong>Raw UNKNOWN is a technical LinkedIn export limitation, not a business failure.</strong>
+          LinkedIn&apos;s bulk export does not include location or country. Geographic confidence will always be low.
+          The business dashboard uses <strong>Opportunity Bucket V5</strong> — classifying contacts by company, title, persona, and language — instead of showing UNKNOWN as the main conclusion.
+        </span>
+      </div>
+      <div class="metrics-grid" id="quality-metrics-b"></div>
+
+      <div class="section-label">How V5 Classification Works</div>
       <div class="card" style="padding:1.5rem">
         <table class="info-table">
           <thead><tr><th>Confidence</th><th>Method</th><th>Example</th></tr></thead>
           <tbody>
-            <tr><td><span class="conf-badge high">0.95</span></td><td>Manual override (YAML or CSV)</td><td>agileengine &rarr; LATAM_USD</td></tr>
-            <tr><td><span class="conf-badge high">0.85</span></td><td>Company name keyword</td><td>company contains "madrid" &rarr; SPAIN_EU</td></tr>
-            <tr><td><span class="conf-badge med">0.75</span></td><td>Title/position keyword</td><td>title contains "nearshore Canada" &rarr; US_CA</td></tr>
-            <tr><td><span class="conf-badge med">0.70</span></td><td>Global company category</td><td>Accenture &rarr; GLOBAL_CONSULTING</td></tr>
-            <tr><td><span class="conf-badge low">0.00</span></td><td>No signal found &rarr; UNKNOWN</td><td>"Digital Ventures" &rarr; UNKNOWN</td></tr>
+            <tr><td><span class="conf-badge high">0.95</span></td><td>Manual override (YAML / CSV)</td><td>hays &rarr; GLOBAL_STAFFING</td></tr>
+            <tr><td><span class="conf-badge high">0.90</span></td><td>Exact company dictionary</td><td>NTT DATA &rarr; GLOBAL_CONSULTING</td></tr>
+            <tr><td><span class="conf-badge high">0.85</span></td><td>Company/title region keyword</td><td>company contains "brasil" &rarr; BRAZIL_CONFIRMED</td></tr>
+            <tr><td><span class="conf-badge med">0.75</span></td><td>Company category (staffing / tech)</td><td>Randstad &rarr; GLOBAL_STAFFING</td></tr>
+            <tr><td><span class="conf-badge med">0.65</span></td><td>Language inference (PT/ES title)</td><td>"Analista de Dados" &rarr; LANGUAGE_PORTUGUESE_MARKET</td></tr>
+            <tr><td><span class="conf-badge med">0.55</span></td><td>High-value persona fallback</td><td>Recruiter, no company &rarr; GLOBAL_OPPORTUNITY</td></tr>
+            <tr><td><span class="conf-badge low">0.40</span></td><td>Company exists but not in dict</td><td>"Digital Ventures" &rarr; NEEDS_COMPANY_MAPPING</td></tr>
+            <tr><td><span class="conf-badge low">0.10</span></td><td>No usable signal at all</td><td>empty company + no persona &rarr; LOW_VALUE_UNRESOLVED</td></tr>
           </tbody>
         </table>
         <div style="margin-top:1.2rem;font-size:0.85rem;color:var(--text-muted);line-height:1.7">
-          <p><strong>Why is UNKNOWN so high?</strong></p>
-          <p>A company named "Digital Ventures Solutions" gives zero geographic signal even if it operates in Austin, TX.
-          Only if the company name or title contains a recognizable geographic keyword can the inference engine assign a market.</p>
-          <br>
-          <p><strong>The correct approach: classify companies, not people.</strong></p>
-          <p>Open <code>outputs/company_override_candidates.csv</code> &rarr;
-          fill <code>manual_market</code> for the top 25 &rarr;
-          re-run pipeline. Scores update automatically.</p>
+          <p><strong>To improve Needs Company Mapping:</strong></p>
+          <p>Open <code>outputs/unresolved_opportunity_buckets.csv</code> &rarr;
+          add entries to <code>config/company_market_overrides.yml</code> &rarr;
+          re-run pipeline. Each company you map resolves all its connections.</p>
         </div>
       </div>
+      <!-- legacy metrics div for any remaining code that writes to it -->
+      <div id="quality-metrics" style="display:none"></div>
     </div>
 
   </main>

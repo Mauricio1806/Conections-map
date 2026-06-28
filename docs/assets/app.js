@@ -203,20 +203,26 @@ function doughnutChart(canvasId, labels, values, colors) {
 
 // ── PAGE 1: Executive Overview ────────────────────────────────────────────────
 function renderOverview() {
-  // Data quality warning banner
-  const unknownPct = kpi('unknown_pct');
-  const mktConf    = kpi('market_confidence_score');
-  const bannerEl   = document.getElementById('confidence-banner');
-  if (unknownPct > 70) {
-    bannerEl.innerHTML = '<div class="alert alert-warn">'
-      + '<span class="alert-icon">&#9888;&#65039;</span>'
-      + '<div><strong>Market Confidence is Low (' + mktConf + '/100)</strong> — '
-      + unknownPct + '% of connections have unresolved market. '
-      + 'Strategic Network Score and readiness scores are based on persona value, not market certainty. '
-      + 'Go to the <strong>Unknown Resolution</strong> page to reduce UNKNOWN quickly.</div></div>';
-  } else {
+  // V5 coverage banner (replaces old UNKNOWN warning)
+  const v5S      = D.opportunity_market_v5_summary || {};
+  const actPct   = v5S.v5_actionable_pct || (100 - (v5S.v5_low_value_pct || 0));
+  const needsMap = v5S.v5_needs_company_mapping || 0;
+  const lowVal   = v5S.v5_low_value_unresolved  || 0;
+  const bannerEl = document.getElementById('confidence-banner');
+  if (v5S.total_connections) {
     bannerEl.innerHTML = '<div class="alert alert-good">'
       + '<span class="alert-icon">&#9989;</span>'
+      + '<strong>Opportunity Bucket Coverage: ' + actPct + '%</strong> — '
+      + (v5S.total_connections - lowVal).toLocaleString() + ' of ' + v5S.total_connections.toLocaleString() + ' contacts classified into actionable opportunity buckets. '
+      + needsMap.toLocaleString() + ' need company mapping (action backlog). '
+      + lowVal.toLocaleString() + ' low-value/no-signal residual.'
+      + ' <em style="opacity:.7;font-size:.85em">Exact geographic location is unavailable from LinkedIn exports — the business dashboard uses company/title/persona inference.</em>'
+      + '</div>';
+  } else {
+    const unknownPct = kpi('unknown_pct');
+    const mktConf    = kpi('market_confidence_score');
+    bannerEl.innerHTML = '<div class="alert alert-info">'
+      + '<span class="alert-icon">&#9432;</span>'
       + '<strong>Market Confidence: ' + mktConf + '/100</strong> — '
       + (100 - unknownPct).toFixed(1) + '% of connections have inferred market.</div>';
   }
@@ -240,13 +246,17 @@ function renderOverview() {
   const glob  = kpi('global_opportunity_score');
   const act   = kpi('actionable_contacts');
   const hvUnk = kpi('unknown_recruiters_highvalue') + kpi('unknown_hiring_mgrs_highvalue');
+  const v5Sm = D.opportunity_market_v5_summary || {};
+  const needsMapCount = v5Sm.v5_needs_company_mapping || 0;
+  const lowValCount   = v5Sm.v5_low_value_unresolved  || 0;
+  const v5CovPct      = v5Sm.v5_actionable_pct || 0;
   const diagItems = [
     { cls: sns >= 60 ? 'good' : 'warn',  title: 'Network Strength',    text: sns >= 60 ? 'Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders.' : 'Your network is building. Keep adding strategic personas.' },
-    { cls: usd >= 35 ? 'good' : 'warn',  title: 'USD Job Readiness',   text: usd >= 35 ? 'USD network is developing. You have confirmed contacts in LATAM USD and US/Canada markets.' : 'USD readiness needs work. Add LATAM USD + US/Canada nearshore recruiters.' },
-    { cls: spain >= 20 ? 'good' : 'info',title: 'Spain/EU Readiness',  text: spain >= 20 ? 'Early Spain/EU foundation exists. On track for 12-month relocation timeline.' : 'Spain/EU network is nascent — normal for early planning phase.' },
-    { cls: glob >= 30 ? 'good' : 'warn', title: 'Global Opportunities', text: 'You have ' + kpi('global_opportunity_total') + ' contacts at GLOBAL_STAFFING, GLOBAL_TECH, and GLOBAL_CONSULTING companies — these can hire anywhere.' },
-    { cls: 'info', title: 'UNKNOWN (' + unknownPct + '%)', text: 'UNKNOWN means market was not inferred — NOT that contacts are worthless. You have ' + hvUnk + ' high-value UNKNOWN recruiters/hiring managers. Go to Unknown Resolution to classify them.' },
-    { cls: act >= 100 ? 'good' : 'warn', title: 'Actionable Contacts', text: act + ' contacts have priority score >= 60. These are your outreach targets. See the Top Contacts page.' },
+    { cls: usd >= 35 ? 'good' : 'warn',  title: 'USD / LATAM Readiness (Primary)',   text: usd >= 35 ? 'USD network is developing. Current 60-day focus: 90% LATAM/USD outreach. You have confirmed contacts in LATAM USD and US/Canada markets.' : 'USD readiness needs work. Current focus: add LATAM USD + US/Canada nearshore recruiters (90% of outreach budget).' },
+    { cls: spain >= 20 ? 'info' : 'info',title: 'Spain/EU Readiness (Exploratory)',  text: 'Spain/EU is a 10% exploratory layer for the next 60 days. Build slowly as optionality while USD pipeline is the primary income target.' },
+    { cls: glob >= 30 ? 'good' : 'warn', title: 'Global Opportunities', text: 'You have ' + kpi('global_opportunity_total') + ' contacts at GLOBAL_STAFFING, GLOBAL_TECH, and GLOBAL_CONSULTING companies — these can hire anywhere. Reactivate warm ones via Lead Reactivation.' },
+    { cls: needsMapCount > 0 ? 'warn' : 'good', title: 'Needs Company Mapping (' + needsMapCount.toLocaleString() + ')', text: needsMapCount + ' contacts have a known company but no opportunity bucket yet. This is an action backlog — not a data failure. Open outputs/unresolved_opportunity_buckets.csv to map them.' },
+    { cls: act >= 100 ? 'good' : 'warn', title: 'Actionable Contacts',  text: act + ' contacts have base priority score ≥60. Default ranking uses outreach-adjusted score from message history. See Top Contacts page.' },
   ];
   document.getElementById('diagnosis-grid').innerHTML = diagItems.map(d =>
     '<div class="diag-item ' + d.cls + '"><h4>' + d.title + '</h4><p>' + d.text + '</p></div>'
@@ -484,15 +494,15 @@ function renderPlan() {
     GLOBAL_STAFFING:     '"data engineer" staffing OR nearshore recruiter',
   };
 
-  // 7-day sprint hardcoded (based on strategic priorities)
+  // 7-day sprint — 90% LATAM/USD primary, 10% Spain/EU exploratory
   const sprint = [
-    { day: 'Mon', action: 'Search LATAM USD recruiters, send 7 connection requests', target: '+7 LATAM USD recruiters', market: 'LATAM_USD', dms: 0, connects: 7, comments: 0, query: queries.LATAM_USD, angle: 'Pitch as nearshore Data Engineer open to remote USD roles' },
-    { day: 'Tue', action: 'Search US/Canada nearshore recruiters, send 7 requests', target: '+7 US/CA recruiters', market: 'US_CANADA_NEARSHORE', dms: 0, connects: 7, comments: 0, query: queries.US_CANADA_NEARSHORE, angle: 'Mention LATAM/nearshore experience' },
-    { day: 'Wed', action: 'Classify 20 companies in company_override_candidates.csv', target: '+20 resolved companies', market: 'ALL', dms: 0, connects: 0, comments: 0, query: '—', angle: 'Open outputs/company_override_candidates.csv, fill manual_market' },
-    { day: 'Thu', action: 'Message top 10 from action_backlog.csv (score >= 70)', target: '10 personalized DMs', market: 'ALL', dms: 10, connects: 0, comments: 0, query: '—', angle: 'Use message_angle column from backlog' },
-    { day: 'Fri', action: 'Post LinkedIn content on Data Engineering topic', target: '1 post, recruiter reach', market: 'ALL', dms: 0, connects: 0, comments: 5, query: '—', angle: 'Position as LATAM nearshore Data Engineer expert' },
-    { day: 'Sat', action: 'Search Spain/EU recruiters: ERNI, Stratesys, Capgemini Spain', target: '+3 Spain connections', market: 'SPAIN_EU', dms: 0, connects: 3, comments: 2, query: queries.SPAIN_EU, angle: 'Planning Spain relocation — connect early' },
-    { day: 'Sun', action: 'Run full pipeline, review new connections, update CSV', target: 'Pipeline refreshed', market: 'ALL', dms: 0, connects: 0, comments: 0, query: '—', angle: 'Weekly hygiene — keep data fresh' },
+    { day: 'Mon', action: 'Reactivate top 10 warm LATAM/USD recruiters from Lead Reactivation queue', target: '10 DMs — recruiters who replied or had prior CV/interview conversations', market: 'LATAM_USD', dms: 10, connects: 0, comments: 0, query: queries.LATAM_USD, angle: 'Lead with: "open to LATAM/USD remote Data Engineering roles — Spark, dbt, Airflow, cloud"' },
+    { day: 'Tue', action: 'Search US/Canada nearshore recruiters, send 7 targeted connection requests', target: '+7 US/CA recruiters (Global Staffing + nearshore companies)', market: 'US_CANADA_NEARSHORE', dms: 0, connects: 7, comments: 0, query: queries.US_CANADA_NEARSHORE, angle: 'Mention LATAM/nearshore experience — AgileEngine, Andela, Gorilla Logic, Wizeline' },
+    { day: 'Wed', action: 'Message 7 LATAM recruiter connections who haven\'t replied yet (follow-up)', target: '7 soft follow-ups', market: 'LATAM_USD', dms: 7, connects: 0, comments: 0, query: '—', angle: 'Short: "quick follow-up — available for remote USD Data Engineering roles, happy to share updated profile"' },
+    { day: 'Thu', action: 'Reply to leads from "Needs My Response" list in Lead Reactivation', target: 'Reply to all pending conversations', market: 'ALL', dms: 0, connects: 0, comments: 0, query: '—', angle: 'Prioritize recruiters with interview/CV signals. Reply within 24h.' },
+    { day: 'Fri', action: 'Post LinkedIn content: Data Engineering topic (Spark/dbt/Airflow/cloud)', target: '1 post — attract inbound recruiters', market: 'ALL', dms: 0, connects: 0, comments: 5, query: '—', angle: 'Position as LATAM nearshore Data Engineer — highlight remote USD availability' },
+    { day: 'Sat', action: 'Exploratory: connect with 2–3 Spain/EU recruiters (ERNI, Stratesys, Capgemini Spain)', target: '+2–3 Spain/EU connections (10% exploratory budget)', market: 'SPAIN_EU', dms: 0, connects: 3, comments: 1, query: queries.SPAIN_EU, angle: 'Low-pressure: building EU network for future optionality — not primary job search channel yet' },
+    { day: 'Sun', action: 'Run pipeline, map 10 companies in unresolved_opportunity_buckets.csv', target: 'Pipeline refreshed + 10 companies mapped', market: 'ALL', dms: 0, connects: 0, comments: 0, query: '—', angle: 'Weekly hygiene — open unresolved_opportunity_buckets.csv, add to config/company_market_overrides.yml' },
   ];
 
   document.getElementById('sprint-grid').innerHTML = sprint.map(s =>
@@ -711,85 +721,89 @@ function renderCompanyChart(tabId) {
   );
 }
 
-// ── PAGE 7: Unresolved Opportunity Resolution ─────────────────────────────────
+// ── PAGE 7: Opportunity Market V5 ────────────────────────────────────────────
 function renderUnknownResolution() {
   const res   = D.unknown_resolution || {};
   const v5Sum = D.opportunity_market_v5_summary || {};
   const v5Dist= D.opportunity_market_v5 || {};
 
-  // V5 summary — show at top of the page
+  // Primary V5 summary cards
   const v5TopEl = document.getElementById('v5-resolution-summary');
   if (v5TopEl && v5Sum.total_connections) {
     const needsMapping = v5Sum.v5_needs_company_mapping || 0;
     const lowValue     = v5Sum.v5_low_value_unresolved || 0;
     const actionable   = v5Sum.v5_actionable_total || 0;
     v5TopEl.innerHTML = [
-      makeCard('Actionable Connections',  actionable,    v5Sum.v5_actionable_pct + '% classified', 'good'),
-      makeCard('Confirmed Geographic',    v5Sum.v5_confirmed_geographic || 0, 'Brazil · LATAM · US · EU', 'good'),
-      makeCard('Global Buckets',          v5Sum.v5_global_buckets || 0, 'staffing · consulting · tech'),
-      makeCard('Language Inferred',       v5Sum.v5_language_inferred || 0, 'PT/ES title signal'),
-      makeCard('Needs Company Mapping',   needsMapping,  'company found but market unknown', 'warn'),
-      makeCard('Low Value Unresolved',    lowValue,      v5Sum.v5_low_value_pct + '% — no usable signal'),
+      makeCard('Actionable Connections',       actionable,                        v5Sum.v5_actionable_pct + '% classified', 'good'),
+      makeCard('Confirmed Geographic Signals', v5Sum.v5_confirmed_geographic||0,  'Brazil · LATAM · US · EU · Spain', 'good'),
+      makeCard('Global Company Buckets',       v5Sum.v5_global_buckets||0,        'Staffing · Consulting · Tech'),
+      makeCard('Language Signal (PT/ES)',      v5Sum.v5_language_inferred||0,     'inferred from title keywords'),
+      makeCard('Global Opportunity',           v5Sum.v5_global_opportunity||0,    'valuable persona, region unresolved'),
+      makeCard('Needs Company Mapping',        needsMapping,                      'action backlog — map in overrides.yml', 'warn'),
+      makeCard('Low Value Unresolved',         lowValue,                          v5Sum.v5_low_value_pct + '% — no usable signal at all'),
     ].join('');
   }
 
-  const total = res.total_unknown_contacts || kpi('unknown_count');
+  // Needs-mapping contacts (renamed from "UNKNOWN")
   const hvUnk = res.high_value_unknown_contacts || 0;
-  const top25 = res.top25_coverage || kpi('top25_company_coverage');
-  const top25pct = res.top25_pct_of_unknown || kpi('unknown_resolution_potential');
-  const autoRes  = res.auto_resolvable_contacts || 0;
-
   const unkMetEl = document.getElementById('unk-metrics');
   if (unkMetEl) unkMetEl.innerHTML = [
-    makeCard('V2 UNKNOWN (raw)',      total,   kpi('unknown_pct') + '% raw before V5'),
-    makeCard('High-Value UNKNOWN',    hvUnk,   'recruiters + hiring mgrs with score ≥60', 'warn'),
-    makeCard('UNKNOWN Recruiters',    kpi('unknown_recruiters_highvalue'), 'score ≥60'),
-    makeCard('UNKNOWN Hiring Mgrs',   kpi('unknown_hiring_mgrs_highvalue'), 'score ≥50'),
-    makeCard('UNKNOWN Data Leaders',  kpi('unknown_data_leaders_highvalue'), 'score ≥50'),
+    makeCard('Needs Mapping Total',           v5Sum.v5_needs_company_mapping||0, 'company known, market unresolved'),
+    makeCard('High-Value Needs Mapping',      hvUnk,   'recruiters + hiring mgrs score ≥60', 'warn'),
+    makeCard('Recruiters Needing Mapping',    kpi('unknown_recruiters_highvalue'), 'score ≥60 — map their companies first'),
+    makeCard('Hiring Mgrs Needing Mapping',   kpi('unknown_hiring_mgrs_highvalue'), 'score ≥50'),
+    makeCard('Data Leaders Needing Mapping',  kpi('unknown_data_leaders_highvalue'), 'score ≥50'),
   ].join('');
 
+  // Resolution potential
+  const autoRes = res.auto_resolvable_contacts || 0;
+  const top25   = res.top25_coverage || kpi('top25_company_coverage');
+  const top25pct= res.top25_pct_of_unknown || kpi('unknown_resolution_potential');
   const unkResEl = document.getElementById('unk-resolution-metrics');
   if (unkResEl) unkResEl.innerHTML = [
-    makeCard('Top 25 Companies Cover',top25,    top25pct + '% of V2 UNKNOWN', 'good'),
-    makeCard('Auto-Resolvable',       autoRes,  'via keyword + heuristics', 'good'),
-    makeCard('Unknown Resolution Score', kpi('unknown_resolution_score') + '/100', ''),
+    makeCard('Top 25 Companies Impact', top25,   top25pct + '% of needs-mapping contacts', 'good'),
+    makeCard('Auto-Resolvable',         autoRes, 'via keyword + heuristics', 'good'),
+    makeCard('Opportunity Bucket Score',kpi('unknown_resolution_score') + '/100', 'higher = better mapped'),
   ].join('');
 
-  // Top 25 companies table
+  // Top companies needing mapping — prefer V5 backlog, fall back to V2 unknown
+  const backlogData = D.unknown_companies || [];
   const top25Companies = (res.top25_companies && Array.isArray(res.top25_companies))
     ? res.top25_companies
-    : (D.unknown_companies || []).slice(0, 25);
+    : backlogData.slice(0, 25);
   const tbody = document.getElementById('unk-companies-tbody');
   if (tbody) {
     if (!top25Companies.length) {
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">No UNKNOWN companies found.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">All companies have been mapped.</td></tr>';
     } else {
-    tbody.innerHTML = top25Companies.map((r, i) =>
-      '<tr>'
+    tbody.innerHTML = top25Companies.map((r, i) => {
+      const sugMarket = r.suggested_market || r.opportunity_bucket || '';
+      const badgeVal  = sugMarket && sugMarket !== 'UNKNOWN' ? sugMarket : 'NEEDS_COMPANY_MAPPING';
+      return '<tr>'
       + '<td><strong>#' + (i+1) + '</strong></td>'
-      + '<td style="font-weight:500">' + (r.company_clean||'') + '</td>'
+      + '<td style="font-weight:500">' + (r.company_clean||r.company||'') + '</td>'
       + '<td><strong>' + fmt(r.connection_count) + '</strong></td>'
       + '<td>' + fmt(r.recruiter_count||0) + '</td>'
       + '<td>' + fmt(r.talent_count||0) + '</td>'
       + '<td>' + fmt(r.hiring_manager_count||0) + '</td>'
       + '<td>' + fmt(r.data_leader_count||0) + '</td>'
       + '<td>' + (Number(r.avg_priority_score||0).toFixed(0)) + '</td>'
-      + '<td>' + marketBadge(r.suggested_market||'UNKNOWN') + '</td>'
+      + '<td>' + marketBadge(badgeVal) + '</td>'
       + '<td style="font-size:0.72rem;max-width:200px">' + String(r.suggested_reason||'').substring(0,80) + '</td>'
-      + '</tr>'
-    ).join('');
-    } // end if top25Companies.length
+      + '</tr>';
+    }).join('');
+    }
   }
 
-  // Unknown persona metrics
+  // Persona breakdown for needs-mapping contacts
   const unkPersonaEl = document.getElementById('unk-persona-metrics');
   if (!unkPersonaEl) return;
   unkPersonaEl.innerHTML = [
-    makeCard('Unknown Recruiters (any)', kpi('sns_recruiters') > 0 ? kpi('unknown_count') + ' total' : '—'),
-    makeCard('UNKNOWN Rec. (score≥60)',  kpi('unknown_recruiters_highvalue'), 'potential USD pipeline'),
-    makeCard('UNKNOWN Hiring Mgr',       kpi('unknown_hiring_mgrs_highvalue'), 'potential direct hire'),
-    makeCard('UNKNOWN Data Leaders',     kpi('unknown_data_leaders_highvalue'), 'referral network'),
-    makeCard('UNKNOWN Data Peers',       kpi('unknown_peers'), 'lowest priority'),
+    makeCard('Recruiters Needing Mapping',      kpi('unknown_recruiters_highvalue'),   'score ≥60 — map their companies first', 'warn'),
+    makeCard('Talent Acquisition — No Bucket',  kpi('unknown_ta_highvalue') || kpi('unknown_ta') || 0, 'score ≥50'),
+    makeCard('Hiring Mgrs — No Bucket',         kpi('unknown_hiring_mgrs_highvalue'),  'score ≥50 — potential direct hire'),
+    makeCard('Data Leaders — No Bucket',        kpi('unknown_data_leaders_highvalue'), 'referral network value'),
+    makeCard('Data Peers — No Bucket',          kpi('unknown_peers'),                 'lowest priority to map'),
   ].join('');
 }
 
@@ -985,23 +999,73 @@ function renderLeadsTable() {
 
 // ── PAGE 9: Data Quality ──────────────────────────────────────────────────────
 function renderQuality() {
-  const mktConf = kpi('market_confidence_score');
-  const risk    = kpi('data_quality_risk_score');
-  const unkPct  = kpi('unknown_pct');
+  const v5S  = D.opportunity_market_v5_summary || {};
+  const v5D  = D.opportunity_market_v5 || {};
+  const total = v5S.total_connections || kpi('total_connections');
 
-  document.getElementById('quality-metrics').innerHTML = [
-    makeCard('Market Confidence', mktConf + '/100', mktConf < 30 ? 'Low — normal for LinkedIn exports' : 'Adequate'),
-    makeCard('Data Quality Risk',  risk + '/100',   risk > 70 ? 'High — classify companies' : 'Moderate', risk > 70 ? 'bad' : 'warn'),
-    makeCard('Unknown Market',     kpi('unknown_count'), unkPct + '% of network'),
-    makeCard('Market Known %',     kpi('market_known_pct') + '%', kpi('market_known_count') + ' connections'),
-  ].join('');
+  // Section A — Business Classification Quality (V5)
+  const qaEl = document.getElementById('quality-metrics-a');
+  if (qaEl) {
+    const actionable  = v5S.v5_actionable_total  || (total - (v5S.v5_low_value_unresolved||0));
+    const actPct      = v5S.v5_actionable_pct    || 0;
+    const needsMap    = v5S.v5_needs_company_mapping || 0;
+    const lowVal      = v5S.v5_low_value_unresolved  || 0;
+    const lowPct      = v5S.v5_low_value_pct     || 0;
+    const geoConf     = v5S.v5_confirmed_geographic  || 0;
+    const globalBuck  = v5S.v5_global_buckets    || 0;
+    const langInf     = v5S.v5_language_inferred || 0;
+    const globalOpp   = v5S.v5_global_opportunity|| 0;
+    qaEl.innerHTML = [
+      makeCard('Opportunity Bucket Coverage', actPct + '%',     actionable.toLocaleString() + ' contacts classified', 'good'),
+      makeCard('Confirmed Geographic Signals', geoConf.toLocaleString(), 'Brazil · LATAM · US · EU · Spain', 'good'),
+      makeCard('Global Company Buckets',      globalBuck.toLocaleString(), 'Staffing · Consulting · Tech'),
+      makeCard('Language Signal (PT/ES)',     langInf.toLocaleString(), 'inferred from title keywords'),
+      makeCard('Global Opportunity',          globalOpp.toLocaleString(), 'valuable persona, unresolved region'),
+      makeCard('Needs Company Mapping',       needsMap.toLocaleString(), 'action backlog — map in overrides YAML', 'warn'),
+      makeCard('Low Value Unresolved',        lowVal.toLocaleString(), lowPct + '% — no usable signal found'),
+    ].join('');
+  }
 
-  // Market type distribution chart
-  const mtDist = kpi('market_type_distribution', {});
-  if (typeof mtDist === 'object' && Object.keys(mtDist).length > 0) {
-    const ls = Object.keys(mtDist);
-    const vs = Object.values(mtDist);
-    const cs = ['#3b82f6','#22c55e','#f59e0b','#a78bfa','#14b8a6','#4b5563'];
-    doughnutChart('chart-mkt-type', ls, vs, cs.slice(0, ls.length));
+  // Section B — Geographic data limitation (technical)
+  const qbEl = document.getElementById('quality-metrics-b');
+  if (qbEl) {
+    const unkPct  = kpi('unknown_pct');
+    const mktConf = kpi('market_confidence_score');
+    qbEl.innerHTML = [
+      makeCard('Exact Location Available', '0%',             'LinkedIn export has no location field'),
+      makeCard('Geographic Confidence',    mktConf + '/100', 'Low = normal for LinkedIn exports'),
+      makeCard('Raw V2 Unknown (technical)',kpi('unknown_count'), unkPct + '% — before V5 reclassification'),
+      makeCard('V5 Reclassified',          (kpi('unknown_count') - (v5S.v5_needs_company_mapping||0) - (v5S.v5_low_value_unresolved||0)) + '', 'contacts rescued from raw UNKNOWN', 'good'),
+    ].join('');
+  }
+
+  // V5 doughnut (replaces old market type distribution)
+  const chartEl = document.getElementById('chart-mkt-type');
+  if (chartEl && Object.keys(v5D).length > 0) {
+    const V5_SHORT = {
+      BRAZIL_CONFIRMED:'Brazil', BRAZIL_LIKELY:'Brazil (likely)',
+      LATAM_USD_CONFIRMED:'LATAM USD', LATAM_USD_LIKELY:'LATAM (likely)',
+      US_CANADA_CONFIRMED:'US/Canada', US_CANADA_LIKELY:'US/CA (likely)',
+      SPAIN_EU_CONFIRMED:'Spain/EU', SPAIN_EU_LIKELY:'Spain (likely)',
+      EUROPE_CONFIRMED:'Europe', EUROPE_LIKELY:'Europe (likely)',
+      GLOBAL_STAFFING:'Staffing', GLOBAL_CONSULTING:'Consulting',
+      GLOBAL_TECH:'Tech', GLOBAL_OPPORTUNITY:'Global Opp.',
+      LANGUAGE_PORTUGUESE_MARKET:'PT Signal', LANGUAGE_SPANISH_MARKET:'ES Signal',
+      NEEDS_COMPANY_MAPPING:'Needs Mapping', LOW_VALUE_UNRESOLVED:'Low Value',
+    };
+    const entries = Object.entries(v5D).sort((a,b) => b[1]-a[1]);
+    doughnutChart('chart-mkt-type',
+      entries.map(([k]) => V5_SHORT[k] || k),
+      entries.map(([,v]) => v),
+      entries.map(([k]) => MARKET_COLORS[k] || '#555')
+    );
+  } else if (chartEl) {
+    const mtDist = kpi('market_type_distribution', {});
+    if (typeof mtDist === 'object' && Object.keys(mtDist).length > 0) {
+      const ls = Object.keys(mtDist);
+      const vs = Object.values(mtDist);
+      const cs = ['#3b82f6','#22c55e','#f59e0b','#a78bfa','#14b8a6','#4b5563'];
+      doughnutChart('chart-mkt-type', ls, vs, cs.slice(0, ls.length));
+    }
   }
 }
