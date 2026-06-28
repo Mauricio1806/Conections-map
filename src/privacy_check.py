@@ -62,6 +62,9 @@ ALLOWED_CONTACT_FIELDS = {
     "reactivation_priority_score", "recommended_next_action",
     "has_positive_signal", "has_interview_signal", "has_cv_signal", "is_auto_reply",
     "market_v4", "market_group", "market_resolution_status",
+    # V5 Opportunity Market — safe inference output fields only (no raw message data)
+    "opportunity_market_v5", "opportunity_bucket",
+    "opportunity_confidence", "is_actionable_opportunity",
 }
 
 

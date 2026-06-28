@@ -55,7 +55,7 @@
       <span class="nav-icon">&#127970;</span> Company Intel
     </div>
     <div class="nav-item" data-page="unknown">
-      <span class="nav-icon">&#10067;</span> Unknown Resolution
+      <span class="nav-icon">&#127758;</span> Opportunity Market
     </div>
     <div class="nav-item" data-page="leads">
       <span class="nav-icon">&#128233;</span> Lead Reactivation
@@ -95,6 +95,9 @@
 
       <div class="section-label">Market Distribution (V2 Inference)</div>
       <div class="metrics-grid metrics-grid-wide" id="kpi-markets"></div>
+
+      <div class="section-label">Opportunity Market V5 — Breakdown</div>
+      <div class="metrics-grid metrics-grid-wide" id="kpi-v5-summary" style="display:none"></div>
 
       <div class="section-label" id="kpi-lead-reactivation-label" style="display:none">Lead Reactivation Intelligence (local data)</div>
       <div class="metrics-grid" id="kpi-lead-reactivation" style="display:none"></div>
@@ -288,22 +291,26 @@
       </div>
     </div>
 
-    <!-- PAGE: Unknown Resolution -->
+    <!-- PAGE: Opportunity Market V5 / Resolution -->
     <div class="page" id="page-unknown">
       <div class="page-header">
-        <h2>Unknown Resolution Engine</h2>
-        <p>Classify companies, not people. Classifying one company can resolve dozens of connections at once.</p>
+        <h2>Opportunity Market V5</h2>
+        <p>18 actionable opportunity buckets — replacing raw UNKNOWN (81.9% V2) with meaningful market intelligence.</p>
       </div>
-      <div class="alert alert-info">
+
+      <div class="section-label">V5 Resolution Summary</div>
+      <div class="metrics-grid metrics-grid-wide" id="v5-resolution-summary"></div>
+
+      <div class="alert alert-info" style="margin-top:1rem">
         <span class="alert-icon">&#128161;</span>
         <span>
-          <strong>To reduce UNKNOWN fastest:</strong> Open <code>outputs/company_override_candidates.csv</code>,
-          fill the <code>manual_market</code> column for the top 25 companies, save, and re-run the pipeline.
+          <strong>To resolve "Needs Mapping" companies:</strong> Open <code>outputs/unresolved_opportunity_buckets.csv</code>,
+          add entries to <code>config/company_market_overrides.yml</code>, and re-run the pipeline.
           Each company you classify resolves all its connections at once.
         </span>
       </div>
 
-      <div class="section-label">UNKNOWN Contacts</div>
+      <div class="section-label">V2 UNKNOWN Analysis (raw data before V5)</div>
       <div class="metrics-grid" id="unk-metrics"></div>
 
       <div class="section-label">Resolution Potential</div>

@@ -556,6 +556,26 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  V4 inference failed (non-fatal): {exc}")
 
+    # 2c. Opportunity Market V5 (replaces UNKNOWN as primary business view)
+    logger.info("Step 2c/8: Applying Opportunity Market V5 …")
+    v5_data = {}
+    try:
+        from src.opportunity_market_v5 import (
+            apply_opportunity_market_v5, build_v5_summary, export_v5_audit,
+        )
+        df = apply_opportunity_market_v5(df)
+        v5_data = build_v5_summary(df)
+        export_v5_audit(df)
+        logger.info(
+            f"  V5: confirmed_geo={v5_data.get('v5_confirmed_geographic',0):,} "
+            f"global={v5_data.get('v5_global_buckets',0):,} "
+            f"lang_inferred={v5_data.get('v5_language_inferred',0):,} "
+            f"needs_mapping={v5_data.get('v5_needs_company_mapping',0):,} "
+            f"low_value={v5_data.get('v5_low_value_unresolved',0):,}"
+        )
+    except Exception as exc:
+        logger.warning(f"  V5 inference failed (non-fatal): {exc}")
+
     _save_csv(df, ENRICHED_CSV, "Enriched Connections")
 
     # 3. Confidence-adjusted KPIs (V3 — 8 separate scores)
@@ -624,7 +644,7 @@ def run_strategy_layer() -> None:
         from src.export_public_dashboard_data import export_public_dashboard_data
         export_public_dashboard_data(
             df, kpis, gap_mat, plan_30, plan_60, plan_90, resolution_data,
-            lead_data=lead_data
+            lead_data=lead_data, v5_data=v5_data,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

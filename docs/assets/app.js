@@ -10,6 +10,7 @@ let filteredGap = [];
 const PAGE_SIZE = 25;
 
 const MARKET_COLORS = {
+  // V2 / legacy
   BRAZIL:             '#22c55e',
   LATAM_USD:          '#f59e0b',
   US_CANADA_NEARSHORE:'#3b82f6',
@@ -19,6 +20,22 @@ const MARKET_COLORS = {
   GLOBAL_TECH:        '#38bdf8',
   GLOBAL_CONSULTING:  '#fb923c',
   UNKNOWN:            '#4b5563',
+  // V5 Opportunity Market buckets
+  BRAZIL_CONFIRMED:          '#16a34a',
+  BRAZIL_LIKELY:             '#4ade80',
+  LATAM_USD_CONFIRMED:       '#d97706',
+  LATAM_USD_LIKELY:          '#fbbf24',
+  US_CANADA_CONFIRMED:       '#2563eb',
+  US_CANADA_LIKELY:          '#60a5fa',
+  SPAIN_EU_CONFIRMED:        '#dc2626',
+  SPAIN_EU_LIKELY:           '#f87171',
+  EUROPE_CONFIRMED:          '#7c3aed',
+  EUROPE_LIKELY:             '#c4b5fd',
+  GLOBAL_OPPORTUNITY:        '#8b5cf6',
+  LANGUAGE_PORTUGUESE_MARKET:'#34d399',
+  LANGUAGE_SPANISH_MARKET:   '#fcd34d',
+  NEEDS_COMPANY_MAPPING:     '#9ca3af',
+  LOW_VALUE_UNRESOLVED:      '#374151',
 };
 
 const URGENCY_COLORS = {
@@ -286,12 +303,42 @@ function renderOverview() {
     }
   }
 
-  // Market doughnut
-  const mktDist   = D.market_distribution || {};
-  const mktLabels = Object.keys(mktDist);
-  const mktValues = Object.values(mktDist);
-  const mktColors = mktLabels.map(m => MARKET_COLORS[m] || '#555');
+  // Market doughnut — V5 Opportunity Market (replaces UNKNOWN-dominated V2 view)
+  const v5Dist = D.opportunity_market_v5 || D.market_distribution || {};
+  const V5_LABEL = {
+    BRAZIL_CONFIRMED: 'Brazil', BRAZIL_LIKELY: 'Brazil (likely)',
+    LATAM_USD_CONFIRMED: 'LATAM USD', LATAM_USD_LIKELY: 'LATAM USD (likely)',
+    US_CANADA_CONFIRMED: 'US / Canada', US_CANADA_LIKELY: 'US/CA (likely)',
+    SPAIN_EU_CONFIRMED: 'Spain / EU', SPAIN_EU_LIKELY: 'Spain/EU (likely)',
+    EUROPE_CONFIRMED: 'Europe', EUROPE_LIKELY: 'Europe (likely)',
+    GLOBAL_STAFFING: 'Global Staffing', GLOBAL_CONSULTING: 'Global Consulting',
+    GLOBAL_TECH: 'Global Tech', GLOBAL_OPPORTUNITY: 'Global Opportunity',
+    LANGUAGE_PORTUGUESE_MARKET: 'PT Language Signal', LANGUAGE_SPANISH_MARKET: 'ES Language Signal',
+    NEEDS_COMPANY_MAPPING: 'Needs Mapping', LOW_VALUE_UNRESOLVED: 'Low Value',
+    // V2 fallbacks
+    BRAZIL: 'Brazil', LATAM_USD: 'LATAM USD', US_CANADA_NEARSHORE: 'US/CA',
+    SPAIN_EU: 'Spain/EU', EUROPE: 'Europe', UNKNOWN: 'Unknown',
+  };
+  const mktEntries = Object.entries(v5Dist).sort((a, b) => b[1] - a[1]);
+  const mktLabels = mktEntries.map(([k]) => V5_LABEL[k] || k);
+  const mktValues = mktEntries.map(([, v]) => v);
+  const mktColors = mktEntries.map(([k]) => MARKET_COLORS[k] || '#555');
   doughnutChart('chart-market', mktLabels, mktValues, mktColors);
+
+  // V5 summary KPI row under chart
+  const v5Sum = D.opportunity_market_v5_summary || {};
+  const v5El = document.getElementById('kpi-v5-summary');
+  if (v5El && v5Sum.total_connections) {
+    v5El.innerHTML = [
+      makeCard('Confirmed Region',   v5Sum.v5_confirmed_geographic || 0, v5Sum.v5_confirmed_pct + '% geographic', 'good'),
+      makeCard('Global Buckets',     v5Sum.v5_global_buckets       || 0, 'staffing · consulting · tech'),
+      makeCard('Language Signal',    v5Sum.v5_language_inferred    || 0, 'PT / ES title keywords'),
+      makeCard('Global Opportunity', v5Sum.v5_global_opportunity   || 0, 'unresolved region persona'),
+      makeCard('Needs Mapping',      v5Sum.v5_needs_company_mapping|| 0, 'company exists, unknown market', 'warn'),
+      makeCard('Low Value',          v5Sum.v5_low_value_unresolved || 0, v5Sum.v5_low_value_pct + '% unresolvable'),
+    ].join('');
+    v5El.style.display = '';
+  }
 
   // Persona bar
   const persDist  = D.persona_distribution || {};
@@ -586,25 +633,46 @@ function renderCompanyChart(tabId) {
   );
 }
 
-// ── PAGE 7: Unknown Resolution ────────────────────────────────────────────────
+// ── PAGE 7: Unresolved Opportunity Resolution ─────────────────────────────────
 function renderUnknownResolution() {
   const res   = D.unknown_resolution || {};
+  const v5Sum = D.opportunity_market_v5_summary || {};
+  const v5Dist= D.opportunity_market_v5 || {};
+
+  // V5 summary — show at top of the page
+  const v5TopEl = document.getElementById('v5-resolution-summary');
+  if (v5TopEl && v5Sum.total_connections) {
+    const needsMapping = v5Sum.v5_needs_company_mapping || 0;
+    const lowValue     = v5Sum.v5_low_value_unresolved || 0;
+    const actionable   = v5Sum.v5_actionable_total || 0;
+    v5TopEl.innerHTML = [
+      makeCard('Actionable Connections',  actionable,    v5Sum.v5_actionable_pct + '% classified', 'good'),
+      makeCard('Confirmed Geographic',    v5Sum.v5_confirmed_geographic || 0, 'Brazil · LATAM · US · EU', 'good'),
+      makeCard('Global Buckets',          v5Sum.v5_global_buckets || 0, 'staffing · consulting · tech'),
+      makeCard('Language Inferred',       v5Sum.v5_language_inferred || 0, 'PT/ES title signal'),
+      makeCard('Needs Company Mapping',   needsMapping,  'company found but market unknown', 'warn'),
+      makeCard('Low Value Unresolved',    lowValue,      v5Sum.v5_low_value_pct + '% — no usable signal'),
+    ].join('');
+  }
+
   const total = res.total_unknown_contacts || kpi('unknown_count');
   const hvUnk = res.high_value_unknown_contacts || 0;
   const top25 = res.top25_coverage || kpi('top25_company_coverage');
   const top25pct = res.top25_pct_of_unknown || kpi('unknown_resolution_potential');
   const autoRes  = res.auto_resolvable_contacts || 0;
 
-  document.getElementById('unk-metrics').innerHTML = [
-    makeCard('Total UNKNOWN',         total,   kpi('unknown_pct') + '% of network'),
+  const unkMetEl = document.getElementById('unk-metrics');
+  if (unkMetEl) unkMetEl.innerHTML = [
+    makeCard('V2 UNKNOWN (raw)',      total,   kpi('unknown_pct') + '% raw before V5'),
     makeCard('High-Value UNKNOWN',    hvUnk,   'recruiters + hiring mgrs with score ≥60', 'warn'),
     makeCard('UNKNOWN Recruiters',    kpi('unknown_recruiters_highvalue'), 'score ≥60'),
     makeCard('UNKNOWN Hiring Mgrs',   kpi('unknown_hiring_mgrs_highvalue'), 'score ≥50'),
     makeCard('UNKNOWN Data Leaders',  kpi('unknown_data_leaders_highvalue'), 'score ≥50'),
   ].join('');
 
-  document.getElementById('unk-resolution-metrics').innerHTML = [
-    makeCard('Top 25 Companies Cover',top25,    top25pct + '% of UNKNOWN', 'good'),
+  const unkResEl = document.getElementById('unk-resolution-metrics');
+  if (unkResEl) unkResEl.innerHTML = [
+    makeCard('Top 25 Companies Cover',top25,    top25pct + '% of V2 UNKNOWN', 'good'),
     makeCard('Auto-Resolvable',       autoRes,  'via keyword + heuristics', 'good'),
     makeCard('Unknown Resolution Score', kpi('unknown_resolution_score') + '/100', ''),
   ].join('');
@@ -636,7 +704,9 @@ function renderUnknownResolution() {
   }
 
   // Unknown persona metrics
-  document.getElementById('unk-persona-metrics').innerHTML = [
+  const unkPersonaEl = document.getElementById('unk-persona-metrics');
+  if (!unkPersonaEl) return;
+  unkPersonaEl.innerHTML = [
     makeCard('Unknown Recruiters (any)', kpi('sns_recruiters') > 0 ? kpi('unknown_count') + ' total' : '—'),
     makeCard('UNKNOWN Rec. (score≥60)',  kpi('unknown_recruiters_highvalue'), 'potential USD pipeline'),
     makeCard('UNKNOWN Hiring Mgr',       kpi('unknown_hiring_mgrs_highvalue'), 'potential direct hire'),
@@ -644,6 +714,7 @@ function renderUnknownResolution() {
     makeCard('UNKNOWN Data Peers',       kpi('unknown_peers'), 'lowest priority'),
   ].join('');
 }
+
 
 // ── PAGE 8: Lead Reactivation ─────────────────────────────────────────────────
 let filteredLeads = [];

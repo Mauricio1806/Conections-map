@@ -34,6 +34,9 @@ SAFE_CONTACT_COLS = [
     "market_v2", "strategic_market", "market_type",
     "priority_score", "action_type", "message_angle", "why_priority",
     "market_confidence_v2", "company_category", "url",
+    # V5 opportunity market fields
+    "opportunity_market_v5", "opportunity_bucket",
+    "opportunity_confidence", "is_actionable_opportunity",
 ]
 
 EXCLUDED_PATTERNS = {
@@ -233,6 +236,13 @@ def build_public_company_intel(df: pd.DataFrame) -> dict:
     }
 
 
+def build_v5_distribution_public(df: pd.DataFrame) -> dict:
+    """V5 opportunity market distribution for the public dashboard."""
+    if "opportunity_market_v5" not in df.columns:
+        return {}
+    return df["opportunity_market_v5"].value_counts().to_dict()
+
+
 def build_unknown_companies_public(df: pd.DataFrame) -> list:
     """Top unknown companies for the 'classify unknown' tab."""
     mkt_col  = "market_v2" if "market_v2" in df.columns else "strategic_market"
@@ -336,6 +346,7 @@ def export_public_dashboard_data(
     plan_90: pd.DataFrame,
     resolution_data: dict = None,
     lead_data: dict = None,
+    v5_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -373,11 +384,14 @@ def export_public_dashboard_data(
         "action_plan_30":     plan_30.to_dict(orient="records"),
         "action_plan_60":     plan_60.to_dict(orient="records"),
         "action_plan_90":     plan_90.to_dict(orient="records"),
-        "top_contacts":        build_public_contacts(df, n=200),
-        "company_intel":       build_public_company_intel(df),
-        "unknown_companies":   build_unknown_companies_public(df),
-        "unknown_resolution":  resolution_data or {},
-        "lead_reactivation":   lead_section,
+        "top_contacts":                build_public_contacts(df, n=200),
+        "company_intel":               build_public_company_intel(df),
+        "unknown_companies":           build_unknown_companies_public(df),
+        "unknown_resolution":          resolution_data or {},
+        "lead_reactivation":           lead_section,
+        # V5 Opportunity Market (replaces UNKNOWN as primary business view)
+        "opportunity_market_v5":       build_v5_distribution_public(df),
+        "opportunity_market_v5_summary": v5_data or {},
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:
