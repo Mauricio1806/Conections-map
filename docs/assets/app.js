@@ -273,6 +273,8 @@ function renderOverview() {
   const actPct   = v5S.v5_actionable_pct || (100 - (v5S.v5_low_value_pct || 0));
   const needsMap = v5S.v5_needs_company_mapping || 0;
   const lowVal   = v5S.v5_low_value_unresolved  || 0;
+  const mktConf    = kpi('market_confidence_score') || 0;
+  const unknownPct = kpi('unknown_pct') || 0;
   const bannerEl = document.getElementById('confidence-banner');
   if (v5S.total_connections) {
     bannerEl.innerHTML = '<div class="alert alert-good">'
@@ -284,8 +286,6 @@ function renderOverview() {
       + ' <em style="opacity:.7;font-size:.85em">Exact geographic location is unavailable from LinkedIn exports — the business dashboard uses company/title/persona inference.</em>'
       + '</div>';
   } else {
-    const unknownPct = kpi('unknown_pct');
-    const mktConf    = kpi('market_confidence_score');
     bannerEl.innerHTML = '<div class="alert alert-info">'
       + '<span class="alert-icon">&#9432;</span>'
       + '<strong>Market Confidence: ' + mktConf + '/100</strong> — '
