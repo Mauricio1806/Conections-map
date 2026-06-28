@@ -22,6 +22,7 @@ import json
 import logging
 import shutil
 import sys
+import time
 from pathlib import Path
 
 # ── UTF-8 stdout on Windows ──────────────────────────────────────────────────
@@ -73,17 +74,35 @@ def _check_json_sanity(path: Path) -> dict:
     return {"kpis": kpis, "contacts": len(contacts), "issues": issues}
 
 
+def _inject_cache_bust(build_ts: str) -> None:
+    """Replace __BUILD_TS__ sentinel in app.js and add ?v= to HTML asset references."""
+    # app.js: replace sentinel in DATA_PATHS
+    app_text = APP_JS.read_text(encoding="utf-8")
+    app_text = app_text.replace("'__BUILD_TS__'", "'" + build_ts + "'")
+    APP_JS.write_text(app_text, encoding="utf-8")
+
+    # index.html: stamp ?v=<ts> onto style.css and app.js references
+    html_text = INDEX_HTML.read_text(encoding="utf-8")
+    import re
+    html_text = re.sub(r'(assets/style\.css)(\?v=[^"\']*)?', r'assets/style.css?v=' + build_ts, html_text)
+    html_text = re.sub(r'(assets/app\.js)(\?v=[^"\']*)?',   r'assets/app.js?v='   + build_ts, html_text)
+    INDEX_HTML.write_text(html_text, encoding="utf-8")
+    logger.info(f"  Cache-bust timestamp injected: {build_ts}")
+
+
 def main():
     logger.info("=" * 60)
     logger.info("  Generating Static HTML Dashboard (V3)")
     logger.info("=" * 60)
     logger.info(f"  Production URL: https://mauricio1806.github.io/Conections-map/")
 
+    build_ts = str(int(time.time()))
+
     # Ensure docs/assets/ exists
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
 
     # Step 1: Copy dashboard_data.json to docs/assets/
-    logger.info("Step 1/3: Copying dashboard_data.json to docs/assets/ ...")
+    logger.info("Step 1/4: Copying dashboard_data.json to docs/assets/ ...")
     if not SRC_JSON.exists():
         logger.error(f"Source JSON not found: {SRC_JSON}")
         logger.error("Run `python src/build_strategy_layer.py` first.")
@@ -92,8 +111,11 @@ def main():
     shutil.copy2(SRC_JSON, DST_JSON)
     logger.info(f"  Copied: {SRC_JSON.name} → docs/assets/ ({DST_JSON.stat().st_size // 1024}KB)")
 
+    # Step 1b: Inject cache-bust timestamp
+    _inject_cache_bust(build_ts)
+
     # Step 2: Sanity check the JSON
-    logger.info("Step 2/3: Validating dashboard_data.json ...")
+    logger.info("Step 2/4: Validating dashboard_data.json ...")
     try:
         info = _check_json_sanity(DST_JSON)
         kpis = info["kpis"]
@@ -113,7 +135,7 @@ def main():
         logger.warning(f"  JSON validation failed (non-fatal): {e}")
 
     # Step 3: Verify all required files exist
-    logger.info("Step 3/3: Verifying all static files ...")
+    logger.info("Step 3/4: Verifying all static files ...")
     all_ok = True
     for f in REQUIRED_FILES:
         if f.exists():
@@ -126,9 +148,28 @@ def main():
         logger.error("Some required files are missing. Check the docs/ directory.")
         sys.exit(1)
 
+    # Step 4: JS syntax check if node available
+    logger.info("Step 4/4: JavaScript syntax check ...")
+    import subprocess
+    try:
+        result = subprocess.run(
+            ["node", "--check", str(APP_JS)],
+            capture_output=True, text=True, timeout=10
+        )
+        if result.returncode == 0:
+            logger.info("  app.js syntax: OK")
+        else:
+            logger.error(f"  app.js SYNTAX ERROR:\n{result.stderr.strip()}")
+            sys.exit(1)
+    except FileNotFoundError:
+        logger.info("  node not found — skipping JS syntax check")
+    except Exception as e:
+        logger.warning(f"  JS syntax check failed: {e}")
+
     logger.info("")
     logger.info("=" * 60)
     logger.info("  Static dashboard generation COMPLETE")
+    logger.info(f"  Build timestamp: {build_ts}")
     logger.info("  Production: https://mauricio1806.github.io/Conections-map/")
     logger.info("  Local test: python -m http.server --directory docs")
     logger.info("=" * 60)

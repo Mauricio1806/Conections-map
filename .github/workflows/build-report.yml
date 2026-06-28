@@ -41,6 +41,9 @@ jobs:
       - name: Run Privacy Check
         run: python src/privacy_check.py
 
+      - name: Run Runtime Validation
+        run: python src/validate_static_dashboard_runtime.py
+
       - name: Verify required dashboard files
         run: |
           echo "Verifying committed dashboard files..."

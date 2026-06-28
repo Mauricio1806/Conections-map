@@ -57,30 +57,95 @@ const SCORE_COLORS = {
   'Not Started':'#ef4444',
 };
 
+// ── Global error handlers ────────────────────────────────────────────────────
+window.onerror = function(msg, src, line, col, err) {
+  showBootError('Runtime error: ' + msg + ' (line ' + line + ')');
+};
+window.addEventListener('unhandledrejection', function(ev) {
+  showBootError('Unhandled rejection: ' + (ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason)));
+});
+
+function showBootError(msg) {
+  const loadEl = document.getElementById('loading');
+  if (!loadEl) return;
+  loadEl.style.display = '';
+  loadEl.innerHTML = '<div class="load-error">'
+    + '<h3>Dashboard Error</h3>'
+    + '<p>' + msg + '</p>'
+    + '<p style="font-size:0.8rem;opacity:0.6">Open browser DevTools (F12 &rarr; Console) for details.</p>'
+    + '</div>';
+}
+
+// ── Defensive helpers ────────────────────────────────────────────────────────
+function safeGet(obj, path, fallback) {
+  try {
+    return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj) ?? fallback;
+  } catch(_) { return fallback; }
+}
+function asArray(v)  { return Array.isArray(v) ? v : []; }
+function asObject(v) { return (v && typeof v === 'object' && !Array.isArray(v)) ? v : {}; }
+function formatNumber(v) { return (v === null || v === undefined) ? '—' : (typeof v === 'number' ? v.toLocaleString() : v); }
+
+function safeRender(name, fn) {
+  try { fn(); }
+  catch(e) {
+    console.error('[Dashboard] ' + name + ' render failed:', e);
+    const errCard = '<div class="card" style="border-color:#ef4444;color:#ef4444;padding:1rem">'
+      + '<strong>' + name + '</strong>: render error — ' + e.message + '</div>';
+    const page = document.getElementById('page-' + name.toLowerCase().replace(/\s+/g, '-'));
+    if (page) {
+      const existing = page.querySelector('.section-label, .metrics-grid, .page-header');
+      if (existing) existing.insertAdjacentHTML('afterend', errCard);
+    }
+  }
+}
+
 // ── Boot ─────────────────────────────────────────────────────────────────────
+const BUILD_TS = '1782687775';
+const DATA_PATHS = [
+  'assets/dashboard_data.json?v=' + BUILD_TS,
+  './assets/dashboard_data.json?v=' + BUILD_TS,
+  '/Conections-map/assets/dashboard_data.json?v=' + BUILD_TS,
+];
+
+async function tryFetchData() {
+  for (const path of DATA_PATHS) {
+    try {
+      const r = await fetch(path);
+      if (r.ok) {
+        const data = await r.json();
+        console.log('[Dashboard] Loaded from:', path, '| Keys:', Object.keys(data));
+        return data;
+      }
+    } catch(_) { /* try next */ }
+  }
+  throw new Error('Could not load dashboard_data.json. Tried:\n' + DATA_PATHS.join('\n'));
+}
+
 window.addEventListener('DOMContentLoaded', () => {
-  fetch('./assets/dashboard_data.json')
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  tryFetchData()
     .then(data => {
       D = data;
       document.getElementById('loading').style.display = 'none';
       document.getElementById('app').style.display     = 'flex';
       initNav();
-      renderOverview();
-      renderHeatmaps();
-      renderGap();
-      renderPlan();
-      renderContacts();
-      renderCompanies();
-      renderUnknownResolution();
-      renderLeads();
-      renderQuality();
+      safeRender('Overview',    renderOverview);
+      safeRender('Heatmaps',    renderHeatmaps);
+      safeRender('Gap',         renderGap);
+      safeRender('Plan',        renderPlan);
+      safeRender('Contacts',    renderContacts);
+      safeRender('Companies',   renderCompanies);
+      safeRender('Opportunity', renderUnknownResolution);
+      safeRender('Leads',       renderLeads);
+      safeRender('Quality',     renderQuality);
     })
     .catch(err => {
-      document.getElementById('loading').innerHTML =
-        '<div class="load-error"><h3>Failed to load dashboard data</h3>'
-        + '<p>' + err.message + '</p>'
-        + '<p style="font-size:0.8rem;opacity:0.6">If viewing as a local file, run: <code>python -m http.server --directory docs</code></p></div>';
+      const loadEl = document.getElementById('loading');
+      loadEl.innerHTML = '<div class="load-error">'
+        + '<h3>Failed to load dashboard data</h3>'
+        + '<p>' + err.message.replace(/\n/g, '<br>') + '</p>'
+        + '<p style="font-size:0.8rem;opacity:0.6">If viewing as a local file, run: <code>python -m http.server --directory docs</code></p>'
+        + '</div>';
     });
 });
 
@@ -280,7 +345,6 @@ function renderOverview() {
   ].join('');
 
   // V5 Opportunity Market KPI row — replaces raw UNKNOWN
-  const v5S = D.opportunity_market_v5_summary || {};
   const v5D = D.opportunity_market_v5 || {};
   if (v5S.total_connections) {
     document.getElementById('kpi-markets').innerHTML = [
