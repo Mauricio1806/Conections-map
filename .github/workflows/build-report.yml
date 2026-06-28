@@ -7,6 +7,9 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-report:
     runs-on: ubuntu-latest
@@ -48,17 +51,22 @@ jobs:
       - name: Verify required dashboard files
         run: |
           echo "Verifying dashboard files exist..."
-          test -f docs/index.html         && echo "[OK] docs/index.html"         || { echo "[FAIL] docs/index.html missing"; exit 1; }
-          test -f docs/assets/dashboard_data.json && echo "[OK] docs/assets/dashboard_data.json" || { echo "[FAIL] docs/assets/dashboard_data.json missing"; exit 1; }
-          test -f docs/assets/style.css   && echo "[OK] docs/assets/style.css"   || { echo "[FAIL] docs/assets/style.css missing"; exit 1; }
-          test -f docs/assets/app.js      && echo "[OK] docs/assets/app.js"      || { echo "[FAIL] docs/assets/app.js missing"; exit 1; }
+          test -f docs/index.html                  && echo "[OK] docs/index.html"                  || { echo "[FAIL] docs/index.html missing";                  exit 1; }
+          test -f docs/assets/dashboard_data.json  && echo "[OK] docs/assets/dashboard_data.json"  || { echo "[FAIL] docs/assets/dashboard_data.json missing";  exit 1; }
+          test -f docs/assets/style.css            && echo "[OK] docs/assets/style.css"            || { echo "[FAIL] docs/assets/style.css missing";            exit 1; }
+          test -f docs/assets/app.js               && echo "[OK] docs/assets/app.js"               || { echo "[FAIL] docs/assets/app.js missing";               exit 1; }
           echo "All required files present."
 
       - name: Commit updated outputs and dashboard
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add outputs/ reports/ docs/
-          git diff --cached --quiet && echo "No changes to commit" || \
-            git commit -m "ci: update LinkedIn network dashboard [$(date -u '+%Y-%m-%d')]"
-          git push
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/ outputs/ reports/
+
+          if git diff --cached --quiet; then
+            echo "No generated files changed."
+          else
+            git commit -m "update generated LinkedIn network dashboard [skip ci]"
+            git push
+          fi
