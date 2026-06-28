@@ -260,45 +260,68 @@ def build_unknown_companies_public(df: pd.DataFrame) -> list:
     return agg.to_dict(orient="records")
 
 
+SAFE_LEAD_COLS = {
+    "other_person_name", "company_clean", "position_clean", "persona",
+    "strategic_market", "conversation_status", "lead_category", "lead_temperature",
+    "last_message_date", "days_since_last_message", "total_messages",
+    "reactivation_priority_score", "recommended_next_action",
+    "message_angle", "other_person_profile_url",
+    "has_positive_signal", "has_interview_signal", "has_cv_signal", "is_auto_reply",
+}
+
+SAFE_LEAD_SUMMARY_KEYS = {
+    "messages_csv_available", "total_conversations",
+    "hot_reactivation_leads", "warm_reactivation_leads",
+    "needs_my_response", "career_site_follow_ups",
+    "follow_up_due", "dormant_warm_leads",
+    "rejected_closed_reusable", "no_response_leads",
+    "this_week_count", "weekly_action_plan",
+    # legacy
+    "hot_leads", "warm_leads",
+    # contact lists
+    "top_reactivation_contacts", "this_week_contacts", "needs_reply_contacts",
+}
+
+
+def _sanitize_lead_contacts(contacts: list) -> list:
+    return [
+        {k: v for k, v in c.items() if k in SAFE_LEAD_COLS}
+        for c in (contacts or [])
+    ]
+
+
+def _load_existing_lead_data() -> dict | None:
+    """
+    Load lead_reactivation section from the committed JSON if it has real data.
+    Used to preserve local-generated lead data when messages.csv is absent.
+    """
+    for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:
+        if path.exists():
+            try:
+                with open(path, encoding="utf-8") as f:
+                    data = json.load(f)
+                lr = data.get("lead_reactivation", {})
+                if lr.get("messages_csv_available") and lr.get("total_conversations", 0) > 0:
+                    return lr
+            except Exception:
+                pass
+    return None
+
+
 def build_lead_reactivation_public(lead_data: dict) -> dict:
     """Strip any private fields from lead reactivation data for public JSON."""
     if not lead_data:
         return {"messages_csv_available": False}
 
-    # Safe summary fields only
-    safe_summary = {
-        k: lead_data[k]
-        for k in [
-            "messages_csv_available", "total_conversations", "hot_leads",
-            "warm_leads", "follow_up_due", "needs_my_response",
-            "auto_reply_leads", "dormant_warm_leads",
-            "rejected_closed_reusable", "no_response_leads",
-            "weekly_action_plan",
-        ]
-        if k in lead_data
-    }
+    safe_summary = {k: lead_data[k] for k in SAFE_LEAD_SUMMARY_KEYS if k in lead_data}
 
-    # Safe contact fields for public dashboard (no raw messages or emails)
-    SAFE_LEAD_COLS = {
-        "other_person_name", "company_clean", "position_clean", "persona",
-        "strategic_market", "conversation_status", "lead_temperature",
-        "last_message_date", "days_since_last_message", "total_messages",
-        "reactivation_priority_score", "recommended_next_action",
-        "message_angle", "other_person_profile_url",
-        "has_positive_signal", "has_interview_signal", "is_auto_reply",
-    }
-
-    def _sanitize_contacts(contacts: list) -> list:
-        result = []
-        for c in (contacts or []):
-            safe = {k: v for k, v in c.items() if k in SAFE_LEAD_COLS}
-            result.append(safe)
-        return result
-
-    safe_summary["top_reactivation_contacts"] = _sanitize_contacts(
+    safe_summary["top_reactivation_contacts"] = _sanitize_lead_contacts(
         lead_data.get("top_reactivation_contacts", [])
     )
-    safe_summary["needs_reply_contacts"] = _sanitize_contacts(
+    safe_summary["this_week_contacts"] = _sanitize_lead_contacts(
+        lead_data.get("this_week_contacts", [])
+    )
+    safe_summary["needs_reply_contacts"] = _sanitize_lead_contacts(
         lead_data.get("needs_reply_contacts", [])
     )
     return safe_summary
@@ -316,6 +339,20 @@ def export_public_dashboard_data(
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Determine lead_reactivation section:
+    # If messages.csv was present this run → build fresh
+    # If not (messages_csv_available == False) → preserve existing committed data
+    messages_available = lead_data and lead_data.get("messages_csv_available", False)
+    if messages_available:
+        lead_section = build_lead_reactivation_public(lead_data)
+    else:
+        existing = _load_existing_lead_data()
+        if existing:
+            logger.info("  Preserving existing lead_reactivation data (messages.csv not present this run)")
+            lead_section = existing
+        else:
+            lead_section = {"messages_csv_available": False}
 
     payload = {
         "meta": {
@@ -340,7 +377,7 @@ def export_public_dashboard_data(
         "company_intel":       build_public_company_intel(df),
         "unknown_companies":   build_unknown_companies_public(df),
         "unknown_resolution":  resolution_data or {},
-        "lead_reactivation":   build_lead_reactivation_public(lead_data or {}),
+        "lead_reactivation":   lead_section,
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:

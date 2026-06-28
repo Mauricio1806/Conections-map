@@ -96,6 +96,9 @@
       <div class="section-label">Market Distribution (V2 Inference)</div>
       <div class="metrics-grid metrics-grid-wide" id="kpi-markets"></div>
 
+      <div class="section-label" id="kpi-lead-reactivation-label" style="display:none">Lead Reactivation Intelligence (local data)</div>
+      <div class="metrics-grid" id="kpi-lead-reactivation" style="display:none"></div>
+
       <div class="section-label">Visual Distribution</div>
       <div class="chart-grid">
         <div class="chart-box"><h4>Market Distribution (V2)</h4><canvas id="chart-market"></canvas></div>
@@ -343,7 +346,35 @@
         <div class="section-label">Lead Pipeline</div>
         <div class="metrics-grid" id="leads-pipeline"></div>
 
-        <div class="section-label">Filters</div>
+        <div id="leads-this-week">
+          <div class="section-label">This Week&apos;s Queue (max 55 contacts)</div>
+          <div class="table-wrap">
+            <table id="leads-this-week-table">
+              <thead><tr>
+                <th>#</th><th>Name</th><th>Company</th><th>Persona</th>
+                <th>Category</th><th>Temp</th><th>Status</th>
+                <th>Score</th><th>Recommended Action</th><th>LinkedIn</th>
+              </tr></thead>
+              <tbody id="leads-this-week-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section-label">Needs My Response — Priority Queue</div>
+        <div class="table-wrap">
+          <table id="leads-reply-table">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Company</th><th>Persona</th>
+              <th>Score</th><th>Message Angle</th><th>LinkedIn</th>
+            </tr></thead>
+            <tbody id="leads-reply-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-label">This Week&apos;s Recommended Actions</div>
+        <div class="sprint-grid" id="leads-weekly-plan"></div>
+
+        <div class="section-label">Filters — Full Backlog</div>
         <div class="filters-bar">
           <div class="filter-group"><label>Temperature</label>
             <select id="lead-temp-filter">
@@ -373,13 +404,13 @@
           <button class="btn-ghost" onclick="resetLeadFilters()">Reset</button>
         </div>
 
-        <div class="section-label">Top 50 Reactivation Contacts</div>
+        <div class="section-label">Top 50 Reactivation Contacts (Backlog)</div>
         <div class="table-stats" id="leads-stats"></div>
         <div class="table-wrap">
           <table id="leads-table">
             <thead><tr>
               <th>#</th><th>Name</th><th>Company</th><th>Role</th><th>Persona</th>
-              <th>Market</th><th>Status</th><th>Temp</th>
+              <th>Market</th><th>Category</th><th>Status</th><th>Temp</th>
               <th>Last Msg</th><th>Days</th><th>Score</th>
               <th>Recommended Action</th><th>LinkedIn</th>
             </tr></thead>
@@ -387,19 +418,6 @@
           </table>
         </div>
 
-        <div class="section-label">This Week&apos;s Recommended Actions</div>
-        <div class="sprint-grid" id="leads-weekly-plan"></div>
-
-        <div class="section-label">Needs My Response — Priority Queue</div>
-        <div class="table-wrap">
-          <table id="leads-reply-table">
-            <thead><tr>
-              <th>#</th><th>Name</th><th>Company</th><th>Persona</th>
-              <th>Score</th><th>Message Angle</th><th>LinkedIn</th>
-            </tr></thead>
-            <tbody id="leads-reply-tbody"></tbody>
-          </table>
-        </div>
       </div>
     </div>
 

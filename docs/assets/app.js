@@ -264,6 +264,28 @@ function renderOverview() {
     makeCard('Unknown',           kpi('unknown_count'), kpi('unknown_pct') + '%', 'warn'),
   ].join('');
 
+  // Lead reactivation row (additive — only shown when message data is available)
+  const lr = D.lead_reactivation || {};
+  const lrRow = document.getElementById('kpi-lead-reactivation');
+  const lrLabel = document.getElementById('kpi-lead-reactivation-label');
+  if (lrRow) {
+    if (lr.messages_csv_available && lr.total_conversations) {
+      lrRow.style.display = '';
+      if (lrLabel) lrLabel.style.display = '';
+      lrRow.innerHTML = [
+        makeCard('This Week Queue',   lr.this_week_count           || 0, 'action target', 'good'),
+        makeCard('Needs My Response', lr.needs_my_response         || 0, 'reply now',     'bad'),
+        makeCard('Hot Reactivation',  lr.hot_reactivation_leads    || lr.hot_leads  || 0, 'positive signal + recruiter', 'good'),
+        makeCard('Warm Reactivation', lr.warm_reactivation_leads   || lr.warm_leads || 0, 'opportunity signals', 'warn'),
+        makeCard('Career Site',       lr.career_site_follow_ups    || 0, 'submit CV'),
+        makeCard('Follow-ups Due',    lr.follow_up_due             || 0, '7-120d window'),
+      ].join('');
+    } else {
+      lrRow.style.display = 'none';
+      if (lrLabel) lrLabel.style.display = 'none';
+    }
+  }
+
   // Market doughnut
   const mktDist   = D.market_distribution || {};
   const mktLabels = Object.keys(mktDist);
@@ -653,11 +675,16 @@ function tempBadge(t) {
 
 function renderLeads() {
   const lr = D.lead_reactivation || {};
-  const available = lr.messages_csv_available !== false;
   const noData = document.getElementById('leads-no-data');
   const mainContent = document.getElementById('leads-main-content');
 
-  if (!available || !lr.total_conversations) {
+  // Only show no-data banner if there truly is no data (check contacts too,
+  // to avoid hiding data that was preserved from a previous local build)
+  const hasContacts = (lr.top_reactivation_contacts || []).length > 0
+                   || (lr.this_week_contacts || []).length > 0;
+  const genuinelyEmpty = !lr.total_conversations && !hasContacts;
+
+  if (genuinelyEmpty) {
     if (noData) noData.style.display = '';
     if (mainContent) mainContent.style.display = 'none';
     return;
@@ -665,40 +692,56 @@ function renderLeads() {
   if (noData) noData.style.display = 'none';
   if (mainContent) mainContent.style.display = '';
 
-  // Summary
+  // ── Summary cards ─────────────────────────────────────────────────────────
   const sumEl = document.getElementById('leads-summary');
   if (sumEl) sumEl.innerHTML = [
-    makeCard('Conversations Analyzed', lr.total_conversations),
-    makeCard('Needs My Response',      lr.needs_my_response || 0, 'reply first', 'bad'),
-    makeCard('Follow-ups Due',         lr.follow_up_due     || 0, '>7 days since my last msg', 'warn'),
+    makeCard('Conversations Analyzed', lr.total_conversations || 0),
+    makeCard('Needs My Response', lr.needs_my_response || 0, 'reply first', 'bad'),
+    makeCard('This Week Queue',   lr.this_week_count   || 0, 'weekly action limit', 'warn'),
+    makeCard('Follow-ups Due',    lr.follow_up_due     || 0, '7-120d, positive signal'),
   ].join('');
 
   const pipeEl = document.getElementById('leads-pipeline');
   if (pipeEl) pipeEl.innerHTML = [
-    makeCard('Hot Leads',           lr.hot_leads            || 0, 'positive signal + unread', 'good'),
-    makeCard('Warm Leads',          lr.warm_leads           || 0, 'opportunity signals found', 'good'),
-    makeCard('Dormant Warm Leads',  lr.dormant_warm_leads   || 0, 'positive but >30d ago', 'warn'),
-    makeCard('Auto-reply Leads',    lr.auto_reply_leads     || 0, 'career site only'),
-    makeCard('Rejected / Closed',   lr.rejected_closed_reusable || 0, 'reusable for future'),
-    makeCard('No Response',         lr.no_response_leads    || 0, 'sent, no reply'),
+    makeCard('Hot Reactivation',  lr.hot_reactivation_leads  || lr.hot_leads  || 0, 'needs response + positive signal', 'good'),
+    makeCard('Warm Reactivation', lr.warm_reactivation_leads || lr.warm_leads || 0, 'opportunity signals found', 'good'),
+    makeCard('Career Site',       lr.career_site_follow_ups  || 0, 'auto-reply → submit CV'),
+    makeCard('Dormant Warm',      lr.dormant_warm_leads      || 0, 'positive but >30d ago', 'warn'),
+    makeCard('Rejected / Closed', lr.rejected_closed_reusable || 0, 'reusable for future'),
+    makeCard('No Response',       lr.no_response_leads        || 0, 'sent, no reply'),
   ].join('');
 
-  // Contacts table
-  filteredLeads = lr.top_reactivation_contacts || [];
-  renderLeadsTable();
-
-  // Weekly plan
-  const planEl = document.getElementById('leads-weekly-plan');
-  if (planEl && lr.weekly_action_plan) {
-    planEl.innerHTML = Object.entries(lr.weekly_action_plan).map(([day, action]) =>
-      '<div class="sprint-card">'
-      + '<div class="sprint-day">' + day + '</div>'
-      + '<div class="sprint-action">' + action + '</div>'
-      + '</div>'
-    ).join('');
+  // ── This Week queue (shown first) ─────────────────────────────────────────
+  const thisWeekSection = document.getElementById('leads-this-week');
+  const thisWeekTbody   = document.getElementById('leads-this-week-tbody');
+  if (thisWeekTbody) {
+    const tw = lr.this_week_contacts || [];
+    if (!tw.length) {
+      if (thisWeekSection) thisWeekSection.style.display = 'none';
+    } else {
+      if (thisWeekSection) thisWeekSection.style.display = '';
+      thisWeekTbody.innerHTML = tw.map((r, i) => {
+        const url   = r.other_person_profile_url || '';
+        const score = parseInt(r.reactivation_priority_score) || 0;
+        const sCls  = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+        const icon  = STATUS_ICONS[r.conversation_status] || '';
+        return '<tr>'
+          + '<td><strong>#' + (i+1) + '</strong></td>'
+          + '<td style="white-space:nowrap">' + (r.other_person_name||'—') + '</td>'
+          + '<td>' + (r.company_clean||'—') + '</td>'
+          + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
+          + '<td style="font-size:0.78rem">' + (r.lead_category||'—') + '</td>'
+          + '<td>' + tempBadge(r.lead_temperature||'—') + '</td>'
+          + '<td style="font-size:0.75rem">' + icon + ' ' + (r.conversation_status||'—') + '</td>'
+          + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+          + '<td style="font-size:0.72rem;max-width:200px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
+          + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
   }
 
-  // Needs reply table
+  // ── Needs reply table ─────────────────────────────────────────────────────
   const replyTbody = document.getElementById('leads-reply-tbody');
   if (replyTbody) {
     const replies = lr.needs_reply_contacts || [];
@@ -718,6 +761,21 @@ function renderLeads() {
           + '</tr>';
       }).join('');
     }
+  }
+
+  // ── Full backlog contacts table ───────────────────────────────────────────
+  filteredLeads = lr.top_reactivation_contacts || [];
+  renderLeadsTable();
+
+  // ── Weekly plan ───────────────────────────────────────────────────────────
+  const planEl = document.getElementById('leads-weekly-plan');
+  if (planEl && lr.weekly_action_plan) {
+    planEl.innerHTML = Object.entries(lr.weekly_action_plan).map(([day, action]) =>
+      '<div class="sprint-card">'
+      + '<div class="sprint-day">' + day + '</div>'
+      + '<div class="sprint-action">' + action + '</div>'
+      + '</div>'
+    ).join('');
   }
 }
 
@@ -749,7 +807,7 @@ function renderLeadsTable() {
   const tbody = document.getElementById('leads-tbody');
   if (!tbody) return;
   if (!filteredLeads.length) {
-    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
     return;
   }
   tbody.innerHTML = filteredLeads.map((r, i) => {
@@ -761,15 +819,16 @@ function renderLeadsTable() {
       + '<td><strong>#' + (i+1) + '</strong></td>'
       + '<td style="white-space:nowrap">' + (r.other_person_name||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (r.company_clean||'—') + '</td>'
-      + '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.position_clean||'—') + '</td>'
+      + '<td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.position_clean||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
       + '<td>' + marketBadge(r.strategic_market||'UNKNOWN') + '</td>'
+      + '<td style="font-size:0.75rem">' + (r.lead_category||'—') + '</td>'
       + '<td style="white-space:nowrap;font-size:0.78rem">' + icon + ' ' + (r.conversation_status||'—') + '</td>'
       + '<td>' + tempBadge(r.lead_temperature||'—') + '</td>'
       + '<td style="white-space:nowrap;font-size:0.78rem">' + (r.last_message_date||'—') + '</td>'
       + '<td style="text-align:center">' + (r.days_since_last_message||'—') + '</td>'
       + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
-      + '<td style="font-size:0.72rem;max-width:200px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
+      + '<td style="font-size:0.72rem;max-width:180px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
       + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
       + '</tr>';
   }).join('');

@@ -57,10 +57,10 @@ ALLOWED_CONTACT_FIELDS = {
     "recommended_action", "company_category", "url",
     # Lead reactivation safe fields
     "other_person_name", "other_person_profile_url",
-    "conversation_status", "lead_temperature",
+    "conversation_status", "lead_category", "lead_temperature",
     "last_message_date", "days_since_last_message", "total_messages",
     "reactivation_priority_score", "recommended_next_action",
-    "has_positive_signal", "has_interview_signal", "is_auto_reply",
+    "has_positive_signal", "has_interview_signal", "has_cv_signal", "is_auto_reply",
     "market_v4", "market_group", "market_resolution_status",
 }
 
@@ -80,7 +80,12 @@ def check_json(path: Path) -> list[str]:
 
     # ── 1. Field-level check on contact records ─────────────────────────────
     contacts = data.get("top_contacts", [])
-    leads    = (data.get("lead_reactivation", {}) or {}).get("top_reactivation_contacts", [])
+    lr = data.get("lead_reactivation", {}) or {}
+    leads = (
+        list(lr.get("top_reactivation_contacts", []) or []) +
+        list(lr.get("this_week_contacts", []) or []) +
+        list(lr.get("needs_reply_contacts", []) or [])
+    )
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)]
 

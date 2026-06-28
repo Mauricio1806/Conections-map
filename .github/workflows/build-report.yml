@@ -1,4 +1,4 @@
-name: Build LinkedIn Network Report
+name: Validate LinkedIn Network Dashboard
 
 on:
   push:
@@ -7,11 +7,13 @@ on:
       - master
   workflow_dispatch:
 
-permissions:
-  contents: write
+# Architecture: docs/assets/dashboard_data.json is generated LOCALLY
+# (with messages.csv) and committed. GitHub Actions only validates the
+# committed files. It never regenerates the dashboard to avoid wiping
+# Lead Reactivation data that requires messages.csv.
 
 jobs:
-  build-report:
+  validate-dashboard:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,37 +38,30 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Step 1 - Build Network Heatmap
-        run: python src/build_network_heatmap.py
-
-      - name: Run Step 2 - Build Strategy Layer (V3)
-        run: python src/build_strategy_layer.py
-
-      - name: Run Step 3 - Generate Static Dashboard
-        run: python src/generate_static_dashboard.py
-
-      - name: Run Step 4 - Privacy Check
+      - name: Run Privacy Check
         run: python src/privacy_check.py
 
       - name: Verify required dashboard files
         run: |
-          echo "Verifying dashboard files exist..."
+          echo "Verifying committed dashboard files..."
           test -f docs/index.html                  && echo "[OK] docs/index.html"                  || { echo "[FAIL] docs/index.html missing";                  exit 1; }
           test -f docs/assets/dashboard_data.json  && echo "[OK] docs/assets/dashboard_data.json"  || { echo "[FAIL] docs/assets/dashboard_data.json missing";  exit 1; }
           test -f docs/assets/style.css            && echo "[OK] docs/assets/style.css"            || { echo "[FAIL] docs/assets/style.css missing";            exit 1; }
-          test -f docs/assets/app.js               && echo "[OK] docs/assets/app.js"               || { echo "[FAIL] docs/assets/app.js missing";               exit 1; }
-          echo "All required files present."
+          test -f docs/assets/app.js               && echo "[OK] docs/assets/app.js"               || { echo "[FAIL] docs/assets/app.js missing";              exit 1; }
+          echo "All required dashboard files present."
 
-      - name: Commit updated outputs and dashboard
+      - name: Verify Lead Reactivation data integrity
         run: |
-          git config --global user.name  "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add docs/ outputs/ reports/
-
-          if git diff --cached --quiet; then
-            echo "No generated files changed."
-          else
-            git commit -m "update generated LinkedIn network dashboard [skip ci]"
-            git push
-          fi
+          python -c "
+          import json, sys
+          with open('docs/assets/dashboard_data.json', encoding='utf-8') as f:
+              d = json.load(f)
+          lr = d.get('lead_reactivation', {})
+          available = lr.get('messages_csv_available', False)
+          total = lr.get('total_conversations', 0)
+          if available and total > 0:
+              print(f'[OK] Lead Reactivation data present: {total} conversations')
+          else:
+              print('[INFO] Lead Reactivation: no message data (messages.csv is local-only)')
+          print('[OK] Lead Reactivation integrity check passed')
+          "
