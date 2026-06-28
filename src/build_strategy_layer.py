@@ -638,13 +638,21 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Lead reactivation failed (non-fatal): {exc}")
 
+    # 7b2. Outreach Adjusted Scoring (reads message_threads_summary.csv)
+    outreach_scores = {}
+    try:
+        from src.outreach_adjusted_scoring import compute_outreach_scores
+        outreach_scores = compute_outreach_scores()
+    except Exception as exc:
+        logger.warning(f"  Outreach scoring failed (non-fatal): {exc}")
+
     # 7c. Export public dashboard JSON (for static GitHub Pages dashboard)
     logger.info("  Exporting public dashboard JSON ...")
     try:
         from src.export_public_dashboard_data import export_public_dashboard_data
         export_public_dashboard_data(
             df, kpis, gap_mat, plan_30, plan_60, plan_90, resolution_data,
-            lead_data=lead_data, v5_data=v5_data,
+            lead_data=lead_data, v5_data=v5_data, outreach_scores=outreach_scores,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

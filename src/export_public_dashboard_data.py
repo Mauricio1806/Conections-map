@@ -37,6 +37,11 @@ SAFE_CONTACT_COLS = [
     # V5 opportunity market fields
     "opportunity_market_v5", "opportunity_bucket",
     "opportunity_confidence", "is_actionable_opportunity",
+    # Outreach adjusted scoring (message history intelligence)
+    "outreach_adjusted_score", "outreach_status", "outreach_reason",
+    "has_message_history", "replied_to_me", "ghosted_me", "auto_reply_only",
+    "last_message_date", "days_since_last_message",
+    "prior_positive_signal", "prior_rejection",
 ]
 
 EXCLUDED_PATTERNS = {
@@ -120,13 +125,50 @@ def _enrich_action_fields(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def build_public_contacts(df: pd.DataFrame, n: int = 200) -> list:
+def build_public_contacts(
+    df: pd.DataFrame,
+    n: int = 200,
+    outreach_scores: dict = None,
+) -> list:
     df = _enrich_action_fields(df)
+
+    # Merge outreach scores (by normalized URL)
+    if outreach_scores:
+        def _norm(url):
+            return str(url or "").strip().rstrip("/").lower()
+
+        for col in [
+            "outreach_adjusted_score", "outreach_status", "outreach_reason",
+            "has_message_history", "replied_to_me", "ghosted_me", "auto_reply_only",
+            "last_message_date", "days_since_last_message",
+            "prior_positive_signal", "prior_rejection",
+        ]:
+            df[col] = None
+
+        for idx, row in df.iterrows():
+            norm = _norm(row.get("url", ""))
+            rec  = outreach_scores.get(norm)
+            if rec:
+                for col, val in rec.items():
+                    df.at[idx, col] = val
+
+        # Fill defaults for contacts with no message history
+        df["outreach_adjusted_score"] = (
+            df["outreach_adjusted_score"]
+            .combine_first(df["priority_score"])
+        )
+        df["outreach_status"]     = df["outreach_status"].where(df["outreach_status"].notna(), "No History")
+        df["has_message_history"] = df["has_message_history"].where(df["has_message_history"].notna(), False)
+
+        sort_col = "outreach_adjusted_score"
+    else:
+        sort_col = "priority_score"
+
     safe_cols = [c for c in SAFE_CONTACT_COLS if c in df.columns]
     safe_cols = [c for c in safe_cols if _is_safe_field(c)]
 
     top = (
-        df.sort_values("priority_score", ascending=False)
+        df.sort_values(sort_col, ascending=False)
         .head(n)[safe_cols]
         .reset_index(drop=True)
     )
@@ -344,9 +386,10 @@ def export_public_dashboard_data(
     plan_30: pd.DataFrame,
     plan_60: pd.DataFrame,
     plan_90: pd.DataFrame,
-    resolution_data: dict = None,
-    lead_data: dict = None,
-    v5_data: dict = None,
+    resolution_data: dict  = None,
+    lead_data: dict        = None,
+    v5_data: dict          = None,
+    outreach_scores: dict  = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -384,7 +427,7 @@ def export_public_dashboard_data(
         "action_plan_30":     plan_30.to_dict(orient="records"),
         "action_plan_60":     plan_60.to_dict(orient="records"),
         "action_plan_90":     plan_90.to_dict(orient="records"),
-        "top_contacts":                build_public_contacts(df, n=200),
+        "top_contacts":                build_public_contacts(df, n=200, outreach_scores=outreach_scores),
         "company_intel":               build_public_company_intel(df),
         "unknown_companies":           build_unknown_companies_public(df),
         "unknown_resolution":          resolution_data or {},

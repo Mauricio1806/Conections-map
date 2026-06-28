@@ -227,11 +227,16 @@
     <div class="page" id="page-contacts">
       <div class="page-header">
         <h2>Top Priority Contacts</h2>
-        <p>Your most valuable existing connections. Sanitized — no email or private data.</p>
+        <p>Ranked by outreach-adjusted score (message history intelligence). Sanitized — no email or private data.</p>
       </div>
-      <div class="filters-bar">
-        <div class="filter-group"><label>Min Score</label>
-          <input type="number" id="ct-min-score" value="60" min="0" max="100" style="width:70px">
+      <div class="filters-bar" style="flex-wrap:wrap;gap:0.5rem">
+        <div class="filter-group">
+          <label>Sort by</label>
+          <button id="ct-sort-outreach" class="btn-primary active" onclick="setContactSort('outreach')" style="font-size:0.8rem;padding:4px 10px">Outreach Score</button>
+          <button id="ct-sort-base"     class="btn-ghost"          onclick="setContactSort('base')"     style="font-size:0.8rem;padding:4px 10px">Base Network Score</button>
+        </div>
+        <div class="filter-group"><label>Min Base Score</label>
+          <input type="number" id="ct-min-score" value="0" min="0" max="100" style="width:60px">
         </div>
         <div class="filter-group"><label>Persona</label>
           <select id="ct-persona-filter"><option value="">All</option></select>
@@ -247,6 +252,14 @@
             <option value="low">Low (&lt;40)</option>
           </select>
         </div>
+        <div class="filter-group"><label>Outreach</label>
+          <select id="ct-outreach-filter">
+            <option value="">All</option>
+            <option value="replied">Replied to me</option>
+            <option value="ghosted">Ghosted me</option>
+            <option value="nohistory">No message history</option>
+          </select>
+        </div>
         <button class="btn-primary" onclick="applyContactFilters()">Apply</button>
         <button class="btn-ghost" onclick="resetContactFilters()">Reset</button>
       </div>
@@ -254,8 +267,14 @@
       <div class="table-wrap">
         <table id="ct-table">
           <thead><tr>
-            <th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Seniority</th>
-            <th>Market</th><th>Score</th><th>Action</th><th>Why Priority</th><th>LinkedIn</th>
+            <th>Name</th><th>Company</th><th>Role</th><th>Persona</th>
+            <th>Opportunity Bucket</th>
+            <th title="Outreach Adjusted Score">Adj. Score</th>
+            <th title="Base Network Score">Base</th>
+            <th>Outreach Status</th>
+            <th>Last Contact</th>
+            <th>Reason / Note</th>
+            <th>LinkedIn</th>
           </tr></thead>
           <tbody id="ct-tbody"></tbody>
         </table>

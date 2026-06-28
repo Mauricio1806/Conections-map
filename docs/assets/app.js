@@ -269,17 +269,36 @@ function renderOverview() {
     makeCard('Data Peers',        kpi('data_peers_total')),
   ].join('');
 
-  document.getElementById('kpi-markets').innerHTML = [
-    makeCard('Brazil',            kpi('brazil_count')),
-    makeCard('LATAM USD',         kpi('latam_usd_count')),
-    makeCard('US/CA Nearshore',   kpi('us_nearshore_count')),
-    makeCard('Spain/EU',          kpi('spain_eu_count')),
-    makeCard('Europe',            kpi('europe_count')),
-    makeCard('Global Staffing',   kpi('global_staffing_count')),
-    makeCard('Global Tech',       kpi('global_tech_count')),
-    makeCard('Global Consulting', kpi('global_consulting_count')),
-    makeCard('Unknown',           kpi('unknown_count'), kpi('unknown_pct') + '%', 'warn'),
-  ].join('');
+  // V5 Opportunity Market KPI row — replaces raw UNKNOWN
+  const v5S = D.opportunity_market_v5_summary || {};
+  const v5D = D.opportunity_market_v5 || {};
+  if (v5S.total_connections) {
+    document.getElementById('kpi-markets').innerHTML = [
+      makeCard('Brazil',            (v5D.BRAZIL_CONFIRMED||0) + (v5D.BRAZIL_LIKELY||0),  'confirmed + likely', 'good'),
+      makeCard('LATAM USD',         (v5D.LATAM_USD_CONFIRMED||0) + (v5D.LATAM_USD_LIKELY||0), 'confirmed + likely'),
+      makeCard('US / Canada',       (v5D.US_CANADA_CONFIRMED||0) + (v5D.US_CANADA_LIKELY||0)),
+      makeCard('Spain / EU',        (v5D.SPAIN_EU_CONFIRMED||0) + (v5D.SPAIN_EU_LIKELY||0) + (v5D.EUROPE_CONFIRMED||0) + (v5D.EUROPE_LIKELY||0)),
+      makeCard('Global Staffing',   v5D.GLOBAL_STAFFING||0, 'places data engineers'),
+      makeCard('Global Consulting', v5D.GLOBAL_CONSULTING||0),
+      makeCard('Global Tech',       v5D.GLOBAL_TECH||0),
+      makeCard('Language Signal',   (v5D.LANGUAGE_PORTUGUESE_MARKET||0) + (v5D.LANGUAGE_SPANISH_MARKET||0), 'PT + ES title inference'),
+      makeCard('Global Opportunity',v5D.GLOBAL_OPPORTUNITY||0, 'unresolved region'),
+      makeCard('Needs Mapping',     v5S.v5_needs_company_mapping||0, 'action backlog', 'warn'),
+      makeCard('Low Value',         v5S.v5_low_value_unresolved||0, v5S.v5_low_value_pct + '%'),
+    ].join('');
+  } else {
+    // Fallback to V2 if V5 not yet generated
+    document.getElementById('kpi-markets').innerHTML = [
+      makeCard('Brazil',            kpi('brazil_count')),
+      makeCard('LATAM USD',         kpi('latam_usd_count')),
+      makeCard('US/CA Nearshore',   kpi('us_nearshore_count')),
+      makeCard('Spain/EU',          kpi('spain_eu_count')),
+      makeCard('Europe',            kpi('europe_count')),
+      makeCard('Global Staffing',   kpi('global_staffing_count')),
+      makeCard('Global Tech',       kpi('global_tech_count')),
+      makeCard('Global Consulting', kpi('global_consulting_count')),
+    ].join('');
+  }
 
   // Lead reactivation row (additive — only shown when message data is available)
   const lr = D.lead_reactivation || {};
@@ -522,47 +541,103 @@ function renderPlan() {
 }
 
 // ── PAGE 5: Top Contacts ──────────────────────────────────────────────────────
+let contactSortMode = 'outreach'; // 'outreach' | 'base'
+
 function renderContacts() {
   const contacts = D.top_contacts || [];
   const personas = [...new Set(contacts.map(c => c.persona||''))].sort();
-  const markets  = [...new Set(contacts.map(c => c.market_v2 || c.strategic_market || ''))].sort();
+  const markets  = [...new Set(contacts.map(c => c.opportunity_market_v5 || c.market_v2 || c.strategic_market || ''))].sort();
   const pf = document.getElementById('ct-persona-filter');
   const mf = document.getElementById('ct-market-filter');
   personas.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; pf && pf.appendChild(o); });
   markets.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; mf && mf.appendChild(o); });
-  filteredContacts = contacts;
+  filteredContacts = [...contacts];
+  _sortContacts();
   renderContactsTable();
 }
+
+function _sortContacts() {
+  if (contactSortMode === 'outreach') {
+    filteredContacts.sort((a, b) =>
+      (parseFloat(b.outreach_adjusted_score ?? b.priority_score) || 0) -
+      (parseFloat(a.outreach_adjusted_score ?? a.priority_score) || 0)
+    );
+  } else {
+    filteredContacts.sort((a, b) =>
+      (parseFloat(b.priority_score) || 0) - (parseFloat(a.priority_score) || 0)
+    );
+  }
+}
+
+window.setContactSort = function(mode) {
+  contactSortMode = mode;
+  const b1 = document.getElementById('ct-sort-outreach');
+  const b2 = document.getElementById('ct-sort-base');
+  if (b1) b1.classList.toggle('active', mode === 'outreach');
+  if (b2) b2.classList.toggle('active', mode === 'base');
+  _sortContacts();
+  contactsPage = 1;
+  renderContactsTable();
+};
 
 window.applyContactFilters = function() {
   const minS   = parseFloat(document.getElementById('ct-min-score')?.value) || 0;
   const per    = document.getElementById('ct-persona-filter')?.value || '';
   const mkt    = document.getElementById('ct-market-filter')?.value  || '';
   const band   = document.getElementById('ct-band-filter')?.value    || '';
+  const outS   = document.getElementById('ct-outreach-filter')?.value || '';
   filteredContacts = (D.top_contacts || []).filter(c => {
-    const s = parseFloat(c.priority_score) || 0;
-    const m = c.market_v2 || c.strategic_market || '';
+    const s  = parseFloat(c.priority_score) || 0;
+    const os = parseFloat(c.outreach_adjusted_score ?? s) || 0;
+    const m  = c.opportunity_market_v5 || c.market_v2 || c.strategic_market || '';
     if (s < minS) return false;
     if (per && c.persona !== per) return false;
     if (mkt && m !== mkt) return false;
     if (band === 'high'   && s < 70)           return false;
     if (band === 'medium' && (s < 40 || s >= 70)) return false;
     if (band === 'low'    && s >= 40)          return false;
+    if (outS === 'replied'   && !c.replied_to_me)     return false;
+    if (outS === 'ghosted'   && !c.ghosted_me)        return false;
+    if (outS === 'nohistory' && c.has_message_history) return false;
     return true;
   });
+  _sortContacts();
   contactsPage = 1;
   renderContactsTable();
 };
 
 window.resetContactFilters = function() {
-  const ms = document.getElementById('ct-min-score');    if (ms) ms.value = '60';
+  const ms = document.getElementById('ct-min-score');     if (ms) ms.value = '0';
   const pf = document.getElementById('ct-persona-filter');if (pf) pf.value = '';
-  const mf = document.getElementById('ct-market-filter');if (mf) mf.value = '';
+  const mf = document.getElementById('ct-market-filter'); if (mf) mf.value = '';
   const bf = document.getElementById('ct-band-filter');   if (bf) bf.value = '';
-  filteredContacts = D.top_contacts || [];
+  const of = document.getElementById('ct-outreach-filter');if (of) of.value = '';
+  filteredContacts = [...(D.top_contacts || [])];
+  _sortContacts();
   contactsPage = 1;
   renderContactsTable();
 };
+
+const OUTREACH_STATUS_STYLE = {
+  'Needs Reply':     'background:#ef4444;color:#fff',
+  'Interview Pipeline': 'background:#22c55e;color:#fff',
+  'CV / Follow-up':  'background:#3b82f6;color:#fff',
+  'Warm Lead':       'background:#f59e0b;color:#fff',
+  'Follow-up Due':   'background:#fb923c;color:#fff',
+  'Ghosted':         'background:#6b7280;color:#fff',
+  'Auto-reply':      'background:#9ca3af;color:#111',
+  'Rejected':        'background:#dc2626;color:#fff',
+  'Dormant':         'background:#a78bfa;color:#fff',
+  'Replied':         'background:#14b8a6;color:#fff',
+  'Pending Reply':   'background:#fbbf24;color:#111',
+  'No History':      'background:#374151;color:#aaa',
+  'No Contact':      'background:#374151;color:#aaa',
+};
+
+function outreachBadge(status) {
+  const style = OUTREACH_STATUS_STYLE[status] || 'background:#374151;color:#aaa';
+  return '<span style="' + style + ';padding:2px 6px;border-radius:4px;font-size:0.7rem;white-space:nowrap">' + (status||'—') + '</span>';
+}
 
 function renderContactsTable() {
   const start = (contactsPage - 1) * PAGE_SIZE;
@@ -572,21 +647,24 @@ function renderContactsTable() {
   const tbody = document.getElementById('ct-tbody');
   if (!tbody) return;
   tbody.innerHTML = slice.map(c => {
-    const s   = parseFloat(c.priority_score) || 0;
-    const mkt = c.market_v2 || c.strategic_market || 'UNKNOWN';
-    const cf  = parseFloat(c.market_confidence_v2) || 0;
-    const url = c.url || '';
-    const sClass = s >= 70 ? 'score-high' : s >= 40 ? 'score-med' : 'score-low';
+    const baseS    = parseFloat(c.priority_score) || 0;
+    const adjS     = parseFloat(c.outreach_adjusted_score ?? baseS) || 0;
+    const mkt      = c.opportunity_market_v5 || c.market_v2 || c.strategic_market || 'UNKNOWN';
+    const url      = c.url || '';
+    const adjClass = adjS >= 70 ? 'score-high' : adjS >= 40 ? 'score-med' : 'score-low';
+    const baseClass= baseS >= 70 ? 'score-high' : baseS >= 40 ? 'score-med' : 'score-low';
+    const daysAgo  = c.days_since_last_message != null ? c.days_since_last_message + 'd' : '—';
     return '<tr>'
       + '<td style="white-space:nowrap">' + (c.full_name||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (c.company_clean||'—') + '</td>'
-      + '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (c.position_clean||'—') + '</td>'
+      + '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (c.position_clean||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (c.persona||'—') + '</td>'
-      + '<td style="white-space:nowrap">' + (c.seniority||'—') + '</td>'
       + '<td>' + marketBadge(mkt) + '</td>'
-      + '<td><span class="score-badge ' + sClass + '">' + s.toFixed(0) + '</span></td>'
-      + '<td style="font-size:0.73rem">' + (c.action_type||'—') + '</td>'
-      + '<td style="white-space:normal;font-size:0.72rem;max-width:200px">' + ((c.why_priority||'').substring(0,100)) + '</td>'
+      + '<td title="Outreach Adjusted Score"><span class="score-badge ' + adjClass + '">' + adjS.toFixed(0) + '</span></td>'
+      + '<td title="Base Network Score"><span class="score-badge ' + baseClass + '" style="opacity:.65">' + baseS.toFixed(0) + '</span></td>'
+      + '<td>' + outreachBadge(c.outreach_status || (c.has_message_history ? 'Replied' : 'No History')) + '</td>'
+      + '<td style="font-size:0.7rem;color:var(--text-muted)">' + daysAgo + '</td>'
+      + '<td style="white-space:normal;font-size:0.7rem;max-width:180px">' + ((c.outreach_reason || c.why_priority||'').substring(0,80)) + '</td>'
       + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
       + '</tr>';
   }).join('');

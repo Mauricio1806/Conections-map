@@ -65,6 +65,11 @@ ALLOWED_CONTACT_FIELDS = {
     # V5 Opportunity Market — safe inference output fields only (no raw message data)
     "opportunity_market_v5", "opportunity_bucket",
     "opportunity_confidence", "is_actionable_opportunity",
+    # Outreach adjusted scoring — computed signals, no raw content
+    "outreach_adjusted_score", "outreach_status", "outreach_reason",
+    "has_message_history", "replied_to_me", "ghosted_me", "auto_reply_only",
+    "last_message_date", "days_since_last_message",
+    "prior_positive_signal", "prior_rejection",
 }
 
 
