@@ -1,5 +1,5 @@
 ﻿kpi,value
-report_date,2026-06-27
+report_date,2026-06-28
 total_connections,10780
 high_priority,206
 medium_priority,3626
@@ -21,43 +21,64 @@ talent_hr_total,1963
 hiring_managers_total,77
 data_leaders_total,874
 data_peers_total,986
-usd_recruiters_raw,56
-usd_ta_raw,66
-usd_hiring_mgrs_raw,6
-usd_data_leaders_raw,55
-usd_high_priority_raw,110
-usd_recruiters_hc,56
-usd_ta_hc,66
-usd_hiring_mgrs_hc,6
-usd_data_leaders_hc,55
-spain_recruiters_raw,16
-spain_ta_raw,33
-spain_hiring_mgrs_raw,3
-spain_data_leaders_raw,29
-spain_recruiters_hc,16
-spain_ta_hc,33
-spain_hiring_mgrs_hc,3
-spain_data_leaders_hc,29
-usd_network_score_raw,82.0
-usd_network_score_adjusted,82.0
-spain_network_score_raw,65.0
-spain_network_score_adjusted,65.0
-market_readiness_score_raw,75.2
-market_readiness_score_adjusted,75.2
-data_confidence_score,18.1
-unknown_market_risk_score,98.3
-actionable_network_score,100.0
-actionable_contacts,329
-usd_score_level,Strong
-usd_score_desc,Your USD opportunity network is well-developed.
-usd_next_step,You have 56 high-confidence USD recruiters (target: 60). Add 4 more to significantly improve this score.
-spain_score_level,Developing
-spain_score_desc,Your Spain/EU network has a foundation but significant gaps remain.
-spain_next_step,You have 16 high-confidence Spain/EU recruiters (target: 40). Add 24 more to unlock Spain readiness growth.
-unknown_recruiters,994
-unknown_ta,765
-unknown_hiring_mgrs,44
-unknown_data_leaders,695
+connected_last_30_days,666
+connected_last_90_days,2367
+strategic_network_score,96.5
+strategic_network_level,Strong
+strategic_network_desc,"Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders."
+sns_recruiters,1193
+sns_talent_acquisition,920
+sns_hiring_managers,77
+sns_data_leaders,874
+sns_data_peers,986
+sns_high_priority,206
+usd_readiness_score,80.7
+usd_readiness_level,Ready
+usd_readiness_desc,Strong USD network. Active outreach should yield job conversations quickly.
+usd_readiness_next,You have 56 confirmed USD recruiters. Target: 60. Add 4 more to grow this score.
+usd_latam_usd_recruiters,38
+usd_latam_usd_ta,47
+usd_latam_usd_hiring_mgrs,0
+usd_latam_usd_data_leaders,36
+usd_us_ca_recruiters,18
+usd_us_ca_ta,19
+usd_us_ca_hiring_mgrs,6
+usd_global_recruiters_partial,80
+usd_global_ta_partial,32
+usd_global_hm_partial,0
+usd_unknown_high_value_partial,61
+spain_eu_readiness_score,62.4
+spain_eu_readiness_level,Ready
+spain_eu_readiness_desc,Strong Spain/EU foundation. Good positioning for relocation.
+spain_eu_readiness_next,"You have 16 confirmed Spain/EU recruiters (target: 40). Add 24 more via ERNI, Stratesys, Capgemini Spain."
+spain_spain_eu_recruiters,16
+spain_spain_eu_ta,33
+spain_spain_eu_hiring_mgrs,3
+spain_spain_eu_data_leaders,29
+spain_global_partial_credit,18.5
+market_confidence_score,18.1
+market_known_count,1952
+market_high_conf_count,1952
+market_known_pct,18.1
+market_high_conf_pct,18.1
+global_opportunity_score,70.0
+global_opportunity_total,400
+global_recruiters,112
+global_hiring_mgrs,0
+global_data_leaders,33
+actionable_contacts_score,100.0
+actionable_contacts,568
+very_high_priority,206
+unknown_resolution_score,7.8
+unknown_resolution_potential,7.8
+top25_company_coverage,686
+top50_company_coverage,972
+top100_company_coverage,1355
+data_quality_risk_score,90.1
+data_quality_risk_level,High Risk
+data_quality_risk_desc,Most market inferences are unresolved. Readiness scores are conservative estimates.
+market_readiness_composite,73.4
+unknown_recruiters_highvalue,185
+unknown_hiring_mgrs_highvalue,13
+unknown_data_leaders_highvalue,119
 unknown_peers,749
-high_confidence_count,1952
-high_confidence_pct,18.1

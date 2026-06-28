@@ -3,159 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LinkedIn Network Intelligence Dashboard</title>
-  <meta name="description" content="Strategic LinkedIn network analysis dashboard — career intelligence for data engineers.">
-  <meta name="robots" content="noindex">
-  <link rel="stylesheet" href="assets/style.css">
+  <title>LinkedIn Network Intelligence | Conections-map</title>
+  <meta name="description" content="Strategic LinkedIn network intelligence dashboard for data engineers targeting USD remote roles and Spain/EU relocation.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
 
-<!-- Loading screen -->
+<!-- Loading -->
 <div id="loading">
   <div class="spinner"></div>
-  <p>Loading network intelligence data&hellip;</p>
+  <p>Loading network intelligence…</p>
 </div>
 
-<!-- Main layout (hidden until data loads) -->
-<div class="layout" id="app" style="display:none">
+<!-- App -->
+<div id="app" class="layout" style="display:none">
 
   <!-- Sidebar -->
   <nav class="sidebar">
-    <div class="sidebar-logo">
-      <div style="font-size:2rem">&#127757;</div>
-      <h1>Network Intel</h1>
-      <p>LinkedIn Connections Heatmap</p>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label">Analysis</div>
-      <div class="nav-item active" data-page="overview">
-        <span class="icon">&#128200;</span> Executive Overview
-      </div>
-      <div class="nav-item" data-page="heatmap">
-        <span class="icon">&#128293;</span> Network Heatmap
-      </div>
-      <div class="nav-item" data-page="gap">
-        <span class="icon">&#128269;</span> Strategic Gap
+    <div class="sidebar-brand">
+      <div class="brand-icon">&#127757;</div>
+      <div>
+        <div class="brand-title">Network Intel</div>
+        <div class="brand-sub">LinkedIn Connections</div>
       </div>
     </div>
-    <div class="nav-section">
-      <div class="nav-label">Action</div>
-      <div class="nav-item" data-page="plan">
-        <span class="icon">&#128203;</span> Action Plan
-      </div>
-      <div class="nav-item" data-page="contacts">
-        <span class="icon">&#128100;</span> Top Contacts
-      </div>
+
+    <div class="nav-group-label">Analysis</div>
+    <div class="nav-item active" data-page="overview">
+      <span class="nav-icon">&#128200;</span> Executive Overview
     </div>
-    <div class="nav-section">
-      <div class="nav-label">Intelligence</div>
-      <div class="nav-item" data-page="companies">
-        <span class="icon">&#127970;</span> Company Intel
-      </div>
-      <div class="nav-item" data-page="unknown">
-        <span class="icon">&#10067;</span> Classify Unknown
-      </div>
-      <div class="nav-item" data-page="quality">
-        <span class="icon">&#128202;</span> Data Quality
-      </div>
+    <div class="nav-item" data-page="heatmap">
+      <span class="nav-icon">&#128293;</span> Network Heatmap
     </div>
-    <div style="padding: 1rem 1.2rem; border-top: 1px solid var(--border); margin-top: auto;">
-      <div style="font-size:0.7rem; color:var(--text-dim)">Report date</div>
-      <div style="font-size:0.8rem; color:var(--text-muted)">2026-06-27</div>
+    <div class="nav-item" data-page="gap">
+      <span class="nav-icon">&#128269;</span> Strategic Gap
+    </div>
+
+    <div class="nav-group-label">Action</div>
+    <div class="nav-item" data-page="plan">
+      <span class="nav-icon">&#128203;</span> Action Plan
+    </div>
+    <div class="nav-item" data-page="contacts">
+      <span class="nav-icon">&#128100;</span> Top Contacts
+    </div>
+
+    <div class="nav-group-label">Intelligence</div>
+    <div class="nav-item" data-page="companies">
+      <span class="nav-icon">&#127970;</span> Company Intel
+    </div>
+    <div class="nav-item" data-page="unknown">
+      <span class="nav-icon">&#10067;</span> Unknown Resolution
+    </div>
+    <div class="nav-item" data-page="quality">
+      <span class="nav-icon">&#128202;</span> Data Quality
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="https://mauricio1806.github.io/Conections-map/" class="sidebar-link" target="_blank">&#127760; Public Dashboard</a>
     </div>
   </nav>
 
-  <!-- Main content -->
+  <!-- Main -->
   <main class="main">
 
     <!-- PAGE: Executive Overview -->
     <div class="page active" id="page-overview">
       <div class="page-header">
         <h2>Executive Network Overview</h2>
-        <p>Confidence-adjusted strategic scores. Market is inferred from company/title keywords &mdash; LinkedIn does not export location.</p>
+        <p>Confidence is low but strategic value is real. UNKNOWN market does <strong>not</strong> mean the connection is worthless.</p>
       </div>
 
-      <!-- Data confidence warning -->
-      <div id="data-confidence-alert"></div>
+      <div id="confidence-banner"></div>
 
-      <!-- Score gauges -->
+      <div class="section-label">Strategic Scores</div>
       <div class="gauges-row" id="gauges-row"></div>
 
-      <!-- Executive Diagnosis -->
-      <div class="section-header">Executive Diagnosis</div>
-      <div class="diagnosis-grid" id="diagnosis-grid"></div>
+      <div class="section-label">Executive Diagnosis</div>
+      <div class="diag-grid" id="diagnosis-grid"></div>
 
-      <!-- KPI metrics -->
-      <div class="section-header">Network Size &amp; Priority</div>
-      <div class="metrics-grid metrics-grid-5" id="priority-metrics"></div>
+      <div class="section-label">Network Size &amp; Priority</div>
+      <div class="metrics-grid" id="kpi-size"></div>
 
-      <div class="section-header">Persona Groups</div>
-      <div class="metrics-grid metrics-grid-5" id="persona-metrics"></div>
+      <div class="section-label">Persona Groups</div>
+      <div class="metrics-grid" id="kpi-personas"></div>
 
-      <div class="section-header">Market Distribution (V2 Inference)</div>
-      <div class="metrics-grid" id="market-metrics"></div>
+      <div class="section-label">Market Distribution (V2 Inference)</div>
+      <div class="metrics-grid metrics-grid-wide" id="kpi-markets"></div>
 
-      <!-- Charts -->
-      <div class="section-header">Visual Distribution</div>
-      <div class="chart-grid-2">
-        <div class="chart-box">
-          <h4>Market Distribution (V2)</h4>
-          <canvas id="chart-market-pie"></canvas>
-        </div>
-        <div class="chart-box">
-          <h4>Top Personas</h4>
-          <canvas id="chart-persona-bar"></canvas>
-        </div>
+      <div class="section-label">Visual Distribution</div>
+      <div class="chart-grid">
+        <div class="chart-box"><h4>Market Distribution (V2)</h4><canvas id="chart-market"></canvas></div>
+        <div class="chart-box"><h4>Top Personas</h4><canvas id="chart-personas"></canvas></div>
       </div>
 
-      <!-- Concentration flags -->
-      <div class="section-header">Network Health Flags</div>
-      <div id="concentration-flags"></div>
+      <div class="section-label">Network Health Flags</div>
+      <div id="flags-list"></div>
     </div>
 
     <!-- PAGE: Heatmap -->
     <div class="page" id="page-heatmap">
       <div class="page-header">
         <h2>Network Heatmap</h2>
-        <p>Distribution of connections across market and persona dimensions. Toggle UNKNOWN to focus on classified connections.</p>
+        <p>How your connections distribute across market and persona dimensions. Inferred market — not exact location.</p>
       </div>
       <div class="alert alert-info">
         <span class="alert-icon">&#8505;&#65039;</span>
-        <span><strong>Market is inferred, not exact location.</strong>
-        These heatmaps show where your connections likely operate based on company and title keyword signals.
-        UNKNOWN connections have no geographic signal in their exported data.</span>
+        <span><strong>Market is inferred from company/title keywords.</strong> LinkedIn does not export location data. UNKNOWN connections have no geographic signal — not that they are useless.</span>
       </div>
       <div class="filters-bar" style="margin-bottom:1rem">
-        <label class="filter-toggle">
-          <input type="checkbox" id="hm-exclude-unknown" checked>
-          <span>Exclude UNKNOWN market</span>
-        </label>
-        <label class="filter-toggle">
-          <input type="checkbox" id="hm-high-conf-only">
-          <span>High-confidence only (>= 0.70)</span>
+        <label class="toggle-label">
+          <input type="checkbox" id="hm-excl-unk" checked>
+          <span>Exclude UNKNOWN market from heatmap</span>
         </label>
       </div>
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="hm-persona">Persona &times; Market</button>
-        <button class="tab-btn" data-tab="hm-area">Area &times; Market</button>
-        <button class="tab-btn" data-tab="hm-seniority">Seniority &times; Market</button>
-      </div>
-      <div class="tab-panel active" id="hm-persona">
-        <div class="table-wrap"><table id="heatmap-persona-market" class="heatmap-table"></table></div>
-      </div>
-      <div class="tab-panel" id="hm-area">
-        <div class="table-wrap"><table id="heatmap-area-market" class="heatmap-table"></table></div>
-      </div>
-      <div class="tab-panel" id="hm-seniority">
-        <div class="table-wrap"><table id="heatmap-seniority-market" class="heatmap-table"></table></div>
+      <div class="tabs-container">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="hm-panel-persona-market">Persona &times; Market</button>
+          <button class="tab-btn" data-tab="hm-panel-area-market">Area &times; Market</button>
+          <button class="tab-btn" data-tab="hm-panel-seniority-market">Seniority &times; Market</button>
+          <button class="tab-btn" data-tab="hm-panel-persona-priority">Persona &times; Priority</button>
+        </div>
+        <div class="tab-panel active" id="hm-panel-persona-market"><div class="table-wrap"><table id="hm-persona-market" class="hm-table"></table></div></div>
+        <div class="tab-panel" id="hm-panel-area-market"><div class="table-wrap"><table id="hm-area-market" class="hm-table"></table></div></div>
+        <div class="tab-panel" id="hm-panel-seniority-market"><div class="table-wrap"><table id="hm-seniority-market" class="hm-table"></table></div></div>
+        <div class="tab-panel" id="hm-panel-persona-priority"><div class="table-wrap"><table id="hm-persona-priority" class="hm-table"></table></div></div>
       </div>
     </div>
 
-    <!-- PAGE: Strategic Gap -->
+    <!-- PAGE: Gap -->
     <div class="page" id="page-gap">
       <div class="page-header">
         <h2>Strategic Gap Analysis</h2>
-        <p>Where your network is underrepresented vs. your career targets.</p>
+        <p>Where your network falls short of targets. Urgency considers current count, gap size, timeframe, and strategic importance.</p>
       </div>
       <div class="filters-bar">
         <div class="filter-group">
@@ -173,19 +155,19 @@
           <label>Market</label>
           <select id="gap-market-filter"><option value="">All Markets</option></select>
         </div>
-        <button class="btn-apply" onclick="applyGapFilters()">Apply</button>
-        <button class="btn-reset" onclick="resetGapFilters()">Reset</button>
+        <button class="btn-primary" onclick="applyGapFilters()">Apply</button>
+        <button class="btn-ghost" onclick="resetGapFilters()">Reset</button>
       </div>
       <div class="chart-box" style="margin-bottom:1.5rem">
-        <h4>Connections Needed (Top 15)</h4>
-        <canvas id="chart-gap-bar" style="max-height:380px"></canvas>
+        <h4>Top 15 Gaps by Count Needed</h4>
+        <canvas id="chart-gap" style="max-height:360px"></canvas>
       </div>
       <div class="table-stats" id="gap-stats"></div>
       <div class="table-wrap">
         <table id="gap-table">
           <thead><tr>
             <th>Market</th><th>Persona</th><th>Current</th><th>Target</th>
-            <th>Gap</th><th>Gap %</th><th>Urgency</th><th>Timeframe</th><th>Action</th>
+            <th>Gap</th><th>Gap%</th><th>Urgency</th><th>Timeframe</th><th>Why</th>
           </tr></thead>
           <tbody id="gap-tbody"></tbody>
         </table>
@@ -195,34 +177,40 @@
     <!-- PAGE: Action Plan -->
     <div class="page" id="page-plan">
       <div class="page-header">
-        <h2>30 / 60 / 90 Day Action Plan</h2>
-        <p>Prioritized outreach plan with weekly targets, search queries, and message angles.</p>
+        <h2>Action Plan — 7 / 30 / 60 / 90 Days</h2>
+        <p>Prioritized outreach with weekly targets, LinkedIn search queries, and message angles.</p>
       </div>
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="plan-30">30 Days</button>
-        <button class="tab-btn" data-tab="plan-60">60 Days</button>
-        <button class="tab-btn" data-tab="plan-90">90 Days</button>
-      </div>
-      <div class="tab-panel active" id="plan-30">
-        <div class="alert alert-info">
-          <span class="alert-icon">&#127919;</span>
-          <span><strong>30-Day Focus:</strong> Build LATAM USD and US/Canada recruiter pipeline. Priority = landing active USD job conversations.</span>
+      <div class="tabs-container">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="plan-sprint">7-Day Sprint</button>
+          <button class="tab-btn" data-tab="plan-30">30 Days</button>
+          <button class="tab-btn" data-tab="plan-60">60 Days</button>
+          <button class="tab-btn" data-tab="plan-90">90 Days</button>
         </div>
-        <div class="plan-grid" id="plan-30-grid"></div>
-      </div>
-      <div class="tab-panel" id="plan-60">
-        <div class="alert alert-info">
-          <span class="alert-icon">&#127919;</span>
-          <span><strong>60-Day Focus:</strong> Maintain USD pipeline, begin Spain/EU network positioning.</span>
+        <div class="tab-panel active" id="plan-sprint">
+          <div class="alert alert-info"><span class="alert-icon">&#9889;</span>
+            <span><strong>7-Day Sprint:</strong> Do these 7 actions this week. 30 minutes/day, focused outreach.</span>
+          </div>
+          <div class="sprint-grid" id="sprint-grid"></div>
         </div>
-        <div class="plan-grid" id="plan-60-grid"></div>
-      </div>
-      <div class="tab-panel" id="plan-90">
-        <div class="alert alert-info">
-          <span class="alert-icon">&#127919;</span>
-          <span><strong>90-Day Focus:</strong> Balance USD income stability with Spain/Europe readiness.</span>
+        <div class="tab-panel" id="plan-30">
+          <div class="alert alert-info"><span class="alert-icon">&#127919;</span>
+            <span><strong>30-Day Focus:</strong> Build LATAM USD and US/Canada recruiter pipeline. Goal: active USD job conversations.</span>
+          </div>
+          <div class="plan-grid" id="plan-30-grid"></div>
         </div>
-        <div class="plan-grid" id="plan-90-grid"></div>
+        <div class="tab-panel" id="plan-60">
+          <div class="alert alert-info"><span class="alert-icon">&#127919;</span>
+            <span><strong>60-Day Focus:</strong> Maintain USD pipeline. Begin Spain/EU positioning.</span>
+          </div>
+          <div class="plan-grid" id="plan-60-grid"></div>
+        </div>
+        <div class="tab-panel" id="plan-90">
+          <div class="alert alert-info"><span class="alert-icon">&#127919;</span>
+            <span><strong>90-Day Focus:</strong> Balance USD income with Spain/EU relocation readiness.</span>
+          </div>
+          <div class="plan-grid" id="plan-90-grid"></div>
+        </div>
       </div>
     </div>
 
@@ -230,23 +218,19 @@
     <div class="page" id="page-contacts">
       <div class="page-header">
         <h2>Top Priority Contacts</h2>
-        <p>Your highest-priority existing connections. Focus on these first for reactivation.</p>
+        <p>Your most valuable existing connections. Sanitized — no email or private data.</p>
       </div>
       <div class="filters-bar">
-        <div class="filter-group">
-          <label>Min Score</label>
-          <input type="number" id="ct-min-score" value="60" min="0" max="100">
+        <div class="filter-group"><label>Min Score</label>
+          <input type="number" id="ct-min-score" value="60" min="0" max="100" style="width:70px">
         </div>
-        <div class="filter-group">
-          <label>Persona</label>
-          <select id="ct-persona-filter"><option value="">All Personas</option></select>
+        <div class="filter-group"><label>Persona</label>
+          <select id="ct-persona-filter"><option value="">All</option></select>
         </div>
-        <div class="filter-group">
-          <label>Market (V2)</label>
-          <select id="ct-market-filter"><option value="">All Markets</option></select>
+        <div class="filter-group"><label>Market</label>
+          <select id="ct-market-filter"><option value="">All</option></select>
         </div>
-        <div class="filter-group">
-          <label>Priority Band</label>
+        <div class="filter-group"><label>Band</label>
           <select id="ct-band-filter">
             <option value="">All</option>
             <option value="high">High (&ge;70)</option>
@@ -254,22 +238,17 @@
             <option value="low">Low (&lt;40)</option>
           </select>
         </div>
-        <label class="filter-toggle">
-          <input type="checkbox" id="ct-hc-only">
-          <span>High-confidence only</span>
-        </label>
-        <button class="btn-apply" onclick="applyContactFilters()">Apply</button>
-        <button class="btn-reset" onclick="resetContactFilters()">Reset</button>
+        <button class="btn-primary" onclick="applyContactFilters()">Apply</button>
+        <button class="btn-ghost" onclick="resetContactFilters()">Reset</button>
       </div>
       <div class="table-stats" id="ct-stats"></div>
       <div class="table-wrap">
-        <table id="contacts-table">
+        <table id="ct-table">
           <thead><tr>
-            <th>Name</th><th>Company</th><th>Role</th><th>Persona</th>
-            <th>Market (V2)</th><th>Score</th><th>Action Type</th>
-            <th>Why Priority</th><th>Conf.</th><th>LinkedIn</th>
+            <th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Seniority</th>
+            <th>Market</th><th>Score</th><th>Action</th><th>Why Priority</th><th>LinkedIn</th>
           </tr></thead>
-          <tbody id="contacts-tbody"></tbody>
+          <tbody id="ct-tbody"></tbody>
         </table>
       </div>
       <div class="pagination" id="ct-pagination"></div>
@@ -279,119 +258,108 @@
     <div class="page" id="page-companies">
       <div class="page-header">
         <h2>Company Intelligence</h2>
-        <p>Top companies in your network by segment.</p>
+        <p>Top companies in your network by segment — including Global Staffing, Tech, and Consulting firms that hire anywhere.</p>
       </div>
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="co-all">All Companies</button>
-        <button class="tab-btn" data-tab="co-recruiting">Recruiting</button>
-        <button class="tab-btn" data-tab="co-data">Data Companies</button>
-        <button class="tab-btn" data-tab="co-latam">LATAM USD</button>
-        <button class="tab-btn" data-tab="co-spain">Spain/EU</button>
-      </div>
-      <div class="tab-panel active" id="co-all">
-        <div class="chart-box">
-          <h4>Top 25 Companies by Connection Count</h4>
-          <canvas id="chart-co-all" style="max-height:450px"></canvas>
+      <div class="tabs-container">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="co-all">All Companies</button>
+          <button class="tab-btn" data-tab="co-recruiting">Recruiting</button>
+          <button class="tab-btn" data-tab="co-data">Data</button>
+          <button class="tab-btn" data-tab="co-staffing">Global Staffing</button>
+          <button class="tab-btn" data-tab="co-tech">Global Tech</button>
+          <button class="tab-btn" data-tab="co-consulting">Global Consulting</button>
+          <button class="tab-btn" data-tab="co-latam">LATAM/USD</button>
+          <button class="tab-btn" data-tab="co-spain">Spain/EU</button>
         </div>
-      </div>
-      <div class="tab-panel" id="co-recruiting">
-        <div class="chart-box">
-          <h4>Top Recruiting &amp; Staffing Companies</h4>
-          <canvas id="chart-co-rec" style="max-height:400px"></canvas>
-        </div>
-      </div>
-      <div class="tab-panel" id="co-data">
-        <div class="chart-box">
-          <h4>Top Data-Focused Companies</h4>
-          <canvas id="chart-co-data" style="max-height:400px"></canvas>
-        </div>
-      </div>
-      <div class="tab-panel" id="co-latam">
-        <div class="chart-box">
-          <h4>Top LATAM USD Companies</h4>
-          <canvas id="chart-co-latam" style="max-height:400px"></canvas>
-        </div>
-      </div>
-      <div class="tab-panel" id="co-spain">
-        <div class="chart-box">
-          <h4>Top Spain/EU Companies</h4>
-          <canvas id="chart-co-spain" style="max-height:400px"></canvas>
-        </div>
+        <div class="tab-panel active" id="co-all">     <div class="chart-box"><h4>Top 20 Companies by Connections</h4><canvas id="chart-co-all" style="max-height:450px"></canvas></div></div>
+        <div class="tab-panel" id="co-recruiting">     <div class="chart-box"><h4>Top Recruiting Companies</h4><canvas id="chart-co-rec" style="max-height:400px"></canvas></div></div>
+        <div class="tab-panel" id="co-data">           <div class="chart-box"><h4>Top Data Companies</h4><canvas id="chart-co-data" style="max-height:400px"></canvas></div></div>
+        <div class="tab-panel" id="co-staffing">       <div class="chart-box"><h4>Global Staffing Companies</h4><canvas id="chart-co-staff" style="max-height:400px"></canvas></div></div>
+        <div class="tab-panel" id="co-tech">           <div class="chart-box"><h4>Global Tech Companies</h4><canvas id="chart-co-tech" style="max-height:400px"></canvas></div></div>
+        <div class="tab-panel" id="co-consulting">     <div class="chart-box"><h4>Global Consulting Companies</h4><canvas id="chart-co-cons" style="max-height:400px"></canvas></div></div>
+        <div class="tab-panel" id="co-latam">          <div class="chart-box"><h4>LATAM/USD Companies</h4><canvas id="chart-co-latam" style="max-height:400px"></canvas></div></div>
+        <div class="tab-panel" id="co-spain">          <div class="chart-box"><h4>Spain/EU Companies</h4><canvas id="chart-co-spain" style="max-height:400px"></canvas></div></div>
       </div>
     </div>
 
-    <!-- PAGE: Classify Unknown -->
+    <!-- PAGE: Unknown Resolution -->
     <div class="page" id="page-unknown">
       <div class="page-header">
-        <h2>Classify Unknown Companies</h2>
-        <p>These companies have the most connections but no market signal. Classifying them reduces UNKNOWN % and improves score accuracy.</p>
+        <h2>Unknown Resolution Engine</h2>
+        <p>Classify companies, not people. Classifying one company can resolve dozens of connections at once.</p>
       </div>
       <div class="alert alert-info">
         <span class="alert-icon">&#128161;</span>
         <span>
-          <strong>How to classify:</strong> Download <code>outputs/company_market_mapping_template.csv</code>,
-          fill in the <code>manual_market</code> column, then re-run the pipeline.
-          Each company you classify improves the accuracy of all KPI scores.
+          <strong>To reduce UNKNOWN fastest:</strong> Open <code>outputs/company_override_candidates.csv</code>,
+          fill the <code>manual_market</code> column for the top 25 companies, save, and re-run the pipeline.
+          Each company you classify resolves all its connections at once.
         </span>
       </div>
-      <div class="section-header">Top Unknown Companies by Connection Count</div>
+
+      <div class="section-label">UNKNOWN Contacts</div>
+      <div class="metrics-grid" id="unk-metrics"></div>
+
+      <div class="section-label">Resolution Potential</div>
+      <div class="metrics-grid" id="unk-resolution-metrics"></div>
+
+      <div class="section-label">Top 25 Companies to Classify First</div>
       <div class="table-wrap">
-        <table id="unknown-table">
+        <table id="unk-companies-table">
           <thead><tr>
-            <th>Company</th><th>Connections</th><th>Top Persona</th><th>Top Area</th><th>Avg Score</th><th>Suggested Market</th>
+            <th>#</th><th>Company</th><th>Connections</th>
+            <th>Recruiters</th><th>TA</th><th>Hiring Mgrs</th><th>Data Leaders</th>
+            <th>Avg Score</th><th>Suggested Market</th><th>Reason</th>
           </tr></thead>
-          <tbody id="unknown-tbody"></tbody>
+          <tbody id="unk-companies-tbody"></tbody>
         </table>
       </div>
-      <div class="section-header">Unknown Connections Still Useful by Persona</div>
-      <div class="metrics-grid metrics-grid-5" id="unknown-persona-metrics"></div>
+
+      <div class="section-label">High-Value UNKNOWN Contacts by Persona</div>
+      <div class="metrics-grid" id="unk-persona-metrics"></div>
     </div>
 
     <!-- PAGE: Data Quality -->
     <div class="page" id="page-quality">
       <div class="page-header">
         <h2>Data Quality &amp; Limitations</h2>
-        <p>Understanding what LinkedIn exports &mdash; and what it doesn&apos;t.</p>
+        <p>Understanding what LinkedIn exports — and what it doesn&apos;t.</p>
       </div>
       <div class="alert alert-warn">
         <span class="alert-icon">&#9888;&#65039;</span>
         <span>
-          <strong>UNKNOWN does not mean irrelevant.</strong>
-          LinkedIn&apos;s connection export does not include location data.
-          UNKNOWN means there was no geographic keyword in the company name or job title.
-          Many UNKNOWN connections may be in your target markets.
+          <strong>UNKNOWN does NOT mean irrelevant.</strong>
+          LinkedIn&apos;s bulk export only includes: Name, URL, Company, Position, Connected On.
+          Location is never exported. UNKNOWN = no geographic keyword found — not worthless.
         </span>
       </div>
-      <div class="section-header">Completeness Metrics</div>
-      <div class="metrics-grid metrics-grid-4" id="quality-metrics"></div>
-      <div class="section-header">Inference Confidence Distribution</div>
-      <div class="chart-box" style="max-width:500px;margin-bottom:1.5rem">
+      <div class="section-label">Data Quality Metrics</div>
+      <div class="metrics-grid" id="quality-metrics"></div>
+      <div class="chart-box" style="max-width:480px;margin-bottom:1.5rem">
         <h4>Market Type Distribution</h4>
-        <canvas id="chart-market-type"></canvas>
+        <canvas id="chart-mkt-type"></canvas>
       </div>
-      <div class="section-header">How Market Inference Works</div>
-      <div class="card">
-        <div style="font-size:0.88rem;line-height:1.7;color:var(--text)">
-          <p><strong>Inference hierarchy (highest to lowest confidence):</strong></p>
-          <ol style="margin:0.8rem 0 0 1.2rem;display:flex;flex-direction:column;gap:0.4rem">
-            <li><strong>Manual override</strong> (0.95) &mdash; company manually mapped in overrides YAML</li>
-            <li><strong>Manual CSV file</strong> (0.95) &mdash; company filled in company_market_mapping_template.csv</li>
-            <li><strong>Company keyword</strong> (0.85) &mdash; company name contains geographic keyword (e.g. &ldquo;LATAM&rdquo;, &ldquo;Madrid&rdquo;)</li>
-            <li><strong>Title keyword</strong> (0.75) &mdash; job title contains geographic keyword (e.g. &ldquo;Canada&rdquo;, &ldquo;Spain&rdquo;)</li>
-            <li><strong>Global company category</strong> (0.70) &mdash; known global staffing/tech/consulting firm</li>
-            <li><strong>UNKNOWN</strong> (0.00) &mdash; no signal found</li>
-          </ol>
-          <br>
+      <div class="section-label">How Market Inference Works</div>
+      <div class="card" style="padding:1.5rem">
+        <table class="info-table">
+          <thead><tr><th>Confidence</th><th>Method</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><span class="conf-badge high">0.95</span></td><td>Manual override (YAML or CSV)</td><td>agileengine &rarr; LATAM_USD</td></tr>
+            <tr><td><span class="conf-badge high">0.85</span></td><td>Company name keyword</td><td>company contains "madrid" &rarr; SPAIN_EU</td></tr>
+            <tr><td><span class="conf-badge med">0.75</span></td><td>Title/position keyword</td><td>title contains "nearshore Canada" &rarr; US_CA</td></tr>
+            <tr><td><span class="conf-badge med">0.70</span></td><td>Global company category</td><td>Accenture &rarr; GLOBAL_CONSULTING</td></tr>
+            <tr><td><span class="conf-badge low">0.00</span></td><td>No signal found &rarr; UNKNOWN</td><td>"Digital Ventures" &rarr; UNKNOWN</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:1.2rem;font-size:0.85rem;color:var(--text-muted);line-height:1.7">
           <p><strong>Why is UNKNOWN so high?</strong></p>
-          <p>LinkedIn&apos;s bulk CSV export only includes: Name, URL, Company, Position, Connected On.
-          Location is never included in the export.
-          A company named &ldquo;Digital Ventures&rdquo; gives zero geographic signal even if it&apos;s based in Austin, TX.
-          The inference engine can only work with what&apos;s available.</p>
+          <p>A company named "Digital Ventures Solutions" gives zero geographic signal even if it operates in Austin, TX.
+          Only if the company name or title contains a recognizable geographic keyword can the inference engine assign a market.</p>
           <br>
-          <p><strong>How to improve:</strong></p>
-          <p>1. Download <code>outputs/company_market_mapping_template.csv</code><br>
-          2. Fill in <code>manual_market</code> for the top 50 unknown companies<br>
-          3. Re-run the pipeline &mdash; scores will update automatically</p>
+          <p><strong>The correct approach: classify companies, not people.</strong></p>
+          <p>Open <code>outputs/company_override_candidates.csv</code> &rarr;
+          fill <code>manual_market</code> for the top 25 &rarr;
+          re-run pipeline. Scores update automatically.</p>
         </div>
       </div>
     </div>
@@ -400,6 +368,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="assets/app.js"></script>
+<script src="./assets/app.js"></script>
 </body>
 </html>

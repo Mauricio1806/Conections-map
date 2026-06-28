@@ -50,6 +50,7 @@ from src.generate_action_plan import (
     build_connection_gap_matrix, build_market_strategy_matrix,
     build_persona_strategy_matrix,
 )
+from src.unknown_resolution_engine import run_unknown_resolution_engine
 
 logging.basicConfig(
     level=logging.INFO,
@@ -548,13 +549,16 @@ def run_strategy_layer() -> None:
     df = apply_market_inference_v2(df)
     _save_csv(df, ENRICHED_CSV, "Enriched Connections")
 
-    # 3. Confidence-adjusted KPIs
-    logger.info("Step 3/8: Computing confidence-adjusted KPIs …")
+    # 3. Confidence-adjusted KPIs (V3 — 8 separate scores)
+    logger.info("Step 3/8: Computing confidence-adjusted KPIs (V3) …")
     kpis = compute_confidence_adjusted_kpis(df)
     save_confidence_adjusted_kpis_csv(kpis, OUTPUTS_DIR)
-    logger.info(f"  USD Score (raw/adj):   {kpis['usd_network_score_raw']} / {kpis['usd_network_score_adjusted']}")
-    logger.info(f"  Spain Score (raw/adj): {kpis['spain_network_score_raw']} / {kpis['spain_network_score_adjusted']}")
-    logger.info(f"  Data Confidence:       {kpis['data_confidence_score']}%")
+    logger.info(f"  Strategic Network Score:  {kpis.get('strategic_network_score',0)}/100 ({kpis.get('strategic_network_level','')})")
+    logger.info(f"  USD Readiness:            {kpis.get('usd_readiness_score',0)}/100 ({kpis.get('usd_readiness_level','')})")
+    logger.info(f"  Spain/EU Readiness:       {kpis.get('spain_eu_readiness_score',0)}/100 ({kpis.get('spain_eu_readiness_level','')})")
+    logger.info(f"  Market Confidence:        {kpis.get('market_confidence_score',0)}/100")
+    logger.info(f"  Global Opportunity:       {kpis.get('global_opportunity_score',0)}/100")
+    logger.info(f"  Unknown%:                 {kpis.get('unknown_pct',0)}%")
 
     # 4. Action plans (pass enriched df so market_v2 is used)
     logger.info("Step 4/8: Building action plans …")
@@ -576,10 +580,14 @@ def run_strategy_layer() -> None:
     _save_csv(gap_mat,         GAP_MATRIX, "Gap Matrix")
     _save_csv(action_backlog,  ACTION_BACKLOG, "Action Backlog")
 
-    # 6. Unknown company exports + audit
-    logger.info("Step 6/8: Exporting unknown companies + inference audit …")
+    # 6. Unknown Resolution Engine
+    logger.info("Step 6/8: Running Unknown Resolution Engine …")
+    resolution_data = run_unknown_resolution_engine(df)
     export_unknown_companies(df)
     export_inference_audit(df)
+    logger.info(f"  Auto-resolvable companies: {resolution_data.get('auto_resolvable_companies',0)}")
+    logger.info(f"  Auto-resolvable contacts:  {resolution_data.get('auto_resolvable_contacts',0)}")
+    logger.info(f"  High-value UNKNOWN:        {resolution_data.get('high_value_unknown_contacts',0)}")
 
     # 7. Markdown reports
     logger.info("Step 7/8: Generating Markdown reports …")
@@ -589,16 +597,28 @@ def run_strategy_layer() -> None:
     KPI_REPORT.write_text(_kpi_report(kpis), encoding="utf-8")
     logger.info("  Reports saved.")
 
+    # 7b. Export public dashboard JSON (for static GitHub Pages dashboard)
+    logger.info("  Exporting public dashboard JSON ...")
+    try:
+        from src.export_public_dashboard_data import export_public_dashboard_data
+        export_public_dashboard_data(
+            df, kpis, gap_mat, plan_30, plan_60, plan_90, resolution_data
+        )
+        logger.info("  Public JSON exported.")
+    except Exception as exc:
+        logger.warning(f"  Public JSON export failed (non-fatal): {exc}")
+
     # 8. Excel
     logger.info("Step 8/8: Updating Excel …")
     _update_excel(kpis, plan_30, plan_60, plan_90, market_mat, persona_mat, gap_mat)
 
     elapsed = round(time.time() - t0, 1)
     logger.info("=" * 60)
-    logger.info(f"  Strategy Layer V2 complete in {elapsed}s")
+    logger.info(f"  Strategy Layer V3 complete in {elapsed}s")
     logger.info("=" * 60)
     logger.info("")
     logger.info("  Now run: python src/generate_static_dashboard.py")
+    logger.info("  Then run: python src/privacy_check.py")
 
 
 if __name__ == "__main__":

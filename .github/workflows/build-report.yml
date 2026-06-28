@@ -33,53 +33,32 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run network heatmap pipeline
+      - name: Run Step 1 - Build Network Heatmap
+        run: python src/build_network_heatmap.py
+
+      - name: Run Step 2 - Build Strategy Layer (V3)
+        run: python src/build_strategy_layer.py
+
+      - name: Run Step 3 - Generate Static Dashboard
+        run: python src/generate_static_dashboard.py
+
+      - name: Run Step 4 - Privacy Check
+        run: python src/privacy_check.py
+
+      - name: Verify required dashboard files
         run: |
-          python src/build_network_heatmap.py
+          echo "Verifying dashboard files exist..."
+          test -f docs/index.html         && echo "[OK] docs/index.html"         || { echo "[FAIL] docs/index.html missing"; exit 1; }
+          test -f docs/assets/dashboard_data.json && echo "[OK] docs/assets/dashboard_data.json" || { echo "[FAIL] docs/assets/dashboard_data.json missing"; exit 1; }
+          test -f docs/assets/style.css   && echo "[OK] docs/assets/style.css"   || { echo "[FAIL] docs/assets/style.css missing"; exit 1; }
+          test -f docs/assets/app.js      && echo "[OK] docs/assets/app.js"      || { echo "[FAIL] docs/assets/app.js missing"; exit 1; }
+          echo "All required files present."
 
-      - name: Run strategy layer (V2 inference + confidence KPIs)
+      - name: Commit updated outputs and dashboard
         run: |
-          python src/build_strategy_layer.py
-
-      - name: Generate static HTML dashboard
-        run: |
-          python src/generate_static_dashboard.py
-
-      - name: Verify static dashboard files
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          required = [
-            "docs/index.html",
-            "docs/assets/dashboard_data.json",
-            "docs/assets/style.css",
-            "docs/assets/app.js",
-          ]
-          missing = [p for p in required if not Path(p).exists()]
-          if missing:
-              raise FileNotFoundError(f"Missing dashboard files: {missing}")
-          # Verify no email in public JSON
-          import json
-          data = json.loads(Path("docs/assets/dashboard_data.json").read_text(encoding="utf-8"))
-          contacts = data.get("top_contacts", [])
-          for c in contacts:
-              if "email address" in str(c).lower():
-                  raise ValueError("PII (email) found in public dashboard JSON!")
-          print(f"All {len(required)} required files present. No PII detected in {len(contacts)} contacts.")
-          PY
-
-      - name: Upload reports and outputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: network-reports-${{ github.run_number }}
-          path: |
-            reports/
-            outputs/
-          retention-days: 30
-
-      - name: Upload static dashboard
-        uses: actions/upload-artifact@v4
-        with:
-          name: static-dashboard-${{ github.run_number }}
-          path: docs/
-          retention-days: 90
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add outputs/ reports/ docs/
+          git diff --cached --quiet && echo "No changes to commit" || \
+            git commit -m "ci: update LinkedIn network dashboard [$(date -u '+%Y-%m-%d')]"
+          git push

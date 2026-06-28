@@ -1,5 +1,5 @@
 # Career Network Roadmap
-> Generated: **June 27, 2026**
+> Generated: **June 28, 2026**
 
 ---
 
@@ -11,9 +11,9 @@
 | Short-term goal | Remote Data Engineering job paid in USD |
 | Medium-term goal | Relocate to Spain / Europe |
 | Network size | 10,780 connections |
-| High-confidence inferred | 1,952 |
-| USD Score (adjusted) | 82.0/100 |
-| Spain Score (adjusted) | 65.0/100 |
+| High-confidence inferred | 0 |
+| USD Score (adjusted) | 0/100 |
+| Spain Score (adjusted) | 0/100 |
 
 > **Note:** Scores use only high-confidence market inference.
 > Market is inferred from company/title keywords — LinkedIn does not export location.

@@ -7,6 +7,11 @@ Build 30/60/90-day action plans from KPIs and gap data.
 import pandas as pd
 
 
+def _mkt_col(df: pd.DataFrame) -> str:
+    """Use market_v2 (V2 inference) if available, fall back to strategic_market."""
+    return "market_v2" if "market_v2" in df.columns else "strategic_market"
+
+
 # ── target profiles ───────────────────────────────────────────────────────────
 
 SHORT_TERM_TARGETS = [
@@ -89,10 +94,12 @@ def _action(urgency: str, market: str, persona: str) -> str:
 def build_action_plan(df: pd.DataFrame, targets: list, label: str) -> pd.DataFrame:
     """
     Build an action plan DataFrame from a list of target tuples.
+    Uses market_v2 (V2 inference) when available.
     """
+    mkt = _mkt_col(df)
     rows = []
     for market, persona, target, timeframe, reason in targets:
-        current = int(len(df[(df["strategic_market"] == market) & (df["persona"] == persona)]))
+        current = int(len(df[(df[mkt] == market) & (df["persona"] == persona)]))
         gap     = max(0, target - current)
         gap_pct = round(gap / target * 100) if target else 0
         urgency = _urgency(gap_pct)
@@ -144,14 +151,16 @@ def build_market_strategy_matrix(df: pd.DataFrame) -> pd.DataFrame:
     """
     Market x persona count pivot for the strategy matrix.
     """
+    mkt = _mkt_col(df)
     pivot = (
-        df.groupby(["strategic_market", "persona"])
+        df.groupby([mkt, "persona"])
         .agg(
             count=("persona", "size"),
             avg_score=("priority_score", "mean"),
             high_priority=("priority_score", lambda x: (x >= 70).sum()),
         )
         .reset_index()
+        .rename(columns={mkt: "market"})
     )
     pivot["avg_score"] = pivot["avg_score"].round(1)
     return pivot
@@ -161,10 +170,11 @@ def build_persona_strategy_matrix(df: pd.DataFrame) -> pd.DataFrame:
     """
     Persona x market pivot showing coverage and urgency.
     """
+    mkt = _mkt_col(df)
     all_targets = SHORT_TERM_TARGETS + MEDIUM_TERM_TARGETS
     rows = []
     for market, persona, target, timeframe, reason in all_targets:
-        current = int(len(df[(df["strategic_market"] == market) & (df["persona"] == persona)]))
+        current = int(len(df[(df[mkt] == market) & (df["persona"] == persona)]))
         gap     = max(0, target - current)
         gap_pct = round(gap / target * 100) if target else 0
         rows.append({
@@ -184,11 +194,13 @@ def build_persona_strategy_matrix(df: pd.DataFrame) -> pd.DataFrame:
 def build_connection_gap_matrix(df: pd.DataFrame) -> pd.DataFrame:
     """
     Combined gap matrix covering all target market/persona pairs.
+    Uses market_v2 (V2 inference) when available.
     """
+    mkt = _mkt_col(df)
     all_targets = SHORT_TERM_TARGETS + MEDIUM_TERM_TARGETS
     rows = []
     for market, persona, target, timeframe, reason in all_targets:
-        current = int(len(df[(df["strategic_market"] == market) & (df["persona"] == persona)]))
+        current = int(len(df[(df[mkt] == market) & (df["persona"] == persona)]))
         gap     = max(0, target - current)
         gap_pct = round(gap / target * 100) if target else 0
         urgency = _urgency(gap_pct)

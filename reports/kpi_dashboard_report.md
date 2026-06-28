@@ -1,34 +1,34 @@
 # KPI Dashboard Report
-> Generated: **June 27, 2026**
+> Generated: **June 28, 2026**
 
 ## Key Scores
 
 | KPI | Raw | Adjusted | Notes |
 |-----|-----|----------|-------|
-| USD Opportunity Score | 82.0/100 | 82.0/100 | Adjusted uses only conf >= 0.70 |
-| Spain Readiness Score | 65.0/100 | 65.0/100 | Capped at 60 if < 20 high-conf contacts |
-| Market Readiness | 75.2/100 | 75.2/100 | USD*0.6 + Spain*0.4 |
-| Data Confidence | — | 18.1% | % of connections with conf >= 0.70 |
-| Unknown Risk | — | 98.3/100 | Higher = more unknown = less reliable |
-| Actionable Network | — | 100.0/100 | High-conf + priority >= 60 |
+| USD Opportunity Score | 0/100 | 0/100 | Adjusted uses only conf >= 0.70 |
+| Spain Readiness Score | 0/100 | 0/100 | Capped at 60 if < 20 high-conf contacts |
+| Market Readiness | 0/100 | 0/100 | USD*0.6 + Spain*0.4 |
+| Data Confidence | — | 0% | % of connections with conf >= 0.70 |
+| Unknown Risk | — | 0/100 | Higher = more unknown = less reliable |
+| Actionable Network | — | 0/100 | High-conf + priority >= 60 |
 
 ## USD Breakdown (High-Confidence Only)
 
 | Persona | Count | Target |
 |---------|-------|--------|
-| Recruiters | 56 | 60 |
-| Talent Acquisition | 66 | 40 |
-| Hiring Managers | 6 | 30 |
-| Data Leaders | 55 | 20 |
+| Recruiters | 0 | 60 |
+| Talent Acquisition | 0 | 40 |
+| Hiring Managers | 0 | 30 |
+| Data Leaders | 0 | 20 |
 
 ## Spain/EU Breakdown (High-Confidence Only)
 
 | Persona | Count | Target |
 |---------|-------|--------|
-| Recruiters | 16 | 40 |
-| Talent Acquisition | 33 | 30 |
-| Hiring Managers | 3 | 20 |
-| Data Leaders | 29 | 15 |
+| Recruiters | 0 | 40 |
+| Talent Acquisition | 0 | 30 |
+| Hiring Managers | 0 | 20 |
+| Data Leaders | 0 | 15 |
 
 ## Unknown Market Analysis
 
@@ -37,10 +37,10 @@ They simply have no geographic keyword in company or title.
 
 | Persona in UNKNOWN | Count |
 |--------------------|-------|
-| Recruiters | 994 |
-| Talent Acquisition | 765 |
-| Hiring Managers | 44 |
-| Data Leaders | 695 |
+| Recruiters | 0 |
+| Talent Acquisition | 0 |
+| Hiring Managers | 0 |
+| Data Leaders | 0 |
 | Data Peers | 749 |
 
 To reduce UNKNOWN: fill `outputs/company_market_mapping_template.csv`.

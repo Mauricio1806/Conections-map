@@ -1,143 +1,136 @@
 # Conections-map
 
-> **LinkedIn Network Intelligence Dashboard**  
-> Classify, score, visualize, and act on your LinkedIn network to accelerate your career strategy.
+> **LinkedIn Network Intelligence Dashboard — V3**  
+> Strategic career analysis powered by your LinkedIn exports.
 
 ---
 
-> ⚠️ **Privacy Warning**  
-> If this repository is **public**, do **NOT** commit your raw LinkedIn export files.  
-> The `.gitignore` in this repo already excludes files in `data/raw/` by default.
+## Production Dashboard
+
+**Live URL:** https://mauricio1806.github.io/Conections-map/
+
+> GitHub Pages is configured from the **main branch / docs folder**.  
+> Push to main and the dashboard updates automatically.
+
+---
+
+## Weekly Update Workflow
+
+1. **Export fresh LinkedIn data** — download `Connections.csv`, replace the file in the project folder.
+
+2. **Run the three-step pipeline:**
+   ```
+   python src/build_network_heatmap.py
+   python src/build_strategy_layer.py
+   python src/generate_static_dashboard.py
+   ```
+
+3. **Validate locally** (optional):
+   ```
+   python src/privacy_check.py
+   python -m http.server --directory docs
+   ```
+   Then open `http://localhost:8000`
+
+4. **Commit and push:**
+   ```
+   git add .
+   git commit -m "update weekly LinkedIn network dashboard"
+   git push
+   ```
+
+5. **GitHub Pages** updates `https://mauricio1806.github.io/Conections-map/` automatically (usually within 1-2 minutes).
 
 ---
 
 ## What This Project Does
 
-This project reads your exported LinkedIn data and automatically:
+Reads your exported LinkedIn data and automatically:
 
-1. **Classifies** each connection by persona, functional area, seniority, and strategic market
-2. **Market Inference V2**: Infers opportunity market from company/title keywords + manual overrides + global company categories
-3. **Confidence-adjusted KPIs**: Raw vs. adjusted scores that penalize low-confidence inferences
-4. **Scores** each connection 0–100 based on career relevance
-5. **Generates action plans**: 30/60/90-day prioritized outreach plans
-6. **Identifies strategic gaps**: where your network is under vs. over represented
-7. **Produces a Streamlit dashboard** with interactive analysis (local development)
-8. **Generates a static HTML dashboard** served from `docs/` via GitHub Pages (no server required)
-9. **Exports** Excel, CSV, Markdown reports, and actionable contact backlog
+1. **Classifies** each connection: persona, functional area, seniority, strategic market
+2. **Market Inference V2**: Hierarchical keyword + manual override inference
+3. **V3 Scoring Model**: 8 separate score families — UNKNOWN market does NOT drag scores down
+4. **Unknown Resolution Engine**: Groups UNKNOWN connections by company, auto-suggests markets
+5. **Action Plans**: 7 / 30 / 60 / 90-day prioritized outreach plans
+6. **Strategic Gap Analysis**: Where your network falls short, with honest urgency levels
+7. **Static HTML Dashboard**: 8-page interactive dashboard served via GitHub Pages
+8. **Privacy Check**: Validates no PII in public dashboard data before publishing
 
 ---
 
-## Quick Start
+## Score Model (V3)
 
+UNKNOWN market does NOT mean the connection has no strategic value.
+UNKNOWN means no geographic signal was found in the exported fields.
+
+| Score | Measures | UNKNOWN impact |
+|-------|---------|----------------|
+| `strategic_network_score` | Persona strength — recruiters, HMs, data leaders | None |
+| `usd_readiness_score` | USD remote job readiness | GLOBAL_* = partial; high-value UNKNOWN = small partial |
+| `spain_eu_readiness_score` | Spain/EU relocation readiness | Same |
+| `market_confidence_score` | Quality of market inference | Pure data quality |
+| `global_opportunity_score` | GLOBAL_STAFFING/TECH/CONSULTING contacts | Positive |
+| `actionable_contacts_score` | Contacts with priority >= 60 | None |
+| `unknown_resolution_score` | How much UNKNOWN can be reduced | Diagnostic |
+| `data_quality_risk_score` | Risk of score inaccuracy due to data gaps | Warning only |
+
+---
+
+## How to Reduce UNKNOWN
+
+LinkedIn exports do NOT include location. Market is inferred from company/title keywords.
+
+**Fastest path to reduce UNKNOWN:**
+
+1. Open `outputs/company_override_candidates.csv` (top 150 companies to classify)
+2. Fill `manual_market` column for companies you recognize
+3. Re-run `python src/build_strategy_layer.py && python src/generate_static_dashboard.py`
+4. Each company you classify resolves all its connections at once
+
+The Unknown Resolution page in the dashboard shows the top 25 companies to classify first.
+
+---
+
+## Privacy
+
+The static dashboard (`docs/assets/dashboard_data.json`) is safe to publish publicly:
+- No email addresses
+- No phone numbers
+- No raw LinkedIn export data
+- Top contacts show: name, company, role, persona, score, LinkedIn URL only
+
+Run `python src/privacy_check.py` to validate before pushing.
+
+---
+
+## Quick Start (First Time)
+
+### 1. Setup
 ```bash
-# 1. Install dependencies
 pip install -r requirements.txt
+```
 
-# 2. Run the core pipeline (classify + heatmaps)
+### 2. Place LinkedIn Export Files
+Download your LinkedIn export and place these files in the `data/raw/` folder (or project root):
+- `Connections.csv`
+
+### 3. Run Pipeline
+```bash
 python src/build_network_heatmap.py
-
-# 3. Run the strategy layer (KPIs + action plans + reports)
 python src/build_strategy_layer.py
-
-# 4. Launch the dashboard
-streamlit run app/dashboard.py
+python src/generate_static_dashboard.py
+python src/privacy_check.py
 ```
 
----
-
-## Files Expected
-
-Place your LinkedIn export files in the **project root** (or in `data/raw/`):
-
-| File | Required | Description |
-|------|----------|-------------|
-| `Connections.csv` | ✅ Yes | Your LinkedIn connections export |
-| `Company Follows.csv` | Optional | Companies you follow on LinkedIn |
-| `Invitations.csv` | Optional | Sent/received invitations |
-
-### How to Export from LinkedIn
-
-1. Go to **LinkedIn → Settings → Data Privacy → Get a copy of your data**
-2. Select **Connections**, **Company Follows**, and **Invitations**
-3. Download and unzip the archive
-4. Place the CSV files in the project root
-
----
-
-## Pipeline Architecture
-
+### 4. View Dashboard
+Open `docs/index.html` via a local HTTP server:
+```bash
+python -m http.server --directory docs
 ```
-[Connections.csv] ──► build_network_heatmap.py ──► classified_connections.csv
-                                                 ──► heatmap CSVs
-                                                 ──► daily_network_report.md
-                                                 ──► dashboard_ready.xlsx (base)
+Then open: `http://localhost:8000`
 
-[classified_connections.csv] ──► build_strategy_layer.py ──► kpi_summary.csv
-                                                          ──► action_plan_*.csv
-                                                          ──► connection_gap_matrix.csv
-                                                          ──► dashboard_metrics.json
-                                                          ──► executive_strategy_report.md
-                                                          ──► career_network_roadmap.md
-                                                          ──► dashboard_ready.xlsx (updated)
-
-[outputs/] ──► streamlit run app/dashboard.py ──► Interactive 7-page Dashboard
-```
-
----
-
-## Dashboard Pages
-
-| Page | Description |
-|------|-------------|
-| 1. Executive Overview | KPI gauges, market distribution, persona breakdown, concentration risk |
-| 2. Network Heatmap | 5 interactive heatmaps (Persona×Market, Area×Market, Seniority×Market, etc.) |
-| 3. Strategic Gap | Gap analysis with urgency levels, filter by market/urgency |
-| 4. Action Plan | 30/60/90-day plans with visual urgency breakdown |
-| 5. Top Priority Contacts | Filterable table of highest-priority existing connections |
-| 6. Company Intelligence | Top companies by segment (all, recruiting, data, LATAM USD, Spain/EU) |
-| 7. Data Quality | Missing data rates, confidence levels, LinkedIn limitations explained |
-
----
-
-## Strategic Scores
-
-| Score | Formula | Interpretation |
-|-------|---------|---------------|
-| **USD Opportunity Score** | Weighted: recruiters+TA+HM+data leaders in LATAM/US markets | Readiness to land remote USD job from Brazil |
-| **Spain Readiness Score** | Weighted: recruiters+TA+HM+data leaders in SPAIN/EU markets | Readiness for Spain/Europe move |
-| **Market Readiness Score** | USD×0.6 + Spain×0.4 | Composite strategic score |
-
----
-
-## Output Files
-
-```
-outputs/
-  classified_connections.csv     ← All 10,780 connections classified + scored
-  network_heatmap_by_*.csv       ← 5 heatmap pivot CSVs
-  strategic_gap_report.csv       ← Gap analysis (original)
-  kpi_summary.csv                ← All KPIs as flat CSV
-  action_plan_30_days.csv        ← 30-day action plan
-  action_plan_60_days.csv        ← 60-day action plan
-  action_plan_90_days.csv        ← 90-day action plan
-  connection_gap_matrix.csv      ← Full gap matrix with urgency levels
-  market_strategy_matrix.csv     ← Market × persona pivot
-  persona_strategy_matrix.csv    ← Persona × market with gap data
-  dashboard_metrics.json         ← All dashboard data as JSON
-
-reports/
-  dashboard_ready.xlsx           ← 17-sheet Excel workbook
-  daily_network_report.md        ← Original daily report
-  strategic_gap_report.md        ← Original gap report
-  executive_strategy_report.md   ← NEW: Strategic analysis and recommendations
-  career_network_roadmap.md      ← NEW: 30/60/90 day roadmap
-  kpi_dashboard_report.md        ← NEW: KPI definitions and benchmarks
-
-docs/
-  dashboard_kpi_dictionary.md    ← Full KPI reference
-  strategy_playbook.md           ← Weekly cadences, target companies, message templates
-  data_limitations.md            ← LinkedIn export limitations explained
-```
+Or push to GitHub — the production dashboard updates at:
+**https://mauricio1806.github.io/Conections-map/**
 
 ---
 
@@ -145,112 +138,77 @@ docs/
 
 ```
 Conections-map/
-├── src/
-│   ├── config.py                   # Keywords, targets, paths
-│   ├── load_data.py                # CSV loader with preamble skip
-│   ├── clean_data.py               # Normalization and cleaning
-│   ├── classify_connections.py     # Persona / area / seniority / market
-│   ├── score_connections.py        # Priority score 0-100
-│   ├── generate_heatmaps.py        # Heatmap CSVs + gap report
-│   ├── generate_reports.py         # Excel + Markdown reports
-│   ├── build_network_heatmap.py    # Pipeline entry point (step 1)
-│   ├── calculate_kpis.py           # KPI computations
-│   ├── generate_action_plan.py     # 30/60/90-day plans
-│   ├── generate_dashboard_data.py  # JSON data for dashboard
-│   └── build_strategy_layer.py     # Strategy layer entry point (step 2)
-├── app/
-│   └── dashboard.py               # Streamlit 7-page dashboard
-├── docs/
-│   ├── dashboard_kpi_dictionary.md
-│   ├── strategy_playbook.md
-│   └── data_limitations.md
-├── config/
-│   ├── classification_rules.yml
-│   └── strategic_targets.yml
-├── outputs/                        # Generated CSV + JSON files
-├── reports/                        # Generated Excel + Markdown reports
-├── data/raw/                       # LinkedIn exports (gitignored)
-├── .github/workflows/build-report.yml
-├── requirements.txt
-└── README.md
+  src/
+    build_network_heatmap.py       # Step 1: Classify connections
+    build_strategy_layer.py        # Step 2: V3 strategy + KPIs + export JSON
+    generate_static_dashboard.py   # Step 3: Verify static files
+    privacy_check.py               # Step 4: Validate public JSON
+    market_inference_v2.py         # Hierarchical market inference
+    confidence_adjusted_kpis.py    # V3 8-score model
+    unknown_resolution_engine.py   # Classify UNKNOWN companies automatically
+    export_public_dashboard_data.py# Build sanitized public JSON
+    generate_action_plan.py        # 7/30/60/90-day plans
+  config/
+    market_keywords.yml            # Keyword rules by market
+    company_market_overrides.yml   # Manual company overrides (confidence 0.95)
+    company_category_rules.yml     # GLOBAL_STAFFING/TECH/CONSULTING rules
+  docs/
+    index.html                     # Static dashboard (GitHub Pages)
+    assets/
+      dashboard_data.json          # Public-safe analytics JSON
+      style.css                    # Dashboard styles
+      app.js                       # Dashboard logic (Chart.js)
+  outputs/
+    enriched_connections.csv
+    company_override_candidates.csv # Fill manual_market to reduce UNKNOWN
+    unknown_resolution_backlog.csv
+    unresolved_high_value_contacts.csv
+    action_backlog.csv
+  reports/
+    executive_strategy_report.md
+    career_network_roadmap.md
+    kpi_dashboard_report.md
+  app/
+    dashboard.py                   # Streamlit (local development only)
 ```
 
 ---
 
-## How GitHub Actions Works
+## Local Streamlit Dashboard (Optional)
 
-Every push to `main` (or manual trigger) runs:
+For deeper analysis with interactive filters:
+```bash
+streamlit run app/dashboard.py
+```
 
-1. `pip install -r requirements.txt`
-2. `python src/build_network_heatmap.py` — classify + heatmaps
-3. `python src/build_strategy_layer.py` — KPIs + action plans + reports
-4. Uploads `reports/` and `outputs/` as downloadable artifacts (30-day retention)
-5. Uploads `dashboard_ready.xlsx` separately (90-day retention)
-
-To trigger manually:
-1. Go to your repo → **Actions** tab
-2. Select **Build LinkedIn Network Report**
-3. Click **Run workflow**
-
-> **Note:** For GitHub Actions to work, `Connections.csv` must be committed.
-> To keep raw data private, run the pipeline locally and commit only the reports.
-
----
-
-## Customization
-
-| File | What to Edit |
-|------|-------------|
-| `src/config.py` | Classification keywords, scoring weights, strategic targets |
-| `src/generate_action_plan.py` | Target counts for 30/60/90-day plans |
-| `config/strategic_targets.yml` | Human-readable target documentation |
-
----
-
-## How to Interpret Results
-
-- **High Priority (score ≥ 70)**: Reach out immediately with a personalized message
-- **Medium Priority (40-69)**: Engage with content regularly; reconnect when relevant
-- **Low Priority (< 40)**: No immediate action needed
-- **UNKNOWN market**: Not irrelevant — just unclassifiable from title/company keywords alone
-
-See [docs/data_limitations.md](docs/data_limitations.md) for a full explanation of
-LinkedIn's export limitations and how market inference works.
-
----
-
-## License
-
-MIT — use freely, no warranty.
-
----
-
-## Static HTML Dashboard / GitHub Pages
-
-The production dashboard is a static HTML dashboard served via GitHub Pages.
-It requires no server, no Python, and no Streamlit.
-
-### Weekly Update Workflow
-
-1. Export fresh LinkedIn data.
-2. Run: python src/build_network_heatmap.py
-3. Run: python src/build_strategy_layer.py
-4. Run: python src/generate_static_dashboard.py
-5. Run: git add . && git commit -m update && git push
-6. GitHub Pages serves docs/index.html automatically.
-
-### Reduce UNKNOWN %
-
-Open outputs/company_market_mapping_template.csv,
-fill manual_market for the top unknown companies, re-run pipeline.
+Note: Streamlit is optional. The production dashboard is the static GitHub Pages version.
 
 ---
 
 ## Market Inference V2
 
-LinkedIn exports do NOT include location data.
-Market is inferred from company/title keywords (confidence 0.85-0.95).
-Global companies (Accenture, AWS) get confidence 0.70.
-No signal = UNKNOWN (confidence 0.00).
+LinkedIn exports do NOT include location data. Market is inferred from company/title keywords:
 
-See docs/market_inference_methodology.md for details.
+| Confidence | Method | Example |
+|-----------|--------|---------|
+| 0.95 | Manual override (YAML or CSV) | agileengine → LATAM_USD |
+| 0.85 | Company keyword match | "Wizeline" → LATAM_USD |
+| 0.75 | Title/position keyword | "nearshore Canada" → US_CA |
+| 0.70 | Global company category | Accenture → GLOBAL_CONSULTING |
+| 0.00 | No signal → UNKNOWN | "Digital Solutions" → UNKNOWN |
+
+See `docs/market_inference_methodology.md` for full details.
+
+---
+
+## GitHub Actions
+
+Pushes to `main` automatically:
+1. Run full 4-step pipeline
+2. Privacy check (fails if email/phone found in JSON)
+3. Verify all 4 required docs/ files exist
+4. Commit updated outputs and dashboard
+
+---
+
+MIT License — use freely, no warranty.
