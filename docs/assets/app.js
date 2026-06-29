@@ -149,6 +149,26 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ── Mobile sidebar ────────────────────────────────────────────────────────────
+function initMobileSidebar() {
+  const sidebar  = document.getElementById('sidebar');
+  const overlay  = document.getElementById('sidebar-overlay');
+  const burger   = document.getElementById('hamburger-btn');
+  if (!sidebar || !burger) return;
+
+  function openSidebar()  { sidebar.classList.add('open');  if (overlay) overlay.classList.add('open'); }
+  function closeSidebar() { sidebar.classList.remove('open'); if (overlay) overlay.classList.remove('open'); }
+
+  burger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+  if (overlay) overlay.addEventListener('click', closeSidebar);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+  // Auto-close on nav item tap (mobile UX)
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.addEventListener('click', () => { if (window.innerWidth <= 768) closeSidebar(); });
+  });
+}
+
 // ── Navigation ────────────────────────────────────────────────────────────────
 function initNav() {
   document.querySelectorAll('.nav-item').forEach(el => {
@@ -159,6 +179,8 @@ function initNav() {
       el.classList.add('active');
       const pg = document.getElementById('page-' + page);
       if (pg) pg.classList.add('active');
+      // Resize charts after page switch so Chart.js recalculates dimensions
+      setTimeout(() => { Object.values(charts).forEach(c => { try { c.resize(); } catch(_){} }); }, 50);
     });
   });
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -173,7 +195,20 @@ function initNav() {
       btn.classList.add('active');
       panel.classList.add('active');
       if (tabId.startsWith('co-')) renderCompanyChart(tabId);
+      // Resize charts after tab switch
+      setTimeout(() => { Object.values(charts).forEach(c => { try { c.resize(); } catch(_){} }); }, 50);
     });
+  });
+
+  initMobileSidebar();
+
+  // Resize all charts when window resizes
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      Object.values(charts).forEach(c => { try { c.resize(); } catch(_){} });
+    }, 150);
   });
 }
 

@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1782689264">
+  <link rel="stylesheet" href="./assets/style.css?v=1782752740">
 </head>
 <body>
 
@@ -21,8 +21,20 @@
 <!-- App -->
 <div id="app" class="layout" style="display:none">
 
+  <!-- Mobile header (only visible on small screens) -->
+  <div class="mobile-header" id="mobile-header">
+    <div class="mobile-header-brand">
+      <span class="brand-icon">&#127757;</span>
+      <span>Network Intel</span>
+    </div>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu">&#9776;</button>
+  </div>
+
+  <!-- Sidebar overlay backdrop -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
   <!-- Sidebar -->
-  <nav class="sidebar">
+  <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-icon">&#127757;</div>
       <div>
@@ -504,6 +516,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1782689264"></script>
+<script src="./assets/app.js?v=1782752740"></script>
 </body>
 </html>
