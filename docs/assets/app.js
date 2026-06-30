@@ -585,24 +585,115 @@ function renderGapChart() {
 
 // ── PAGE 4: Action Plan ───────────────────────────────────────────────────────
 function renderPlan() {
-  // ── Precise Boolean search queries ──────────────────────────────────────────
-  const Q = {
-    LATAM_USD:      '("Data Engineer" OR "Data Engineering" OR "Cloud Data") AND ("LATAM" OR "Latin America" OR "South America" OR "Remote") AND ("Recruiter" OR "Talent Acquisition" OR "Sourcer")',
-    SOUTH_AMERICA:  '("Data Engineer" OR "Data Engineering") AND ("Brazil" OR "Brasil" OR "Argentina" OR "Chile" OR "Colombia" OR "Uruguay" OR "Peru" OR "Mexico") AND ("Recruiter" OR "Talent Acquisition")',
-    US_NEARSHORE:   '("Data Engineer" OR "Analytics Engineer" OR "Cloud Data") AND ("nearshore" OR "LATAM" OR "Latin America" OR "remote contractor") AND ("USA" OR "United States" OR "Canada") AND ("Recruiter" OR "Talent Acquisition")',
-    STAFFING:       '("Data Engineer" OR "Cloud Data" OR "Azure" OR "AWS" OR "Databricks") AND ("staffing" OR "consulting" OR "nearshore" OR "contractor") AND ("LATAM" OR "remote")',
-    HIRING_MGR:     '("Data Engineering Manager" OR "Head of Data" OR "Engineering Manager" OR "Director of Data") AND ("LATAM" OR "remote" OR "nearshore" OR "global")',
-    SPAIN_EU:       '("Data Engineer" OR "Data Engineering" OR "Cloud Data") AND ("Spain" OR "España" OR "Madrid" OR "Barcelona" OR "Portugal" OR "Europe") AND ("Recruiter" OR "Talent Acquisition")',
-    PORTUGAL_EU:    '("Data Engineer" OR "Analytics Engineer" OR "Cloud Data") AND ("Portugal" OR "Lisbon" OR "Porto" OR "Europe" OR "EU remote") AND ("Recruiter" OR "Talent Acquisition")',
-    DIGITAL_NOMAD:  '("Data Engineer" OR "Cloud Data") AND ("remote" OR "contractor" OR "freelance") AND ("Europe" OR "Spain" OR "Portugal") AND ("Recruiter" OR "Talent Acquisition")',
+  // ── Search pack helper ───────────────────────────────────────────────────────
+  function liUrl(q) {
+    return 'https://www.linkedin.com/search/results/people/?keywords=' + encodeURIComponent(q);
+  }
+
+  // Build a compact stacked search-pack block (4 tiers)
+  function searchPack(pack, filters, noise) {
+    const tiers = [
+      { label: 'Broad',     quality: 'Volume High / Precision Low',        q: pack.broad     },
+      { label: 'Precision', quality: 'Volume Medium / Precision Medium-High', q: pack.precision },
+      { label: 'Persona',   quality: 'Volume Medium / Precision High',     q: pack.persona   },
+      { label: 'Company',   quality: 'Volume Low / Precision Very High',   q: pack.company   },
+    ];
+    const colors = { Broad: '#f59e0b', Precision: '#3b82f6', Persona: '#8b5cf6', Company: '#22c55e' };
+    const rows = tiers.map(t =>
+      '<div style="display:flex;align-items:flex-start;gap:.4rem;padding:.35rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap">'
+      + '<span style="font-size:.7rem;font-weight:700;color:' + colors[t.label] + ';min-width:64px;flex-shrink:0">' + t.label + '</span>'
+      + '<div style="flex:1;min-width:0">'
+      + '<code style="font-size:.72rem;color:#e6edf3;word-break:break-word;white-space:normal;display:block">' + t.q + '</code>'
+      + '<span style="font-size:.65rem;color:var(--text-muted)">' + t.quality + '</span>'
+      + '</div>'
+      + '<a href="' + liUrl(t.q) + '" target="_blank" rel="noopener" '
+      + 'style="font-size:.7rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;white-space:nowrap;text-decoration:none;flex-shrink:0" '
+      + 'title="Open People Search on LinkedIn">Open</a>'
+      + '</div>'
+    ).join('');
+    const noiseHtml = noise
+      ? '<div style="font-size:.7rem;color:var(--text-muted);margin-top:.35rem">&#9888; Noise tip: if too many irrelevant results, try adding <code style="font-size:.7rem">NOT Student</code> or <code style="font-size:.7rem">NOT Course</code></div>'
+      : '';
+    return '<div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:.6rem .75rem;margin:.5rem 0">'
+      + '<div style="font-size:.7rem;font-weight:700;color:var(--text-secondary);margin-bottom:.25rem">&#128269; SEARCH PACK — Use People search + filters</div>'
+      + rows
+      + (filters ? '<div style="font-size:.7rem;color:var(--info);margin-top:.35rem">&#127717; Filters: ' + filters + '</div>' : '')
+      + '<div style="font-size:.7rem;color:var(--text-muted);margin-top:.3rem;font-style:italic">Tip: Start Broad → if noisy use Precision → apply filters for precision. Short + filters beats huge Boolean strings.</div>'
+      + noiseHtml
+      + '</div>';
+  }
+
+  // ── Search packs ─────────────────────────────────────────────────────────────
+  const SP = {
+    LATAM_USD: {
+      broad:     'data engineer recruiter LATAM',
+      precision: '"Data Engineer" AND Recruiter AND LATAM',
+      persona:   '"Talent Acquisition" AND "Data Engineer" AND LATAM',
+      company:   'Recruiter AND "Data Engineer" AND Hays',
+    },
+    SOUTH_AMERICA: {
+      broad:     'data engineer recruiter South America',
+      precision: '"Data Engineer" AND Recruiter AND Brazil',
+      persona:   '"Talent Acquisition" AND "Data Engineer" AND Brazil',
+      company:   'Recruiter AND "Data Engineer" AND "Michael Page"',
+    },
+    US_NEARSHORE: {
+      broad:     'nearshore recruiter data engineer',
+      precision: '"Data Engineer" AND Recruiter AND nearshore',
+      persona:   '"Talent Acquisition" AND "Data Engineer" AND LATAM',
+      company:   'Recruiter AND "Data Engineer" AND Nearsure',
+    },
+    STAFFING: {
+      broad:     'data engineer recruiter staffing',
+      precision: '"Data Engineer" AND Recruiter AND contractor',
+      persona:   '"Talent Acquisition" AND "Cloud Data" AND contractor',
+      company:   'Recruiter AND "Data Engineer" AND "NTT DATA"',
+    },
+    HIRING_MGR: {
+      broad:     'data engineering manager remote',
+      precision: '"Data Engineering Manager" AND Remote',
+      persona:   '"Head of Data" AND "Data Engineer"',
+      company:   '"Data Engineering Manager" AND Databricks',
+    },
+    SPAIN_EU: {
+      broad:     'data engineer recruiter Spain',
+      precision: '"Data Engineer" AND Recruiter AND Spain',
+      persona:   '"Talent Acquisition" AND "Data Engineer" AND Spain',
+      company:   'Recruiter AND "Data Engineer" AND Stratesys',
+    },
+    PORTUGAL_EU: {
+      broad:     'data engineer recruiter Portugal',
+      precision: '"Data Engineer" AND Recruiter AND Portugal',
+      persona:   '"Talent Acquisition" AND "Data Engineer" AND Portugal',
+      company:   'Recruiter AND "Data Engineer" AND ERNI',
+    },
+    DIGITAL_NOMAD: {
+      broad:     'remote data engineer recruiter Europe',
+      precision: '"Data Engineer" AND Recruiter AND remote',
+      persona:   '"Talent Acquisition" AND "Data Engineer" AND Europe',
+      company:   'Recruiter AND "Data Engineer" AND remote',
+    },
   };
 
   // ── Filters ──────────────────────────────────────────────────────────────────
   const F = {
     LATAM_USD:    'People · 2nd degree · Locations: Brazil, Argentina, Colombia, Mexico, Chile, Uruguay, Peru · Keywords: recruiter, talent acquisition, data engineer, LATAM, remote',
     US_NEARSHORE: 'People · 2nd degree · Locations: United States, Canada · Keywords: LATAM, nearshore, remote contractor, data engineer, recruiter',
-    HIRING_MGR:   'People · 2nd degree · Companies: tech, consulting, SaaS, data/platform · Keywords: Head of Data, Data Engineering Manager, Director of Data, Engineering Manager',
+    HIRING_MGR:   'People · 2nd degree · Seniority: Manager/Director/Head · Keywords: Head of Data, Data Engineering Manager, Director of Data',
     SPAIN_EU:     'People · 2nd degree · Locations: Spain, Portugal, Germany, Netherlands, Ireland · Keywords: data engineer, recruiter, talent acquisition, remote',
+    STAFFING:     'People · 2nd degree · Companies: Hays, Michael Page, Randstad, Robert Half, NTT DATA, Capgemini, Accenture, TCS, Globant, BairesDev, Nearsure',
+  };
+
+  // Legacy single-query fallback for data-driven 60/90 cards
+  const Q = {
+    LATAM_USD:      SP.LATAM_USD.precision,
+    SOUTH_AMERICA:  SP.SOUTH_AMERICA.precision,
+    US_NEARSHORE:   SP.US_NEARSHORE.precision,
+    STAFFING:       SP.STAFFING.precision,
+    HIRING_MGR:     SP.HIRING_MGR.precision,
+    SPAIN_EU:       SP.SPAIN_EU.precision,
+    PORTUGAL_EU:    SP.PORTUGAL_EU.precision,
+    DIGITAL_NOMAD:  SP.DIGITAL_NOMAD.precision,
   };
 
   // ── 7-day sprint ─────────────────────────────────────────────────────────────
@@ -612,8 +703,7 @@ function renderPlan() {
       action: 'LATAM/USD Hot Lead Reactivation',
       detail: 'Message top hot/warm recruiters from Lead Reactivation. Prioritize who replied, asked for CV, or had real conversations.',
       targets: { DMs: '5–10', Connects: '0', Comments: '0' },
-      query: Q.LATAM_USD,
-      filters: F.LATAM_USD,
+      sp: SP.LATAM_USD, filters: F.LATAM_USD, noise: true,
       angle: 'Hi [Name], I wanted to reconnect — I\'m currently open to remote LATAM/USD Data Engineering roles. My focus is Azure/AWS data pipelines, Databricks, SQL and ETL/ELT. Happy to share my updated profile.',
     },
     {
@@ -621,8 +711,7 @@ function renderPlan() {
       action: 'LATAM/South America Recruiter Search',
       detail: 'Search and connect with recruiters in Brazil, Argentina, Colombia, Mexico, Chile. Focus on staffing and tech companies.',
       targets: { DMs: '0', Connects: '10–15', Comments: '0' },
-      query: Q.SOUTH_AMERICA,
-      filters: F.LATAM_USD,
+      sp: SP.SOUTH_AMERICA, filters: F.LATAM_USD, noise: true,
       angle: 'Hi [Name], thanks for connecting. I\'m a Data Engineer focused on Azure, AWS, Databricks, SQL and ETL/ELT, currently open to remote LATAM/USD contractor roles. Happy to stay in touch if you work with data engineering positions.',
     },
     {
@@ -630,8 +719,7 @@ function renderPlan() {
       action: 'Nearshore / US-Canada Contractor Ecosystem',
       detail: 'Search for US and Canada recruiters hiring LATAM contractors. Target AgileEngine, Andela, Gorilla Logic, Wizeline, Turing, Deel-adjacent companies.',
       targets: { DMs: '0', Connects: '10–15', Comments: '3' },
-      query: Q.US_NEARSHORE,
-      filters: F.US_NEARSHORE,
+      sp: SP.US_NEARSHORE, filters: F.US_NEARSHORE, noise: false,
       angle: 'Hi [Name], I\'m currently based in Brazil and available for remote Data Engineering roles aligned with US time zones. My focus is Azure/AWS data pipelines, Databricks, SQL and cloud analytics.',
     },
     {
@@ -639,8 +727,7 @@ function renderPlan() {
       action: 'Hiring Managers and Data Leaders',
       detail: 'Search Data Engineering Managers, Heads of Data, Directors in LATAM-friendly or globally remote companies. Softer angle — not a recruiter pitch.',
       targets: { DMs: '3', Connects: '5–10', Comments: '3' },
-      query: Q.HIRING_MGR,
-      filters: F.HIRING_MGR,
+      sp: SP.HIRING_MGR, filters: F.HIRING_MGR, noise: false,
       angle: 'Hi [Name], I\'m connecting because I follow data engineering and cloud data teams working with scalable pipelines and analytics platforms. I work with Azure, AWS, Databricks, SQL and ETL/ELT.',
     },
     {
@@ -648,8 +735,7 @@ function renderPlan() {
       action: 'Content + Visibility',
       detail: 'Post or comment on LinkedIn around Data Engineering / Azure / AWS / Databricks / remote contractor work. Attract inbound recruiter contacts.',
       targets: { DMs: '0', Connects: '0', Comments: '5–10' },
-      query: '—',
-      filters: '—',
+      sp: null, filters: null, noise: false,
       angle: 'Post angle: "Remote Data Engineering with Azure/Databricks/dbt — what I\'ve built and what I\'m looking for next." Comment on 5–10 recruiter or company posts about data engineering.',
     },
     {
@@ -657,8 +743,7 @@ function renderPlan() {
       action: 'Spain/EU Exploratory Layer (10% budget)',
       detail: 'Search Spain, Portugal, Germany, Netherlands, Ireland recruiters. Light touch only — do not over-invest here yet.',
       targets: { DMs: '0', Connects: '2–5', Comments: '1' },
-      query: Q.SPAIN_EU,
-      filters: F.SPAIN_EU,
+      sp: SP.SPAIN_EU, filters: F.SPAIN_EU, noise: false,
       angle: 'Hi [Name], I\'m building my European network as I\'ll be spending time in Spain soon. I\'m a Data Engineer focused on cloud data platforms, Azure/AWS, Databricks and analytics engineering.',
     },
     {
@@ -666,8 +751,7 @@ function renderPlan() {
       action: 'Review and Pipeline Hygiene',
       detail: 'Review replies from the week. Update company mapping backlog. Refresh dashboard CSV if available. Prepare next week\'s target list.',
       targets: { DMs: '0', Connects: '0', Comments: '0' },
-      query: '—',
-      filters: '—',
+      sp: null, filters: null, noise: false,
       angle: 'Open outputs/unresolved_opportunity_buckets.csv → add top 10 companies to config/company_market_overrides.yml → run python src/build_strategy_layer.py to refresh dashboard.',
     },
   ];
@@ -682,9 +766,8 @@ function renderPlan() {
       + '<div class="sprint-action">' + s.action + '</div>'
       + '<div class="plan-targets">' + tgt + '</div>'
       + '<div class="sprint-meta" style="margin-bottom:.4rem">' + s.detail + '</div>'
-      + (s.query !== '—' ? '<div class="sprint-query" style="word-break:break-word;white-space:normal">&#128269; ' + s.query + '</div>' : '')
-      + (s.filters !== '—' ? '<div class="sprint-meta" style="color:var(--info);margin-top:.3rem">&#127717; ' + s.filters + '</div>' : '')
-      + '<div class="sprint-angle" style="white-space:normal">&#128172; ' + s.angle + '</div>'
+      + (s.sp ? searchPack(s.sp, s.filters, s.noise) : '')
+      + '<div class="sprint-angle" style="white-space:normal;margin-top:.4rem">&#128172; ' + s.angle + '</div>'
       + '</div>';
   }).join('');
 
@@ -718,8 +801,7 @@ function renderPlan() {
       + '</div>' + urgencyBadge(w.urgency.charAt(0).toUpperCase() + w.urgency.slice(1)) + '</div>'
       + '<div class="plan-targets" style="margin-bottom:.6rem">' + tgt + '</div>'
       + '<div class="plan-reason">' + w.detail + '</div>'
-      + (w.query ? '<div class="plan-query" style="word-break:break-word;white-space:normal;margin-top:.5rem">&#128269; ' + w.query + '</div>' : '')
-      + (w.filters ? '<div class="sprint-meta" style="color:var(--info);margin-top:.3rem">&#127717; ' + w.filters + '</div>' : '')
+      + (w.sp ? searchPack(w.sp, w.filters || null, w.noise || false) : '')
       + (w.angle ? '<div class="sprint-angle" style="white-space:normal;margin-top:.4rem">&#128172; ' + w.angle + '</div>' : '')
       + '</div>';
   }
@@ -728,17 +810,17 @@ function renderPlan() {
     { urgency: 'critical', title: 'Hot/Warm Lead Reactivation', focus: 'Message history intelligence — leads who already know you',
       targets: { 'DMs': '10–15', 'Career Sites': '5', 'EU Connects': '2–3' },
       detail: 'Start with existing warm contacts. Go to Lead Reactivation → Hot + Warm tabs. Message recruiters who replied, requested CV, or shared roles. Personalize every message. Do NOT send bulk identical DMs.',
-      query: Q.LATAM_USD, filters: F.LATAM_USD,
+      sp: SP.LATAM_USD, filters: F.LATAM_USD, noise: true,
       angle: 'We spoke previously about data roles. I wanted to reconnect because I\'m currently open to remote Data Engineering opportunities across LATAM/US time zones.' },
     { urgency: 'high', title: 'LATAM/USD Recruiter Pipeline — New Connects', focus: 'Brazil · Argentina · Colombia · Chile · Uruguay · Mexico',
       targets: { 'Connects': '40–60', 'DMs': '5', 'Comments': '5' },
       detail: 'Search for LATAM and South America recruiters. Prioritize 2nd degree connections at staffing, consulting, and nearshore tech companies. Send personalized connection requests with a brief note.',
-      query: Q.LATAM_USD, filters: F.LATAM_USD,
+      sp: SP.SOUTH_AMERICA, filters: F.LATAM_USD, noise: true,
       angle: 'Hi [Name], thanks for connecting. I\'m a Data Engineer focused on Azure, AWS, Databricks, SQL and ETL/ELT, currently open to remote LATAM/USD contractor roles.' },
     { urgency: 'medium', title: 'Spain/EU Exploratory (Week 1 — Light)', focus: 'Optional — only if LATAM pipeline is on track',
       targets: { 'Connects': '2–3', 'DMs': '0', 'Comments': '1' },
       detail: '10% EU budget. Connect with 2–3 Spain or Portugal recruiters only. Do not spend more than 20 minutes here this week.',
-      query: Q.SPAIN_EU, filters: F.SPAIN_EU,
+      sp: SP.SPAIN_EU, filters: F.SPAIN_EU, noise: false,
       angle: 'Hi [Name], I\'m building my European network as I\'ll be spending time in Spain soon. I\'m a Data Engineer focused on cloud data platforms, Azure/AWS, Databricks and analytics engineering.' },
   ];
 
@@ -746,17 +828,17 @@ function renderPlan() {
     { urgency: 'critical', title: 'South America Recruiter Expansion', focus: 'Staffing & consulting firms hiring LATAM contractors',
       targets: { 'Connects': '50–70', 'DMs': '10', 'Comments': '10' },
       detail: 'Expand beyond your existing network. Search South America recruiters and TA professionals. Focus on staffing companies and consulting firms with LATAM contractor pipelines. Comment on recruiter posts to increase visibility.',
-      query: Q.SOUTH_AMERICA, filters: F.LATAM_USD,
+      sp: SP.SOUTH_AMERICA, filters: F.LATAM_USD, noise: true,
       angle: 'Hi [Name], thanks for connecting. I\'m a Data Engineer focused on Azure, AWS, Databricks, SQL and ETL/ELT, currently open to remote LATAM/USD contractor roles. Happy to stay in touch.' },
     { urgency: 'high', title: 'US/Canada Nearshore Recruiters', focus: 'AgileEngine · Andela · Gorilla Logic · Wizeline · Turing · Deel',
       targets: { 'Connects': '15–20', 'DMs': '5', 'Comments': '5' },
       detail: 'Search US and Canada recruiters explicitly hiring LATAM contractors for remote nearshore roles. These companies bridge the USD income gap directly. Priority targets: AgileEngine, Gorilla Logic, Wizeline, BairesDev, Andela.',
-      query: Q.US_NEARSHORE, filters: F.US_NEARSHORE,
+      sp: SP.US_NEARSHORE, filters: F.US_NEARSHORE, noise: false,
       angle: 'Hi [Name], I\'m currently based in Brazil and available for remote Data Engineering roles aligned with US time zones. My focus is Azure/AWS data pipelines, Databricks, SQL and cloud analytics.' },
     { urgency: 'medium', title: 'Spain/EU Exploratory (Week 2)', focus: 'Slow build — not the main channel',
       targets: { 'Connects': '3–5', 'DMs': '0', 'Comments': '2' },
       detail: '10% EU budget. Add 3–5 Spain/EU recruiters this week. Focus on people in your network\'s 2nd degree. No DMs yet — just connections.',
-      query: Q.SPAIN_EU, filters: F.SPAIN_EU,
+      sp: SP.SPAIN_EU, filters: F.SPAIN_EU, noise: false,
       angle: 'Hi [Name], I\'m building my European network for future optionality. I\'m a Data Engineer specializing in Azure/AWS, Databricks and cloud analytics.' },
   ];
 
@@ -764,17 +846,17 @@ function renderPlan() {
     { urgency: 'high', title: 'Hiring Managers — LATAM/Remote Companies', focus: 'Decision-makers who can create roles, not just fill them',
       targets: { 'Connects': '30–40', 'DMs': '5', 'Comments': '10' },
       detail: 'Search Data Engineering Managers, Heads of Data, Engineering Directors at LATAM-friendly or globally remote companies. Softer angle — connect and comment on posts, not a direct pitch. Build relationships.',
-      query: Q.HIRING_MGR, filters: F.HIRING_MGR,
+      sp: SP.HIRING_MGR, filters: F.HIRING_MGR, noise: false,
       angle: 'Hi [Name], I\'m connecting because I follow data engineering and cloud data teams working with scalable pipelines. I work with Azure, AWS, Databricks, SQL and ETL/ELT pipelines.' },
     { urgency: 'high', title: 'Recruiters — Keep Warm', focus: 'Do not let Week 1–2 connections go cold',
       targets: { 'Connects': '30–40', 'DMs': '10', 'Comments': '5' },
       detail: 'Keep the recruiter pipeline active. Follow up with Week 1–2 new connections who accepted but haven\'t replied. Send a brief contextual message — mention open LATAM/USD Data Engineering opportunities.',
-      query: Q.LATAM_USD, filters: F.LATAM_USD,
+      sp: SP.LATAM_USD, filters: F.LATAM_USD, noise: true,
       angle: 'Hi [Name], thanks for accepting — I\'m currently open to remote Data Engineering roles. My stack: Azure, AWS, Databricks, dbt, Airflow, SQL. Happy to send my profile if you work with data engineering positions.' },
     { urgency: 'medium', title: 'Staffing & Global Consulting Firms', focus: 'GLOBAL_STAFFING + GLOBAL_CONSULTING buckets',
       targets: { 'Connects': '10–15', 'DMs': '5', 'Comments': '5' },
       detail: 'Target Hays, Michael Page, Robert Half, Manpower, Randstad, NTT DATA, Accenture, Capgemini — these companies place Data Engineers globally and often have LATAM contractor demand.',
-      query: Q.STAFFING, filters: F.LATAM_USD,
+      sp: SP.STAFFING, filters: F.STAFFING, noise: false,
       angle: 'Hi [Name], I\'m a Data Engineer specializing in cloud data platforms — Azure, AWS, Databricks, dbt, SQL and ETL/ELT. Currently open to LATAM/USD remote contractor opportunities.' },
   ];
 
@@ -782,17 +864,17 @@ function renderPlan() {
     { urgency: 'critical', title: 'Follow-up with Accepted Connections', focus: 'Turn connections into conversations',
       targets: { 'DMs': '20–30', 'Comments': '10', 'Career Sites': '10' },
       detail: 'Send a brief follow-up to everyone who accepted in Weeks 1–3 but hasn\'t replied. Apply to open roles discovered through conversations. Submit to career site talent databases at target companies.',
-      query: '—', filters: '—',
+      sp: null, filters: null, noise: false,
       angle: 'Hi [Name], thanks for connecting! I\'m actively looking for remote Data Engineering opportunities. My focus is Azure/AWS data pipelines, Databricks, dbt and SQL. If you\'re working with DE roles, I\'d love to stay in touch.' },
     { urgency: 'high', title: 'EU/Spain Expansion (Week 4 — slightly more)', focus: 'Begin building European optionality',
       targets: { 'Connects': '5–10', 'DMs': '2', 'Comments': '3' },
       detail: 'This week allow slightly more EU exploration now that the LATAM pipeline has momentum. Prioritize Spain, Portugal, Netherlands, Germany, Ireland. Still not the main channel.',
-      query: Q.SPAIN_EU, filters: F.SPAIN_EU,
+      sp: SP.SPAIN_EU, filters: F.SPAIN_EU, noise: false,
       angle: 'Hi [Name], I\'ll be spending time in Spain soon and I\'m building my European network. I\'m a Data Engineer focused on cloud data platforms, Azure/AWS, Databricks and analytics engineering.' },
     { urgency: 'medium', title: 'Pipeline Cleanup + Next Sprint Setup', focus: 'Compound your momentum',
       targets: { 'Mapping': '20+', 'Review': 'all replies', 'Next Sprint': 'planned' },
       detail: 'Map top 20 companies from unresolved_opportunity_buckets.csv. Review all conversation replies — categorize as Hot/Warm/Cold. Prepare Week 5–8 list with updated contacts from Lead Reactivation.',
-      query: '—', filters: '—',
+      sp: null, filters: null, noise: false,
       angle: 'Hygiene actions: run python src/build_strategy_layer.py → update company_market_overrides.yml → review Lead Reactivation hot leads → prepare next sprint focus areas.' },
   ];
 
@@ -826,7 +908,9 @@ function renderPlan() {
         + '<div class="plan-t"><div class="plan-n" style="color:#14b8a6">' + weekly + '/wk</div><div class="plan-l">connects</div></div>'
         + '</div>'
         + '<div class="plan-reason">' + (r.strategic_reason||'').substring(0,140) + '</div>'
-        + '<div class="plan-query" style="word-break:break-word;white-space:normal;margin-top:.4rem">&#128269; ' + query + '</div>'
+        + '<div style="margin-top:.5rem"><a href="' + liUrl(query) + '" target="_blank" rel="noopener" '
+        + 'style="font-size:.72rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;text-decoration:none">&#128269; Precision Search</a>'
+        + '<code style="font-size:.7rem;color:var(--text-muted);margin-left:.5rem;word-break:break-word">' + query + '</code></div>'
         + '</div>';
     });
     const extra = (extraCards || []).map(makeWeekCard);
@@ -837,26 +921,26 @@ function renderPlan() {
     { urgency: 'high', title: '60-Day: Maintain USD Pipeline (80–85%)', focus: 'LATAM/USD + US-nearshore remains primary',
       targets: { 'Connects/wk': '30–40', 'DMs/wk': '10–15', 'Comments/wk': '10' },
       detail: 'Keep the LATAM/USD recruiter and hiring manager pipeline active. Reactivate dormant leads from Lead Reactivation. Add Spain/EU slowly only if USD conversations are already progressing.',
-      query: Q.LATAM_USD, filters: F.LATAM_USD, angle: '' },
+      sp: SP.LATAM_USD, filters: F.LATAM_USD, noise: true, angle: '' },
     { urgency: 'medium', title: '60-Day: Spain/EU Positioning (15–20%)', focus: 'Exploratory — not primary income channel',
       targets: { 'Connects/wk': '5–10', 'DMs/wk': '2–5', 'Comments/wk': '5' },
       detail: 'Build a small but real EU recruiter and hiring manager network. Focus on Spain (Madrid/Barcelona), Portugal (Lisbon), Netherlands, Germany, Ireland. Increase investment only after USD pipeline is stable.',
-      query: Q.SPAIN_EU, filters: F.SPAIN_EU, angle: '' },
+      sp: SP.SPAIN_EU, filters: F.SPAIN_EU, noise: false, angle: '' },
   ];
 
   const plan90extra = [
     { urgency: 'high', title: '90-Day: USD Remote Income — Still Priority', focus: 'Do not drop LATAM/USD pipeline',
       targets: { 'Active leads': '15–25', 'EU network': 'growing', 'Mapping': 'ongoing' },
       detail: 'By 90 days you should have active USD job conversations. Keep feeding the LATAM/USD recruiter pipeline. Europe becomes a positioning layer — not a replacement. You can increase EU connects to 20–30% if income is secured.',
-      query: Q.LATAM_USD, filters: F.LATAM_USD, angle: '' },
+      sp: SP.LATAM_USD, filters: F.LATAM_USD, noise: true, angle: '' },
     { urgency: 'medium', title: '90-Day: Europe as Positioning Layer', focus: 'Digital nomad optionality — Spain/Portugal base',
       targets: { 'EU Connects': '40–60 total', 'EU DMs': '15–20 total', 'EU HMs': '10–15' },
       detail: 'Europe becomes a positioning layer while USD remote work remains the income priority. Increase hiring manager relationships in Spain, Portugal, Netherlands. Map companies open to contractors and digital nomads.',
-      query: Q.DIGITAL_NOMAD, filters: F.SPAIN_EU, angle: '' },
+      sp: SP.DIGITAL_NOMAD, filters: F.SPAIN_EU, noise: false, angle: '' },
     { urgency: 'medium', title: '90-Day: Company Mapping Backlog', focus: 'Improve opportunity bucket coverage',
       targets: { 'Companies mapped': '50+', 'V5 coverage': '>80%', 'Mapping sessions': '4' },
       detail: 'Map at least 50 more companies from unresolved_opportunity_buckets.csv. Each company resolved improves the entire dashboard accuracy and reveals hidden opportunities.',
-      query: '—', filters: '—', angle: 'Run: python src/build_strategy_layer.py → check Data Quality page for updated bucket coverage.' },
+      sp: null, filters: null, noise: false, angle: 'Run: python src/build_strategy_layer.py → check Data Quality page for updated bucket coverage.' },
   ];
 
   makePlanGrid(D.action_plan_60 || [], 'plan-60-grid', plan60extra);
