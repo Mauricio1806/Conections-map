@@ -57,12 +57,47 @@ const SCORE_COLORS = {
   'Not Started':'#ef4444',
 };
 
+// ── Browser extension error filter ───────────────────────────────────────────
+function isExtensionError(msg, src) {
+  const m = String(msg || '').toLowerCase();
+  const s = String(src || '').toLowerCase();
+  return (
+    s.includes('chrome-extension://') ||
+    s.includes('moz-extension://') ||
+    s.includes('safari-extension://') ||
+    s.includes('inpage.js') ||
+    s.includes('contentscript') ||
+    s.includes('content-script') ||
+    m.includes('metamask') ||
+    m.includes('failed to connect to metamask') ||
+    m.includes('metamask extension not found') ||
+    m.includes('message channel closed before a response was received') ||
+    m.includes('a listener indicated an asynchronous response') ||
+    m.includes('extension context invalidated') ||
+    m.includes('could not establish connection') ||
+    m.includes('receiving end does not exist')
+  );
+}
+
 // ── Global error handlers ────────────────────────────────────────────────────
 window.onerror = function(msg, src, line, col, err) {
+  if (isExtensionError(msg, src)) {
+    console.warn('[Dashboard] Ignored browser extension error:', msg, src);
+    return true; // suppress
+  }
   showBootError('Runtime error: ' + msg + ' (line ' + line + ')');
+  return false;
 };
 window.addEventListener('unhandledrejection', function(ev) {
-  showBootError('Unhandled rejection: ' + (ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason)));
+  const reason  = ev.reason;
+  const message = (reason && reason.message) ? reason.message : String(reason || '');
+  const stack   = (reason && reason.stack)   ? reason.stack   : '';
+  if (isExtensionError(message, stack)) {
+    console.warn('[Dashboard] Ignored browser extension rejection:', message);
+    ev.preventDefault();
+    return;
+  }
+  showBootError('Unhandled rejection: ' + message);
 });
 
 function showBootError(msg) {
