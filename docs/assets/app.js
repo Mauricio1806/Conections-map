@@ -57,7 +57,7 @@ const SCORE_COLORS = {
   'Not Started':'#ef4444',
 };
 
-// ── Browser extension error filter ───────────────────────────────────────────
+// ── Browser extension / wallet error filter ───────────────────────────────────
 function isExtensionError(msg, src) {
   const m = String(msg || '').toLowerCase();
   const s = String(src || '').toLowerCase();
@@ -75,40 +75,68 @@ function isExtensionError(msg, src) {
     m.includes('a listener indicated an asynchronous response') ||
     m.includes('extension context invalidated') ||
     m.includes('could not establish connection') ||
-    m.includes('receiving end does not exist')
+    m.includes('receiving end does not exist') ||
+    m.includes('chrome-extension') ||
+    m.includes('moz-extension') ||
+    m.includes('inpage.js') ||
+    m.includes('contentscript')
   );
 }
 
-// ── Global error handlers ────────────────────────────────────────────────────
-window.onerror = function(msg, src, line, col, err) {
+// ── Global error handlers — COMPLETELY NON-FATAL ──────────────────────────────
+// These handlers NEVER render the fatal UI. Only fatalAppError() does that.
+window.onerror = function(message, source, lineno, colno, error) {
+  const msg = String(message || (error && error.message) || '');
+  const src = String(source || (error && error.stack) || '');
   if (isExtensionError(msg, src)) {
-    console.warn('[Dashboard] Ignored browser extension error:', msg, src);
-    return true; // suppress
+    console.warn('[Ignored extension error]', msg, src);
+    return true;
   }
-  showBootError('Runtime error: ' + msg + ' (line ' + line + ')');
-  return false;
+  // Non-fatal: log to console only, dashboard keeps running
+  console.error('[Non-fatal global error]', { message: msg, source, lineno, colno, error });
+  return true; // always suppress default browser error reporting
 };
-window.addEventListener('unhandledrejection', function(ev) {
-  const reason  = ev.reason;
-  const message = (reason && reason.message) ? reason.message : String(reason || '');
-  const stack   = (reason && reason.stack)   ? reason.stack   : '';
-  if (isExtensionError(message, stack)) {
-    console.warn('[Dashboard] Ignored browser extension rejection:', message);
-    ev.preventDefault();
+
+window.addEventListener('unhandledrejection', function(event) {
+  const reason = event.reason;
+  const msg = String((reason && reason.message) ? reason.message : (reason || ''));
+  const src = String((reason && reason.stack) ? reason.stack : '');
+  if (isExtensionError(msg, src)) {
+    console.warn('[Ignored extension rejection]', msg);
+    event.preventDefault();
     return;
   }
-  showBootError('Unhandled rejection: ' + message);
+  // Non-fatal: log only, never show UI error
+  console.error('[Non-fatal unhandled rejection]', reason);
+  event.preventDefault();
 });
 
-function showBootError(msg) {
+// ── Fatal app error — ONLY call for real boot failures ────────────────────────
+function fatalAppError(title, detail) {
+  // Guard: never show fatal UI for extension errors
+  const combined = String(title || '') + ' ' + String(detail || '');
+  if (isExtensionError(combined, '')) {
+    console.warn('[Suppressed fatal UI from extension error]', combined);
+    return;
+  }
   const loadEl = document.getElementById('loading');
   if (!loadEl) return;
   loadEl.style.display = '';
   loadEl.innerHTML = '<div class="load-error">'
-    + '<h3>Dashboard Error</h3>'
-    + '<p>' + msg + '</p>'
+    + '<h3>' + (title || 'Dashboard Error') + '</h3>'
+    + '<p>' + (detail || '') + '</p>'
     + '<p style="font-size:0.8rem;opacity:0.6">Open browser DevTools (F12 &rarr; Console) for details.</p>'
     + '</div>';
+}
+
+// Kept for backwards-compat with any internal call sites — delegates to fatalAppError.
+function showBootError(msg) {
+  const m = String(msg || '');
+  if (isExtensionError(m, '')) {
+    console.warn('[Suppressed showBootError from extension]', m);
+    return;
+  }
+  fatalAppError('Dashboard Error', m);
 }
 
 // ── Defensive helpers ────────────────────────────────────────────────────────
@@ -158,8 +186,24 @@ async function tryFetchData() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  let booted = false;
+
+  // Watchdog: if loading screen still visible after 12 s, show a soft warning (never fatal)
+  const watchdog = setTimeout(() => {
+    if (booted) return;
+    const loadEl = document.getElementById('loading');
+    if (!loadEl || loadEl.style.display === 'none') return;
+    loadEl.innerHTML = '<div class="load-error" style="border-color:#f59e0b;color:#f59e0b">'
+      + '<h3 style="color:#f59e0b">Taking longer than expected</h3>'
+      + '<p>Dashboard is still loading. Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).</p>'
+      + '<p style="font-size:0.8rem;opacity:0.6">If this persists, open DevTools (F12) Console for details.</p>'
+      + '</div>';
+  }, 12000);
+
   tryFetchData()
     .then(data => {
+      booted = true;
+      clearTimeout(watchdog);
       D = data;
       document.getElementById('loading').style.display = 'none';
       document.getElementById('app').style.display     = 'flex';
@@ -175,12 +219,14 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Quality',     renderQuality);
     })
     .catch(err => {
-      const loadEl = document.getElementById('loading');
-      loadEl.innerHTML = '<div class="load-error">'
-        + '<h3>Failed to load dashboard data</h3>'
-        + '<p>' + err.message.replace(/\n/g, '<br>') + '</p>'
-        + '<p style="font-size:0.8rem;opacity:0.6">If viewing as a local file, run: <code>python -m http.server --directory docs</code></p>'
-        + '</div>';
+      booted = true;
+      clearTimeout(watchdog);
+      // This is a real app boot failure — the only place fatalAppError is called
+      fatalAppError(
+        'Failed to load dashboard data',
+        err.message.replace(/\n/g, '<br>')
+          + '<br><span style="font-size:.8rem;opacity:.6">If viewing as a local file, run: <code>python -m http.server --directory docs</code></span>'
+      );
     });
 });
 

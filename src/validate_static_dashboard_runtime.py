@@ -45,7 +45,7 @@ FAIL = "[FAIL]"
 def check(label, ok, detail=""):
     mark = PASS if ok else FAIL
     line = f"  {mark}  {label}"
-    if detail:
+    if detail and not ok:  # only show detail on failure
         line += f"\n         {detail}"
     print(line)
     return ok
@@ -82,15 +82,49 @@ def main():
                      f"found: {found_keys or 'NONE'} (expected one of {REQUIRED_DATA_KEYS})"):
             failures += 1
 
-    # 4. index.html references app.js and style.css
+    # 4. index.html references app.js and style.css (with cache-bust ?v=)
     if INDEX_HTML.exists():
         html = INDEX_HTML.read_text(encoding="utf-8")
         for ref in ["app.js", "style.css"]:
             ok = ref in html
             if not check(f"index.html references {ref}", ok):
                 failures += 1
+        # Cache-bust check (warn only, not a hard failure)
+        if "app.js?v=" in html:
+            check("index.html has cache-bust ?v= on app.js", True)
+        else:
+            check("index.html has cache-bust ?v= on app.js (warn)", True,
+                  "No ?v= found — run generate_static_dashboard.py to inject cache-buster")
 
-    # 5. JS syntax check via node
+    # 5. app.js safety checks — global handlers must NOT call showBootError directly
+    if APP_JS.exists():
+        js = APP_JS.read_text(encoding="utf-8")
+
+        # Required: isExtensionError and fatalAppError must exist
+        for symbol in ["isExtensionError", "fatalAppError", "Non-fatal unhandled rejection"]:
+            ok = symbol in js
+            if not check(f"app.js contains '{symbol}'", ok,
+                         "Missing stability guard — rerun the failsafe patch"):
+                failures += 1
+
+        # Forbidden: onerror must not directly call showBootError
+        import re
+        onerror_block = re.search(r'window\.onerror\s*=.*?(?=window\.addEventListener|function \w)', js, re.S)
+        if onerror_block:
+            bad = "showBootError" in onerror_block.group(0)
+            if not check("window.onerror does NOT call showBootError directly", not bad,
+                         "onerror still calls showBootError — this will surface extension errors as fatal UI"):
+                failures += 1
+
+        # Forbidden: unhandledrejection must not directly call showBootError
+        uhr_block = re.search(r'addEventListener\([\'"]unhandledrejection[\'"]\).*?(?=window\.addEventListener|function \w|\Z)', js, re.S)
+        if uhr_block:
+            bad = "showBootError" in uhr_block.group(0)
+            if not check("unhandledrejection does NOT call showBootError directly", not bad,
+                         "unhandledrejection still calls showBootError — extension errors become fatal"):
+                failures += 1
+
+    # 6. JS syntax check via node
     try:
         result = subprocess.run(
             ["node", "--check", str(APP_JS)],
