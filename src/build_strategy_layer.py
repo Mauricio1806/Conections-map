@@ -564,17 +564,45 @@ def run_strategy_layer() -> None:
             apply_opportunity_market_v5, build_v5_summary, export_v5_audit,
         )
         df = apply_opportunity_market_v5(df)
-        v5_data = build_v5_summary(df)
-        export_v5_audit(df)
+        v5_data_pre_v6 = build_v5_summary(df)
         logger.info(
-            f"  V5: confirmed_geo={v5_data.get('v5_confirmed_geographic',0):,} "
-            f"global={v5_data.get('v5_global_buckets',0):,} "
-            f"lang_inferred={v5_data.get('v5_language_inferred',0):,} "
-            f"needs_mapping={v5_data.get('v5_needs_company_mapping',0):,} "
-            f"low_value={v5_data.get('v5_low_value_unresolved',0):,}"
+            f"  V5 (pre-V6): confirmed_geo={v5_data_pre_v6.get('v5_confirmed_geographic',0):,} "
+            f"global={v5_data_pre_v6.get('v5_global_buckets',0):,} "
+            f"lang_inferred={v5_data_pre_v6.get('v5_language_inferred',0):,} "
+            f"needs_mapping={v5_data_pre_v6.get('v5_needs_company_mapping',0):,} "
+            f"low_value={v5_data_pre_v6.get('v5_low_value_unresolved',0):,}"
         )
     except Exception as exc:
         logger.warning(f"  V5 inference failed (non-fatal): {exc}")
+
+    # 2d. Company Resolution V6 (reduces Needs Company Mapping honestly —
+    # same-company propagation, local message-signal evidence, persona/category
+    # fallback). Only touches rows V5 left at NEEDS_COMPANY_MAPPING.
+    logger.info("Step 2d/8: Applying Company Resolution V6 …")
+    company_resolution_v6_summary = {}
+    try:
+        from src.company_resolution_v6 import apply_company_resolution_v6
+        df, company_resolution_v6_summary = apply_company_resolution_v6(df)
+        logger.info(
+            f"  V6 mapping: Needs Company Mapping "
+            f"{company_resolution_v6_summary.get('needs_mapping_before', 0):,} -> "
+            f"{company_resolution_v6_summary.get('needs_mapping_after', 0):,} "
+            f"({company_resolution_v6_summary.get('needs_mapping_pct_before', 0)}% -> "
+            f"{company_resolution_v6_summary.get('needs_mapping_pct_after', 0)}% of network)"
+        )
+    except Exception as exc:
+        logger.warning(f"  Company Resolution V6 failed (non-fatal): {exc}")
+
+    # Recompute the V5 summary + audit AFTER V6 so every dashboard card (Overview,
+    # Opportunity Market, Data Quality) reflects the honest post-V6 state instead
+    # of the stale pre-V6 "Needs Company Mapping" count.
+    try:
+        from src.opportunity_market_v5 import build_v5_summary, export_v5_audit
+        v5_data = build_v5_summary(df)
+        export_v5_audit(df)
+    except Exception as exc:
+        logger.warning(f"  V5 summary/audit refresh after V6 failed (non-fatal): {exc}")
+        v5_data = locals().get("v5_data_pre_v6", {})
 
     _save_csv(df, ENRICHED_CSV, "Enriched Connections")
 
@@ -653,6 +681,7 @@ def run_strategy_layer() -> None:
         export_public_dashboard_data(
             df, kpis, gap_mat, plan_30, plan_60, plan_90, resolution_data,
             lead_data=lead_data, v5_data=v5_data, outreach_scores=outreach_scores,
+            company_resolution_v6_data=company_resolution_v6_summary,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

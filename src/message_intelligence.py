@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-message_intelligence.py  (V2 — corrective patch)
-==================================================
+message_intelligence.py  (V2 — corrective patch; V6 — response intelligence)
+==============================================================================
 Reads messages.csv and builds per-conversation intelligence.
 
 Key fixes vs V1:
@@ -11,9 +11,28 @@ Key fixes vs V1:
   - Old low-value conversations → "Low value / ignore" (not "Follow-up due")
   - Adds lead_category for cleaner segmentation
   - Uses O(1) lookup dict for classified_df join
+
+V6 additions (response intelligence — see CLAUDE_INTELLIGENCE_V6_PATCH.md Parts 1-5):
+  - Explicit response-intelligence fields computed on the TRUE last message of the
+    conversation (whoever sent it): needs_my_response, needs_response_confidence,
+    needs_response_reason, response_intent_score, last_message_is_substantive/
+    question/request/auto_reply/generic_ack/process_closure/opportunity_signal,
+    manual_review_required, last_sender_type, conversation_recency_band.
+  - EN/PT/ES substantive-signal keyword rules (Part 2) and do-not-flag rules for
+    generic acknowledgements / auto-replies / process closure (Part 3).
+  - Recency-band decay logic (Part 4): conversations older than 90 days are not
+    flagged "Needs my response" by default; older than 180 days only remain
+    actionable if there was a prior interview/CV request/role-share/recruiter
+    interaction.
+  - Refined lead_category taxonomy (Part 5) with a 0-100 confidence-aligned
+    response_intent_score. conversation_status (legacy) is left UNCHANGED so
+    outreach_adjusted_scoring.py and the this-week-queue masks keep working.
+  - No raw message content is ever exposed — only booleans/labels/short static
+    reason strings are produced.
 """
 
 import logging
+import re
 from datetime import date, datetime
 from pathlib import Path
 
@@ -72,6 +91,8 @@ REJECTION_KW = [
     "process closed", "role closed", "position closed",
     "moved forward with other", "decided not to proceed",
     "infelizmente", "não prosseguiremos",
+    # Part 3 additions
+    "posición cerrada", "posicion cerrada", "otra persona",
 ]
 
 CV_KW = [
@@ -87,6 +108,102 @@ INTERVIEW_KW = [
     "meeting", "recruiter call", "video call", "video interview",
     "bate-papo", "conversa",
 ]
+
+# ── V6 Response Intelligence keyword lists (CLAUDE_INTELLIGENCE_V6_PATCH.md Parts 2-3) ──
+
+# Part 2 — substantive actionable request/question patterns (EN/PT/ES combined)
+REQUEST_SUBSTANTIVE_KW = [
+    # English
+    "can you", "could you", "would you", "please send", "please share",
+    "let me know", "confirm", "available", "availability",
+    "when are you available", "what time", "schedule", "calendar",
+    "meeting", "call", "interview", "screening", "technical interview",
+    "send your cv", "send your resume", "share your cv", "share your resume",
+    "updated cv", "updated resume", "compensation", "salary expectation",
+    "notice period", "start date", "interested", "are you interested",
+    "location", "relocate", "contractor", "citizenship", "work authorization",
+    # Portuguese
+    "você pode", "voce pode", "poderia", "me envie", "compartilhe",
+    "confirma", "disponibilidade", "quando você pode", "quando voce pode",
+    "agenda", "reunião", "reuniao", "entrevista", "currículo", "curriculo",
+    "pretensão", "pretensao", "aviso prévio", "aviso previo", "início",
+    "inicio", "tem interesse",
+    # Spanish
+    "puedes", "podrías", "podrias", "envíame", "enviame", "comparte",
+    "confirma", "disponibilidad", "cuándo puedes", "cuando puedes",
+    "agenda", "reunión", "reunion", "entrevista", "cv", "salario",
+    "interesado",
+]
+
+# Explicit question lead-ins (subset used for last_message_is_question, beyond a bare "?")
+QUESTION_LEADIN_KW = [
+    "can you", "could you", "would you", "when are you available",
+    "what time", "are you interested",
+    "você pode", "voce pode", "poderia", "quando você pode", "quando voce pode",
+    "puedes", "podrías", "podrias", "cuándo puedes", "cuando puedes",
+]
+
+# Explicit request/instruction lead-ins (subset used for last_message_is_request)
+REQUEST_LEADIN_KW = [
+    "please send", "please share", "let me know", "confirm",
+    "send your cv", "send your resume", "share your cv", "share your resume",
+    "updated cv", "updated resume", "schedule", "calendar",
+    "me envie", "compartilhe", "confirma",
+    "envíame", "enviame", "comparte",
+]
+
+# Part 3 — generic acknowledgements / reaction-only (do NOT flag as needing response)
+GENERIC_ACK_KW = [
+    # English
+    "thanks", "thank you", "great", "perfect", "sounds good", "noted",
+    "okay", "ok", "welcome", "my pleasure", "keep in touch",
+    "best wishes", "good luck",
+    # Portuguese
+    "obrigado", "obrigada", "perfeito", "combinado", "beleza",
+    "sucesso", "boa sorte",
+    # Spanish
+    "gracias", "perfecto", "entendido", "suerte",
+]
+
+# Emoji / reaction-only unicode ranges — used to detect emoji-only messages
+_EMOJI_RE = re.compile(
+    "["
+    "\U0001F300-\U0001FAFF"
+    "\U00002600-\U000027BF"
+    "\U0001F1E6-\U0001F1FF"
+    "❤️❤"
+    "]+",
+    flags=re.UNICODE,
+)
+
+RECENCY_BANDS = [
+    (7,   "CURRENT"),
+    (30,  "RECENT"),
+    (90,  "AGING"),
+    (180, "STALE"),
+]
+
+
+def _recency_band(days_since) -> str:
+    """0-7 CURRENT · 8-30 RECENT · 31-90 AGING · 91-180 STALE · >180 HISTORICAL."""
+    try:
+        d = int(days_since)
+    except (TypeError, ValueError):
+        return "HISTORICAL"
+    for limit, band in RECENCY_BANDS:
+        if d <= limit:
+            return band
+    return "HISTORICAL"
+
+
+def _is_emoji_or_reaction_only(text: str) -> bool:
+    """True if, after stripping emoji/whitespace/punctuation, nothing substantive remains."""
+    plain = (text or "").strip()
+    if not plain:
+        return False
+    stripped = _EMOJI_RE.sub("", plain)
+    stripped = re.sub(r"[\s\.,!?;:\-–—'\"()]+", "", stripped)
+    return len(stripped) == 0 and len(plain) > 0
 
 
 def _normalize_cols(df: pd.DataFrame) -> pd.DataFrame:
@@ -124,6 +241,18 @@ def _kw_match(text: str, keywords: list) -> bool:
         return False
     tl = text.lower()
     return any(kw in tl for kw in keywords)
+
+
+def _kw_match_wb(text: str, keywords: list) -> bool:
+    """Word-boundary keyword match — avoids short tokens (e.g. 'ok') matching
+    inside unrelated words ('look', 'broken', 'token')."""
+    if not text:
+        return False
+    tl = text.lower()
+    for kw in keywords:
+        if re.search(r"(?<![a-zà-ÿ0-9])" + re.escape(kw) + r"(?![a-zà-ÿ0-9])", tl):
+            return True
+    return False
 
 
 def _score_content(text: str) -> dict:
@@ -165,6 +294,191 @@ def _is_substantive(text: str, min_chars: int = 40) -> bool:
     if _kw_match(plain, AUTO_REPLY_KW):
         return False
     return True
+
+
+# ── V6 Response Intelligence (CLAUDE_INTELLIGENCE_V6_PATCH.md Parts 1-4) ─────────
+
+_CONFIDENCE_TIER_BONUS = {"HIGH": 30, "MEDIUM": 15, "LOW": 5, "NONE": 0}
+_RECENCY_BAND_BONUS    = {"CURRENT": 12, "RECENT": 9, "AGING": 5, "STALE": 2, "HISTORICAL": 0}
+
+
+def _response_intelligence(
+    last_message_raw: str,
+    last_sender_is_me: bool,
+    days_since: int,
+    is_valuable_persona: bool,
+    has_interview_signal: bool,
+    has_cv_signal: bool,
+) -> dict:
+    """
+    Classify the TRUE last message of a conversation (whoever sent it) into
+    explicit response-intelligence fields. Never returns/uses raw message text —
+    only booleans, short static reason strings, and numeric scores.
+    """
+    plain = strip_html(last_message_raw or "").strip()
+    band  = _recency_band(days_since)
+
+    is_auto        = _kw_match(plain, AUTO_REPLY_KW)
+    is_ack         = _kw_match_wb(plain, GENERIC_ACK_KW)
+    is_closure     = _kw_match(plain, REJECTION_KW)
+    is_emoji_only  = _is_emoji_or_reaction_only(plain)
+    is_question    = ("?" in plain) or _kw_match(plain, QUESTION_LEADIN_KW)
+    is_request     = _kw_match(plain, REQUEST_LEADIN_KW)
+    is_opportunity = _kw_match(plain, POSITIVE_KW)
+
+    is_substantive = (
+        len(plain) >= 8
+        and not is_emoji_only
+        and (is_question or is_request or _kw_match(plain, REQUEST_SUBSTANTIVE_KW))
+        and not (is_ack and not (is_question or is_request))
+    )
+
+    last_sender_type = "me" if last_sender_is_me else "other"
+    eligible = (not last_sender_is_me) and is_substantive and not is_auto
+    meaningful_history = bool(has_interview_signal or has_cv_signal or is_valuable_persona)
+
+    manual_review = False
+    needs_my_response = False
+
+    if not eligible:
+        needs_my_response = False
+        if last_sender_is_me:
+            confidence, reason = "NONE", "I sent the last message — no reply owed"
+        elif is_auto:
+            confidence, reason = "NONE", "last message is an automatic reply / career-site redirect"
+            if is_substantive:
+                manual_review = True
+                reason = "auto-reply pattern but message also contains a possible request — verify manually"
+        elif is_emoji_only:
+            confidence, reason = "NONE", "emoji/reaction-only message"
+        elif is_ack:
+            confidence, reason = "NONE", "generic acknowledgement only, no actionable request"
+        elif is_closure:
+            confidence, reason = "NONE", "process closure / rejection message, no separate actionable request"
+        else:
+            confidence, reason = "NONE", "no substantive actionable signal in last message"
+    else:
+        if band in ("CURRENT", "RECENT", "AGING"):
+            needs_my_response = True
+            confidence = "HIGH"
+            reason = f"substantive question/request from them ({band.lower()}, within 90 days)"
+        elif band == "STALE":
+            if meaningful_history:
+                needs_my_response = True
+                confidence = "MEDIUM"
+                manual_review = True
+                reason = "substantive signal 91-180 days old with prior meaningful interaction — verify still relevant"
+            else:
+                needs_my_response = False
+                confidence = "LOW"
+                manual_review = True
+                reason = "stale unanswered (91-180 days) — not treated as urgent by default"
+        else:  # HISTORICAL (> 180 days)
+            if meaningful_history:
+                needs_my_response = True
+                confidence = "LOW"
+                manual_review = True
+                reason = "historical reactivation candidate (>180 days) — prior interview/CV/recruiter interaction"
+            else:
+                needs_my_response = False
+                confidence = "NONE"
+                reason = "historical (>180 days), no prior meaningful process — not flagged as needing reply"
+
+    # Mixed-signal messages (substantive wording alongside an ack/closure phrase)
+    # that did not already trigger manual review get flagged for a human look.
+    # Only applies when THEY sent the last message — if I sent it, there is no
+    # open response question regardless of ack/closure/substantive wording.
+    if (not manual_review and not needs_my_response and not last_sender_is_me
+            and is_substantive and (is_ack or is_closure) and not is_auto):
+        manual_review = True
+        reason = reason + "; mixed signals — flagged for manual review"
+
+    base = 0
+    if is_substantive:  base += 25
+    if is_question:     base += 8
+    if is_request:      base += 8
+    if is_opportunity:  base += 7
+    base += _RECENCY_BAND_BONUS.get(band, 0)
+    if is_auto:         base -= 15
+    if is_ack:          base -= 10
+    if is_closure:       base -= 10
+    if is_emoji_only:   base -= 15
+    base = max(0, base)
+
+    response_intent_score = max(0, min(100, base + _CONFIDENCE_TIER_BONUS.get(confidence, 0)))
+
+    return {
+        "needs_my_response":               needs_my_response,
+        "needs_response_confidence":       confidence,
+        "needs_response_reason":           reason,
+        "response_intent_score":           int(response_intent_score),
+        "last_message_is_substantive":     is_substantive,
+        "last_message_is_question":        is_question,
+        "last_message_is_request":         is_request,
+        "last_message_is_auto_reply":      is_auto,
+        "last_message_is_generic_ack":     is_ack,
+        "last_message_is_process_closure": is_closure,
+        "last_message_is_opportunity_signal": is_opportunity,
+        "manual_review_required":          manual_review,
+        "last_sender_type":                last_sender_type,
+        "conversation_recency_band":       band,
+    }
+
+
+def _sanitized_intent_label(ri: dict, has_interview_signal: bool, has_cv_signal: bool,
+                             messages_from_other: int) -> str:
+    """Very short, sanitized intent label for the Lead Reactivation table (Part 7)."""
+    if ri["last_message_is_process_closure"]:
+        return "Process closed"
+    if ri["last_message_is_auto_reply"]:
+        return "Auto reply"
+    if has_interview_signal and (ri["last_message_is_question"] or ri["last_message_is_request"]):
+        return "Interview scheduling"
+    if has_cv_signal:
+        return "Asked for CV"
+    if ri["last_message_is_request"] and ("available" in ri["needs_response_reason"] or ri["last_message_is_question"]):
+        return "Asked for availability"
+    if ri["last_message_is_generic_ack"]:
+        return "Generic acknowledgement"
+    if ri["last_message_is_opportunity_signal"]:
+        return "Opportunity discussion"
+    if messages_from_other == 0:
+        return "No response"
+    return "General message"
+
+
+def _lead_category_v6(
+    conversation_status: str,
+    lead_temperature: str,
+    has_opportunity: bool,
+    ri: dict,
+) -> str:
+    """
+    Refined Lead Reactivation category taxonomy (Part 5). Built on top of the
+    legacy conversation_status (kept unchanged for outreach_adjusted_scoring.py)
+    plus the new response-intelligence decision.
+    """
+    if ri["needs_my_response"]:
+        return "Needs my response — Confirmed" if ri["needs_response_confidence"] == "HIGH" else "Needs my response — Likely"
+
+    if ri["manual_review_required"] and conversation_status not in (
+        "Rejected / closed process", "Auto-reply / career site redirect",
+    ):
+        return "Ambiguous — Review"
+
+    if conversation_status == "Follow-up due":
+        return "Follow-up candidate"
+    if conversation_status == "Warm lead":
+        return "Hot reactivation" if lead_temperature == "Hot" else "Warm reactivation"
+    if conversation_status == "Dormant warm lead":
+        return "Dormant warm"
+    if conversation_status == "Auto-reply / career site redirect":
+        return "Career site follow-up"
+    if conversation_status == "Rejected / closed process":
+        return "Previous process reusable" if has_opportunity else "Closed / no action"
+    if conversation_status == "No response":
+        return "No response"
+    return "Ignore"
 
 
 def _determine_status(
@@ -263,20 +577,9 @@ def _determine_temperature(status: str, has_opportunity: bool,
     return "Ignore"
 
 
-def _determine_lead_category(status: str, temperature: str, has_opportunity: bool) -> str:
-    if status == "Needs my response":
-        return "Needs my response"
-    if temperature == "Hot" and has_opportunity:
-        return "Hot reactivation lead"
-    if temperature == "Warm" and has_opportunity:
-        return "Warm reactivation lead"
-    if status == "Auto-reply / career site redirect":
-        return "Career site follow-up"
-    if status == "Rejected / closed process":
-        return "Previous process reusable"
-    if status == "No response":
-        return "No-response low priority"
-    return "Ignore"
+# NOTE: lead_category is now computed by _lead_category_v6() (see Part 5 of the
+# V6 patch), which builds on conversation_status + the new response-intelligence
+# decision instead of temperature/has_opportunity alone.
 
 
 def _recommended_action(status: str, has_cv: bool, has_interview: bool, is_auto: bool) -> tuple:
@@ -496,7 +799,21 @@ def build_conversation_intelligence(
         )
 
         temperature = _determine_temperature(status, has_opportunity, is_valuable, days_since)
-        lead_category = _determine_lead_category(status, temperature, has_opportunity)
+
+        # V6 response intelligence — classifies the TRUE last message (whoever sent it)
+        last_message_raw = group.iloc[-1].get("content", "") or ""
+        resp_intel = _response_intelligence(
+            last_message_raw     = last_message_raw,
+            last_sender_is_me    = last_sender_is_me,
+            days_since           = days_since if days_since < 9999 else 9999,
+            is_valuable_persona  = is_valuable,
+            has_interview_signal = signals["interview"],
+            has_cv_signal        = signals["cv_request"],
+        )
+        lead_category = _lead_category_v6(status, temperature, has_opportunity, resp_intel)
+        sanitized_intent_label = _sanitized_intent_label(
+            resp_intel, signals["interview"], signals["cv_request"], messages_from_other,
+        )
 
         action, angle = _recommended_action(
             status, signals["cv_request"], signals["interview"], signals["auto_reply"]
@@ -551,6 +868,22 @@ def build_conversation_intelligence(
             "message_angle":                 angle,
             "sanitized_last_message_excerpt": excerpt,
             "connection_priority_score":     priority_score,
+            # V6 response intelligence (Parts 1-5) — sanitized, no raw content
+            "needs_my_response":             resp_intel["needs_my_response"],
+            "needs_response_confidence":     resp_intel["needs_response_confidence"],
+            "needs_response_reason":         resp_intel["needs_response_reason"],
+            "response_intent_score":         resp_intel["response_intent_score"],
+            "last_message_is_substantive":   resp_intel["last_message_is_substantive"],
+            "last_message_is_question":      resp_intel["last_message_is_question"],
+            "last_message_is_request":       resp_intel["last_message_is_request"],
+            "last_message_is_auto_reply":    resp_intel["last_message_is_auto_reply"],
+            "last_message_is_generic_ack":   resp_intel["last_message_is_generic_ack"],
+            "last_message_is_process_closure": resp_intel["last_message_is_process_closure"],
+            "last_message_is_opportunity_signal": resp_intel["last_message_is_opportunity_signal"],
+            "manual_review_required":        resp_intel["manual_review_required"],
+            "last_sender_type":              resp_intel["last_sender_type"],
+            "conversation_recency_band":     resp_intel["conversation_recency_band"],
+            "sanitized_intent_label":        sanitized_intent_label,
         })
 
     if not rows:

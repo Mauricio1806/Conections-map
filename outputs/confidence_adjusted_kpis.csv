@@ -1,9 +1,9 @@
 ﻿kpi,value
-report_date,2026-06-28
+report_date,2026-07-04
 total_connections,10780
-high_priority,206
-medium_priority,3626
-low_priority,6948
+high_priority,204
+medium_priority,3621
+low_priority,6955
 high_priority_pct,1.9
 medium_priority_pct,33.6
 brazil_count,846
@@ -21,8 +21,8 @@ talent_hr_total,1963
 hiring_managers_total,77
 data_leaders_total,874
 data_peers_total,986
-connected_last_30_days,666
-connected_last_90_days,2367
+connected_last_30_days,544
+connected_last_90_days,2212
 strategic_network_score,96.5
 strategic_network_level,Strong
 strategic_network_desc,"Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders."
@@ -31,8 +31,8 @@ sns_talent_acquisition,920
 sns_hiring_managers,77
 sns_data_leaders,874
 sns_data_peers,986
-sns_high_priority,206
-usd_readiness_score,80.7
+sns_high_priority,204
+usd_readiness_score,80.5
 usd_readiness_level,Ready
 usd_readiness_desc,Strong USD network. Active outreach should yield job conversations quickly.
 usd_readiness_next,You have 56 confirmed USD recruiters. Target: 60. Add 4 more to grow this score.
@@ -46,7 +46,7 @@ usd_us_ca_hiring_mgrs,6
 usd_global_recruiters_partial,80
 usd_global_ta_partial,32
 usd_global_hm_partial,0
-usd_unknown_high_value_partial,61
+usd_unknown_high_value_partial,59
 spain_eu_readiness_score,62.4
 spain_eu_readiness_level,Ready
 spain_eu_readiness_desc,Strong Spain/EU foundation. Good positioning for relocation.
@@ -67,8 +67,8 @@ global_recruiters,112
 global_hiring_mgrs,0
 global_data_leaders,33
 actionable_contacts_score,100.0
-actionable_contacts,565
-very_high_priority,206
+actionable_contacts,559
+very_high_priority,204
 unknown_resolution_score,7.8
 unknown_resolution_potential,7.8
 top25_company_coverage,686
@@ -77,8 +77,8 @@ top100_company_coverage,1355
 data_quality_risk_score,90.1
 data_quality_risk_level,High Risk
 data_quality_risk_desc,Most market inferences are unresolved. Readiness scores are conservative estimates.
-market_readiness_composite,73.4
-unknown_recruiters_highvalue,184
-unknown_hiring_mgrs_highvalue,13
-unknown_data_leaders_highvalue,118
+market_readiness_composite,73.3
+unknown_recruiters_highvalue,182
+unknown_hiring_mgrs_highvalue,11
+unknown_data_leaders_highvalue,115
 unknown_peers,749

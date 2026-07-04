@@ -489,6 +489,12 @@ tr:hover td { background: var(--bg-hover); }
 .plan-reason      { font-size: 0.77rem; color: var(--text-secondary); margin-bottom: .5rem; line-height: 1.45; }
 .plan-query       { font-size: 0.72rem; color: var(--info); font-family: 'Courier New', monospace; word-break: break-all; }
 
+/* ── Search-pack "Recommended LinkedIn Filters" expandable (V6) ──────────── */
+details summary::-webkit-details-marker { display: none; }
+details summary { list-style: none; }
+details[open] summary { color: var(--accent-2); }
+.plan-card details, .sprint-card details { overflow-wrap: anywhere; word-break: break-word; }
+
 /* ── Sprint cards ──────────────────────────────── */
 .sprint-grid {
   display: grid;

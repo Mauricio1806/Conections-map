@@ -1,24 +1,24 @@
 ﻿market,persona,count,avg_score,high_priority
 BRAZIL,Consultant,15,31.2,0
 BRAZIL,Data Analyst,30,30.7,0
-BRAZIL,Data Engineer,101,39.3,0
+BRAZIL,Data Engineer,101,39.2,0
 BRAZIL,Data Engineering Manager,1,58.0,0
 BRAZIL,Data Scientist,20,36.2,0
 BRAZIL,Director,39,55.6,1
-BRAZIL,Executive,12,54.2,0
+BRAZIL,Executive,12,53.9,0
 BRAZIL,Founder,2,44.0,0
-BRAZIL,HR,48,35.5,0
+BRAZIL,HR,48,35.2,0
 BRAZIL,Head of Data,10,59.4,0
 BRAZIL,Hiring Manager,24,58.5,0
 BRAZIL,Machine Learning / AI,4,41.8,0
 BRAZIL,Operations,5,33.0,0
 BRAZIL,Other,416,24.4,0
-BRAZIL,Product,19,33.4,0
+BRAZIL,Product,19,33.2,0
 BRAZIL,Project / Program Manager,12,31.2,0
-BRAZIL,Recruiter,47,54.5,1
-BRAZIL,Software Engineer,17,32.2,0
-BRAZIL,Talent Acquisition,24,54.2,0
-EUROPE,Consultant,21,43.2,0
+BRAZIL,Recruiter,47,54.4,1
+BRAZIL,Software Engineer,17,31.8,0
+BRAZIL,Talent Acquisition,24,53.8,0
+EUROPE,Consultant,21,43.0,0
 EUROPE,Data Engineering Manager,1,66.0,0
 EUROPE,Data Scientist,1,54.0,0
 EUROPE,Director,18,61.7,1
@@ -44,13 +44,13 @@ GLOBAL_CONSULTING,Data Scientist,3,48.7,0
 GLOBAL_CONSULTING,Director,21,51.7,0
 GLOBAL_CONSULTING,Executive,9,56.1,1
 GLOBAL_CONSULTING,Founder,9,49.9,0
-GLOBAL_CONSULTING,HR,8,34.0,0
+GLOBAL_CONSULTING,HR,8,33.6,0
 GLOBAL_CONSULTING,Operations,2,23.0,0
-GLOBAL_CONSULTING,Other,77,20.1,0
+GLOBAL_CONSULTING,Other,77,19.9,0
 GLOBAL_CONSULTING,Project / Program Manager,12,27.6,0
-GLOBAL_CONSULTING,Recruiter,56,57.1,3
+GLOBAL_CONSULTING,Recruiter,56,56.9,3
 GLOBAL_CONSULTING,Software Engineer,3,23.3,0
-GLOBAL_CONSULTING,Talent Acquisition,25,54.5,1
+GLOBAL_CONSULTING,Talent Acquisition,25,54.0,1
 GLOBAL_STAFFING,Consultant,2,25.5,0
 GLOBAL_STAFFING,Data Engineer,1,43.0,0
 GLOBAL_STAFFING,Director,2,46.0,0
@@ -59,7 +59,7 @@ GLOBAL_STAFFING,Founder,1,42.0,0
 GLOBAL_STAFFING,HR,2,27.5,0
 GLOBAL_STAFFING,Operations,1,28.0,0
 GLOBAL_STAFFING,Other,4,19.5,0
-GLOBAL_STAFFING,Recruiter,23,57.1,1
+GLOBAL_STAFFING,Recruiter,23,57.0,1
 GLOBAL_STAFFING,Sourcer,1,53.0,0
 GLOBAL_STAFFING,Talent Acquisition,6,54.2,0
 GLOBAL_TECH,HR,2,36.5,0
@@ -67,16 +67,16 @@ GLOBAL_TECH,Other,2,24.0,0
 GLOBAL_TECH,Talent Acquisition,1,55.0,0
 LATAM_USD,Consultant,7,42.9,0
 LATAM_USD,Data Analyst,1,49.0,0
-LATAM_USD,Data Engineer,14,61.5,2
+LATAM_USD,Data Engineer,14,61.1,2
 LATAM_USD,Data Scientist,2,62.0,0
-LATAM_USD,Director,27,73.1,19
+LATAM_USD,Director,27,73.0,19
 LATAM_USD,Executive,8,65.4,2
 LATAM_USD,Founder,3,55.7,0
 LATAM_USD,HR,18,54.1,0
 LATAM_USD,Head of Data,1,72.0,1
 LATAM_USD,Operations,4,38.8,0
-LATAM_USD,Other,101,42.7,0
-LATAM_USD,Partner,1,61.0,0
+LATAM_USD,Other,101,42.6,0
+LATAM_USD,Partner,1,58.0,0
 LATAM_USD,Project / Program Manager,3,52.3,0
 LATAM_USD,Recruiter,37,72.2,24
 LATAM_USD,Software Engineer,4,47.0,0
@@ -93,30 +93,30 @@ SPAIN_EU,Partner,1,56.0,0
 SPAIN_EU,Project / Program Manager,1,56.0,0
 SPAIN_EU,Recruiter,2,64.0,1
 SPAIN_EU,Talent Acquisition,12,69.7,7
-UNKNOWN,Analytics Engineer,6,32.3,0
-UNKNOWN,BI Analyst,11,26.2,0
-UNKNOWN,Consultant,454,23.7,0
-UNKNOWN,Data Analyst,204,24.6,0
-UNKNOWN,Data Engineer,428,31.0,0
+UNKNOWN,Analytics Engineer,6,31.7,0
+UNKNOWN,BI Analyst,11,25.9,0
+UNKNOWN,Consultant,454,23.6,0
+UNKNOWN,Data Analyst,204,24.5,0
+UNKNOWN,Data Engineer,428,30.9,0
 UNKNOWN,Data Engineering Manager,16,48.8,0
 UNKNOWN,Data Scientist,89,28.1,0
-UNKNOWN,Director,323,46.8,3
+UNKNOWN,Director,323,46.7,3
 UNKNOWN,Engineering Manager,1,42.0,0
-UNKNOWN,Executive,302,45.4,4
-UNKNOWN,Founder,149,43.0,0
-UNKNOWN,HR,951,27.2,0
-UNKNOWN,Head of Data,54,47.9,0
-UNKNOWN,Hiring Manager,43,51.4,0
+UNKNOWN,Executive,302,45.2,4
+UNKNOWN,Founder,149,42.9,0
+UNKNOWN,HR,951,27.0,0
+UNKNOWN,Head of Data,54,47.8,0
+UNKNOWN,Hiring Manager,43,51.2,0
 UNKNOWN,Machine Learning / AI,11,32.5,0
-UNKNOWN,Operations,59,23.1,0
-UNKNOWN,Other,3714,18.1,0
+UNKNOWN,Operations,59,22.8,0
+UNKNOWN,Other,3714,18.0,0
 UNKNOWN,Partner,17,40.2,0
-UNKNOWN,Product,62,26.6,0
+UNKNOWN,Product,62,26.4,0
 UNKNOWN,Project / Program Manager,78,25.5,0
-UNKNOWN,Recruiter,929,49.9,30
-UNKNOWN,Software Engineer,97,24.1,0
-UNKNOWN,Sourcer,65,44.1,1
-UNKNOWN,Talent Acquisition,765,50.0,30
+UNKNOWN,Recruiter,929,49.7,29
+UNKNOWN,Software Engineer,97,23.9,0
+UNKNOWN,Sourcer,65,44.0,0
+UNKNOWN,Talent Acquisition,765,49.8,30
 US_CANADA_NEARSHORE,Analytics Engineer,1,57.0,0
 US_CANADA_NEARSHORE,BI Analyst,1,15.0,0
 US_CANADA_NEARSHORE,Consultant,5,43.2,0
@@ -124,17 +124,17 @@ US_CANADA_NEARSHORE,Data Analyst,3,39.3,0
 US_CANADA_NEARSHORE,Data Engineer,6,46.0,0
 US_CANADA_NEARSHORE,Data Scientist,5,35.8,0
 US_CANADA_NEARSHORE,Director,14,65.6,7
-US_CANADA_NEARSHORE,Executive,3,65.7,1
+US_CANADA_NEARSHORE,Executive,3,64.7,1
 US_CANADA_NEARSHORE,Founder,1,28.0,0
 US_CANADA_NEARSHORE,HR,4,43.2,0
-US_CANADA_NEARSHORE,Head of Data,2,63.5,1
+US_CANADA_NEARSHORE,Head of Data,2,62.0,1
 US_CANADA_NEARSHORE,Hiring Manager,6,71.8,5
 US_CANADA_NEARSHORE,Machine Learning / AI,2,54.0,0
 US_CANADA_NEARSHORE,Operations,3,41.0,0
 US_CANADA_NEARSHORE,Other,99,43.8,0
 US_CANADA_NEARSHORE,Product,3,52.7,0
 US_CANADA_NEARSHORE,Project / Program Manager,7,54.0,0
-US_CANADA_NEARSHORE,Recruiter,17,67.8,10
+US_CANADA_NEARSHORE,Recruiter,17,67.6,10
 US_CANADA_NEARSHORE,Software Engineer,4,42.5,0
 US_CANADA_NEARSHORE,Sourcer,1,45.0,0
-US_CANADA_NEARSHORE,Talent Acquisition,19,60.2,7
+US_CANADA_NEARSHORE,Talent Acquisition,19,59.8,7

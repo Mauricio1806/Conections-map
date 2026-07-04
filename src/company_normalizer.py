@@ -57,8 +57,20 @@ COMPANY_ALIASES: dict[str, str] = {
     "ntt data europe & latam": "ntt data",
     "ntt data europe and latam": "ntt data",
     "ntt data europe & latam s.l.": "ntt data",
+    "ntt data brasil": "ntt data",
+    "ntt data brazil": "ntt data",
     "pagegroup": "michael page",
     "page group": "michael page",
+    "hays talent solutions": "hays",
+    "hays plc": "hays",
+    "randstad brasil": "randstad",
+    "randstad brazil": "randstad",
+    "capgemini engineering": "capgemini",
+    "capgemini brasil": "capgemini",
+    "capgemini brazil": "capgemini",
+    "accenture brasil": "accenture",
+    "accenture brazil": "accenture",
+    "tata consultancy services (tcs)": "tcs",
     "kelly services": "kelly",
     "lhh recruitment solutions": "lhh",
     "manpowergroup": "manpower",
@@ -156,3 +168,24 @@ def tokens(company: str) -> set[str]:
     """Return word tokens of the normalized form (length >= 3)."""
     norm = normalize_for_search(company)
     return {t for t in re.split(r"[\s\-&/|.]+", norm) if len(t) >= 3}
+
+
+# ── Canonical display names for audit/reporting (Part 11) ────────────────────
+# Purely cosmetic — maps the normalize()d lookup key to an uppercase canonical
+# label used in audit CSVs so mapping decisions read clearly, e.g.
+# "NTT DATA Brasil" / "NTT DATA Europe & LATAM" / "NTT Data" => "NTT DATA".
+CANONICAL_DISPLAY: dict[str, str] = {
+    "hays":                       "HAYS",
+    "tcs":                        "TCS",
+    "ntt data":                   "NTT DATA",
+    "michael page":               "PAGEGROUP",
+    "randstad":                   "RANDSTAD",
+    "capgemini":                  "CAPGEMINI",
+    "accenture":                  "ACCENTURE",
+}
+
+
+def canonical_display(company: str) -> str:
+    """Return an uppercase canonical display name if known, else the normalized form."""
+    norm = normalize(company)
+    return CANONICAL_DISPLAY.get(norm, norm.upper() if norm else "")

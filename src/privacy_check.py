@@ -70,6 +70,16 @@ ALLOWED_CONTACT_FIELDS = {
     "has_message_history", "replied_to_me", "ghosted_me", "auto_reply_only",
     "last_message_date", "days_since_last_message",
     "prior_positive_signal", "prior_rejection",
+    # V6 response intelligence — sanitized fields only, no raw content
+    "needs_my_response", "needs_response_confidence", "needs_response_reason",
+    "response_intent_score",
+    "manual_review_required", "last_sender_type", "conversation_recency_band",
+    "sanitized_intent_label",
+    # V6 company resolution — computed signals, no raw content
+    "company_resolution_source", "company_resolution_confidence",
+    "company_evidence_count", "company_dominant_bucket",
+    "company_dominant_bucket_share", "cross_contact_propagation_used",
+    "message_signal_used", "company_canonical",
 }
 
 

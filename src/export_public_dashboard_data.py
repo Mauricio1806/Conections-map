@@ -42,6 +42,11 @@ SAFE_CONTACT_COLS = [
     "has_message_history", "replied_to_me", "ghosted_me", "auto_reply_only",
     "last_message_date", "days_since_last_message",
     "prior_positive_signal", "prior_rejection",
+    # V6 company resolution — computed signals, no raw content
+    "company_resolution_source", "company_resolution_confidence",
+    "company_evidence_count", "company_dominant_bucket",
+    "company_dominant_bucket_share", "cross_contact_propagation_used",
+    "message_signal_used", "company_canonical",
 ]
 
 EXCLUDED_PATTERNS = {
@@ -319,6 +324,10 @@ SAFE_LEAD_COLS = {
     "reactivation_priority_score", "recommended_next_action",
     "message_angle", "other_person_profile_url",
     "has_positive_signal", "has_interview_signal", "has_cv_signal", "is_auto_reply",
+    # V6 response intelligence — sanitized fields only, no raw content
+    "needs_my_response", "needs_response_confidence", "needs_response_reason",
+    "response_intent_score", "manual_review_required", "last_sender_type",
+    "conversation_recency_band", "sanitized_intent_label",
 }
 
 SAFE_LEAD_SUMMARY_KEYS = {
@@ -330,6 +339,10 @@ SAFE_LEAD_SUMMARY_KEYS = {
     "this_week_count", "weekly_action_plan",
     # legacy
     "hot_leads", "warm_leads",
+    # V6 refined taxonomy summary counts
+    "needs_my_response_confirmed", "needs_my_response_likely",
+    "ambiguous_review_count", "message_review_queue_count",
+    "follow_up_candidate", "previous_process_reusable", "closed_no_action",
     # contact lists
     "top_reactivation_contacts", "this_week_contacts", "needs_reply_contacts",
 }
@@ -390,6 +403,7 @@ def export_public_dashboard_data(
     lead_data: dict        = None,
     v5_data: dict          = None,
     outreach_scores: dict  = None,
+    company_resolution_v6_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -435,6 +449,8 @@ def export_public_dashboard_data(
         # V5 Opportunity Market (replaces UNKNOWN as primary business view)
         "opportunity_market_v5":       build_v5_distribution_public(df),
         "opportunity_market_v5_summary": v5_data or {},
+        # V6 Company Resolution — cross-contact/message/persona mapping improvements
+        "company_resolution_v6":       company_resolution_v6_data or {},
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:

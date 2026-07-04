@@ -1,7 +1,7 @@
 ﻿company_clean,opportunity_market_v5,opportunity_confidence,company_normalized
 #ONO (Open to New Opportunities),NEEDS_COMPANY_MAPPING,0.4,#ono (open to new opportunities)
 &V Recruitment,NEEDS_COMPANY_MAPPING,0.4,&v recruitment
-(GSH) Grupo Soluciones Horizonte,NEEDS_COMPANY_MAPPING,0.4,(gsh) grupo soluciones horizonte
+(GSH) Grupo Soluciones Horizonte,LATAM_USD_LIKELY,0.6,(gsh) grupo soluciones horizonte
 ++hellohello,NEEDS_COMPANY_MAPPING,0.4,++hellohello
 +A Educação,NEEDS_COMPANY_MAPPING,0.4,+a educação
 +Talent,LATAM_USD_CONFIRMED,0.85,+talent
@@ -49,7 +49,7 @@ A GERADORA,LANGUAGE_PORTUGUESE_MARKET,0.65,a geradora
 A Humtech agora é Humgroup,GLOBAL_TECH,0.75,a humtech agora é humgroup
 A Predial Imóveis,LANGUAGE_PORTUGUESE_MARKET,0.65,a predial imóveis
 A-Players,NEEDS_COMPANY_MAPPING,0.4,a-players
-A.C.Camargo Cancer Center,NEEDS_COMPANY_MAPPING,0.4,a.c.camargo cancer center
+A.C.Camargo Cancer Center,SPAIN_EU_LIKELY,0.6,a.c.camargo cancer center
 A.P. Moller - Maersk,NEEDS_COMPANY_MAPPING,0.4,a.p. moller - maersk
 A3Data,BRAZIL_CONFIRMED,0.85,a3data
 A4PM,LANGUAGE_PORTUGUESE_MARKET,0.65,a4pm
@@ -146,10 +146,10 @@ APAA – Associação Paulista dos Amigos da Arte,BRAZIL_CONFIRMED,0.85,apaa –
 APGAR,LATAM_USD_CONFIRMED,0.85,apgar
 API Ágil,GLOBAL_OPPORTUNITY,0.55,api ágil
 APL - Administração de Pátios e Leilões,LANGUAGE_PORTUGUESE_MARKET,0.65,apl - administração de pátios e leilões
-APLLOS,NEEDS_COMPANY_MAPPING,0.4,apllos
+APLLOS,SPAIN_EU_LIKELY,0.6,apllos
 "APN Consulting, Inc",GLOBAL_CONSULTING,0.9,apn
-APOIO ACADEMIC,NEEDS_COMPANY_MAPPING,0.4,apoio academic
-APPLICA CORP,NEEDS_COMPANY_MAPPING,0.4,applica
+APOIO ACADEMIC,SPAIN_EU_LIKELY,0.6,apoio academic
+APPLICA CORP,GLOBAL_OPPORTUNITY,0.72,applica
 APRIORI - business solutions AG,GLOBAL_OPPORTUNITY,0.55,apriori - business
 APSCo,NEEDS_COMPANY_MAPPING,0.4,apsco
 "AQUA Information Systems, Inc",NEEDS_COMPANY_MAPPING,0.4,aqua information systems
@@ -213,7 +213,7 @@ Able,LANGUAGE_PORTUGUESE_MARKET,0.65,able
 Abradi,NEEDS_COMPANY_MAPPING,0.4,abradi
 Abria - Associação Brasileira de Inteligência Artificial,BRAZIL_CONFIRMED,0.85,abria - associação brasileira de inteligência artificial
 Absa Group,EUROPE_CONFIRMED,0.85,absa
-Academia RH+,NEEDS_COMPANY_MAPPING,0.4,academia rh+
+Academia RH+,SPAIN_EU_LIKELY,0.6,academia rh+
 Academia do Dev,NEEDS_COMPANY_MAPPING,0.4,academia do dev
 Academy for Intercultural Dialogue and Competency,GLOBAL_OPPORTUNITY,0.55,academy for intercultural dialogue and competency
 Accelya,GLOBAL_OPPORTUNITY,0.55,accelya
@@ -282,7 +282,7 @@ Aerospace,NEEDS_COMPANY_MAPPING,0.4,aerospace
 Afinz,BRAZIL_CONFIRMED,0.85,afinz
 Afriam International,NEEDS_COMPANY_MAPPING,0.4,afriam international
 Africa,LANGUAGE_PORTUGUESE_MARKET,0.65,africa
-Afya,NEEDS_COMPANY_MAPPING,0.4,afya
+Afya,LANGUAGE_PORTUGUESE_MARKET,0.72,afya
 AgSUS,BRAZIL_CONFIRMED,0.85,agsus
 Agemark Senior Living,GLOBAL_OPPORTUNITY,0.55,agemark senior living
 Agencia Ontrade,BRAZIL_CONFIRMED,0.85,agencia ontrade
@@ -423,7 +423,7 @@ Amoria Bond,NEEDS_COMPANY_MAPPING,0.4,amoria bond
 Amorix Alimentos,NEEDS_COMPANY_MAPPING,0.4,amorix alimentos
 Ampacet Corporation,LANGUAGE_PORTUGUESE_MARKET,0.65,ampacet
 Amplifi (Europe),EUROPE_CONFIRMED,0.85,amplifi ()
-Amplitude Recursos Humanos,NEEDS_COMPANY_MAPPING,0.4,amplitude recursos humanos
+Amplitude Recursos Humanos,LATAM_USD_LIKELY,0.6,amplitude recursos humanos
 Ampstek,GLOBAL_OPPORTUNITY,0.55,ampstek
 Amvox,LANGUAGE_PORTUGUESE_MARKET,0.65,amvox
 Analisia,BRAZIL_CONFIRMED,0.85,analisia

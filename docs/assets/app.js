@@ -665,41 +665,176 @@ function renderGapChart() {
 }
 
 // ── PAGE 4: Action Plan ───────────────────────────────────────────────────────
+
+// Part 17 — per-tier "Recommended LinkedIn Filters" metadata. Each of the 4
+// search tiers gets ITS OWN distinct filter recipe (not shared boilerplate).
+const TIER_COLORS = { Broad: '#f59e0b', Precision: '#3b82f6', Persona: '#8b5cf6', Company: '#22c55e' };
+
+const REGION_FILTER_META = {
+  LATAM_USD: {
+    locations: 'Brazil, Argentina, Colombia, Mexico, Chile, Uruguay, Peru',
+    companies: ['Hays', 'Michael Page', 'Randstad', 'NTT DATA', 'BairesDev', 'Nearsure'],
+    industry: 'Staffing & Recruiting, IT Services & IT Consulting',
+    personaFocus: 'Talent Acquisition, Technical Recruiter, IT Recruiter',
+  },
+  SOUTH_AMERICA: {
+    locations: 'Brazil, Argentina, Colombia, Chile, Peru',
+    companies: ['Michael Page', 'Robert Half', 'Globant', 'CI&T'],
+    industry: 'Staffing & Recruiting, IT Services & IT Consulting',
+    personaFocus: 'Talent Acquisition, Recruiter, HR Business Partner',
+  },
+  US_NEARSHORE: {
+    locations: 'United States, Canada',
+    companies: ['Nearsure', 'AgileEngine', 'Wizeline', 'Andela', 'BairesDev'],
+    industry: 'IT Services & IT Consulting, Staffing & Recruiting',
+    personaFocus: 'Technical Recruiter, Talent Acquisition Partner, Delivery Manager',
+  },
+  STAFFING: {
+    locations: 'Brazil, LATAM, United States (remote-first)',
+    companies: ['Hays', 'NTT DATA', 'Randstad', 'Capgemini', 'Accenture', 'TCS'],
+    industry: 'Staffing & Recruiting, IT Services & IT Consulting',
+    personaFocus: 'Recruiter, Talent Acquisition, Account Manager',
+  },
+  HIRING_MGR: {
+    locations: 'Brazil, United States, Canada, Remote',
+    companies: ['Databricks', 'Snowflake', 'Microsoft', 'Nubank', 'iFood'],
+    industry: 'Software Development, IT Services & IT Consulting, Data Infrastructure',
+    personaFocus: 'Head of Data, Data Engineering Manager, Director of Data',
+  },
+  SPAIN_EU: {
+    locations: 'Spain, Portugal, Germany, Netherlands, Ireland',
+    companies: ['Stratesys', 'ERNI', 'Minsait', 'Indra', 'Capgemini'],
+    industry: 'IT Services & IT Consulting, Staffing & Recruiting',
+    personaFocus: 'Talent Acquisition, Technical Recruiter, HR Business Partner',
+  },
+  PORTUGAL_EU: {
+    locations: 'Portugal, Spain, Ireland',
+    companies: ['ERNI', 'Critical TechWorks', 'Farfetch', 'Talkdesk'],
+    industry: 'IT Services & IT Consulting, Software Development',
+    personaFocus: 'Talent Acquisition, Technical Recruiter',
+  },
+  DIGITAL_NOMAD: {
+    locations: 'Europe (remote-first companies)',
+    companies: ['GitLab', 'Automattic', 'Toptal', 'Remote.com'],
+    industry: 'Software Development, IT Services & IT Consulting',
+    personaFocus: 'Remote Talent Acquisition, People Ops, Recruiter',
+  },
+};
+
+// Builds the 4 distinct per-tier filter recipes (Parts 16-17) for one region/profile.
+function buildTierFilters(regionKey, pack) {
+  const meta = REGION_FILTER_META[regionKey] || REGION_FILTER_META.LATAM_USD;
+  const primaryCompany = (meta.companies && meta.companies[0]) || 'target company';
+  return [
+    {
+      tier: 'Broad', query: pack.broad,
+      purpose: 'Market discovery — see the shape of the market before narrowing.',
+      peopleJobs: 'People', degree: '2nd degree', locations: meta.locations,
+      currentCompany: 'Do not restrict company', industry: '—',
+      activelyHiring: 'Not required', expectedPersona: 'Mixed / broad', expectedPrecision: 'Low',
+      whenToUse: 'Use for discovery only — first pass on a new market.',
+    },
+    {
+      tier: 'Precision', query: pack.precision,
+      purpose: 'Default daily outreach search.',
+      peopleJobs: 'People', degree: '2nd degree', locations: meta.locations,
+      currentCompany: 'Staffing, consulting, nearshore firms', industry: meta.industry,
+      activelyHiring: 'Yes, when available', expectedPersona: 'Recruiter / Talent Acquisition', expectedPrecision: 'Medium-High',
+      whenToUse: 'Default daily search — best mix of volume and relevance.',
+    },
+    {
+      tier: 'Persona', query: pack.persona,
+      purpose: 'High-quality recruiter/persona targeting.',
+      peopleJobs: 'People', degree: '2nd degree', locations: meta.locations,
+      currentCompany: 'Do not restrict company', industry: meta.industry,
+      activelyHiring: 'Optional', expectedPersona: meta.personaFocus, expectedPrecision: 'High',
+      whenToUse: 'Use when Broad/Precision results contain irrelevant profiles.',
+    },
+    {
+      tier: 'Company', query: pack.company,
+      purpose: 'Account-based networking at a known target firm.',
+      peopleJobs: 'People', degree: '2nd degree', locations: 'Optional: ' + meta.locations,
+      currentCompany: primaryCompany + ' (exact target company)', industry: meta.industry,
+      activelyHiring: 'Yes, when available', expectedPersona: 'Recruiter / account contact at target firm', expectedPrecision: 'Very High',
+      whenToUse: 'Use for account-based networking and known target companies.',
+    },
+  ];
+}
+
+function escapeAttr(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Clipboard copy for "Copy Query" — never throws uncaught (fail-safe rule).
+window.copyQueryBtn = function(btn) {
+  try {
+    const q = btn.getAttribute('data-query') || '';
+    const restore = () => { const old = btn.dataset.label || btn.textContent; btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = old; }, 1200); };
+    if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(q).then(restore).catch(() => { try { _fallbackCopyText(q); restore(); } catch(_) {} });
+    } else {
+      _fallbackCopyText(q); restore();
+    }
+  } catch(_) { /* never let a copy-button click become an uncaught error */ }
+};
+
+function _fallbackCopyText(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); } finally { document.body.removeChild(ta); }
+}
+
 function renderPlan() {
   // ── Search pack helper ───────────────────────────────────────────────────────
   function liUrl(q) {
     return 'https://www.linkedin.com/search/results/people/?keywords=' + encodeURIComponent(q);
   }
 
-  // Build a compact stacked search-pack block (4 tiers)
+  // Build a compact stacked search-pack block — 4 tiers, EACH with its own
+  // distinct filter recipe (Part 16-17), an expandable "Recommended LinkedIn
+  // Filters" panel, an Open Search link, and a Copy Query button.
   function searchPack(pack, filters, noise) {
-    const tiers = [
-      { label: 'Broad',     quality: 'Volume High / Precision Low',        q: pack.broad     },
-      { label: 'Precision', quality: 'Volume Medium / Precision Medium-High', q: pack.precision },
-      { label: 'Persona',   quality: 'Volume Medium / Precision High',     q: pack.persona   },
-      { label: 'Company',   quality: 'Volume Low / Precision Very High',   q: pack.company   },
-    ];
-    const colors = { Broad: '#f59e0b', Precision: '#3b82f6', Persona: '#8b5cf6', Company: '#22c55e' };
-    const rows = tiers.map(t =>
-      '<div style="display:flex;align-items:flex-start;gap:.4rem;padding:.35rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap">'
-      + '<span style="font-size:.7rem;font-weight:700;color:' + colors[t.label] + ';min-width:64px;flex-shrink:0">' + t.label + '</span>'
-      + '<div style="flex:1;min-width:0">'
-      + '<code style="font-size:.72rem;color:#e6edf3;word-break:break-word;white-space:normal;display:block">' + t.q + '</code>'
-      + '<span style="font-size:.65rem;color:var(--text-muted)">' + t.quality + '</span>'
-      + '</div>'
-      + '<a href="' + liUrl(t.q) + '" target="_blank" rel="noopener" '
-      + 'style="font-size:.7rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;white-space:nowrap;text-decoration:none;flex-shrink:0" '
-      + 'title="Open People Search on LinkedIn">Open</a>'
-      + '</div>'
-    ).join('');
+    const tiers = buildTierFilters(pack.key, pack);
+    const rows = tiers.map(t => {
+      const color = TIER_COLORS[t.tier] || '#8b949e';
+      const qAttr = escapeAttr(t.query);
+      return '<div style="display:flex;align-items:flex-start;gap:.4rem;padding:.4rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap">'
+        + '<span style="font-size:.7rem;font-weight:700;color:' + color + ';min-width:64px;flex-shrink:0">' + t.tier + '</span>'
+        + '<div style="flex:1;min-width:0">'
+        + '<code style="font-size:.72rem;color:#e6edf3;word-break:break-word;white-space:normal;display:block">' + t.query + '</code>'
+        + '<span style="font-size:.65rem;color:var(--text-muted)">' + t.purpose + ' — precision: ' + t.expectedPrecision + '</span>'
+        + '</div>'
+        + '<a href="' + liUrl(t.query) + '" target="_blank" rel="noopener" '
+        + 'style="font-size:.7rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;white-space:nowrap;text-decoration:none;flex-shrink:0" '
+        + 'title="Open People Search on LinkedIn">Open Search</a>'
+        + '<button type="button" class="btn-ghost" data-query="' + qAttr + '" onclick="copyQueryBtn(this)" '
+        + 'style="font-size:.68rem;padding:2px 8px;flex-shrink:0" title="Copy this query to clipboard">Copy Query</button>'
+        + '<details style="flex:1 0 100%;margin-top:.3rem">'
+        + '<summary style="cursor:pointer;font-size:.68rem;color:var(--text-muted);font-weight:600">&#9881; Recommended LinkedIn Filters</summary>'
+        + '<div style="font-size:.7rem;color:var(--text-secondary);padding:.4rem .3rem;line-height:1.7;background:var(--bg-surface);border-radius:4px;margin-top:.25rem">'
+        + '<div><strong>Search type:</strong> ' + t.peopleJobs + '</div>'
+        + '<div><strong>Connection degree:</strong> ' + t.degree + '</div>'
+        + '<div><strong>Location filters:</strong> ' + t.locations + '</div>'
+        + '<div><strong>Current company filters:</strong> ' + t.currentCompany + '</div>'
+        + '<div><strong>Industry suggestions:</strong> ' + t.industry + '</div>'
+        + '<div><strong>Actively hiring:</strong> ' + t.activelyHiring + '</div>'
+        + '<div><strong>Expected persona:</strong> ' + t.expectedPersona + '</div>'
+        + '<div><strong>Expected precision:</strong> ' + t.expectedPrecision + '</div>'
+        + '<div><strong>When to use:</strong> ' + t.whenToUse + '</div>'
+        + '</div></details>'
+        + '</div>';
+    }).join('');
     const noiseHtml = noise
       ? '<div style="font-size:.7rem;color:var(--text-muted);margin-top:.35rem">&#9888; Noise tip: if too many irrelevant results, try adding <code style="font-size:.7rem">NOT Student</code> or <code style="font-size:.7rem">NOT Course</code></div>'
       : '';
     return '<div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:.6rem .75rem;margin:.5rem 0">'
-      + '<div style="font-size:.7rem;font-weight:700;color:var(--text-secondary);margin-bottom:.25rem">&#128269; SEARCH PACK — Use People search + filters</div>'
+      + '<div style="font-size:.7rem;font-weight:700;color:var(--text-secondary);margin-bottom:.25rem">&#128269; SEARCH PACK — Broad / Precision / Persona / Company (each with its own filters)</div>'
       + rows
-      + (filters ? '<div style="font-size:.7rem;color:var(--info);margin-top:.35rem">&#127717; Filters: ' + filters + '</div>' : '')
-      + '<div style="font-size:.7rem;color:var(--text-muted);margin-top:.3rem;font-style:italic">Tip: Start Broad → if noisy use Precision → apply filters for precision. Short + filters beats huge Boolean strings.</div>'
+      + (filters ? '<div style="font-size:.7rem;color:var(--info);margin-top:.4rem">&#127717; Market context: ' + filters + '</div>' : '')
+      + '<div style="font-size:.7rem;color:var(--text-muted);margin-top:.3rem;font-style:italic">Do not encode every criterion into the keyword query — use the query for intent and LinkedIn filters (degree, geography, company, persona) for refinement.</div>'
       + noiseHtml
       + '</div>';
   }
@@ -755,6 +890,9 @@ function renderPlan() {
       company:   'Recruiter AND "Data Engineer" AND remote',
     },
   };
+  // Tag each search pack with its region key so searchPack() can look up
+  // its distinct per-tier filter recipe (Part 16-17).
+  Object.keys(SP).forEach(k => { SP[k].key = k; });
 
   // ── Filters ──────────────────────────────────────────────────────────────────
   const F = {
@@ -1200,10 +1338,50 @@ function renderCompanyChart(tabId) {
 }
 
 // ── PAGE 7: Opportunity Market V5 ────────────────────────────────────────────
+const RESOLUTION_METHOD_LABEL = {
+  manual_override:                   'Manual override (YAML)',
+  exact_dictionary:                  'Exact company dictionary',
+  v4_inference:                      'V4 keyword inference',
+  title_or_company_keyword:          'Title/company region keyword',
+  company_category:                  'Company category',
+  language_signal:                   'Language signal (PT/ES)',
+  persona_fallback:                  'High-value persona fallback',
+  same_company_propagation:          'Same-company propagation (V6)',
+  message_signal_evidence:           'Message-history signal (V6, local)',
+  persona_company_category_fallback: 'Persona/company-category fallback (V6)',
+  unresolved:                        'Still unresolved (honest residual)',
+  no_usable_signal:                  'Low value — no usable signal',
+};
+
+function renderCompanyResolutionV6() {
+  const v6 = D.company_resolution_v6 || {};
+  const el = document.getElementById('v6-resolution-summary');
+  if (el && v6.total_connections) {
+    el.innerHTML = [
+      makeCard('Needs Mapping — Before V6', v6.needs_mapping_before || 0, v6.needs_mapping_pct_before + '% of network'),
+      makeCard('Needs Mapping — After V6',  v6.needs_mapping_after  || 0, v6.needs_mapping_pct_after + '% of network', v6.target_met ? 'good' : 'warn'),
+      makeCard('Reduced By',                v6.needs_mapping_reduction_count || 0, v6.needs_mapping_reduction_pct + '% reduction', 'good'),
+      makeCard('Same-Company Propagation',  v6.resolved_by_same_company_propagation || 0, '>=2 contacts, >=70% share'),
+      makeCard('Message-Signal Evidence',   v6.resolved_by_message_signal_evidence  || 0, 'local messages.csv only'),
+      makeCard('Persona/Category Fallback', v6.resolved_by_persona_company_category || 0, 'staffing/consulting/tech/strategic'),
+    ].join('');
+  }
+  const noteEl = document.getElementById('v6-target-note');
+  if (noteEl) {
+    if (v6.target_note) {
+      noteEl.innerHTML = '<span class="alert-icon">' + (v6.target_met ? '&#9989;' : '&#8505;&#65039;') + '</span><span>' + v6.target_note + '</span>';
+      noteEl.className = 'alert ' + (v6.target_met ? 'alert-good' : 'alert-info');
+    } else {
+      noteEl.innerHTML = '';
+    }
+  }
+}
+
 function renderUnknownResolution() {
   const res   = D.unknown_resolution || {};
   const v5Sum = D.opportunity_market_v5_summary || {};
   const v5Dist= D.opportunity_market_v5 || {};
+  renderCompanyResolutionV6();
 
   // Primary V5 summary cards
   const v5TopEl = document.getElementById('v5-resolution-summary');
@@ -1405,7 +1583,9 @@ function renderLeads() {
   }
 
   // ── Full backlog contacts table ───────────────────────────────────────────
-  filteredLeads = lr.top_reactivation_contacts || [];
+  const allContacts = lr.top_reactivation_contacts || [];
+  filteredLeads = allContacts;
+  _populateLeadFilterOptions(allContacts);
   renderLeadsTable();
 
   // ── Weekly plan ───────────────────────────────────────────────────────────
@@ -1420,14 +1600,80 @@ function renderLeads() {
   }
 }
 
+function _populateLeadFilterOptions(contacts) {
+  const personaSel = document.getElementById('lead-persona-filter');
+  const marketSel  = document.getElementById('lead-market-filter');
+  if (personaSel && personaSel.options.length <= 1) {
+    [...new Set(contacts.map(c => c.persona || '').filter(Boolean))].sort().forEach(p => {
+      const o = document.createElement('option'); o.value = p; o.textContent = p; personaSel.appendChild(o);
+    });
+  }
+  if (marketSel && marketSel.options.length <= 1) {
+    [...new Set(contacts.map(c => c.strategic_market || '').filter(Boolean))].sort().forEach(m => {
+      const o = document.createElement('option'); o.value = m; o.textContent = m; marketSel.appendChild(o);
+    });
+  }
+}
+
+// Part 6 — full client-side filter bar for the Lead Reactivation page
 window.applyLeadFilters = function() {
-  const temp    = document.getElementById('lead-temp-filter')?.value   || '';
-  const status  = document.getElementById('lead-status-filter')?.value || '';
-  const recOnly = document.getElementById('lead-recruiter-only')?.checked || false;
-  const contacts = (D.lead_reactivation || {}).top_reactivation_contacts || [];
-  filteredLeads = contacts.filter(c => {
-    if (temp   && c.lead_temperature    !== temp)   return false;
-    if (status && c.conversation_status !== status) return false;
+  const search    = (document.getElementById('lead-search')?.value || '').trim().toLowerCase();
+  const status    = document.getElementById('lead-status-filter')?.value || '';
+  const category  = document.getElementById('lead-category-filter')?.value || '';
+  const temp      = document.getElementById('lead-temp-filter')?.value || '';
+  const persona   = document.getElementById('lead-persona-filter')?.value || '';
+  const market    = document.getElementById('lead-market-filter')?.value || '';
+  const sender    = document.getElementById('lead-sender-filter')?.value || '';
+  const needsResp = document.getElementById('lead-needs-response-filter')?.value || '';
+  const replied   = document.getElementById('lead-replied-filter')?.value || '';
+  const ghosted   = document.getElementById('lead-ghosted-filter')?.value || '';
+  const autoReply = document.getElementById('lead-autoreply-filter')?.value || '';
+  const positive  = document.getElementById('lead-positive-filter')?.value || '';
+  const interview = document.getElementById('lead-interview-filter')?.value || '';
+  const recency   = document.getElementById('lead-recency-filter')?.value || '';
+  const minScore  = parseFloat(document.getElementById('lead-min-score')?.value) || 0;
+  const thisWeekOnly = document.getElementById('lead-this-week-only')?.checked || false;
+  const recOnly   = document.getElementById('lead-recruiter-only')?.checked || false;
+
+  const lr = D.lead_reactivation || {};
+  const thisWeekIds = new Set((lr.this_week_contacts || []).map(c => c.other_person_profile_url || c.other_person_name));
+  const source = lr.top_reactivation_contacts || [];
+
+  filteredLeads = source.filter(c => {
+    if (search) {
+      const hay = ((c.other_person_name||'') + ' ' + (c.company_clean||'')).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    if (status   && c.conversation_status !== status) return false;
+    if (category && c.lead_category       !== category) return false;
+    if (temp     && c.lead_temperature    !== temp) return false;
+    if (persona  && c.persona             !== persona) return false;
+    if (market   && c.strategic_market    !== market) return false;
+    if (sender   && (c.last_sender_type || '') !== sender) return false;
+    if (needsResp === 'confirmed' && c.lead_category !== 'Needs my response — Confirmed') return false;
+    if (needsResp === 'likely'    && c.lead_category !== 'Needs my response — Likely')    return false;
+    if (needsResp === 'no'        && c.needs_my_response) return false;
+    if (replied === 'yes' && !(c.messages_from_other_person > 0 || c.conversation_status === 'Warm lead' || c.needs_my_response)) return false;
+    if (replied === 'no'  && (c.messages_from_other_person > 0 || c.needs_my_response)) return false;
+    if (ghosted === 'yes' && !(c.last_sender_type === 'me' && c.conversation_status === 'No response')) return false;
+    if (ghosted === 'no'  && (c.last_sender_type === 'me' && c.conversation_status === 'No response')) return false;
+    if (autoReply === 'yes' && !c.is_auto_reply) return false;
+    if (autoReply === 'no'  && c.is_auto_reply) return false;
+    if (positive === 'yes' && !c.has_positive_signal) return false;
+    if (positive === 'no'  && c.has_positive_signal) return false;
+    if (interview === 'yes' && !c.has_interview_signal) return false;
+    if (interview === 'no'  && c.has_interview_signal) return false;
+    if (recency) {
+      const d = c.days_since_last_message;
+      const dn = (d === null || d === undefined || d === '') ? Infinity : parseInt(d);
+      if (recency === '0-7'    && !(dn <= 7))            return false;
+      if (recency === '8-30'   && !(dn >= 8 && dn <= 30)) return false;
+      if (recency === '31-90'  && !(dn >= 31 && dn <= 90)) return false;
+      if (recency === '91-180' && !(dn >= 91 && dn <= 180)) return false;
+      if (recency === '180+'   && !(dn > 180))            return false;
+    }
+    if ((parseFloat(c.reactivation_priority_score) || 0) < minScore) return false;
+    if (thisWeekOnly && !thisWeekIds.has(c.other_person_profile_url || c.other_person_name)) return false;
     if (recOnly && !['Recruiter','Talent Acquisition','Sourcer','Hiring Manager','Engineering Manager'].includes(c.persona)) return false;
     return true;
   });
@@ -1435,12 +1681,29 @@ window.applyLeadFilters = function() {
 };
 
 window.resetLeadFilters = function() {
-  const t = document.getElementById('lead-temp-filter');    if (t) t.value = '';
-  const s = document.getElementById('lead-status-filter'); if (s) s.value = '';
-  const r = document.getElementById('lead-recruiter-only'); if (r) r.checked = false;
+  ['lead-search'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  ['lead-status-filter','lead-category-filter','lead-temp-filter','lead-persona-filter',
+   'lead-market-filter','lead-sender-filter','lead-needs-response-filter','lead-replied-filter',
+   'lead-ghosted-filter','lead-autoreply-filter','lead-positive-filter','lead-interview-filter',
+   'lead-recency-filter'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const ms = document.getElementById('lead-min-score'); if (ms) ms.value = '0';
+  const tw = document.getElementById('lead-this-week-only'); if (tw) tw.checked = false;
+  const r  = document.getElementById('lead-recruiter-only'); if (r) r.checked = false;
   filteredLeads = (D.lead_reactivation || {}).top_reactivation_contacts || [];
   renderLeadsTable();
 };
+
+const NEEDS_RESPONSE_CONF_STYLE = {
+  HIGH:   'background:#ef4444;color:#fff',
+  MEDIUM: 'background:#f59e0b;color:#111',
+  LOW:    'background:#9ca3af;color:#111',
+  NONE:   'background:#374151;color:#aaa',
+};
+
+function needsResponseBadge(conf) {
+  const style = NEEDS_RESPONSE_CONF_STYLE[conf] || NEEDS_RESPONSE_CONF_STYLE.NONE;
+  return '<span style="' + style + ';padding:2px 6px;border-radius:4px;font-size:0.68rem;white-space:nowrap">' + (conf||'NONE') + '</span>';
+}
 
 function renderLeadsTable() {
   const st = document.getElementById('leads-stats');
@@ -1448,7 +1711,7 @@ function renderLeadsTable() {
   const tbody = document.getElementById('leads-tbody');
   if (!tbody) return;
   if (!filteredLeads.length) {
-    tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="17" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
     return;
   }
   tbody.innerHTML = filteredLeads.map((r, i) => {
@@ -1456,20 +1719,24 @@ function renderLeadsTable() {
     const score  = parseInt(r.reactivation_priority_score) || 0;
     const sCls   = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
     const icon   = STATUS_ICONS[r.conversation_status] || '';
+    const lastSender = r.last_sender_type === 'me' ? 'Me' : (r.last_sender_type === 'other' ? 'Them' : '—');
     return '<tr>'
       + '<td><strong>#' + (i+1) + '</strong></td>'
       + '<td style="white-space:nowrap">' + (r.other_person_name||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (r.company_clean||'—') + '</td>'
-      + '<td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.position_clean||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
       + '<td>' + marketBadge(r.strategic_market||'UNKNOWN') + '</td>'
       + '<td style="font-size:0.75rem">' + (r.lead_category||'—') + '</td>'
-      + '<td style="white-space:nowrap;font-size:0.78rem">' + icon + ' ' + (r.conversation_status||'—') + '</td>'
       + '<td>' + tempBadge(r.lead_temperature||'—') + '</td>'
+      + '<td style="white-space:nowrap;font-size:0.78rem">' + icon + ' ' + (r.conversation_status||'—') + '</td>'
+      + '<td style="font-size:0.75rem">' + lastSender + '</td>'
       + '<td style="white-space:nowrap;font-size:0.78rem">' + (r.last_message_date||'—') + '</td>'
-      + '<td style="text-align:center">' + (r.days_since_last_message||'—') + '</td>'
+      + '<td style="text-align:center">' + (r.days_since_last_message ?? '—') + '</td>'
+      + '<td>' + needsResponseBadge(r.needs_response_confidence) + '</td>'
       + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
-      + '<td style="font-size:0.72rem;max-width:180px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
+      + '<td style="font-size:0.72rem;max-width:170px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
+      + '<td style="font-size:0.7rem;max-width:150px;color:var(--text-muted)">' + String(r.needs_response_reason || r.message_angle ||'').substring(0,70) + '</td>'
+      + '<td style="font-size:0.72rem;white-space:nowrap">' + (r.sanitized_intent_label||'—') + '</td>'
       + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
       + '</tr>';
   }).join('');
@@ -1502,6 +1769,26 @@ function renderQuality() {
       makeCard('Needs Company Mapping',       needsMap.toLocaleString(), 'action backlog — map in overrides YAML', 'warn'),
       makeCard('Low Value Unresolved',        lowVal.toLocaleString(), lowPct + '% — no usable signal found'),
     ].join('');
+  }
+
+  // Resolution method breakdown (Part 15) — how every contact got its bucket
+  const methodTbody = document.getElementById('quality-method-tbody');
+  if (methodTbody) {
+    const breakdown = (D.company_resolution_v6 || {}).resolution_method_breakdown || {};
+    const entries = Object.entries(breakdown).sort((a, b) => b[1] - a[1]);
+    const grand = entries.reduce((s, [, v]) => s + v, 0) || total || 1;
+    if (!entries.length) {
+      methodTbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted)">Run the pipeline to populate resolution-method breakdown.</td></tr>';
+    } else {
+      methodTbody.innerHTML = entries.map(([method, count]) => {
+        const pct = (count / grand * 100).toFixed(1);
+        return '<tr>'
+          + '<td>' + (RESOLUTION_METHOD_LABEL[method] || method) + '</td>'
+          + '<td><strong>' + count.toLocaleString() + '</strong></td>'
+          + '<td>' + pct + '%' + scoreBar(count, grand, '#3b82f6') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
   }
 
   // Section B — Geographic data limitation (technical)

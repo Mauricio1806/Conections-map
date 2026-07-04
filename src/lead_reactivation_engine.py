@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-lead_reactivation_engine.py  (V2 — corrective patch)
-======================================================
+lead_reactivation_engine.py  (V2 — corrective patch; V6 — response intelligence)
+==================================================================================
 Runs message_intelligence, generates segmented CSV outputs,
 and returns a summary dict for the public dashboard JSON.
 
@@ -12,6 +12,20 @@ Key fixes vs V1:
   - New outputs: this_week, hot, warm, career_site, ignore
   - lead_category field in all outputs
   - Safe dashboard columns include lead_category and profile_url
+
+V6 additions (CLAUDE_INTELLIGENCE_V6_PATCH.md Parts 1, 5, 8):
+  - lead_category now uses the refined 12-category taxonomy (Part 5):
+    "Needs my response — Confirmed/Likely", "Ambiguous — Review",
+    "Hot/Warm reactivation", "Dormant warm", "Career site follow-up",
+    "Previous process reusable", "Follow-up candidate", "No response",
+    "Closed / no action", "Ignore".
+  - The old inflated "Needs my response" count is replaced by
+    needs_my_response_confirmed + needs_my_response_likely, both requiring a
+    substantive actionable signal (not just "other person sent last").
+  - New small manual-review queue: outputs/message_review_queue.csv
+    (only "Ambiguous — Review" cases — a handful, not the whole backlog).
+  - conversation_status (legacy) is UNCHANGED so outreach_adjusted_scoring.py
+    and downstream consumers keep working exactly as before.
 
 Outputs (all local/private — never committed):
   outputs/message_threads_summary.csv
@@ -27,6 +41,7 @@ Outputs (all local/private — never committed):
   outputs/dormant_leads.csv
   outputs/rejected_or_closed_leads.csv
   outputs/no_response_leads.csv
+  outputs/message_review_queue.csv
 """
 
 import logging
@@ -68,6 +83,23 @@ SAFE_DASHBOARD_COLS = [
     "has_interview_signal",
     "has_cv_signal",
     "is_auto_reply",
+    # V6 response intelligence — sanitized fields only, no raw content
+    "needs_my_response",
+    "needs_response_confidence",
+    "needs_response_reason",
+    "response_intent_score",
+    "manual_review_required",
+    "last_sender_type",
+    "conversation_recency_band",
+    "sanitized_intent_label",
+]
+
+# Ambiguous manual-review queue fields (Part 8) — sanitized, no raw content
+REVIEW_QUEUE_COLS = [
+    "other_person_name", "company_clean", "persona",
+    "last_message_date", "days_since_last_message",
+    "inferred_status", "needs_response_confidence", "response_intent_score",
+    "sanitized_intent_label", "reason", "manual_status", "manual_action",
 ]
 
 
@@ -85,22 +117,21 @@ def _safe_records(df: pd.DataFrame) -> list:
 def _build_this_week_queue(df: pd.DataFrame) -> pd.DataFrame:
     """
     Build the weekly action queue with limits.
-    Priority order: Needs my response → Hot/Warm → Career site → Dormant.
+    Priority order: Needs my response (Confirmed → Likely) → Hot/Warm → Career site → Dormant.
     """
     frames = []
 
-    # 1. Needs my response (up to limit)
-    needs = df[df["conversation_status"] == "Needs my response"].sort_values(
-        "reactivation_priority_score", ascending=False
+    # 1. Needs my response — Confirmed + Likely (up to limit)
+    needs = df[df["lead_category"].isin(
+        ["Needs my response — Confirmed", "Needs my response — Likely"]
+    )].sort_values(
+        ["lead_category", "reactivation_priority_score"], ascending=[True, False]
     ).head(WEEKLY_LIMITS["needs_reply"])
     frames.append(needs)
 
     # 2. Hot + Warm reactivation leads (up to limit, excluding already added)
     added_ids = set(needs["conversation_id"]) if "conversation_id" in needs.columns else set()
-    hot_warm_mask = (
-        df["lead_category"].isin(["Hot reactivation lead", "Warm reactivation lead"]) &
-        df["conversation_status"].isin(["Follow-up due", "Warm lead"])
-    )
+    hot_warm_mask = df["lead_category"].isin(["Hot reactivation", "Warm reactivation"])
     if "conversation_id" in df.columns:
         hot_warm_mask = hot_warm_mask & ~df["conversation_id"].isin(added_ids)
     hot_warm = df[hot_warm_mask].sort_values(
@@ -176,14 +207,16 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     for fname, mask in seg_map.items():
         _save(df[mask], OUTPUTS_DIR / f"{fname}.csv", fname)
 
-    # ── Segmented by lead_category ────────────────────────────────────────────
+    # ── Segmented by lead_category (V6 refined taxonomy — Part 5) ─────────────
     _save(
-        df[df["lead_category"].isin(["Hot reactivation lead", "Needs my response"])],
+        df[df["lead_category"].isin([
+            "Needs my response — Confirmed", "Needs my response — Likely", "Hot reactivation",
+        ])],
         OUTPUTS_DIR / "lead_reactivation_hot.csv",
         "lead_reactivation_hot",
     )
     _save(
-        df[df["lead_category"] == "Warm reactivation lead"],
+        df[df["lead_category"] == "Warm reactivation"],
         OUTPUTS_DIR / "lead_reactivation_warm.csv",
         "lead_reactivation_warm",
     )
@@ -207,23 +240,41 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     backlog = df[backlog_mask].sort_values("reactivation_priority_score", ascending=False)
     _save(backlog, OUTPUTS_DIR / "lead_reactivation_backlog.csv", "lead_reactivation_backlog")
 
+    # ── Ambiguous manual-review queue (Part 8) — small queue, NOT the whole backlog ──
+    review_mask = df["lead_category"] == "Ambiguous — Review"
+    review_df = df[review_mask].copy()
+    if not review_df.empty:
+        review_df["inferred_status"] = review_df["lead_category"]
+        review_df["reason"] = review_df["needs_response_reason"]
+        review_df["manual_status"] = ""
+        review_df["manual_action"] = ""
+        review_df = review_df.sort_values("response_intent_score", ascending=False)
+        review_out = review_df[[c for c in REVIEW_QUEUE_COLS if c in review_df.columns]]
+    else:
+        review_out = pd.DataFrame(columns=REVIEW_QUEUE_COLS)
+    _save(review_out, OUTPUTS_DIR / "message_review_queue.csv", "message_review_queue")
+
     # ── Counts ────────────────────────────────────────────────────────────────
     cat_counts  = df["lead_category"].value_counts().to_dict()
     stat_counts = df["conversation_status"].value_counts().to_dict()
     temp_counts = df["lead_temperature"].value_counts().to_dict()
 
-    hot_count        = int(cat_counts.get("Hot reactivation lead", 0))
-    warm_count       = int(cat_counts.get("Warm reactivation lead", 0))
-    needs_reply      = int(cat_counts.get("Needs my response", 0))
-    # "Needs my response" contacts are the hottest leads — include them in hot count
-    # so the dashboard pipeline card reflects urgency correctly
-    hot_count = hot_count + needs_reply
+    needs_confirmed  = int(cat_counts.get("Needs my response — Confirmed", 0))
+    needs_likely     = int(cat_counts.get("Needs my response — Likely", 0))
+    needs_reply      = needs_confirmed + needs_likely  # honest replacement for the old inflated count
+    ambiguous_review = int(cat_counts.get("Ambiguous — Review", 0))
+    hot_count        = int(cat_counts.get("Hot reactivation", 0)) + needs_confirmed
+    warm_count       = int(cat_counts.get("Warm reactivation", 0))
     career_site      = int(cat_counts.get("Career site follow-up", 0))
-    dormant_warm     = int(stat_counts.get("Dormant warm lead", 0))
+    dormant_warm     = int(cat_counts.get("Dormant warm", 0))
+    follow_up_candidate = int(cat_counts.get("Follow-up candidate", 0))
+    previous_process_reusable = int(cat_counts.get("Previous process reusable", 0))
+    closed_no_action = int(cat_counts.get("Closed / no action", 0))
     follow_due       = int(stat_counts.get("Follow-up due", 0))
     rejected         = int(stat_counts.get("Rejected / closed process", 0))
-    no_response      = int(stat_counts.get("No response", 0))
+    no_response      = int(cat_counts.get("No response", 0))
     this_week_count  = int(len(this_week))
+    review_queue_count = int(len(review_out))
 
     # ── Top 50 reactivation contacts (safe fields only) ───────────────────────
     top50_records = _safe_records(
@@ -236,26 +287,28 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     # ── This week queue (safe fields) ─────────────────────────────────────────
     this_week_records = _safe_records(this_week)
 
-    # ── Needs reply (top 15, safe fields) ─────────────────────────────────────
+    # ── Needs reply (top 15, safe fields; Confirmed first, then Likely) ──────
     needs_reply_records = _safe_records(
-        df[df["conversation_status"] == "Needs my response"]
-        .sort_values("reactivation_priority_score", ascending=False)
+        df[df["lead_category"].isin(["Needs my response — Confirmed", "Needs my response — Likely"])]
+        .sort_values(["lead_category", "reactivation_priority_score"], ascending=[True, False])
         .head(15)
         .reset_index(drop=True)
     )
 
     weekly_plan = {
-        "Monday":    "Reply to 'Needs my response' contacts (check leads-reply queue)",
-        "Tuesday":   "Follow up with Hot reactivation leads from this week's queue",
+        "Monday":    "Reply to 'Needs my response — Confirmed' contacts first (check leads-reply queue)",
+        "Tuesday":   "Reply to 'Needs my response — Likely' + follow up with Hot reactivation leads",
         "Wednesday": "Submit CV to career site leads (up to 10)",
         "Thursday":  "Recontact Warm reactivation leads and dormant warm leads",
-        "Friday":    "Review Warm leads backlog and tag any previous process reusable",
+        "Friday":    "Clear the small Ambiguous — Review queue (outputs/message_review_queue.csv)",
     }
 
     logger.info(
-        f"  Lead intelligence V2: {len(df)} conversations | "
-        f"Hot={hot_count} Warm={warm_count} NeedsReply={needs_reply} "
-        f"FollowDue={follow_due} CareerSite={career_site} ThisWeek={this_week_count}"
+        f"  Lead intelligence V6: {len(df)} conversations | "
+        f"NeedsConfirmed={needs_confirmed} NeedsLikely={needs_likely} Ambiguous={ambiguous_review} "
+        f"Hot={hot_count} Warm={warm_count} "
+        f"FollowDue={follow_due} CareerSite={career_site} ThisWeek={this_week_count} "
+        f"ReviewQueue={review_queue_count}"
     )
 
     return {
@@ -264,6 +317,13 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
         "hot_reactivation_leads":    hot_count,
         "warm_reactivation_leads":   warm_count,
         "needs_my_response":         needs_reply,
+        "needs_my_response_confirmed": needs_confirmed,
+        "needs_my_response_likely":  needs_likely,
+        "ambiguous_review_count":    ambiguous_review,
+        "message_review_queue_count": review_queue_count,
+        "follow_up_candidate":       follow_up_candidate,
+        "previous_process_reusable": previous_process_reusable,
+        "closed_no_action":          closed_no_action,
         "career_site_follow_ups":    career_site,
         "follow_up_due":             follow_due,
         "dormant_warm_leads":        dormant_warm,

@@ -93,7 +93,11 @@ def run_pipeline() -> None:
         "persona", "area", "seniority", "strategic_market",
         "market_confidence", "inference_reason",
         "priority_score", "recommended_action",
-        "url", "email",
+        "url",
+        # NOTE: "email" is intentionally excluded — classified_connections.csv
+        # and everything derived from it (enriched_connections.csv, the public
+        # dashboard JSON, etc.) can end up in the public docs/outputs tree, and
+        # the project's privacy rules forbid exposing email addresses there.
     ]
     # Only include cols that exist
     output_cols = [c for c in output_cols if c in scored.columns]

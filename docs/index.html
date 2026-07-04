@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783014524">
+  <link rel="stylesheet" href="./assets/style.css?v=1783206036">
 </head>
 <body>
 
@@ -206,6 +206,16 @@
         <span><strong>Short-term allocation: 90% LATAM/USD + 10% Spain/EU exploration.</strong>
         Priority: secure remote USD income from Brazil first. Europe is medium-term positioning as a future digital nomad base.</span>
       </div>
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#128161;</span>
+        <span><strong>Smart search advice:</strong> Do not encode every criterion into the keyword query — use the
+        query for intent and LinkedIn filters for degree, geography, company, and persona refinement.
+        <strong>Broad</strong> = discovery only. <strong>Precision</strong> = your default daily search.
+        <strong>Persona</strong> = switch here when Broad/Precision return irrelevant profiles.
+        <strong>Company</strong> = account-based networking at known target firms.
+        Each search pack below lists all four tiers with their own distinct filter recipe —
+        expand &quot;Recommended LinkedIn Filters&quot; on any tier for details.</span>
+      </div>
       <div class="tabs-container">
         <div class="tabs-bar">
           <button class="tab-btn active" data-tab="plan-sprint">7-Day Sprint</button>
@@ -363,10 +373,13 @@
       <div class="alert alert-info" style="margin-top:1rem">
         <span class="alert-icon">&#128161;</span>
         <span>
-          <strong>To resolve "Needs Company Mapping":</strong> Open <code>outputs/unresolved_opportunity_buckets.csv</code>,
+          <strong>To resolve "Needs Company Mapping":</strong> Automated cross-contact propagation, local
+          message-signal evidence, and persona/company-category fallback (V6) already reduce this backlog honestly —
+          see <code>outputs/company_resolution_v6_audit.csv</code> and <code>outputs/company_propagation_audit.csv</code>.
+          For the remaining residual, open <code>outputs/company_mapping_backlog_v6.csv</code>,
           add entries to <code>config/company_market_overrides.yml</code>, and re-run the pipeline.
           Each company you map resolves all its connections at once.
-          <em style="opacity:.7"> — Exact country/location cannot be guaranteed from LinkedIn exports.</em>
+          <em style="opacity:.7"> — Exact country/location cannot be guaranteed from LinkedIn exports; nothing here is fabricated.</em>
         </span>
       </div>
 
@@ -375,6 +388,10 @@
 
       <div class="section-label">Mapping Potential</div>
       <div class="metrics-grid" id="unk-resolution-metrics"></div>
+
+      <div class="section-label">Company Resolution V6 — Mapping Reduction (Cross-Contact / Message / Persona Evidence)</div>
+      <div class="metrics-grid" id="v6-resolution-summary"></div>
+      <div class="alert alert-info" id="v6-target-note" style="margin-top:.75rem"></div>
 
       <div class="section-label">Top 25 Companies to Map First (by Connection Count)</div>
       <div class="table-wrap">
@@ -443,16 +460,10 @@
 
         <div class="section-label">Filters — Full Backlog</div>
         <div class="filters-bar">
-          <div class="filter-group"><label>Temperature</label>
-            <select id="lead-temp-filter">
-              <option value="">All</option>
-              <option value="Hot">Hot</option>
-              <option value="Warm">Warm</option>
-              <option value="Neutral">Neutral</option>
-              <option value="Cold">Cold</option>
-            </select>
+          <div class="filter-group" style="min-width:160px"><label>Search name/company</label>
+            <input type="text" id="lead-search" placeholder="e.g. Hays, Maria...">
           </div>
-          <div class="filter-group"><label>Status</label>
+          <div class="filter-group"><label>Conversation status</label>
             <select id="lead-status-filter">
               <option value="">All</option>
               <option value="Needs my response">Needs my response</option>
@@ -464,6 +475,104 @@
               <option value="No response">No response</option>
             </select>
           </div>
+          <div class="filter-group"><label>Lead category</label>
+            <select id="lead-category-filter">
+              <option value="">All</option>
+              <option value="Needs my response — Confirmed">Needs response — Confirmed</option>
+              <option value="Needs my response — Likely">Needs response — Likely</option>
+              <option value="Ambiguous — Review">Ambiguous — Review</option>
+              <option value="Hot reactivation">Hot reactivation</option>
+              <option value="Warm reactivation">Warm reactivation</option>
+              <option value="Dormant warm">Dormant warm</option>
+              <option value="Career site follow-up">Career site follow-up</option>
+              <option value="Previous process reusable">Previous process reusable</option>
+              <option value="Follow-up candidate">Follow-up candidate</option>
+              <option value="No response">No response</option>
+              <option value="Closed / no action">Closed / no action</option>
+              <option value="Ignore">Ignore</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Temperature</label>
+            <select id="lead-temp-filter">
+              <option value="">All</option>
+              <option value="Hot">Hot</option>
+              <option value="Warm">Warm</option>
+              <option value="Neutral">Neutral</option>
+              <option value="Cold">Cold</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Persona</label>
+            <select id="lead-persona-filter"><option value="">All</option></select>
+          </div>
+          <div class="filter-group"><label>Opportunity bucket</label>
+            <select id="lead-market-filter"><option value="">All</option></select>
+          </div>
+          <div class="filter-group"><label>Last sender</label>
+            <select id="lead-sender-filter">
+              <option value="">All</option>
+              <option value="other">Them</option>
+              <option value="me">Me</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Needs my response</label>
+            <select id="lead-needs-response-filter">
+              <option value="">All</option>
+              <option value="confirmed">Confirmed only</option>
+              <option value="likely">Likely</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Replied to me</label>
+            <select id="lead-replied-filter">
+              <option value="">All</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Ghosted me</label>
+            <select id="lead-ghosted-filter">
+              <option value="">All</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Auto reply only</label>
+            <select id="lead-autoreply-filter">
+              <option value="">All</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Positive signal</label>
+            <select id="lead-positive-filter">
+              <option value="">All</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Previous interview/process</label>
+            <select id="lead-interview-filter">
+              <option value="">All</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Days since last message</label>
+            <select id="lead-recency-filter">
+              <option value="">All</option>
+              <option value="0-7">0–7</option>
+              <option value="8-30">8–30</option>
+              <option value="31-90">31–90</option>
+              <option value="91-180">91–180</option>
+              <option value="180+">180+</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Min reactivation score</label>
+            <input type="number" id="lead-min-score" value="0" min="0" max="100" style="width:70px">
+          </div>
+          <div class="filter-group"><label>This Week Queue only</label>
+            <input type="checkbox" id="lead-this-week-only">
+          </div>
           <div class="filter-group"><label>Recruiters only</label>
             <input type="checkbox" id="lead-recruiter-only">
           </div>
@@ -471,15 +580,16 @@
           <button class="btn-ghost" onclick="resetLeadFilters()">Reset</button>
         </div>
 
-        <div class="section-label">Top 50 Reactivation Contacts (Backlog)</div>
+        <div class="section-label">Top Reactivation Contacts (Backlog)</div>
         <div class="table-stats" id="leads-stats"></div>
         <div class="table-wrap">
           <table id="leads-table">
             <thead><tr>
-              <th>#</th><th>Name</th><th>Company</th><th>Role</th><th>Persona</th>
-              <th>Market</th><th>Category</th><th>Status</th><th>Temp</th>
-              <th>Last Msg</th><th>Days</th><th>Score</th>
-              <th>Recommended Action</th><th>LinkedIn</th>
+              <th>#</th><th>Name</th><th>Company</th><th>Persona</th>
+              <th>Opportunity bucket</th><th>Category</th><th>Temp</th><th>Status</th>
+              <th>Last sender</th><th>Last msg date</th><th>Days</th>
+              <th>Needs response conf.</th><th>Score</th>
+              <th>Recommended Action</th><th>Why</th><th>Intent</th><th>LinkedIn</th>
             </tr></thead>
             <tbody id="leads-tbody"></tbody>
           </table>
@@ -497,6 +607,14 @@
 
       <div class="section-label">Section A — Business Classification Quality (Opportunity Bucket V5)</div>
       <div class="metrics-grid metrics-grid-wide" id="quality-metrics-a"></div>
+
+      <div class="section-label">Resolution Method Breakdown (V6 — how contacts got their bucket)</div>
+      <div class="table-wrap">
+        <table id="quality-method-table">
+          <thead><tr><th>Method</th><th>Contacts</th><th>Share</th></tr></thead>
+          <tbody id="quality-method-tbody"></tbody>
+        </table>
+      </div>
 
       <div class="chart-box" style="max-width:520px;margin:1.5rem 0">
         <h4>Opportunity Bucket Distribution V5</h4>
@@ -531,7 +649,7 @@
         </table>
         <div style="margin-top:1.2rem;font-size:0.85rem;color:var(--text-muted);line-height:1.7">
           <p><strong>To improve Needs Company Mapping:</strong></p>
-          <p>Open <code>outputs/unresolved_opportunity_buckets.csv</code> &rarr;
+          <p>Open <code>outputs/company_mapping_backlog_v6.csv</code> (post cross-contact/message/persona resolution) &rarr;
           add entries to <code>config/company_market_overrides.yml</code> &rarr;
           re-run pipeline. Each company you map resolves all its connections.</p>
         </div>
@@ -544,6 +662,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783014524"></script>
+<script src="./assets/app.js?v=1783206036"></script>
 </body>
 </html>
