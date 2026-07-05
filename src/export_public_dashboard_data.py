@@ -404,6 +404,7 @@ def export_public_dashboard_data(
     v5_data: dict          = None,
     outreach_scores: dict  = None,
     company_resolution_v6_data: dict = None,
+    company_resolution_v7_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -451,6 +452,9 @@ def export_public_dashboard_data(
         "opportunity_market_v5_summary": v5_data or {},
         # V6 Company Resolution — cross-contact/message/persona mapping improvements
         "company_resolution_v6":       company_resolution_v6_data or {},
+        # V7 Company Resolution — iterative fuzzy-cluster/company-message-aggregate/
+        # persona-cohort mapping improvements (sanitized aggregate counts only)
+        "company_resolution_v7":       company_resolution_v7_data or {},
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:

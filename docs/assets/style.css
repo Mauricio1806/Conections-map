@@ -180,6 +180,25 @@ body {
 .card-sub.warn { color: var(--warning); }
 .card-sub.bad  { color: var(--danger); }
 
+/* ── Clickable KPI cards (Lead Reactivation filter-by-click) ───────────── */
+.kpi-card {
+  cursor: pointer;
+  user-select: none;
+  transition: border-color .15s ease, transform .1s ease, background .15s ease;
+  min-height: 44px; /* touch target */
+}
+.kpi-card:hover      { border-color: var(--primary, #3b82f6); }
+.kpi-card:active     { transform: scale(0.98); }
+.kpi-card:focus-visible {
+  outline: 2px solid var(--primary, #3b82f6);
+  outline-offset: 2px;
+}
+.kpi-card.active {
+  border-color: var(--primary, #3b82f6);
+  background: color-mix(in srgb, var(--primary, #3b82f6) 12%, var(--bg-surface));
+  box-shadow: 0 0 0 1px var(--primary, #3b82f6) inset;
+}
+
 /* ── Metric Grids ───────────────────────────────── */
 .metrics-grid {
   display: grid;

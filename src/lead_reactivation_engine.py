@@ -276,11 +276,17 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     this_week_count  = int(len(this_week))
     review_queue_count = int(len(review_out))
 
-    # ── Top 50 reactivation contacts (safe fields only) ───────────────────────
+    # ── All actionable reactivation contacts (safe fields only) ───────────────
+    # V7 corrective patch: this used to be capped at head(50), which made the
+    # Lead Reactivation filter bar and KPI-card click-through unable to
+    # actually retrieve the contacts behind categories like "Dormant warm"
+    # (197) or "Follow-up candidate" (732) — filtering only ever searched
+    # within the top 50 by score. Exporting the FULL non-Ignore backlog (still
+    # sanitized/no raw content) is what makes every KPI card and filter
+    # combination return a result set that matches its displayed count.
     top50_records = _safe_records(
         df[df["lead_category"] != "Ignore"]
         .sort_values("reactivation_priority_score", ascending=False)
-        .head(50)
         .reset_index(drop=True)
     )
 

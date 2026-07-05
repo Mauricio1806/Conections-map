@@ -308,6 +308,19 @@ function makeCard(title, value, sub = '', subClass = '') {
        + '</div>';
 }
 
+// Clickable KPI card (Lead Reactivation Part 2) — same look as makeCard but
+// wired to applyLeadKpiFilter(key) on click/Enter/Space, keyboard accessible.
+function makeKpiCard(key, title, value, sub = '', subClass = '') {
+  return '<div class="card kpi-card" data-kpi="' + key + '" tabindex="0" role="button" '
+       + 'aria-pressed="false" aria-label="Filter leads by ' + title + '" '
+       + 'onclick="applyLeadKpiFilter(\'' + key + '\')" '
+       + 'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();applyLeadKpiFilter(\'' + key + '\')}">'
+       + '<div class="card-title">' + title + '</div>'
+       + '<div class="card-value">' + fmt(value) + '</div>'
+       + (sub ? '<div class="card-sub ' + subClass + '">' + sub + '</div>' : '')
+       + '</div>';
+}
+
 function makeScoreGauge(label, score, level, desc, next) {
   const color = SCORE_COLORS[level] || '#f59e0b';
   const pct   = Math.min(100, parseFloat(score) || 0);
@@ -1169,14 +1182,41 @@ function renderPlan() {
 // ── PAGE 5: Top Contacts ──────────────────────────────────────────────────────
 let contactSortMode = 'outreach'; // 'outreach' | 'base'
 
+// Preferred display order for Outreach Status — anything not listed here
+// (e.g. a future new status) is appended alphabetically at the end.
+const OUTREACH_STATUS_ORDER = [
+  'Needs Reply', 'Replied', 'Interview Pipeline', 'CV / Follow-up', 'Warm Lead',
+  'Follow-up Due', 'Pending Reply', 'Dormant', 'Ghosted', 'Auto-reply',
+  'Rejected', 'No Contact', 'No History',
+];
+
 function renderContacts() {
   const contacts = D.top_contacts || [];
   const personas = [...new Set(contacts.map(c => c.persona||''))].sort();
   const markets  = [...new Set(contacts.map(c => c.opportunity_market_v5 || c.market_v2 || c.strategic_market || ''))].sort();
   const pf = document.getElementById('ct-persona-filter');
   const mf = document.getElementById('ct-market-filter');
-  personas.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; pf && pf.appendChild(o); });
-  markets.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; mf && mf.appendChild(o); });
+  if (pf && pf.options.length <= 1) {
+    personas.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; pf.appendChild(o); });
+  }
+  if (mf && mf.options.length <= 1) {
+    markets.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; mf.appendChild(o); });
+  }
+
+  // Part 17 — Outreach Status filter, populated from ACTUAL outreach_status
+  // values present in the data (not a hardcoded/duplicate filter).
+  const of = document.getElementById('ct-outreach-filter');
+  if (of && of.options.length <= 1) {
+    const present = new Set(
+      contacts.map(c => c.outreach_status || (c.has_message_history ? 'Replied' : 'No History')).filter(Boolean)
+    );
+    const ordered = OUTREACH_STATUS_ORDER.filter(s => present.has(s));
+    const extra = [...present].filter(s => !OUTREACH_STATUS_ORDER.includes(s)).sort();
+    [...ordered, ...extra].forEach(s => {
+      const o = document.createElement('option'); o.value = s; o.textContent = s; of.appendChild(o);
+    });
+  }
+
   filteredContacts = [...contacts];
   _sortContacts();
   renderContactsTable();
@@ -1222,9 +1262,10 @@ window.applyContactFilters = function() {
     if (band === 'high'   && s < 70)           return false;
     if (band === 'medium' && (s < 40 || s >= 70)) return false;
     if (band === 'low'    && s >= 40)          return false;
-    if (outS === 'replied'   && !c.replied_to_me)     return false;
-    if (outS === 'ghosted'   && !c.ghosted_me)        return false;
-    if (outS === 'nohistory' && c.has_message_history) return false;
+    if (outS) {
+      const status = c.outreach_status || (c.has_message_history ? 'Replied' : 'No History');
+      if (status !== outS) return false;
+    }
     return true;
   });
   _sortContacts();
@@ -1515,19 +1556,19 @@ function renderLeads() {
   const sumEl = document.getElementById('leads-summary');
   if (sumEl) sumEl.innerHTML = [
     makeCard('Conversations Analyzed', lr.total_conversations || 0),
-    makeCard('Needs My Response', lr.needs_my_response || 0, 'reply first', 'bad'),
-    makeCard('This Week Queue',   lr.this_week_count   || 0, 'weekly action limit', 'warn'),
-    makeCard('Follow-ups Due',    lr.follow_up_due     || 0, '7-120d, positive signal'),
+    makeKpiCard('needs_response', 'Needs My Response', lr.needs_my_response || 0, 'reply first — click to filter', 'bad'),
+    makeKpiCard('this_week',      'This Week Queue',   lr.this_week_count   || 0, 'weekly action limit — click to filter', 'warn'),
+    makeKpiCard('follow_up_due',  'Follow-ups Due',    lr.follow_up_due     || 0, '7-120d, positive signal — click to filter'),
   ].join('');
 
   const pipeEl = document.getElementById('leads-pipeline');
   if (pipeEl) pipeEl.innerHTML = [
-    makeCard('Hot Reactivation',  lr.hot_reactivation_leads  || lr.hot_leads  || 0, 'needs response + positive signal', 'good'),
-    makeCard('Warm Reactivation', lr.warm_reactivation_leads || lr.warm_leads || 0, 'opportunity signals found', 'good'),
-    makeCard('Career Site',       lr.career_site_follow_ups  || 0, 'auto-reply → submit CV'),
-    makeCard('Dormant Warm',      lr.dormant_warm_leads      || 0, 'positive but >30d ago', 'warn'),
-    makeCard('Rejected / Closed', lr.rejected_closed_reusable || 0, 'reusable for future'),
-    makeCard('No Response',       lr.no_response_leads        || 0, 'sent, no reply'),
+    makeKpiCard('hot',         'Hot Reactivation',  lr.hot_reactivation_leads  || lr.hot_leads  || 0, 'needs response + positive signal', 'good'),
+    makeKpiCard('warm',        'Warm Reactivation', lr.warm_reactivation_leads || lr.warm_leads || 0, 'opportunity signals found', 'good'),
+    makeKpiCard('career_site', 'Career Site',       lr.career_site_follow_ups  || 0, 'auto-reply → submit CV'),
+    makeKpiCard('dormant',     'Dormant Warm',      lr.dormant_warm_leads      || 0, 'positive but >30d ago', 'warn'),
+    makeKpiCard('rejected',    'Rejected / Closed', lr.rejected_closed_reusable || 0, 'reusable for future'),
+    makeKpiCard('no_response', 'No Response',       lr.no_response_leads        || 0, 'sent, no reply'),
   ].join('');
 
   // ── This Week queue (shown first) ─────────────────────────────────────────
@@ -1677,6 +1718,8 @@ window.applyLeadFilters = function() {
     if (recOnly && !['Recruiter','Talent Acquisition','Sourcer','Hiring Manager','Engineering Manager'].includes(c.persona)) return false;
     return true;
   });
+  activeLeadKpi = null;
+  _updateActiveKpiCards();
   renderLeadsTable();
 };
 
@@ -1690,7 +1733,58 @@ window.resetLeadFilters = function() {
   const tw = document.getElementById('lead-this-week-only'); if (tw) tw.checked = false;
   const r  = document.getElementById('lead-recruiter-only'); if (r) r.checked = false;
   filteredLeads = (D.lead_reactivation || {}).top_reactivation_contacts || [];
+  activeLeadKpi = null;
+  _updateActiveKpiCards();
   renderLeadsTable();
+};
+
+// Part 2 — clickable Lead Reactivation KPI cards. Each key's predicate mirrors
+// EXACTLY the same definition the backend used to compute the number shown on
+// the card (see src/lead_reactivation_engine.py), so "Showing N" always
+// matches the card count it was clicked from.
+let activeLeadKpi = null;
+
+const LEAD_KPI_FILTERS = {
+  needs_response: { label: 'Needs My Response',
+    match: c => c.lead_category === 'Needs my response — Confirmed' || c.lead_category === 'Needs my response — Likely' },
+  hot:            { label: 'Hot Reactivation',
+    match: c => c.lead_category === 'Needs my response — Confirmed' || c.lead_category === 'Hot reactivation' },
+  warm:           { label: 'Warm Reactivation',    match: c => c.lead_category === 'Warm reactivation' },
+  career_site:    { label: 'Career Site',          match: c => c.lead_category === 'Career site follow-up' },
+  dormant:        { label: 'Dormant Warm',         match: c => c.lead_category === 'Dormant warm' },
+  rejected:       { label: 'Rejected / Closed',    match: c => c.conversation_status === 'Rejected / closed process' },
+  no_response:    { label: 'No Response',          match: c => c.lead_category === 'No response' },
+  follow_up_due:  { label: 'Follow-ups Due',       match: c => c.conversation_status === 'Follow-up due' },
+  this_week:      { label: 'This Week Queue',      match: null }, // special-cased below
+};
+
+function _updateActiveKpiCards() {
+  document.querySelectorAll('.kpi-card').forEach(el => {
+    const isActive = activeLeadKpi && el.getAttribute('data-kpi') === activeLeadKpi;
+    el.classList.toggle('active', !!isActive);
+    el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+}
+
+window.applyLeadKpiFilter = function(key) {
+  const def = LEAD_KPI_FILTERS[key];
+  if (!def) return;
+  const lr = D.lead_reactivation || {};
+  const source = lr.top_reactivation_contacts || [];
+
+  if (key === 'this_week') {
+    const ids = new Set((lr.this_week_contacts || []).map(c => c.other_person_profile_url || c.other_person_name));
+    filteredLeads = source.filter(c => ids.has(c.other_person_profile_url || c.other_person_name));
+  } else {
+    filteredLeads = source.filter(def.match);
+  }
+
+  activeLeadKpi = key;
+  _updateActiveKpiCards();
+  renderLeadsTable(def.label);
+
+  const table = document.getElementById('leads-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
 const NEEDS_RESPONSE_CONF_STYLE = {
@@ -1705,9 +1799,14 @@ function needsResponseBadge(conf) {
   return '<span style="' + style + ';padding:2px 6px;border-radius:4px;font-size:0.68rem;white-space:nowrap">' + (conf||'NONE') + '</span>';
 }
 
-function renderLeadsTable() {
+function renderLeadsTable(kpiLabel) {
   const st = document.getElementById('leads-stats');
-  if (st) st.textContent = 'Showing ' + filteredLeads.length + ' contacts';
+  if (st) {
+    const total = ((D.lead_reactivation || {}).top_reactivation_contacts || []).length;
+    const label = kpiLabel || (activeLeadKpi && LEAD_KPI_FILTERS[activeLeadKpi] ? LEAD_KPI_FILTERS[activeLeadKpi].label : '');
+    st.textContent = 'Showing ' + filteredLeads.length + ' of ' + total + ' matching contacts'
+      + (label ? ' — ' + label : '');
+  }
   const tbody = document.getElementById('leads-tbody');
   if (!tbody) return;
   if (!filteredLeads.length) {
@@ -1771,10 +1870,13 @@ function renderQuality() {
     ].join('');
   }
 
-  // Resolution method breakdown (Part 15) — how every contact got its bucket
+  // Resolution method breakdown (Part 15/16) — how every contact got its bucket.
+  // V7 runs after V6 and its breakdown reflects the final state; fall back to
+  // V6 only if V7 hasn't run yet (e.g. an older cached JSON).
+  const v7 = D.company_resolution_v7 || {};
   const methodTbody = document.getElementById('quality-method-tbody');
   if (methodTbody) {
-    const breakdown = (D.company_resolution_v6 || {}).resolution_method_breakdown || {};
+    const breakdown = v7.resolution_method_breakdown || (D.company_resolution_v6 || {}).resolution_method_breakdown || {};
     const entries = Object.entries(breakdown).sort((a, b) => b[1] - a[1]);
     const grand = entries.reduce((s, [, v]) => s + v, 0) || total || 1;
     if (!entries.length) {
@@ -1788,6 +1890,34 @@ function renderQuality() {
           + '<td>' + pct + '%' + scoreBar(count, grand, '#3b82f6') + '</td>'
           + '</tr>';
       }).join('');
+    }
+  }
+
+  // Residual Mapping Pareto (Part 15/16) — where manual mapping has the highest ROI
+  const paretoSumEl = document.getElementById('quality-pareto-summary');
+  if (paretoSumEl) paretoSumEl.innerHTML = [
+    makeCard('Unique Unresolved Companies', v7.pareto_unique_unresolved_companies || 0),
+    makeCard('Top 10 Coverage',  (v7.pareto_top10_coverage_pct  || 0) + '%', 'of unresolved contacts'),
+    makeCard('Top 25 Coverage',  (v7.pareto_top25_coverage_pct  || 0) + '%', 'of unresolved contacts'),
+    makeCard('Top 50 Coverage',  (v7.pareto_top50_coverage_pct  || 0) + '%', 'of unresolved contacts'),
+    makeCard('Top 100 Coverage', (v7.pareto_top100_coverage_pct || 0) + '%', 'of unresolved contacts'),
+  ].join('');
+  const paretoTbody = document.getElementById('quality-pareto-tbody');
+  if (paretoTbody) {
+    const rows = v7.pareto_top20 || [];
+    if (!rows.length) {
+      paretoTbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">See outputs/company_mapping_pareto_v7.csv for the full ranked backlog.</td></tr>';
+    } else {
+      paretoTbody.innerHTML = rows.map(r => '<tr>'
+        + '<td>' + (r.rank||'—') + '</td>'
+        + '<td>' + (r.company_canonical||'—') + '</td>'
+        + '<td>' + (r.unresolved_contact_count||0) + '</td>'
+        + '<td>' + (r.cumulative_pct_of_unresolved||0) + '%</td>'
+        + '<td>' + (r.talent_acquisition||0) + '</td>'
+        + '<td>' + (r.data_leaders||0) + '</td>'
+        + '<td>' + (r.avg_priority_score||0) + '</td>'
+        + '<td style="font-size:0.72rem">' + (r.suggested_bucket||'—') + '</td>'
+        + '</tr>').join('');
     }
   }
 

@@ -593,15 +593,35 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Company Resolution V6 failed (non-fatal): {exc}")
 
-    # Recompute the V5 summary + audit AFTER V6 so every dashboard card (Overview,
-    # Opportunity Market, Data Quality) reflects the honest post-V6 state instead
-    # of the stale pre-V6 "Needs Company Mapping" count.
+    # 2e. Company Resolution V7 (iterative multi-pass fixpoint: fuzzy company
+    # clustering, company-level aggregate message evidence, persona/role cohort
+    # fallback, re-run until no more rows change or 10 iterations). Works the
+    # residual V6 left at NEEDS_COMPANY_MAPPING harder — still no fabricated
+    # geography.
+    logger.info("Step 2e/8: Applying Company Resolution V7 …")
+    company_resolution_v7_summary = {}
+    try:
+        from src.company_resolution_v7 import apply_company_resolution_v7
+        df, company_resolution_v7_summary = apply_company_resolution_v7(df, v6_summary=company_resolution_v6_summary)
+        logger.info(
+            f"  V7 mapping: Needs Company Mapping "
+            f"{company_resolution_v7_summary.get('before_unresolved', 0):,} -> "
+            f"{company_resolution_v7_summary.get('after_unresolved', 0):,} "
+            f"({company_resolution_v7_summary.get('needs_mapping_pct_before', 0)}% -> "
+            f"{company_resolution_v7_summary.get('needs_mapping_pct_after', 0)}% of network)"
+        )
+    except Exception as exc:
+        logger.warning(f"  Company Resolution V7 failed (non-fatal): {exc}")
+
+    # Recompute the V5 summary + audit AFTER V6+V7 so every dashboard card
+    # (Overview, Opportunity Market, Data Quality) reflects the honest final
+    # state instead of the stale pre-resolution "Needs Company Mapping" count.
     try:
         from src.opportunity_market_v5 import build_v5_summary, export_v5_audit
         v5_data = build_v5_summary(df)
         export_v5_audit(df)
     except Exception as exc:
-        logger.warning(f"  V5 summary/audit refresh after V6 failed (non-fatal): {exc}")
+        logger.warning(f"  V5 summary/audit refresh after V6/V7 failed (non-fatal): {exc}")
         v5_data = locals().get("v5_data_pre_v6", {})
 
     _save_csv(df, ENRICHED_CSV, "Enriched Connections")
@@ -682,6 +702,7 @@ def run_strategy_layer() -> None:
             df, kpis, gap_mat, plan_30, plan_60, plan_90, resolution_data,
             lead_data=lead_data, v5_data=v5_data, outreach_scores=outreach_scores,
             company_resolution_v6_data=company_resolution_v6_summary,
+            company_resolution_v7_data=company_resolution_v7_summary,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

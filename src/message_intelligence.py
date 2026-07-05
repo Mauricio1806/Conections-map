@@ -38,7 +38,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.message_sanitizer import sanitize_excerpt, strip_html
+from src.message_sanitizer import strip_html
 
 logger = logging.getLogger(__name__)
 
@@ -824,8 +824,6 @@ def build_conversation_intelligence(
             import datetime as _dt
             follow_up_date = str(last_date.date() + _dt.timedelta(days=7))
 
-        last_content = group.iloc[-1].get("content", "") or ""
-        excerpt = sanitize_excerpt(last_content, max_len=120)
 
         reactivation_score = _compute_reactivation_score(
             days_since        = days_since if days_since < 9999 else 9999,
@@ -866,7 +864,6 @@ def build_conversation_intelligence(
             "follow_up_due_date":            follow_up_date,
             "reactivation_priority_score":   reactivation_score,
             "message_angle":                 angle,
-            "sanitized_last_message_excerpt": excerpt,
             "connection_priority_score":     priority_score,
             # V6 response intelligence (Parts 1-5) — sanitized, no raw content
             "needs_my_response":             resp_intel["needs_my_response"],

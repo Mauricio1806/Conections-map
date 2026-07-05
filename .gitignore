@@ -51,6 +51,27 @@ data/raw/Messages.csv
 # reports/*.xlsx
 # reports/*.md
 
+# ─── Message-derived outputs — local/private, never committed ────────────────
+# These are built from messages.csv (private, gitignored above). They used to
+# carry a "sanitized_last_message_excerpt" column that only redacted email/
+# phone patterns and still embedded real conversation text — that field has
+# been removed from the generator, but these files stay untracked going
+# forward as defense in depth (per the "no raw messages" rule).
+outputs/message_threads_summary.csv
+outputs/recruiter_conversation_history.csv
+outputs/lead_reactivation_backlog.csv
+outputs/lead_reactivation_this_week.csv
+outputs/lead_reactivation_hot.csv
+outputs/lead_reactivation_warm.csv
+outputs/lead_reactivation_career_site.csv
+outputs/lead_reactivation_ignore.csv
+outputs/follow_up_due.csv
+outputs/warm_leads.csv
+outputs/dormant_leads.csv
+outputs/rejected_or_closed_leads.csv
+outputs/no_response_leads.csv
+outputs/message_review_queue.csv
+
 # ─── Logs ─────────────────────────────────────────────────────────────────────
 *.log
 logs/

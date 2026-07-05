@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783206036">
+  <link rel="stylesheet" href="./assets/style.css?v=1783209863">
 </head>
 <body>
 
@@ -302,13 +302,8 @@
             <option value="low">Low (&lt;40)</option>
           </select>
         </div>
-        <div class="filter-group"><label>Outreach</label>
-          <select id="ct-outreach-filter">
-            <option value="">All</option>
-            <option value="replied">Replied to me</option>
-            <option value="ghosted">Ghosted me</option>
-            <option value="nohistory">No message history</option>
-          </select>
+        <div class="filter-group"><label>Outreach Status</label>
+          <select id="ct-outreach-filter"><option value="">All</option></select>
         </div>
         <button class="btn-primary" onclick="applyContactFilters()">Apply</button>
         <button class="btn-ghost" onclick="resetContactFilters()">Reset</button>
@@ -608,11 +603,23 @@
       <div class="section-label">Section A — Business Classification Quality (Opportunity Bucket V5)</div>
       <div class="metrics-grid metrics-grid-wide" id="quality-metrics-a"></div>
 
-      <div class="section-label">Resolution Method Breakdown (V6 — how contacts got their bucket)</div>
+      <div class="section-label">Resolution Method Breakdown V7 (how every contact got its bucket)</div>
       <div class="table-wrap">
         <table id="quality-method-table">
           <thead><tr><th>Method</th><th>Contacts</th><th>Share</th></tr></thead>
           <tbody id="quality-method-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-label">Residual Mapping Pareto — where manual mapping has the highest ROI</div>
+      <div class="metrics-grid" id="quality-pareto-summary"></div>
+      <div class="table-wrap">
+        <table id="quality-pareto-table">
+          <thead><tr>
+            <th>#</th><th>Company</th><th>Unresolved</th><th>Cumulative %</th>
+            <th>TA/Recruiters</th><th>Data Leaders</th><th>Avg Priority</th><th>Suggested Bucket</th>
+          </tr></thead>
+          <tbody id="quality-pareto-tbody"></tbody>
         </table>
       </div>
 
@@ -649,8 +656,9 @@
         </table>
         <div style="margin-top:1.2rem;font-size:0.85rem;color:var(--text-muted);line-height:1.7">
           <p><strong>To improve Needs Company Mapping:</strong></p>
-          <p>Open <code>outputs/company_mapping_backlog_v6.csv</code> (post cross-contact/message/persona resolution) &rarr;
-          add entries to <code>config/company_market_overrides.yml</code> &rarr;
+          <p>Open <code>outputs/company_mapping_pareto_v7.csv</code> (ranked by highest-ROI first — mapping the
+          top few companies clears the largest share of the residual) or <code>outputs/company_mapping_residual_v7.csv</code>
+          (full backlog) &rarr; add entries to <code>config/company_market_overrides.yml</code> &rarr;
           re-run pipeline. Each company you map resolves all its connections.</p>
         </div>
       </div>
@@ -662,6 +670,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783206036"></script>
+<script src="./assets/app.js?v=1783209863"></script>
 </body>
 </html>

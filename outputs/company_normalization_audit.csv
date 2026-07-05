@@ -66,7 +66,7 @@ ABN Paletes,LANGUAGE_PORTUGUESE_MARKET,0.65,abn paletes
 ABPMP Brasil,BRAZIL_CONFIRMED,0.85,abpmp
 ABTEC Associação Brasileira de Educação e Tecnologia (FIAP),BRAZIL_CONFIRMED,0.85,abtec associação brasileira de educação e tecnologia (fiap)
 ACE Money Transfer,GLOBAL_CONSULTING,0.9,ace money transfer
-ACHS,NEEDS_COMPANY_MAPPING,0.4,achs
+ACHS,LATAM_USD_LIKELY,0.7,achs
 ACL,LANGUAGE_PORTUGUESE_MARKET,0.65,acl
 ACR Safety on Lifting & Handling,LANGUAGE_PORTUGUESE_MARKET,0.65,acr safety on lifting & handling
 ACS Professional Staffing,GLOBAL_STAFFING,0.9,acs professional staffing
@@ -260,7 +260,7 @@ Ademicon,LANGUAGE_PORTUGUESE_MARKET,0.65,ademicon
 Aden,NEEDS_COMPANY_MAPPING,0.4,aden
 Adentis Portugal,SPAIN_EU_CONFIRMED,0.85,adentis portugal
 Aditi Consulting,GLOBAL_CONSULTING,0.9,aditi
-Adium,NEEDS_COMPANY_MAPPING,0.4,adium
+Adium,LATAM_USD_LIKELY,0.66,adium
 Adler Consulting,GLOBAL_CONSULTING,0.9,adler
 Adlerqa Technologies Pvt Ltd,GLOBAL_TECH,0.75,adlerqa pvt
 Adm Moveis E Design,NEEDS_COMPANY_MAPPING,0.4,adm moveis e design
