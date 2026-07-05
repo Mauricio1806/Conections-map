@@ -1,0 +1,107 @@
+name: Deploy Static Network Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            pip-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # docs/assets/dashboard_data.json is generated LOCALLY (with the private
+      # messages.csv) and committed. This job only validates the already-
+      # committed static site — it never regenerates it, so it cannot wipe
+      # Lead Reactivation data (messages.csv is absent in CI on purpose).
+      - name: Verify required static site files exist
+        run: |
+          echo "Verifying committed static site files..."
+          test -f docs/index.html                 && echo "[OK] docs/index.html"                 || { echo "[FAIL] docs/index.html missing";                 exit 1; }
+          test -f docs/assets/app.js               && echo "[OK] docs/assets/app.js"               || { echo "[FAIL] docs/assets/app.js missing";               exit 1; }
+          test -f docs/assets/style.css            && echo "[OK] docs/assets/style.css"            || { echo "[FAIL] docs/assets/style.css missing";            exit 1; }
+          test -f docs/assets/dashboard_data.json  && echo "[OK] docs/assets/dashboard_data.json"  || { echo "[FAIL] docs/assets/dashboard_data.json missing";  exit 1; }
+          echo "All required static site files present."
+
+      - name: Run Privacy Check
+        run: python src/privacy_check.py
+
+      - name: Run Runtime Validation
+        run: python src/validate_static_dashboard_runtime.py
+
+      - name: Validate dashboard_data.json parses
+        run: |
+          python -c "
+          import json
+          with open('docs/assets/dashboard_data.json', encoding='utf-8') as f:
+              json.load(f)
+          print('[OK] dashboard_data.json is valid JSON')
+          "
+
+      - name: Deployment diagnostics
+        run: |
+          echo "Commit SHA:        ${{ github.sha }}"
+          echo "docs/ file count:  $(find docs -type f | wc -l)"
+          echo "docs/ total size:  $(du -sh docs | cut -f1)"
+          echo "index.html size:   $(du -h docs/index.html | cut -f1)"
+          echo "dashboard_data.json size: $(du -h docs/assets/dashboard_data.json | cut -f1)"
+          if [ ! -s docs/index.html ]; then echo "[FAIL] docs/index.html missing/empty"; exit 1; fi
+          if [ ! -s docs/assets/dashboard_data.json ]; then echo "[FAIL] docs/assets/dashboard_data.json missing/empty"; exit 1; fi
+          if [ -z "$(ls -A docs)" ]; then echo "[FAIL] docs directory empty"; exit 1; fi
+          echo "[OK] Deployment diagnostics passed."
+
+      - name: Ensure .nojekyll exists
+        run: |
+          test -f docs/.nojekyll && echo "[OK] docs/.nojekyll present" || { echo "[FAIL] docs/.nojekyll missing"; exit 1; }
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload docs/ as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
