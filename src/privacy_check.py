@@ -11,6 +11,7 @@ Run after generate_static_dashboard.py:
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -20,6 +21,40 @@ if hasattr(sys.stdout, "buffer"):
 
 ROOT      = Path(__file__).resolve().parent.parent
 JSON_PATH = ROOT / "docs" / "assets" / "dashboard_data.json"
+
+# ─── Part 18 (weekly snapshot refresh) — raw snapshot/export tracking check ───
+# Root-level raw LinkedIn export filenames that must never be committed.
+ROOT_RAW_EXPORT_NAMES = {
+    "connections.csv", "invitations.csv", "company follows.csv",
+    "messages.csv",
+}
+# Dated weekly snapshot folders (DD-MM or YYYY-MM-DD), root-anchored only —
+# matches src/weekly_snapshot_refresh.py's own folder convention.
+SNAPSHOT_DIR_RE = re.compile(r"^(?:\d{2}-\d{2}|\d{4}-\d{2}-\d{2})/")
+
+
+def check_no_tracked_raw_snapshots() -> list[str]:
+    """Assert `git ls-files` contains no raw LinkedIn export or dated snapshot
+    folder. Returns a list of violations (empty = clean)."""
+    try:
+        out = subprocess.run(
+            ["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True,
+        ).stdout
+    except Exception as e:
+        return [f"Could not run 'git ls-files' to check tracked files: {e}"]
+
+    violations = []
+    for path in out.splitlines():
+        p = path.strip()
+        if not p:
+            continue
+        name_lower = p.lower()
+        # Root-level raw export (no directory separator before the filename)
+        if "/" not in p and name_lower in ROOT_RAW_EXPORT_NAMES:
+            violations.append(f"Raw LinkedIn export is tracked at repo root: {p}")
+        elif SNAPSHOT_DIR_RE.match(p):
+            violations.append(f"File inside a dated snapshot folder is tracked: {p}")
+    return violations
 
 # Exact field names that must NOT appear in any contact record
 FORBIDDEN_FIELDS = {
@@ -151,6 +186,12 @@ def main():
     print("=" * 60)
 
     violations = check_json(JSON_PATH)
+
+    snapshot_violations = check_no_tracked_raw_snapshots()
+    if snapshot_violations:
+        violations = violations + snapshot_violations
+    else:
+        print("  [OK] No raw LinkedIn export or dated snapshot folder is tracked in git.")
 
     if violations:
         print(f"\n  [FAIL] {len(violations)} violation(s) found:\n")

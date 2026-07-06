@@ -217,6 +217,7 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Opportunity', renderUnknownResolution);
       safeRender('Leads',       renderLeads);
       safeRender('Quality',     renderQuality);
+      safeRender('Weekly',      renderWeekly);
     })
     .catch(err => {
       booted = true;
@@ -1963,4 +1964,107 @@ function renderQuality() {
       doughnutChart('chart-mkt-type', ls, vs, cs.slice(0, ls.length));
     }
   }
+}
+
+// ── PAGE 10: Weekly Evolution ─────────────────────────────────────────────────
+function _deltaSub(n, positiveIsGood = true) {
+  if (n === null || n === undefined) return { text: 'not tracked yet', cls: '' };
+  const v = parseFloat(n) || 0;
+  const sign = v > 0 ? '+' : '';
+  const cls = v === 0 ? '' : (v > 0) === positiveIsGood ? 'good' : 'bad';
+  return { text: sign + v.toLocaleString() + ' vs previous', cls };
+}
+
+function renderWeekly() {
+  const we = D.weekly_evolution || {};
+  const noData = document.getElementById('weekly-no-data');
+  const mainContent = document.getElementById('weekly-main-content');
+
+  if (!we || !we.network_growth) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  const labelEl = document.getElementById('weekly-snapshot-label');
+  if (labelEl) labelEl.textContent =
+    'Current Snapshot: ' + (we.current_snapshot_label || '—') +
+    '   |   Previous Snapshot: ' + (we.previous_snapshot_label || '—');
+
+  // A. Network Growth
+  const ng = we.network_growth || {};
+  const ngEl = document.getElementById('weekly-network-growth');
+  if (ngEl) ngEl.innerHTML = [
+    makeCard('Previous Connections', ng.previous_connections || 0),
+    makeCard('Current Connections',  ng.current_connections  || 0),
+    makeCard('Net Growth', (parseFloat(ng.net_growth) >= 0 ? '+' : '') + (ng.net_growth || 0), '', parseFloat(ng.net_growth) >= 0 ? 'good' : 'bad'),
+    makeCard('New Connections', ng.new_connections || 0, 'added this week', 'good'),
+  ].join('');
+
+  // B. Strategic Growth
+  const sg = we.strategic_growth || {};
+  const sgEl = document.getElementById('weekly-strategic-growth');
+  if (sgEl) sgEl.innerHTML = [
+    makeCard('New Recruiters', sg.new_recruiters || 0, _deltaSub(sg.new_recruiters).text),
+    makeCard('New Talent Acquisition', sg.new_talent_acquisition || 0, _deltaSub(sg.new_talent_acquisition).text),
+    makeCard('New Hiring Managers', sg.new_hiring_managers || 0, _deltaSub(sg.new_hiring_managers).text),
+    makeCard('New Data Leaders', sg.new_data_leaders || 0, _deltaSub(sg.new_data_leaders).text),
+  ].join('');
+
+  // C. Market / Opportunity Movement
+  const mm = we.market_movement || {};
+  const mmEl = document.getElementById('weekly-market-movement');
+  if (mmEl) mmEl.innerHTML = [
+    makeCard('LATAM/USD Δ', mm.latam_usd_delta || 0, _deltaSub(mm.latam_usd_delta).text, _deltaSub(mm.latam_usd_delta).cls),
+    makeCard('US/Canada Nearshore Δ', mm.us_canada_nearshore_delta || 0, _deltaSub(mm.us_canada_nearshore_delta).text, _deltaSub(mm.us_canada_nearshore_delta).cls),
+    makeCard('Spain/EU Δ', mm.spain_eu_delta || 0, _deltaSub(mm.spain_eu_delta).text, _deltaSub(mm.spain_eu_delta).cls),
+    makeCard('Global Opportunity Δ', mm.global_opportunity_delta || 0, _deltaSub(mm.global_opportunity_delta).text, _deltaSub(mm.global_opportunity_delta).cls),
+    makeCard('Needs Mapping Δ', mm.needs_mapping_delta || 0, _deltaSub(mm.needs_mapping_delta, false).text, _deltaSub(mm.needs_mapping_delta, false).cls),
+  ].join('');
+
+  // D. Lead Pipeline Movement
+  const lp = we.lead_pipeline_movement || {};
+  const lpEl = document.getElementById('weekly-lead-pipeline');
+  if (lpEl) lpEl.innerHTML = [
+    makeCard('Needs My Response Δ', lp.needs_my_response_delta ?? 0, _deltaSub(lp.needs_my_response_delta, false).text, _deltaSub(lp.needs_my_response_delta, false).cls),
+    makeCard('Hot Leads Δ', lp.hot_leads_delta ?? 0, _deltaSub(lp.hot_leads_delta).text, _deltaSub(lp.hot_leads_delta).cls),
+    makeCard('Warm Leads Δ', lp.warm_leads_delta ?? 0, _deltaSub(lp.warm_leads_delta).text, _deltaSub(lp.warm_leads_delta).cls),
+    makeCard('Follow-ups Due Δ', lp.follow_ups_due_delta ?? 0, _deltaSub(lp.follow_ups_due_delta, false).text, _deltaSub(lp.follow_ups_due_delta, false).cls),
+    makeCard('Interview Pipeline Δ', lp.interview_pipeline_delta ?? '—', _deltaSub(lp.interview_pipeline_delta).text, _deltaSub(lp.interview_pipeline_delta).cls),
+  ].join('');
+
+  // E. New High-Value Connections (sanitized — name/company/persona/bucket/score/public URL only)
+  const tbody = document.getElementById('weekly-new-contacts-tbody');
+  if (tbody) {
+    const rows = we.new_high_value_connections || [];
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No new connections this week.</td></tr>';
+    } else {
+      tbody.innerHTML = rows.map(r => {
+        const url = r.url || '';
+        const score = parseInt(r.priority_score) || 0;
+        const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+        return '<tr>'
+          + '<td style="white-space:nowrap">' + ((r.first_name||'') + ' ' + (r.last_name||'')).trim() + '</td>'
+          + '<td style="white-space:nowrap">' + (r.company||'—') + '</td>'
+          + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
+          + '<td>' + marketBadge(r.opportunity_bucket||'UNKNOWN') + '</td>'
+          + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+          + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+  }
+
+  // F. Weekly Diagnosis
+  const diagEl = document.getElementById('weekly-diagnosis-card');
+  const diag = we.diagnosis || {};
+  if (diagEl) diagEl.innerHTML = [
+    '<p><strong>Strongest growth area:</strong> ' + (diag.strongest_growth_area || '—') + '</p>',
+    '<p><strong>Weakest strategic area:</strong> ' + (diag.weakest_strategic_area || '—') + '</p>',
+    '<p><strong>90/10 allocation check:</strong> ' + (diag.allocation_90_10_note || '—') + '</p>',
+    '<p><strong>Highest-value next action:</strong> ' + (diag.highest_value_next_action || '—') + '</p>',
+  ].join('');
 }

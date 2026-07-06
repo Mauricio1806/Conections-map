@@ -1,0 +1,27 @@
+{
+  "snapshots": [
+    {
+      "snapshot_id": "snap-2026-07-05",
+      "snapshot_date": "2026-07-05",
+      "folder": "05-07",
+      "ingested_at": "2026-07-05T21:39:07",
+      "connections_rows": 10971,
+      "invitations_rows": 5475,
+      "messages_rows": 6662,
+      "company_follows_rows": 199,
+      "schema_hashes": {
+        "connections": "21a0ae310c07",
+        "invitations": "df23d51f73dd",
+        "messages": "d196d0cc912f",
+        "company_follows": "cf462610629b"
+      },
+      "file_hashes": {
+        "connections": "0549c61997c5bcbd",
+        "invitations": "5aa898057e0de530",
+        "messages": "06b9f4a411e05c9b",
+        "company_follows": "be659d93a988f995"
+      },
+      "previous_snapshot_id": "snap-2026-05-28"
+    }
+  ]
+}

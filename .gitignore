@@ -30,13 +30,32 @@ Thumbs.db
 *.ipynb
 
 # ─── Raw LinkedIn data ────────────────────────────────────────────────────────
-# WARNING: Do NOT commit raw LinkedIn exports if this repo is public.
-# They may contain personal data, email addresses, and profile URLs.
-# Connections.csv
-# "Company Follows.csv"
-# Invitations.csv
+# WARNING: Do NOT commit raw LinkedIn exports — this repo is public.
+# They contain personal data, real email addresses, and profile URLs.
+# (These were previously tracked at the project root and removed — see commit
+# history. They are NOT purged from old commits; that is a separate, deliberate
+# git-history rewrite decision, not done automatically here.)
+/Connections.csv
+/Connections
+/connections.csv
+/Company Follows.csv
+/company_follows.csv
+/Invitations.csv
+/invitations.csv
 data/raw/*.csv
 data/raw/*.CSV
+
+# ─── Weekly snapshot folders — raw LinkedIn exports, NEVER commit ────────────
+# Root-anchored so this only matches dated snapshot folders created by
+# src/weekly_snapshot_refresh.py (DD-MM or YYYY-MM-DD), not any similarly
+# named directory that might legitimately exist elsewhere in the tree.
+/[0-9][0-9]-[0-9][0-9]/
+/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
+
+# Local scratch/stash data (e.g. previous-snapshot baselines used only for
+# computing weekly deltas) — never committed.
+data/processed/*
+!data/processed/.gitkeep
 
 # ─── Private message data — NEVER commit ──────────────────────────────────────
 messages.csv

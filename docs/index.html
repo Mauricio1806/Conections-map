@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783209863">
+  <link rel="stylesheet" href="./assets/style.css?v=1783299311">
 </head>
 <body>
 
@@ -63,6 +63,9 @@
     </div>
 
     <div class="nav-group-label">Intelligence</div>
+    <div class="nav-item" data-page="weekly">
+      <span class="nav-icon">&#128197;</span> Weekly Evolution
+    </div>
     <div class="nav-item" data-page="companies">
       <span class="nav-icon">&#127970;</span> Company Intel
     </div>
@@ -666,10 +669,53 @@
       <div id="quality-metrics" style="display:none"></div>
     </div>
 
+    <!-- PAGE: Weekly Evolution -->
+    <div class="page" id="page-weekly">
+      <div class="page-header">
+        <h2>Weekly Evolution</h2>
+        <p id="weekly-snapshot-label">Current Snapshot: — &nbsp;|&nbsp; Previous Snapshot: —</p>
+      </div>
+
+      <div id="weekly-no-data" style="display:none">
+        <div class="alert alert-info">
+          <span class="alert-icon">&#128197;</span>
+          <span><strong>No weekly evolution data yet.</strong> Run <code>python src/weekly_snapshot_refresh.py --snapshot-folder "DD-MM" --snapshot-date "YYYY-MM-DD"</code>
+          followed by the usual pipeline to populate this page.</span>
+        </div>
+      </div>
+
+      <div id="weekly-main-content">
+        <div class="section-label">A. Network Growth</div>
+        <div class="metrics-grid" id="weekly-network-growth"></div>
+
+        <div class="section-label">B. Strategic Growth (new contacts this week)</div>
+        <div class="metrics-grid" id="weekly-strategic-growth"></div>
+
+        <div class="section-label">C. Market / Opportunity Movement</div>
+        <div class="metrics-grid" id="weekly-market-movement"></div>
+
+        <div class="section-label">D. Lead Pipeline Movement</div>
+        <div class="metrics-grid" id="weekly-lead-pipeline"></div>
+
+        <div class="section-label">E. New High-Value Connections This Week</div>
+        <div class="table-wrap">
+          <table id="weekly-new-contacts-table">
+            <thead><tr>
+              <th>Name</th><th>Company</th><th>Persona</th><th>Opportunity Bucket</th><th>Score</th><th>LinkedIn</th>
+            </tr></thead>
+            <tbody id="weekly-new-contacts-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-label">F. Weekly Diagnosis</div>
+        <div class="card" id="weekly-diagnosis-card" style="padding:1.5rem"></div>
+      </div>
+    </div>
+
   </main>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783209863"></script>
+<script src="./assets/app.js?v=1783299311"></script>
 </body>
 </html>

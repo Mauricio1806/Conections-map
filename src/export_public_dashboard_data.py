@@ -443,6 +443,15 @@ def export_public_dashboard_data(
         "action_plan_60":     plan_60.to_dict(orient="records"),
         "action_plan_90":     plan_90.to_dict(orient="records"),
         "top_contacts":                build_public_contacts(df, n=200, outreach_scores=outreach_scores),
+        # Full-network outreach status aggregate (sanitized counts only) — persisted
+        # so next week's weekly_kpi_delta.py can compute a real Interview Pipeline /
+        # ghosted / replied delta instead of only ever seeing the top-200 slice.
+        "outreach_summary": {
+            "total_scored":            len(outreach_scores or {}),
+            "ghosted_count":           sum(1 for v in (outreach_scores or {}).values() if v.get("ghosted_me")),
+            "replied_count":           sum(1 for v in (outreach_scores or {}).values() if v.get("replied_to_me")),
+            "interview_pipeline_count":sum(1 for v in (outreach_scores or {}).values() if v.get("outreach_status") == "Interview Pipeline"),
+        },
         "company_intel":               build_public_company_intel(df),
         "unknown_companies":           build_unknown_companies_public(df),
         "unknown_resolution":          resolution_data or {},
