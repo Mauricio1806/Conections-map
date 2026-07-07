@@ -1218,30 +1218,54 @@ function renderContacts() {
     });
   }
 
+  // V8 (Part 14) — Process State / Reply Obligation filters, populated from
+  // actual values present in the data.
+  const psf = document.getElementById('ct-process-state-filter');
+  if (psf && psf.options.length <= 1) {
+    [...new Set(contacts.map(c => c.process_state).filter(Boolean))].sort().forEach(s => {
+      const o = document.createElement('option'); o.value = s; o.textContent = s.replace(/_/g, ' '); psf.appendChild(o);
+    });
+  }
+  const robf = document.getElementById('ct-reply-obligation-filter');
+  if (robf && robf.options.length <= 1) {
+    ['CONFIRMED', 'LIKELY', 'AMBIGUOUS', 'NONE'].forEach(s => {
+      if (contacts.some(c => c.reply_obligation === s)) {
+        const o = document.createElement('option'); o.value = s; o.textContent = s; robf.appendChild(o);
+      }
+    });
+  }
+
   filteredContacts = [...contacts];
   _sortContacts();
   renderContactsTable();
 }
 
 function _sortContacts() {
-  if (contactSortMode === 'outreach') {
-    filteredContacts.sort((a, b) =>
-      (parseFloat(b.outreach_adjusted_score ?? b.priority_score) || 0) -
-      (parseFloat(a.outreach_adjusted_score ?? a.priority_score) || 0)
-    );
+  if (contactSortMode === 'relvalue') {
+    filteredContacts.sort((a, b) => (parseFloat(b.relationship_value_score) || 0) - (parseFloat(a.relationship_value_score) || 0));
+  } else if (contactSortMode === 'base') {
+    filteredContacts.sort((a, b) => (parseFloat(b.priority_score) || 0) - (parseFloat(a.priority_score) || 0));
   } else {
-    filteredContacts.sort((a, b) =>
-      (parseFloat(b.priority_score) || 0) - (parseFloat(a.priority_score) || 0)
-    );
+    // Default (Part 14): Immediate Action descending, then Relationship Value
+    // descending — this is what prevents a recently-rejected high-value
+    // recruiter from outranking someone with a genuinely unresolved request.
+    filteredContacts.sort((a, b) => {
+      const aAction = parseFloat(a.immediate_action_score ?? a.outreach_adjusted_score ?? a.priority_score) || 0;
+      const bAction = parseFloat(b.immediate_action_score ?? b.outreach_adjusted_score ?? b.priority_score) || 0;
+      if (bAction !== aAction) return bAction - aAction;
+      return (parseFloat(b.relationship_value_score) || 0) - (parseFloat(a.relationship_value_score) || 0);
+    });
   }
 }
 
 window.setContactSort = function(mode) {
   contactSortMode = mode;
   const b1 = document.getElementById('ct-sort-outreach');
-  const b2 = document.getElementById('ct-sort-base');
+  const b2 = document.getElementById('ct-sort-relvalue');
+  const b3 = document.getElementById('ct-sort-base');
   if (b1) b1.classList.toggle('active', mode === 'outreach');
-  if (b2) b2.classList.toggle('active', mode === 'base');
+  if (b2) b2.classList.toggle('active', mode === 'relvalue');
+  if (b3) b3.classList.toggle('active', mode === 'base');
   _sortContacts();
   contactsPage = 1;
   renderContactsTable();
@@ -1253,10 +1277,15 @@ window.applyContactFilters = function() {
   const mkt    = document.getElementById('ct-market-filter')?.value  || '';
   const band   = document.getElementById('ct-band-filter')?.value    || '';
   const outS   = document.getElementById('ct-outreach-filter')?.value || '';
+  const procS  = document.getElementById('ct-process-state-filter')?.value || '';
+  const replyO = document.getElementById('ct-reply-obligation-filter')?.value || '';
+  const relBand = document.getElementById('ct-relvalue-band-filter')?.value || '';
+  const actBand = document.getElementById('ct-actionband-filter')?.value || '';
   filteredContacts = (D.top_contacts || []).filter(c => {
     const s  = parseFloat(c.priority_score) || 0;
-    const os = parseFloat(c.outreach_adjusted_score ?? s) || 0;
     const m  = c.opportunity_market_v5 || c.market_v2 || c.strategic_market || '';
+    const relV = parseFloat(c.relationship_value_score) || 0;
+    const actV = parseFloat(c.immediate_action_score) || 0;
     if (s < minS) return false;
     if (per && c.persona !== per) return false;
     if (mkt && m !== mkt) return false;
@@ -1267,6 +1296,14 @@ window.applyContactFilters = function() {
       const status = c.outreach_status || (c.has_message_history ? 'Replied' : 'No History');
       if (status !== outS) return false;
     }
+    if (procS && c.process_state !== procS) return false;
+    if (replyO && c.reply_obligation !== replyO) return false;
+    if (relBand === 'high'   && relV < 70)            return false;
+    if (relBand === 'medium' && (relV < 40 || relV >= 70)) return false;
+    if (relBand === 'low'    && relV >= 40)           return false;
+    if (actBand === 'high'   && actV < 60)            return false;
+    if (actBand === 'medium' && (actV < 30 || actV >= 60)) return false;
+    if (actBand === 'low'    && actV >= 30)           return false;
     return true;
   });
   _sortContacts();
@@ -1280,6 +1317,10 @@ window.resetContactFilters = function() {
   const mf = document.getElementById('ct-market-filter'); if (mf) mf.value = '';
   const bf = document.getElementById('ct-band-filter');   if (bf) bf.value = '';
   const of = document.getElementById('ct-outreach-filter');if (of) of.value = '';
+  const psf = document.getElementById('ct-process-state-filter'); if (psf) psf.value = '';
+  const robf = document.getElementById('ct-reply-obligation-filter'); if (robf) robf.value = '';
+  const rbf = document.getElementById('ct-relvalue-band-filter'); if (rbf) rbf.value = '';
+  const abf = document.getElementById('ct-actionband-filter'); if (abf) abf.value = '';
   filteredContacts = [...(D.top_contacts || [])];
   _sortContacts();
   contactsPage = 1;
@@ -1316,22 +1357,27 @@ function renderContactsTable() {
   if (!tbody) return;
   tbody.innerHTML = slice.map(c => {
     const baseS    = parseFloat(c.priority_score) || 0;
-    const adjS     = parseFloat(c.outreach_adjusted_score ?? baseS) || 0;
     const mkt      = c.opportunity_market_v5 || c.market_v2 || c.strategic_market || 'UNKNOWN';
     const url      = c.url || '';
-    const adjClass = adjS >= 70 ? 'score-high' : adjS >= 40 ? 'score-med' : 'score-low';
-    const baseClass= baseS >= 70 ? 'score-high' : baseS >= 40 ? 'score-med' : 'score-low';
     const daysAgo  = c.days_since_last_message != null ? c.days_since_last_message + 'd' : '—';
+    const relV     = c.relationship_value_score != null ? parseFloat(c.relationship_value_score) : null;
+    const actV     = c.immediate_action_score != null ? parseFloat(c.immediate_action_score) : null;
+    const relClass = relV == null ? '' : relV >= 70 ? 'score-high' : relV >= 40 ? 'score-med' : 'score-low';
+    const actClass  = actV == null ? '' : actV >= 60 ? 'score-high' : actV >= 30 ? 'score-med' : 'score-low';
+    const processState = c.process_state ? c.process_state.replace(/_/g, ' ') : '—';
     return '<tr>'
       + '<td style="white-space:nowrap">' + (c.full_name||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (c.company_clean||'—') + '</td>'
       + '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (c.position_clean||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (c.persona||'—') + '</td>'
       + '<td>' + marketBadge(mkt) + '</td>'
-      + '<td title="Outreach Adjusted Score"><span class="score-badge ' + adjClass + '">' + adjS.toFixed(0) + '</span></td>'
-      + '<td title="Base Network Score"><span class="score-badge ' + baseClass + '" style="opacity:.65">' + baseS.toFixed(0) + '</span></td>'
+      + '<td title="Relationship Value Score">' + (relV != null ? '<span class="score-badge ' + relClass + '">' + relV.toFixed(0) + '</span>' : '—') + '</td>'
+      + '<td title="Immediate Action Score">' + (actV != null ? '<span class="score-badge ' + actClass + '">' + actV.toFixed(0) + '</span>' : '—') + '</td>'
+      + '<td style="font-size:0.7rem;white-space:nowrap">' + processState + '</td>'
+      + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.reply_obligation||'—') + '</td>'
       + '<td>' + outreachBadge(c.outreach_status || (c.has_message_history ? 'Replied' : 'No History')) + '</td>'
       + '<td style="font-size:0.7rem;color:var(--text-muted)">' + daysAgo + '</td>'
+      + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.next_action_date||'—') + '</td>'
       + '<td style="white-space:normal;font-size:0.7rem;max-width:180px">' + ((c.outreach_reason || c.why_priority||'').substring(0,80)) + '</td>'
       + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
       + '</tr>';
@@ -1553,23 +1599,25 @@ function renderLeads() {
   if (noData) noData.style.display = 'none';
   if (mainContent) mainContent.style.display = '';
 
-  // ── Summary cards ─────────────────────────────────────────────────────────
+  // ── Summary cards (Part 15 — V8 conversation-state KPI cards) ──────────────
   const sumEl = document.getElementById('leads-summary');
   if (sumEl) sumEl.innerHTML = [
     makeCard('Conversations Analyzed', lr.total_conversations || 0),
-    makeKpiCard('needs_response', 'Needs My Response', lr.needs_my_response || 0, 'reply first — click to filter', 'bad'),
-    makeKpiCard('this_week',      'This Week Queue',   lr.this_week_count   || 0, 'weekly action limit — click to filter', 'warn'),
-    makeKpiCard('follow_up_due',  'Follow-ups Due',    lr.follow_up_due     || 0, '7-120d, positive signal — click to filter'),
+    makeKpiCard('needs_confirmed', 'Needs Reply — Confirmed', lr.needs_my_response_confirmed || 0, 'unresolved actionable request — click to filter', 'bad'),
+    makeKpiCard('needs_likely',    'Needs Reply — Likely',    lr.needs_my_response_likely    || 0, 'probable request — click to filter', 'warn'),
+    makeKpiCard('this_week',       'This Week Queue',         lr.this_week_count             || 0, 'weekly action limit — click to filter', 'warn'),
   ].join('');
 
   const pipeEl = document.getElementById('leads-pipeline');
   if (pipeEl) pipeEl.innerHTML = [
-    makeKpiCard('hot',         'Hot Reactivation',  lr.hot_reactivation_leads  || lr.hot_leads  || 0, 'needs response + positive signal', 'good'),
-    makeKpiCard('warm',        'Warm Reactivation', lr.warm_reactivation_leads || lr.warm_leads || 0, 'opportunity signals found', 'good'),
-    makeKpiCard('career_site', 'Career Site',       lr.career_site_follow_ups  || 0, 'auto-reply → submit CV'),
-    makeKpiCard('dormant',     'Dormant Warm',      lr.dormant_warm_leads      || 0, 'positive but >30d ago', 'warn'),
-    makeKpiCard('rejected',    'Rejected / Closed', lr.rejected_closed_reusable || 0, 'reusable for future'),
-    makeKpiCard('no_response', 'No Response',       lr.no_response_leads        || 0, 'sent, no reply'),
+    makeKpiCard('active_interview',   'Active Interview Pipeline', lr.active_interview_pipeline || 0, 'CV requested / interview step', 'good'),
+    makeKpiCard('awaiting_update',    'Awaiting Recruiter Update', lr.awaiting_recruiter_update  || 0, 'they promised an update'),
+    makeKpiCard('rejected',           'Rejected / Closed',         lr.rejected_closed            || 0, 'process closed — not urgent'),
+    makeKpiCard('location_blocked',   'Location / Eligibility Blocked', lr.location_eligibility_blocked || 0, 'geography/residency/work-auth constraint'),
+    makeKpiCard('talent_pool',        'Talent Pool / Career Site',  lr.talent_pool_career_site    || 0, 'external action, not a reply'),
+    makeKpiCard('dormant',            'Dormant Warm',               lr.dormant_warm_leads         || 0, 'warm but inactive', 'warn'),
+    makeKpiCard('no_response',        'No Response',                lr.no_response_leads          || 0, 'sent, no reply'),
+    makeKpiCard('reactivate_month',   'Reactivate This Month',      lr.reactivate_this_month      || 0, 'cooldown cleared — safe to reach out', 'good'),
   ].join('');
 
   // ── This Week queue (shown first) ─────────────────────────────────────────
@@ -1746,17 +1794,17 @@ window.resetLeadFilters = function() {
 let activeLeadKpi = null;
 
 const LEAD_KPI_FILTERS = {
-  needs_response: { label: 'Needs My Response',
-    match: c => c.lead_category === 'Needs my response — Confirmed' || c.lead_category === 'Needs my response — Likely' },
-  hot:            { label: 'Hot Reactivation',
-    match: c => c.lead_category === 'Needs my response — Confirmed' || c.lead_category === 'Hot reactivation' },
-  warm:           { label: 'Warm Reactivation',    match: c => c.lead_category === 'Warm reactivation' },
-  career_site:    { label: 'Career Site',          match: c => c.lead_category === 'Career site follow-up' },
-  dormant:        { label: 'Dormant Warm',         match: c => c.lead_category === 'Dormant warm' },
-  rejected:       { label: 'Rejected / Closed',    match: c => c.conversation_status === 'Rejected / closed process' },
-  no_response:    { label: 'No Response',          match: c => c.lead_category === 'No response' },
-  follow_up_due:  { label: 'Follow-ups Due',       match: c => c.conversation_status === 'Follow-up due' },
-  this_week:      { label: 'This Week Queue',      match: null }, // special-cased below
+  needs_confirmed: { label: 'Needs Reply — Confirmed', match: c => c.lead_category === 'Needs my response — Confirmed' },
+  needs_likely:    { label: 'Needs Reply — Likely',    match: c => c.lead_category === 'Needs my response — Likely' },
+  active_interview:{ label: 'Active Interview Pipeline', match: c => c.lead_category === 'Active Interview Pipeline' },
+  awaiting_update: { label: 'Awaiting Recruiter Update', match: c => c.lead_category === 'Awaiting Recruiter Update' },
+  rejected:        { label: 'Rejected / Closed',       match: c => c.lead_category === 'Rejected / Closed' },
+  location_blocked:{ label: 'Location / Eligibility Blocked', match: c => c.lead_category === 'Location / Eligibility Blocked' },
+  talent_pool:     { label: 'Talent Pool / Career Site', match: c => c.lead_category === 'Talent Pool / Career Site' },
+  dormant:         { label: 'Dormant Warm',            match: c => c.lead_category === 'Dormant warm' },
+  no_response:     { label: 'No Response',             match: c => c.lead_category === 'No response' },
+  reactivate_month:{ label: 'Reactivate This Month',   match: c => c.lead_category === 'Reactivate This Month' },
+  this_week:       { label: 'This Week Queue',         match: null }, // special-cased below
 };
 
 function _updateActiveKpiCards() {

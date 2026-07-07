@@ -65,9 +65,22 @@ def _norm_url(url: str) -> str:
 
 
 def _score_one(row: dict, base_score: float) -> tuple[int, str, str]:
-    """Return (outreach_adjusted_score, outreach_status, outreach_reason)."""
+    """
+    Return (outreach_adjusted_score, outreach_status, outreach_reason).
+
+    V8 (CLAUDE_MESSAGE_STATE_V8.md Part 12): outreach_adjusted_score is now
+    based PRIMARILY on immediate_action_score (the V8 engine's urgency score,
+    which already correctly discounts terminal/blocking states and resolved
+    requests) rather than the legacy conversation_status string — that field
+    only ever reflected a naive last-message check and is what caused a
+    recently-rejected-but-valuable recruiter to outrank someone with a
+    genuinely unresolved request. relationship_value_score is preserved
+    separately (not blended in) so a closed-but-valuable contact can show
+    HIGH relationship value + LOW immediate action, as intended.
+    Falls back to the pre-V8 legacy heuristic if immediate_action_score is
+    absent (e.g. a cached/older message_threads_summary.csv).
+    """
     status           = str(row.get("conversation_status", "") or "")
-    temperature      = str(row.get("lead_temperature", "") or "")
     persona          = str(row.get("persona", "") or "")
     has_positive     = bool(row.get("has_positive_signal", False))
     has_cv           = bool(row.get("has_cv_signal", False))
@@ -81,6 +94,70 @@ def _score_one(row: dict, base_score: float) -> tuple[int, str, str]:
     has_opp          = has_positive or has_cv or has_interview
     is_recruiter     = persona in RECRUITER_PERSONAS
     ghosted          = (last_sender == "me" and msgs_from_other == 0 and days_since >= 14)
+
+    process_state    = str(row.get("process_state", "") or "")
+    reply_obligation = str(row.get("reply_obligation", "") or "")
+    imm_score_raw    = row.get("immediate_action_score", None)
+    rel_score_raw    = row.get("relationship_value_score", None)
+    has_v8           = imm_score_raw not in (None, "", "nan")
+
+    if has_v8:
+        immediate_action_score   = int(float(imm_score_raw))
+        relationship_value_score = int(float(rel_score_raw)) if rel_score_raw not in (None, "", "nan") else 0
+        # outreach_adjusted_score = mostly immediate urgency, with a small
+        # relationship-value tiebreaker so two equally-urgent contacts still
+        # rank by how valuable the relationship is.
+        score = immediate_action_score * 0.75 + relationship_value_score * 0.25
+        score = max(0, min(100, int(score)))
+
+        is_rejection   = process_state == "REJECTED_CLOSED"
+        is_career_site = process_state in ("TALENT_POOL_REDIRECT", "CAREER_SITE_REDIRECT")
+        is_needs_reply = reply_obligation in ("CONFIRMED", "LIKELY")
+        is_dormant     = process_state in ("DORMANT_WARM", "WARM_RELATIONSHIP_NO_ACTIVE_ROLE")
+        is_blocked     = process_state in ("LOCATION_ELIGIBILITY_BLOCKED", "GEOGRAPHIC_HIRING_RESTRICTION", "WORK_AUTHORIZATION_BLOCKED")
+
+        if is_needs_reply:
+            out_status = "Needs Reply"
+        elif is_rejection:
+            out_status = "Rejected"
+        elif is_blocked:
+            out_status = "Location Blocked"
+        elif is_career_site:
+            out_status = "Auto-reply"
+        elif ghosted:
+            out_status = "Ghosted"
+        elif process_state == "INTERVIEW_PIPELINE":
+            out_status = "Interview Pipeline"
+        elif process_state == "CV_REQUESTED":
+            out_status = "CV / Follow-up"
+        elif process_state == "AWAITING_RECRUITER_UPDATE":
+            out_status = "Follow-up Due"
+        elif process_state == "WARM_RELATIONSHIP_NO_ACTIVE_ROLE":
+            out_status = "Warm Lead"
+        elif is_dormant:
+            out_status = "Dormant"
+        elif other_replied and not is_auto:
+            out_status = "Replied"
+        elif not other_replied and days_since < 14:
+            out_status = "Pending Reply"
+        else:
+            out_status = "No Contact"
+
+        reasons = []
+        if is_needs_reply:  reasons.append(f"unresolved {reply_obligation.lower()} request — reply now")
+        if is_rejection:    reasons.append("process closed — relationship preserved for reactivation, not urgent")
+        if is_blocked:      reasons.append("location/eligibility constraint — not an immediate action item")
+        if process_state == "INTERVIEW_PIPELINE": reasons.append("active interview step")
+        if process_state == "CV_REQUESTED":       reasons.append("CV requested")
+        if ghosted and not is_rejection and not is_blocked: reasons.append(f"ghosted ({days_since}d ago)")
+        if is_auto and not reasons: reasons.append("auto-reply only")
+        if not reasons:     reasons.append("no notable urgency signal")
+        reasons.append(f"relationship_value={relationship_value_score}")
+
+        return score, out_status, "; ".join(reasons)
+
+    # ── Legacy pre-V8 fallback (only used if immediate_action_score missing) ──
+    temperature      = str(row.get("lead_temperature", "") or "")
     is_dormant       = (status == "Dormant warm lead")
     is_rejection     = (status == "Rejected / closed process")
     is_career_site   = (status == "Auto-reply / career site redirect")
@@ -89,10 +166,7 @@ def _score_one(row: dict, base_score: float) -> tuple[int, str, str]:
     is_warm          = (status == "Warm lead")
     is_low_value     = (status == "Low value / ignore")
 
-    # Base: 40% of connection priority score
     score = base_score * 0.40
-
-    # Boosts
     if is_needs_reply:                  score += 10
     if other_replied and not is_auto:   score += 20
     if has_cv:                          score += 25
@@ -100,18 +174,14 @@ def _score_one(row: dict, base_score: float) -> tuple[int, str, str]:
     if has_opp and not has_cv and not has_interview: score += 15
     if is_recruiter and other_replied:  score += 10
     if is_dormant:                      score += 10
-
-    # Penalties
     if ghosted:                                     score -= 30
     if is_auto and not has_opp:                     score -= 20
     if is_career_site and not has_opp:              score -= 15
     if is_rejection:                                score -= 25
     if days_since > 180 and not has_opp:            score -= 10
     if is_low_value:                                score -= 40
-
     score = max(0, min(100, int(score)))
 
-    # Outreach status label — driven by conversation_status (strict), not raw keywords
     if is_needs_reply:
         out_status = "Needs Reply"
     elif is_rejection:
@@ -137,7 +207,6 @@ def _score_one(row: dict, base_score: float) -> tuple[int, str, str]:
     else:
         out_status = "No Contact"
 
-    # Reason (human-readable)
     reasons = []
     if is_needs_reply:        reasons.append("they sent last — reply now")
     if has_interview:         reasons.append("interview/call discussed")
@@ -206,6 +275,9 @@ def compute_outreach_scores(threads_csv: Path = THREADS_CSV) -> dict:
             and days_since >= 14
         )
 
+        rel_score_raw = row.get("relationship_value_score", None)
+        imm_score_raw = row.get("immediate_action_score", None)
+
         scores[url] = {
             "outreach_adjusted_score":  adj_score,
             "outreach_status":          out_status,
@@ -218,6 +290,13 @@ def compute_outreach_scores(threads_csv: Path = THREADS_CSV) -> dict:
             "days_since_last_message":  days_since if days_since < 9999 else None,
             "prior_positive_signal":    has_pos,
             "prior_rejection":          has_rej,
+            # V8 — separate relationship value vs immediate action (Part 12/14)
+            "relationship_value_score": int(float(rel_score_raw)) if rel_score_raw not in (None, "", "nan") else None,
+            "immediate_action_score":   int(float(imm_score_raw)) if imm_score_raw not in (None, "", "nan") else None,
+            "process_state":            str(row.get("process_state", "") or ""),
+            "reply_obligation":         str(row.get("reply_obligation", "") or ""),
+            "action_urgency":           str(row.get("action_urgency", "") or ""),
+            "next_action_date":         str(row.get("next_action_date", "") or ""),
         }
 
     logger.info(

@@ -42,6 +42,9 @@ SAFE_CONTACT_COLS = [
     "has_message_history", "replied_to_me", "ghosted_me", "auto_reply_only",
     "last_message_date", "days_since_last_message",
     "prior_positive_signal", "prior_rejection",
+    # V8 conversation-state engine — relationship value vs immediate action
+    "relationship_value_score", "immediate_action_score",
+    "process_state", "reply_obligation", "action_urgency", "next_action_date",
     # V6 company resolution — computed signals, no raw content
     "company_resolution_source", "company_resolution_confidence",
     "company_evidence_count", "company_dominant_bucket",
@@ -147,6 +150,8 @@ def build_public_contacts(
             "has_message_history", "replied_to_me", "ghosted_me", "auto_reply_only",
             "last_message_date", "days_since_last_message",
             "prior_positive_signal", "prior_rejection",
+            "relationship_value_score", "immediate_action_score",
+            "process_state", "reply_obligation", "action_urgency", "next_action_date",
         ]:
             df[col] = None
 
@@ -165,7 +170,21 @@ def build_public_contacts(
         df["outreach_status"]     = df["outreach_status"].where(df["outreach_status"].notna(), "No History")
         df["has_message_history"] = df["has_message_history"].where(df["has_message_history"].notna(), False)
 
-        sort_col = "outreach_adjusted_score"
+        # V8: outreach_adjusted_score is now weighted primarily toward
+        # immediate_action_score (Part 12), which is intentionally LOW for
+        # anyone not in an urgent state (e.g. a warm-but-not-urgent recruiter
+        # relationship). Using it alone to decide WHICH 200 contacts make the
+        # public export would silently drop every valuable-but-not-urgent
+        # message-history contact from Top Contacts entirely. Select on
+        # whichever dimension is highest — base network priority, relationship
+        # value, or immediate action — so nobody is dropped just for being
+        # merely "not urgent right now"; the client-side default sort (Part 14)
+        # still ranks by immediate action first within this pool.
+        rel_v = pd.to_numeric(df.get("relationship_value_score"), errors="coerce").fillna(0)
+        act_v = pd.to_numeric(df.get("immediate_action_score"), errors="coerce").fillna(0)
+        base_v = pd.to_numeric(df["priority_score"], errors="coerce").fillna(0)
+        df["_selection_score"] = pd.concat([base_v, rel_v, act_v], axis=1).max(axis=1)
+        sort_col = "_selection_score"
     else:
         sort_col = "priority_score"
 
@@ -328,6 +347,12 @@ SAFE_LEAD_COLS = {
     "needs_my_response", "needs_response_confidence", "needs_response_reason",
     "response_intent_score", "manual_review_required", "last_sender_type",
     "conversation_recency_band", "sanitized_intent_label",
+    # V8 multi-dimensional conversation state — sanitized fields only, no raw content
+    "process_state", "relationship_state", "reply_obligation", "action_urgency",
+    "closure_reason", "next_action_date", "reactivation_window_days",
+    "relationship_value_score", "immediate_action_score",
+    "conversation_state_confidence", "state_evidence_codes",
+    "external_action_type", "request_resolved", "cooldown_state",
 }
 
 SAFE_LEAD_SUMMARY_KEYS = {
@@ -343,6 +368,11 @@ SAFE_LEAD_SUMMARY_KEYS = {
     "needs_my_response_confirmed", "needs_my_response_likely",
     "ambiguous_review_count", "message_review_queue_count",
     "follow_up_candidate", "previous_process_reusable", "closed_no_action",
+    # V8 conversation-state KPI cards (Part 15)
+    "active_interview_pipeline", "awaiting_recruiter_update",
+    "rejected_closed", "location_eligibility_blocked",
+    "talent_pool_career_site", "reactivate_this_month",
+    "false_urgent_terminal_state_count", "conversation_state_review_queue_count",
     # contact lists
     "top_reactivation_contacts", "this_week_contacts", "needs_reply_contacts",
 }

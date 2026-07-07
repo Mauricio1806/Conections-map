@@ -115,6 +115,12 @@ ALLOWED_CONTACT_FIELDS = {
     "company_evidence_count", "company_dominant_bucket",
     "company_dominant_bucket_share", "cross_contact_propagation_used",
     "message_signal_used", "company_canonical",
+    # V8 multi-dimensional conversation state — derived states/scores only, no raw content
+    "process_state", "relationship_state", "reply_obligation", "action_urgency",
+    "closure_reason", "next_action_date", "reactivation_window_days",
+    "relationship_value_score", "immediate_action_score",
+    "conversation_state_confidence", "state_evidence_codes",
+    "external_action_type", "request_resolved", "cooldown_state",
 }
 
 

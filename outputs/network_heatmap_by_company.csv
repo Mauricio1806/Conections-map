@@ -1,9 +1,9 @@
 ﻿company_clean,count,avg_priority,top_persona,top_market
 Hays,76,24.0,Other,UNKNOWN
-Itaú Unibanco,74,35.9,Other,BRAZIL
+Itaú Unibanco,74,35.7,Other,BRAZIL
 GE Vernova,55,21.9,Other,UNKNOWN
 SENAI CIMATEC,54,14.3,Other,UNKNOWN
-NTT DATA Europe & Latam,52,62.5,Other,LATAM_USD
+NTT DATA Europe & Latam,52,62.4,Other,LATAM_USD
 Deloitte,49,28.3,Other,UNKNOWN
 Databricks,48,60.2,Other,US_CANADA_NEARSHORE
 Grupo Boticário,48,23.0,Other,UNKNOWN
@@ -12,17 +12,17 @@ Larco Petróleo,40,13.7,Other,UNKNOWN
 Randstad Brasil,39,24.4,Other,BRAZIL
 Bradesco,38,34.8,Other,BRAZIL
 Capgemini,37,29.2,Other,UNKNOWN
-iFood,36,29.9,Other,BRAZIL
+iFood,36,29.8,Other,BRAZIL
 CI&T,32,24.9,Data Engineer,UNKNOWN
 GE Renewable Energy,32,15.0,Other,UNKNOWN
 EY,31,32.1,Other,UNKNOWN
-IBM,30,26.9,Other,UNKNOWN
+IBM,30,26.8,Other,UNKNOWN
 LM Soluções de Mobilidade,29,14.4,Other,UNKNOWN
 Michael Page,29,25.7,Other,UNKNOWN
-Zup Innovation,27,45.1,Other,BRAZIL
+Zup Innovation,27,45.0,Other,BRAZIL
 AB InBev,26,28.2,Data Engineer,UNKNOWN
 act digital,25,33.2,Recruiter,UNKNOWN
-Nubank,24,38.4,Data Engineer,BRAZIL
+Nubank,24,38.3,Data Engineer,BRAZIL
 Ford Motor Company,24,12.7,Other,UNKNOWN
 Accenture,24,27.2,Other,UNKNOWN
 TOTVS,23,30.8,Other,BRAZIL
@@ -30,12 +30,12 @@ GFT Technologies,23,40.6,Other,UNKNOWN
 SAP,22,46.0,Other,EUROPE
 Serasa Experian,20,27.3,Other,UNKNOWN
 Globo,19,20.3,Other,UNKNOWN
-Stone,19,38.4,Data Engineer,BRAZIL
-Amazon Web Services (AWS),19,47.1,Other,US_CANADA_NEARSHORE
+Stone,19,38.2,Data Engineer,BRAZIL
+Amazon Web Services (AWS),19,46.9,Other,US_CANADA_NEARSHORE
 Artefact,19,29.7,Data Engineer,UNKNOWN
 Freelance,19,29.8,Recruiter,UNKNOWN
 Indicium AI,19,36.6,Data Engineer,BRAZIL
-Mercado Livre,19,26.5,Other,UNKNOWN
+Mercado Livre,19,26.4,Other,UNKNOWN
 Delivery Hero,19,57.2,Other,EUROPE
 Accenture Brasil,18,44.5,Other,BRAZIL
 Google,17,51.1,Other,US_CANADA_NEARSHORE
@@ -59,7 +59,7 @@ Semantix,13,39.1,Other,BRAZIL
 Melt Group,13,19.9,Consultant,UNKNOWN
 QuintoAndar,13,25.5,Other,UNKNOWN
 Amazon,13,52.8,Other,US_CANADA_NEARSHORE
-PicPay,12,29.3,Other,UNKNOWN
+PicPay,12,29.1,Other,UNKNOWN
 Thoughtworks,12,33.4,Other,UNKNOWN
 Factored,12,31.4,Data Engineer,UNKNOWN
 PetroReconcavo,12,14.6,Other,UNKNOWN
@@ -69,9 +69,9 @@ Nortal,11,26.8,Other,UNKNOWN
 Santander Brasil,11,25.5,Other,BRAZIL
 Globant,11,33.8,Other,UNKNOWN
 Continental,11,9.7,Other,UNKNOWN
-XP Inc,11,36.5,Data Engineer,BRAZIL
+XP Inc,11,36.3,Data Engineer,BRAZIL
 Minsait,11,49.5,Other,SPAIN_EU
-Compass UOL,11,27.4,Data Engineer,UNKNOWN
+Compass UOL,11,26.8,Data Engineer,UNKNOWN
 delaware Brasil,10,32.9,Other,BRAZIL
 Shopee,10,21.5,Other,UNKNOWN
 Randstad Enterprise,10,41.5,Recruiter,UNKNOWN
@@ -90,7 +90,7 @@ EloGroup,10,26.9,Data Engineer,UNKNOWN
 Global Group,9,13.7,Other,UNKNOWN
 Oracle,9,31.8,Other,UNKNOWN
 Contabilizei,9,35.1,Other,BRAZIL
-Capitani Group,9,23.1,Other,UNKNOWN
+Capitani Group,9,22.8,Other,UNKNOWN
 Flink,9,34.2,Director,UNKNOWN
 PageGroup,9,36.1,HR,UNKNOWN
 Babbel,9,34.0,Hiring Manager,UNKNOWN
@@ -132,7 +132,7 @@ EPAM Systems,7,41.1,Data Engineer,UNKNOWN
 Dasa,7,27.3,HR,UNKNOWN
 Hotmart,7,35.0,Data Engineer,UNKNOWN
 Profesional independiente,7,25.9,Other,UNKNOWN
-F1RST Digital Services,7,22.6,Other,UNKNOWN
+F1RST Digital Services,7,22.1,Other,UNKNOWN
 Sodexo,7,13.3,Other,UNKNOWN
 Walmart Chile,7,45.6,Other,LATAM_USD
 TIM Brasil,7,31.4,Other,BRAZIL
@@ -145,7 +145,7 @@ Ambev,7,11.6,Other,UNKNOWN
 Equifax,6,43.3,HR,UNKNOWN
 "NTT DATA, Inc",6,36.2,Data Engineer,UNKNOWN
 Jump,6,27.5,Data Engineer,UNKNOWN
-Maxxi,6,29.0,Other,UNKNOWN
+Maxxi,6,28.5,Other,UNKNOWN
 Natura,6,26.8,Other,UNKNOWN
 Inetum,6,38.0,Talent Acquisition,UNKNOWN
 Petlove,6,23.8,Data Analyst,UNKNOWN
@@ -165,7 +165,7 @@ Data Mundo,6,37.2,Data Analyst,UNKNOWN
 Dataside,6,53.3,Data Engineer,BRAZIL
 Boston Consulting Group (BCG),6,61.8,Consultant,US_CANADA_NEARSHORE
 Strider,6,30.0,Other,UNKNOWN
-Superlógica Tecnologias,6,36.7,Director,UNKNOWN
+Superlógica Tecnologias,6,36.2,Director,UNKNOWN
 PagBank,6,27.0,Other,BRAZIL
 BCG X,6,33.5,Data Engineer,UNKNOWN
 Cognizant,6,42.3,Other,EUROPE
@@ -184,7 +184,7 @@ ilegra,6,27.2,Other,UNKNOWN
 Peers Consulting + Technology,5,32.2,Consultant,UNKNOWN
 Petrobras,5,29.0,Other,BRAZIL
 Mouts TI,5,34.8,Recruiter,UNKNOWN
-C6 Bank,5,39.2,Other,BRAZIL
+C6 Bank,5,38.6,Other,BRAZIL
 Porsche Consulting,5,37.8,Consultant,UNKNOWN
 Praxis,5,33.0,Other,UNKNOWN
 Delfia,5,30.6,Other,UNKNOWN

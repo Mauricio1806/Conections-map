@@ -33,7 +33,7 @@ V6 additions (response intelligence — see CLAUDE_INTELLIGENCE_V6_PATCH.md Part
 
 import logging
 import re
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -96,10 +96,15 @@ REJECTION_KW = [
 ]
 
 CV_KW = [
-    "send your cv", "send me your resume", "curriculum", "currículo",
+    "send your cv", "send me your resume", "send your updated cv",
+    "send your updated resume", "share your updated cv", "share your updated resume",
+    "updated cv", "updated resume", "curriculum", "currículo",
     "curriculo", "i applied", "realizei minha candidatura",
     "application submitted", "candidatura realizada",
-    "talent database", "career site", "submit your profile",
+    # NOTE: "talent database" / "career site" / "submit your profile" were
+    # removed from this list (V8) — they are talent-pool/career-site REDIRECTS
+    # (see TALENT_POOL_KW / CAREER_SITE_KW below), not CV requests, and lumping
+    # them in here caused false CV-request/escalation signals.
 ]
 
 INTERVIEW_KW = [
@@ -425,9 +430,469 @@ def _response_intelligence(
     }
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# V8 — Multi-dimensional conversation state engine
+# (CLAUDE_MESSAGE_STATE_V8.md Parts 1-13)
+#
+# The V6 _response_intelligence() above only ever looked at the single TRUE
+# last message. That conflates five independent things: relationship value,
+# immediate action urgency, reply obligation, process status, and
+# reactivation timing. A valuable recruiter relationship that ended in
+# REJECTED_CLOSED, or a message that contains "?" only because the OTHER
+# person is explaining a geographic/residency restriction, was getting
+# flagged as an urgent "Needs my response" — a false positive.
+#
+# This engine scans the conversation's MEANINGFUL turns (excluding emoji/
+# generic-ack-only messages) in reverse chronological order, so the most
+# recent substantive signal wins, and terminal/blocking states (rejection,
+# location/geography/work-auth blocks, talent-pool/career-site redirects,
+# auto-replies) take precedence over any question mark or keyword in the
+# same message. It also detects "request resolved" — if Mauricio sent a
+# substantive reply after the other person's last actionable message, there
+# is no outstanding reply_obligation regardless of who technically sent the
+# very last message in the thread.
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── Part 9 — strengthened multilingual rejection/closure detection ───────────
+TERMINAL_REJECTION_KW = REJECTION_KW + [
+    "move forward with another candidate", "moving forward with another candidate",
+    "another candidate", "experience aligned more closely", "tough decision",
+    "role has been filled", "position has been filled",
+    "client chose another candidate", "client selected another candidate",
+    "seguimos com outro candidato", "avançamos com outro candidato",
+    "avancamos com outro candidato", "optamos por outro candidato",
+    "não avançaremos", "nao avancaremos", "posição foi preenchida",
+    "posicao foi preenchida", "vaga foi encerrada", "processo encerrado",
+    "avanzamos con otro candidato", "hemos decidido continuar con otro candidato",
+    "posición cubierta", "posicion cubierta", "proceso cerrado",
+    "no continuaremos",
+]
+_OTHER_CANDIDATE_KW = [
+    "another candidate", "outro candidato", "otro candidato",
+    "client chose another candidate", "client selected another candidate",
+    "seguimos com outro candidato", "avançamos com outro candidato",
+    "avanzamos con otro candidato",
+]
+
+# ── Part 10 — location / eligibility / geographic / work-authorization blocks ─
+LOCATION_ELIGIBILITY_KW = [
+    "reside in portugal", "residency in portugal", "fiscal residency",
+    "residência fiscal", "residencia fiscal", "must reside in", "must be located in",
+    "hybrid role requires", "requires local residence", "local residence",
+    "morar em portugal", "residir em portugal", "morar na região",
+    "based in portugal", "based locally", "residir localmente",
+]
+GEOGRAPHIC_RESTRICTION_KW = [
+    "only hiring in india", "not hiring outside india", "hiring only in india",
+    "não contratamos fora", "nao contratamos fora", "solo contratamos en",
+    "local candidates only", "not hiring outside", "hiring locally only",
+    "candidatos locales solamente", "somente candidatos locais",
+]
+WORK_AUTH_KW = [
+    "work authorization", "visa sponsorship", "sponsorship unavailable",
+    "sponsorship is not available", "autorização de trabalho",
+    "autorizacao de trabalho", "necesita autorización", "necesita autorizacion",
+    "requer visto", "no visa sponsorship",
+]
+
+# ── Part 11 — talent pool / career site redirects (broader than AUTO_REPLY_KW) ─
+TALENT_POOL_KW = [
+    "talent database", "talent pool", "register your profile",
+    "join our talent", "linktree", "register in our database",
+    "mentoring is available", "cadastre seu perfil", "banco de talentos",
+    "base de talentos", "regístrate en nuestra base", "registrate en nuestra base",
+]
+CAREER_SITE_KW = [
+    "career site", "apply via our career site", "apply through our",
+    "apply on our", "check our job board", "job board",
+    "site de carreiras", "portal de vagas", "portal de carreras",
+]
+
+# ── Part 13 — awaiting-update / active-interview detection ───────────────────
+AWAITING_UPDATE_KW = [
+    "will get back to you", "get back to you", "let you know next week",
+    "update you soon", "keep you posted", "will follow up", "will circle back",
+    "aguarde retorno", "te aviso", "os mantendo informado", "mantendo voce informado",
+    "te mantendo informado", "en breve te contactamos", "te contactaremos pronto",
+]
+INTERVIEW_ACTIVE_KW = [
+    "second interview", "next round", "move forward with the interview",
+    "schedule a call", "schedule the interview", "technical interview",
+    "interview process", "próxima etapa", "proxima etapa", "segunda entrevista",
+    "siguiente etapa", "segunda entrevista",
+]
+
+# Terminal/blocking states — Part 4: these OVERRIDE reply_obligation to NONE
+# unless a separate unresolved actionable request follows.
+TERMINAL_STATES = {
+    "REJECTED_CLOSED", "LOCATION_ELIGIBILITY_BLOCKED",
+    "GEOGRAPHIC_HIRING_RESTRICTION", "WORK_AUTHORIZATION_BLOCKED",
+    "TALENT_POOL_REDIRECT", "CAREER_SITE_REDIRECT", "AUTO_REPLY_ONLY",
+    "GENERIC_ACKNOWLEDGEMENT",
+}
+
+# process_state -> external_action_type (Part 11)
+_EXTERNAL_ACTION_BY_STATE = {
+    "TALENT_POOL_REDIRECT": "JOIN_TALENT_POOL",
+    "CAREER_SITE_REDIRECT": "APPLY_CAREER_SITE",
+}
+
+# process_state -> reactivation_window_days, next_action_date offset (Part 13)
+_REACTIVATION_WINDOW_DAYS = {
+    "REJECTED_CLOSED":                 75,   # 60-90
+    "LOCATION_ELIGIBILITY_BLOCKED":     90,
+    "GEOGRAPHIC_HIRING_RESTRICTION":   150,   # 120-180
+    "WORK_AUTHORIZATION_BLOCKED":      120,
+    "TALENT_POOL_REDIRECT":             75,   # 60-90
+    "CAREER_SITE_REDIRECT":             75,
+    "DORMANT_WARM":                      0,   # eligible now if cooldown passed
+    "WARM_RELATIONSHIP_NO_ACTIVE_ROLE": 30,
+}
+
+
+def _is_meaningful_message(text: str) -> bool:
+    """Part 6 — excludes emoji/reaction-only and short generic-acknowledgement
+    messages from conversation-state determination (still counted for
+    total_messages etc., just not used to drive state)."""
+    plain = (text or "").strip()
+    if not plain:
+        return False
+    if _is_emoji_or_reaction_only(plain):
+        return False
+    if len(plain) <= 60 and _kw_match_wb(plain, GENERIC_ACK_KW):
+        return False
+    return True
+
+
+def _build_meaningful_turns(group: pd.DataFrame) -> list[dict]:
+    """Part 6 — ordered list of {sender, text, date, meaningful} for every
+    message in the conversation (chronological)."""
+    turns = []
+    for _, row in group.iterrows():
+        text = strip_html(row.get("content", "") or "")
+        turns.append({
+            "sender": "me" if row["is_me_sender"] else "other",
+            "text": text,
+            "date": row.get("date_parsed"),
+            "meaningful": _is_meaningful_message(text),
+        })
+    return turns
+
+
+def _is_strong_ask(text: str) -> bool:
+    """A clearly actionable, specific request — CV/scheduling/interview/explicit
+    availability confirmation. Deliberately NARROWER than REQUEST_SUBSTANTIVE_KW
+    (which contains generic words like "available" that can appear inside an
+    unrelated sentence, e.g. "mentoring is also available") so it's safe to use
+    for escalating a terminal/blocking state (Part 4)."""
+    return bool(
+        _kw_match(text, CV_KW)
+        or _kw_match(text, INTERVIEW_ACTIVE_KW)
+        or _kw_match_wb(text, ["schedule", "confirm interview", "disponibilidade", "disponibilidad"])
+        or (("?" in text) and _kw_match_wb(text, [
+            "available", "availability", "when are you available", "what time",
+            "interested", "are you interested",
+            "disponibilidade", "disponibilidad", "tem interesse", "interesado",
+        ]))
+    )
+
+
+def _analyze_conversation_state(
+    turns: list[dict],
+    is_valuable_persona: bool,
+    has_interview_hist: bool,
+    has_cv_hist: bool,
+    priority_score: float,
+    market_value: bool,
+    messages_from_other: int,
+    days_since_last: int,
+) -> dict:
+    """
+    Parts 1-13 — the authoritative conversation-state classifier. Scans
+    meaningful turns in reverse (most recent first) so the latest relevant
+    signal wins, detects resolved requests (Part 5), and gives terminal/
+    blocking states precedence over reply_obligation (Part 4).
+    """
+    meaningful = [t for t in turns if t["meaningful"]]
+    evidence: list[str] = []
+
+    latest_overall  = meaningful[-1] if meaningful else (turns[-1] if turns else None)
+    latest_other    = next((t for t in reversed(meaningful) if t["sender"] == "other"), None)
+    latest_mine     = next((t for t in reversed(meaningful) if t["sender"] == "me"), None)
+
+    # Part 5 — resolved-request detection: if the latest meaningful turn is
+    # mine, or my latest meaningful reply is not older than their latest
+    # meaningful message, the request is resolved.
+    request_resolved = False
+    if latest_overall is not None and latest_overall["sender"] == "me":
+        request_resolved = True
+    elif latest_mine and latest_other and latest_mine["date"] and latest_other["date"]:
+        request_resolved = latest_mine["date"] >= latest_other["date"]
+
+    # ── Scan meaningful turns in reverse for the most recent classifying signal ──
+    process_state = None
+    closure_reason = None
+    triggering_text = ""
+    for t in reversed(meaningful):
+        text = t["text"]
+        if _kw_match(text, TERMINAL_REJECTION_KW):
+            process_state = "REJECTED_CLOSED"
+            closure_reason = "OTHER_CANDIDATE_SELECTED" if _kw_match(text, _OTHER_CANDIDATE_KW) else "PROCESS_CLOSED"
+            evidence.append("REJECTION_KW"); triggering_text = text; break
+        if _kw_match(text, LOCATION_ELIGIBILITY_KW):
+            process_state = "LOCATION_ELIGIBILITY_BLOCKED"
+            evidence.append("LOCATION_BLOCK_KW"); triggering_text = text; break
+        if _kw_match(text, GEOGRAPHIC_RESTRICTION_KW):
+            process_state = "GEOGRAPHIC_HIRING_RESTRICTION"
+            evidence.append("GEO_RESTRICTION_KW"); triggering_text = text; break
+        if _kw_match(text, WORK_AUTH_KW):
+            process_state = "WORK_AUTHORIZATION_BLOCKED"
+            evidence.append("WORK_AUTH_KW"); triggering_text = text; break
+        if _kw_match(text, TALENT_POOL_KW):
+            process_state = "TALENT_POOL_REDIRECT"
+            evidence.append("TALENT_POOL_KW"); triggering_text = text; break
+        if _kw_match(text, CAREER_SITE_KW):
+            process_state = "CAREER_SITE_REDIRECT"
+            evidence.append("CAREER_SITE_KW"); triggering_text = text; break
+        if _kw_match(text, AUTO_REPLY_KW):
+            process_state = "AUTO_REPLY_ONLY"
+            evidence.append("AUTO_REPLY_KW"); triggering_text = text; break
+        if _kw_match(text, INTERVIEW_ACTIVE_KW):
+            process_state = "INTERVIEW_PIPELINE"
+            evidence.append("INTERVIEW_ACTIVE_KW"); triggering_text = text; break
+        if _kw_match(text, CV_KW):
+            process_state = "CV_REQUESTED"
+            evidence.append("CV_REQUEST_KW"); triggering_text = text; break
+        if _kw_match(text, AWAITING_UPDATE_KW):
+            process_state = "AWAITING_RECRUITER_UPDATE"
+            evidence.append("AWAITING_UPDATE_KW"); triggering_text = text; break
+        if t["sender"] == "other" and _kw_match_wb(t["text"], GENERIC_ACK_KW):
+            process_state = "GENERIC_ACKNOWLEDGEMENT"
+            evidence.append("GENERIC_ACK_KW"); triggering_text = text; break
+
+    has_opportunity_overall = has_interview_hist or has_cv_hist or any(
+        _kw_match(t["text"], POSITIVE_KW) for t in meaningful
+    )
+
+    if process_state is None:
+        if not meaningful:
+            process_state = "NO_RESPONSE" if messages_from_other == 0 else "LOW_VALUE"
+            evidence.append("NO_MEANINGFUL_TURNS")
+        elif has_opportunity_overall and days_since_last <= 30:
+            process_state = "ACTIVE_OPPORTUNITY"; evidence.append("OPPORTUNITY_RECENT")
+        elif has_opportunity_overall and days_since_last <= 365:
+            process_state = "WARM_RELATIONSHIP_NO_ACTIVE_ROLE"; evidence.append("OPPORTUNITY_AGING")
+        elif has_opportunity_overall:
+            process_state = "DORMANT_WARM"; evidence.append("OPPORTUNITY_OLD")
+        elif messages_from_other == 0:
+            process_state = "NO_RESPONSE"; evidence.append("NO_REPLY_FROM_OTHER")
+        else:
+            process_state = "LOW_VALUE"; evidence.append("NO_SIGNAL")
+
+    # ── Part 3/4 — reply_obligation ───────────────────────────────────────────
+    is_terminal = process_state in TERMINAL_STATES
+    triggered_by_latest_other = bool(latest_other and triggering_text and triggering_text == latest_other["text"])
+
+    if is_terminal:
+        # Terminal/blocking states default to NONE. Only escalate to AMBIGUOUS
+        # (never straight to CONFIRMED) when the SAME latest-other message also
+        # carries a strong, SPECIFIC separate actionable request (not just a
+        # loose generic word like "available" appearing incidentally) and it
+        # isn't resolved yet.
+        if (triggered_by_latest_other and not request_resolved
+                and _is_strong_ask(triggering_text)
+                and process_state not in ("AUTO_REPLY_ONLY", "GENERIC_ACKNOWLEDGEMENT")):
+            reply_obligation = "AMBIGUOUS"
+            evidence.append("TERMINAL_WITH_POSSIBLE_SEPARATE_ASK")
+        else:
+            reply_obligation = "NONE"
+    elif request_resolved:
+        reply_obligation = "NONE"
+        evidence.append("REQUEST_RESOLVED")
+    elif latest_other is not None:
+        text = latest_other["text"]
+        strong_ask = _is_strong_ask(text)
+        weak_ask = _kw_match(text, REQUEST_SUBSTANTIVE_KW) or "?" in text
+        if strong_ask:
+            reply_obligation = "CONFIRMED"; evidence.append("UNRESOLVED_STRONG_ASK")
+        elif weak_ask:
+            reply_obligation = "LIKELY"; evidence.append("UNRESOLVED_WEAK_ASK")
+        else:
+            reply_obligation = "NONE"; evidence.append("NO_ACTIONABLE_ASK")
+    else:
+        reply_obligation = "NONE"
+
+    # Recency decay (mirrors V6 Part 4 band logic) — old unresolved asks are
+    # downgraded rather than left urgent forever, matching V6's existing behavior.
+    if reply_obligation in ("CONFIRMED", "LIKELY") and days_since_last > 90:
+        meaningful_history = has_interview_hist or has_cv_hist or is_valuable_persona
+        if not meaningful_history:
+            reply_obligation = "AMBIGUOUS" if reply_obligation == "CONFIRMED" else "NONE"
+            evidence.append("RECENCY_DECAY_90D")
+
+    # ── Part 12 — relationship_value_score (independent of urgency) ──────────
+    rel_score = 0.0
+    if is_valuable_persona:               rel_score += 25
+    if has_interview_hist:                rel_score += 20
+    if has_cv_hist:                        rel_score += 15
+    if messages_from_other >= 2:          rel_score += 10
+    if market_value:                      rel_score += 10
+    rel_score += min(20, (priority_score or 0) * 0.20)
+    if process_state in ("REJECTED_CLOSED", "CV_REQUESTED", "INTERVIEW_PIPELINE") and has_opportunity_overall:
+        rel_score += 10  # reached a real process — reusable relationship
+    relationship_value_score = int(max(0, min(100, rel_score)))
+
+    # ── Part 12 — immediate_action_score (independent of relationship value) ──
+    if reply_obligation == "CONFIRMED":     act_score = 60.0
+    elif reply_obligation == "LIKELY":      act_score = 35.0
+    elif reply_obligation == "AMBIGUOUS":   act_score = 15.0
+    else:                                    act_score = 0.0
+    if process_state == "INTERVIEW_PIPELINE":            act_score += 15
+    if process_state == "AWAITING_RECRUITER_UPDATE":     act_score += 5
+    if days_since_last <= 7:    act_score += 10
+    elif days_since_last <= 30: act_score += 5
+    # Terminal/blocking states are hard-capped low regardless of any bonus above.
+    if is_terminal:
+        act_score = min(act_score, 20.0)
+    immediate_action_score = int(max(0, min(100, act_score)))
+
+    action_urgency = (
+        "HIGH" if immediate_action_score >= 60 else
+        "MEDIUM" if immediate_action_score >= 30 else
+        "LOW" if immediate_action_score >= 10 else
+        "NONE"
+    )
+
+    # ── Part 13 — next_action_date / reactivation_window_days ────────────────
+    today = date.today()
+    if reply_obligation in ("CONFIRMED",) or process_state in ("INTERVIEW_PIPELINE", "CV_REQUESTED"):
+        next_action_date = today
+        reactivation_window_days = 0
+    elif process_state == "ACTIVE_OPPORTUNITY":
+        # Recent positive-keyword mention but no specific active step detected —
+        # warm, not "today"-urgent.
+        next_action_date = today + timedelta(days=7)
+        reactivation_window_days = 7
+    elif process_state == "AWAITING_RECRUITER_UPDATE":
+        next_action_date = today + timedelta(days=6)
+        reactivation_window_days = 6
+    elif process_state in _REACTIVATION_WINDOW_DAYS:
+        win = _REACTIVATION_WINDOW_DAYS[process_state]
+        next_action_date = today + timedelta(days=win)
+        reactivation_window_days = win
+    elif process_state == "NO_RESPONSE":
+        reactivation_window_days = 14
+        next_action_date = today + timedelta(days=14)
+    else:
+        reactivation_window_days = 0
+        next_action_date = today
+
+    external_action_type = _EXTERNAL_ACTION_BY_STATE.get(process_state, "NONE")
+
+    # ── relationship_state (simple, descriptive) ──────────────────────────────
+    if is_valuable_persona and (has_interview_hist or has_cv_hist or messages_from_other >= 2):
+        relationship_state = "WARM_RECRUITER_RELATIONSHIP" if is_valuable_persona else "WARM_CONTACT"
+    elif is_valuable_persona:
+        relationship_state = "PROFESSIONAL_CONTACT"
+    else:
+        relationship_state = "GENERAL_CONTACT"
+
+    _weak_evidence = {"NO_SIGNAL", "NO_MEANINGFUL_TURNS", "NO_REPLY_FROM_OTHER", "OPPORTUNITY_AGING", "OPPORTUNITY_OLD"}
+    if evidence and evidence[0] not in _weak_evidence:
+        confidence = "HIGH"
+    elif process_state != "LOW_VALUE":
+        confidence = "MEDIUM"
+    else:
+        confidence = "LOW"
+    if reply_obligation == "AMBIGUOUS":
+        confidence = "LOW"
+
+    return {
+        "process_state":               process_state,
+        "relationship_state":           relationship_state,
+        "reply_obligation":             reply_obligation,
+        "action_urgency":               action_urgency,
+        "closure_reason":               closure_reason or "",
+        "next_action_date":             str(next_action_date),
+        "reactivation_window_days":     reactivation_window_days,
+        "relationship_value_score":     relationship_value_score,
+        "immediate_action_score":       immediate_action_score,
+        "conversation_state_confidence": confidence,
+        "state_evidence_codes":         ",".join(evidence),
+        "external_action_type":         external_action_type,
+        "request_resolved":             request_resolved,
+        "last_actionable_response_date": str(latest_mine["date"].date()) if (latest_mine and latest_mine["date"]) else "",
+        "last_actionable_request_date":  str(latest_other["date"].date()) if (latest_other and latest_other["date"]) else "",
+    }
+
+
+def _cooldown_state(process_state: str, days_since_last: int) -> str:
+    """Part 16 — process-closed cooldown. Only applies to REJECTED_CLOSED."""
+    if process_state != "REJECTED_CLOSED":
+        return ""
+    d = days_since_last if isinstance(days_since_last, int) else 9999
+    if d <= 30:
+        return "NO_ACTION_COOLDOWN"
+    if d <= 59:
+        return "MONITOR"
+    if d <= 90:
+        return "REACTIVATION_ELIGIBLE"
+    return "REACTIVATE_IF_STRATEGIC"
+
+
+def _lead_category_v8(process_state: str, reply_obligation: str, cooldown: str) -> str:
+    """Part 15 — Lead Reactivation KPI-card categories, driven by the new
+    conversation-state engine instead of last-message-only heuristics."""
+    if reply_obligation == "CONFIRMED":
+        return "Needs my response — Confirmed"
+    if reply_obligation == "LIKELY":
+        return "Needs my response — Likely"
+    if reply_obligation == "AMBIGUOUS":
+        return "Ambiguous — Review"
+    if process_state in ("INTERVIEW_PIPELINE", "CV_REQUESTED"):
+        return "Active Interview Pipeline"
+    if process_state == "AWAITING_RECRUITER_UPDATE":
+        return "Awaiting Recruiter Update"
+    if process_state == "ACTIVE_OPPORTUNITY":
+        # Recent positive-keyword mention but no specific active step (no
+        # interview/CV request/recruiter-update signal) — genuinely warm, not
+        # a confirmed active pipeline step.
+        return "Warm reactivation"
+    if process_state == "REJECTED_CLOSED":
+        return "Reactivate This Month" if cooldown == "REACTIVATION_ELIGIBLE" else "Rejected / Closed"
+    if process_state in ("LOCATION_ELIGIBILITY_BLOCKED", "GEOGRAPHIC_HIRING_RESTRICTION", "WORK_AUTHORIZATION_BLOCKED"):
+        return "Location / Eligibility Blocked"
+    if process_state in ("TALENT_POOL_REDIRECT", "CAREER_SITE_REDIRECT"):
+        return "Talent Pool / Career Site"
+    if process_state == "WARM_RELATIONSHIP_NO_ACTIVE_ROLE":
+        return "Warm reactivation"
+    if process_state == "DORMANT_WARM":
+        return "Reactivate This Month" if cooldown == "REACTIVATION_ELIGIBLE" else "Dormant warm"
+    if process_state == "NO_RESPONSE":
+        return "No response"
+    if process_state == "GENERIC_ACKNOWLEDGEMENT":
+        return "Closed / no action"
+    return "Ignore"
+
+
+_INTENT_LABEL_BY_STATE = {
+    "REJECTED_CLOSED": "Process closed",
+    "LOCATION_ELIGIBILITY_BLOCKED": "Location/residency constraint",
+    "GEOGRAPHIC_HIRING_RESTRICTION": "Geographic hiring restriction",
+    "WORK_AUTHORIZATION_BLOCKED": "Work authorization constraint",
+    "TALENT_POOL_REDIRECT": "Talent pool redirect",
+    "CAREER_SITE_REDIRECT": "Auto reply",
+    "AUTO_REPLY_ONLY": "Auto reply",
+    "AWAITING_RECRUITER_UPDATE": "Awaiting recruiter update",
+}
+
+
 def _sanitized_intent_label(ri: dict, has_interview_signal: bool, has_cv_signal: bool,
-                             messages_from_other: int) -> str:
+                             messages_from_other: int, process_state: str = "") -> str:
     """Very short, sanitized intent label for the Lead Reactivation table (Part 7)."""
+    state_label = _INTENT_LABEL_BY_STATE.get(process_state)
+    if state_label:
+        return state_label
     if ri["last_message_is_process_closure"]:
         return "Process closed"
     if ri["last_message_is_auto_reply"]:
@@ -800,7 +1265,10 @@ def build_conversation_intelligence(
 
         temperature = _determine_temperature(status, has_opportunity, is_valuable, days_since)
 
-        # V6 response intelligence — classifies the TRUE last message (whoever sent it)
+        # V6 response intelligence — classifies the TRUE last message (whoever sent it).
+        # Kept for its last_message_is_* booleans / response_intent_score, but its
+        # needs_my_response/confidence/reason are now OVERRIDDEN by the V8 engine
+        # below (see module docstring for why last-message-only was insufficient).
         last_message_raw = group.iloc[-1].get("content", "") or ""
         resp_intel = _response_intelligence(
             last_message_raw     = last_message_raw,
@@ -810,9 +1278,37 @@ def build_conversation_intelligence(
             has_interview_signal = signals["interview"],
             has_cv_signal        = signals["cv_request"],
         )
-        lead_category = _lead_category_v6(status, temperature, has_opportunity, resp_intel)
+
+        # V8 — multi-dimensional conversation state (CLAUDE_MESSAGE_STATE_V8.md)
+        turns = _build_meaningful_turns(group)
+        conv_state = _analyze_conversation_state(
+            turns                 = turns,
+            is_valuable_persona   = is_valuable,
+            has_interview_hist    = signals["interview"],
+            has_cv_hist           = signals["cv_request"],
+            priority_score        = priority_score,
+            market_value          = market_value,
+            messages_from_other   = messages_from_other,
+            days_since_last       = days_since if days_since < 9999 else 9999,
+        )
+        cooldown = _cooldown_state(conv_state["process_state"], days_since if days_since < 9999 else 9999)
+
+        # Legacy fields are now DERIVED from the V8 engine — this is the actual
+        # fix: reply_obligation correctly accounts for terminal/blocking states
+        # and resolved requests, instead of only ever looking at the last message.
+        _OBLIGATION_TO_CONFIDENCE = {"CONFIRMED": "HIGH", "LIKELY": "MEDIUM", "AMBIGUOUS": "LOW", "NONE": "NONE"}
+        needs_my_response         = conv_state["reply_obligation"] in ("CONFIRMED", "LIKELY")
+        needs_response_confidence = _OBLIGATION_TO_CONFIDENCE[conv_state["reply_obligation"]]
+        manual_review_required    = conv_state["reply_obligation"] == "AMBIGUOUS"
+        needs_response_reason = (
+            f"{conv_state['process_state'].replace('_', ' ').title()} — reply_obligation={conv_state['reply_obligation']}"
+            f" ({conv_state['state_evidence_codes'] or 'no evidence codes'})"
+        )
+
+        lead_category = _lead_category_v8(conv_state["process_state"], conv_state["reply_obligation"], cooldown)
         sanitized_intent_label = _sanitized_intent_label(
             resp_intel, signals["interview"], signals["cv_request"], messages_from_other,
+            process_state=conv_state["process_state"],
         )
 
         action, angle = _recommended_action(
@@ -865,10 +1361,13 @@ def build_conversation_intelligence(
             "reactivation_priority_score":   reactivation_score,
             "message_angle":                 angle,
             "connection_priority_score":     priority_score,
-            # V6 response intelligence (Parts 1-5) — sanitized, no raw content
-            "needs_my_response":             resp_intel["needs_my_response"],
-            "needs_response_confidence":     resp_intel["needs_response_confidence"],
-            "needs_response_reason":         resp_intel["needs_response_reason"],
+            # V6 response intelligence (Parts 1-5) — needs_my_response/confidence/
+            # reason/manual_review_required are now DERIVED from the V8 engine
+            # (see above); the last_message_is_* booleans are still the V6
+            # single-message signals, kept for backward compatibility.
+            "needs_my_response":             needs_my_response,
+            "needs_response_confidence":     needs_response_confidence,
+            "needs_response_reason":         needs_response_reason,
             "response_intent_score":         resp_intel["response_intent_score"],
             "last_message_is_substantive":   resp_intel["last_message_is_substantive"],
             "last_message_is_question":      resp_intel["last_message_is_question"],
@@ -877,10 +1376,27 @@ def build_conversation_intelligence(
             "last_message_is_generic_ack":   resp_intel["last_message_is_generic_ack"],
             "last_message_is_process_closure": resp_intel["last_message_is_process_closure"],
             "last_message_is_opportunity_signal": resp_intel["last_message_is_opportunity_signal"],
-            "manual_review_required":        resp_intel["manual_review_required"],
+            "manual_review_required":        manual_review_required,
             "last_sender_type":              resp_intel["last_sender_type"],
             "conversation_recency_band":     resp_intel["conversation_recency_band"],
             "sanitized_intent_label":        sanitized_intent_label,
+            # V8 — multi-dimensional conversation state (CLAUDE_MESSAGE_STATE_V8.md Part 1)
+            "process_state":                 conv_state["process_state"],
+            "relationship_state":             conv_state["relationship_state"],
+            "reply_obligation":               conv_state["reply_obligation"],
+            "action_urgency":                 conv_state["action_urgency"],
+            "closure_reason":                 conv_state["closure_reason"],
+            "next_action_date":               conv_state["next_action_date"],
+            "reactivation_window_days":       conv_state["reactivation_window_days"],
+            "relationship_value_score":       conv_state["relationship_value_score"],
+            "immediate_action_score":         conv_state["immediate_action_score"],
+            "conversation_state_confidence":  conv_state["conversation_state_confidence"],
+            "state_evidence_codes":           conv_state["state_evidence_codes"],
+            "external_action_type":           conv_state["external_action_type"],
+            "request_resolved":               conv_state["request_resolved"],
+            "last_actionable_request_date":   conv_state["last_actionable_request_date"],
+            "last_actionable_response_date":  conv_state["last_actionable_response_date"],
+            "cooldown_state":                 cooldown,
         })
 
     if not rows:

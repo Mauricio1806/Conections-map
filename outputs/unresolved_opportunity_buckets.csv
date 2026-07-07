@@ -12,7 +12,7 @@ Grupo MAG,5,12.0,Other
 The HEINEKEN Company,4,23.8,Other
 Wellhub,4,24.8,Data Engineer
 Selbstständig,4,12.0,Other
-Neon,4,25.0,HR
+Neon,4,24.2,HR
 Kienbaum,4,19.2,Other
 Hotmart,4,31.8,Data Engineer
 Compass UOL,4,23.2,Data Analyst
@@ -221,7 +221,7 @@ Banco Sofisa S/A,1,8.0,Other
 Banco de Seguros del Estado,1,15.0,Other
 Banco del Sol,1,14.0,Other
 Banistmo,1,22.0,Other
-Bankaool,1,27.0,HR
+Bankaool,1,24.0,HR
 Bankhaus Metzler,1,12.0,Other
 Bildungsreif,1,12.0,Other
 Billie,1,25.0,Software Engineer
@@ -278,7 +278,7 @@ CESAR,1,27.0,Data Engineer
 CESAR School,1,12.0,Other
 CEVA SAUDE ANIMAL,1,19.0,Other
 CHEP,1,11.0,Other
-CHS América do Sul,1,30.0,HR
+CHS América do Sul,1,27.0,HR
 CIB Egypt,1,12.0,Other
 CIEE - Centro de Integração Empresa-Escola,1,12.0,Other
 CJ Recruitment,1,31.0,Consultant
@@ -334,7 +334,7 @@ Care&Co Uy,1,15.0,Other
 Career Rebels,1,12.0,Other
 Career Today,1,27.0,HR
 Career Wizards,1,18.0,Other
-Cargill,1,12.0,Other
+Cargill,1,8.0,Other
 Churchill Group,1,25.0,Other
 Cinco tareas,1,13.0,Other
 Cargoo,1,27.0,HR
@@ -831,7 +831,7 @@ Immobilien Robert Ellinghoven,1,12.0,Other
 Impala Search,1,22.0,Consultant
 IBRA+ Carreira e Recolocação Assertiva,1,8.0,Other
 ICT Group,1,22.0,Other
-Arrow Electronics,1,24.0,HR
+Arrow Electronics,1,20.0,HR
 Arrows,1,25.0,Consultant
 Arvato,1,18.0,Other
 Arvenda LLC,1,26.0,Other
@@ -889,9 +889,9 @@ Intone Networks Inc,1,12.0,Other
 Inttegra,1,23.0,Other
 InvGate,1,22.0,Other
 Invenergy,1,11.0,Other
-Invillia,1,21.0,Other
+Invillia,1,18.0,Other
 Involves,1,30.0,Data Engineer
-Ion Interactive,1,18.0,Other
+Ion Interactive,1,15.0,Other
 Ipsos,1,22.0,Other
 Istituto Comprensivo,1,12.0,Other
 Itonga Resourcing,1,25.0,Consultant
@@ -936,7 +936,7 @@ Kyndryl,1,18.0,Other
 L'Oréal,1,25.0,Other
 LAUTEC Group,1,31.0,HR
 LCM Energy,1,19.0,Other
-LCM Sports and Pet Products,1,20.0,Operations
+LCM Sports and Pet Products,1,17.0,Operations
 LG CNS,1,30.0,Data Engineer
 LG Consultores,1,8.0,Other
 Kazulo Displays,1,18.0,Other
@@ -951,7 +951,7 @@ La Caja de Ahorro y Seguro,1,18.0,Other
 LabPro,1,12.0,Other
 Laghetto,1,24.0,HR
 LanceSoft UAE,1,18.0,Other
-Lapônia - Concessionário de Caminhões e Chassis de Ônibus Volvo,1,35.0,HR
+Lapônia - Concessionário de Caminhões e Chassis de Ônibus Volvo,1,32.0,HR
 Larissa Sanford,1,12.0,Other
 Lauren & Jose,1,22.0,Consultant
 Layse Tattoo,1,12.0,Other
@@ -986,7 +986,7 @@ LevelUP HCS,1,22.0,Consultant
 Lifemate Furniture,1,22.0,HR
 Lighthouse,1,27.0,HR
 Lightsound Group,1,27.0,HR
-Link School,1,15.0,Other
+Link School,1,12.0,Other
 Linuxell Informática,1,23.0,Product
 Lisalog Operador Logístico,1,8.0,Other
 Litcessory,1,27.0,HR
@@ -1030,7 +1030,7 @@ MakeValue,1,12.0,Other
 Mallette,1,15.0,Other
 Mandomedio Perú,1,22.0,Consultant
 Manserv,1,8.0,Other
-Maplink,1,15.0,Other
+Maplink,1,12.0,Other
 Maria Enterprise,1,27.0,Project / Program Manager
 MariaDB,1,12.0,Other
 Markel,1,27.0,Data Engineer
@@ -1095,7 +1095,7 @@ Neodent,1,21.0,HR
 Nessentis,1,21.0,HR
 Movizzon,1,25.0,Other
 Multiplica,1,18.0,Other
-MurryConsult LLC,1,21.0,HR
+MurryConsult LLC,1,17.0,HR
 Mushtari Capital,1,12.0,Other
 Muybridge,1,46.0,Consultant
 Mycon,1,21.0,HR
@@ -1165,7 +1165,7 @@ Odeabank,1,22.0,HR
 Odebrecht Angola,1,8.0,Other
 Oderço,1,15.0,Other
 Odido Nederland,1,12.0,Other
-OdontoCompany,1,18.0,Other
+OdontoCompany,1,15.0,Other
 OllyGarden,1,19.0,Software Engineer
 Omie,1,18.0,Other
 OmniChat,1,23.0,Data Engineer
@@ -1233,7 +1233,7 @@ Periferia IT Group,1,25.0,Other
 Peritus Partners,1,12.0,Other
 Polícia Militar do Distrito Federal - PMDF,1,12.0,Other
 Pontifícia Universidade Católica do Rio Grande do Sul,1,15.0,Other
-PortX,1,55.0,Consultant
+PortX,1,52.0,Consultant
 Portobello Grupo,1,40.0,HR
 Posedio GmbH,1,23.0,Other
 Postbeamtenkrankenkasse,1,12.0,Other
@@ -1566,7 +1566,7 @@ Talent Match- Firma de Reclutamiento y selección,1,22.0,Consultant
 Talent Nova,1,22.0,Consultant
 Talent Works RH,1,8.0,Other
 Talentfluss,1,15.0,Other
-Aarohaan Sales and Services,1,25.0,HR
+Aarohaan Sales and Services,1,22.0,HR
 Texas McCombs School of Business,1,35.0,Other
 Texas Psychiatry Group,1,30.0,Machine Learning / AI
 Texfyt | Nonwoven,1,31.0,HR
@@ -1744,7 +1744,7 @@ Virtual Minds,1,20.0,Other
 Visible,1,15.0,Other
 Visure Solutions,1,34.0,HR
 We Are Fiber,1,26.0,Other
-We Are Pipol,1,27.0,HR
+We Are Pipol,1,24.0,HR
 Weber Ambiental,1,8.0,Other
 Webmotors,1,21.0,HR
 WelHome,1,24.0,Data Scientist

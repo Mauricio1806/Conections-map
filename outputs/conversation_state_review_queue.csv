@@ -1,0 +1,2 @@
+﻿other_person_name,company_clean,persona,current_state,proposed_state,confidence,evidence_codes,review_reason
+Alan Gulino,,,Needs my response,WARM_RELATIONSHIP_NO_ACTIVE_ROLE,LOW,"OPPORTUNITY_AGING,UNRESOLVED_STRONG_ASK,RECENCY_DECAY_90D","Warm Relationship No Active Role — reply_obligation=AMBIGUOUS (OPPORTUNITY_AGING,UNRESOLVED_STRONG_ASK,RECENCY_DECAY_90D)"

@@ -846,17 +846,17 @@ Karîna Salles,Fast Sistemas Construtivos,Coordenadora de R&S,Other,UNKNOWN,BRAZ
 Viviane Santos,WHB AUTOMOTIVE S.A,Coordenadora de recrutamento e seleção,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,15
 Luiz Eduardo Dantas Tavares dos Santos Sant'Anna,BMP,Coordenador de dados,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
 Edson Paixão,Secretaria de Educação do Estado da Bahia,Psicólogo,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,12
-Fernanda Lasmar,iFood,Senior Data Analyst | iFood Groceries Operations,Data Analyst,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_TECH,,False,36
+Fernanda Lasmar,iFood,Senior Data Analyst | iFood Groceries Operations,Data Analyst,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_TECH,,False,33
 Leonardo Marinho,Dataside,Head of Data & AI and Partnership,Head of Data,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_CONSULTING,,True,66
 Matheus Miranda Brandão,Petlove,Engenheiro de dados,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,27
 Fabiana Sousa Santos,Capitani Group,Coordenador de novos negócios,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,49
-Neoaquison Medeiros,Itaú Unibanco,Engenheiro de dados pleno,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,OTHER,,False,42
+Neoaquison Medeiros,Itaú Unibanco,Engenheiro de dados pleno,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,OTHER,,False,39
 Amós Magalhães,DB,Engenheiro de dados,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,27
 Clarianny Fernandes,ManpowerGroup Brasil,Analista de Operações de RH Pleno,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,24
-Vitor Corrade Pires,C6 Bank,Analista de Business Intelligence Jr,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,GLOBAL_TECH,,False,27
-Manoel Gonçalves,Superlógica Tecnologias,Diretor de Negócios para Imobiliárias,Director,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,48
+Vitor Corrade Pires,C6 Bank,Analista de Business Intelligence Jr,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,GLOBAL_TECH,,False,24
+Manoel Gonçalves,Superlógica Tecnologias,Diretor de Negócios para Imobiliárias,Director,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,45
 "Tiago Orsoni, MSc",Finaxis Brasil,"Director of Analytics, Risk and Compliance",Head of Data,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,56
-Daniele Alcoforado Costa,Compass UOL,Engenheiro de dados | Vivo,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,30
+Daniele Alcoforado Costa,Compass UOL,Engenheiro de dados | Vivo,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,27
 Marcela Crivilin Reckel,GRUPO SBF,Talent Acquisition - Tech (Centauro e Fisia - Nike Brasil),Talent Acquisition,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,51
 Paulo Sadao Konatu,Itaú Unibanco,Coordenador de TI,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,OTHER,,False,34
 Manoela Vilar,ManpowerGroup Brasil,Analista de Recrutamento e Seleção Sênior,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,24
@@ -944,7 +944,7 @@ Vitor Idalgo,ANBIMA,Engenheiro de Dados Sr,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPH
 Paloma Gonzalez,Stefanini Brasil,Recruiter Sr,Recruiter,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,56
 Vinicius Aguiar,SESATECH,Engenheiro de Dados,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_TECH,inferred from Portuguese title,False,37
 Caio Campos,Opella Brasil,Head of Data,Head of Data,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,OTHER,,True,56
-Gabriele Martins,BlueShift Brasil,Analista de Recursos Humanos Pleno I,HR,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,36
+Gabriele Martins,BlueShift Brasil,Analista de Recursos Humanos Pleno I,HR,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,33
 Karina Araújo 🏳️🌈,Banco Itaú,Technical Group Product Manager,Product,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,36
 Leylani Baratto,LB Consultoria de RH,Consultora de Recrutamento e Seleção e Psicóloga Corporativa,Consultant,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_CONSULTING,inferred from Portuguese title,False,19
 Charles Diego Silva,Grupo MAG,Gerente Comercial de Negócios e Previdencia Publica,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
@@ -1014,40 +1014,40 @@ Karla Renata Rosario,A3Data,Estagiária Analise de dados,Other,UNKNOWN,BRAZIL,GE
 Ana Paula Brito,Bulgarelli Serviços Financeiros,Coordenador de R&S,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
 Aline Goncalves Albino,PariPassu Aplicativos,Gerente administrativo e financeiro,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
 Anderson Silva,Techfin ERP Finance - uma empresa TOTVS e ITAÚ,Talent Acquisition Analyst | Aquisição de Talentos & Pessoas,Talent Acquisition,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,SPANISH,GLOBAL_TECH,,True,64
-Paula Prado,SearchNOW BRASIL,Analista de recrutamento e seleção,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,27
-Stefanie Voss,PicPay,Product Manager Specialist,Product,UNKNOWN,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,23
+Paula Prado,SearchNOW BRASIL,Analista de recrutamento e seleção,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,24
+Stefanie Voss,PicPay,Product Manager Specialist,Product,UNKNOWN,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,20
 Deyse Melo,Stefanini Brasil,Business Partner,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,21
-Altenir Modesto,Compass UOL,Engenheiro de dados Databricks,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,57
-Suellen Alves Gregorio,F1RST Digital Services,Engenheira de Dados Jr,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_TECH,inferred from Portuguese title,False,15
+Altenir Modesto,Compass UOL,Engenheiro de dados Databricks,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,54
+Suellen Alves Gregorio,F1RST Digital Services,Engenheira de Dados Jr,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_TECH,inferred from Portuguese title,False,12
 Eliane Fernandes,Confederação Nacional da Indústria - Brasil (SESI/SENAI Departamento Nacional),Superintendente de Gestão e Desempenho,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,GLOBAL_TECH,,False,21
-Amanda Moreira de Souza,Admita Recursos Humanos,Assistente de RH,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,25
-Thiago Generoso,Itaú Unibanco,Líder técnico Engenheiro de Dados,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,47
-Bruno Laerte,Zup Innovation,Engineering Manager,Hiring Manager,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,61
-Bruna Silva,Gela Boca,Coordenador de recrutamento e seleção,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,25
-Rodrigo Azevedo,Itaú Unibanco,Data Engineer,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,OTHER,,False,39
-Frederico B. Emídio,Itaú Unibanco,Emprestimos e ABL - Superintendente de Tecnologia (cCIO),Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,24
+Amanda Moreira de Souza,Admita Recursos Humanos,Assistente de RH,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
+Thiago Generoso,Itaú Unibanco,Líder técnico Engenheiro de Dados,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,44
+Bruno Laerte,Zup Innovation,Engineering Manager,Hiring Manager,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,58
+Bruna Silva,Gela Boca,Coordenador de recrutamento e seleção,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
+Rodrigo Azevedo,Itaú Unibanco,Data Engineer,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,OTHER,,False,36
+Frederico B. Emídio,Itaú Unibanco,Emprestimos e ABL - Superintendente de Tecnologia (cCIO),Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,21
 Luiz Fernando Oliveira,ArcelorMittal Brasil,Estagiário de TI/Dados,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,OTHER,,False,20
 Celeste Alves Pereira,Capitani Group,Recrutadora,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,12
-Beatriz Nogueira,XP Inc,Senior Data Engineer,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_TECH,,False,45
+Beatriz Nogueira,XP Inc,Senior Data Engineer,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_TECH,,False,42
 Luis Uzai,Banco Itaú,Cientista de Dados Coordenador,Data Scientist,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,OTHER,,False,43
 Miryan Carneiro,Grupo Bancorbrás,Assistente de Gente e Gestão,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
-Andreia Assini,Assini Consultoria,Consultora em Recrutamento e Seleção | Headhunter,Recruiter,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_CONSULTING,inferred from Portuguese title,True,47
+Andreia Assini,Assini Consultoria,Consultora em Recrutamento e Seleção | Headhunter,Recruiter,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_CONSULTING,inferred from Portuguese title,True,44
 Wellington Caris,Autonomo,Desenvolvedor Web Low code,Software Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,19
-Amanda Freitas,Praxis Gestão Empresarial,Coordenadora de Gestão de Pessoas,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,24
+Amanda Freitas,Praxis Gestão Empresarial,Coordenadora de Gestão de Pessoas,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,21
 Cristiane Ribeiro de Sá,Finaxis Brasil,HR Head - Superintendente Gente & Cultura,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,21
-Mariana Schimanowski Wizbicki,Doutor-IE | Inteligência Automotiva,Supervisora de Gente e Gestão,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,24
+Mariana Schimanowski Wizbicki,Doutor-IE | Inteligência Automotiva,Supervisora de Gente e Gestão,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,21
 Verônica de Paula,Nucleo Engenharia Consultiva S.A,Analista administrativo,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,15
 Daniel Dalforne,Finaxis Brasil,Gerente de Inteligência de dados,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,31
 Ângelo Gagno Moreira,HST Card Technology,Engenheiro de Dados,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_TECH,inferred from Portuguese title,False,37
 Kesley Miranda,Petlove,Coordenador de Dados,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
-Mariane Gonçalves,Singularis RH,Consultora de recrutamento e seleção,Consultant,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
-Suenny Boos,Singularis RH,Consultora em Gestão de Pessoas,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,24
-Rafaela Eugenio,Maxxi,Coordenador de RH,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,25
+Mariane Gonçalves,Singularis RH,Consultora de recrutamento e seleção,Consultant,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,19
+Suenny Boos,Singularis RH,Consultora em Gestão de Pessoas,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,21
+Rafaela Eugenio,Maxxi,Coordenador de RH,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,22
 Mauricio Monteiro,LM Mobilidade,Analista financeiro sênior,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,15
 Dayla Reizer Martins,ScanSource Brasil,Analista de Gente & Gestão | Talent Acquisition,Talent Acquisition,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,True,54
 Stefânia Domingues,Zappts,"Analista Recrutamento, Seleção e Jornada do Colaborador.",Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,15
 Alan Herbas Martinez,ILUNION,Técnico de selección,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,12
-Eduardo Munari,Stone,Group Product Manager @ Foundation Platform Engineering,Product,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,39
+Eduardo Munari,Stone,Group Product Manager @ Foundation Platform Engineering,Product,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,36
 Natália Lopes,RGK4IT,Coordenador(a) de Gestão de Pessoas,HR,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,31
 Lisandra Bosa,Positivo Tecnologia,Coordenadora de Desenvolvimento Humano - DHO,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,12
 Ítalo Souza,Compass.uol,Engenheiro de dados,Data Engineer,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,27
@@ -1062,7 +1062,7 @@ Esthefany Vitória,InvestSmartXP,Assistente de Recrutamento e Seleção,Other,UN
 Lucas Sanches,Unica Comércio e Distribuição,Auxiliar Logístico I,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,13
 Mariana Stanguerlin,CWI Software,Tech Recruiter,Recruiter,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_CONSULTING,,True,54
 Ayrton Tridico,Dataside,Senior Data Engineer,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_CONSULTING,,False,52
-Renan Kinetz Wachter,Nubank,Lead Analytics Engineer,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_TECH,,False,47
+Renan Kinetz Wachter,Nubank,Lead Analytics Engineer,Data Engineer,BRAZIL,BRAZIL,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,GLOBAL_TECH,,False,44
 Virgínia Nóbrega,Neurotech,Engenheira de dados,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,GLOBAL_TECH,inferred from Portuguese title,False,22
 Thalles Tavares,TIM Brasil,Data & Analytics Manager – Sales Information Modelling (Mobile B2C),Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,31
 Natalia Araujo,GS Inima Brasil,Analista de Gestão de Pessoas PL,HR,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,33
@@ -1240,7 +1240,7 @@ Milton Junior,Randstad Brasil,Especialista Administrativo,Other,BRAZIL,BRAZIL,GE
 Nilton Neves Filho,LM Soluções de Mobilidade,Coordenador de Operações,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,18
 Isadora Lima,Randstad Brasil,Analista de Recrutamento e Seleção Sênior,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,20
 Bruna Vieira de Mello,Randstad Brasil,Coordenadora de Recrutamento e Seleção Regional,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,OTHER,,False,17
-Izadora Balby Brilhante,Capitani Group,Assistente de RH,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,19
+Izadora Balby Brilhante,Capitani Group,Assistente de RH,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,16
 Thais Gregório,Randstad Brasil,Coordenadora de Customer Success,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,OTHER,,False,17
 Julia Rossi,Randstad Brasil,Especialista de Rh,Other,BRAZIL,BRAZIL,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,20
 Gabriel Luppi,Nuevo Manantial SA,Auxiliar de RR. HH.,Other,UNKNOWN,BRAZIL,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,PORTUGUESE,OTHER,inferred from Portuguese title,False,16
@@ -3892,9 +3892,9 @@ Karen M. Paz Villacreses,Nortal,Senior IT Recruiter 360° | Talent Acquisition S
 Leandro Baptista,Work in Finland,Talent Manager Consultant,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,48
 Alejandra Flores,Freelance Insider,Global Talent Partner,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,ENGLISH,OTHER,high-value persona but no region signal in company or title,True,40
 Evelyn Sosa,JULIUS Connected 2 Grow,Talent Acquisition & Commercial Manager,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,48
-Miriam Ivonne Mauricio Ramírez,Ancient - The Wisdom of Technology,Talent Acquisition Manager & IT Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,GLOBAL_TECH,high-value persona but no region signal in company or title,True,70
-Manuela Moreno Mantilla,Deliverect,Recruitment & Sourcing Specialist,Sourcer,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,46
-Melany Montoro,Prometeo Talent,Senior Technical Recruiter | Talent Acquisition,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,56
+Miriam Ivonne Mauricio Ramírez,Ancient - The Wisdom of Technology,Talent Acquisition Manager & IT Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,GLOBAL_TECH,high-value persona but no region signal in company or title,True,67
+Manuela Moreno Mantilla,Deliverect,Recruitment & Sourcing Specialist,Sourcer,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,43
+Melany Montoro,Prometeo Talent,Senior Technical Recruiter | Talent Acquisition,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,53
 Mariana Pinto Bolivar,Jalasoft,Talent Acquisition Lead,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,46
 Matias Maccaglia,UnlockCareer.AI,Co-Founder,Executive,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,GLOBAL_TECH,high-value persona but no region signal in company or title,True,40
 Tetiana Shypik,Sigma Software Group,Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,GLOBAL_TECH,high-value persona but no region signal in company or title,True,50
@@ -4556,14 +4556,14 @@ Mona Raghuwanshi,Oremda Infotech Inc,Sr Bench Sales Recruiter,Recruiter,UNKNOWN,
 Dale Galindez,Manulife,Senior Corporate and Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,50
 Kenneth Mangulabnan,EOS IT Solutions,Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,54
 Paul Cruz,Arch Global Services (Philippines) Inc,Senior Talent Acquisition Specialist,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,45
-Elvia Pereira,Mercado Livre,Talent Acquisition,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,45
+Elvia Pereira,Mercado Livre,Talent Acquisition,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,42
 Marcus Kindermann,Piening Personal,Senior Recruiter Engineering & IT,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,50
 Lucas Luciano Markert,TOPEOPLE GROUP,Senior Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,50
 Barbara Hässner,serviceminds GmbH,Information Technology Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Abhishek Upadhyay,TekIntegral,Executive IT Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,57
 Guillem Llacuna Ines,PlayJob,Co-Founder,Executive,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Gisell Galanton Ortiz,Page Personnel,Talent Acquisition Consultant,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,42
-Vitor Silva,Atom6 Studio,Analista de RH Sênior 2 l Tech Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,MIXED,OTHER,high-value persona but no region signal in company or title,True,50
+Vitor Silva,Atom6 Studio,Analista de RH Sênior 2 l Tech Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,MIXED,OTHER,high-value persona but no region signal in company or title,True,47
 Andrii Momut,Фриланс,Tech & Non-Tech Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Ana Paula D Silva,Fortics,Tech Manager,Hiring Manager,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,49
 Raúl Pizarro Gallego,Banco Mediolanum,HeadHunter - Banca y Finanzas,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
@@ -4571,7 +4571,7 @@ Aliona Konstantinova,Andersen Lab,IT Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUN
 Victor Baggio,Playbook Lab,Sócio fundador,Executive,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Adriana Santos,Object Edge Inc,Talent Acquisition Lead | Onboarding | Training & Development,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,50
 Nicole Riesner,just.nerds GmbH & Co. KG,IT Recruiter / Partner Manager,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,54
-Jhenifer Carvalho Vicentini,RENOHAR Consultoria em Recursos Humanos,Founder - Headhunter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,GLOBAL_CONSULTING,high-value persona but no region signal in company or title,True,60
+Jhenifer Carvalho Vicentini,RENOHAR Consultoria em Recursos Humanos,Founder - Headhunter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,GLOBAL_CONSULTING,high-value persona but no region signal in company or title,True,57
 Swetha Shivanna,Outdefine,Global Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Klaudia Sakotic,FERCHAU,Talent Acquisition Expert,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,42
 Denise Hernández,ParallelStaff,Talent Acquisition Executive,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,58
@@ -4619,15 +4619,15 @@ Stefania Ponce,Grupo Faro Verde,Talent Acquisition Leader,Talent Acquisition,UNK
 Arun Kumar,HRize LLC,Sr. Lead Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,50
 Aleksandra Gogolewska,Seargin,Principal Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,52
 Jorge Flores Romero,Inetum,Especialista de Atracción de Talento,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,MIXED,OTHER,high-value persona but no region signal in company or title,True,45
-Sonia Palacios Cepeda,Resilient Co,Talent Acquisition Associate,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,45
+Sonia Palacios Cepeda,Resilient Co,Talent Acquisition Associate,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,42
 Rocío Rodríguez de Trujillo Sánchez,Dragados SA,Talent Acquisition & HR Specialist,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,45
 Poliana Cardoso,Strider,Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Talison Araujo,iMile Delivery,Talent Acquisition Analyst,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,GLOBAL_CONSULTING,high-value persona but no region signal in company or title,True,45
 Oluwatimilehin Shonibare PHRi™,Voicemod,Staff Talent Acquisition Partner (Tech & Product),Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,50
-Oleksandra Skalko,Relevant Search,Talent Sourcer,Sourcer,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,40
+Oleksandra Skalko,Relevant Search,Talent Sourcer,Sourcer,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,37
 Nitin Diwaker,Talent Portus,Senior Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,50
 Mercè Cañisá,PortAventura World,Talent Acquisition Manager,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,52
-Rodrigo Tanus,Livon,CEO,Executive,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,47
+Rodrigo Tanus,Livon,CEO,Executive,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Ana Caroline Fialho,Insi,Tech Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,44
 Sara Ramos,Spark | Influencer Marketing,Gerente de Talent Acquisition,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,MIXED,OTHER,high-value persona but no region signal in company or title,True,52
 Carlos Macêdo,Avanade,Talent Acquisition Specialist,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL,0.0,LOW,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,UNKNOWN,OTHER,high-value persona but no region signal in company or title,True,45
@@ -5036,7 +5036,7 @@ Julia Almeida,BA Global Talent,Talent Acquisition Associate,Talent Acquisition,U
 Sarah Grote,Randstad Enterprise,Operational Excellence Director EMEA,Director,UNKNOWN,GLOBAL_STAFFING,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_STAFFING,,True,45
 Victor Kazuyuki Shinya,Amazon Web Services (AWS),"Enterprise Solutions Architect, Agriculture",Other,UNKNOWN,GLOBAL_TECH,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,39
 Anatoly Masterovoy,Amazon Web Services (AWS),Senior Talent Acquisition Specialist (Full-Cycle Recruiting | Technical Hiring) – AWS,Talent Acquisition,UNKNOWN,GLOBAL_TECH,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,75
-Gabriel Damianovici Sartori,Amazon Web Services (AWS),Cloud Sales Representative,Other,UNKNOWN,GLOBAL_TECH,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,42
+Gabriel Damianovici Sartori,Amazon Web Services (AWS),Cloud Sales Representative,Other,UNKNOWN,GLOBAL_TECH,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,39
 Kaue Eduardo,Salesforce,Account Executive – Data Foundation,Other,UNKNOWN,GLOBAL_TECH,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,25
 Vinícius Pereira,Villares Metals,Analista planejamento manutenção Pleno,Other,UNKNOWN,GLOBAL_TECH,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,PORTUGUESE,GLOBAL_TECH,,False,38
 Arthur De Santis,Oracle,Diretor,Director,UNKNOWN,GLOBAL_TECH,GLOBAL,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,45
@@ -5380,9 +5380,9 @@ Ezequiel Gonzalo Ruiz,BairesDev,Chief Business Officer,Other,LATAM_USD,LATAM_USD
 Juan Sebastian Ardila Echeverry,Controles Empresariales,Coordinador de planeación,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,25
 Alexandre Leonardo Trevisani,Stefanini Group,Director de Operaciones,Director,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,True,45
 Anita Mellado Santander,Independiente,"Senior Talent Acquisition Specialist - Chile, México, España",Talent Acquisition,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,73
-Andrea Barrios,Búsquedas Latam,Recruiter,Recruiter,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,75
+Andrea Barrios,Búsquedas Latam,Recruiter,Recruiter,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,72
 Bruno Bueno,NTT DATA Europe & Latam,Business Intelligence,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,43
-Haide Padilla,Bankaool,Captación de talentos,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,18
+Haide Padilla,Bankaool,Captación de talentos,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,15
 Gabriela Orozco,Electrix,Lider de Gestión del Talento Humano y Cultura,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,16
 Bruno Oliveira,NTT DATA Europe & Latam,Director Digital Architecture,Director,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,80
 Flavia Brasil Nunes,Athyna,Customer Success Manager,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_STAFFING,,False,31
@@ -5496,11 +5496,11 @@ Bryan Zimmerman,KogniVera - LATAM,Information Technology Recruiter,Recruiter,LAT
 Fabiano de Oliveira e Souza,NTT DATA Europe & Latam,Executive Account Manager,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,57
 Nadjane Andrade,NTT DATA Europe & Latam,Tech Lead,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,55
 Verônica Ávella,jobnagringa,Líder de Comunicação e Relacionamento da Comunidade e Tutora de Inglês,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,23
-Gimena Ponzio,Freelance | Self-Employed,IT Recruiter & Talent Partner | LATAM & US Hiring | Tech & Non-Tech Roles,Recruiter,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,OTHER,,True,72
+Gimena Ponzio,Freelance | Self-Employed,IT Recruiter & Talent Partner | LATAM & US Hiring | Tech & Non-Tech Roles,Recruiter,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,ENGLISH,OTHER,,True,69
 Oscar Morgado,NIMA Automoció,"Responsable Corporativo de Talento, Cultura y Desarrollo | Nima Automoció",Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,22
 Jennifer Melo,NTT DATA Europe & Latam,HR Business Partner,HR,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,56
 Franco Agustin Velazco,MinData,Referente del área de selección & Líder de equipo,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,GLOBAL_TECH,inferred from Spanish title,False,33
-Karen Camiloaga,NTT DATA Europe & Latam,Analista de capacitación,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,GLOBAL_TECH,,False,53
+Karen Camiloaga,NTT DATA Europe & Latam,Analista de capacitación,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,GLOBAL_TECH,,False,50
 Roberto Celestino Pereira,NTT DATA Europe & Latam,Chief Sustainability Officer (CSO) – NTT DATA | Digital Sustainability,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,60
 Pablo Sáez,NTT DATA Europe & Latam,"Partner, Head of Ibero-America Data & Analytics",Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,False,58
 Kiara Rondon Ulloa,Praxis,Analista de Reclutamiento y Selección LATAM,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,OTHER,,False,46
@@ -5520,7 +5520,7 @@ Thiago Prado,Prosync Talent Hub,Talent Acquisition | Aquisição de Talentos | T
 Vanessa Moya,GE Vernova,LATAM Services Parts Manager,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,43
 Esteban Gutiérrez,Zimmer Biomet,Talent Acquisition Partner (LATAM & US),Talent Acquisition,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,70
 María Primo Carrau,Melt Group,Directora de Operaciones,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,12
-Mercedes Espinosa,Resilient Co,"Global Talent Acquisition Partner| LATAM, US & EMEA",Talent Acquisition,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,70
+Mercedes Espinosa,Resilient Co,"Global Talent Acquisition Partner| LATAM, US & EMEA",Talent Acquisition,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,67
 Eduardo Felisberto,ZIVA,Talent Acquisition Manager LATAM & HR Operations Coordinator,Talent Acquisition,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,77
 Georgia Tsalgini,NTT DATA Europe & Latam,Senior Talent Acquisition Specialist,Talent Acquisition,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_TECH,,True,80
 Facundo Canido,Mapaiso Urbanizaciones,Gestor de talento,Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,GLOBAL_TECH,inferred from Spanish title,False,18
@@ -5621,7 +5621,7 @@ Mónica Alexandra Valerio Mendieta,NTT DATA Europe & Latam,Talent Acquisition An
 Julio Bianco,Dafiti Group LATAM,Head of Enterprise Systems,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,48
 Alejandra Arango García,TECLA,Recruiter @Tecla | Hiring the Best Talent in LATAM 🚀,Recruiter,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,72
 Bárbara Baliano,"Ubiminds: You, International",Tech Recruiter LaTam,Recruiter,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,79
-Daniel Esteban Vesga,Perficient,Solutions Architect,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,15
+Daniel Esteban Vesga,Perficient,Solutions Architect,Other,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,12
 Gabriela Gutterres de Brito,Nutrien Soluções Agrícolas,"Lider de Change Management, Comunicação Corporativa e DHO",Other,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,False,20
 Luiz Gouvêa,Straumann Group,Sales Excellence Director - LATAM,Director,LATAM_USD,LATAM_USD,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,70
 Oscar Canals Morata,S.A. RECASENS,Director de RR. HH.,Director,UNKNOWN,LATAM_USD,GEOGRAPHIC,0.4,LOW,RESOLVED_LOW_CONFIDENCE,SPANISH,OTHER,inferred from Spanish title,True,45
@@ -6419,14 +6419,14 @@ Marlons A. A. de Jesus,Ford Motor Company,Data Analytics Engineer,Data Engineer,
 Deise Wolski,Zallpy Digital,Operations Leader,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,15
 Valentina Cariaga Noriega,Novofarma Service S.A,Analista Desarrollo Organizacional / HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,36
 Helton Chagas,Sebrae Startups,Startup Mentor,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,12
-Felipe Paredes,Cargill,Tecnologia da Informação,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
+Felipe Paredes,Cargill,Tecnologia da Informação,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,8
 Jhenifer Cardoso,GRUPO CRIAR,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
-"Nicole Murry - MS, PHR -Masters, HR Certified",MurryConsult LLC,Human Resources Consultant,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
+"Nicole Murry - MS, PHR -Masters, HR Certified",MurryConsult LLC,Human Resources Consultant,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,17
 Oscar Daniel Sulbara Buitrago,Gesthion Organizacional,Human Talent Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Maria Victoria Morales,Intertec International,Senior Recruiting Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,31
 Letícia Pedroso (Leh),UX Quest,Mentora de Carreira em Tecnologia,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Manasvi Malav,Tarento Group,Associate Product Manager,Product,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
-Mostafa Etman,Arrow Electronics,HR specialist,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,24
+Mostafa Etman,Arrow Electronics,HR specialist,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,20
 Wesley Gomes da Silva,Serasa Experian,IT Coordinator | M&A Startup Fintech Flexpag | Payments and Data,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 "Rachel Serwetz, MBA, PCC",Pinnacle - AI Coaching,AI Learning Strategist / AI Agent Lead,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,20
 Mai Nagiub,CodeZone,People Section Head,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
@@ -7932,11 +7932,11 @@ Agustina Giménez D´Anatro,Glic Solutions,Head of Human Resources,HR,UNKNOWN,NE
 Suriya Palanisamy,LTI - Larsen & Toubro Infotech,Integration Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,25
 Bianca Maestrali,Cidadania Já,Gerente de Gente e Gestão,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
 Juan Felipe Librado Jimenez,Nortal,Senior Recruitment Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
-Clara Goñi,Orienta,Founder & Talent Consultant,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,48
-Ingrid Brandão,First Decision,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,30
+Clara Goñi,Orienta,Founder & Talent Consultant,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,45
+Ingrid Brandão,First Decision,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
 Jerónimo D'Alessandro,SUBSCRIBE,Senior Product Manager,Product,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,19
 Sibusiso Mthimkulu,DVT,Senior Product Designer (UI & UX),Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,14
-Simon Peña,"Foothill Technology Solutions, LLC",Talent Operation Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,38
+Simon Peña,"Foothill Technology Solutions, LLC",Talent Operation Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,35
 Rosina Rey,Helios HR Talent,HR Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Maria Helena Silva,FLAPA - Engenharia e Mineração,Analista de Rh II,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,20
 Isabel Ambrosio,"Aseguradora General, S.A",Encargada de Selección y Atención al Personal,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,8
@@ -7944,15 +7944,15 @@ Martina Michelini,Tu Terapia,Psicóloga clínica,Other,UNKNOWN,NEEDS_COMPANY_MAP
 Joss Diaz,Nortal,Recruiting Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,18
 Micaela Vischi,Bayer,Senior UX UI Designer,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,14
 Valeria Villalva,Nortal,Recruitment Assistant,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
-Maria Eduarda Jaruzo,TD Business,HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
-Nicolás Machado,Friedman,Gerente de Reclutamiento y Selección,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,28
+Maria Eduarda Jaruzo,TD Business,HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,24
+Nicolás Machado,Friedman,Gerente de Reclutamiento y Selección,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,25
 Tainá Motta,Euro Start Academy,Especialista em Recrutamento Internacional,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,11
 Olena Khasina,NDA,Team Lead of HRBPs & Admin,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,16
 Maritza Bazan,Alimentos Bloxom,Head of People & Culture,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,28
 Josino Moreira Neto de Carvalho,Braveo,Analista de BI,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,11
 Jonathan Mathias,WEINIG HOLZ-HER Australia,"Customer Service, Operation & Success Manager",Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
-Karla L. Urueña Alonso,Bankaool,HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
-Rosario Pais Zubizarreta,We Are Pipol,HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
+Karla L. Urueña Alonso,Bankaool,HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,24
+Rosario Pais Zubizarreta,We Are Pipol,HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,24
 João Marcos Ferreira Silva,HealthBit | Inteligência em Saúde,Data Analyst,Data Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,30
 Gustavo Barbosa,Grupo Boticário,Analista de Inovação e Experiência III,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,11
 Ivan Osatchuk,Grupo Boticário,Data Engineer Specialist (Data Platform),Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,45
@@ -7973,7 +7973,7 @@ Santiago Barceló,Clip,People Business Partner Manager,Other,UNKNOWN,NEEDS_COMPA
 Rafael Andrade,Strider,Lead Software Engineer,Software Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
 Nikhil Parihar,RANJAN TECHNOLOGIES (OPC) PRIVATE LIMITED,Data Analyst,Data Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,37
 Martina Saggese,Albano Cozzuol S.A,Analista Sr. de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,20
-Florencia Valls,Megalabs,Especialista de Personas y Cultura,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,21
+Florencia Valls,Megalabs,Especialista de Personas y Cultura,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,18
 Darina Sysoieva,Sigma Software Group,IT Researcher,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,18
 Stephanie Cerf,HitOcean,Chief Marketing Officer,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
 Mailén Miró,Banco del Sol,Senior UX Designer,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,14
@@ -7992,7 +7992,7 @@ Sylvia Souza,SP+ Escolas,Supervisora de RH,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,U
 Karen Corado,Banco Promerica Guatemala,Analista de selección de personal,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,11
 PAOLLA CRISTINA,Data Mundo,Analista de Dados e BI,Data Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,GLOBAL_TECH,company exists but no geographic or category signal,False,30
 Cecilia Martínez Lemos,Médicos Sin Fronteras Latinoamérica,Técnica de Reclutamiento,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,40
-Camilla Ianhes Silva,OdontoCompany,Avaliador,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
+Camilla Ianhes Silva,OdontoCompany,Avaliador,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Denisse Varela,Desai Hotel Group,HR Intelligence & Experience Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,8
 Michelle Oliveira,Grupo Otimiza,Analista de RH Pleno,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,20
 Jeymi Cermeño,Corporación AG,HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,17
@@ -9397,7 +9397,7 @@ Valeriia Homeniuk,CloudBees,Demand Generation Specialist,Other,UNKNOWN,NEEDS_COM
 Sri Durga Meghana Y,Optum,Senior Manager Data Engineering,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,18
 Karina Makarova-Kuravkin,Cargoo,Senior People & Culture Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
 Miao Zhang,openEuler,Social Media Operation at openEuler,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
-Yara Medeiros,A Humtech agora é Humgroup,Analista de Recrutamento e Seleção Sênior,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,GLOBAL_TECH,company exists but no geographic or category signal,False,28
+Yara Medeiros,A Humtech agora é Humgroup,Analista de Recrutamento e Seleção Sênior,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,GLOBAL_TECH,company exists but no geographic or category signal,False,25
 Henry Tobias Jones,EQT Group,Global Head of Content Marketing & Creative,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
 Carlos Lima,Getecsa,IT Recruitment Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Franciele Bilhar Vrielink,Grupo QuintoAndar,Compensation Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
@@ -9412,7 +9412,7 @@ Anastasiia Pyrih,Intellias,Delivery Coordinator,Other,UNKNOWN,NEEDS_COMPANY_MAPP
 Admir Bostandzic,Tech Punk GmbH,Recruiting & Operations Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,25
 Lara Evrenos,finbyte,HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
 Caio Moretti,Hardwork Medicina,Membro do conselho de administração,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
-Amanda Nabarrete,Lapônia - Concessionário de Caminhões e Chassis de Ônibus Volvo,Head of People & Culture,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,35
+Amanda Nabarrete,Lapônia - Concessionário de Caminhões e Chassis de Ônibus Volvo,Head of People & Culture,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,32
 MBB Eduardo Marcondes,SETA Desenvolvimento Gerencial,"Belt, Instrutor & Consultor",Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,19
 Maike Lübke,in-tech GmbH,Teamleader Recruiting,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,22
 Fábio Sobreira Catein,EloGroup,Partner & Distinguished Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
@@ -9423,7 +9423,7 @@ Maíra Matos Araújo,CESAR,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAP
 André Lamounier,Hotmart,Senior Analytics Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,33
 Stefan Widmer,atelier TILIJA,"Head of Marketing, Communications and Processes",Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
 Nick Burr,Oxford Data Plan,Recruitment Lead,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,30
-Thayná Moizés,Mobi2buy,Head de Pessoas,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
+Thayná Moizés,Mobi2buy,Head de Pessoas,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Beate Schulte,DPS - Das Prüfunternehmen,Head of People & Culture,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,32
 Ione Moura,ACR Safety on Lifting & Handling,Gerente de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,31
 Anna Massow,IU Group,"Head of Employer Branding, Culture & Communication",Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
@@ -9435,7 +9435,7 @@ Douglas Rosseto,Power Tuning,Lead Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMP
 George Silva,phData,MLOps Solutions Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,22
 "Renato Santos Pereira, MSc",The HEINEKEN Company,Analytics Engineering Team Lead,Analytics Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,32
 Bruno Willyan Lunelli Pires,Olist,Analista de negócios,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
-Fernanda Ferreira Rocha,VAGAS.com,Enterprise Customer Success Manager | Especialista em Customer Success,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,18
+Fernanda Ferreira Rocha,VAGAS.com,Enterprise Customer Success Manager | Especialista em Customer Success,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Erica Rodrigues,SENAI CIMATEC,HR Business Partner Sr,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,21
 Cristian Pérez Arranz,PIXIE,Key Account Manager - KAM,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Denner Augusto,WelHome,Sr Machine Learning Engineer,Data Scientist,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,24
@@ -9445,7 +9445,7 @@ Marilia Ribeiro,MATH,People and Culture Lead,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UN
 Rafaella Alvares,Swap,Product manager,Product,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
 Ricardo Portilho Proni,Power Tuning,Head of Oracle,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
 Ana Carolina Ricciardi,Grupo Fleury,Lead of AI and Data Science | Health,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,20
-Thiago Antonio Mazzaron Reino,CHS América do Sul,Senior HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,30
+Thiago Antonio Mazzaron Reino,CHS América do Sul,Senior HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
 Alessandro Zito Gomes,F1RST Tecnologia,Data Engineer for Data&AI and Advanced Analytics Senior Manager at F1RST Tecnologia,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,33
 Jessica Matos,SENAI CIMATEC,Gerente de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,GLOBAL_TECH,company exists but no geographic or category signal,False,31
 Maria Isabela Silva,WV Eventos LTDA,Atendente de negócios,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
@@ -9456,9 +9456,9 @@ Daniela Strazza,Breakthroux,Founder | Fractional Head of People,Founder,UNKNOWN,
 Lucas Cerresi,AB InBev,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Camylla Souza,Deal,HR Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
 Joshua Lyrio,ExxonMobil,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
-Julia Hannah Pereira,AUTOLAB,Consultora e Founder,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,45
+Julia Hannah Pereira,AUTOLAB,Consultora e Founder,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,42
 Rahul Dhami,IntelliPro,Delivery Manager,Project / Program Manager,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
-Daiane Nunes,Linx,HR Business Partner Specialist,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
+Daiane Nunes,Linx,HR Business Partner Specialist,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,24
 Luisa Ruiz blasco,Grupo Acrismatic,Subdirección departamento recursos humanos (desde marzo 2023),HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,21
 Sercan Gelincik,Deutsche Bank,Strategic Development Officer - Chief Strategy and Innovation Office,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
 Rafaela Campos 🏳️⚧️,EloGroup,Data Engineer IV,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
@@ -9466,12 +9466,12 @@ Alana Aguiar Beirão,Grupo Sagarana,Analista de RH Generalista,HR,UNKNOWN,NEEDS_
 Rodrigo Rodrigues,AVANT Gestão Financeira,ANALISTA DE DEPARTAMENTO PESSOAL,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Renato Turk Faria,Associacao Junior Achievement Do Rio Grande Do Sul,Conselheiro Consultivo da Junior Achievement do Rio Grande do Sul,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,13
 Armando Nabas Filho,Emprego Na Gringa,Fundador,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,42
-Karina Botura,The Digital Eden,Anallista de RH e DP,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,15
+Karina Botura,The Digital Eden,Anallista de RH e DP,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,12
 Anita Patel,K&K Talents,Sr. Recruitment Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Julide Aslankaya,Odeabank,HRBP Assistant Manager (Technology Departments),HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Hala Yacoub,Open (YC W24),Talent and People Operations Lead,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,29
 Clara Pla Marcos,Melt Group,Recruitment Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,19
-Jessica Korbes,UltraCheese,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
+Jessica Korbes,UltraCheese,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Pabllo Bitencourt,GPA,Analista de Data Analytics,Data Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Mariana Ehlert,Barbosa Assessoria Contábil,Assistente tributário,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,13
 Carlotta Deriu,Fondazione Policlinico Universitario Agostino Gemelli IRCCS,Administrative Office Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
@@ -9480,7 +9480,7 @@ Rafael Castro,Amoreza,Hospitality Operations Lead | Guest Experience & Business 
 Isabella Duarte,CNI - Confederação Nacional da Indústria,Analista de RH Sênior,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Loreto Estay Vera,ServiceRocket,HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
 Franciele Mascarenhas da Silva,Delfia S/A,Performance Test Engineer,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
-Pamella Maiara,Unimed Maringá,Analista de Recursos Humanos (R&S),HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
+Pamella Maiara,Unimed Maringá,Analista de Recursos Humanos (R&S),HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Alex Fournaise,Havas Play 🇫🇷,Chargé média sponsoring TV & Radio,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Vitória Barboza,Vitoria - Recursos Humanos,CEO,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,34
 Alexandre Sales,ForbesBLK,Membro,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
@@ -9525,7 +9525,7 @@ Rodrigo Müller de Carvalho,UOL EdTech,Gerente de dados,Other,UNKNOWN,NEEDS_COMP
 Beatriz Mata,Keeta,Sales Enablement & Operations Sr. Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Hugo Pina e Moura,#ONO (Open to New Opportunities),Chief Financial Officer,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
 Hemelyn Nunes,ilegra,Analista de Endomarketing e Comunicação Interna Pleno,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
-Gabriela Kegler,Grupo AG Capital,Analista de DHO,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,18
+Gabriela Kegler,Grupo AG Capital,Analista de DHO,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Glauco dos Santos Almeida,Artefact,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Hillary Kuntuwaah Ampah,eleQtron GmbH,Junior HR Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Sara Busti,Istituto Comprensivo,Docente scuola primaria,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
@@ -9533,7 +9533,7 @@ Andréa Nobre,ADEPARA,FEA,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,N
 Tiago Costa,Automarticles,Fundador,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,42
 Malena Beute,Hire With Near,Talent Hunter,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Maria Tsormpatzoglou,Virtual Minds,Principal Talent Operations,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,20
-Maiara Fernandes,Talent GRH,Analista de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
+Maiara Fernandes,Talent GRH,Analista de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Daniel Fujimoto da Silva,TDS Informática S/A,Analista de infraestrutura de TI,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Ben Smith,GetYourGuide,Analytics Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Danille Butler,Self-employed,Front-End Development Projects,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
@@ -9542,7 +9542,7 @@ Claudia Montella,Farmacie Lombardi Group,Risorse umane,Other,UNKNOWN,NEEDS_COMPA
 Meetali Jain,Adlerqa Technologies Pvt Ltd,Human Resources Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,41
 Laís Mota,Wellhub,Senior Software Engineer,Software Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
 Jan Karrasch,toom Baumarkt,Geschäftsführer | CFO Toom Baumarkt GmbH,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
-Luana Rohling Silva,Agência liveSEO,Gestora de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
+Luana Rohling Silva,Agência liveSEO,Gestora de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,21
 Gibram Raul,Technium - AI for EveryOne,Founder & AI/Neuroscience Strategist,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,52
 Mariarubini Arumainathan,Wallpaper & Carpets Distributors (M) Sdn Bhd,Group Human Resources Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,31
 Luke Toussaint,Gravitas Recruitment Group (Global) Ltd,Recruitment Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,38
@@ -9558,11 +9558,11 @@ Luís Fernando Marques Oliveira,John Deere,Senior validation engineer | Tractor 
 Daniel Ribeiro,ExxonMobil,Data Engineer/Data Analytics,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Victor Fagundes Ferreira Dias,ArcelorMittal Sistemas,Consultor SAP BW,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,38
 José Lucas Vasconcelos,Justos,Senior Analytics Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,33
-Professor Isidro PhD,Link School,Faculty Member,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
+Professor Isidro PhD,Link School,Faculty Member,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Ricarda Redeker,Academy for Intercultural Dialogue and Competency,Founder,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,42
 Gabriel Menegueli,MedSênior,Analista de Dados Pleno,Data Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Joe Reis,DeepLearning.AI,Instructor,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,12
-Eduardo Rocha,PSA Soluções em TI,Gerente de Projetos,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,25
+Eduardo Rocha,PSA Soluções em TI,Gerente de Projetos,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,22
 Kevin Berger,Tintschl Unternehmensgruppe,Senior Consultant Personaldienstleistungen,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
 Daniele Schiavelli,ING Italia,Tribe Data Management - Chapter Lead Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,54
 Marc John,Bridges - Raising Standards,Principal Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,27
@@ -9592,15 +9592,15 @@ Marco Alves (Gaurav),Epsilon Solutions Ltd. SA de CV,Team Lead,Other,UNKNOWN,NEE
 Adeoluwa Isiade,TALBOOST LTD,Regional Team Lead(Africa),Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,20
 Alina Bernatska,Cash Flow Positif,Лідер фонду,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Roxanne Phillipson (Pedretti),Hamilton George Care,HR Associate,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
-Pedro Josue Ambuca Serna,IDM Technology,Practicante de reclutamiento y selección,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,24
-Micheli Möller,Oystr - Robôs Inteligentes,Analista de Gestão de Pessoas Pleno II,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
+Pedro Josue Ambuca Serna,IDM Technology,Practicante de reclutamiento y selección,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,21
+Micheli Möller,Oystr - Robôs Inteligentes,Analista de Gestão de Pessoas Pleno II,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Allan Centurione,Mindbody,Senior Product Manager,Product,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
 Aline Guimarães,Blip,Data & Analytics Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
-Rafaela Valeriano Sirpa,Sirpa Desenvolvimento Humano e Organizacional,Consultor de RH,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,31
+Rafaela Valeriano Sirpa,Sirpa Desenvolvimento Humano e Organizacional,Consultor de RH,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,28
 Bruno Pereira,EloGroup,Principal Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,35
 Gilvanei Gregório,Ascertain,Senior Software Engineer,Software Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,25
 Teresa Vaz da Silva,Mermaidestak,Generalista em RH,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,12
-Nathália Honório,Seara,Analista de RH - Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
+Nathália Honório,Seara,Analista de RH - Business Partner,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Nathalia Seixas,Clicksign,Analytics Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Paula Lerma,BIGSEO,Head of People & Culture,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,32
 Sang-Kyun Park,KWS Group,Global Expert Employer Branding & Talent Attraction,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
@@ -9610,7 +9610,7 @@ Timo Hörz,Postbeamtenkrankenkasse,Personalentwickler mit Schwerpunkt Führungsk
 Karine Giovana,MPA Automação,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Solène Renault,XRAYS TRADING,Chargée de recrutement,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 プリンス Prince Kumar,"Tanisha Systems, Inc",Recruitment Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
-Lucas Naves,Hapvida NotreDame Intermédica,Data Engineer Mid-level,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,33
+Lucas Naves,Hapvida NotreDame Intermédica,Data Engineer Mid-level,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,30
 Natália Tomé Scalzaretto,Malka Digital,Project Manager,Project / Program Manager,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,27
 Isabelle Ebener,AuPairWorld,Childcare,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,12
 Ana Carolina Proença,Grupo Farmavan,Gestora de DP,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
@@ -9623,7 +9623,7 @@ Yannik Buttkus,Octopus Energy,Team Lead Talent @ Octopus Wärmepumpen,Other,UNKN
 Cínthia Rodrigues,HUB MIND CONSULTORIA,Fundadora,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_CONSULTING,company exists but no geographic or category signal,False,12
 José Henrique Garcia,Involves,Analytics Engineer Pleno,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,30
 Andrey Henrique Rodrigues,Grupo Idiomus,Analista de Dados (Growth & Revenue),Data Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
-Ana Rafaella Arruda,Unidas,Gerente de projetos de TI,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,25
+Ana Rafaella Arruda,Unidas,Gerente de projetos de TI,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,22
 Maria Luiza Ribeiro,Rioquímica S.A,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Magdalena Wrona,Finalyse,HR Officer,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Juan Gonzalez de Avellaneda,Yumatech,Recruitment Lead,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,30
@@ -9645,7 +9645,7 @@ Ronia Mundim,SiDi,QA Analyst,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NON
 Gustavo Taguchi,RED Innovations,Senior Business Intelligence Analyst,BI Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Rafael Italiano,DoorDash,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,46
 Daniela Tunchel,Oraion,Head of Global Operations,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,23
-Deep A (日本、インド、アメリカで採用中),Aarohaan Sales and Services,Assistant Director - HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
+Deep A (日本、インド、アメリカで採用中),Aarohaan Sales and Services,Assistant Director - HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Larissa Markus Torres,IQVIA,Analytics Engineer & Data Automation,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Daniel Mata,Tibber,Head of VPP Asset Growth,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
 Lucas França,Globo,Senior Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,33
@@ -9664,11 +9664,11 @@ Cecilia Spinola BR PT,ValorH Consultoria e Treinamento,Sócia,Other,UNKNOWN,NEED
 Cássio Andrade,NCS Consultoria,SDM - Service Delivery Manager - Life Science,Project / Program Manager,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_CONSULTING,company exists but no geographic or category signal,False,27
 Breno Paiva,Vale,AI & Machine Learning Tech Lead,Machine Learning / AI,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,41
 Sami Mustafa,malomatia,Senior Consultant - Business Analytics and Technology,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
-Michelle Iris Oliveira,Ion Interactive,Interactive Content Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
+Michelle Iris Oliveira,Ion Interactive,Interactive Content Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Gabriel Philot,AB InBev,Senior Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,33
 Vinita Pal,NexCen Global Inc,Recruitment Account Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Milena Cerqueira,BRP,Business Intelligence Senior,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
-Pedro Carrijo,GitLab,Senior Solutions Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
+Pedro Carrijo,GitLab,Senior Solutions Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
 David Puleri,Wazo International,Technology Leader,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Duy Lam,ShareCV,HR Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,31
 Adriana Abad,HomeBuddy,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
@@ -9694,9 +9694,9 @@ Nazareno Lattessi Di Vito,Avature,Software Engineer,Software Engineer,UNKNOWN,NE
 Helder Borges,Kuehne+Nagel,IT Team Lead | Data Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,20
 Pablo Riboldi,Workstream,Business Development Specialist,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Peter Williamson,MariaDB,Solutions Engineer,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
-Tatiana Crocco,IBM,Ecosystem Technical Sales Leader,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
+Tatiana Crocco,IBM,Ecosystem Technical Sales Leader,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 "Filipe Silvano Andrade, Major, MSc., PhD. Candidate",Corpo de Bombeiros Militar de Minas Gerais,Senior Data Analyst,Data Analyst,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,GLOBAL_TECH,company exists but no geographic or category signal,False,24
-Anna C. Takano,Hayamax Distribuidora de Produtos Eletronicos Ltda,Analista de Gestão de Pessoas SR,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
+Anna C. Takano,Hayamax Distribuidora de Produtos Eletronicos Ltda,Analista de Gestão de Pessoas SR,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Bernardo Lago,NielsenIQ,Lead Data Scientist,Data Scientist,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,32
 Fabiana Vaz,Grupo AG Capital,Parceira estratégica,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Angelo R. Abilio,"Viaflow | Work Smarter, Not Harder",Executivo de soluções Sr,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
@@ -9745,7 +9745,7 @@ Minisha M,Nurtur,People Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,
 Jaqueline Souza,RHGestor By Sólides,Customer Training Analyst,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
 Catalina Contreras Salazar,TicMobile Empresas - Distribuidor Orange,People Operations Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,31
 Antonielle Da Cunha,Vieira Melo & Lionello,Analista de Recursos Humanos SR,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
-Bruna Alves Pereira,BALERA,Head de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
+Bruna Alves Pereira,BALERA,Head de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,21
 Jessica Ferreira,RL Higiene,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Rafael G. Fernandes,Cora,AI Engineer Senior,Data Scientist,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,30
 Francelly Silva,Chlorum Solutions,Especialista de PCP,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,34
@@ -9864,7 +9864,7 @@ Laura Maass,InBetta,Comprador (a) Jr - Importação,Other,UNKNOWN,NEEDS_COMPANY_
 Silvia Tordera Rodríguez,Page Personnel,Senior Executive Associate Manager Ingenieros y Técnicos,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,18
 Julia dos Santos Damasio Demenek,Mais que Gente e Gestão,Sócia Fundadora,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,21
 Fernando Igartua Barturen,Capital Vision,Investments Solutions Analyst,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,15
-Ana Paula Moura,U3 Urbanismo S.A. ®,Recursos humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
+Ana Paula Moura,U3 Urbanismo S.A. ®,Recursos humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,21
 Heitor Sasaki,Hitachi Energy,Digital Transformation - IT Project Manager,Project / Program Manager,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
 Jennifer Scarcella,Rhomberg Sersa Rail Group,Assistente Risorse Umane,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,13
 Saurabh Srivastava,Advance Auto Parts,Senior Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
@@ -9895,7 +9895,7 @@ DIS AG Giuseppina Di Marco,DIS AG,Niederlassungsleiterin,Other,UNKNOWN,NEEDS_COM
 Carme Rioja Navarro,Melt Group,Recruitment Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,19
 Jone de la Fuente Asensio,LKS NEXT,Consultora de Personas,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,19
 Paulo Silva,Gupy,Revenue Operations & AI Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
-Tanila Garcia,Transpanorama Transportes,Analista de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
+Tanila Garcia,Transpanorama Transportes,Analista de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
 Lucia Andreotta,Hotel Campo Marzio,People&Culture,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Débora Paixão,LUZA Group,Analista de Recrutamento e Seleção Pleno,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Pandian K S,Growth Engine,Founder,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,42
@@ -9991,7 +9991,7 @@ Alessandro Binhara,Azuris Company,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMP
 Fernanda Cristina da Rocha Possamai,Multiplike Gestora de Recursos,Gerente de Gente & Gestão,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,22
 Katerina Papaderakis,Amadeus Fire,Senior Recruiterin,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
 Rodrigo Drabovski,Cloudster,Head of Service Delivery,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,33
-Letícia Alves,Invillia,HR Bussiness Partner SR - Tech,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,21
+Letícia Alves,Invillia,HR Bussiness Partner SR - Tech,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
 Riuler Mendes,Bi Smart,Lead Analytics Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,35
 Murilo Castilho,Núclea,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Weverton do Vale Marcelino,Aviva,Analista de Processos SR,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,24
@@ -10411,13 +10411,13 @@ Dagmar Cirino - Casa do Dev,Banco Carrefour,RPA Developer,Software Engineer,UNKN
 Silvia Letícia Simões,Humana Soluções Estrategicas em RH,Proprietário da empresa,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,45
 Patrick Schill,expertum Gruppe,HR Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,19
 Sabrina Mendes,Neon,People Analytics Analyst,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,18
-Fabio Tamura,LCM Sports and Pet Products,Finance Specialist & Operations Manager,Operations,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,20
+Fabio Tamura,LCM Sports and Pet Products,Finance Specialist & Operations Manager,Operations,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,17
 Marcos Felipe Clarindo Lopes,Co-operators,Data Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,12
 Giovanna Romero,Hub Infinity,Sr Recruitment Consultant RPO,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,19
 Fabio Fogliarini Brolesi,CI&T,Data & Analytics Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
 Anastasiya Taran,GFN,Partner Managerin Praktikumsbetriebe,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Sandra Kopp,KWS Group,Global Recruiting,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
-Ricardo Souza,Maplink,Cloud Data Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,15
+Ricardo Souza,Maplink,Cloud Data Architect,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,12
 Göksever Akmaz,Porsche,Personalreferent Personalmarketing,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 🤸🏼♀️Josefina Likerman,ITH,Founding Head of Talent & Operations | AI-Driven Recruiting & Workforce Management,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,23
 Furkan Shawkat,Developers-First,Business Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,22
@@ -10437,10 +10437,10 @@ Thiago Ferreira,PrecNacional Consultoria em Direitos Creditórios,RPA Developer,
 Arthur Jun Fujimoto,Essent,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Shaiane Reis,Woba,Analista de Pessoas e Cultura | Talent Aquisition Sênior,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Vinicius Ferreira Amim,Juntos Somos Mais,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,GLOBAL_TECH,company exists but no geographic or category signal,False,27
-Lígia Shimizu SHRM-CP,Neon,HRBP Sr Manager • People Partner Sr Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,34
+Lígia Shimizu SHRM-CP,Neon,HRBP Sr Manager • People Partner Sr Manager,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,31
 Pedro Duque,GDM,Marketing Executive,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
-Halan Lima,PortX,Senior Solutions Consultant | Java | Spring Boot | Apache Camel | AWS | Kubernetes,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,55
-Simone Martins,Donaldson,Business Partner de Recursos Humanos Sr.,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,30
+Halan Lima,PortX,Senior Solutions Consultant | Java | Spring Boot | Apache Camel | AWS | Kubernetes,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,52
+Simone Martins,Donaldson,Business Partner de Recursos Humanos Sr.,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,27
 Dhereck Zavataro,Corpo Forte Fitness Center,Instrutor de natação,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,12
 Ecaterina Grusetcaia,BNP Paribas,Data Engineer,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Volker Grümmer,conrizon AG,Chief Commercial Officer (CCO),Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,25
@@ -10481,9 +10481,9 @@ Florencia Introna,Grupo Blanco,Desarrollo Humano,Other,UNKNOWN,NEEDS_COMPANY_MAP
 Lisa-Marie Beckers,UNITED MACHINING,Head of Human Resources,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,32
 Carlos Eduardo Carbonera,Universidade do Vale do Rio dos Sinos,Doctor of Philosophy - PhD in Applied Computing (In Progress) - Area: RAG | LLM | NLP,Machine Learning / AI,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,33
 Silvia Garcia Lopez,"Fraternidad-Muprespa, Mutua Colaboradora con la Seguridad Social nº 275",Gestor/a Cuentas,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,35
-Alexandra Müller Cunha,Henry Schein,Analista de Treinamento e Desenvolvimento,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,18
+Alexandra Müller Cunha,Henry Schein,Analista de Treinamento e Desenvolvimento,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Sanchay Rohad,Persistent Systems,Lead Software Engineer,Software Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,27
-Diana Silva Felix,Pontifícia Universidade Católica do Paraná,Analista de Atração e Inclusão,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,18
+Diana Silva Felix,Pontifícia Universidade Católica do Paraná,Analista de Atração e Inclusão,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,MIXED,OTHER,company exists but no geographic or category signal,False,15
 Julius Müller,Stealth Startup,building,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,GLOBAL_TECH,company exists but no geographic or category signal,False,12
 Matheus Bombassei Amorim,Artefact,Data Engineer II,Data Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,ENGLISH,OTHER,company exists but no geographic or category signal,False,27
 Odin L.,Tiger Resourcing Group,Consultant - Smart Buildings,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,UNKNOWN,0.0,NONE,NEEDS_COMPANY_MAPPING,UNKNOWN,OTHER,company exists but no geographic or category signal,False,19
@@ -10658,7 +10658,7 @@ Bruno Pritsch,ABA - WORK in AUSTRIA (Austrian Business Agency),Market Director -
 Constanza Mendoza Díaz,SEIDOR,Analista de Selección TI,Other,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,GLOBAL_CONSULTING,,False,44
 Juliano Melo,SEIDOR Brasil,Sales Director - Large Enterprises,Director,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,54
 Claudia A Escalona Gálvez,SEIDOR,Analista de Atracción de Talento TI,Talent Acquisition,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,MIXED,GLOBAL_CONSULTING,,True,71
-Jessica Vasquez,SEIDOR Ecuador,IT Recruiter - Talent Management Analyst,Recruiter,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,75
+Jessica Vasquez,SEIDOR Ecuador,IT Recruiter - Talent Management Analyst,Recruiter,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,72
 Ana Paula Mendonça,SGF Global,"Talent Acquisition Manager — Brazil, Portugal & Costa Rica",Talent Acquisition,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,75
 Anderson De Jesus,DPD Portugal,Entregador,Other,UNKNOWN,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,31
 Suzan Barreto,Minsait,Head de Mercados em Serviços Financeiros,Other,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_CONSULTING,,False,35
@@ -10669,7 +10669,7 @@ Luiz Godoy,STRATESYS,SAP Material Management - Source to Pay - LATAM,Other,SPAIN
 Leonardo Souza,Minsait,Data Analyst,Data Analyst,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_CONSULTING,,False,47
 Celia Vázquez Prieto,Harry Hope. España,Consultant - Technology Division,Consultant,UNKNOWN,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,42
 Laurindo Chaves,AA Euro Group,Country Manager Portugal,Other,SPAIN_EU,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,False,45
-Aline Sena,Aubay Portugal,Talent Recruiter,Recruiter,UNKNOWN,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,70
+Aline Sena,Aubay Portugal,Talent Recruiter,Recruiter,UNKNOWN,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,67
 Maria João Antunes,ABANCA Portugal,Diretora Executiva,Director,UNKNOWN,SPAIN_EU,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,68
 Dênia Oliveira,BD,HR Business Partner,HR,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,UNKNOWN,OTHER,"no company, no title signal, no high-value persona",False,17
 Vinicius Matheus,MV,Senior BI Analyst,Data Analyst,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,UNKNOWN,OTHER,"no company, no title signal, no high-value persona",False,24
@@ -10695,7 +10695,7 @@ Henrique Mantovani,-,Data Specialist,Other,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0
 Thia Bauer,-,Sales Managerin / Key Account Managerin,Other,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,UNKNOWN,OTHER,"no company, no title signal, no high-value persona",False,12
 Rafael Ribeiro,MC,Senior Data Engineer,Data Engineer,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,ENGLISH,OTHER,"no company, no title signal, no high-value persona",False,33
 Fernando Costa,GE,"Parts Services Specialist, REN-ONW-PS Projects & Services",Other,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,UNKNOWN,OTHER,"no company, no title signal, no high-value persona",False,11
-Julio Mendes,B3,Data Engineer II,Data Engineer,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,ENGLISH,OTHER,"no company, no title signal, no high-value persona",False,30
+Julio Mendes,B3,Data Engineer II,Data Engineer,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,ENGLISH,OTHER,"no company, no title signal, no high-value persona",False,27
 Júlio César Andrade da Costa,DM,Analista de Sistemas Sênior,Other,UNKNOWN,UNKNOWN_LOW_VALUE,UNKNOWN,0.0,NONE,UNKNOWN_LOW_VALUE,MIXED,OTHER,"no company, no title signal, no high-value persona",False,15
 Adenike Adekunbi,Thoughtworks,European Recruiter,Recruiter,US_CANADA_NEARSHORE,US_CANADA_NEARSHORE,GEOGRAPHIC,0.85,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,OTHER,,True,44
 Eyvanna Connole,HIRECLOUT,"Senior Recruiter & Business Development Associate, Tech & GTM (L5)",Recruiter,US_CANADA_NEARSHORE,US_CANADA_NEARSHORE,GEOGRAPHIC,0.95,HIGH,RESOLVED_HIGH_CONFIDENCE,UNKNOWN,GLOBAL_STAFFING,,True,83

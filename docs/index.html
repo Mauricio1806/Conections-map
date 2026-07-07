@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783299311">
+  <link rel="stylesheet" href="./assets/style.css?v=1783385229">
 </head>
 <body>
 
@@ -285,7 +285,8 @@
       <div class="filters-bar" style="flex-wrap:wrap;gap:0.5rem">
         <div class="filter-group">
           <label>Sort by</label>
-          <button id="ct-sort-outreach" class="btn-primary active" onclick="setContactSort('outreach')" style="font-size:0.8rem;padding:4px 10px">Outreach Score</button>
+          <button id="ct-sort-outreach" class="btn-primary active" onclick="setContactSort('outreach')" style="font-size:0.8rem;padding:4px 10px">Immediate Action</button>
+          <button id="ct-sort-relvalue" class="btn-ghost"          onclick="setContactSort('relvalue')" style="font-size:0.8rem;padding:4px 10px">Relationship Value</button>
           <button id="ct-sort-base"     class="btn-ghost"          onclick="setContactSort('base')"     style="font-size:0.8rem;padding:4px 10px">Base Network Score</button>
         </div>
         <div class="filter-group"><label>Min Base Score</label>
@@ -308,6 +309,28 @@
         <div class="filter-group"><label>Outreach Status</label>
           <select id="ct-outreach-filter"><option value="">All</option></select>
         </div>
+        <div class="filter-group"><label>Process State</label>
+          <select id="ct-process-state-filter"><option value="">All</option></select>
+        </div>
+        <div class="filter-group"><label>Reply Obligation</label>
+          <select id="ct-reply-obligation-filter"><option value="">All</option></select>
+        </div>
+        <div class="filter-group"><label>Relationship Value</label>
+          <select id="ct-relvalue-band-filter">
+            <option value="">All</option>
+            <option value="high">High (&ge;70)</option>
+            <option value="medium">Medium (40-69)</option>
+            <option value="low">Low (&lt;40)</option>
+          </select>
+        </div>
+        <div class="filter-group"><label>Immediate Action</label>
+          <select id="ct-actionband-filter">
+            <option value="">All</option>
+            <option value="high">High (&ge;60)</option>
+            <option value="medium">Medium (30-59)</option>
+            <option value="low">Low (&lt;30)</option>
+          </select>
+        </div>
         <button class="btn-primary" onclick="applyContactFilters()">Apply</button>
         <button class="btn-ghost" onclick="resetContactFilters()">Reset</button>
       </div>
@@ -317,10 +340,13 @@
           <thead><tr>
             <th>Name</th><th>Company</th><th>Role</th><th>Persona</th>
             <th>Opportunity Bucket</th>
-            <th title="Outreach Adjusted Score">Adj. Score</th>
-            <th title="Base Network Score">Base</th>
+            <th title="Relationship Value Score">Rel. Value</th>
+            <th title="Immediate Action Score">Immediate Action</th>
+            <th>Process State</th>
+            <th>Reply Obligation</th>
             <th>Outreach Status</th>
             <th>Last Contact</th>
+            <th>Next Action Date</th>
             <th>Reason / Note</th>
             <th>LinkedIn</th>
           </tr></thead>
@@ -479,12 +505,14 @@
               <option value="Needs my response — Confirmed">Needs response — Confirmed</option>
               <option value="Needs my response — Likely">Needs response — Likely</option>
               <option value="Ambiguous — Review">Ambiguous — Review</option>
-              <option value="Hot reactivation">Hot reactivation</option>
+              <option value="Active Interview Pipeline">Active Interview Pipeline</option>
+              <option value="Awaiting Recruiter Update">Awaiting Recruiter Update</option>
               <option value="Warm reactivation">Warm reactivation</option>
               <option value="Dormant warm">Dormant warm</option>
-              <option value="Career site follow-up">Career site follow-up</option>
-              <option value="Previous process reusable">Previous process reusable</option>
-              <option value="Follow-up candidate">Follow-up candidate</option>
+              <option value="Rejected / Closed">Rejected / Closed</option>
+              <option value="Location / Eligibility Blocked">Location / Eligibility Blocked</option>
+              <option value="Talent Pool / Career Site">Talent Pool / Career Site</option>
+              <option value="Reactivate This Month">Reactivate This Month</option>
               <option value="No response">No response</option>
               <option value="Closed / no action">Closed / no action</option>
               <option value="Ignore">Ignore</option>
@@ -716,6 +744,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783299311"></script>
+<script src="./assets/app.js?v=1783385229"></script>
 </body>
 </html>
