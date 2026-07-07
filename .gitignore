@@ -90,6 +90,14 @@ outputs/dormant_leads.csv
 outputs/rejected_or_closed_leads.csv
 outputs/no_response_leads.csv
 outputs/message_review_queue.csv
+outputs/conversation_state_review_queue.csv
+
+# ─── Untapped Network Intelligence — private person-level backlog ────────────
+# Up to ~10k-contact operational CSVs (full names, companies, LinkedIn URLs).
+# Only a small sanitized top-N slice goes into the public dashboard JSON via
+# export_public_dashboard_data.py — the full backlog stays local.
+outputs/private/
+outputs/untapped_ambiguous_review.csv
 
 # ─── Logs ─────────────────────────────────────────────────────────────────────
 *.log

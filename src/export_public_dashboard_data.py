@@ -422,6 +422,45 @@ def build_lead_reactivation_public(lead_data: dict) -> dict:
     return safe_summary
 
 
+# ── Untapped Network Intelligence (Part 12) — explicit allowlist, defense in
+# depth on top of what untapped_network_intelligence.py already sanitizes.
+# Never emits raw messages, email, phone, or the internal ambiguous-candidate
+# lists — those stay in outputs/private/ only.
+SAFE_UNTAPPED_SUMMARY_KEYS = {
+    "total_connections", "has_conversation", "never_contacted_confirmed",
+    "likely_never_contacted", "ambiguous_review", "reconciled_total",
+    "high_value_untapped", "recruiters_untapped", "ta_untapped",
+    "hiring_managers_untapped", "data_leaders_untapped",
+    "latam_usd_untapped", "us_nearshore_untapped", "spain_eu_untapped",
+    "connected_90d_plus_never_contacted", "connected_180d_plus_never_contacted",
+    "this_week_queue_count",
+}
+SAFE_UNTAPPED_CONTACT_COLS = {
+    "full_name", "company_clean", "position_clean", "persona", "seniority",
+    "opportunity_bucket", "connected_on", "days_connected", "connection_age_bucket",
+    "contact_history_status", "untapped_category", "untapped_outreach_score",
+    "recommended_first_action", "first_message_angle", "profile_url",
+    "conversation_match_confidence", "strategic_focus", "operational_category",
+}
+
+
+def _sanitize_untapped_contacts(contacts: list) -> list:
+    return [{k: v for k, v in c.items() if k in SAFE_UNTAPPED_CONTACT_COLS} for c in (contacts or [])]
+
+
+def build_untapped_network_public(untapped_data: dict) -> dict:
+    if not untapped_data or not untapped_data.get("available"):
+        return {"available": False}
+    summary = untapped_data.get("summary", {}) or {}
+    return {
+        "available": True,
+        "summary": {k: v for k, v in summary.items() if k in SAFE_UNTAPPED_SUMMARY_KEYS},
+        "match_method_breakdown": untapped_data.get("match_method_breakdown", {}),
+        "top_untapped_contacts": _sanitize_untapped_contacts(untapped_data.get("top_untapped_contacts", [])),
+        "this_week_queue": _sanitize_untapped_contacts(untapped_data.get("this_week_queue", [])),
+    }
+
+
 def export_public_dashboard_data(
     df:      pd.DataFrame,
     kpis:    dict,
@@ -435,6 +474,7 @@ def export_public_dashboard_data(
     outreach_scores: dict  = None,
     company_resolution_v6_data: dict = None,
     company_resolution_v7_data: dict = None,
+    untapped_network_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -494,6 +534,10 @@ def export_public_dashboard_data(
         # V7 Company Resolution — iterative fuzzy-cluster/company-message-aggregate/
         # persona-cohort mapping improvements (sanitized aggregate counts only)
         "company_resolution_v7":       company_resolution_v7_data or {},
+        # Untapped Network Intelligence — 1st-degree connections with no
+        # conversation history (separate from Lead Reactivation). Sanitized:
+        # no raw messages, no email, no phone.
+        "untapped_network":            build_untapped_network_public(untapped_network_data),
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:

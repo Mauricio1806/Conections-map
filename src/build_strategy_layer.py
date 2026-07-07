@@ -694,6 +694,20 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Outreach scoring failed (non-fatal): {exc}")
 
+    # 7b3. Untapped Network Intelligence — SEPARATE from Lead Reactivation.
+    # Identifies existing 1st-degree connections with NO conversation history
+    # at all and ranks them for first-outreach activation. Only runs
+    # meaningfully when messages.csv was available this run (needs
+    # message_threads_summary.csv, just written by lead_reactivation_engine).
+    untapped_data = {}
+    try:
+        from src.untapped_network_intelligence import run_untapped_network_intelligence
+        untapped_data = run_untapped_network_intelligence(
+            classified_df=df, messages_csv_available=lead_data.get("messages_csv_available", False),
+        )
+    except Exception as exc:
+        logger.warning(f"  Untapped Network Intelligence failed (non-fatal): {exc}")
+
     # 7c. Export public dashboard JSON (for static GitHub Pages dashboard)
     logger.info("  Exporting public dashboard JSON ...")
     try:
@@ -703,6 +717,7 @@ def run_strategy_layer() -> None:
             lead_data=lead_data, v5_data=v5_data, outreach_scores=outreach_scores,
             company_resolution_v6_data=company_resolution_v6_summary,
             company_resolution_v7_data=company_resolution_v7_summary,
+            untapped_network_data=untapped_data,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

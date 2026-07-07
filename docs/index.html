@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783385229">
+  <link rel="stylesheet" href="./assets/style.css?v=1783452718">
 </head>
 <body>
 
@@ -75,6 +75,9 @@
     <div class="nav-item" data-page="leads">
       <span class="nav-icon">&#128233;</span> Lead Reactivation
     </div>
+    <div class="nav-item" data-page="untapped">
+      <span class="nav-icon">&#127793;</span> Untapped Network
+    </div>
     <div class="nav-item" data-page="quality">
       <span class="nav-icon">&#128202;</span> Data Quality
     </div>
@@ -116,6 +119,10 @@
 
       <div class="section-label" id="kpi-lead-reactivation-label" style="display:none">Lead Reactivation Intelligence (local data)</div>
       <div class="metrics-grid" id="kpi-lead-reactivation" style="display:none"></div>
+
+      <div class="section-label" id="kpi-untapped-label" style="display:none">Untapped Network Opportunity</div>
+      <div class="metrics-grid" id="kpi-untapped" style="display:none"></div>
+      <div id="untapped-diagnosis-text" style="display:none;font-size:0.85rem;color:var(--text-muted);margin:-0.25rem 0 1rem"></div>
 
       <div class="section-label">Visual Distribution</div>
       <div class="chart-grid">
@@ -208,6 +215,13 @@
         <span class="alert-icon">&#127919;</span>
         <span><strong>Short-term allocation: 90% LATAM/USD + 10% Spain/EU exploration.</strong>
         Priority: secure remote USD income from Brazil first. Europe is medium-term positioning as a future digital nomad base.</span>
+      </div>
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#127793;</span>
+        <span><strong>Don't rely on new connections alone.</strong> The <strong>Untapped Network</strong> page has existing
+        1st-degree connections you've never messaged, ranked and queued for first outreach — often faster to activate than
+        waiting on a new connection request. A practical weekly mix: new connection requests, untapped existing-connection
+        outreach, and Lead Reactivation follow-ups, weighted toward the same 90/10 LATAM/USD vs Spain/EU split.</span>
       </div>
       <div class="alert alert-info" style="margin-bottom:1rem">
         <span class="alert-icon">&#128161;</span>
@@ -624,6 +638,114 @@
       </div>
     </div>
 
+    <!-- PAGE: Untapped Network -->
+    <div class="page" id="page-untapped">
+      <div class="page-header">
+        <h2>Untapped Network</h2>
+        <p>Existing 1st-degree connections with no known conversation history — activate the network you already built.</p>
+      </div>
+
+      <div id="untapped-no-data" style="display:none">
+        <div class="alert alert-info">
+          <span class="alert-icon">&#127793;</span>
+          <span><strong>No untapped network data yet.</strong> Run the pipeline with messages.csv present to populate this page.</span>
+        </div>
+      </div>
+
+      <div id="untapped-main-content">
+        <div class="section-label">Contact History Matching</div>
+        <div class="metrics-grid" id="untapped-summary"></div>
+
+        <div class="section-label">Untapped Opportunity</div>
+        <div class="metrics-grid" id="untapped-opportunity"></div>
+
+        <div class="section-label">This Week — Untapped Outreach Queue (max 20)</div>
+        <div class="table-wrap">
+          <table id="untapped-queue-table">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Company</th><th>Persona</th><th>Strategic Focus</th>
+              <th>Score</th><th>Recommended Action</th><th>LinkedIn</th>
+            </tr></thead>
+            <tbody id="untapped-queue-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-label">Filters — Full Untapped Backlog</div>
+        <div class="filters-bar">
+          <div class="filter-group" style="min-width:160px"><label>Search name/company</label>
+            <input type="text" id="untapped-search" placeholder="e.g. Hays, Maria...">
+          </div>
+          <div class="filter-group"><label>History Status</label>
+            <select id="untapped-status-filter">
+              <option value="">All</option>
+              <option value="NEVER_CONTACTED_CONFIRMED">Never Contacted — Confirmed</option>
+              <option value="LIKELY_NEVER_CONTACTED">Likely Never Contacted</option>
+              <option value="AMBIGUOUS_REVIEW">Ambiguous — Review</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Untapped Category</label>
+            <select id="untapped-category-filter"><option value="">All</option></select>
+          </div>
+          <div class="filter-group"><label>Persona</label>
+            <select id="untapped-persona-filter"><option value="">All</option></select>
+          </div>
+          <div class="filter-group"><label>Opportunity Bucket</label>
+            <select id="untapped-bucket-filter"><option value="">All</option></select>
+          </div>
+          <div class="filter-group"><label>Strategic Focus</label>
+            <select id="untapped-focus-filter">
+              <option value="">All</option>
+              <option value="PRIMARY_LATAM_USD">Primary LATAM/USD</option>
+              <option value="SPAIN_EU_EXPLORATORY">Spain/EU Exploratory</option>
+              <option value="GLOBAL_OPPORTUNITY">Global Opportunity</option>
+              <option value="UNCLASSIFIED">Unclassified</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Connection Age</label>
+            <select id="untapped-age-filter">
+              <option value="">All</option>
+              <option value="CONNECTED_LT_30D">&lt; 30 days</option>
+              <option value="CONNECTED_30_89D">30–89 days</option>
+              <option value="CONNECTED_90_179D">90–179 days</option>
+              <option value="CONNECTED_180_364D">180–364 days</option>
+              <option value="CONNECTED_365D_PLUS">365+ days</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Seniority</label>
+            <select id="untapped-seniority-filter"><option value="">All</option></select>
+          </div>
+          <div class="filter-group"><label>Min Untapped Score</label>
+            <input type="number" id="untapped-min-score" value="0" min="0" max="100" style="width:70px">
+          </div>
+          <div class="filter-group"><label>Min Match Confidence</label>
+            <input type="number" id="untapped-min-confidence" value="0" min="0" max="1" step="0.05" style="width:70px">
+          </div>
+          <div class="filter-group"><label>Primary 90% only</label>
+            <input type="checkbox" id="untapped-primary-only">
+          </div>
+          <div class="filter-group"><label>Europe exploratory only</label>
+            <input type="checkbox" id="untapped-europe-only">
+          </div>
+          <button class="btn-primary" onclick="applyUntappedFilters()">Apply</button>
+          <button class="btn-ghost" onclick="resetUntappedFilters()">Reset</button>
+        </div>
+
+        <div class="table-stats" id="untapped-stats"></div>
+        <div class="table-wrap">
+          <table id="untapped-table">
+            <thead><tr>
+              <th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Seniority</th>
+              <th>Opportunity Bucket</th><th>Connected On</th><th>Days</th>
+              <th>History Status</th><th>Untapped Category</th><th>Score</th>
+              <th>Recommended Action</th><th>LinkedIn</th>
+            </tr></thead>
+            <tbody id="untapped-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="untapped-pagination"></div>
+      </div>
+    </div>
+
     <!-- PAGE: Data Quality -->
     <div class="page" id="page-quality">
       <div class="page-header">
@@ -651,6 +773,21 @@
             <th>TA/Recruiters</th><th>Data Leaders</th><th>Avg Priority</th><th>Suggested Bucket</th>
           </tr></thead>
           <tbody id="quality-pareto-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-label">Untapped Matching Quality</div>
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#9432;</span>
+        <span>"No conversation found" is based on the available LinkedIn message export. Deleted conversations,
+        unavailable historical exports, changed profile identities, or incomplete data may create uncertainty —
+        matching is intentionally conservative, and ambiguous cases go to manual review rather than being
+        force-classified either way.</span>
+      </div>
+      <div class="table-wrap">
+        <table id="quality-untapped-match-table">
+          <thead><tr><th>Match Method</th><th>Contacts</th><th>Share</th></tr></thead>
+          <tbody id="quality-untapped-match-tbody"></tbody>
         </table>
       </div>
 
@@ -725,6 +862,10 @@
         <div class="section-label">D. Lead Pipeline Movement</div>
         <div class="metrics-grid" id="weekly-lead-pipeline"></div>
 
+        <div class="section-label">Untapped Network Movement</div>
+        <div class="metrics-grid" id="weekly-untapped-movement"></div>
+        <div id="weekly-untapped-note" style="display:none;font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 1rem"></div>
+
         <div class="section-label">E. New High-Value Connections This Week</div>
         <div class="table-wrap">
           <table id="weekly-new-contacts-table">
@@ -744,6 +885,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783385229"></script>
+<script src="./assets/app.js?v=1783452718"></script>
 </body>
 </html>

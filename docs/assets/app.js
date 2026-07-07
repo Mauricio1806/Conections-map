@@ -216,6 +216,7 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Companies',   renderCompanies);
       safeRender('Opportunity', renderUnknownResolution);
       safeRender('Leads',       renderLeads);
+      safeRender('Untapped',    renderUntapped);
       safeRender('Quality',     renderQuality);
       safeRender('Weekly',      renderWeekly);
     })
@@ -311,11 +312,11 @@ function makeCard(title, value, sub = '', subClass = '') {
 
 // Clickable KPI card (Lead Reactivation Part 2) — same look as makeCard but
 // wired to applyLeadKpiFilter(key) on click/Enter/Space, keyboard accessible.
-function makeKpiCard(key, title, value, sub = '', subClass = '') {
+function makeKpiCard(key, title, value, sub = '', subClass = '', handler = 'applyLeadKpiFilter') {
   return '<div class="card kpi-card" data-kpi="' + key + '" tabindex="0" role="button" '
-       + 'aria-pressed="false" aria-label="Filter leads by ' + title + '" '
-       + 'onclick="applyLeadKpiFilter(\'' + key + '\')" '
-       + 'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();applyLeadKpiFilter(\'' + key + '\')}">'
+       + 'aria-pressed="false" aria-label="Filter by ' + title + '" '
+       + 'onclick="' + handler + '(\'' + key + '\')" '
+       + 'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();' + handler + '(\'' + key + '\')}">'
        + '<div class="card-title">' + title + '</div>'
        + '<div class="card-value">' + fmt(value) + '</div>'
        + (sub ? '<div class="card-sub ' + subClass + '">' + sub + '</div>' : '')
@@ -523,6 +524,39 @@ function renderOverview() {
     } else {
       lrRow.style.display = 'none';
       if (lrLabel) lrLabel.style.display = 'none';
+    }
+  }
+
+  // Untapped Network Opportunity row (Part 19 — additive, own section)
+  const un = D.untapped_network || {};
+  const unSum = un.summary || {};
+  const unRow = document.getElementById('kpi-untapped');
+  const unLabel = document.getElementById('kpi-untapped-label');
+  const unDiag = document.getElementById('untapped-diagnosis-text');
+  if (unRow) {
+    if (un.available) {
+      unRow.style.display = '';
+      if (unLabel) unLabel.style.display = '';
+      unRow.innerHTML = [
+        makeCard('Never Contacted — Confirmed', unSum.never_contacted_confirmed || 0, 'existing connections, no conversation', 'warn'),
+        makeCard('High-Value Untapped',         unSum.high_value_untapped       || 0, 'strong persona + market fit', 'good'),
+        makeCard('Recruiters/TA Untapped',      (unSum.recruiters_untapped||0) + (unSum.ta_untapped||0), 'never messaged'),
+        makeCard('Hiring Managers Untapped',    unSum.hiring_managers_untapped  || 0, 'never messaged'),
+        makeCard('Primary LATAM/USD Untapped',  unSum.latam_usd_untapped        || 0, '90% short-term focus', 'good'),
+        makeCard('Europe Exploratory Untapped', unSum.spain_eu_untapped         || 0, '10% exploratory'),
+        makeCard('This Week Untapped Queue',    unSum.this_week_queue_count     || 0, 'ready to activate', 'good'),
+      ].join('');
+      if (unDiag) {
+        unDiag.style.display = '';
+        const hv = unSum.high_value_untapped || 0;
+        unDiag.textContent = 'You already have ' + hv.toLocaleString() + ' high-value first-degree connections with no known '
+          + 'conversation history. Activating existing connections may be more efficient than relying only on new connection '
+          + 'requests — this does not claim any guaranteed outcome, just that the outreach barrier (connection accepted) is already cleared.';
+      }
+    } else {
+      unRow.style.display = 'none';
+      if (unLabel) unLabel.style.display = 'none';
+      if (unDiag) unDiag.style.display = 'none';
     }
   }
 
@@ -1808,7 +1842,7 @@ const LEAD_KPI_FILTERS = {
 };
 
 function _updateActiveKpiCards() {
-  document.querySelectorAll('.kpi-card').forEach(el => {
+  document.querySelectorAll('#page-leads .kpi-card').forEach(el => {
     const isActive = activeLeadKpi && el.getAttribute('data-kpi') === activeLeadKpi;
     el.classList.toggle('active', !!isActive);
     el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
@@ -1970,6 +2004,33 @@ function renderQuality() {
     }
   }
 
+  // Untapped Matching Quality (Part 23)
+  const unMatchTbody = document.getElementById('quality-untapped-match-tbody');
+  if (unMatchTbody) {
+    const un = D.untapped_network || {};
+    const breakdown = un.match_method_breakdown || {};
+    const entries = Object.entries(breakdown).sort((a, b) => b[1] - a[1]);
+    const grand = (un.summary && un.summary.total_connections) || entries.reduce((s, [, v]) => s + v, 0) || 1;
+    const METHOD_LABEL = {
+      EXACT_PROFILE_URL: 'Exact profile URL', NORMALIZED_PROFILE_URL: 'Normalized profile URL',
+      EXACT_NAME_COMPANY: 'Exact name + company', EXACT_UNIQUE_NAME: 'Unique name match',
+      NAME_ROLE_MATCH: 'Name + compatible role', CONSERVATIVE_FUZZY: 'Conservative fuzzy match',
+      AMBIGUOUS: 'Ambiguous — review', NO_MATCH: 'Confirmed no-match (untapped)',
+    };
+    if (!entries.length) {
+      unMatchTbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted)">Run the pipeline to populate untapped matching quality.</td></tr>';
+    } else {
+      unMatchTbody.innerHTML = entries.map(([method, count]) => {
+        const pct = (count / grand * 100).toFixed(1);
+        return '<tr>'
+          + '<td>' + (METHOD_LABEL[method] || method) + '</td>'
+          + '<td><strong>' + count.toLocaleString() + '</strong></td>'
+          + '<td>' + pct + '%' + scoreBar(count, grand, '#22c55e') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+  }
+
   // Section B — Geographic data limitation (technical)
   const qbEl = document.getElementById('quality-metrics-b');
   if (qbEl) {
@@ -2083,6 +2144,32 @@ function renderWeekly() {
     makeCard('Interview Pipeline Δ', lp.interview_pipeline_delta ?? '—', _deltaSub(lp.interview_pipeline_delta).text, _deltaSub(lp.interview_pipeline_delta).cls),
   ].join('');
 
+  // Untapped Network Movement (Part 22) — gracefully degrades on first run
+  const um = we.untapped_network_movement || {};
+  const umEl = document.getElementById('weekly-untapped-movement');
+  const umNote = document.getElementById('weekly-untapped-note');
+  if (umEl) {
+    if (!um.available) {
+      umEl.innerHTML = '';
+      if (umNote) { umNote.style.display = 'none'; }
+    } else if (!um.tracked_since_last_snapshot) {
+      umEl.innerHTML = [
+        makeCard('Never Contacted — Confirmed', um.current_never_contacted_confirmed || 0, 'baseline established this snapshot'),
+        makeCard('High-Value Untapped', um.current_high_value_untapped || 0, 'baseline established this snapshot', 'good'),
+      ].join('');
+      if (umNote) { umNote.style.display = ''; umNote.textContent = um.note || ''; }
+    } else {
+      umEl.innerHTML = [
+        makeCard('Never Contacted — Confirmed Δ', um.never_contacted_confirmed_delta ?? 0, _deltaSub(um.never_contacted_confirmed_delta, false).text, _deltaSub(um.never_contacted_confirmed_delta, false).cls),
+        makeCard('High-Value Untapped Δ', um.high_value_untapped_delta ?? 0, _deltaSub(um.high_value_untapped_delta).text, _deltaSub(um.high_value_untapped_delta).cls),
+        makeCard('Untapped Recruiters Δ', um.untapped_recruiters_delta ?? 0, _deltaSub(um.untapped_recruiters_delta).text, _deltaSub(um.untapped_recruiters_delta).cls),
+        makeCard('Untapped Hiring Managers Δ', um.untapped_hiring_managers_delta ?? 0, _deltaSub(um.untapped_hiring_managers_delta).text, _deltaSub(um.untapped_hiring_managers_delta).cls),
+        makeCard('Activated This Week (est.)', um.untapped_contacts_activated_this_week_estimate ?? 0, 'moved from never-contacted to has-conversation', 'good'),
+      ].join('');
+      if (umNote) { umNote.style.display = ''; umNote.textContent = 'Estimate derived from aggregate counts, not identity-level snapshot diffing.'; }
+    }
+  }
+
   // E. New High-Value Connections (sanitized — name/company/persona/bucket/score/public URL only)
   const tbody = document.getElementById('weekly-new-contacts-tbody');
   if (tbody) {
@@ -2116,3 +2203,271 @@ function renderWeekly() {
     '<p><strong>Highest-value next action:</strong> ' + (diag.highest_value_next_action || '—') + '</p>',
   ].join('');
 }
+
+// ── PAGE 11: Untapped Network ──────────────────────────────────────────────
+let filteredUntapped = [];
+let untappedPage = 1;
+const UNTAPPED_PAGE_SIZE = 25;
+let activeUntappedKpi = null;
+
+const HISTORY_STATUS_LABEL = {
+  NEVER_CONTACTED_CONFIRMED: 'Never Contacted', LIKELY_NEVER_CONTACTED: 'Likely Never Contacted',
+  AMBIGUOUS_REVIEW: 'Ambiguous — Review', HAS_CONVERSATION: 'Has Conversation',
+};
+
+function untappedBadge(status) {
+  const colors = { NEVER_CONTACTED_CONFIRMED: '#f59e0b', LIKELY_NEVER_CONTACTED: '#fbbf24', AMBIGUOUS_REVIEW: '#9ca3af' };
+  const c = colors[status] || '#6b7280';
+  return '<span class="urgency-badge" style="background:' + c + '20;color:' + c + ';border:1px solid ' + c + '">'
+    + (HISTORY_STATUS_LABEL[status] || status || '—') + '</span>';
+}
+
+function renderUntapped() {
+  const un = D.untapped_network || {};
+  const noData = document.getElementById('untapped-no-data');
+  const mainContent = document.getElementById('untapped-main-content');
+
+  if (!un.available) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  const s = un.summary || {};
+
+  // Contact History Matching summary
+  const sumEl = document.getElementById('untapped-summary');
+  if (sumEl) sumEl.innerHTML = [
+    makeCard('Total Connections', s.total_connections || 0),
+    makeCard('Has Conversation', s.has_conversation || 0, 'Lead Reactivation territory'),
+    makeKpiCard('never_confirmed', 'Never Contacted — Confirmed', s.never_contacted_confirmed || 0, 'click to filter', 'warn', 'applyUntappedKpiFilter'),
+    makeKpiCard('likely_never',    'Likely Never Contacted',      s.likely_never_contacted     || 0, 'incomplete identity — click to filter', '', 'applyUntappedKpiFilter'),
+    makeKpiCard('ambiguous',       'Ambiguous — Review',          s.ambiguous_review            || 0, 'conflicting candidates — click to filter', '', 'applyUntappedKpiFilter'),
+  ].join('');
+
+  // Untapped Opportunity KPI cards — all clickable
+  const oppEl = document.getElementById('untapped-opportunity');
+  if (oppEl) oppEl.innerHTML = [
+    makeKpiCard('high_value',   'High-Value Untapped',       s.high_value_untapped       || 0, 'click to filter', 'good', 'applyUntappedKpiFilter'),
+    makeKpiCard('recruiters',   'Recruiters Untapped',       s.recruiters_untapped       || 0, 'click to filter', '', 'applyUntappedKpiFilter'),
+    makeKpiCard('ta',           'Talent Acquisition Untapped', s.ta_untapped              || 0, 'click to filter', '', 'applyUntappedKpiFilter'),
+    makeKpiCard('hm',           'Hiring Managers Untapped',  s.hiring_managers_untapped   || 0, 'click to filter', '', 'applyUntappedKpiFilter'),
+    makeKpiCard('data_leaders', 'Data Leaders Untapped',     s.data_leaders_untapped      || 0, 'click to filter', '', 'applyUntappedKpiFilter'),
+    makeKpiCard('latam',        'LATAM/USD Untapped',        s.latam_usd_untapped         || 0, '90% primary focus — click to filter', 'good', 'applyUntappedKpiFilter'),
+    makeKpiCard('nearshore',    'US/Nearshore Untapped',     s.us_nearshore_untapped      || 0, 'part of primary 90% — click to filter', '', 'applyUntappedKpiFilter'),
+    makeKpiCard('spain_eu',     'Spain/EU Exploratory Untapped', s.spain_eu_untapped      || 0, '10% exploratory — click to filter', '', 'applyUntappedKpiFilter'),
+    makeKpiCard('conn_90d',     'Connected >90 Days, Never Contacted', s.connected_90d_plus_never_contacted || 0, 'click to filter', 'warn', 'applyUntappedKpiFilter'),
+    makeKpiCard('conn_180d',    'Connected >180 Days, Never Contacted', s.connected_180d_plus_never_contacted || 0, 'click to filter', 'warn', 'applyUntappedKpiFilter'),
+  ].join('');
+
+  // This Week Queue
+  const queueTbody = document.getElementById('untapped-queue-tbody');
+  if (queueTbody) {
+    const q = un.this_week_queue || [];
+    if (!q.length) {
+      queueTbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">No queue this week.</td></tr>';
+    } else {
+      queueTbody.innerHTML = q.map((r, i) => {
+        const url = r.profile_url || '';
+        const score = parseInt(r.untapped_outreach_score) || 0;
+        const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+        return '<tr>'
+          + '<td><strong>#' + (i + 1) + '</strong></td>'
+          + '<td style="white-space:nowrap">' + (r.full_name || '—') + '</td>'
+          + '<td style="white-space:nowrap">' + (r.company_clean || '—') + '</td>'
+          + '<td style="white-space:nowrap">' + (r.persona || '—') + '</td>'
+          + '<td style="font-size:0.75rem">' + (r.strategic_focus || '—').replace(/_/g, ' ') + '</td>'
+          + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+          + '<td style="font-size:0.72rem">' + (r.recommended_first_action || '—').replace(/_/g, ' ') + '</td>'
+          + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+  }
+
+  // Populate dynamic filter dropdowns
+  const source = un.top_untapped_contacts || [];
+  const catSel = document.getElementById('untapped-category-filter');
+  if (catSel && catSel.options.length <= 1) {
+    [...new Set(source.map(c => c.untapped_category).filter(Boolean))].sort().forEach(v => {
+      const o = document.createElement('option'); o.value = v; o.textContent = v.replace(/_/g, ' '); catSel.appendChild(o);
+    });
+  }
+  const perSel = document.getElementById('untapped-persona-filter');
+  if (perSel && perSel.options.length <= 1) {
+    [...new Set(source.map(c => c.persona).filter(Boolean))].sort().forEach(v => {
+      const o = document.createElement('option'); o.value = v; o.textContent = v; perSel.appendChild(o);
+    });
+  }
+  const bucketSel = document.getElementById('untapped-bucket-filter');
+  if (bucketSel && bucketSel.options.length <= 1) {
+    [...new Set(source.map(c => c.opportunity_bucket).filter(Boolean))].sort().forEach(v => {
+      const o = document.createElement('option'); o.value = v; o.textContent = v; bucketSel.appendChild(o);
+    });
+  }
+  const senSel = document.getElementById('untapped-seniority-filter');
+  if (senSel && senSel.options.length <= 1) {
+    [...new Set(source.map(c => c.seniority).filter(Boolean))].sort().forEach(v => {
+      const o = document.createElement('option'); o.value = v; o.textContent = v; senSel.appendChild(o);
+    });
+  }
+
+  filteredUntapped = source;
+  renderUntappedTable();
+}
+
+const UNTAPPED_KPI_FILTERS = {
+  never_confirmed: { label: 'Never Contacted — Confirmed', match: c => c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  likely_never:     { label: 'Likely Never Contacted',      match: c => c.contact_history_status === 'LIKELY_NEVER_CONTACTED' },
+  ambiguous:        { label: 'Ambiguous — Review',          match: c => c.contact_history_status === 'AMBIGUOUS_REVIEW' },
+  high_value:       { label: 'High-Value Untapped',         match: c => c.untapped_category === 'HIGH_VALUE_UNTAPPED' },
+  recruiters:       { label: 'Recruiters Untapped',         match: c => c.persona === 'Recruiter' && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  ta:               { label: 'Talent Acquisition Untapped', match: c => c.persona === 'Talent Acquisition' && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  hm:               { label: 'Hiring Managers Untapped',    match: c => ['Hiring Manager', 'Engineering Manager'].includes(c.persona) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  data_leaders:     { label: 'Data Leaders Untapped',       match: c => ['Data Engineering Manager', 'Head of Data', 'Director'].includes(c.persona) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  latam:            { label: 'LATAM/USD Untapped',
+    match: c => c.strategic_focus === 'PRIMARY_LATAM_USD' && !['US_CANADA_CONFIRMED', 'US_CANADA_LIKELY'].includes(c.opportunity_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  nearshore:        { label: 'US/Nearshore Untapped',
+    match: c => ['US_CANADA_CONFIRMED', 'US_CANADA_LIKELY'].includes(c.opportunity_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  spain_eu:         { label: 'Spain/EU Exploratory Untapped', match: c => c.strategic_focus === 'SPAIN_EU_EXPLORATORY' && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  conn_90d:         { label: 'Connected >90 Days, Never Contacted',
+    match: c => ['CONNECTED_90_179D', 'CONNECTED_180_364D', 'CONNECTED_365D_PLUS'].includes(c.connection_age_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  conn_180d:        { label: 'Connected >180 Days, Never Contacted',
+    match: c => ['CONNECTED_180_364D', 'CONNECTED_365D_PLUS'].includes(c.connection_age_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+};
+
+function _updateActiveUntappedKpiCards() {
+  document.querySelectorAll('#page-untapped .kpi-card').forEach(el => {
+    const isActive = activeUntappedKpi && el.getAttribute('data-kpi') === activeUntappedKpi;
+    el.classList.toggle('active', !!isActive);
+    el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+}
+
+window.applyUntappedKpiFilter = function(key) {
+  const def = UNTAPPED_KPI_FILTERS[key];
+  if (!def) return;
+  const source = (D.untapped_network || {}).top_untapped_contacts || [];
+  filteredUntapped = source.filter(def.match);
+  activeUntappedKpi = key;
+  untappedPage = 1;
+  _updateActiveUntappedKpiCards();
+  renderUntappedTable(def.label);
+  const table = document.getElementById('untapped-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+window.applyUntappedFilters = function() {
+  const search   = (document.getElementById('untapped-search')?.value || '').trim().toLowerCase();
+  const status   = document.getElementById('untapped-status-filter')?.value || '';
+  const cat      = document.getElementById('untapped-category-filter')?.value || '';
+  const persona  = document.getElementById('untapped-persona-filter')?.value || '';
+  const bucket   = document.getElementById('untapped-bucket-filter')?.value || '';
+  const focus    = document.getElementById('untapped-focus-filter')?.value || '';
+  const age      = document.getElementById('untapped-age-filter')?.value || '';
+  const seniority= document.getElementById('untapped-seniority-filter')?.value || '';
+  const minScore = parseFloat(document.getElementById('untapped-min-score')?.value) || 0;
+  const minConf  = parseFloat(document.getElementById('untapped-min-confidence')?.value) || 0;
+  const primaryOnly = document.getElementById('untapped-primary-only')?.checked || false;
+  const europeOnly  = document.getElementById('untapped-europe-only')?.checked || false;
+
+  const source = (D.untapped_network || {}).top_untapped_contacts || [];
+  filteredUntapped = source.filter(c => {
+    if (search) {
+      const hay = ((c.full_name||'') + ' ' + (c.company_clean||'')).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    if (status && c.contact_history_status !== status) return false;
+    if (cat && c.untapped_category !== cat) return false;
+    if (persona && c.persona !== persona) return false;
+    if (bucket && c.opportunity_bucket !== bucket) return false;
+    if (focus && c.strategic_focus !== focus) return false;
+    if (age && c.connection_age_bucket !== age) return false;
+    if (seniority && c.seniority !== seniority) return false;
+    if ((parseFloat(c.untapped_outreach_score) || 0) < minScore) return false;
+    if ((parseFloat(c.conversation_match_confidence) || 0) < minConf) return false;
+    if (primaryOnly && c.strategic_focus !== 'PRIMARY_LATAM_USD') return false;
+    if (europeOnly && c.strategic_focus !== 'SPAIN_EU_EXPLORATORY') return false;
+    return true;
+  });
+  activeUntappedKpi = null;
+  untappedPage = 1;
+  _updateActiveUntappedKpiCards();
+  renderUntappedTable();
+};
+
+window.resetUntappedFilters = function() {
+  ['untapped-search'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  ['untapped-status-filter', 'untapped-category-filter', 'untapped-persona-filter', 'untapped-bucket-filter',
+   'untapped-focus-filter', 'untapped-age-filter', 'untapped-seniority-filter'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const ms = document.getElementById('untapped-min-score'); if (ms) ms.value = '0';
+  const mc = document.getElementById('untapped-min-confidence'); if (mc) mc.value = '0';
+  const po = document.getElementById('untapped-primary-only'); if (po) po.checked = false;
+  const eo = document.getElementById('untapped-europe-only'); if (eo) eo.checked = false;
+  filteredUntapped = (D.untapped_network || {}).top_untapped_contacts || [];
+  activeUntappedKpi = null;
+  untappedPage = 1;
+  _updateActiveUntappedKpiCards();
+  renderUntappedTable();
+};
+
+function renderUntappedTable(kpiLabel) {
+  const st = document.getElementById('untapped-stats');
+  if (st) {
+    const total = ((D.untapped_network || {}).top_untapped_contacts || []).length;
+    const label = kpiLabel || (activeUntappedKpi && UNTAPPED_KPI_FILTERS[activeUntappedKpi] ? UNTAPPED_KPI_FILTERS[activeUntappedKpi].label : '');
+    st.textContent = 'Showing ' + filteredUntapped.length + ' of ' + total + ' matching contacts' + (label ? ' — ' + label : '');
+  }
+  filteredUntapped = [...filteredUntapped].sort((a, b) => {
+    const s = (parseFloat(b.untapped_outreach_score) || 0) - (parseFloat(a.untapped_outreach_score) || 0);
+    if (s !== 0) return s;
+    return (parseFloat(b.priority_score) || 0) - (parseFloat(a.priority_score) || 0);
+  });
+  const start = (untappedPage - 1) * UNTAPPED_PAGE_SIZE;
+  const slice = filteredUntapped.slice(start, start + UNTAPPED_PAGE_SIZE);
+  const tbody = document.getElementById('untapped-tbody');
+  if (!tbody) return;
+  if (!slice.length) {
+    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
+  } else {
+    tbody.innerHTML = slice.map(c => {
+      const url = c.profile_url || '';
+      const score = parseInt(c.untapped_outreach_score) || 0;
+      const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+      return '<tr>'
+        + '<td style="white-space:nowrap">' + (c.full_name||'—') + '</td>'
+        + '<td style="white-space:nowrap">' + (c.company_clean||'—') + '</td>'
+        + '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (c.position_clean||'—') + '</td>'
+        + '<td style="white-space:nowrap">' + (c.persona||'—') + '</td>'
+        + '<td style="font-size:0.75rem">' + (c.seniority||'—') + '</td>'
+        + '<td>' + marketBadge(c.opportunity_bucket||'UNKNOWN') + '</td>'
+        + '<td style="font-size:0.75rem;white-space:nowrap">' + (c.connected_on||'—') + '</td>'
+        + '<td style="text-align:center">' + (c.days_connected ?? '—') + '</td>'
+        + '<td>' + untappedBadge(c.contact_history_status) + '</td>'
+        + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.untapped_category||'—').replace(/_/g, ' ') + '</td>'
+        + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+        + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.recommended_first_action||'—').replace(/_/g, ' ') + '</td>'
+        + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+        + '</tr>';
+    }).join('');
+  }
+  renderUntappedPagination();
+}
+
+function renderUntappedPagination() {
+  const total = Math.ceil(filteredUntapped.length / UNTAPPED_PAGE_SIZE);
+  const pg = document.getElementById('untapped-pagination');
+  if (!pg) return;
+  let html = '';
+  for (let i = 1; i <= Math.min(total, 8); i++) {
+    html += '<button class="pg-btn' + (i === untappedPage ? ' active' : '') + '" onclick="goUntappedPage(' + i + ')">' + i + '</button>';
+  }
+  if (total > 8) html += '<span style="color:var(--text-muted);font-size:0.8rem"> … ' + total + ' pages</span>';
+  pg.innerHTML = html;
+}
+
+window.goUntappedPage = function(n) { untappedPage = n; renderUntappedTable(); };

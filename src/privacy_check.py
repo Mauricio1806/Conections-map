@@ -32,10 +32,21 @@ ROOT_RAW_EXPORT_NAMES = {
 # matches src/weekly_snapshot_refresh.py's own folder convention.
 SNAPSHOT_DIR_RE = re.compile(r"^(?:\d{2}-\d{2}|\d{4}-\d{2}-\d{2})/")
 
+# Part 27 (Untapped Network Intelligence) — private person-level backlog
+# files that must never be tracked, however they got there.
+PRIVATE_OUTPUT_PREFIXES = ("outputs/private/",)
+PRIVATE_OUTPUT_NAMES = {
+    "outputs/untapped_ambiguous_review.csv",
+    "outputs/untapped_outreach_backlog.csv",
+    "outputs/untapped_weekly_queue.csv",
+    "outputs/untapped_high_value.csv",
+}
+
 
 def check_no_tracked_raw_snapshots() -> list[str]:
-    """Assert `git ls-files` contains no raw LinkedIn export or dated snapshot
-    folder. Returns a list of violations (empty = clean)."""
+    """Assert `git ls-files` contains no raw LinkedIn export, dated snapshot
+    folder, or private untapped-network backlog file. Returns a list of
+    violations (empty = clean)."""
     try:
         out = subprocess.run(
             ["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True,
@@ -54,6 +65,8 @@ def check_no_tracked_raw_snapshots() -> list[str]:
             violations.append(f"Raw LinkedIn export is tracked at repo root: {p}")
         elif SNAPSHOT_DIR_RE.match(p):
             violations.append(f"File inside a dated snapshot folder is tracked: {p}")
+        elif name_lower.startswith(PRIVATE_OUTPUT_PREFIXES) or name_lower in PRIVATE_OUTPUT_NAMES:
+            violations.append(f"Private untapped-network backlog file is tracked: {p}")
     return violations
 
 # Exact field names that must NOT appear in any contact record
@@ -74,7 +87,11 @@ FORBIDDEN_PATTERNS = [
     (r"@outlook\.com",                 "Outlook address found"),
     (r"@yahoo\.com",                   "Yahoo address found"),
     (r"@protonmail\.com",              "ProtonMail address found"),
-    (r"\b\d{10,15}\b",                 "Possible phone number (10-15 digits)"),
+    # Excludes digit runs directly glued to a word via hyphen (e.g. the
+    # auto-generated numeric suffix LinkedIn appends to a profile URL slug
+    # when the name-based slug is taken, like ".../in/jane-doe-67999813011")
+    # — genuine phone numbers in free text are not written that way.
+    (r"(?<!-)\b\d{10,15}\b",           "Possible phone number (10-15 digits)"),
     # Email pattern — exclude LinkedIn URLs to avoid false positives
     (r"(?<!linkedin\.com)[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}", "Email address pattern"),
 ]
@@ -121,6 +138,11 @@ ALLOWED_CONTACT_FIELDS = {
     "relationship_value_score", "immediate_action_score",
     "conversation_state_confidence", "state_evidence_codes",
     "external_action_type", "request_resolved", "cooldown_state",
+    # Untapped Network Intelligence — derived states/scores only, no raw content
+    "seniority", "connected_on", "days_connected", "connection_age_bucket",
+    "contact_history_status", "untapped_category", "untapped_outreach_score",
+    "recommended_first_action", "first_message_angle", "profile_url",
+    "conversation_match_confidence", "strategic_focus", "operational_category",
 }
 
 
@@ -145,8 +167,14 @@ def check_json(path: Path) -> list[str]:
         list(lr.get("this_week_contacts", []) or []) +
         list(lr.get("needs_reply_contacts", []) or [])
     )
+    un = data.get("untapped_network", {}) or {}
+    untapped = (
+        list(un.get("top_untapped_contacts", []) or []) +
+        list(un.get("this_week_queue", []) or [])
+    )
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
-                  [(i, c, "lead") for i, c in enumerate(leads)]
+                  [(i, c, "lead") for i, c in enumerate(leads)] + \
+                  [(i, c, "untapped") for i, c in enumerate(untapped)]
 
     for i, record, record_type in all_records:
         for field in record:

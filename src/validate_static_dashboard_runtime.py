@@ -64,10 +64,18 @@ def main():
         if not check(f"File exists: {path.relative_to(ROOT)}", ok):
             failures += 1
 
-    # 2. Valid JSON
+    # 2. Valid JSON — STRICT (matches browser JSON.parse(), not Python's
+    # lenient default). Python's json.loads() accepts bare NaN/Infinity/
+    # -Infinity as a non-standard extension; real browsers reject them
+    # outright, which would break dashboard load in production while this
+    # check kept reporting "valid JSON". Reject them here too.
+    def _reject_non_finite(x):
+        raise ValueError(f"dashboard_data.json contains non-finite JSON token: {x!r} "
+                          f"(NaN/Infinity are not valid JSON and will fail JSON.parse() in every browser)")
+
     data = None
     try:
-        data = json.loads(DATA_JSON.read_text(encoding="utf-8"))
+        data = json.loads(DATA_JSON.read_text(encoding="utf-8"), parse_constant=_reject_non_finite)
         kb = DATA_JSON.stat().st_size // 1024
         check(f"dashboard_data.json is valid JSON ({kb} KB)", True)
     except Exception as e:

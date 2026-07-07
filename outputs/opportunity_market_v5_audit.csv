@@ -653,11 +653,11 @@ Elizabeth Bohorquez Gómez,TORTORICI & PARTNERS,Executive Search,Other,UNKNOWN,N
 Christian Porter,Wizards of the Coast,Senior IT Talent Advisor & Business Partner,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,31
 Ana Laura Viana,Randstad Uruguay,Unit Leader,Other,UNKNOWN,GLOBAL_STAFFING,GLOBAL_STAFFING,0.9,v4 inference: GLOBAL_STAFFING,True,True,False,43
 Ana Beatriz Messias,Grupo Contingência,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,30
-Natália Fiori,RHGestor By Sólides,Analista de Gestão de Carteira PL,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,30
-Ana Carolina Flausino,Sicoob Central Unicoob,Analista de Gestão de Pessoas,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,30
-Amanda Lima,SAUTER,HR Business Partner & Talent Acquisition,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,48
-Santiago Barceló,Clip,People Business Partner Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,LATAM_USD_LIKELY,0.66,message history contains LATAM opportunity signal (aggregated across 2 contacts at company),True,False,False,28
-Isabella Mariani,Alltech,Coordenador de recrutamento e seleção,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,38
+Natália Fiori,RHGestor By Sólides,Analista de Gestão de Carteira PL,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,27
+Ana Carolina Flausino,Sicoob Central Unicoob,Analista de Gestão de Pessoas,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,27
+Amanda Lima,SAUTER,HR Business Partner & Talent Acquisition,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,45
+Santiago Barceló,Clip,People Business Partner Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,LATAM_USD_LIKELY,0.66,message history contains LATAM opportunity signal (aggregated across 2 contacts at company),True,False,False,25
+Isabella Mariani,Alltech,Coordenador de recrutamento e seleção,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,35
 Rosario Pais Zubizarreta,We Are Pipol,HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,24
 Karla L. Urueña Alonso,Bankaool,HRBP,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,24
 Clara Goñi,Orienta,Founder & Talent Consultant,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,GLOBAL_OPPORTUNITY,0.55,high-value persona: Founder,True,False,False,45
@@ -2202,36 +2202,36 @@ Jackeline Sousa,TALENTÊNCIA,Especialista em Recursos Humanos,HR,UNKNOWN,NEEDS_C
 Daniel Palma,Estuary,Developer Relations Lead,Software Engineer,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,30
 Karîna Salles,Fast Sistemas Construtivos,Coordenadora de R&S,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,15
 Caru Moràlles,Caru Moràlles | Gestão de Pessoas e Carreiras,Fundadora & Consultora,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,24
-Viviane Santos,WHB AUTOMOTIVE S.A,Coordenadora de recrutamento e seleção,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,15
-Andrea Virrueta Silva,Metso,Analyst Resourcing Services,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,18
-Jéssica Bloise,Grupo AF6,Gerente de Gestão de Pessoas,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,34
-Guilherme Stoklein,Times Idiomas Trianon Masp,Project Manager,Project / Program Manager,UNKNOWN,NEEDS_COMPANY_MAPPING,SPAIN_EU_LIKELY,0.75,message history contains Spain/EU signal (3 matches),True,False,False,30
-Danilo Veras,Accenture Brasil,Associate Director,Director,BRAZIL,BRAZIL,GLOBAL_CONSULTING,0.9,exact company dict: accenture,True,True,False,57
-Andressa Gonzaga Pereira,PROPOSITO Human Capital Solutions,Associate Partner,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,15
-Andressa Cristina da Cunha Costa,Manu Mourão Consulting,Consultora de RH / Headhunter,Recruiter,GLOBAL_CONSULTING,GLOBAL_CONSULTING,GLOBAL_CONSULTING,0.9,v4 inference: GLOBAL_CONSULTING,True,True,False,57
-Sonia Satumari,Sleek de empire,Spa Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,25
-Tatiane Duarte,QUANTICA - Inovação em Saúde,Coordenador de RH,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,25
-Verônica Ávella,jobnagringa,Líder de Comunicação e Relacionamento da Comunidade e Tutora de Inglês,Other,UNKNOWN,LATAM_USD,LATAM_USD_CONFIRMED,0.85,v4 inference: LATAM_USD,True,True,False,23
-Rodrigo Xavier,XP Inc,Engenheiro de Dados Pleno,Data Engineer,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: xp,True,True,False,42
-Héctor Roque,Infosys,Talent Acquisiton Manager,Other,GLOBAL_CONSULTING,GLOBAL_CONSULTING,GLOBAL_CONSULTING,0.9,exact company dict: infosys,True,True,False,25
-Laura Fernandes,TOTVS,Gerente de RH | Cultura e Engajamento,HR,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: totvs,True,True,False,43
-Emanuelle Caroline,BALERA,Analista de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,27
-Heloísa Bastos,Accenture,Global People Partner | HR Business Partner,HR,US_CANADA_NEARSHORE,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,0.9,exact company dict: accenture,True,True,False,24
-Gabrielle Vicente de Souza,Vagas.com,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,27
-Estefania Jimenez,Polaris Advisors,Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,47
-Silvia Letícia Simões,Humana Soluções Estrategicas em RH,Proprietário da empresa,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,GLOBAL_OPPORTUNITY,0.55,high-value persona: Founder,True,False,False,45
-Larissa Gonçalves,Humgroup,Consultora de R&S / Gerente de projetos,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,32
-Gabrielly De Moraes Bezerra,Autoconf,Coordenadora de Pessoas e Cultura,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,15
-Mauren Barboza,Angeloni,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,27
-Rouglas Strapazzon,S&P Consultoria e Mentoria,Fundador,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,GLOBAL_CONSULTING,0.75,company category: GLOBAL_CONSULTING,True,False,False,45
-Chí Tâm,Pharmacity,Talent Acquisition Admin,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,45
-Jeferson Fernando,iFood,Senior Principal Engineer,Other,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: ifood,True,True,False,30
-André Reis,Suco Prat's,Gerente de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,34
-Pamela Rosales,Mercado Livre,Project Leader - Data Culture,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,BRAZIL_LIKELY,0.9,exact company dict: mercado livre,True,True,False,15
-Sabrina Mendes,Neon,People Analytics Analyst,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,18
-Alexandre Cadima Leal,Itaú Unibanco,Distinguished Software Engineer,Software Engineer,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: itau,True,True,False,31
-Patricia Quarenghi,GRUPO CETEFE,Diretora de Atração de Talentos,Talent Acquisition,UNKNOWN,LATAM_USD,LATAM_USD_CONFIRMED,0.85,v4 inference: LATAM_USD,True,True,False,56
-Lucas Magalhães,Solfácil,Senior Tech Manager & Head of AI,Hiring Manager,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,48
+Viviane Santos,WHB AUTOMOTIVE S.A,Coordenadora de recrutamento e seleção,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,12
+Andrea Virrueta Silva,Metso,Analyst Resourcing Services,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,15
+Jéssica Bloise,Grupo AF6,Gerente de Gestão de Pessoas,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,31
+Guilherme Stoklein,Times Idiomas Trianon Masp,Project Manager,Project / Program Manager,UNKNOWN,NEEDS_COMPANY_MAPPING,SPAIN_EU_LIKELY,0.75,message history contains Spain/EU signal (3 matches),True,False,False,27
+Danilo Veras,Accenture Brasil,Associate Director,Director,BRAZIL,BRAZIL,GLOBAL_CONSULTING,0.9,exact company dict: accenture,True,True,False,54
+Andressa Gonzaga Pereira,PROPOSITO Human Capital Solutions,Associate Partner,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,12
+Andressa Cristina da Cunha Costa,Manu Mourão Consulting,Consultora de RH / Headhunter,Recruiter,GLOBAL_CONSULTING,GLOBAL_CONSULTING,GLOBAL_CONSULTING,0.9,v4 inference: GLOBAL_CONSULTING,True,True,False,54
+Sonia Satumari,Sleek de empire,Spa Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,22
+Tatiane Duarte,QUANTICA - Inovação em Saúde,Coordenador de RH,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,22
+Verônica Ávella,jobnagringa,Líder de Comunicação e Relacionamento da Comunidade e Tutora de Inglês,Other,UNKNOWN,LATAM_USD,LATAM_USD_CONFIRMED,0.85,v4 inference: LATAM_USD,True,True,False,20
+Rodrigo Xavier,XP Inc,Engenheiro de Dados Pleno,Data Engineer,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: xp,True,True,False,39
+Héctor Roque,Infosys,Talent Acquisiton Manager,Other,GLOBAL_CONSULTING,GLOBAL_CONSULTING,GLOBAL_CONSULTING,0.9,exact company dict: infosys,True,True,False,22
+Laura Fernandes,TOTVS,Gerente de RH | Cultura e Engajamento,HR,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: totvs,True,True,False,40
+Emanuelle Caroline,BALERA,Analista de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,24
+Heloísa Bastos,Accenture,Global People Partner | HR Business Partner,HR,US_CANADA_NEARSHORE,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,0.9,exact company dict: accenture,True,True,False,21
+Gabrielle Vicente de Souza,Vagas.com,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,24
+Estefania Jimenez,Polaris Advisors,Technical Recruiter,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,44
+Silvia Letícia Simões,Humana Soluções Estrategicas em RH,Proprietário da empresa,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,GLOBAL_OPPORTUNITY,0.55,high-value persona: Founder,True,False,False,42
+Larissa Gonçalves,Humgroup,Consultora de R&S / Gerente de projetos,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,29
+Gabrielly De Moraes Bezerra,Autoconf,Coordenadora de Pessoas e Cultura,Other,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,12
+Mauren Barboza,Angeloni,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,24
+Rouglas Strapazzon,S&P Consultoria e Mentoria,Fundador,Founder,UNKNOWN,NEEDS_COMPANY_MAPPING,GLOBAL_CONSULTING,0.75,company category: GLOBAL_CONSULTING,True,False,False,42
+Chí Tâm,Pharmacity,Talent Acquisition Admin,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,42
+Jeferson Fernando,iFood,Senior Principal Engineer,Other,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: ifood,True,True,False,27
+André Reis,Suco Prat's,Gerente de Recursos Humanos,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,31
+Pamela Rosales,Mercado Livre,Project Leader - Data Culture,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,BRAZIL_LIKELY,0.9,exact company dict: mercado livre,True,True,False,12
+Sabrina Mendes,Neon,People Analytics Analyst,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,15
+Alexandre Cadima Leal,Itaú Unibanco,Distinguished Software Engineer,Software Engineer,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: itau,True,True,False,28
+Patricia Quarenghi,GRUPO CETEFE,Diretora de Atração de Talentos,Talent Acquisition,UNKNOWN,LATAM_USD,LATAM_USD_CONFIRMED,0.85,v4 inference: LATAM_USD,True,True,False,53
+Lucas Magalhães,Solfácil,Senior Tech Manager & Head of AI,Hiring Manager,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,45
 Daniele Alcoforado Costa,Compass UOL,Engenheiro de dados | Vivo,Data Engineer,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,27
 Diana Silva Felix,Pontifícia Universidade Católica do Paraná,Analista de Atração e Inclusão,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,15
 Manoel Gonçalves,Superlógica Tecnologias,Diretor de Negócios para Imobiliárias,Director,BRAZIL,BRAZIL,BRAZIL_CONFIRMED,0.9,exact company dict: superlógica tecnologias,True,True,False,45
@@ -8810,12 +8810,12 @@ Robert M. Henderson,Jobscan,Communications Specialist (Promoted from Content Wri
 Kavin Tung,AP BEVERAGE,Human Resources Generalist,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,21
 Gabriela Ponga,Catena IT,Analista de Recursos Humanos | Comercial Tecnologia,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,24
 "Karla Keegan, SHRM-CP, CDP",Agemark Senior Living,Talent Acquisition Manager,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,48
-Waldirene Machado,Associacao De Poupanca E Emprestimo Poupex,Analista de gestão organizacional,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,24
-Elaine Cristina Mendes,LM Soluções de Mobilidade,Agilista Mestre/ Agile Master,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,BRAZIL_CONFIRMED,0.9,exact company dict: lm mobilidade,True,True,False,12
-Manasvi Malav,Tarento Group,Associate Product Manager,Product,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,27
-Parmeet Kaur Arora,InCommon,Talent Acquisition Associate,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,42
-Letícia Queiroz,MedSênior,Analista de Atração e Seleção Pl | Tech Recruiter e Vagas Estratégicas,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,47
-Sibin Dhas,FinSurge,HR Recruiter| Murex Hiring & Internal Talent Acquisition,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,44
+Waldirene Machado,Associacao De Poupanca E Emprestimo Poupex,Analista de gestão organizacional,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,20
+Elaine Cristina Mendes,LM Soluções de Mobilidade,Agilista Mestre/ Agile Master,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,BRAZIL_CONFIRMED,0.9,exact company dict: lm mobilidade,True,True,False,8
+Manasvi Malav,Tarento Group,Associate Product Manager,Product,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,23
+Parmeet Kaur Arora,InCommon,Talent Acquisition Associate,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,38
+Letícia Queiroz,MedSênior,Analista de Atração e Seleção Pl | Tech Recruiter e Vagas Estratégicas,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,43
+Sibin Dhas,FinSurge,HR Recruiter| Murex Hiring & Internal Talent Acquisition,Recruiter,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,40
 "Nicole Murry - MS, PHR -Masters, HR Certified",MurryConsult LLC,Human Resources Consultant,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,17
 Mostafa Etman,Arrow Electronics,HR specialist,HR,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,20
 Felipe Paredes,Cargill,Tecnologia da Informação,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,8

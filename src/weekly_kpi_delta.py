@@ -259,8 +259,47 @@ def build_weekly_evolution(previous: dict, current: dict, snapshot_meta: dict) -
         },
         "new_high_value_connections": _top_new_high_value(new_conn_df),
         "diagnosis": _weekly_diagnosis(kpi_df, current),
+        "untapped_network_movement": _build_untapped_movement(previous, current),
     }
     return evolution
+
+
+def _build_untapped_movement(previous: dict, current: dict) -> dict:
+    """Part 22 — Untapped Network deltas. Only meaningful once a PREVIOUS
+    snapshot actually persisted an untapped_network.summary (this feature's
+    first run never has one) — gracefully degrades rather than fabricating
+    a delta against an unknown baseline, same pattern as interview_pipeline
+    in _build_kpi_delta above."""
+    p_un = (previous.get("untapped_network") or {}).get("summary")
+    c_un = (current.get("untapped_network") or {}).get("summary") or {}
+    if not c_un:
+        return {"available": False}
+    if not p_un:
+        return {
+            "available": True, "tracked_since_last_snapshot": False,
+            "current_never_contacted_confirmed": c_un.get("never_contacted_confirmed", 0),
+            "current_high_value_untapped": c_un.get("high_value_untapped", 0),
+            "note": "Untapped Network tracking starts this snapshot — week-over-week deltas "
+                    "will be available from the next weekly refresh onward.",
+        }
+
+    def _d(key):
+        return (c_un.get(key, 0) or 0) - (p_un.get(key, 0) or 0)
+
+    # "Activated this week" = was never-contacted-confirmed last snapshot,
+    # now has a conversation. We only have aggregate counts (not identity-
+    # level snapshot diffing) here, so this is reported as a bounded estimate
+    # from the aggregate delta, never asserted as an exact person-level fact.
+    activated_estimate = max(0, -(_d("never_contacted_confirmed")))
+
+    return {
+        "available": True, "tracked_since_last_snapshot": True,
+        "never_contacted_confirmed_delta": _d("never_contacted_confirmed"),
+        "high_value_untapped_delta": _d("high_value_untapped"),
+        "untapped_recruiters_delta": _d("recruiters_untapped"),
+        "untapped_hiring_managers_delta": _d("hiring_managers_untapped"),
+        "untapped_contacts_activated_this_week_estimate": activated_estimate,
+    }
 
 
 def main():
