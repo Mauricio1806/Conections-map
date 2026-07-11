@@ -366,13 +366,23 @@ function barChart(canvasId, labels, values, colors, opts) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
   const isH = opts && opts.horizontal;
+  const periodActuals = opts && opts.periodActuals;
   charts[canvasId] = new Chart(ctx, {
     type: 'bar',
     data: { labels, datasets: [{ data: values, backgroundColor: colors || '#3b82f6', borderRadius: 4, borderSkipped: false }] },
     options: {
       indexAxis: isH ? 'y' : 'x',
       responsive: true,
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' ' + (isH ? c.parsed.x : c.parsed.y).toLocaleString() } } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: c => ' ' + (isH ? c.parsed.x : c.parsed.y).toLocaleString(),
+            afterLabel: c => (periodActuals && periodActuals[c.dataIndex] !== null && periodActuals[c.dataIndex] !== undefined)
+              ? ' (period total: ' + Number(periodActuals[c.dataIndex]).toLocaleString() + ')' : ''
+          }
+        }
+      },
       scales: {
         x: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: '#21262d' } },
         y: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: '#21262d' } }
@@ -399,7 +409,9 @@ function doughnutChart(canvasId, labels, values, colors) {
 }
 
 // Grouped bar chart — multiple named datasets sharing one label axis.
-// datasets: [{ label, data, color }, ...]
+// datasets: [{ label, data, color, periodActuals? }, ...] — periodActuals is
+// an optional array (parallel to data/labels) shown as a secondary tooltip
+// line, e.g. the raw multi-week period total behind a weekly-pace bar.
 function groupedBarChart(canvasId, labels, datasets, opts) {
   destroyChart(canvasId);
   const ctx = document.getElementById(canvasId);
@@ -410,7 +422,8 @@ function groupedBarChart(canvasId, labels, datasets, opts) {
     data: {
       labels,
       datasets: datasets.map(d => ({
-        label: d.label, data: d.data, backgroundColor: d.color, borderRadius: 4, borderSkipped: false
+        label: d.label, data: d.data, backgroundColor: d.color, borderRadius: 4, borderSkipped: false,
+        periodActuals: d.periodActuals
       }))
     },
     options: {
@@ -418,7 +431,16 @@ function groupedBarChart(canvasId, labels, datasets, opts) {
       responsive: true,
       plugins: {
         legend: { display: true, position: 'bottom', labels: { color: '#8b949e', font: { size: 10 }, boxWidth: 12 } },
-        tooltip: { callbacks: { label: c => ' ' + c.dataset.label + ': ' + (isH ? c.parsed.x : c.parsed.y).toLocaleString() } }
+        tooltip: {
+          callbacks: {
+            label: c => ' ' + c.dataset.label + ': ' + (isH ? c.parsed.x : c.parsed.y).toLocaleString(),
+            afterLabel: c => {
+              const pa = c.dataset.periodActuals;
+              if (!pa || pa[c.dataIndex] === null || pa[c.dataIndex] === undefined) return '';
+              return ' (period total: ' + Number(pa[c.dataIndex]).toLocaleString() + ')';
+            }
+          }
+        }
       },
       scales: {
         x: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: '#21262d' } },
@@ -2248,9 +2270,39 @@ function _progressStatusClass(status) {
   return 'color:' + c + ';font-weight:700';
 }
 
+function _statusLabel(status) {
+  return '<span style="' + _progressStatusClass(status) + '">' + status.replace(/_/g, ' ') + '</span>';
+}
+
+// Cards with weekly-pace data get a full breakdown (period actual / weekly
+// pace / weekly target / status) — never collapse this to "168 vs 40-60",
+// since that raw comparison is what caused the original AHEAD/BELOW_TARGET
+// misreporting when snapshots are more than a week apart.
+function _paceCard(card) {
+  const lines = [];
+  if (card.period_actual !== null && card.period_actual !== undefined) {
+    lines.push('Period actual: <strong>' + card.period_actual + '</strong>');
+  }
+  if (card.weekly_pace_actual !== null && card.weekly_pace_actual !== undefined) {
+    lines.push('Weekly pace: <strong>' + card.weekly_pace_actual + '/wk</strong>');
+  } else {
+    lines.push('Weekly pace: —');
+  }
+  if (card.weekly_target_min !== null && card.weekly_target_min !== undefined) {
+    lines.push('Weekly target: ' + card.weekly_target_min + '-' + card.weekly_target_max + '/wk');
+  }
+  if (card.status) lines.push('Status: ' + _statusLabel(card.status));
+  return '<div class="card"><div class="card-title">' + card.title + '</div>'
+    + '<div class="card-sub" style="line-height:1.7;margin-top:.4rem">' + lines.join('<br>') + '</div>'
+    + '</div>';
+}
+
 function _progressCard(card) {
+  if (card.weekly_pace_actual !== undefined || card.period_actual !== undefined) {
+    return _paceCard(card);
+  }
   const sub = card.status
-    ? '<span style="' + _progressStatusClass(card.status) + '">' + card.status.replace(/_/g, ' ') + '</span>'
+    ? _statusLabel(card.status)
     : (card.target ? 'target: ' + card.target : (card.sub || ''));
   const value = (card.value === null || card.value === undefined) ? '—' : card.value;
   return makeCard(card.title, value, sub);
@@ -2273,18 +2325,22 @@ function renderPlanProgress() {
   const charts = ap.charts || {};
   const baselineAvailable = !!summary.baseline_available;
 
+  const period = summary.period || {};
+
   // Status banner
   const banner = document.getElementById('progress-status-banner');
   if (banner) {
     banner.className = 'alert ' + (baselineAvailable
       ? (summary.plan_status === 'ON_TRACK' ? 'alert-good' : 'alert-warn')
       : 'alert-info');
+    const periodText = (period.period_days !== null && period.period_days !== undefined)
+      ? ' Comparison period: ' + period.period_days + ' days (' + period.period_weeks + ' weeks).'
+      : '';
     banner.innerHTML = '<span class="alert-icon">&#127919;</span><span><strong>Plan Status: '
       + (summary.plan_status || '—') + '</strong> — Week ' + (summary.week_index || '?')
       + ' of the plan cycle (snapshot #' + (summary.snapshot_count || 1) + '). Primary focus: '
-      + (summary.primary_focus || '—') + '.</span>';
+      + (summary.primary_focus || '—') + '.' + periodText + '</span>';
   }
-
   const baselineNote = document.getElementById('progress-baseline-note');
   if (baselineNote) {
     if (!baselineAvailable) {
@@ -2292,6 +2348,11 @@ function renderPlanProgress() {
       baselineNote.innerHTML = '<div class="alert alert-info"><span class="alert-icon">&#9432;</span>'
         + '<span><strong>Baseline mode:</strong> this is the first tracked snapshot — week-over-week '
         + 'progress will be available starting next Sunday\'s refresh.</span></div>';
+    } else if (period.is_multi_week) {
+      baselineNote.style.display = '';
+      baselineNote.innerHTML = '<div class="alert alert-warn"><span class="alert-icon">&#9888;&#65039;</span>'
+        + '<span><strong>Multi-week baseline period:</strong> ' + (summary.period_warning || period.note || '')
+        + '</span></div>';
     } else {
       baselineNote.style.display = 'none';
     }
@@ -2301,7 +2362,9 @@ function renderPlanProgress() {
   const cardsEl = document.getElementById('progress-summary-cards');
   if (cardsEl) cardsEl.innerHTML = (ap.progress_cards || []).map(_progressCard).join('');
 
-  // 2. Weekly Target vs Actual
+  // 2. Weekly Target vs Actual — bars show WEEKLY PACE (normalized by
+  // period_weeks), never the raw multi-week period total. The period total
+  // is still surfaced as a tooltip line so nothing is hidden.
   const targetData = charts.weekly_target_vs_actual || [];
   const targetMsgEl = document.getElementById('progress-target-baseline-msg');
   if (!baselineAvailable || !targetData.length) {
@@ -2312,9 +2375,10 @@ function renderPlanProgress() {
     groupedBarChart('chart-progress-target',
       targetData.map(r => r.label),
       [
-        { label: 'Target Min', data: targetData.map(r => r.target_min || 0), color: '#3b82f640' },
-        { label: 'Target Max', data: targetData.map(r => r.target_max || 0), color: '#3b82f680' },
-        { label: 'Actual', data: targetData.map(r => r.actual || 0), color: '#22c55e' },
+        { label: 'Weekly Target Min', data: targetData.map(r => r.target_min || 0), color: '#3b82f640' },
+        { label: 'Weekly Target Max', data: targetData.map(r => r.target_max || 0), color: '#3b82f680' },
+        { label: 'Weekly Pace (Actual)', data: targetData.map(r => r.actual || 0), color: '#22c55e',
+          periodActuals: targetData.map(r => r.period_actual) },
       ]
     );
   }
@@ -2336,9 +2400,10 @@ function renderPlanProgress() {
     );
   }
 
-  // Persona growth
+  // Persona growth — bars show weekly pace, tooltip shows period total
   const personaData = charts.persona_growth || [];
-  barChart('chart-progress-persona', personaData.map(r => r.label), personaData.map(r => r.value || 0), '#3b82f6', { horizontal: true });
+  barChart('chart-progress-persona', personaData.map(r => r.label), personaData.map(r => r.value || 0), '#3b82f6',
+    { horizontal: true, periodActuals: personaData.map(r => r.period_actual) });
 
   // Lead pipeline movement
   const leadData = charts.lead_pipeline_movement || [];

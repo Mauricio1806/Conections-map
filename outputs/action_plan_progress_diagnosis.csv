@@ -1,4 +1,6 @@
 ﻿rule,message
+new_connections_below_target,New connection growth is below weekly pace. Increase new connection requests next week.
+multi_week_baseline_period,"Because this is a baseline catch-up period, use weekly pace instead of raw total."
 needs_my_response_high,Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts.
 high_value_untapped_high,Use existing 1st-degree network before adding more cold connections.
 needs_company_mapping_increased,Spend Sunday mapping top unresolved companies before planning the week.

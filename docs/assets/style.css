@@ -174,7 +174,7 @@ body {
   box-shadow: var(--shadow);
 }
 .card-title { font-size: 0.73rem; color: var(--text-secondary); margin-bottom: .4rem; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
-.card-value { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+.card-value { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); overflow-wrap: break-word; word-break: break-word; }
 .card-sub   { font-size: 0.75rem; margin-top: .3rem; color: var(--text-secondary); }
 .card-sub.good { color: var(--success); }
 .card-sub.warn { color: var(--warning); }

@@ -132,6 +132,104 @@ def current_plan_week(snapshots: list) -> tuple[str, int, int]:
     return f"week_{week_index}", week_index, n
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# Period normalization — weekly targets must be compared against a WEEKLY
+# PACE, not a raw period total. Two snapshots taken 38 days apart are not
+# "one week" of progress; treating the raw delta as a single week's number
+# makes slow weeks look AHEAD and fast weeks look BELOW_TARGET.
+# ══════════════════════════════════════════════════════════════════════════
+
+from datetime import date as _date
+
+
+def compute_period(current_json: dict) -> dict:
+    we = current_json.get("weekly_evolution", {}) or {}
+    cur_label = we.get("current_snapshot_label")
+    prev_label = we.get("previous_snapshot_label")
+
+    def _parse(label):
+        if not label or str(label).lower() == "unknown":
+            return None
+        try:
+            return _date.fromisoformat(str(label)[:10])
+        except ValueError:
+            return None
+
+    cur_date, prev_date = _parse(cur_label), _parse(prev_label)
+    if cur_date is None or prev_date is None:
+        return {
+            "baseline_available": False,
+            "current_snapshot_date": str(cur_label or ""),
+            "previous_snapshot_date": str(prev_label or ""),
+            "period_days": None,
+            "period_weeks": None,
+            "is_multi_week": False,
+            "note": "First tracked snapshot — no previous snapshot date to measure a period against.",
+        }
+
+    period_days = (cur_date - prev_date).days
+    period_weeks = max(period_days / 7, 1)
+    is_multi_week = period_days > 10
+
+    note = (
+        f"Current comparison covers {period_days} days / {round(period_weeks, 1)} weeks. "
+        f"Weekly progress is normalized by pace."
+        if is_multi_week else
+        f"Current comparison covers {period_days} days — treated as a single weekly snapshot."
+    )
+
+    return {
+        "baseline_available": True,
+        "current_snapshot_date": str(cur_label),
+        "previous_snapshot_date": str(prev_label),
+        "period_days": period_days,
+        "period_weeks": round(period_weeks, 2),
+        "is_multi_week": is_multi_week,
+        "note": note,
+    }
+
+
+def _pace_metrics(period_actual: float, weekly_target_min: float, weekly_target_max: float,
+                   period: dict) -> dict:
+    """Given a raw period total and weekly min/max targets, compute the
+    weekly-pace-normalized figures and a status driven by PACE, not the
+    raw period total."""
+    period_weeks = period.get("period_weeks")
+    baseline_available = period.get("baseline_available", False)
+
+    if not baseline_available or not period_weeks:
+        return {
+            "period_actual": period_actual,
+            "weekly_pace_actual": None,
+            "weekly_target_min": weekly_target_min,
+            "weekly_target_max": weekly_target_max,
+            "period_target_min": None,
+            "period_target_max": None,
+            "status": "NO_BASELINE",
+        }
+
+    weekly_pace = round(period_actual / period_weeks, 1)
+    period_target_min = round(weekly_target_min * period_weeks, 1)
+    period_target_max = round(weekly_target_max * period_weeks, 1)
+
+    if weekly_pace > weekly_target_max:
+        status = "AHEAD"
+    elif weekly_pace >= weekly_target_min:
+        status = "ON_TRACK"
+    else:
+        status = "BELOW_TARGET"
+
+    return {
+        "period_actual": period_actual,
+        "weekly_pace_actual": weekly_pace,
+        "weekly_target_min": weekly_target_min,
+        "weekly_target_max": weekly_target_max,
+        "period_target_min": period_target_min,
+        "period_target_max": period_target_max,
+        "status": status,
+    }
+
+
 def load_kpi_delta_lookup() -> dict:
     if not KPI_DELTA_CSV.exists():
         return {}
@@ -214,7 +312,7 @@ def _persona_set(df: pd.DataFrame, personas: set) -> int:
 
 
 def build_network_growth(kpi_lookup: dict, week_cfg: dict, new_conn_df: pd.DataFrame,
-                          baseline_available: bool) -> dict:
+                          period: dict) -> dict:
     prev_total = _kpi(kpi_lookup, "NETWORK", "total_connections", "previous_value", 0)
     cur_total  = _kpi(kpi_lookup, "NETWORK", "total_connections", "current_value", 0)
     delta      = _kpi(kpi_lookup, "NETWORK", "total_connections", "absolute_delta", 0)
@@ -223,16 +321,10 @@ def build_network_growth(kpi_lookup: dict, week_cfg: dict, new_conn_df: pd.DataF
     tmin = week_cfg.get("new_connections_target_min", 0)
     tmax = week_cfg.get("new_connections_target_max", 0)
 
-    if not baseline_available:
-        status = "NO_BASELINE"
-    elif new_count > tmax:
-        status = "AHEAD"
-    elif new_count >= tmin:
-        status = "ON_TRACK"
-    else:
-        status = "BELOW_TARGET"
-
-    progress_pct = round(new_count / tmax * 100, 1) if tmax else None
+    pace = _pace_metrics(new_count, tmin, tmax, period)
+    status = pace["status"]
+    progress_pct = (round(pace["weekly_pace_actual"] / tmax * 100, 1)
+                    if tmax and pace["weekly_pace_actual"] is not None else None)
 
     return {
         "total_connections_current": int(cur_total) if cur_total else 0,
@@ -243,10 +335,15 @@ def build_network_growth(kpi_lookup: dict, week_cfg: dict, new_conn_df: pd.DataF
         "new_connections_target_max": tmax,
         "new_connections_progress_pct": progress_pct,
         "new_connections_status": status,
+        # Weekly-pace normalization (period may span more than one week)
+        "new_connections_period_actual": pace["period_actual"],
+        "new_connections_weekly_pace": pace["weekly_pace_actual"],
+        "new_connections_period_target_min": pace["period_target_min"],
+        "new_connections_period_target_max": pace["period_target_max"],
     }
 
 
-def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict) -> dict:
+def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict, week_cfg: dict, period: dict) -> dict:
     new_latam_usd    = _bucket_set(new_conn_df, {"LATAM_USD_CONFIRMED", "LATAM_USD_LIKELY"})
     new_us_nearshore = _bucket_set(new_conn_df, {"US_CANADA_CONFIRMED", "US_CANADA_LIKELY"})
     new_spain_eu      = _bucket_set(new_conn_df, {"SPAIN_EU_CONFIRMED", "SPAIN_EU_LIKELY"})
@@ -258,6 +355,8 @@ def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict) -> dict:
     unclassified_new = _bucket_set(new_conn_df, UNCLASSIFIED_BUCKETS)
     total_new = len(new_conn_df) if not new_conn_df.empty else 0
 
+    # Share ratios are period-length independent (numerator and denominator
+    # cover the same period) — no pace normalization needed for these.
     classified_denominator = primary_new + europe_new
     actual_primary_share = round(primary_new / classified_denominator, 4) if classified_denominator else None
     actual_europe_share  = round(europe_new / classified_denominator, 4) if classified_denominator else None
@@ -278,6 +377,20 @@ def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict) -> dict:
     else:
         status = "ON_STRATEGY"
 
+    # Europe exploratory has an explicit weekly count target — normalize by pace.
+    europe_pace = _pace_metrics(
+        europe_new, week_cfg.get("europe_exploratory_target_min", 0),
+        week_cfg.get("europe_exploratory_target_max", 0), period,
+    )
+
+    # Primary/LATAM/US/Spain raw counts have no dedicated weekly count target
+    # (only the share targets above) — still expose weekly pace so the UI can
+    # show "X/wk" instead of a raw multi-week total.
+    period_weeks = period.get("period_weeks")
+
+    def _pace_only(count):
+        return round(count / period_weeks, 1) if period_weeks else None
+
     return {
         "new_latam_usd_connections": new_latam_usd,
         "new_us_nearshore_connections": new_us_nearshore,
@@ -285,7 +398,15 @@ def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict) -> dict:
         "new_global_staffing_connections": new_global_staffing,
         "new_global_opportunity_connections": new_global_opportunity,
         "primary_focus_new_connections": primary_new,
+        "primary_focus_weekly_pace": _pace_only(primary_new),
         "europe_exploratory_new_connections": europe_new,
+        "europe_exploratory_period_actual": europe_pace["period_actual"],
+        "europe_exploratory_weekly_pace": europe_pace["weekly_pace_actual"],
+        "europe_exploratory_weekly_target_min": europe_pace["weekly_target_min"],
+        "europe_exploratory_weekly_target_max": europe_pace["weekly_target_max"],
+        "europe_exploratory_period_target_min": europe_pace["period_target_min"],
+        "europe_exploratory_period_target_max": europe_pace["period_target_max"],
+        "europe_exploratory_pace_status": europe_pace["status"],
         "unclassified_new_connections": unclassified_new,
         "actual_primary_share": actual_primary_share,
         "actual_europe_share": actual_europe_share,
@@ -295,17 +416,39 @@ def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict) -> dict:
     }
 
 
-def build_persona_growth(new_conn_df: pd.DataFrame) -> dict:
-    return {key: _persona_set(new_conn_df, personas) for key, personas in PERSONA_GROUPS.items()}
+def build_persona_growth(new_conn_df: pd.DataFrame, period: dict) -> dict:
+    period_weeks = period.get("period_weeks")
+    result = {}
+    for key, personas in PERSONA_GROUPS.items():
+        count = _persona_set(new_conn_df, personas)
+        result[key] = count
+        result[f"{key}_weekly_pace"] = round(count / period_weeks, 1) if period_weeks else None
+    return result
 
 
-def build_lead_reactivation(current_json: dict, kpi_lookup: dict) -> dict:
+def build_lead_reactivation(current_json: dict, kpi_lookup: dict, week_cfg: dict, period: dict) -> dict:
     lr = current_json.get("lead_reactivation", {}) or {}
+    new_conversations_started = lr.get("total_conversations", 0) - _kpi(
+        kpi_lookup, "MESSAGE_INTELLIGENCE", "conversations_analyzed", "previous_value", 0)
+
+    # "Reactivation movement" measured as a period delta (new conversations
+    # started since the previous snapshot) — normalized against the weekly
+    # reactivation target, same pace treatment as new_connections.
+    reactivation_pace = _pace_metrics(
+        max(new_conversations_started, 0), week_cfg.get("reactivation_target_min", 0),
+        week_cfg.get("reactivation_target_max", 0), period,
+    )
+
     return {
         "conversations_current": lr.get("total_conversations", 0),
         "conversations_previous": _kpi(kpi_lookup, "MESSAGE_INTELLIGENCE", "conversations_analyzed", "previous_value", 0),
-        "new_conversations_started": lr.get("total_conversations", 0) - _kpi(
-            kpi_lookup, "MESSAGE_INTELLIGENCE", "conversations_analyzed", "previous_value", 0),
+        "new_conversations_started": new_conversations_started,
+        "new_conversations_weekly_pace": reactivation_pace["weekly_pace_actual"],
+        "reactivation_weekly_target_min": reactivation_pace["weekly_target_min"],
+        "reactivation_weekly_target_max": reactivation_pace["weekly_target_max"],
+        "reactivation_period_target_min": reactivation_pace["period_target_min"],
+        "reactivation_period_target_max": reactivation_pace["period_target_max"],
+        "reactivation_pace_status": reactivation_pace["status"],
         "followups_due_current": lr.get("follow_up_due", 0),
         "needs_my_response_current": lr.get("needs_my_response", 0),
         "hot_reactivation_current": lr.get("hot_reactivation_leads", 0),
@@ -315,7 +458,7 @@ def build_lead_reactivation(current_json: dict, kpi_lookup: dict) -> dict:
     }
 
 
-def build_untapped_movement(current_json: dict) -> dict:
+def build_untapped_movement(current_json: dict, week_cfg: dict, period: dict) -> dict:
     un = current_json.get("untapped_network", {}) or {}
     s  = un.get("summary", {}) or {}
     we = current_json.get("weekly_evolution", {}) or {}
@@ -338,6 +481,12 @@ def build_untapped_movement(current_json: dict) -> dict:
     else:
         not_contacted_yet = 0
 
+    activated_period = um.get("untapped_contacts_activated_this_week_estimate", 0) if um.get("available") else 0
+    activated_pace = _pace_metrics(
+        activated_period, week_cfg.get("untapped_outreach_target_min", 0),
+        week_cfg.get("untapped_outreach_target_max", 0), period,
+    )
+
     return {
         "never_contacted_current": s.get("never_contacted_confirmed", 0),
         "never_contacted_previous": None if not um.get("tracked_since_last_snapshot") else (
@@ -345,7 +494,11 @@ def build_untapped_movement(current_json: dict) -> dict:
         "high_value_untapped_current": s.get("high_value_untapped", 0),
         "high_value_untapped_previous": None if not um.get("tracked_since_last_snapshot") else (
             s.get("high_value_untapped", 0) - um.get("high_value_untapped_delta", 0)),
-        "untapped_activated_this_week": um.get("untapped_contacts_activated_this_week_estimate", 0) if um.get("available") else 0,
+        "untapped_activated_this_week": activated_period,
+        "untapped_activated_weekly_pace": activated_pace["weekly_pace_actual"],
+        "untapped_outreach_weekly_target_min": activated_pace["weekly_target_min"],
+        "untapped_outreach_weekly_target_max": activated_pace["weekly_target_max"],
+        "untapped_activated_pace_status": activated_pace["status"],
         "new_connections_not_contacted_yet": not_contacted_yet,
         "untapped_queue_completed_estimate": s.get("this_week_queue_count", 0),
         "untapped_backlog_change": um.get("high_value_untapped_delta") if um.get("tracked_since_last_snapshot") else None,
@@ -385,7 +538,8 @@ def build_data_quality(current_json: dict, kpi_lookup: dict) -> dict:
 # ══════════════════════════════════════════════════════════════════════════
 
 def build_diagnosis(network: dict, strategic: dict, leads: dict, untapped: dict, quality: dict,
-                     baseline_available: bool) -> list:
+                     period: dict) -> list:
+    baseline_available = period.get("baseline_available", False)
     if not baseline_available:
         return [{"rule": "baseline_only",
                   "message": "First tracked snapshot — no previous week to compare against yet. "
@@ -394,7 +548,15 @@ def build_diagnosis(network: dict, strategic: dict, leads: dict, untapped: dict,
     rules = []
     if network["new_connections_status"] == "BELOW_TARGET":
         rules.append({"rule": "new_connections_below_target",
-                       "message": "Increase new connection requests next week."})
+                       "message": "New connection growth is below weekly pace. "
+                                  "Increase new connection requests next week."})
+    elif network["new_connections_status"] == "AHEAD":
+        rules.append({"rule": "new_connections_above_target",
+                       "message": "Connection growth is above weekly pace. Keep quality control."})
+
+    if period.get("is_multi_week"):
+        rules.append({"rule": "multi_week_baseline_period",
+                       "message": "Because this is a baseline catch-up period, use weekly pace instead of raw total."})
 
     primary_share = strategic.get("actual_primary_share")
     if primary_share is not None and primary_share < 0.80:
@@ -460,7 +622,7 @@ def build_next_week_recommendation(week_index: int, targets: dict, leads: dict, 
 # Outputs (Part 5) + public JSON block (Part 6)
 # ══════════════════════════════════════════════════════════════════════════
 
-def write_output_csvs(week_key: str, week_index: int, snapshot_count: int, baseline_available: bool,
+def write_output_csvs(week_key: str, week_index: int, snapshot_count: int, period: dict,
                        network: dict, strategic: dict, persona: dict, leads: dict, untapped: dict,
                        top_contacts: dict, quality: dict, manual: dict, diagnosis: list,
                        overall_status: str, recommendation: str) -> None:
@@ -470,17 +632,21 @@ def write_output_csvs(week_key: str, week_index: int, snapshot_count: int, basel
         "week_key": week_key,
         "week_index": week_index,
         "snapshot_count": snapshot_count,
-        "baseline_available": baseline_available,
+        "baseline_available": period.get("baseline_available", False),
+        "period_days": period.get("period_days"),
+        "period_weeks": period.get("period_weeks"),
+        "is_multi_week": period.get("is_multi_week"),
         "plan_status": overall_status,
         "new_connections_status": network["new_connections_status"],
         "strategy_mix_status": strategic["strategy_mix_status"],
-        "new_connections_count": network["new_connections_count"],
+        "new_connections_period_actual": network["new_connections_period_actual"],
+        "new_connections_weekly_pace": network["new_connections_weekly_pace"],
         "actual_primary_share": strategic["actual_primary_share"],
         "actual_europe_share": strategic["actual_europe_share"],
         "next_week_recommendation": recommendation,
     }]).to_csv(SUMMARY_CSV, index=False, encoding="utf-8-sig")
 
-    weekly_rows = []
+    weekly_rows = [{"category": "PERIOD", "metric": k, "value": v} for k, v in period.items()]
     for category, block in [("NETWORK_GROWTH", network), ("STRATEGIC_GROWTH", strategic),
                              ("PERSONA_GROWTH", persona), ("LEAD_REACTIVATION", leads),
                              ("UNTAPPED_NETWORK", untapped), ("TOP_CONTACTS", top_contacts),
@@ -510,7 +676,8 @@ def write_output_csvs(week_key: str, week_index: int, snapshot_count: int, basel
 def build_public_block(week_key: str, week_index: int, snapshot_count: int, baseline_available: bool,
                         week_cfg: dict, network: dict, strategic: dict, persona: dict, leads: dict,
                         untapped: dict, top_contacts: dict, quality: dict, manual: dict,
-                        diagnosis: list, overall_status: str, recommendation: str) -> dict:
+                        diagnosis: list, overall_status: str, recommendation: str, period: dict) -> dict:
+    baseline_available = period.get("baseline_available", False)
     summary = {
         "week_key": week_key,
         "week_index": week_index,
@@ -518,21 +685,42 @@ def build_public_block(week_key: str, week_index: int, snapshot_count: int, base
         "baseline_available": baseline_available,
         "primary_focus": week_cfg.get("primary_focus", ""),
         "plan_status": overall_status,
+        "period": period,
+        "period_warning": period.get("note") if period.get("is_multi_week") else None,
     }
+
+    def _pace_card(title, pace_key_prefix, block, sub_label):
+        period_actual = block.get(f"{pace_key_prefix}_period_actual", block.get(f"{pace_key_prefix}_count"))
+        weekly_pace = block.get(f"{pace_key_prefix}_weekly_pace")
+        tmin = block.get(f"{pace_key_prefix}_target_min")
+        tmax = block.get(f"{pace_key_prefix}_target_max")
+        status = block.get(f"{pace_key_prefix}_status")
+        return {
+            "title": title,
+            "period_actual": period_actual,
+            "weekly_pace_actual": weekly_pace,
+            "weekly_target_min": tmin,
+            "weekly_target_max": tmax,
+            "value": (f"{weekly_pace}/wk (period total {period_actual})" if weekly_pace is not None
+                      else f"{period_actual} (no baseline yet)"),
+            "sub": sub_label,
+            "status": status,
+        }
 
     progress_cards = [
         {"title": "Plan Status", "value": overall_status},
-        {"title": "New Connections vs Target",
-         "value": f"{network['new_connections_count']} / {network['new_connections_target_min']}-{network['new_connections_target_max']}",
-         "status": network["new_connections_status"]},
+        _pace_card("New Connections", "new_connections", network,
+                   f"target {network['new_connections_target_min']}-{network['new_connections_target_max']}/wk"),
         {"title": "Primary LATAM/USD Share",
          "value": None if strategic["actual_primary_share"] is None else f"{strategic['actual_primary_share']*100:.0f}%",
          "target": f"{strategic['target_primary_share']*100:.0f}%", "status": strategic["strategy_mix_status"]},
         {"title": "Europe Exploratory Share",
          "value": None if strategic["actual_europe_share"] is None else f"{strategic['actual_europe_share']*100:.0f}%",
          "target": f"{strategic['target_europe_share']*100:.0f}%", "status": strategic["strategy_mix_status"]},
-        {"title": "Reactivation Movement", "value": leads["needs_my_response_current"], "sub": "needs my response"},
-        {"title": "Untapped Activated", "value": untapped["untapped_activated_this_week"]},
+        {"title": "Reactivation Movement", "value": leads["new_conversations_started"],
+         "sub": "new conversations this period", "status": leads.get("reactivation_pace_status")},
+        {"title": "Untapped Activated", "value": untapped["untapped_activated_this_week"],
+         "status": untapped.get("untapped_activated_pace_status")},
         {"title": "Needs My Response", "value": leads["needs_my_response_current"]},
         {"title": "Needs Company Mapping", "value": quality["needs_company_mapping_current"],
          "delta": quality["needs_company_mapping_delta"]},
@@ -540,11 +728,14 @@ def build_public_block(week_key: str, week_index: int, snapshot_count: int, base
 
     charts = {
         "weekly_target_vs_actual": [
-            {"label": "New Connections", "actual": network["new_connections_count"],
+            {"label": "New Connections", "actual": network["new_connections_weekly_pace"],
+             "period_actual": network["new_connections_period_actual"],
              "target_min": network["new_connections_target_min"], "target_max": network["new_connections_target_max"]},
-            {"label": "Reactivation", "actual": leads["needs_my_response_current"],
+            {"label": "Reactivation", "actual": leads["new_conversations_weekly_pace"],
+             "period_actual": leads["new_conversations_started"],
              "target_min": week_cfg.get("reactivation_target_min", 0), "target_max": week_cfg.get("reactivation_target_max", 0)},
-            {"label": "Europe Exploratory", "actual": strategic["europe_exploratory_new_connections"],
+            {"label": "Europe Exploratory", "actual": strategic["europe_exploratory_weekly_pace"],
+             "period_actual": strategic["europe_exploratory_period_actual"],
              "target_min": week_cfg.get("europe_exploratory_target_min", 0), "target_max": week_cfg.get("europe_exploratory_target_max", 0)},
         ],
         "strategy_mix": [
@@ -553,8 +744,11 @@ def build_public_block(week_key: str, week_index: int, snapshot_count: int, base
             {"label": "Europe Exploratory (actual)", "value": strategic["actual_europe_share"]},
             {"label": "Europe Exploratory (target)", "value": strategic["target_europe_share"]},
         ],
-        "persona_growth": [{"label": k.replace("new_", "").replace("_", " ").title(), "value": v}
-                           for k, v in persona.items()],
+        "persona_growth": [
+            {"label": k.replace("new_", "").replace("_", " ").title(),
+             "value": persona.get(f"{k}_weekly_pace"), "period_actual": v}
+            for k, v in persona.items() if not k.endswith("_weekly_pace")
+        ],
         "lead_pipeline_movement": [
             {"label": "Needs My Response", "value": leads["needs_my_response_current"]},
             {"label": "Hot Reactivation", "value": leads["hot_reactivation_current"]},
@@ -609,40 +803,41 @@ def main():
 
     current_json = load_current_json()
     previous_json = load_previous_baseline_json()
-    baseline_available = bool(previous_json) or bool(
-        current_json.get("weekly_evolution", {}).get("previous_snapshot_label")
-        and current_json["weekly_evolution"].get("previous_snapshot_label") != "unknown"
-    )
+    period = compute_period(current_json)
+    baseline_available = period["baseline_available"]
 
     kpi_lookup = load_kpi_delta_lookup()
     new_conn_df = load_new_connections()
 
-    network = build_network_growth(kpi_lookup, week_cfg, new_conn_df, baseline_available)
-    strategic = build_strategic_growth(new_conn_df, targets)
-    persona = build_persona_growth(new_conn_df)
-    leads = build_lead_reactivation(current_json, kpi_lookup)
-    untapped = build_untapped_movement(current_json)
+    network = build_network_growth(kpi_lookup, week_cfg, new_conn_df, period)
+    strategic = build_strategic_growth(new_conn_df, targets, week_cfg, period)
+    persona = build_persona_growth(new_conn_df, period)
+    leads = build_lead_reactivation(current_json, kpi_lookup, week_cfg, period)
+    untapped = build_untapped_movement(current_json, week_cfg, period)
     top_contacts = build_top_contacts(current_json, previous_json, kpi_lookup)
     quality = build_data_quality(current_json, kpi_lookup)
     manual = load_manual_log()
 
-    diagnosis = build_diagnosis(network, strategic, leads, untapped, quality, baseline_available)
+    diagnosis = build_diagnosis(network, strategic, leads, untapped, quality, period)
     overall_status = overall_diagnosis_status(diagnosis, network, baseline_available)
     recommendation = build_next_week_recommendation(week_index, targets, leads, untapped)
 
-    write_output_csvs(week_key, week_index, snapshot_count, baseline_available, network, strategic,
+    write_output_csvs(week_key, week_index, snapshot_count, period, network, strategic,
                        persona, leads, untapped, top_contacts, quality, manual, diagnosis,
                        overall_status, recommendation)
 
     block = build_public_block(week_key, week_index, snapshot_count, baseline_available, week_cfg,
                                 network, strategic, persona, leads, untapped, top_contacts, quality,
-                                manual, diagnosis, overall_status, recommendation)
+                                manual, diagnosis, overall_status, recommendation, period)
     merge_into_public_json(block)
 
     logger.info("=" * 70)
     logger.info(f"  Plan week: {week_key} (snapshot #{snapshot_count})  baseline_available={baseline_available}")
-    logger.info(f"  New connections: {network['new_connections_count']} "
-                f"(target {network['new_connections_target_min']}-{network['new_connections_target_max']}) "
+    logger.info(f"  Period: {period.get('period_days')} days / {period.get('period_weeks')} weeks "
+                f"(multi_week={period.get('is_multi_week')})")
+    logger.info(f"  New connections: period_actual={network['new_connections_period_actual']} "
+                f"weekly_pace={network['new_connections_weekly_pace']} "
+                f"(target {network['new_connections_target_min']}-{network['new_connections_target_max']}/wk) "
                 f"-> {network['new_connections_status']}")
     logger.info(f"  Primary LATAM/USD share: {strategic['actual_primary_share']} "
                 f"(target {strategic['target_primary_share']}) -> {strategic['strategy_mix_status']}")
