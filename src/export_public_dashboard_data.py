@@ -538,6 +538,11 @@ def export_public_dashboard_data(
         # conversation history (separate from Lead Reactivation). Sanitized:
         # no raw messages, no email, no phone.
         "untapped_network":            build_untapped_network_public(untapped_network_data),
+        # Action Plan Progress — measurement layer for the Action Plan page.
+        # Placeholder here (this function runs before the weekly delta layer
+        # exists); src/action_plan_progress.py merges the real sanitized
+        # block in afterward, same pattern as weekly_evolution below.
+        "action_plan_progress":        {"available": False},
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:

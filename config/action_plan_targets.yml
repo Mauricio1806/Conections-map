@@ -1,0 +1,57 @@
+# action_plan_targets.yml
+# Editable weekly targets for the Action Plan Progress tracker
+# (src/action_plan_progress.py). Change the numbers here to tune the plan —
+# no code changes needed.
+#
+# "week_N" keys are applied in cycle order as weekly snapshots accumulate in
+# data/snapshot_manifest.json: the 1st tracked weekly snapshot uses week_1
+# targets, the 2nd uses week_2, etc. From the 4th snapshot onward, week_4
+# (steady-state follow-up/conversion/cleanup targets) is reused every week.
+
+week_1:
+  primary_focus: LATAM/USD
+  new_connections_target_min: 40
+  new_connections_target_max: 60
+  untapped_outreach_target_min: 15
+  untapped_outreach_target_max: 20
+  reactivation_target_min: 10
+  reactivation_target_max: 15
+  europe_exploratory_target_min: 2
+  europe_exploratory_target_max: 3
+
+week_2:
+  primary_focus: LATAM/South America + US Nearshore
+  new_connections_target_min: 50
+  new_connections_target_max: 70
+  untapped_outreach_target_min: 15
+  untapped_outreach_target_max: 25
+  reactivation_target_min: 10
+  reactivation_target_max: 15
+  europe_exploratory_target_min: 2
+  europe_exploratory_target_max: 4
+
+week_3:
+  primary_focus: Hiring Managers + Data Leaders
+  new_connections_target_min: 30
+  new_connections_target_max: 50
+  untapped_outreach_target_min: 15
+  untapped_outreach_target_max: 20
+  reactivation_target_min: 10
+  reactivation_target_max: 15
+  europe_exploratory_target_min: 3
+  europe_exploratory_target_max: 5
+
+week_4:
+  primary_focus: Follow-up + conversion + cleanup
+  new_connections_target_min: 20
+  new_connections_target_max: 40
+  untapped_outreach_target_min: 10
+  untapped_outreach_target_max: 20
+  reactivation_target_min: 15
+  reactivation_target_max: 25
+  europe_exploratory_target_min: 5
+  europe_exploratory_target_max: 10
+
+monthly_strategy:
+  primary_latam_usd_share_target: 0.90
+  europe_exploratory_share_target: 0.10

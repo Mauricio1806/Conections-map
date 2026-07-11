@@ -1,12 +1,12 @@
 ﻿first_name,last_name,company,position,connected_on,url,persona,seniority,opportunity_bucket,priority_score,company_canonical,outreach_adjusted_score
-Fernanda,Melgoza,Thermo Fisher Scientific,Manager Talent Acquisition - LATAM,02 Jul 2026,https://www.linkedin.com/in/fernanda-melgoza-1bb87921,Talent Acquisition,Manager,LATAM_USD_CONFIRMED,83,THERMO FISHER SCIENTIFIC,20.0
+Fernanda,Melgoza,Thermo Fisher Scientific,Manager Talent Acquisition - LATAM,02 Jul 2026,https://www.linkedin.com/in/fernanda-melgoza-1bb87921,Talent Acquisition,Manager,LATAM_USD_CONFIRMED,83,THERMO FISHER SCIENTIFIC,16.0
 Ivonne Aylén,Catauro Nardella,Infracommerce Latam,Talent Acquisition Lead - LATAM,29 Jun 2026,https://www.linkedin.com/in/ivonne-ayl%C3%A9n-catauro-nardella,Talent Acquisition,Lead,LATAM_USD_CONFIRMED,81,INFRACOMMERCE,81.0
-Paula,Caraballo,LatamCent,Senior Talent Partner ,30 Jun 2026,https://www.linkedin.com/in/paula-caraballo,Recruiter,Senior,LATAM_USD_CONFIRMED,81,LATAMCENT,20.0
+Paula,Caraballo,LatamCent,Senior Talent Partner ,30 Jun 2026,https://www.linkedin.com/in/paula-caraballo,Recruiter,Senior,LATAM_USD_CONFIRMED,81,LATAMCENT,16.0
 • Om,Prakash •,Acnovate Corporation,"Senior IT Recruiter - US, Canada , LATAM & India.",29 Jun 2026,https://www.linkedin.com/in/omprakash23892,Recruiter,Senior,US_CANADA_CONFIRMED,81,ACNOVATE,16.0
 Martín,Castro Rodríguez,S&you España,Talent Acquisition Manager,27 Jun 2026,https://www.linkedin.com/in/mcastroro,Talent Acquisition,Manager,SPAIN_EU_CONFIRMED,81,S&YOU ESPAÑA,14.0
 Kirti,.,E-Solutions,"Talent Acquisition Specialist - (USA, LATAM & Canada)",29 Jun 2026,https://www.linkedin.com/in/kirti-1085b21a3,Talent Acquisition,Mid,US_CANADA_CONFIRMED,78,E,16.0
 Iramy,Jiménez,Omnicom Global Solutions Colombia,Talent Acquisition Specialist,28 Jun 2026,https://www.linkedin.com/in/iramy-jim%C3%A9nez-b81426ab,Talent Acquisition,Mid,LATAM_USD_CONFIRMED,76,OMNICOM COLOMBIA,76.0
-Pablo,de la Peña González,UST España & Latam,Talent Acquisition Specialist,01 Jul 2026,https://www.linkedin.com/in/pablodelapenagonzalez,Talent Acquisition,Mid,LATAM_USD_CONFIRMED,76,UST ESPAÑA,20.0
+Pablo,de la Peña González,UST España & Latam,Talent Acquisition Specialist,01 Jul 2026,https://www.linkedin.com/in/pablodelapenagonzalez,Talent Acquisition,Mid,LATAM_USD_CONFIRMED,76,UST ESPAÑA,16.0
 Rachele,Pranteddu,Skillhouse Staffing Solutions K.K.,Department Manager -Marketing & Recruitment,03 Jul 2026,https://www.linkedin.com/in/rachele-pranteddu-49892bb1,Recruiter,Manager,GLOBAL_STAFFING,70,SKILLHOUSE STAFFING K.K,
 Fabiola,Graterol,Amaris Consulting,Consulting Talent  Acquisition Manager,04 Jul 2026,https://www.linkedin.com/in/fabiolagraterolmazzei,Talent Acquisition,Manager,GLOBAL_CONSULTING,68,AMARIS,
 Maria,Gonzálvez Palacios,Sapindex,Talent Acquisition SAP & IT,29 Jun 2026,https://www.linkedin.com/in/mgonzalvezpalacios,Talent Acquisition,Unknown,GLOBAL_TECH,67,SAPINDEX,
@@ -34,7 +34,7 @@ Anzhelika,Hutsalenko,Nitka,Senior IT recruiter,02 Jul 2026,https://www.linkedin.
 Paulina,Sanchez,Catapult Solutions Group,IT Senior Recruiter,03 Jul 2026,https://www.linkedin.com/in/pauulinasanchez,Recruiter,Senior,GLOBAL_OPPORTUNITY,56,CATAPULT,
 Giovanny,Horta,ROJAR reclutamiento,SENIOR IT/TECHNICAL RECRUITER,05 Jul 2026,https://www.linkedin.com/in/giovanny-horta,Recruiter,Senior,GLOBAL_OPPORTUNITY,56,ROJAR RECLUTAMIENTO,
 Daniela Julieth,Celada González,Accenture Colombia,Recruitment Senior Analyst - Team Lead,04 Jul 2026,https://www.linkedin.com/in/daniela-julieth-celada-gonz%C3%A1lez-164182157,Data Analyst,Mid,GLOBAL_CONSULTING,55,ACCENTURE COLOMBIA,
-Pedro,Debiazi,Grupo Educacional Primum,Chief Technology & Data Officer (CTO & CDO),30 Jun 2026,https://www.linkedin.com/in/pedrodebiazi,Head of Data,Executive,GLOBAL_OPPORTUNITY,55,GRUPO EDUCACIONAL PRIMUM,30.0
+Pedro,Debiazi,Grupo Educacional Primum,Chief Technology & Data Officer (CTO & CDO),30 Jun 2026,https://www.linkedin.com/in/pedrodebiazi,Head of Data,Executive,GLOBAL_OPPORTUNITY,55,GRUPO EDUCACIONAL PRIMUM,26.0
 Sofia,Rosero,Accenture Colombia,Human Resources Analyst,02 Jul 2026,https://www.linkedin.com/in/sofia-r-281904179,HR,Mid,GLOBAL_CONSULTING,55,ACCENTURE COLOMBIA,
 Nádia,Miranda,Mercado Livre,Talent Acquisition Senior ,02 Jul 2026,https://www.linkedin.com/in/n%C3%A1dia-miranda-4765a4148,Talent Acquisition,Senior,BRAZIL_LIKELY,54,MERCADO LIVRE,
 Ngan,"D., SHRM-SCP",Chicago Atlantic,Human Resources,01 Jul 2026,https://www.linkedin.com/in/nganduongk,HR,Unknown,US_CANADA_CONFIRMED,54,CHICAGO ATLANTIC,
@@ -44,7 +44,7 @@ Conceição,Sousa,AIKA Empresarial,Líder de projetos,01 Jul 2026,https://www.li
 Sahil,Gulati,RedDoorz,VP of Data,03 Jul 2026,https://www.linkedin.com/in/nsitsahil,Head of Data,Director,GLOBAL_OPPORTUNITY,53,REDDOORZ,
 Laura ,Pinzon Ruge,VFS GLobal,Human Resources Business Partner Latin America and Caribbean,30 Jun 2026,https://www.linkedin.com/in/laura-pinzon-ruge-087b34137,HR,Unknown,LATAM_USD_CONFIRMED,52,VFS,
 Ariana,Asar,Randstad Argentina,Consultora de RRHH Professional - Especialización Health&Pharma,04 Jul 2026,https://www.linkedin.com/in/ariana-asar-a48497141,HR,Unknown,GLOBAL_STAFFING,52,RANDSTAD ARGENTINA,
-Kauany,Riotinto,Zup Innovation,Talent Tech Sourcer Intern,30 Jun 2026,https://www.linkedin.com/in/kauanyriotinto,Sourcer,Intern,BRAZIL_CONFIRMED,51,ZUP INNOVATION,26.0
+Kauany,Riotinto,Zup Innovation,Talent Tech Sourcer Intern,30 Jun 2026,https://www.linkedin.com/in/kauanyriotinto,Sourcer,Intern,BRAZIL_CONFIRMED,51,ZUP INNOVATION,22.0
 Gabriel,Falevich,Wagner Equipment,Senior Talent Acquisition Specialist,01 Jul 2026,https://www.linkedin.com/in/gabrielfalevich,Talent Acquisition,Mid,GLOBAL_OPPORTUNITY,51,WAGNER EQUIPMENT,
 Juan,Quintero Castaño,SaleStrategy,Director of Operations,01 Jul 2026,https://www.linkedin.com/in/juan-quintero-c,Director,Director,GLOBAL_OPPORTUNITY,51,SALESTRATEGY,
 David,Jaime Gomez,Arroyo is becoming INSPYR Global Solutions,Human Capital Director,03 Jul 2026,https://www.linkedin.com/in/david-jaime-gomez-9212569a,Director,Director,GLOBAL_OPPORTUNITY,51,ARROYO IS BECOMING INSPYR,
@@ -134,8 +134,8 @@ Rodrigo, Diaz Pulido,Accenture,Recruiting Senior IT,04 Jul 2026,https://www.link
 Ricardo,Soares Oliveira,Editora zero a oito,Líder de equipe técnica IA | Senior Dados,30 Jun 2026,https://www.linkedin.com/in/ricardosoaresoliveira,Other,Senior,LANGUAGE_PORTUGUESE_MARKET,24,EDITORA ZERO A OITO,
 Helen,Brugnara,Suzano,Human Resources Business Partner,20 Apr 2026,https://www.linkedin.com/in/helenrenata,HR,Unknown,BRAZIL_CONFIRMED,24,SUZANO,
 Vivian,Hou,CaptivateIQ,Senior Product Manager,03 Feb 2026,https://www.linkedin.com/in/vivianhou08,Product,Senior,NEEDS_COMPANY_MAPPING,23,CAPTIVATEIQ,
-Estelen,Julia,Owlery,Logistics System Specialist,08 Jun 2026,https://www.linkedin.com/in/estelen-julia-37945a30a,Operations,Mid,NEEDS_COMPANY_MAPPING,23,OWLERY,
 KARTHIIK,P,Logging-In.com Inc,OPT MANAGER,04 Nov 2025,https://www.linkedin.com/in/karthiik-p-66450011b,Other,Manager,NEEDS_COMPANY_MAPPING,22,LOGGING-IN.COM,
+Leslie ,Corpas Torres ,CENTURION FOODS SAS,Analista de selección y contratación,04 Jul 2026,https://www.linkedin.com/in/leslie-corpas-torres-04057a1b2,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,CENTURION FOODS,
 Juliana,López,Hook + Ladder Digital,Talent Management Specialist,27 Jun 2026,https://www.linkedin.com/in/julianalopezp,Other,Mid,GLOBAL_TECH,21,HOOK + LADDER,
 Ana Paola,Ortiz Justiniano,Inchcape Américas,Analista de Administración y Bienestar del Personal ,30 Jun 2026,https://www.linkedin.com/in/ana-paola-ortiz-justiniano-9384ba119,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,INCHCAPE AMÉRICAS,
 Débora,Angelino Mendes de Castro,RED Innovations,Analista de Pessoas e Cultura Sr.,29 Jun 2026,https://www.linkedin.com/in/deboramendescastro,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,RED INNOVATIONS,
@@ -143,14 +143,14 @@ Karen,Arango Carvajal,A&A Consultores SAS,Analista de selección de personal y f
 Rodrigo,Moran,"Alimentos Gourmet, S.A.",Analista de producción,04 Jul 2026,https://www.linkedin.com/in/ingrodrigo-moran-gaitan,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,ALIMENTOS GOURMET,
 Roberto,Ramirez,RamptStaff,Growth and Talent Aquisition Specialist,03 Jul 2026,https://www.linkedin.com/in/rram200,Other,Mid,NEEDS_COMPANY_MAPPING,21,RAMPTSTAFF,
 Maria,Leitão,Instituto Semear,"Analista de Tecnologia, Dados e Processos Pleno",03 Jul 2026,https://www.linkedin.com/in/marialeitaoo,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,INSTITUTO SEMEAR,
-Leslie ,Corpas Torres ,CENTURION FOODS SAS,Analista de selección y contratación,04 Jul 2026,https://www.linkedin.com/in/leslie-corpas-torres-04057a1b2,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,CENTURION FOODS,
+Angelly,Ballesteros,AGRIPAC BOLIVIANA AGROINDUSTRIAL S.A.,Analista de Gestión Humana,01 Jul 2026,https://www.linkedin.com/in/angelly-ballesteros-6300aa196,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,AGRIPAC BOLIVIANA AGROINDUSTRIAL,
 Kelly,Campero Barrancos,Faboce Bolivia,Analista de RR. HH.,28 Jun 2026,https://www.linkedin.com/in/kelly-campero-barrancos-074679280,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,FABOCE BOLIVIA,
 Pâmylla,Sobrinho ,SSA - São Salvador Alimentos,Analista de Atração e Seleção Sênior,01 Jul 2026,https://www.linkedin.com/in/p%C3%A2mylla-sobrinho-b35992190,Other,Mid,BRAZIL_CONFIRMED,21,SSA - SÃO SALVADOR ALIMENTOS,
 Johana,Ballén G.,Temporizar - Servicios Temporales,Analista de selección de personal,01 Jul 2026,https://www.linkedin.com/in/johanabg,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,TEMPORIZAR - SERVICIOS TEMPORALES,
-Angelly,Ballesteros,AGRIPAC BOLIVIANA AGROINDUSTRIAL S.A.,Analista de Gestión Humana,01 Jul 2026,https://www.linkedin.com/in/angelly-ballesteros-6300aa196,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,AGRIPAC BOLIVIANA AGROINDUSTRIAL,
-Ruddy Harold,Baldiviezo Villarroel,Grupo Tigre,Analista de RR. HH.,30 Jun 2026,https://www.linkedin.com/in/ruddy-harold-baldiviezo-villarroel-6b6783144,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,GRUPO TIGRE,
 Elias Italo,Bernardi Neto,Agência F2F,Analista de BI,01 Jul 2026,https://www.linkedin.com/in/eliasbernardineto,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,AGÊNCIA F2F,
+Ruddy Harold,Baldiviezo Villarroel,Grupo Tigre,Analista de RR. HH.,30 Jun 2026,https://www.linkedin.com/in/ruddy-harold-baldiviezo-villarroel-6b6783144,Other,Mid,LANGUAGE_PORTUGUESE_MARKET,21,GRUPO TIGRE,
 Bruna,Venâncio,Camil Alimentos S/A,People Analytics Pleno,01 Jul 2026,https://www.linkedin.com/in/brunavenancio,Other,Mid,NEEDS_COMPANY_MAPPING,21,CAMIL ALIMENTOS,
+Estelen,Julia,Owlery,Logistics System Specialist,08 Jun 2026,https://www.linkedin.com/in/estelen-julia-37945a30a,Operations,Mid,NEEDS_COMPANY_MAPPING,20,OWLERY,
 Luis ,Felipe,LSG Sky Chefs,Assistente de dados,02 Jul 2026,https://www.linkedin.com/in/luis-felipe-pedrosa,Other,Junior,BRAZIL_CONFIRMED,19,LSG SKY CHEFS,
 Sara,Godoy,Autônomo,Consultora de RH,13 Jul 2025,https://www.linkedin.com/in/saracpgodoy,Consultant,Unknown,SPAIN_EU_LIKELY,19,AUTÔNOMO,
 Kaique,Rios,GrupoGVC,Assistente de TI,01 Jul 2026,https://www.linkedin.com/in/kaiquerios,Other,Junior,BRAZIL_CONFIRMED,19,GRUPOGVC,

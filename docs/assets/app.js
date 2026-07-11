@@ -212,6 +212,7 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Heatmaps',    renderHeatmaps);
       safeRender('Gap',         renderGap);
       safeRender('Plan',        renderPlan);
+      safeRender('PlanProgress', renderPlanProgress);
       safeRender('Contacts',    renderContacts);
       safeRender('Companies',   renderCompanies);
       safeRender('Opportunity', renderUnknownResolution);
@@ -392,6 +393,36 @@ function doughnutChart(canvasId, labels, values, colors) {
       plugins: {
         legend: { position: 'right', labels: { color: '#8b949e', font: { size: 10 }, boxWidth: 12, padding: 10 } },
         tooltip: { callbacks: { label: c => ' ' + c.label + ': ' + c.parsed.toLocaleString() } }
+      }
+    }
+  });
+}
+
+// Grouped bar chart — multiple named datasets sharing one label axis.
+// datasets: [{ label, data, color }, ...]
+function groupedBarChart(canvasId, labels, datasets, opts) {
+  destroyChart(canvasId);
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  const isH = opts && opts.horizontal;
+  charts[canvasId] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: datasets.map(d => ({
+        label: d.label, data: d.data, backgroundColor: d.color, borderRadius: 4, borderSkipped: false
+      }))
+    },
+    options: {
+      indexAxis: isH ? 'y' : 'x',
+      responsive: true,
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { color: '#8b949e', font: { size: 10 }, boxWidth: 12 } },
+        tooltip: { callbacks: { label: c => ' ' + c.dataset.label + ': ' + (isH ? c.parsed.x : c.parsed.y).toLocaleString() } }
+      },
+      scales: {
+        x: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: '#21262d' } },
+        y: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: '#21262d' } }
       }
     }
   });
@@ -2202,6 +2233,137 @@ function renderWeekly() {
     '<p><strong>90/10 allocation check:</strong> ' + (diag.allocation_90_10_note || '—') + '</p>',
     '<p><strong>Highest-value next action:</strong> ' + (diag.highest_value_next_action || '—') + '</p>',
   ].join('');
+}
+
+// ── PAGE: Action Plan — Plan Progress tab ─────────────────────────────────────
+const PROGRESS_STATUS_COLOR = {
+  ON_TRACK: '#22c55e', AHEAD: '#22c55e', ON_STRATEGY: '#22c55e',
+  BELOW_TARGET: '#f59e0b', REBALANCE_NEEDED: '#f59e0b',
+  TOO_MUCH_EU: '#f59e0b', TOO_LITTLE_EU: '#f59e0b', TOO_MUCH_UNCLASSIFIED: '#f59e0b',
+  BASELINE_ONLY: '#8b949e', NO_BASELINE: '#8b949e',
+};
+
+function _progressStatusClass(status) {
+  const c = PROGRESS_STATUS_COLOR[status] || '#8b949e';
+  return 'color:' + c + ';font-weight:700';
+}
+
+function _progressCard(card) {
+  const sub = card.status
+    ? '<span style="' + _progressStatusClass(card.status) + '">' + card.status.replace(/_/g, ' ') + '</span>'
+    : (card.target ? 'target: ' + card.target : (card.sub || ''));
+  const value = (card.value === null || card.value === undefined) ? '—' : card.value;
+  return makeCard(card.title, value, sub);
+}
+
+function renderPlanProgress() {
+  const ap = (D && D.action_plan_progress) || {};
+  const noData = document.getElementById('progress-no-data');
+  const mainContent = document.getElementById('progress-main-content');
+
+  if (!ap.available) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  const summary = ap.summary || {};
+  const charts = ap.charts || {};
+  const baselineAvailable = !!summary.baseline_available;
+
+  // Status banner
+  const banner = document.getElementById('progress-status-banner');
+  if (banner) {
+    banner.className = 'alert ' + (baselineAvailable
+      ? (summary.plan_status === 'ON_TRACK' ? 'alert-good' : 'alert-warn')
+      : 'alert-info');
+    banner.innerHTML = '<span class="alert-icon">&#127919;</span><span><strong>Plan Status: '
+      + (summary.plan_status || '—') + '</strong> — Week ' + (summary.week_index || '?')
+      + ' of the plan cycle (snapshot #' + (summary.snapshot_count || 1) + '). Primary focus: '
+      + (summary.primary_focus || '—') + '.</span>';
+  }
+
+  const baselineNote = document.getElementById('progress-baseline-note');
+  if (baselineNote) {
+    if (!baselineAvailable) {
+      baselineNote.style.display = '';
+      baselineNote.innerHTML = '<div class="alert alert-info"><span class="alert-icon">&#9432;</span>'
+        + '<span><strong>Baseline mode:</strong> this is the first tracked snapshot — week-over-week '
+        + 'progress will be available starting next Sunday\'s refresh.</span></div>';
+    } else {
+      baselineNote.style.display = 'none';
+    }
+  }
+
+  // 1. Executive Progress Summary
+  const cardsEl = document.getElementById('progress-summary-cards');
+  if (cardsEl) cardsEl.innerHTML = (ap.progress_cards || []).map(_progressCard).join('');
+
+  // 2. Weekly Target vs Actual
+  const targetData = charts.weekly_target_vs_actual || [];
+  const targetMsgEl = document.getElementById('progress-target-baseline-msg');
+  if (!baselineAvailable || !targetData.length) {
+    destroyChart('chart-progress-target');
+    if (targetMsgEl) { targetMsgEl.style.display = ''; targetMsgEl.textContent = 'No baseline yet — targets will compare against actuals starting next week.'; }
+  } else {
+    if (targetMsgEl) targetMsgEl.style.display = 'none';
+    groupedBarChart('chart-progress-target',
+      targetData.map(r => r.label),
+      [
+        { label: 'Target Min', data: targetData.map(r => r.target_min || 0), color: '#3b82f640' },
+        { label: 'Target Max', data: targetData.map(r => r.target_max || 0), color: '#3b82f680' },
+        { label: 'Actual', data: targetData.map(r => r.actual || 0), color: '#22c55e' },
+      ]
+    );
+  }
+
+  // 3. 90/10 Strategy Mix
+  const mixData = charts.strategy_mix || [];
+  const mixMsgEl = document.getElementById('progress-mix-baseline-msg');
+  const mixValues = mixData.map(r => r.value);
+  if (!baselineAvailable || mixValues.some(v => v === null || v === undefined)) {
+    destroyChart('chart-progress-mix');
+    if (mixMsgEl) { mixMsgEl.style.display = ''; mixMsgEl.textContent = 'No new connections classified yet this snapshot to compute the mix.'; }
+  } else {
+    if (mixMsgEl) mixMsgEl.style.display = 'none';
+    barChart('chart-progress-mix',
+      mixData.map(r => r.label),
+      mixData.map(r => Math.round((r.value || 0) * 100)),
+      ['#f59e0b', '#f59e0b80', '#a78bfa', '#a78bfa80'],
+      { horizontal: true }
+    );
+  }
+
+  // Persona growth
+  const personaData = charts.persona_growth || [];
+  barChart('chart-progress-persona', personaData.map(r => r.label), personaData.map(r => r.value || 0), '#3b82f6', { horizontal: true });
+
+  // Lead pipeline movement
+  const leadData = charts.lead_pipeline_movement || [];
+  barChart('chart-progress-leads', leadData.map(r => r.label), leadData.map(r => r.value || 0),
+    leadData.map(r => r.label === 'Needs My Response' ? '#ef4444' : '#3b82f6'));
+
+  // Untapped movement
+  const untappedData = charts.untapped_movement || [];
+  barChart('chart-progress-untapped', untappedData.map(r => r.label), untappedData.map(r => r.value || 0), '#14b8a6');
+
+  // Diagnosis
+  const diagEl = document.getElementById('progress-diagnosis-card');
+  if (diagEl) {
+    const rules = ap.diagnosis || [];
+    diagEl.innerHTML = rules.length
+      ? '<ul style="margin:0;padding-left:1.2rem;line-height:1.9">' + rules.map(r => '<li>' + r.message + '</li>').join('') + '</ul>'
+      : '<p>No diagnosis available yet.</p>';
+  }
+
+  // Next Week Recommendation
+  const recEl = document.getElementById('progress-recommendation-card');
+  if (recEl) {
+    const recs = ap.next_week_recommendations || [];
+    recEl.innerHTML = recs.length ? recs.map(r => '<p>' + r + '</p>').join('') : '<p>—</p>';
+  }
 }
 
 // ── PAGE 11: Untapped Network ──────────────────────────────────────────────

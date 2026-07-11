@@ -57,6 +57,12 @@ data/raw/*.CSV
 data/processed/*
 !data/processed/.gitkeep
 
+# Manual weekly action log (Action Plan Progress) — tracks activity that
+# can't be measured from LinkedIn exports (comments, posts, career-site
+# submissions, manual DMs). Private/local only, never committed.
+data/manual/*
+!data/manual/.gitkeep
+
 # ─── Private message data — NEVER commit ──────────────────────────────────────
 messages.csv
 Messages.csv

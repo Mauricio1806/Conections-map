@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783452718">
+  <link rel="stylesheet" href="./assets/style.css?v=1783784575">
 </head>
 <body>
 
@@ -242,6 +242,7 @@
           <button class="tab-btn" data-tab="plan-week4">Week 4</button>
           <button class="tab-btn" data-tab="plan-60">60 Days</button>
           <button class="tab-btn" data-tab="plan-90">90 Days</button>
+          <button class="tab-btn" data-tab="plan-progress">Plan Progress</button>
         </div>
         <div class="tab-panel active" id="plan-sprint">
           <div class="alert alert-info"><span class="alert-icon">&#9889;</span>
@@ -286,6 +287,86 @@
             <span><strong>90-Day Positioning:</strong> Europe becomes a positioning layer while USD remote work remains the income priority. Not a full pivot — optionality building.</span>
           </div>
           <div class="plan-grid" id="plan-90-grid"></div>
+        </div>
+        <div class="tab-panel" id="plan-progress">
+          <div id="progress-no-data" style="display:none">
+            <div class="alert alert-info">
+              <span class="alert-icon">&#128197;</span>
+              <span><strong>No plan progress data yet.</strong> Run <code>python src/action_plan_progress.py</code>
+              after the usual weekly refresh pipeline to populate this tab.</span>
+            </div>
+          </div>
+          <div id="progress-main-content">
+            <div class="alert alert-good" style="margin-bottom:1rem" id="progress-status-banner"></div>
+            <div id="progress-baseline-note" style="display:none;margin-bottom:1rem"></div>
+
+            <div class="section-label">1. Executive Progress Summary</div>
+            <div class="metrics-grid" id="progress-summary-cards"></div>
+
+            <div class="section-label">2. Weekly Target vs Actual</div>
+            <div id="progress-target-note" style="font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 0.75rem">
+              Measured where available from LinkedIn export data. Manual activity (comments, posts, career-site
+              submissions) is layered in separately below when a local weekly action log exists.
+            </div>
+            <div class="chart-box" style="margin-bottom:1.5rem">
+              <h4>New Connections / Reactivation / Europe Exploratory — Target vs Actual</h4>
+              <canvas id="chart-progress-target" style="max-height:320px"></canvas>
+              <div id="progress-target-baseline-msg" style="display:none;text-align:center;color:var(--text-muted);padding:2rem 0"></div>
+            </div>
+
+            <div class="section-label">3. 90/10 Strategy Mix (LATAM/USD vs Spain/EU)</div>
+            <div class="chart-grid">
+              <div class="chart-box"><h4>Actual vs Target Mix</h4>
+                <canvas id="chart-progress-mix"></canvas>
+                <div id="progress-mix-baseline-msg" style="display:none;text-align:center;color:var(--text-muted);padding:2rem 0"></div>
+              </div>
+              <div class="chart-box"><h4>Persona Growth This Week</h4>
+                <canvas id="chart-progress-persona"></canvas>
+              </div>
+            </div>
+
+            <div class="section-label">4. Lead Pipeline Movement</div>
+            <div class="chart-box" style="margin-bottom:1.5rem">
+              <canvas id="chart-progress-leads" style="max-height:300px"></canvas>
+            </div>
+
+            <div class="section-label">5. Untapped Network Movement</div>
+            <div class="chart-box" style="margin-bottom:1.5rem">
+              <canvas id="chart-progress-untapped" style="max-height:300px"></canvas>
+            </div>
+
+            <div class="section-label">6. Diagnosis</div>
+            <div class="card" id="progress-diagnosis-card" style="padding:1.5rem"></div>
+
+            <div class="section-label">7. Next Week Recommendation</div>
+            <div class="card" id="progress-recommendation-card" style="padding:1.5rem"></div>
+
+            <div class="section-label">Sunday Review Checklist</div>
+            <div class="card" style="padding:1.5rem">
+              <ol style="margin:0 0 1rem 1.2rem;padding:0;line-height:1.9">
+                <li>Download fresh LinkedIn exports</li>
+                <li>Place files into weekly folder</li>
+                <li>Run weekly refresh command</li>
+                <li>Review Plan Progress</li>
+                <li>Clear Needs My Response first</li>
+                <li>Activate Untapped Network second</li>
+                <li>Add new connections third</li>
+                <li>Map top unresolved companies</li>
+                <li>Set next week's focus</li>
+              </ol>
+              <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.4rem">
+                Weekly command template — replace DD-MM / YYYY-MM-DD with the new snapshot's date:
+              </div>
+              <pre style="background:var(--bg-surface, #161b22);border:1px solid var(--border, #30363d);border-radius:6px;padding:0.9rem 1rem;font-size:0.78rem;overflow-x:auto;white-space:pre;line-height:1.6">python src/weekly_snapshot_refresh.py --snapshot-folder "DD-MM" --snapshot-date "YYYY-MM-DD"
+python src/build_network_heatmap.py
+python src/build_strategy_layer.py
+python src/weekly_kpi_delta.py
+python src/action_plan_progress.py
+python src/generate_static_dashboard.py
+python src/privacy_check.py
+python src/validate_static_dashboard_runtime.py</pre>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -840,6 +921,12 @@
         <h2>Weekly Evolution</h2>
         <p id="weekly-snapshot-label">Current Snapshot: — &nbsp;|&nbsp; Previous Snapshot: —</p>
       </div>
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#128260;</span>
+        <span>Action Plan Progress uses these same weekly deltas to measure plan execution —
+        see the <strong>Plan Progress</strong> tab on the Action Plan page for targets, diagnosis,
+        and next-week recommendations built from these numbers.</span>
+      </div>
 
       <div id="weekly-no-data" style="display:none">
         <div class="alert alert-info">
@@ -885,6 +972,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783452718"></script>
+<script src="./assets/app.js?v=1783784575"></script>
 </body>
 </html>
