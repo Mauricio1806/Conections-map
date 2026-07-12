@@ -506,13 +506,34 @@ tr:hover td { background: var(--bg-hover); }
 .plan-n           { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); }
 .plan-l           { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; }
 .plan-reason      { font-size: 0.77rem; color: var(--text-secondary); margin-bottom: .5rem; line-height: 1.45; }
-.plan-query       { font-size: 0.72rem; color: var(--info); font-family: 'Courier New', monospace; word-break: break-all; }
+/* word-break: break-all forces mid-word/character breaks even when a normal
+   space-based wrap would do — that's what caused query text to render one
+   letter per line on narrow cards. overflow-wrap: anywhere wraps at word
+   boundaries first and only breaks a single overlong token as a last resort. */
+.plan-query       { font-size: 0.72rem; color: var(--info); font-family: 'Courier New', monospace; overflow-wrap: anywhere; word-break: normal; }
+
+/* ── Search-pack query rows — shared by compact + expanded views ────────── */
+.search-pack-row {
+  display: flex; align-items: flex-start; gap: .4rem; flex-wrap: wrap;
+  padding: .35rem 0; border-bottom: 1px solid var(--border); min-width: 0;
+}
+.search-pack-row:last-of-type { border-bottom: none; }
+.search-query-code {
+  font-family: 'Courier New', monospace; font-size: .72rem; color: #e6edf3;
+  overflow-wrap: anywhere; word-break: normal; white-space: pre-wrap;
+  display: block; min-width: 0; flex: 1 1 180px; max-width: 100%;
+}
+.search-pack-btn {
+  font-size: .68rem; padding: 3px 9px; white-space: nowrap; flex-shrink: 0;
+  min-height: 30px; border-radius: 4px;
+}
 
 /* ── Search-pack "Recommended LinkedIn Filters" expandable (V6) ──────────── */
 details summary::-webkit-details-marker { display: none; }
 details summary { list-style: none; }
 details[open] summary { color: var(--accent-2); }
 .plan-card details, .sprint-card details { overflow-wrap: anywhere; word-break: break-word; }
+.plan-card details, .sprint-card details { max-width: 100%; }
 
 /* ── Sprint cards ──────────────────────────────── */
 .sprint-grid {
@@ -625,6 +646,12 @@ a:hover { text-decoration: underline; }
   .diag-grid    { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
   .plan-grid    { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
   .chart-grid   { grid-template-columns: 1fr; }
+}
+
+/* ── Responsive ── tablet band only (769px–1024px): deterministic 2 cols
+   for Action Plan cards, rather than relying on auto-fill's variable count ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .plan-grid, .sprint-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ── Responsive ── 768px (mobile sidebar) ───────────── */
@@ -768,4 +795,10 @@ a:hover { text-decoration: underline; }
   /* Reduce table font further */
   table { font-size: 0.72rem; }
   th, td { padding: .35rem .4rem; }
+
+  /* Search-pack rows stack instead of squeezing query + 2 buttons onto one
+     line — Open Search / Copy Query stay full-width and tappable. */
+  .search-pack-row { flex-direction: column; align-items: stretch; }
+  .search-pack-row a.search-pack-btn,
+  .search-pack-row button.search-pack-btn { width: 100%; text-align: center; }
 }

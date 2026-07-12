@@ -67,6 +67,14 @@ SUMMARY_CSV    = OUTPUTS_DIR / "action_plan_progress_summary.csv"
 WEEKLY_CSV     = OUTPUTS_DIR / "action_plan_progress_weekly.csv"
 DELTAS_CSV     = OUTPUTS_DIR / "action_plan_progress_deltas.csv"
 DIAGNOSIS_CSV  = OUTPUTS_DIR / "action_plan_progress_diagnosis.csv"
+HISTORY_CSV    = OUTPUTS_DIR / "action_plan_weekly_history.csv"
+
+# Weekly history is keyed 1..N by snapshot_number (how many weekly snapshots
+# have ever been ingested) — NOT the same as week_index (which caps at 4 and
+# is reused as a steady-state target profile). The "Week 1/2/3/4" tabs show
+# the first four snapshot_number rows; a snapshot_number with no history row
+# yet is reported as unavailable rather than fabricated.
+MAX_WEEK_TABS = 4
 
 # ── Opportunity bucket groupings for the 90/10 strategy mix ─────────────────
 # Mirrors the 90/10 framing weekly_kpi_delta.py already uses (latam_usd +
@@ -487,6 +495,13 @@ def build_lead_reactivation(current_json: dict, kpi_lookup: dict, week_cfg: dict
         week_cfg.get("reactivation_target_max", 0), period,
     )
 
+    needs_response_previous = _kpi(kpi_lookup, "MESSAGE_INTELLIGENCE", "needs_my_response", "previous_value", 0)
+    hot_previous = _kpi(kpi_lookup, "MESSAGE_INTELLIGENCE", "hot_reactivation", "previous_value", 0)
+    warm_previous = _kpi(kpi_lookup, "MESSAGE_INTELLIGENCE", "warm_reactivation", "previous_value", 0)
+    needs_response_current = lr.get("needs_my_response", 0)
+    hot_current = lr.get("hot_reactivation_leads", 0)
+    warm_current = lr.get("warm_reactivation_leads", 0)
+
     return {
         "conversations_current": lr.get("total_conversations", 0),
         "conversations_previous": _kpi(kpi_lookup, "MESSAGE_INTELLIGENCE", "conversations_analyzed", "previous_value", 0),
@@ -498,9 +513,15 @@ def build_lead_reactivation(current_json: dict, kpi_lookup: dict, week_cfg: dict
         "reactivation_period_target_max": reactivation_pace["period_target_max"],
         "reactivation_pace_status": reactivation_pace["status"],
         "followups_due_current": lr.get("follow_up_due", 0),
-        "needs_my_response_current": lr.get("needs_my_response", 0),
-        "hot_reactivation_current": lr.get("hot_reactivation_leads", 0),
-        "warm_reactivation_current": lr.get("warm_reactivation_leads", 0),
+        "needs_my_response_current": needs_response_current,
+        "needs_my_response_previous": needs_response_previous,
+        "needs_my_response_delta": needs_response_current - needs_response_previous,
+        "hot_reactivation_current": hot_current,
+        "hot_reactivation_previous": hot_previous,
+        "hot_reactivation_delta": hot_current - hot_previous,
+        "warm_reactivation_current": warm_current,
+        "warm_reactivation_previous": warm_previous,
+        "warm_reactivation_delta": warm_current - warm_previous,
         "dormant_warm_current": lr.get("dormant_warm_leads", 0),
         "rejected_closed_current": lr.get("rejected_closed", 0),
     }
@@ -671,6 +692,118 @@ def build_next_week_recommendation(week_index: int, targets: dict, leads: dict, 
 
 
 # ══════════════════════════════════════════════════════════════════════════
+# Weekly history — persistent, append/upsert-by-snapshot_number log so the
+# Action Plan's "Week 1/2/3/4" tabs and the consolidated weekly comparison
+# chart can show REAL past weeks instead of only ever the current one.
+# action_plan_progress_summary.csv is overwritten every run, so without this
+# separate log there would be no way to see week 1's numbers once week 2 ran.
+# ══════════════════════════════════════════════════════════════════════════
+
+HISTORY_COLUMNS = [
+    "available", "snapshot_number", "week_key", "primary_focus",
+    "current_snapshot_date", "previous_snapshot_date",
+    "period_days", "period_weeks", "baseline_available",
+    "new_connections_target_min", "new_connections_target_max",
+    "reactivation_target_min", "reactivation_target_max",
+    "untapped_outreach_target_min", "untapped_outreach_target_max",
+    "europe_exploratory_target_min", "europe_exploratory_target_max",
+    "gross_new_connections", "net_connection_growth", "connection_churn_or_removed_estimate",
+    "new_recruiters", "new_talent_acquisition", "new_hiring_managers",
+    "new_conversations_started", "needs_my_response_current", "needs_my_response_delta",
+    "hot_reactivation_delta", "warm_reactivation_delta",
+    "untapped_activated_this_week", "needs_company_mapping_delta",
+    "actual_primary_share", "actual_europe_share", "strategy_mix_status",
+    "classification_risk_status", "overall_status", "diagnosis_summary", "recommendation",
+]
+
+
+def build_weekly_history_row(snapshot_number: int, week_key: str, week_cfg: dict, period: dict,
+                              network: dict, strategic: dict, persona: dict, leads: dict,
+                              untapped: dict, quality: dict, diagnosis: list, overall_status: str,
+                              recommendation: str) -> dict:
+    return {
+        "available": True,
+        "snapshot_number": snapshot_number,
+        "week_key": week_key,
+        "primary_focus": week_cfg.get("primary_focus", ""),
+        "current_snapshot_date": period.get("current_snapshot_date"),
+        "previous_snapshot_date": period.get("previous_snapshot_date"),
+        "period_days": period.get("period_days"),
+        "period_weeks": period.get("period_weeks"),
+        "baseline_available": period.get("baseline_available", False),
+        "new_connections_target_min": week_cfg.get("new_connections_target_min"),
+        "new_connections_target_max": week_cfg.get("new_connections_target_max"),
+        "reactivation_target_min": week_cfg.get("reactivation_target_min"),
+        "reactivation_target_max": week_cfg.get("reactivation_target_max"),
+        "untapped_outreach_target_min": week_cfg.get("untapped_outreach_target_min"),
+        "untapped_outreach_target_max": week_cfg.get("untapped_outreach_target_max"),
+        "europe_exploratory_target_min": week_cfg.get("europe_exploratory_target_min"),
+        "europe_exploratory_target_max": week_cfg.get("europe_exploratory_target_max"),
+        "gross_new_connections": network["gross_new_connections"],
+        "net_connection_growth": network["net_connection_growth"],
+        "connection_churn_or_removed_estimate": network["connection_churn_or_removed_estimate"],
+        "new_recruiters": persona.get("new_recruiters", 0),
+        "new_talent_acquisition": persona.get("new_talent_acquisition", 0),
+        "new_hiring_managers": persona.get("new_hiring_managers", 0),
+        "new_conversations_started": leads["new_conversations_started"],
+        "needs_my_response_current": leads["needs_my_response_current"],
+        "needs_my_response_delta": leads.get("needs_my_response_delta"),
+        "hot_reactivation_delta": leads.get("hot_reactivation_delta"),
+        "warm_reactivation_delta": leads.get("warm_reactivation_delta"),
+        "untapped_activated_this_week": untapped["untapped_activated_this_week"],
+        "needs_company_mapping_delta": quality["needs_company_mapping_delta"],
+        "actual_primary_share": strategic["actual_primary_share"],
+        "actual_europe_share": strategic["actual_europe_share"],
+        "strategy_mix_status": strategic["strategy_mix_status"],
+        "classification_risk_status": strategic["classification_risk_status"],
+        "overall_status": overall_status,
+        "diagnosis_summary": " | ".join(r["message"] for r in diagnosis),
+        "recommendation": recommendation,
+    }
+
+
+def upsert_weekly_history(row: dict) -> pd.DataFrame:
+    """Append this snapshot's row, replacing any existing row with the same
+    snapshot_number (idempotent re-runs), then persist sorted by snapshot_number."""
+    if HISTORY_CSV.exists():
+        try:
+            existing = pd.read_csv(HISTORY_CSV, encoding="utf-8-sig")
+        except Exception:
+            existing = pd.DataFrame(columns=HISTORY_COLUMNS)
+    else:
+        existing = pd.DataFrame(columns=HISTORY_COLUMNS)
+
+    new_row_df = pd.DataFrame([row])
+    if existing.empty:
+        updated = new_row_df
+    else:
+        existing = existing[existing["snapshot_number"] != row["snapshot_number"]]
+        updated = new_row_df if existing.empty else pd.concat([existing, new_row_df], ignore_index=True)
+    updated = updated.sort_values("snapshot_number").reset_index(drop=True)
+    updated.to_csv(HISTORY_CSV, index=False, encoding="utf-8-sig")
+    logger.info(f"  Weekly history updated: {HISTORY_CSV.name} ({len(updated)} week(s) on record)")
+    return updated
+
+
+def build_weekly_history_block(history_df: pd.DataFrame) -> dict:
+    """JSON-safe history list + a by_week lookup for the Week 1-4 tabs.
+    Weeks with no recorded snapshot yet are explicit {"available": False}
+    stubs — never a fabricated row."""
+    records = history_df.replace({pd.NA: None}).to_dict(orient="records")
+    for r in records:
+        for k, v in list(r.items()):
+            if isinstance(v, float) and pd.isna(v):
+                r[k] = None
+
+    by_week = {}
+    by_number = {int(r["snapshot_number"]): r for r in records if r.get("snapshot_number") is not None}
+    for n in range(1, MAX_WEEK_TABS + 1):
+        by_week[f"week_{n}"] = by_number.get(n) or {"available": False, "snapshot_number": n}
+
+    return {"weekly_history": records, "by_week": by_week}
+
+
+# ══════════════════════════════════════════════════════════════════════════
 # Outputs (Part 5) + public JSON block (Part 6)
 # ══════════════════════════════════════════════════════════════════════════
 
@@ -732,7 +865,8 @@ def write_output_csvs(week_key: str, week_index: int, snapshot_count: int, perio
 def build_public_block(week_key: str, week_index: int, snapshot_count: int, baseline_available: bool,
                         week_cfg: dict, network: dict, strategic: dict, persona: dict, leads: dict,
                         untapped: dict, top_contacts: dict, quality: dict, manual: dict,
-                        diagnosis: list, overall_status: str, recommendation: str, period: dict) -> dict:
+                        diagnosis: list, overall_status: str, recommendation: str, period: dict,
+                        history_block: dict) -> dict:
     baseline_available = period.get("baseline_available", False)
     summary = {
         "week_key": week_key,
@@ -829,6 +963,20 @@ def build_public_block(week_key: str, week_index: int, snapshot_count: int, base
             {"label": "New Not Contacted Yet", "value": untapped["new_connections_not_contacted_yet"]},
             {"label": "Never Contacted Backlog", "value": untapped["never_contacted_current"]},
         ],
+        # Week-over-week comparison (Objective 3.E) — built from the
+        # persistent history log, so it only ever shows real recorded weeks.
+        "weekly_comparison": [
+            {
+                "week_label": f"Week {int(r['snapshot_number'])}",
+                "gross_new_connections": r.get("gross_new_connections"),
+                "net_connection_growth": r.get("net_connection_growth"),
+                "new_recruiters": r.get("new_recruiters"),
+                "needs_my_response_current": r.get("needs_my_response_current"),
+                "untapped_activated_this_week": r.get("untapped_activated_this_week"),
+                "needs_company_mapping_delta": r.get("needs_company_mapping_delta"),
+            }
+            for r in history_block["weekly_history"]
+        ],
     }
 
     return {
@@ -844,6 +992,8 @@ def build_public_block(week_key: str, week_index: int, snapshot_count: int, base
         "charts": charts,
         "diagnosis": diagnosis,
         "next_week_recommendations": [recommendation],
+        "weekly_history": history_block["weekly_history"],
+        "by_week": history_block["by_week"],
     }
 
 
@@ -900,9 +1050,15 @@ def main():
                        persona, leads, untapped, top_contacts, quality, manual, diagnosis,
                        overall_status, recommendation)
 
+    history_row = build_weekly_history_row(snapshot_count, week_key, week_cfg, period, network, strategic,
+                                            persona, leads, untapped, quality, diagnosis,
+                                            overall_status, recommendation)
+    history_df = upsert_weekly_history(history_row)
+    history_block = build_weekly_history_block(history_df)
+
     block = build_public_block(week_key, week_index, snapshot_count, baseline_available, week_cfg,
                                 network, strategic, persona, leads, untapped, top_contacts, quality,
-                                manual, diagnosis, overall_status, recommendation, period)
+                                manual, diagnosis, overall_status, recommendation, period, history_block)
     merge_into_public_json(block)
 
     logger.info("=" * 70)

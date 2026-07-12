@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783870737">
+  <link rel="stylesheet" href="./assets/style.css?v=1783899013">
 </head>
 <body>
 
@@ -203,6 +203,28 @@
           <tbody id="gap-tbody"></tbody>
         </table>
       </div>
+
+      <div class="section-label" style="margin-top:2rem">Connection Gap Action Plan</div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin:-0.5rem 0 1rem">
+        Ready-to-run actions for the highest-impact gaps — each with a search query, Open Search, Copy Query,
+        and a filter shortcut into the table above.
+      </p>
+      <div class="tabs-container">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="gap-plan-close">Top Gaps to Close This Month</button>
+          <button class="tab-btn" data-tab="gap-plan-ontrack">Already On Track</button>
+          <button class="tab-btn" data-tab="gap-plan-saturated">Saturated / Low Priority</button>
+        </div>
+        <div class="tab-panel active" id="gap-plan-close">
+          <div class="plan-grid" id="gap-plan-close-grid"></div>
+        </div>
+        <div class="tab-panel" id="gap-plan-ontrack">
+          <div class="plan-grid" id="gap-plan-ontrack-grid"></div>
+        </div>
+        <div class="tab-panel" id="gap-plan-saturated">
+          <div class="plan-grid" id="gap-plan-saturated-grid"></div>
+        </div>
+      </div>
     </div>
 
     <!-- PAGE: Action Plan -->
@@ -211,28 +233,41 @@
         <h2>Action Plan — Weekly Execution</h2>
         <p>Operational week-by-week plan with precise Boolean search queries and message angles.</p>
       </div>
-      <div class="alert alert-good" style="margin-bottom:1rem">
-        <span class="alert-icon">&#127919;</span>
-        <span><strong>Short-term allocation: 90% LATAM/USD + 10% Spain/EU exploration.</strong>
-        Priority: secure remote USD income from Brazil first. Europe is medium-term positioning as a future digital nomad base.</span>
+      <div id="plan-exec-no-data" style="display:none;margin-bottom:1rem">
+        <div class="alert alert-info"><span class="alert-icon">&#8505;&#65039;</span>
+          <span>Executive summary needs Plan Progress data. Run the weekly refresh pipeline to populate it.</span>
+        </div>
       </div>
-      <div class="alert alert-info" style="margin-bottom:1rem">
-        <span class="alert-icon">&#127793;</span>
-        <span><strong>Don't rely on new connections alone.</strong> The <strong>Untapped Network</strong> page has existing
-        1st-degree connections you've never messaged, ranked and queued for first outreach — often faster to activate than
-        waiting on a new connection request. A practical weekly mix: new connection requests, untapped existing-connection
-        outreach, and Lead Reactivation follow-ups, weighted toward the same 90/10 LATAM/USD vs Spain/EU split.</span>
+      <div id="plan-exec-main">
+        <div class="section-label">Executive Summary</div>
+        <div class="metrics-grid" id="plan-exec-summary" style="margin-bottom:1rem"></div>
+        <div class="card" id="plan-mini-panel" style="padding:1.25rem;margin-bottom:1rem"></div>
       </div>
-      <div class="alert alert-info" style="margin-bottom:1rem">
-        <span class="alert-icon">&#128161;</span>
-        <span><strong>Smart search advice:</strong> Do not encode every criterion into the keyword query — use the
-        query for intent and LinkedIn filters for degree, geography, company, and persona refinement.
-        <strong>Broad</strong> = discovery only. <strong>Precision</strong> = your default daily search.
-        <strong>Persona</strong> = switch here when Broad/Precision return irrelevant profiles.
-        <strong>Company</strong> = account-based networking at known target firms.
-        Each search pack below lists all four tiers with their own distinct filter recipe —
-        expand &quot;Recommended LinkedIn Filters&quot; on any tier for details.</span>
-      </div>
+      <details style="margin-bottom:1rem">
+        <summary style="cursor:pointer;font-weight:600;color:var(--text-secondary);padding:.5rem 0">How search packs &amp; priorities work</summary>
+        <div class="alert alert-good" style="margin-bottom:.6rem">
+          <span class="alert-icon">&#127919;</span>
+          <span><strong>Short-term allocation: 90% LATAM/USD + 10% Spain/EU exploration.</strong>
+          Priority: secure remote USD income from Brazil first. Europe is medium-term positioning as a future digital nomad base.</span>
+        </div>
+        <div class="alert alert-info" style="margin-bottom:.6rem">
+          <span class="alert-icon">&#127793;</span>
+          <span><strong>Don't rely on new connections alone.</strong> The <strong>Untapped Network</strong> page has existing
+          1st-degree connections you've never messaged, ranked and queued for first outreach — often faster to activate than
+          waiting on a new connection request. A practical weekly mix: new connection requests, untapped existing-connection
+          outreach, and Lead Reactivation follow-ups, weighted toward the same 90/10 LATAM/USD vs Spain/EU split.</span>
+        </div>
+        <div class="alert alert-info">
+          <span class="alert-icon">&#128161;</span>
+          <span><strong>Smart search advice:</strong> Do not encode every criterion into the keyword query — use the
+          query for intent and LinkedIn filters for degree, geography, company, and persona refinement.
+          <strong>Broad</strong> = discovery only. <strong>Precision</strong> = your default daily search.
+          <strong>Persona</strong> = switch here when Broad/Precision return irrelevant profiles.
+          <strong>Company</strong> = account-based networking at known target firms.
+          Each search pack below lists all four tiers with their own distinct filter recipe —
+          expand &quot;Recommended LinkedIn Filters&quot; on any tier for details.</span>
+        </div>
+      </details>
       <div class="tabs-container">
         <div class="tabs-bar">
           <button class="tab-btn active" data-tab="plan-sprint">7-Day Sprint</button>
@@ -256,24 +291,32 @@
           <div class="alert alert-warn"><span class="alert-icon">&#128293;</span>
             <span><strong>Week 1 — Reactivation + LATAM/USD Recruiter Pipeline.</strong> Start with existing warm contacts before adding new ones.</span>
           </div>
+          <div class="card" id="week-1-history-panel" style="padding:1.1rem;margin-bottom:1rem"></div>
+          <div class="section-label">Recommended Priorities (Search Packs)</div>
           <div class="plan-grid" id="plan-week1-grid"></div>
         </div>
         <div class="tab-panel" id="plan-week2">
           <div class="alert alert-info"><span class="alert-icon">&#127758;</span>
             <span><strong>Week 2 — South America / Nearshore Recruiter Expansion.</strong> Expand into staffing and consulting firms hiring LATAM contractors.</span>
           </div>
+          <div class="card" id="week-2-history-panel" style="padding:1.1rem;margin-bottom:1rem"></div>
+          <div class="section-label">Recommended Priorities (Search Packs)</div>
           <div class="plan-grid" id="plan-week2-grid"></div>
         </div>
         <div class="tab-panel" id="plan-week3">
           <div class="alert alert-info"><span class="alert-icon">&#127968;</span>
             <span><strong>Week 3 — Hiring Managers and Data Leaders.</strong> Keep recruiters warm while adding decision-makers who can create roles.</span>
           </div>
+          <div class="card" id="week-3-history-panel" style="padding:1.1rem;margin-bottom:1rem"></div>
+          <div class="section-label">Recommended Priorities (Search Packs)</div>
           <div class="plan-grid" id="plan-week3-grid"></div>
         </div>
         <div class="tab-panel" id="plan-week4">
           <div class="alert alert-good"><span class="alert-icon">&#9989;</span>
             <span><strong>Week 4 — Follow-up, Conversion, and Pipeline Cleanup.</strong> Activate accepted connections, apply to open roles, and set up the next sprint.</span>
           </div>
+          <div class="card" id="week-4-history-panel" style="padding:1.1rem;margin-bottom:1rem"></div>
+          <div class="section-label">Recommended Priorities (Search Packs)</div>
           <div class="plan-grid" id="plan-week4-grid"></div>
         </div>
         <div class="tab-panel" id="plan-60">
@@ -344,6 +387,14 @@
             <div class="section-label">8. Manual Activity This Week</div>
             <div id="progress-manual-note" style="font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 0.75rem"></div>
             <div class="metrics-grid" id="progress-manual-cards"></div>
+
+            <div class="section-label">9. Week-over-Week Comparison</div>
+            <div id="progress-weekly-comparison-note" style="font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 0.75rem"></div>
+            <div class="chart-box" style="margin-bottom:1.5rem">
+              <h4>Gross New / Net Growth / Recruiters / Needs Response / Untapped Activated / Needs Mapping — by Week</h4>
+              <canvas id="chart-progress-weekly-comparison" style="max-height:320px"></canvas>
+              <div id="progress-weekly-comparison-msg" style="display:none;text-align:center;color:var(--text-muted);padding:2rem 0"></div>
+            </div>
 
             <div class="section-label">Sunday Review Checklist</div>
             <div class="card" style="padding:1.5rem">
@@ -516,7 +567,8 @@ python src/validate_static_dashboard_runtime.py</pre>
       <div class="metrics-grid" id="v6-resolution-summary"></div>
       <div class="alert alert-info" id="v6-target-note" style="margin-top:.75rem"></div>
 
-      <div class="section-label">Top 25 Companies to Map First (by Connection Count)</div>
+      <div class="section-label">Top Companies to Map First (click a card above to filter)</div>
+      <div id="unk-companies-count" style="font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 0.5rem"></div>
       <div class="table-wrap">
         <table id="unk-companies-table">
           <thead><tr>
@@ -977,6 +1029,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783870737"></script>
+<script src="./assets/app.js?v=1783899013"></script>
 </body>
 </html>

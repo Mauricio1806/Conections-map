@@ -213,6 +213,8 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Gap',         renderGap);
       safeRender('Plan',        renderPlan);
       safeRender('PlanProgress', renderPlanProgress);
+      safeRender('PlanExecSummary', renderPlanExecSummary);
+      safeRender('WeekHistoryPanels', renderWeekHistoryPanels);
       safeRender('Contacts',    renderContacts);
       safeRender('Companies',   renderCompanies);
       safeRender('Opportunity', renderUnknownResolution);
@@ -718,6 +720,69 @@ function renderGap() {
 
   renderGapTable();
   renderGapChart();
+  renderGapActionPlan(gap);
+}
+
+// ── Connection Gap Action Plan (Objective 5) — built entirely from the
+// existing gap_analysis rows (market/persona/gap/urgency/timeframe/
+// recommended_action), no new backend data. ─────────────────────────────────
+function _gapVolumeForUrgency(urgency) {
+  return ({ Critical: '8-10/wk', High: '5-7/wk', Medium: '2-4/wk', Low: '1-2/wk', Saturated: 'maintain only' })[urgency] || '2-4/wk';
+}
+
+window.applyGapPersonaMarketFilter = function(market, urgency) {
+  const mf = document.getElementById('gap-market-filter');
+  const uf = document.getElementById('gap-urgency-filter');
+  if (mf) mf.value = market || '';
+  if (uf) uf.value = urgency || '';
+  window.applyGapFilters();
+  const table = document.getElementById('gap-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+function _gapActionCard(r) {
+  const market = r.market || '';
+  const persona = r.persona || '';
+  const query = '"' + persona + '" AND "' + market.replace(/_/g, ' ') + '"';
+  const qAttr = escapeAttr(query);
+  const volume = _gapVolumeForUrgency(r.urgency_level);
+  return '<div class="plan-card ' + (r.urgency_level||'').toLowerCase() + '">'
+    + '<div class="plan-card-header"><div>'
+    + '<div class="plan-card-title">Add ' + fmt(r.gap_count) + ' ' + persona + ' — ' + market.replace(/_/g, ' ') + '</div>'
+    + '<div class="plan-card-meta">' + (r.timeframe||'') + ' · suggested pace: ' + volume + '</div>'
+    + '</div>' + urgencyBadge(r.urgency_level) + '</div>'
+    + '<div class="plan-reason">' + (r.recommended_action || r.strategic_reason || '').substring(0, 160) + '</div>'
+    + '<div class="search-pack-row" style="border-bottom:none">'
+    + '<code class="search-query-code" style="flex:1 1 160px">' + query + '</code>'
+    + '<a href="https://www.linkedin.com/search/results/people/?keywords=' + encodeURIComponent(query) + '" target="_blank" rel="noopener" '
+    + 'class="search-pack-btn" style="background:var(--accent);color:#fff;text-decoration:none">Open Search</a>'
+    + '<button type="button" class="btn-ghost search-pack-btn" data-query="' + qAttr + '" onclick="copyQueryBtn(this)">Copy Query</button>'
+    + '<button type="button" class="btn-ghost search-pack-btn" onclick="applyGapPersonaMarketFilter(\'' + escapeAttr(market) + '\',\'' + escapeAttr(r.urgency_level||'') + '\')">Apply Filter</button>'
+    + '</div>'
+    + '</div>';
+}
+
+function renderGapActionPlan(gap) {
+  const closeGrid = document.getElementById('gap-plan-close-grid');
+  const onTrackGrid = document.getElementById('gap-plan-ontrack-grid');
+  const saturatedGrid = document.getElementById('gap-plan-saturated-grid');
+  if (!closeGrid && !onTrackGrid && !saturatedGrid) return;
+
+  const critHigh = gap.filter(r => r.urgency_level === 'Critical' || r.urgency_level === 'High')
+    .sort((a, b) => (b.gap_percentage||0) - (a.gap_percentage||0)).slice(0, 10);
+  const onTrack = gap.filter(r => r.urgency_level === 'Low' || r.urgency_level === 'Medium')
+    .sort((a, b) => (a.gap_percentage||0) - (b.gap_percentage||0)).slice(0, 10);
+  const saturated = gap.filter(r => r.urgency_level === 'Saturated').slice(0, 10);
+
+  if (closeGrid) closeGrid.innerHTML = critHigh.length
+    ? critHigh.map(_gapActionCard).join('')
+    : '<div class="alert alert-good" style="grid-column:1/-1"><span class="alert-icon">&#9989;</span><span>No Critical/High urgency gaps right now.</span></div>';
+  if (onTrackGrid) onTrackGrid.innerHTML = onTrack.length
+    ? onTrack.map(_gapActionCard).join('')
+    : '<div class="alert alert-info" style="grid-column:1/-1"><span>No Low/Medium urgency gaps to show.</span></div>';
+  if (saturatedGrid) saturatedGrid.innerHTML = saturated.length
+    ? saturated.map(_gapActionCard).join('')
+    : '<div class="alert alert-info" style="grid-column:1/-1"><span>No saturated markets/personas yet.</span></div>';
 }
 
 window.applyGapFilters = function() {
@@ -902,17 +967,17 @@ function renderPlan() {
     const rows = tiers.map(t => {
       const color = TIER_COLORS[t.tier] || '#8b949e';
       const qAttr = escapeAttr(t.query);
-      return '<div style="display:flex;align-items:flex-start;gap:.4rem;padding:.4rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap">'
+      return '<div class="search-pack-row">'
         + '<span style="font-size:.7rem;font-weight:700;color:' + color + ';min-width:64px;flex-shrink:0">' + t.tier + '</span>'
-        + '<div style="flex:1;min-width:0">'
-        + '<code style="font-size:.72rem;color:#e6edf3;word-break:break-word;white-space:normal;display:block">' + t.query + '</code>'
+        + '<div style="flex:1 1 180px;min-width:0">'
+        + '<code class="search-query-code">' + t.query + '</code>'
         + '<span style="font-size:.65rem;color:var(--text-muted)">' + t.purpose + ' — precision: ' + t.expectedPrecision + '</span>'
         + '</div>'
-        + '<a href="' + liUrl(t.query) + '" target="_blank" rel="noopener" '
-        + 'style="font-size:.7rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;white-space:nowrap;text-decoration:none;flex-shrink:0" '
+        + '<a href="' + liUrl(t.query) + '" target="_blank" rel="noopener" class="search-pack-btn" '
+        + 'style="background:var(--accent);color:#fff;text-decoration:none" '
         + 'title="Open People Search on LinkedIn">Open Search</a>'
-        + '<button type="button" class="btn-ghost" data-query="' + qAttr + '" onclick="copyQueryBtn(this)" '
-        + 'style="font-size:.68rem;padding:2px 8px;flex-shrink:0" title="Copy this query to clipboard">Copy Query</button>'
+        + '<button type="button" class="btn-ghost search-pack-btn" data-query="' + qAttr + '" onclick="copyQueryBtn(this)" '
+        + 'title="Copy this query to clipboard">Copy Query</button>'
         + '<details style="flex:1 0 100%;margin-top:.3rem">'
         + '<summary style="cursor:pointer;font-size:.68rem;color:var(--text-muted);font-weight:600">&#9881; Recommended LinkedIn Filters</summary>'
         + '<div style="font-size:.7rem;color:var(--text-secondary);padding:.4rem .3rem;line-height:1.7;background:var(--bg-surface);border-radius:4px;margin-top:.25rem">'
@@ -931,12 +996,31 @@ function renderPlan() {
     const noiseHtml = noise
       ? '<div style="font-size:.7rem;color:var(--text-muted);margin-top:.35rem">&#9888; Noise tip: if too many irrelevant results, try adding <code style="font-size:.7rem">NOT Student</code> or <code style="font-size:.7rem">NOT Course</code></div>'
       : '';
-    return '<div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:.6rem .75rem;margin:.5rem 0">'
+    return '<div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:.6rem .75rem;margin:.5rem 0;max-width:100%;overflow:hidden">'
       + '<div style="font-size:.7rem;font-weight:700;color:var(--text-secondary);margin-bottom:.25rem">&#128269; SEARCH PACK — Broad / Precision / Persona / Company (each with its own filters)</div>'
       + rows
-      + (filters ? '<div style="font-size:.7rem;color:var(--info);margin-top:.4rem">&#127717; Market context: ' + filters + '</div>' : '')
+      + (filters ? '<div style="font-size:.7rem;color:var(--info);margin-top:.4rem;overflow-wrap:anywhere">&#127717; Market context: ' + filters + '</div>' : '')
       + '<div style="font-size:.7rem;color:var(--text-muted);margin-top:.3rem;font-style:italic">Do not encode every criterion into the keyword query — use the query for intent and LinkedIn filters (degree, geography, company, persona) for refinement.</div>'
       + noiseHtml
+      + '</div>';
+  }
+
+  // Compact, always-visible single-line version — just the Precision tier
+  // (the "default daily search" tier per the guidance above) — used on the
+  // collapsed day/week card face. The full 4-tier searchPack() above still
+  // lives inside that card's "Expandir detalhes" accordion.
+  function primaryTierSnippet(pack) {
+    const tiers = buildTierFilters(pack.key, pack);
+    const t = tiers.find(x => x.tier === 'Precision') || tiers[0];
+    const color = TIER_COLORS[t.tier] || '#8b949e';
+    const qAttr = escapeAttr(t.query);
+    return '<div class="search-pack-row" style="border-bottom:none;padding:.3rem 0">'
+      + '<span style="font-size:.7rem;font-weight:700;color:' + color + ';min-width:64px;flex-shrink:0">' + t.tier + '</span>'
+      + '<code class="search-query-code" style="flex:1 1 140px">' + t.query + '</code>'
+      + '<a href="' + liUrl(t.query) + '" target="_blank" rel="noopener" class="search-pack-btn" '
+      + 'style="background:var(--accent);color:#fff;text-decoration:none" title="Open People Search on LinkedIn">Open Search</a>'
+      + '<button type="button" class="btn-ghost search-pack-btn" data-query="' + qAttr + '" onclick="copyQueryBtn(this)" '
+      + 'title="Copy this query to clipboard">Copy Query</button>'
       + '</div>';
   }
 
@@ -1081,13 +1165,20 @@ function renderPlan() {
     const tgt = Object.entries(s.targets).map(([k,v]) =>
       '<div class="plan-t"><div class="plan-n" style="font-size:1rem">' + v + '</div><div class="plan-l">' + k + '</div></div>'
     ).join('');
+    // Compact face: day, objective, targets, ONE primary search tier, ONE
+    // message angle. Everything else (full description, all 4 search
+    // tiers) is inside "Expandir detalhes" so cards don't grow indefinitely.
     return '<div class="sprint-card">'
       + '<div class="sprint-day">' + s.icon + ' ' + s.day + '</div>'
       + '<div class="sprint-action">' + s.action + '</div>'
       + '<div class="plan-targets">' + tgt + '</div>'
-      + '<div class="sprint-meta" style="margin-bottom:.4rem">' + s.detail + '</div>'
-      + (s.sp ? searchPack(s.sp, s.filters, s.noise) : '')
+      + (s.sp ? primaryTierSnippet(s.sp) : '')
       + '<div class="sprint-angle" style="white-space:normal;margin-top:.4rem">&#128172; ' + s.angle + '</div>'
+      + '<details style="margin-top:.5rem">'
+      + '<summary style="cursor:pointer;font-size:.72rem;font-weight:600;color:var(--accent-2)">Expandir detalhes &#9660;</summary>'
+      + '<div class="sprint-meta" style="margin:.5rem 0">' + s.detail + '</div>'
+      + (s.sp ? searchPack(s.sp, s.filters, s.noise) : '')
+      + '</details>'
       + '</div>';
   }).join('');
 
@@ -1110,6 +1201,9 @@ function renderPlan() {
   ).join('');
 
   // ── Week-by-week 30-day cards ────────────────────────────────────────────────
+  // Compact face (title, focus, urgency, targets, one primary search tier,
+  // one angle) + "Expandir detalhes" accordion for the full description and
+  // all 4 search-pack tiers — same pattern as the 7-Day Sprint cards.
   function makeWeekCard(w) {
     const tgt = Object.entries(w.targets).map(([k,v]) =>
       '<div class="plan-t"><div class="plan-n" style="font-size:1rem">' + v + '</div><div class="plan-l">' + k + '</div></div>'
@@ -1120,9 +1214,13 @@ function renderPlan() {
       + '<div class="plan-card-meta">' + w.focus + '</div>'
       + '</div>' + urgencyBadge(w.urgency.charAt(0).toUpperCase() + w.urgency.slice(1)) + '</div>'
       + '<div class="plan-targets" style="margin-bottom:.6rem">' + tgt + '</div>'
-      + '<div class="plan-reason">' + w.detail + '</div>'
-      + (w.sp ? searchPack(w.sp, w.filters || null, w.noise || false) : '')
+      + (w.sp ? primaryTierSnippet(w.sp) : '')
       + (w.angle ? '<div class="sprint-angle" style="white-space:normal;margin-top:.4rem">&#128172; ' + w.angle + '</div>' : '')
+      + '<details style="margin-top:.5rem">'
+      + '<summary style="cursor:pointer;font-size:.72rem;font-weight:600;color:var(--accent-2)">Expandir detalhes &#9660;</summary>'
+      + '<div class="plan-reason" style="margin-top:.5rem">' + w.detail + '</div>'
+      + (w.sp ? searchPack(w.sp, w.filters || null, w.noise || false) : '')
+      + '</details>'
       + '</div>';
   }
 
@@ -1228,9 +1326,11 @@ function renderPlan() {
         + '<div class="plan-t"><div class="plan-n" style="color:#14b8a6">' + weekly + '/wk</div><div class="plan-l">connects</div></div>'
         + '</div>'
         + '<div class="plan-reason">' + (r.strategic_reason||'').substring(0,140) + '</div>'
-        + '<div style="margin-top:.5rem"><a href="' + liUrl(query) + '" target="_blank" rel="noopener" '
-        + 'style="font-size:.72rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;text-decoration:none">&#128269; Precision Search</a>'
-        + '<code style="font-size:.7rem;color:var(--text-muted);margin-left:.5rem;word-break:break-word">' + query + '</code></div>'
+        + '<div style="margin-top:.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem">'
+        + '<a href="' + liUrl(query) + '" target="_blank" rel="noopener" '
+        + 'style="font-size:.72rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;text-decoration:none;flex-shrink:0">&#128269; Precision Search</a>'
+        + '<button type="button" class="btn-ghost search-pack-btn" data-query="' + escapeAttr(query) + '" onclick="copyQueryBtn(this)">Copy Query</button>'
+        + '<code class="search-query-code" style="color:var(--text-muted);flex:1 1 140px">' + query + '</code></div>'
         + '</div>';
     });
     const extra = (extraCards || []).map(makeWeekCard);
@@ -1552,6 +1652,75 @@ function renderCompanyResolutionV6() {
   }
 }
 
+// Clickable-card filters for the Opportunity Market companies table (Objective 4.A).
+// Each filter operates on the SAME top-25/50 companies list already shown in
+// the table — no new per-contact data is fetched or fabricated. 'Auto-Resolvable'
+// intentionally has no card filter here: it's a scalar contact count with no
+// per-company list behind it in the public JSON, so making it "clickable" would
+// have nothing real to filter into.
+let unknownCompaniesBase = [];
+let filteredUnknownCompanies = [];
+let activeUnknownKpi = null;
+
+const UNKNOWN_KPI_FILTERS = {
+  needs_mapping_total: { label: 'All companies needing mapping', match: () => true, sortKey: 'connection_count' },
+  top25:                { label: 'Top 25 by connection count',    match: () => true, sortKey: 'connection_count' },
+  high_value:           { label: 'High avg priority score (≥60)', match: r => (r.avg_priority_score || 0) >= 60, sortKey: 'avg_priority_score' },
+  recruiters:           { label: 'Has recruiters needing mapping', match: r => (r.recruiter_count || 0) > 0, sortKey: 'recruiter_count' },
+  hiring_mgrs:          { label: 'Has hiring managers needing mapping', match: r => (r.hiring_manager_count || 0) > 0, sortKey: 'hiring_manager_count' },
+  data_leaders:         { label: 'Has data leaders needing mapping', match: r => (r.data_leader_count || 0) > 0, sortKey: 'data_leader_count' },
+};
+
+function _updateActiveUnknownKpiCards() {
+  document.querySelectorAll('#page-unknown .kpi-card').forEach(el => {
+    const isActive = el.dataset.kpi === activeUnknownKpi;
+    el.classList.toggle('active', isActive);
+    el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+}
+
+window.applyUnknownKpiFilter = function(key) {
+  const def = UNKNOWN_KPI_FILTERS[key];
+  if (!def) return;
+  filteredUnknownCompanies = unknownCompaniesBase
+    .filter(def.match)
+    .sort((a, b) => (b[def.sortKey] || 0) - (a[def.sortKey] || 0));
+  activeUnknownKpi = key;
+  _updateActiveUnknownKpiCards();
+  renderUnknownCompaniesTable(def.label);
+  const table = document.getElementById('unk-companies-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+function renderUnknownCompaniesTable(label) {
+  const tbody = document.getElementById('unk-companies-tbody');
+  const countEl = document.getElementById('unk-companies-count');
+  const rows = filteredUnknownCompanies;
+  if (countEl) countEl.textContent = 'Showing ' + rows.length + ' of ' + unknownCompaniesBase.length
+    + (label ? ' — ' + label : '');
+  if (!tbody) return;
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">No companies match this filter.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map((r, i) => {
+    const sugMarket = r.suggested_market || r.opportunity_bucket || '';
+    const badgeVal  = sugMarket && sugMarket !== 'UNKNOWN' ? sugMarket : 'NEEDS_COMPANY_MAPPING';
+    return '<tr>'
+    + '<td><strong>#' + (i+1) + '</strong></td>'
+    + '<td style="font-weight:500">' + (r.company_clean||r.company||'') + '</td>'
+    + '<td><strong>' + fmt(r.connection_count) + '</strong></td>'
+    + '<td>' + fmt(r.recruiter_count||0) + '</td>'
+    + '<td>' + fmt(r.talent_count||0) + '</td>'
+    + '<td>' + fmt(r.hiring_manager_count||0) + '</td>'
+    + '<td>' + fmt(r.data_leader_count||0) + '</td>'
+    + '<td>' + (Number(r.avg_priority_score||0).toFixed(0)) + '</td>'
+    + '<td>' + marketBadge(badgeVal) + '</td>'
+    + '<td style="font-size:0.72rem;max-width:200px">' + String(r.suggested_reason||'').substring(0,80) + '</td>'
+    + '</tr>';
+  }).join('');
+}
+
 function renderUnknownResolution() {
   const res   = D.unknown_resolution || {};
   const v5Sum = D.opportunity_market_v5_summary || {};
@@ -1575,15 +1744,16 @@ function renderUnknownResolution() {
     ].join('');
   }
 
-  // Needs-mapping contacts (renamed from "UNKNOWN")
+  // Needs-mapping contacts (renamed from "UNKNOWN") — clickable, filters the
+  // companies table below (Objective 4.A).
   const hvUnk = res.high_value_unknown_contacts || 0;
   const unkMetEl = document.getElementById('unk-metrics');
   if (unkMetEl) unkMetEl.innerHTML = [
-    makeCard('Needs Mapping Total',           v5Sum.v5_needs_company_mapping||0, 'company known, market unresolved'),
-    makeCard('High-Value Needs Mapping',      hvUnk,   'recruiters + hiring mgrs score ≥60', 'warn'),
-    makeCard('Recruiters Needing Mapping',    kpi('unknown_recruiters_highvalue'), 'score ≥60 — map their companies first'),
-    makeCard('Hiring Mgrs Needing Mapping',   kpi('unknown_hiring_mgrs_highvalue'), 'score ≥50'),
-    makeCard('Data Leaders Needing Mapping',  kpi('unknown_data_leaders_highvalue'), 'score ≥50'),
+    makeKpiCard('needs_mapping_total', 'Needs Mapping Total',           v5Sum.v5_needs_company_mapping||0, 'company known, market unresolved — click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('high_value',          'High-Value Needs Mapping',      hvUnk,   'recruiters + hiring mgrs score ≥60 — click to filter', 'warn', 'applyUnknownKpiFilter'),
+    makeKpiCard('recruiters',          'Recruiters Needing Mapping',    kpi('unknown_recruiters_highvalue'), 'score ≥60 — click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('hiring_mgrs',         'Hiring Mgrs Needing Mapping',   kpi('unknown_hiring_mgrs_highvalue'), 'score ≥50 — click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('data_leaders',        'Data Leaders Needing Mapping',  kpi('unknown_data_leaders_highvalue'), 'score ≥50 — click to filter', '', 'applyUnknownKpiFilter'),
   ].join('');
 
   // Resolution potential
@@ -1592,39 +1762,20 @@ function renderUnknownResolution() {
   const top25pct= res.top25_pct_of_unknown || kpi('unknown_resolution_potential');
   const unkResEl = document.getElementById('unk-resolution-metrics');
   if (unkResEl) unkResEl.innerHTML = [
-    makeCard('Top 25 Companies Impact', top25,   top25pct + '% of needs-mapping contacts', 'good'),
-    makeCard('Auto-Resolvable',         autoRes, 'via keyword + heuristics', 'good'),
+    makeKpiCard('top25', 'Top 25 Companies Impact', top25,   top25pct + '% of needs-mapping contacts — click to view', 'good', 'applyUnknownKpiFilter'),
+    makeCard('Auto-Resolvable',         autoRes, 'via keyword + heuristics (aggregate count only — not a filterable list)', 'good'),
     makeCard('Opportunity Bucket Score',kpi('unknown_resolution_score') + '/100', 'higher = better mapped'),
   ].join('');
 
   // Top companies needing mapping — prefer V5 backlog, fall back to V2 unknown
   const backlogData = D.unknown_companies || [];
-  const top25Companies = (res.top25_companies && Array.isArray(res.top25_companies))
+  unknownCompaniesBase = (res.top25_companies && Array.isArray(res.top25_companies))
     ? res.top25_companies
     : backlogData.slice(0, 25);
-  const tbody = document.getElementById('unk-companies-tbody');
-  if (tbody) {
-    if (!top25Companies.length) {
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">All companies have been mapped.</td></tr>';
-    } else {
-    tbody.innerHTML = top25Companies.map((r, i) => {
-      const sugMarket = r.suggested_market || r.opportunity_bucket || '';
-      const badgeVal  = sugMarket && sugMarket !== 'UNKNOWN' ? sugMarket : 'NEEDS_COMPANY_MAPPING';
-      return '<tr>'
-      + '<td><strong>#' + (i+1) + '</strong></td>'
-      + '<td style="font-weight:500">' + (r.company_clean||r.company||'') + '</td>'
-      + '<td><strong>' + fmt(r.connection_count) + '</strong></td>'
-      + '<td>' + fmt(r.recruiter_count||0) + '</td>'
-      + '<td>' + fmt(r.talent_count||0) + '</td>'
-      + '<td>' + fmt(r.hiring_manager_count||0) + '</td>'
-      + '<td>' + fmt(r.data_leader_count||0) + '</td>'
-      + '<td>' + (Number(r.avg_priority_score||0).toFixed(0)) + '</td>'
-      + '<td>' + marketBadge(badgeVal) + '</td>'
-      + '<td style="font-size:0.72rem;max-width:200px">' + String(r.suggested_reason||'').substring(0,80) + '</td>'
-      + '</tr>';
-    }).join('');
-    }
+  if (!activeUnknownKpi) {
+    filteredUnknownCompanies = unknownCompaniesBase.slice().sort((a, b) => (b.connection_count||0) - (a.connection_count||0));
   }
+  renderUnknownCompaniesTable(activeUnknownKpi ? UNKNOWN_KPI_FILTERS[activeUnknownKpi].label : null);
 
   // Persona breakdown for needs-mapping contacts
   const unkPersonaEl = document.getElementById('unk-persona-metrics');
@@ -2323,6 +2474,120 @@ function _progressCard(card) {
   return makeCard(card.title, value, subParts.join('<br>'));
 }
 
+// ── Action Plan — Executive Summary + Mini Panel (top of page) ──────────────
+// Consolidates what used to be 3 always-open alert blocks into a compact,
+// data-driven summary built from the same action_plan_progress numbers the
+// Plan Progress tab uses — nothing here is fabricated, it's a different view
+// of fields already computed by src/action_plan_progress.py.
+function goToNavPage(page) {
+  const el = document.querySelector('.nav-item[data-page="' + page + '"]');
+  if (el) el.click();
+}
+function goToPlanTab(tab) {
+  const btn = document.querySelector('#page-plan .tab-btn[data-tab="' + tab + '"]');
+  if (btn) btn.click();
+}
+
+function _mainBottleneck(ap) {
+  const rules = ap.diagnosis || [];
+  const byRule = {};
+  rules.forEach(r => { byRule[r.rule] = r.message; });
+  const priority = [
+    'needs_my_response_high', 'primary_share_below_80', 'europe_share_above_20',
+    'classification_backlog_increased', 'europe_share_below_5',
+    'new_connections_below_target', 'high_value_untapped_high',
+  ];
+  for (const key of priority) {
+    if (byRule[key]) return byRule[key];
+  }
+  return (rules[0] && rules[0].message) || 'No major bottleneck — plan execution is on track.';
+}
+
+function renderPlanExecSummary() {
+  const ap = (D && D.action_plan_progress) || {};
+  const noData = document.getElementById('plan-exec-no-data');
+  const mainEl = document.getElementById('plan-exec-main');
+  if (!ap.available) {
+    if (noData) noData.style.display = '';
+    if (mainEl) mainEl.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainEl) mainEl.style.display = '';
+
+  const summary = ap.summary || {};
+  const wm = ap.weekly_metrics || {};
+  const network = wm.network_growth || {};
+  const strategic = wm.strategic_growth || {};
+  const leads = wm.lead_reactivation || {};
+  const untapped = wm.untapped_network || {};
+  const quality = wm.data_quality || {};
+
+  // Block 1: Focus This Week
+  const focusEl = document.getElementById('plan-exec-summary');
+
+  const priorities = [];
+  if ((leads.needs_my_response_current || 0) > 0) {
+    priorities.push('Reply to ' + leads.needs_my_response_current + ' pending Needs My Response contacts');
+  }
+  if ((untapped.high_value_untapped_current || 0) > 0) {
+    priorities.push('Activate ' + untapped.high_value_untapped_current + ' high-value Untapped contacts');
+  }
+  priorities.push('Add ' + (network.new_connections_target_min || 0) + '-' + (network.new_connections_target_max || 0)
+    + ' new recruiter/TA connections');
+  if (strategic.classification_risk_status === 'CLASSIFICATION_BACKLOG_INCREASED') {
+    priorities.push('Map top unresolved companies (backlog grew by ' + (quality.needs_company_mapping_delta || 0) + ')');
+  }
+
+  const cards = [
+    {
+      title: 'Focus This Week',
+      value: summary.primary_focus || '—',
+      sub: '80-90% LATAM/USD · 10-20% Spain/EU exploratory',
+    },
+    {
+      title: 'Main Bottleneck',
+      value: _mainBottleneck(ap),
+    },
+    {
+      title: 'Recommended Priorities',
+      value: priorities.map((p, i) => (i + 1) + ') ' + p).join('<br>'),
+    },
+    {
+      title: 'Weekly Targets Snapshot',
+      value: [
+        'New connections: ' + (network.new_connections_target_min || 0) + '-' + (network.new_connections_target_max || 0) + '/wk',
+        'Reactivation: ' + (leads.reactivation_weekly_target_min ?? '—') + '-' + (leads.reactivation_weekly_target_max ?? '—') + '/wk',
+        'Untapped outreach: ' + (untapped.untapped_outreach_weekly_target_min ?? '—') + '-' + (untapped.untapped_outreach_weekly_target_max ?? '—') + '/wk',
+        'Europe exploratory: ' + (strategic.europe_exploratory_weekly_target_min ?? '—') + '-' + (strategic.europe_exploratory_weekly_target_max ?? '—') + '/wk',
+      ].join('<br>'),
+    },
+  ];
+  if (focusEl) focusEl.innerHTML = cards.map(c => {
+    return '<div class="card"><div class="card-title">' + c.title + '</div>'
+      + '<div class="card-sub" style="line-height:1.6;margin-top:.3rem;font-size:0.82rem">' + c.value + '</div>'
+      + (c.sub ? '<div class="card-sub" style="margin-top:.3rem;color:var(--text-muted)">' + c.sub + '</div>' : '')
+      + '</div>';
+  }).join('');
+
+  // Mini panel: This Week Progress / Targets / Diagnosis + cross-links
+  const panelEl = document.getElementById('plan-mini-panel');
+  if (panelEl) {
+    const diagList = (ap.diagnosis || []).map(r => '<li>' + r.message + '</li>').join('');
+    panelEl.innerHTML =
+      '<div class="section-label" style="margin-top:0">This Week</div>'
+      + '<p><strong>Progress:</strong> ' + (summary.plan_status || '—')
+      + ' — gross ' + (network.gross_new_connections ?? '—') + ' new / net ' + (network.net_connection_growth ?? '—') + ' growth'
+      + ' (week ' + (summary.week_index || '?') + ' of the plan cycle, snapshot #' + (summary.snapshot_count || '?') + ')</p>'
+      + '<p><strong>Diagnosis:</strong></p>'
+      + '<ul style="margin:.2rem 0 .8rem 1.2rem;line-height:1.8">' + diagList + '</ul>'
+      + '<div style="display:flex;gap:.5rem;flex-wrap:wrap">'
+      + '<button type="button" class="btn-ghost" onclick="goToNavPage(\'weekly\')">&#128197; Weekly Evolution</button>'
+      + '<button type="button" class="btn-ghost" onclick="goToPlanTab(\'plan-progress\')">&#127919; Plan Progress</button>'
+      + '</div>';
+  }
+}
+
 function renderPlanProgress() {
   const ap = (D && D.action_plan_progress) || {};
   const noData = document.getElementById('progress-no-data');
@@ -2463,6 +2728,101 @@ function renderPlanProgress() {
   } else {
     if (manualNoteEl) manualNoteEl.textContent = 'No manual activity log entry for this week — measured where available, nothing fabricated.';
     if (manualCardsEl) manualCardsEl.innerHTML = '';
+  }
+
+  // 9. Week-over-Week Comparison — only ever plots weeks that actually have
+  // a recorded snapshot (ap.charts.weekly_comparison is built server-side
+  // from the persistent history log, never fabricated for missing weeks).
+  const wcData = charts.weekly_comparison || [];
+  const wcNoteEl = document.getElementById('progress-weekly-comparison-note');
+  const wcMsgEl = document.getElementById('progress-weekly-comparison-msg');
+  if (wcData.length < 2) {
+    destroyChart('chart-progress-weekly-comparison');
+    if (wcMsgEl) {
+      wcMsgEl.style.display = '';
+      wcMsgEl.textContent = wcData.length === 1
+        ? 'Only one recorded week so far (' + wcData[0].week_label + ') — the comparison chart needs at least two weekly snapshots.'
+        : 'No recorded weeks yet.';
+    }
+    if (wcNoteEl) wcNoteEl.textContent = '';
+  } else {
+    if (wcMsgEl) wcMsgEl.style.display = 'none';
+    if (wcNoteEl) wcNoteEl.textContent = 'Showing ' + wcData.length + ' recorded week(s) of ' + MAX_WEEK_TABS_JS + ' tracked.';
+    groupedBarChart('chart-progress-weekly-comparison',
+      wcData.map(r => r.week_label),
+      [
+        { label: 'Gross New', data: wcData.map(r => r.gross_new_connections || 0), color: '#3b82f6' },
+        { label: 'Net Growth', data: wcData.map(r => r.net_connection_growth || 0), color: '#22c55e' },
+        { label: 'Recruiters', data: wcData.map(r => r.new_recruiters || 0), color: '#f59e0b' },
+        { label: 'Needs Response', data: wcData.map(r => r.needs_my_response_current || 0), color: '#ef4444' },
+        { label: 'Untapped Activated', data: wcData.map(r => r.untapped_activated_this_week || 0), color: '#14b8a6' },
+        { label: 'Needs Mapping Δ', data: wcData.map(r => r.needs_company_mapping_delta || 0), color: '#8b5cf6' },
+      ]
+    );
+  }
+}
+const MAX_WEEK_TABS_JS = 4;
+
+// ── Action Plan — Week 1-4 tabs: real weekly-history panel ──────────────────
+// Injects a "resumo / targets / realizado / diagnóstico / próximas ações"
+// panel at the top of each existing plan-week1..plan-week4 tab, sourced from
+// action_plan_progress's by_week history. Weeks without a recorded snapshot
+// yet show an honest "baseline not available" message — never fabricated.
+function _weekTargetLine(label, min, max, unit) {
+  if (min === null || min === undefined) return null;
+  return label + ': ' + min + '-' + max + (unit || '/wk');
+}
+
+function renderWeekHistoryPanels() {
+  const byWeek = ((D && D.action_plan_progress) || {}).by_week || {};
+  for (let n = 1; n <= MAX_WEEK_TABS_JS; n++) {
+    const panel = document.getElementById('week-' + n + '-history-panel');
+    if (!panel) continue;
+    const w = byWeek['week_' + n];
+    if (!w || !w.available) {
+      panel.innerHTML = '<div class="alert alert-info" style="margin:0"><span class="alert-icon">&#8505;&#65039;</span>'
+        + '<span><strong>Baseline not available for Week ' + n + '.</strong> No weekly snapshot has reached this '
+        + 'point in the plan cycle yet — run the weekly refresh to populate real progress here. Nothing is fabricated.</span></div>';
+      continue;
+    }
+
+    const targets = [
+      _weekTargetLine('New connections', w.new_connections_target_min, w.new_connections_target_max),
+      _weekTargetLine('Reactivation', w.reactivation_target_min, w.reactivation_target_max),
+      _weekTargetLine('Untapped outreach', w.untapped_outreach_target_min, w.untapped_outreach_target_max),
+      _weekTargetLine('Europe exploratory', w.europe_exploratory_target_min, w.europe_exploratory_target_max),
+    ].filter(Boolean).join(' &middot; ');
+
+    const diagItems = String(w.diagnosis_summary || '').split('|').map(s => s.trim()).filter(Boolean);
+    const statusColor = PROGRESS_STATUS_COLOR[w.overall_status] || '#8b949e';
+
+    panel.innerHTML =
+      '<div class="section-label" style="margin-top:0">1. Resumo da Semana</div>'
+      + '<p style="font-size:0.85rem">' + (w.previous_snapshot_date || '—') + ' &rarr; ' + (w.current_snapshot_date || '—')
+      + ' (' + (w.period_days ?? '—') + ' days) — focus: <strong>' + (w.primary_focus || '—') + '</strong></p>'
+      + '<div class="section-label">2. Targets da Semana</div>'
+      + '<p style="font-size:0.85rem">' + (targets || '—') + '</p>'
+      + '<div class="section-label">3. Realizado da Semana</div>'
+      + '<div class="metrics-grid">'
+      + makeCard('Gross New Connections', w.gross_new_connections ?? '—')
+      + makeCard('Net Growth', w.net_connection_growth ?? '—')
+      + makeCard('Recruiters Added', w.new_recruiters ?? '—')
+      + makeCard('TA Added', w.new_talent_acquisition ?? '—')
+      + makeCard('Hiring Managers Added', w.new_hiring_managers ?? '—')
+      + makeCard('New Conversations', w.new_conversations_started ?? '—')
+      + makeCard('Needs My Response Δ', w.needs_my_response_delta ?? '—')
+      + makeCard('Hot Reactivation Δ', w.hot_reactivation_delta ?? '—')
+      + makeCard('Warm Reactivation Δ', w.warm_reactivation_delta ?? '—')
+      + makeCard('Untapped Activated', w.untapped_activated_this_week ?? '—')
+      + makeCard('Needs Mapping Δ', w.needs_company_mapping_delta ?? '—')
+      + makeCard('90/10 Mix', w.strategy_mix_status || '—')
+      + '</div>'
+      + '<div class="section-label">4. Diagnóstico da Semana</div>'
+      + '<p style="font-size:0.85rem"><span style="color:' + statusColor + ';font-weight:700">' + (w.overall_status || '—') + '</span></p>'
+      + (diagItems.length ? '<ul style="margin:.2rem 0 .6rem 1.2rem;font-size:0.85rem;line-height:1.8">'
+          + diagItems.map(d => '<li>' + d + '</li>').join('') + '</ul>' : '')
+      + '<div class="section-label">5. Próximas Ações</div>'
+      + '<p style="font-size:0.85rem">' + (w.recommendation || '—') + '</p>';
   }
 }
 
