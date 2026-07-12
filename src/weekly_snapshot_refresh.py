@@ -57,6 +57,10 @@ from src.config import ROOT_DIR, DATA_RAW_DIR, OUTPUTS_DIR
 from src.load_data import _read_csv_flexible
 from src.company_normalizer import normalize as normalize_company
 
+DATA_PROCESSED_DIR = ROOT_DIR / "data" / "processed"
+PREVIOUS_BASELINE_JSON = DATA_PROCESSED_DIR / "_previous_snapshot_baseline.json"
+PREVIOUS_ENRICHED_CSV = DATA_PROCESSED_DIR / "_previous_enriched_connections.csv"
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
 logger = logging.getLogger(__name__)
 
@@ -274,6 +278,33 @@ def activate_snapshot(resolved: dict[str, Path]) -> None:
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, target)
         logger.info(f"  Activated {logical}: {src} -> {target}")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# PART 5b — Stash the CURRENT (about-to-be-superseded) dashboard JSON as next
+# week's "previous baseline", before build_strategy_layer.py overwrites it.
+#
+# weekly_kpi_delta.py and action_plan_progress.py both diff against
+# data/processed/_previous_snapshot_baseline.json. If nothing refreshes that
+# file every week, it silently goes stale and every future week gets diffed
+# against an old snapshot instead of last week's — this is the ONE point in
+# the weekly routine where the pre-refresh JSON is still the correct "last
+# week" state, so it must happen here, before any pipeline step runs.
+# ══════════════════════════════════════════════════════════════════════════
+
+def stash_previous_baseline() -> None:
+    DATA_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    current_json = OUTPUTS_DIR / "public_dashboard_data.json"
+    if not current_json.exists():
+        logger.info("  No existing outputs/public_dashboard_data.json yet — nothing to stash as baseline (first-ever run).")
+        return
+    shutil.copyfile(current_json, PREVIOUS_BASELINE_JSON)
+    logger.info(f"  Stashed pre-refresh public_dashboard_data.json -> {PREVIOUS_BASELINE_JSON.relative_to(ROOT_DIR)}")
+
+    current_enriched = OUTPUTS_DIR / "enriched_connections.csv"
+    if current_enriched.exists():
+        shutil.copyfile(current_enriched, PREVIOUS_ENRICHED_CSV)
+        logger.info(f"  Stashed pre-refresh enriched_connections.csv -> {PREVIOUS_ENRICHED_CSV.relative_to(ROOT_DIR)}")
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -516,6 +547,11 @@ def main():
     logger.info(f"  WEEKLY SNAPSHOT REFRESH — {args.snapshot_folder} ({args.snapshot_date})")
     logger.info("=" * 70)
 
+    # ── Part 5b: stash pre-refresh JSON as next week's baseline (must run
+    # before anything below touches outputs/public_dashboard_data.json) ──────
+    logger.info("Step 0: Stashing current dashboard state as next diff's baseline ...")
+    stash_previous_baseline()
+
     # ── Part 1: discover + validate current snapshot ────────────────────────
     logger.info("Step 1: Discovering and validating current snapshot files ...")
     current_resolved = discover_snapshot_files(current_folder)
@@ -552,9 +588,17 @@ def main():
     row_counts = {k: v["row_count"] for k, v in current_summaries.items()}
     file_hashes = {k: _file_hash(v) for k, v in current_resolved.items()}
     snapshot_id = f"snap-{args.snapshot_date}"
-    previous_snapshot_id = f"snap-{args.previous_date}" if args.previous_date else (
-        f"snap-{previous_folder.name}" if previous_folder else None
-    )
+    if args.previous_date:
+        previous_snapshot_id = f"snap-{args.previous_date}"
+    elif previous_folder:
+        # Auto-detected path: resolve the folder name (DD-MM or YYYY-MM-DD) to
+        # an actual ISO date rather than storing the raw folder name — this ID
+        # gets parsed as a date downstream (weekly_kpi_delta.py / plan progress
+        # period-normalization), and "snap-05-07" is not a valid date.
+        resolved_prev_date = _parse_snapshot_date(previous_folder.name, None, ref_year)
+        previous_snapshot_id = f"snap-{resolved_prev_date.isoformat()}" if resolved_prev_date else f"snap-{previous_folder.name}"
+    else:
+        previous_snapshot_id = None
     update_manifest(snapshot_id, args.snapshot_date, args.snapshot_folder, row_counts,
                      schema_hashes, file_hashes, previous_snapshot_id)
 

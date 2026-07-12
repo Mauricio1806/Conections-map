@@ -62,6 +62,9 @@ data/processed/*
 # submissions, manual DMs). Private/local only, never committed.
 data/manual/*
 !data/manual/.gitkeep
+data/manual/weekly_action_log.csv
+data/manual/*.csv
+weekly_action_log.csv
 
 # ─── Private message data — NEVER commit ──────────────────────────────────────
 messages.csv

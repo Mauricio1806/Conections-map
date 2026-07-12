@@ -2429,6 +2429,26 @@ function renderPlanProgress() {
     const recs = ap.next_week_recommendations || [];
     recEl.innerHTML = recs.length ? recs.map(r => '<p>' + r + '</p>').join('') : '<p>—</p>';
   }
+
+  // 8. Manual Activity This Week — measured where available, zero shown as
+  // zero (not hidden/missing) when a log row exists; a distinct message
+  // when no row exists for this week at all (no fabricated activity).
+  const manual = (ap.weekly_metrics && ap.weekly_metrics.manual_activity) || {};
+  const manualNoteEl = document.getElementById('progress-manual-note');
+  const manualCardsEl = document.getElementById('progress-manual-cards');
+  if (manual.manual_activity_available) {
+    if (manualNoteEl) manualNoteEl.textContent = 'From data/manual/weekly_action_log.csv (week ending ' + (manual.week_end || '—') + ').';
+    if (manualCardsEl) manualCardsEl.innerHTML = [
+      makeCard('Comments Done', manual.comments_done ?? 0),
+      makeCard('Posts Done', manual.posts_done ?? 0),
+      makeCard('Career Sites Submitted', manual.career_sites_submitted ?? 0),
+      makeCard('Manual DMs Sent', manual.manual_dms_sent ?? 0),
+      makeCard('Manual Follow-ups Done', manual.manual_followups_done ?? 0),
+    ].join('');
+  } else {
+    if (manualNoteEl) manualNoteEl.textContent = 'No manual activity log entry for this week — measured where available, nothing fabricated.';
+    if (manualCardsEl) manualCardsEl.innerHTML = '';
+  }
 }
 
 // ── PAGE 11: Untapped Network ──────────────────────────────────────────────

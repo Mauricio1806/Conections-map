@@ -1,5 +1,5 @@
 # 🎯 Strategic Gap Report
-> Generated: **July 11, 2026**
+> Generated: **July 12, 2026**
 
 This report compares your current LinkedIn network against your strategic targets.
 
@@ -30,16 +30,16 @@ This report compares your current LinkedIn network against your strategic target
 | BRAZIL | Head of Data | 11 | 30 | **19** | 30 | 19 | **HIGH** |
 | EUROPE | Data Engineering Manager | 2 | 5 | **3** | 30 | 28 | **HIGH** |
 | SPAIN_EU | Director | 5 | 10 | **5** | 40 | 35 | **HIGH** |
-| LATAM_USD | Recruiter | 42 | 80 | **38** | 100 | 58 | **MEDIUM** |
-| BRAZIL | Recruiter | 40 | 50 | **10** | 50 | 10 | **MEDIUM** |
+| LATAM_USD | Recruiter | 44 | 80 | **36** | 100 | 56 | **MEDIUM** |
 | EUROPE | Head of Data | 4 | 5 | **1** | 40 | 36 | **MEDIUM** |
+| BRAZIL | Recruiter | 41 | 50 | **9** | 50 | 9 | **LOW** |
 | LATAM_USD | Talent Acquisition | 52 | 60 | **8** | 80 | 28 | **LOW** |
 | LATAM_USD | Director | 29 | 20 | **0** | 40 | 11 | **LOW** |
-| SPAIN_EU | Talent Acquisition | 19 | 15 | **0** | 60 | 41 | **LOW** |
+| SPAIN_EU | Talent Acquisition | 21 | 15 | **0** | 60 | 39 | **LOW** |
 | EUROPE | Recruiter | 29 | 10 | **0** | 60 | 31 | **LOW** |
 | EUROPE | Talent Acquisition | 34 | 10 | **0** | 50 | 16 | **LOW** |
 | EUROPE | Director | 30 | 5 | **0** | 30 | 0 | **LOW** |
-| BRAZIL | Data Engineer | 97 | 30 | **0** | 30 | 0 | **LOW** |
+| BRAZIL | Data Engineer | 96 | 30 | **0** | 30 | 0 | **LOW** |
 
 ---
 

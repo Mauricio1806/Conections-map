@@ -258,27 +258,40 @@ def load_previous_baseline_json() -> dict:
         return {}
 
 
-def load_manual_log() -> dict:
-    """Optional local file — never committed, never fabricated if missing."""
-    if not MANUAL_LOG_CSV.exists():
+def load_manual_log(week_end: str | None) -> dict:
+    """Optional local file — never committed, never fabricated if missing.
+
+    Only the row whose week_end exactly matches the CURRENT snapshot date is
+    used (not just the last row — an unrelated stale row must not be
+    reported as this week's activity). The free-text 'notes' column is
+    intentionally NEVER included in the returned dict: this dict flows into
+    outputs/action_plan_progress_weekly.csv (committed to git) and the public
+    dashboard JSON (served on GitHub Pages), and notes may contain names or
+    other private context that has no place in either.
+    """
+    if not MANUAL_LOG_CSV.exists() or not week_end:
         return {"manual_activity_available": False}
     try:
-        df = pd.read_csv(MANUAL_LOG_CSV, encoding="utf-8-sig")
+        df = pd.read_csv(MANUAL_LOG_CSV, encoding="utf-8-sig", dtype=str)
     except Exception:
         return {"manual_activity_available": False}
-    if df.empty:
+    if df.empty or "week_end" not in df.columns:
         return {"manual_activity_available": False}
-    row = df.iloc[-1]
+
+    match = df[df["week_end"].fillna("").str.strip() == str(week_end).strip()]
+    if match.empty:
+        return {"manual_activity_available": False}
+
+    row = match.iloc[-1]
     return {
         "manual_activity_available": True,
-        "week_start": str(row.get("week_start", "")),
-        "week_end": str(row.get("week_end", "")),
+        "week_start": str(row.get("week_start", "") or ""),
+        "week_end": str(row.get("week_end", "") or ""),
         "comments_done": int(pd.to_numeric(row.get("comments_done"), errors="coerce") or 0),
         "posts_done": int(pd.to_numeric(row.get("posts_done"), errors="coerce") or 0),
         "career_sites_submitted": int(pd.to_numeric(row.get("career_sites_submitted"), errors="coerce") or 0),
         "manual_dms_sent": int(pd.to_numeric(row.get("manual_dms_sent"), errors="coerce") or 0),
         "manual_followups_done": int(pd.to_numeric(row.get("manual_followups_done"), errors="coerce") or 0),
-        "notes": str(row.get("notes", "") or ""),
     }
 
 
@@ -816,7 +829,7 @@ def main():
     untapped = build_untapped_movement(current_json, week_cfg, period)
     top_contacts = build_top_contacts(current_json, previous_json, kpi_lookup)
     quality = build_data_quality(current_json, kpi_lookup)
-    manual = load_manual_log()
+    manual = load_manual_log(period.get("current_snapshot_date"))
 
     diagnosis = build_diagnosis(network, strategic, leads, untapped, quality, period)
     overall_status = overall_diagnosis_status(diagnosis, network, baseline_available)

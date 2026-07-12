@@ -1,26 +1,26 @@
 # Executive Strategy Report
-> Generated: **July 11, 2026**  
+> Generated: **July 12, 2026**  
 > ⚠️ *LinkedIn exports do not include location data. Market classification is inferred from company/title keywords only.*
 
 ---
 
 ## 1. Network Summary
 
-- **Total connections:** 10,925
+- **Total connections:** 11,112
 - **High-confidence inferred:** 0 (0%)
-- **Unknown market:** 8,946 (81.9%)
+- **Unknown market:** 9,106 (81.9%)
 
 | Market (V2) | Count |
 |-------------|-------|
-| Brazil | 851 |
-| LATAM USD | 285 |
-| US/Canada Nearshore | 213 |
-| Spain/EU | 46 |
+| Brazil | 861 |
+| LATAM USD | 288 |
+| US/Canada Nearshore | 216 |
+| Spain/EU | 47 |
 | Europe | 181 |
-| Global Staffing | 45 |
-| Global Tech | 5 |
-| Global Consulting | 353 |
-| Unknown | 8,946 (81.9%) |
+| Global Staffing | 49 |
+| Global Tech | 6 |
+| Global Consulting | 358 |
+| Unknown | 9,106 (81.9%) |
 
 ---
 
