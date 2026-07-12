@@ -339,11 +339,19 @@ def build_network_growth(kpi_lookup: dict, week_cfg: dict, new_conn_df: pd.DataF
     progress_pct = (round(pace["weekly_pace_actual"] / tmax * 100, 1)
                     if tmax and pace["weekly_pace_actual"] is not None else None)
 
+    net_growth = int(delta) if delta == delta else 0
+    gross_new = new_count
+    # Gross new connections (identity-matched additions this period) can be
+    # higher than net growth when some prior connections disappear, are
+    # removed, or an export simply doesn't re-list them — this is an
+    # estimate of that gap, not evidence of a data error.
+    churn_estimate = max(0, gross_new - net_growth)
+
     return {
         "total_connections_current": int(cur_total) if cur_total else 0,
         "total_connections_previous": int(prev_total) if prev_total else 0,
         "new_connections_count": new_count,
-        "new_connections_delta": int(delta) if delta == delta else 0,
+        "new_connections_delta": net_growth,
         "new_connections_target_min": tmin,
         "new_connections_target_max": tmax,
         "new_connections_progress_pct": progress_pct,
@@ -353,6 +361,16 @@ def build_network_growth(kpi_lookup: dict, week_cfg: dict, new_conn_df: pd.DataF
         "new_connections_weekly_pace": pace["weekly_pace_actual"],
         "new_connections_period_target_min": pace["period_target_min"],
         "new_connections_period_target_max": pace["period_target_max"],
+        # Gross vs net (Problem 1) — explicit, separate labels so the
+        # dashboard never conflates "205 new connections" with "+187 net
+        # growth" as if one were wrong.
+        "gross_new_connections": gross_new,
+        "net_connection_growth": net_growth,
+        "connection_churn_or_removed_estimate": churn_estimate,
+        "gross_vs_net_note": (
+            "Gross new connections can be higher than net growth when some prior "
+            "connections disappear, are removed, or exports change."
+        ),
     }
 
 
@@ -379,16 +397,31 @@ def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict, week_cfg: d
     target_primary = monthly.get("primary_latam_usd_share_target", 0.90)
     target_europe  = monthly.get("europe_exploratory_share_target", 0.10)
 
+    # Strategy Mix Status evaluates ONLY the 90/10 LATAM/USD vs Spain/EU
+    # effort split among new connections that ARE classified into one of the
+    # two strategic buckets. A large unclassified/GLOBAL/NEEDS_MAPPING share
+    # is a data-quality problem, not a strategy problem — mixing the two
+    # into one status previously made a genuinely on-strategy week (92%
+    # primary / 8% Europe) get flagged as TOO_MUCH_UNCLASSIFIED, which is
+    # misleading. See classification_risk_status below for that signal.
     if classified_denominator == 0:
         status = "NO_BASELINE"
-    elif unclassified_share is not None and unclassified_share > 0.6:
-        status = "TOO_MUCH_UNCLASSIFIED"
     elif actual_europe_share is not None and actual_europe_share > 0.20:
         status = "TOO_MUCH_EU"
     elif actual_europe_share is not None and actual_europe_share < 0.05:
         status = "TOO_LITTLE_EU"
     else:
         status = "ON_STRATEGY"
+
+    # Classification Risk — independent signal: a large share of this week's
+    # new connections landed in GLOBAL_*/NEEDS_COMPANY_MAPPING/LOW_VALUE
+    # buckets rather than a confirmed market, or the company-mapping backlog
+    # grew. Surfaced separately so it never overwrites an on-strategy mix.
+    classification_risk_status = (
+        "CLASSIFICATION_BACKLOG_INCREASED"
+        if (unclassified_share is not None and unclassified_share > 0.6)
+        else "NORMAL"
+    )
 
     # Europe exploratory has an explicit weekly count target — normalize by pace.
     europe_pace = _pace_metrics(
@@ -421,11 +454,13 @@ def build_strategic_growth(new_conn_df: pd.DataFrame, targets: dict, week_cfg: d
         "europe_exploratory_period_target_max": europe_pace["period_target_max"],
         "europe_exploratory_pace_status": europe_pace["status"],
         "unclassified_new_connections": unclassified_new,
+        "unclassified_share": unclassified_share,
         "actual_primary_share": actual_primary_share,
         "actual_europe_share": actual_europe_share,
         "target_primary_share": target_primary,
         "target_europe_share": target_europe,
         "strategy_mix_status": status,
+        "classification_risk_status": classification_risk_status,
     }
 
 
@@ -595,9 +630,13 @@ def build_diagnosis(network: dict, strategic: dict, leads: dict, untapped: dict,
         rules.append({"rule": "high_value_untapped_high",
                        "message": "Use existing 1st-degree network before adding more cold connections."})
 
-    if (quality.get("needs_company_mapping_delta") or 0) > 0:
-        rules.append({"rule": "needs_company_mapping_increased",
-                       "message": "Spend Sunday mapping top unresolved companies before planning the week."})
+    # Classification Risk (Problem 2) — a separate, non-overriding signal.
+    # Fires on either a growing company-mapping backlog or a high unclassified
+    # share among this week's new connections; never changes strategy_mix_status.
+    if strategic.get("classification_risk_status") == "CLASSIFICATION_BACKLOG_INCREASED":
+        rules.append({"rule": "classification_backlog_increased",
+                       "message": "Keep the 90/10 outreach strategy. Spend Sunday mapping the top new "
+                                  "unresolved companies before planning next week."})
 
     if not rules:
         rules.append({"rule": "on_track", "message": "Plan execution is on track. Keep the current weekly rhythm."})
@@ -652,8 +691,12 @@ def write_output_csvs(week_key: str, week_index: int, snapshot_count: int, perio
         "plan_status": overall_status,
         "new_connections_status": network["new_connections_status"],
         "strategy_mix_status": strategic["strategy_mix_status"],
+        "classification_risk_status": strategic["classification_risk_status"],
         "new_connections_period_actual": network["new_connections_period_actual"],
         "new_connections_weekly_pace": network["new_connections_weekly_pace"],
+        "gross_new_connections": network["gross_new_connections"],
+        "net_connection_growth": network["net_connection_growth"],
+        "connection_churn_or_removed_estimate": network["connection_churn_or_removed_estimate"],
         "actual_primary_share": strategic["actual_primary_share"],
         "actual_europe_share": strategic["actual_europe_share"],
         "next_week_recommendation": recommendation,
@@ -724,12 +767,23 @@ def build_public_block(week_key: str, week_index: int, snapshot_count: int, base
         {"title": "Plan Status", "value": overall_status},
         _pace_card("New Connections", "new_connections", network,
                    f"target {network['new_connections_target_min']}-{network['new_connections_target_max']}/wk"),
-        {"title": "Primary LATAM/USD Share",
-         "value": None if strategic["actual_primary_share"] is None else f"{strategic['actual_primary_share']*100:.0f}%",
-         "target": f"{strategic['target_primary_share']*100:.0f}%", "status": strategic["strategy_mix_status"]},
-        {"title": "Europe Exploratory Share",
-         "value": None if strategic["actual_europe_share"] is None else f"{strategic['actual_europe_share']*100:.0f}%",
-         "target": f"{strategic['target_europe_share']*100:.0f}%", "status": strategic["strategy_mix_status"]},
+        {
+            "title": "Gross New vs Net Growth",
+            "value": f"gross {network['gross_new_connections']} / net {network['net_connection_growth']:+d}",
+            "sub": (f"Removed/lost/changed estimate: {network['connection_churn_or_removed_estimate']}. "
+                    + network["gross_vs_net_note"]),
+        },
+        {"title": "Strategy Mix Status",
+         "value": strategic["strategy_mix_status"],
+         "sub": (f"Primary LATAM/USD {strategic['actual_primary_share']*100:.0f}% / "
+                 f"Europe {strategic['actual_europe_share']*100:.0f}% (target "
+                 f"{strategic['target_primary_share']*100:.0f}/{strategic['target_europe_share']*100:.0f})"
+                 if strategic["actual_primary_share"] is not None else None),
+         "status": strategic["strategy_mix_status"]},
+        {"title": "Classification Risk",
+         "value": strategic["classification_risk_status"].replace("CLASSIFICATION_", ""),
+         "sub": "unclassified/GLOBAL share or company-mapping backlog — independent of strategy mix",
+         "status": strategic["classification_risk_status"]},
         {"title": "Reactivation Movement", "value": leads["new_conversations_started"],
          "sub": "new conversations this period", "status": leads.get("reactivation_pace_status")},
         {"title": "Untapped Activated", "value": untapped["untapped_activated_this_week"],
@@ -831,6 +885,13 @@ def main():
     quality = build_data_quality(current_json, kpi_lookup)
     manual = load_manual_log(period.get("current_snapshot_date"))
 
+    # Classification Risk also fires when the company-mapping backlog grew
+    # (quality dict isn't available inside build_strategic_growth) — folded
+    # in here rather than changing strategy_mix_status, which must stay
+    # scoped to the 90/10 effort mix only.
+    if (quality.get("needs_company_mapping_delta") or 0) > 0:
+        strategic["classification_risk_status"] = "CLASSIFICATION_BACKLOG_INCREASED"
+
     diagnosis = build_diagnosis(network, strategic, leads, untapped, quality, period)
     overall_status = overall_diagnosis_status(diagnosis, network, baseline_available)
     recommendation = build_next_week_recommendation(week_index, targets, leads, untapped)
@@ -852,8 +913,11 @@ def main():
                 f"weekly_pace={network['new_connections_weekly_pace']} "
                 f"(target {network['new_connections_target_min']}-{network['new_connections_target_max']}/wk) "
                 f"-> {network['new_connections_status']}")
+    logger.info(f"  Gross new={network['gross_new_connections']}  Net growth={network['net_connection_growth']}  "
+                f"Removed/lost/changed estimate={network['connection_churn_or_removed_estimate']}")
     logger.info(f"  Primary LATAM/USD share: {strategic['actual_primary_share']} "
-                f"(target {strategic['target_primary_share']}) -> {strategic['strategy_mix_status']}")
+                f"(target {strategic['target_primary_share']}) -> strategy_mix={strategic['strategy_mix_status']}  "
+                f"classification_risk={strategic['classification_risk_status']}")
     logger.info(f"  Overall plan status: {overall_status}")
     logger.info(f"  Next week: {recommendation}")
     logger.info("=" * 70)

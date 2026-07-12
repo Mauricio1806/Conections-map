@@ -2155,15 +2155,25 @@ function renderWeekly() {
     'Current Snapshot: ' + (we.current_snapshot_label || '—') +
     '   |   Previous Snapshot: ' + (we.previous_snapshot_label || '—');
 
-  // A. Network Growth
+  // A. Network Growth — gross new connections vs net growth are DIFFERENT
+  // numbers on purpose: gross can exceed net when some prior connections
+  // disappear, are removed, or exports change between snapshots.
   const ng = we.network_growth || {};
+  const grossNew = parseFloat(ng.new_connections) || 0;
+  const netGrowth = parseFloat(ng.net_growth) || 0;
+  const churnEstimate = Math.max(0, grossNew - netGrowth);
   const ngEl = document.getElementById('weekly-network-growth');
   if (ngEl) ngEl.innerHTML = [
     makeCard('Previous Connections', ng.previous_connections || 0),
     makeCard('Current Connections',  ng.current_connections  || 0),
-    makeCard('Net Growth', (parseFloat(ng.net_growth) >= 0 ? '+' : '') + (ng.net_growth || 0), '', parseFloat(ng.net_growth) >= 0 ? 'good' : 'bad'),
-    makeCard('New Connections', ng.new_connections || 0, 'added this week', 'good'),
+    makeCard('Net Growth', (netGrowth >= 0 ? '+' : '') + netGrowth, 'total connections, previous vs current', netGrowth >= 0 ? 'good' : 'bad'),
+    makeCard('Gross New Connections', grossNew, 'newly identity-matched this period', 'good'),
+    makeCard('Removed/Lost/Changed Estimate', churnEstimate, 'gross new minus net growth'),
   ].join('');
+  const ngNoteEl = document.getElementById('weekly-network-growth-note');
+  if (ngNoteEl) ngNoteEl.textContent = grossNew > netGrowth
+    ? 'Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change.'
+    : '';
 
   // B. Strategic Growth
   const sg = we.strategic_growth || {};
@@ -2259,9 +2269,10 @@ function renderWeekly() {
 
 // ── PAGE: Action Plan — Plan Progress tab ─────────────────────────────────────
 const PROGRESS_STATUS_COLOR = {
-  ON_TRACK: '#22c55e', AHEAD: '#22c55e', ON_STRATEGY: '#22c55e',
+  ON_TRACK: '#22c55e', AHEAD: '#22c55e', ON_STRATEGY: '#22c55e', NORMAL: '#22c55e',
   BELOW_TARGET: '#f59e0b', REBALANCE_NEEDED: '#f59e0b',
   TOO_MUCH_EU: '#f59e0b', TOO_LITTLE_EU: '#f59e0b', TOO_MUCH_UNCLASSIFIED: '#f59e0b',
+  CLASSIFICATION_BACKLOG_INCREASED: '#f59e0b',
   BASELINE_ONLY: '#8b949e', NO_BASELINE: '#8b949e',
 };
 
@@ -2301,11 +2312,15 @@ function _progressCard(card) {
   if (card.weekly_pace_actual !== undefined || card.period_actual !== undefined) {
     return _paceCard(card);
   }
-  const sub = card.status
-    ? _statusLabel(card.status)
-    : (card.target ? 'target: ' + card.target : (card.sub || ''));
+  // Custom sub text and the colored status badge are independent pieces of
+  // information — show both when both are present instead of one silently
+  // replacing the other.
+  const subParts = [];
+  if (card.sub) subParts.push(card.sub);
+  if (card.status) subParts.push(_statusLabel(card.status));
+  if (!subParts.length && card.target) subParts.push('target: ' + card.target);
   const value = (card.value === null || card.value === undefined) ? '—' : card.value;
-  return makeCard(card.title, value, sub);
+  return makeCard(card.title, value, subParts.join('<br>'));
 }
 
 function renderPlanProgress() {

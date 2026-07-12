@@ -18,6 +18,10 @@ NETWORK_GROWTH,new_connections_period_actual,205
 NETWORK_GROWTH,new_connections_weekly_pace,205.0
 NETWORK_GROWTH,new_connections_period_target_min,50.0
 NETWORK_GROWTH,new_connections_period_target_max,70.0
+NETWORK_GROWTH,gross_new_connections,205
+NETWORK_GROWTH,net_connection_growth,187
+NETWORK_GROWTH,connection_churn_or_removed_estimate,18
+NETWORK_GROWTH,gross_vs_net_note,"Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
 STRATEGIC_GROWTH,new_latam_usd_connections,20
 STRATEGIC_GROWTH,new_us_nearshore_connections,2
 STRATEGIC_GROWTH,new_spain_eu_connections,2
@@ -34,11 +38,13 @@ STRATEGIC_GROWTH,europe_exploratory_period_target_min,2.0
 STRATEGIC_GROWTH,europe_exploratory_period_target_max,4.0
 STRATEGIC_GROWTH,europe_exploratory_pace_status,ON_TRACK
 STRATEGIC_GROWTH,unclassified_new_connections,155
+STRATEGIC_GROWTH,unclassified_share,0.7561
 STRATEGIC_GROWTH,actual_primary_share,0.92
 STRATEGIC_GROWTH,actual_europe_share,0.08
 STRATEGIC_GROWTH,target_primary_share,0.9
 STRATEGIC_GROWTH,target_europe_share,0.1
-STRATEGIC_GROWTH,strategy_mix_status,TOO_MUCH_UNCLASSIFIED
+STRATEGIC_GROWTH,strategy_mix_status,ON_STRATEGY
+STRATEGIC_GROWTH,classification_risk_status,CLASSIFICATION_BACKLOG_INCREASED
 PERSONA_GROWTH,new_recruiters,29
 PERSONA_GROWTH,new_recruiters_weekly_pace,29.0
 PERSONA_GROWTH,new_talent_acquisition,76
