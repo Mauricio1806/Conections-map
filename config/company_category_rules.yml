@@ -16,7 +16,10 @@ global_staffing:
     - talent marketplace
     - remote talent
     - nearshore
+    - ubiminds
   known_companies:
+    - ubiminds
+    - "ubiminds: you, international"
     - agileengine
     - andela
     - toptal

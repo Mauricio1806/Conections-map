@@ -50,6 +50,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.message_intelligence import MESSAGES_CSV, RECRUITER_PERSONAS, run_message_intelligence
+from src.company_normalizer import normalize as normalize_company
 
 logger = logging.getLogger(__name__)
 
@@ -193,6 +194,44 @@ def _build_this_week_queue(df: pd.DataFrame) -> pd.DataFrame:
         subset=["conversation_id"] if "conversation_id" in result.columns else None
     )
     return result.sort_values("reactivation_priority_score", ascending=False).reset_index(drop=True)
+
+
+def build_company_warm_signal_map(df: pd.DataFrame) -> dict:
+    """
+    Company-level aggregate (Untapped Outreach Scoring V9): has this company
+    already produced a warm lead / interview / positive reply, or conversely
+    only rejected/closed outcomes? Consumed by untapped_network_intelligence.py
+    as a cross-signal for never-contacted people at the SAME company — e.g. if
+    Company X already replied warmly to one conversation, a different,
+    never-contacted recruiter at Company X is a better bet.
+
+    Internal-only aggregate (company name -> booleans) — never published to
+    the public dashboard JSON, no raw message content.
+    """
+    if df is None or df.empty or "company_clean" not in df.columns:
+        return {}
+
+    warm_categories = {
+        "Active Interview Pipeline", "Warm reactivation",
+        "Needs my response — Confirmed", "Needs my response — Likely",
+    }
+    warm_mask = df["lead_category"].isin(warm_categories)
+    if "has_positive_signal" in df.columns:
+        warm_mask = warm_mask | df["has_positive_signal"].astype(bool)
+    if "has_interview_signal" in df.columns:
+        warm_mask = warm_mask | df["has_interview_signal"].astype(bool)
+    rejection_mask = df["conversation_status"] == "Rejected / closed process"
+
+    signal_map: dict[str, dict] = {}
+    for company, idx in df.groupby("company_clean").groups.items():
+        norm = normalize_company(str(company or ""))
+        if not norm:
+            continue
+        signal_map[norm] = {
+            "has_warm_signal": bool(warm_mask.loc[idx].any()),
+            "has_rejection_signal": bool(rejection_mask.loc[idx].any() and not warm_mask.loc[idx].any()),
+        }
+    return signal_map
 
 
 def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> dict:
@@ -408,4 +447,7 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
         # Legacy keys for backward compat with JS
         "hot_leads":   hot_count,
         "warm_leads":  warm_count,
+        # Internal-only (Untapped Outreach Scoring V9) — never published to the
+        # public dashboard JSON, see export_public_dashboard_data.py.
+        "company_signal_map": build_company_warm_signal_map(df),
     }

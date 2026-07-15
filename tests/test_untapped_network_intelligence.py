@@ -27,7 +27,9 @@ from src.untapped_network_intelligence import (
     normalize_url,
     build_weekly_untapped_queue,
     _untapped_category,
+    _recommended_first_action,
 )
+from src.untapped_outreach_score import score_untapped_contact
 
 
 def _mk_msg_df(rows):
@@ -219,6 +221,38 @@ def test_weekly_queue_allocation_favors_primary():
     eu_count = (queue["strategic_focus"] == "SPAIN_EU_EXPLORATORY").sum()
     assert primary_count >= 14
     assert eu_count <= 3
+
+
+# ── Untapped Outreach Scoring V9 — LATAM/US recruiter regression ─────────────
+# Case: a never-contacted recruiter at a LATAM/international staffing company
+# (fixture modeled on Ubiminds: You, International) whose title stacks
+# multiple strong recruiting signals (LATAM + U.S. corporate + bilingual +
+# tech/IT recruiter). This used to under-rank to a mid score (~66) because
+# the company wasn't recognized as a staffing company and the scoring model
+# didn't credit stacked title keywords — V9 fixes both. All names/companies
+# below are synthetic fixture data, not real contacts.
+def test_never_contacted_latam_us_recruiter_at_staffing_company_scores_high_value():
+    result = score_untapped_contact(
+        full_name="Fake LATAM Recruiter",
+        company_clean="Ubiminds: You, International",
+        position_clean=(
+            "Tech Recruiter LATAM | Bilingual Recruiter | Corporate U.S. Recruiter | "
+            "IT Recruiter | Fluent English"
+        ),
+        persona="Recruiter",
+        opportunity_bucket="",
+        opportunity_confidence=0.0,
+        seniority="Senior",
+        days_connected=45,
+    )
+    assert result["untapped_outreach_score"] >= 85
+    assert result["opportunity_bucket"] in ("LATAM_USD_CONFIRMED", "GLOBAL_STAFFING")
+    assert "latam" in result["untapped_reason"].lower()
+    assert "u.s." in result["untapped_reason"].lower() or "us" in result["untapped_reason"].lower()
+
+    recommended_action = _recommended_first_action("Recruiter", _strategic_focus(result["opportunity_bucket"]),
+                                                     result["untapped_outreach_score"])
+    assert recommended_action == "FIRST_MESSAGE_RECRUITER"
 
 
 if __name__ == "__main__":

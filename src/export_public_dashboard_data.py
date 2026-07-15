@@ -50,6 +50,11 @@ SAFE_CONTACT_COLS = [
     "company_evidence_count", "company_dominant_bucket",
     "company_dominant_bucket_share", "cross_contact_propagation_used",
     "message_signal_used", "company_canonical",
+    # Untapped Outreach Scoring V9 — merged in from untapped_network_intelligence.py
+    # so Top Contacts can sort/filter by the same score used on the Untapped
+    # Network page (see build_public_contacts()). Sanitized fields only.
+    "untapped_outreach_score", "untapped_reason", "untapped_category",
+    "contact_history_status", "recommended_first_action", "first_message_angle",
 ]
 
 EXCLUDED_PATTERNS = {
@@ -137,8 +142,37 @@ def build_public_contacts(
     df: pd.DataFrame,
     n: int = 200,
     outreach_scores: dict = None,
+    untapped_scores: dict = None,
 ) -> list:
     df = _enrich_action_fields(df)
+
+    # Merge Untapped Outreach Scoring V9 fields (by normalized URL) — lets Top
+    # Contacts sort/filter by untapped_outreach_score alongside the existing
+    # scores, and makes sure a high-scoring never-contacted recruiter isn't
+    # dropped from the top-N pool just because their base priority_score
+    # doesn't reflect it.
+    untapped_cols = [
+        "untapped_outreach_score", "untapped_reason", "untapped_category",
+        "contact_history_status", "recommended_first_action", "first_message_angle",
+    ]
+    if untapped_scores:
+        def _norm_u(url):
+            return str(url or "").strip().rstrip("/").lower()
+
+        for col in untapped_cols:
+            df[col] = None
+        for idx, row in df.iterrows():
+            norm = _norm_u(row.get("url", ""))
+            rec = untapped_scores.get(norm)
+            if rec:
+                for col in untapped_cols:
+                    if col in rec:
+                        df.at[idx, col] = rec[col]
+        # NaN (from unmatched rows / coercion) is not valid JSON — 0 is the
+        # correct semantic default for "no untapped score applies here"
+        # (a contacted person, or one outside the top_untapped_contacts pool).
+        df["untapped_outreach_score"] = pd.to_numeric(df["untapped_outreach_score"], errors="coerce").fillna(0)
+        df["contact_history_status"] = df["contact_history_status"].where(df["contact_history_status"].notna(), "")
 
     # Merge outreach scores (by normalized URL)
     if outreach_scores:
@@ -183,7 +217,16 @@ def build_public_contacts(
         rel_v = pd.to_numeric(df.get("relationship_value_score"), errors="coerce").fillna(0)
         act_v = pd.to_numeric(df.get("immediate_action_score"), errors="coerce").fillna(0)
         base_v = pd.to_numeric(df["priority_score"], errors="coerce").fillna(0)
-        df["_selection_score"] = pd.concat([base_v, rel_v, act_v], axis=1).max(axis=1)
+        untap_v = pd.to_numeric(df.get("untapped_outreach_score"), errors="coerce").fillna(0)
+        df["_selection_score"] = pd.concat([base_v, rel_v, act_v, untap_v], axis=1).max(axis=1)
+        sort_col = "_selection_score"
+    elif untapped_scores:
+        # No message-history scores this run, but untapped scores are
+        # available — a high-scoring never-contacted recruiter should still
+        # make the top-N pool even if their base priority_score is modest.
+        base_v = pd.to_numeric(df["priority_score"], errors="coerce").fillna(0)
+        untap_v = pd.to_numeric(df.get("untapped_outreach_score"), errors="coerce").fillna(0)
+        df["_selection_score"] = pd.concat([base_v, untap_v], axis=1).max(axis=1)
         sort_col = "_selection_score"
     else:
         sort_col = "priority_score"
@@ -433,7 +476,7 @@ SAFE_UNTAPPED_SUMMARY_KEYS = {
     "hiring_managers_untapped", "data_leaders_untapped",
     "latam_usd_untapped", "us_nearshore_untapped", "spain_eu_untapped",
     "connected_90d_plus_never_contacted", "connected_180d_plus_never_contacted",
-    "this_week_queue_count",
+    "this_week_queue_count", "manual_enriched_contacts",
 }
 SAFE_UNTAPPED_CONTACT_COLS = {
     "full_name", "company_clean", "position_clean", "persona", "seniority",
@@ -441,6 +484,10 @@ SAFE_UNTAPPED_CONTACT_COLS = {
     "contact_history_status", "untapped_category", "untapped_outreach_score",
     "recommended_first_action", "first_message_angle", "profile_url",
     "conversation_match_confidence", "strategic_focus", "operational_category",
+    # Untapped Outreach Scoring V9
+    "untapped_reason", "untapped_opportunity_market", "untapped_market_confidence",
+    "untapped_market_reason", "exact_location_available", "observed_location_manual",
+    "is_manual_enriched",
 }
 
 
@@ -493,6 +540,15 @@ def export_public_dashboard_data(
         else:
             lead_section = {"messages_csv_available": False}
 
+    # Untapped Outreach Scoring V9 — index by normalized profile URL so Top
+    # Contacts can merge in untapped_outreach_score/untapped_reason/etc.
+    untapped_scores = {}
+    if untapped_network_data and untapped_network_data.get("available"):
+        for c in untapped_network_data.get("top_untapped_contacts", []):
+            u = str(c.get("profile_url", "") or "").strip().rstrip("/").lower()
+            if u:
+                untapped_scores[u] = c
+
     payload = {
         "meta": {
             "report_date":      str(date.today()),
@@ -503,6 +559,12 @@ def export_public_dashboard_data(
                 "LinkedIn exports do not include location data. "
                 "UNKNOWN market does not mean the connection has no strategic value."
             ),
+            "untapped_scoring_note": (
+                "LinkedIn export does not include location, but opportunity market can "
+                "still be inferred from company, title, persona, language, manual "
+                "enrichment, and message history. These are opportunity signals, not "
+                "exact geography."
+            ),
         },
         "kpis":               kpis,
         "market_distribution":build_public_market_distribution(df),
@@ -512,7 +574,7 @@ def export_public_dashboard_data(
         "action_plan_30":     plan_30.to_dict(orient="records"),
         "action_plan_60":     plan_60.to_dict(orient="records"),
         "action_plan_90":     plan_90.to_dict(orient="records"),
-        "top_contacts":                build_public_contacts(df, n=200, outreach_scores=outreach_scores),
+        "top_contacts":                build_public_contacts(df, n=200, outreach_scores=outreach_scores, untapped_scores=untapped_scores),
         # Full-network outreach status aggregate (sanitized counts only) — persisted
         # so next week's weekly_kpi_delta.py can compute a real Interview Pipeline /
         # ghosted / replied delta instead of only ever seeing the top-200 slice.

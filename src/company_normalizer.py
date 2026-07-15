@@ -128,6 +128,17 @@ COMPANY_ALIASES: dict[str, str] = {
     "lm soluções de mobilidade": "lm mobilidade",
     "globant s.a.": "globant",
     "ci&t software": "ci&t",
+    # LATAM / international recruiting company connecting LATAM talent with
+    # U.S. companies — see config/company_market_overrides.yml and
+    # config/company_category_rules.yml for the matching GLOBAL_STAFFING
+    # market/category classification (Untapped Outreach Scoring V9).
+    "ubiminds": "ubiminds",
+    "ubiminds you international": "ubiminds",
+    "you international": "ubiminds",
+    "you, international": "ubiminds",
+    "ubiminds: you, international": "ubiminds",
+    "ubiminds: you international": "ubiminds",
+    "ubiminds - you, international": "ubiminds",
 }
 
 

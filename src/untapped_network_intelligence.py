@@ -40,6 +40,9 @@ from pathlib import Path
 import pandas as pd
 
 from src.company_normalizer import normalize as normalize_company, canonical_display
+from src.untapped_outreach_score import (
+    score_untapped_contact, load_manual_enrichment, match_manual_enrichment,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -524,7 +527,9 @@ PRIVATE_COLS = [
     "opportunity_bucket", "opportunity_confidence", "url",
     "connected_on", "days_connected", "connection_age_bucket",
     "contact_history_status", "conversation_match_confidence", "conversation_match_method",
-    "untapped_category", "untapped_outreach_score",
+    "untapped_category", "untapped_outreach_score", "untapped_reason",
+    "untapped_opportunity_market", "untapped_market_confidence", "untapped_market_reason",
+    "exact_location_available", "observed_location_manual", "is_manual_enriched",
     "is_high_value_untapped", "is_recruiter_untapped", "is_ta_untapped",
     "is_hiring_manager_untapped", "is_data_leader_untapped",
     "is_latam_primary", "is_europe_exploratory", "strategic_focus",
@@ -547,12 +552,22 @@ def _save_private(df: pd.DataFrame, name: str) -> Path:
     return path
 
 
-def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_available: bool) -> dict:
+def run_untapped_network_intelligence(
+    classified_df: pd.DataFrame,
+    messages_csv_available: bool,
+    company_signal_map: dict | None = None,
+) -> dict:
     """
     Main entry point. Returns a summary dict for the pipeline log + public
     JSON export. All full per-contact CSVs are written to outputs/private/
     (gitignored) — only a small sanitized top-N slice is safe for the public
     dashboard (handled separately in export_public_dashboard_data.py).
+
+    company_signal_map (Untapped Outreach Scoring V9): optional per-company
+    aggregate from lead_reactivation_engine.py — {normalized_company: {
+    "has_warm_signal": bool, "has_rejection_signal": bool}} — used as a
+    cross-signal so a never-contacted recruiter at a company that already
+    produced a warm lead/interview scores higher.
     """
     if classified_df is None or classified_df.empty:
         return {"available": False, "reason": "no classified connections dataframe"}
@@ -585,6 +600,11 @@ def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_
     name_series = df["full_name"].fillna("").apply(normalize_name)
     connections_name_counts = name_series.value_counts().to_dict()
 
+    # Untapped Outreach Scoring V9 — optional private manual enrichment file
+    # and the per-company warm/rejection cross-signal from Lead Reactivation.
+    manual_index = load_manual_enrichment()
+    company_signal_map = company_signal_map or {}
+
     today = date.today()
 
     statuses, confidences, methods = [], [], []
@@ -593,6 +613,9 @@ def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_
     flags_recruiter, flags_ta, flags_hm, flags_dl, flags_hv = [], [], [], [], []
     flags_latam, flags_eu, foci = [], [], []
     actions, angles, op_cats = [], [], []
+    reasons, opp_buckets_out, opp_markets = [], [], []
+    market_confs, market_reasons = [], []
+    exact_locs, observed_locs, manual_enriched = [], [], []
 
     for _, row in df.iterrows():
         status, conf, method = match_identity(
@@ -610,20 +633,61 @@ def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_
 
         persona = str(row.get("persona", "") or "")
         opp_bucket = str(row.get("opportunity_bucket", "") or "")
-        focus = _strategic_focus(opp_bucket)
-        foci.append(focus)
 
         if status in ("NEVER_CONTACTED_CONFIRMED", "LIKELY_NEVER_CONTACTED"):
-            score = compute_untapped_outreach_score(
-                persona, opp_bucket, row.get("opportunity_confidence", 0),
-                row.get("seniority", ""), row.get("position_clean", ""),
-                days, conf if conf else 1.0,
+            company_norm = normalize_company(str(row.get("company_clean", "") or ""))
+            manual_rec = match_manual_enrichment(
+                row.get("full_name", ""), row.get("company_clean", ""), row.get("url", ""), manual_index,
             )
+            company_sig = company_signal_map.get(company_norm, {})
+            v9 = score_untapped_contact(
+                full_name=row.get("full_name", ""),
+                company_clean=row.get("company_clean", ""),
+                position_clean=row.get("position_clean", ""),
+                persona=persona,
+                opportunity_bucket=opp_bucket,
+                opportunity_confidence=row.get("opportunity_confidence", 0),
+                seniority=row.get("seniority", ""),
+                days_connected=days,
+                manual_record=manual_rec,
+                company_has_warm_signal=bool(company_sig.get("has_warm_signal")),
+                company_has_rejection_signal=bool(company_sig.get("has_rejection_signal")),
+            )
+            score = v9["untapped_outreach_score"]
+            reason = v9["untapped_reason"]
+            out_bucket = v9["opportunity_bucket"]
+            opp_market = v9["opportunity_market"]
+            market_conf = v9["market_confidence"]
+            market_reason = v9["market_reason"]
+            exact_loc = v9["exact_location_available"]
+            observed_loc = v9["observed_location_manual"]
+            angle_v9 = v9["first_message_angle"]
+            is_enriched = bool(manual_rec)
         else:
             score = 0
-        scores.append(score)
+            reason = ""
+            out_bucket = opp_bucket
+            opp_market = ""
+            market_conf = 0.0
+            market_reason = ""
+            exact_loc = False
+            observed_loc = ""
+            angle_v9 = None
+            is_enriched = False
 
-        cat = _untapped_category(persona, opp_bucket, age_bucket, score, status) if status != "HAS_CONVERSATION" else ""
+        focus = _strategic_focus(out_bucket)
+        foci.append(focus)
+        scores.append(score)
+        reasons.append(reason)
+        opp_buckets_out.append(out_bucket)
+        opp_markets.append(opp_market)
+        market_confs.append(market_conf)
+        market_reasons.append(market_reason)
+        exact_locs.append(exact_loc)
+        observed_locs.append(observed_loc)
+        manual_enriched.append(is_enriched)
+
+        cat = _untapped_category(persona, out_bucket, age_bucket, score, status) if status != "HAS_CONVERSATION" else ""
         untapped_categories.append(cat)
 
         pf = _persona_flags(persona)
@@ -636,7 +700,7 @@ def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_
         flags_eu.append(focus == "SPAIN_EU_EXPLORATORY" and status == "NEVER_CONTACTED_CONFIRMED")
 
         actions.append(_recommended_first_action(persona, focus, score) if status == "NEVER_CONTACTED_CONFIRMED" else "REVIEW_IDENTITY" if status == "AMBIGUOUS_REVIEW" else "")
-        angles.append(_first_message_angle(persona, focus) if status == "NEVER_CONTACTED_CONFIRMED" else "")
+        angles.append((angle_v9 or _first_message_angle(persona, focus)) if status == "NEVER_CONTACTED_CONFIRMED" else "")
         op_cats.append(_operational_category(status, score, focus, conf))
 
     df["contact_history_status"]          = statuses
@@ -647,6 +711,14 @@ def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_
     df["connection_age_bucket"]           = age_bucket_list
     df["strategic_focus"]                 = foci
     df["untapped_outreach_score"]         = scores
+    df["untapped_reason"]                 = reasons
+    df["opportunity_bucket"]              = opp_buckets_out
+    df["untapped_opportunity_market"]     = opp_markets
+    df["untapped_market_confidence"]      = market_confs
+    df["untapped_market_reason"]          = market_reasons
+    df["exact_location_available"]        = exact_locs
+    df["observed_location_manual"]        = observed_locs
+    df["is_manual_enriched"]              = manual_enriched
     df["untapped_category"]               = untapped_categories
     df["is_recruiter_untapped"]           = flags_recruiter
     df["is_ta_untapped"]                  = flags_ta
@@ -717,6 +789,9 @@ def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_
         "connected_180d_plus_never_contacted": int(untapped_df["connection_age_bucket"].isin(
             ["CONNECTED_180_364D", "CONNECTED_365D_PLUS"]).sum()),
         "this_week_queue_count": len(weekly_queue),
+        # Untapped Outreach Scoring V9 — contacts matched against the private,
+        # optional data/manual/profile_enrichment.csv file (Part 6/7).
+        "manual_enriched_contacts": int(untapped_df["is_manual_enriched"].sum()),
     }
     pd.DataFrame([summary_row]).to_csv(OUTPUTS_DIR / "untapped_network_summary.csv", index=False, encoding="utf-8-sig")
     match_audit_df = pd.DataFrame(sorted(match_method_counts.items()), columns=["match_method", "count"])
@@ -741,6 +816,9 @@ def run_untapped_network_intelligence(classified_df: pd.DataFrame, messages_csv_
         "full_name", "company_clean", "position_clean", "persona", "seniority",
         "opportunity_bucket", "connected_on", "days_connected", "connection_age_bucket",
         "contact_history_status", "untapped_category", "untapped_outreach_score",
+        "untapped_reason", "untapped_opportunity_market", "untapped_market_confidence",
+        "untapped_market_reason", "exact_location_available", "observed_location_manual",
+        "is_manual_enriched",
         "recommended_first_action", "first_message_angle", "url",
         "conversation_match_confidence", "strategic_focus", "operational_category",
     ]

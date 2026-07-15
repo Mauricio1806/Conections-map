@@ -1,28 +1,28 @@
 ﻿kpi,value
-report_date,2026-07-12
+report_date,2026-07-15
 total_connections,11112
-high_priority,213
-medium_priority,3769
-low_priority,7130
+high_priority,210
+medium_priority,3763
+low_priority,7139
 high_priority_pct,1.9
 medium_priority_pct,33.9
 brazil_count,861
-latam_usd_count,288
+latam_usd_count,289
 us_nearshore_count,216
 spain_eu_count,47
 europe_count,181
 global_staffing_count,49
 global_tech_count,6
 global_consulting_count,358
-unknown_count,9106
+unknown_count,9105
 unknown_pct,81.9
 recruiters_total,1231
 talent_hr_total,2092
 hiring_managers_total,80
 data_leaders_total,889
 data_peers_total,993
-connected_last_30_days,714
-connected_last_90_days,2269
+connected_last_30_days,676
+connected_last_90_days,2188
 strategic_network_score,97.0
 strategic_network_level,Strong
 strategic_network_desc,"Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders."
@@ -31,7 +31,7 @@ sns_talent_acquisition,992
 sns_hiring_managers,80
 sns_data_leaders,889
 sns_data_peers,993
-sns_high_priority,213
+sns_high_priority,210
 usd_readiness_score,82.3
 usd_readiness_level,Ready
 usd_readiness_desc,Strong USD network. Active outreach should yield job conversations quickly.
@@ -57,8 +57,8 @@ spain_spain_eu_hiring_mgrs,3
 spain_spain_eu_data_leaders,29
 spain_global_partial_credit,20.1
 market_confidence_score,18.1
-market_known_count,2006
-market_high_conf_count,2006
+market_known_count,2007
+market_high_conf_count,2007
 market_known_pct,18.1
 market_high_conf_pct,18.1
 global_opportunity_score,70.0
@@ -67,8 +67,8 @@ global_recruiters,122
 global_hiring_mgrs,0
 global_data_leaders,34
 actionable_contacts_score,100.0
-actionable_contacts,585
-very_high_priority,213
+actionable_contacts,583
+very_high_priority,210
 unknown_resolution_score,7.5
 unknown_resolution_potential,7.5
 top25_company_coverage,687

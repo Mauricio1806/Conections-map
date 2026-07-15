@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1783899013">
+  <link rel="stylesheet" href="./assets/style.css?v=1784156133">
 </head>
 <body>
 
@@ -438,6 +438,7 @@ python src/validate_static_dashboard_runtime.py</pre>
           <button id="ct-sort-outreach" class="btn-primary active" onclick="setContactSort('outreach')" style="font-size:0.8rem;padding:4px 10px">Immediate Action</button>
           <button id="ct-sort-relvalue" class="btn-ghost"          onclick="setContactSort('relvalue')" style="font-size:0.8rem;padding:4px 10px">Relationship Value</button>
           <button id="ct-sort-base"     class="btn-ghost"          onclick="setContactSort('base')"     style="font-size:0.8rem;padding:4px 10px">Base Network Score</button>
+          <button id="ct-sort-untapped" class="btn-ghost"          onclick="setContactSort('untapped')" style="font-size:0.8rem;padding:4px 10px">Untapped Outreach Score</button>
         </div>
         <div class="filter-group"><label>Min Base Score</label>
           <input type="number" id="ct-min-score" value="0" min="0" max="100" style="width:60px">
@@ -458,6 +459,30 @@ python src/validate_static_dashboard_runtime.py</pre>
         </div>
         <div class="filter-group"><label>Outreach Status</label>
           <select id="ct-outreach-filter"><option value="">All</option></select>
+        </div>
+        <div class="filter-group"><label>History Status</label>
+          <select id="ct-history-filter">
+            <option value="">Any</option>
+            <option value="never_contacted">Never Contacted</option>
+            <option value="needs_reply">Needs Reply</option>
+            <option value="warm_lead">Warm Lead</option>
+            <option value="dormant">Dormant</option>
+            <option value="rejected_closed">Rejected / Closed</option>
+            <option value="no_response">No Response</option>
+          </select>
+        </div>
+        <div class="filter-group"><label>Untapped Category</label>
+          <select id="ct-untapped-category-filter">
+            <option value="">All</option>
+            <option value="HIGH_VALUE_UNTAPPED">High Value Untapped</option>
+            <option value="RECRUITER_UNTAPPED">Recruiter Untapped</option>
+            <option value="TALENT_ACQUISITION_UNTAPPED">Talent Acquisition Untapped</option>
+            <option value="HIRING_MANAGER_UNTAPPED">Hiring Manager Untapped</option>
+            <option value="DATA_LEADER_UNTAPPED">Data Leader Untapped</option>
+            <option value="LATAM_USD_UNTAPPED">LATAM/USD Untapped</option>
+            <option value="US_NEARSHORE_UNTAPPED">US/Canada Untapped</option>
+            <option value="SPAIN_EU_EXPLORATORY_UNTAPPED">Spain/EU Untapped</option>
+          </select>
         </div>
         <div class="filter-group"><label>Process State</label>
           <select id="ct-process-state-filter"><option value="">All</option></select>
@@ -498,6 +523,9 @@ python src/validate_static_dashboard_runtime.py</pre>
             <th>Last Contact</th>
             <th>Next Action Date</th>
             <th>Reason / Note</th>
+            <th title="Untapped Outreach Score">Untapped Score</th>
+            <th>Why This Score?</th>
+            <th>First Message Angle</th>
             <th>LinkedIn</th>
           </tr></thead>
           <tbody id="ct-tbody"></tbody>
@@ -790,6 +818,11 @@ python src/validate_static_dashboard_runtime.py</pre>
       </div>
 
       <div id="untapped-main-content">
+        <div class="alert alert-info" style="margin-bottom:0.8rem">
+          <span class="alert-icon">&#8505;&#65039;</span>
+          <span id="untapped-location-note"></span>
+        </div>
+
         <div class="section-label">Contact History Matching</div>
         <div class="metrics-grid" id="untapped-summary"></div>
 
@@ -874,7 +907,8 @@ python src/validate_static_dashboard_runtime.py</pre>
               <th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Seniority</th>
               <th>Opportunity Bucket</th><th>Connected On</th><th>Days</th>
               <th>History Status</th><th>Untapped Category</th><th>Score</th>
-              <th>Recommended Action</th><th>LinkedIn</th>
+              <th>Why This Score?</th>
+              <th>Recommended Action</th><th>First Message Angle</th><th>LinkedIn</th>
             </tr></thead>
             <tbody id="untapped-tbody"></tbody>
           </table>
@@ -1029,6 +1063,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1783899013"></script>
+<script src="./assets/app.js?v=1784156133"></script>
 </body>
 </html>

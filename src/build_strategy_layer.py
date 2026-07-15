@@ -704,6 +704,7 @@ def run_strategy_layer() -> None:
         from src.untapped_network_intelligence import run_untapped_network_intelligence
         untapped_data = run_untapped_network_intelligence(
             classified_df=df, messages_csv_available=lead_data.get("messages_csv_available", False),
+            company_signal_map=lead_data.get("company_signal_map", {}),
         )
     except Exception as exc:
         logger.warning(f"  Untapped Network Intelligence failed (non-fatal): {exc}")

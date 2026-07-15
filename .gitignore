@@ -66,6 +66,14 @@ data/manual/weekly_action_log.csv
 data/manual/*.csv
 weekly_action_log.csv
 
+# Manual profile enrichment (Untapped Outreach Scoring V9) — private,
+# manually-observed LinkedIn profile signals used only to boost never-
+# contacted scoring. Already covered by data/manual/*.csv above; these
+# extra patterns are defense in depth in case the file is ever moved.
+data/manual/profile_enrichment.csv
+profile_enrichment.csv
+*profile_enrichment*.csv
+
 # ─── Private message data — NEVER commit ──────────────────────────────────────
 messages.csv
 Messages.csv

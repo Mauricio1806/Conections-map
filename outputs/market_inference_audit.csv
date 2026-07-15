@@ -3255,7 +3255,7 @@ Rahul Yadav,TALENT Software Services,Senior Technical Recruiter,UNKNOWN,0.0,UNKN
 Drew Pollek,Terex Corporation,"Manager, Talent Acquisition",UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Yulia O.,Self-Employed,Recruiter,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Samreen Qayyum,Cross Border Talents,Core Recruiter,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
-Natanael Carvalho,"Ubiminds: You, International",Senior Tech Recruiter LATAM,LATAM_USD,0.5,LATAM_USD,TITLE_KEYWORD,0.75,title keyword match: 'latam' in 'Senior Tech Recruiter LATAM',OTHER
+Natanael Carvalho,"Ubiminds: You, International",Senior Tech Recruiter LATAM,LATAM_USD,0.5,LATAM_USD,MANUAL_COMPANY_OVERRIDE,0.95,"company YAML override: Ubiminds: You, International → LATAM_USD",GLOBAL_STAFFING
 Brett Freed,Concrete Careers,Recruiter,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Noah Knezovic,Robert Half,Talentmanager | Finance & Accounting,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Felipe Limeira,OndeAbrir,Founder,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
@@ -4345,7 +4345,7 @@ Claudio Yamaguchi,Zayra,Co-founder & CPO,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no mark
 Izabele Araujo,Loomy Smart Solutions,Analista de Recursos Humanos Pleno,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Hendrik Kortgödde,Michael Page,Senior Executive Associate,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Bruna Lima,Quality Digital,Head of Marketing,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
-Lorenzo Uriel,"Ubiminds: You, International",Database Developer,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
+Lorenzo Uriel,"Ubiminds: You, International",Database Developer,UNKNOWN,0.0,LATAM_USD,MANUAL_COMPANY_OVERRIDE,0.95,"company YAML override: Ubiminds: You, International → LATAM_USD",GLOBAL_STAFFING
 Rafaela Oliveira,CBM EXPRESS,Coordenador de RH,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Fábio Bussacarini Mariano,Draiven,Diretor de Projetos de Inteligência Artificial,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Marcelo Lopes Vilela,Banco BS2,Superintendente Executivo Engenharia de Software,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
@@ -8222,7 +8222,7 @@ Tugce Özyol Atkurt,Seven Senders,Talent Acquisition Lead,UNKNOWN,0.0,UNKNOWN,UN
 Kalpana Mangal,WDP Technologies Pvt. Ltd,Human Resources Executive,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Stéfano Ferreira,Banco Bmg,Senior Talent Acquisition,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Thiago Silva,Projeto Social PIB VP Jiu-Jitsu,Cientista de dados,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
-Bárbara Baliano,"Ubiminds: You, International",Tech Recruiter LaTam,LATAM_USD,0.5,LATAM_USD,TITLE_KEYWORD,0.75,title keyword match: 'latam' in 'Tech Recruiter LaTam',OTHER
+Bárbara Baliano,"Ubiminds: You, International",Tech Recruiter LaTam,LATAM_USD,0.5,LATAM_USD,MANUAL_COMPANY_OVERRIDE,0.95,"company YAML override: Ubiminds: You, International → LATAM_USD",GLOBAL_STAFFING
 Juarez Feitosa de Melo,SVPM | Mineração Serra Verde,Technical Consulting,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Ana Clara Lack,A4PM,Analista de RH,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER
 Lucas Lima,DataValue,CEO,UNKNOWN,0.0,UNKNOWN,UNKNOWN,0.0,no market signal found in company or title,OTHER

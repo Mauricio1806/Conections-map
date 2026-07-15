@@ -1368,7 +1368,7 @@ function renderPlan() {
 }
 
 // ── PAGE 5: Top Contacts ──────────────────────────────────────────────────────
-let contactSortMode = 'outreach'; // 'outreach' | 'base'
+let contactSortMode = 'outreach'; // 'outreach' | 'relvalue' | 'base' | 'untapped'
 
 // Preferred display order for Outreach Status — anything not listed here
 // (e.g. a future new status) is appended alphabetically at the end.
@@ -1432,6 +1432,8 @@ function _sortContacts() {
     filteredContacts.sort((a, b) => (parseFloat(b.relationship_value_score) || 0) - (parseFloat(a.relationship_value_score) || 0));
   } else if (contactSortMode === 'base') {
     filteredContacts.sort((a, b) => (parseFloat(b.priority_score) || 0) - (parseFloat(a.priority_score) || 0));
+  } else if (contactSortMode === 'untapped') {
+    filteredContacts.sort((a, b) => (parseFloat(b.untapped_outreach_score) || 0) - (parseFloat(a.untapped_outreach_score) || 0));
   } else {
     // Default (Part 14): Immediate Action descending, then Relationship Value
     // descending — this is what prevents a recently-rejected high-value
@@ -1450,13 +1452,31 @@ window.setContactSort = function(mode) {
   const b1 = document.getElementById('ct-sort-outreach');
   const b2 = document.getElementById('ct-sort-relvalue');
   const b3 = document.getElementById('ct-sort-base');
+  const b4 = document.getElementById('ct-sort-untapped');
   if (b1) b1.classList.toggle('active', mode === 'outreach');
   if (b2) b2.classList.toggle('active', mode === 'relvalue');
   if (b3) b3.classList.toggle('active', mode === 'base');
+  if (b4) b4.classList.toggle('active', mode === 'untapped');
   _sortContacts();
   contactsPage = 1;
   renderContactsTable();
 };
+
+// History Status (Untapped Outreach Scoring V9) — a simplified, fixed
+// taxonomy layered on top of the raw contact_history_status / outreach_status
+// fields, so users don't need to know the underlying enum values.
+function _historyStatusOf(c) {
+  const hist = c.contact_history_status || '';
+  if (hist === 'NEVER_CONTACTED_CONFIRMED' || hist === 'LIKELY_NEVER_CONTACTED') return 'never_contacted';
+  const outS = c.outreach_status || (c.has_message_history ? 'Replied' : 'No History');
+  if (outS === 'No History') return 'never_contacted';
+  if (outS === 'Needs Reply' || outS === 'Pending Reply') return 'needs_reply';
+  if (outS === 'Warm Lead') return 'warm_lead';
+  if (outS === 'Dormant') return 'dormant';
+  if (outS === 'Rejected') return 'rejected_closed';
+  if (outS === 'Ghosted' || outS === 'No Contact') return 'no_response';
+  return '';
+}
 
 window.applyContactFilters = function() {
   const minS   = parseFloat(document.getElementById('ct-min-score')?.value) || 0;
@@ -1464,6 +1484,8 @@ window.applyContactFilters = function() {
   const mkt    = document.getElementById('ct-market-filter')?.value  || '';
   const band   = document.getElementById('ct-band-filter')?.value    || '';
   const outS   = document.getElementById('ct-outreach-filter')?.value || '';
+  const histS  = document.getElementById('ct-history-filter')?.value || '';
+  const untapCat = document.getElementById('ct-untapped-category-filter')?.value || '';
   const procS  = document.getElementById('ct-process-state-filter')?.value || '';
   const replyO = document.getElementById('ct-reply-obligation-filter')?.value || '';
   const relBand = document.getElementById('ct-relvalue-band-filter')?.value || '';
@@ -1483,6 +1505,8 @@ window.applyContactFilters = function() {
       const status = c.outreach_status || (c.has_message_history ? 'Replied' : 'No History');
       if (status !== outS) return false;
     }
+    if (histS && _historyStatusOf(c) !== histS) return false;
+    if (untapCat && c.untapped_category !== untapCat) return false;
     if (procS && c.process_state !== procS) return false;
     if (replyO && c.reply_obligation !== replyO) return false;
     if (relBand === 'high'   && relV < 70)            return false;
@@ -1504,6 +1528,8 @@ window.resetContactFilters = function() {
   const mf = document.getElementById('ct-market-filter'); if (mf) mf.value = '';
   const bf = document.getElementById('ct-band-filter');   if (bf) bf.value = '';
   const of = document.getElementById('ct-outreach-filter');if (of) of.value = '';
+  const hf = document.getElementById('ct-history-filter'); if (hf) hf.value = '';
+  const ucf = document.getElementById('ct-untapped-category-filter'); if (ucf) ucf.value = '';
   const psf = document.getElementById('ct-process-state-filter'); if (psf) psf.value = '';
   const robf = document.getElementById('ct-reply-obligation-filter'); if (robf) robf.value = '';
   const rbf = document.getElementById('ct-relvalue-band-filter'); if (rbf) rbf.value = '';
@@ -1552,6 +1578,8 @@ function renderContactsTable() {
     const relClass = relV == null ? '' : relV >= 70 ? 'score-high' : relV >= 40 ? 'score-med' : 'score-low';
     const actClass  = actV == null ? '' : actV >= 60 ? 'score-high' : actV >= 30 ? 'score-med' : 'score-low';
     const processState = c.process_state ? c.process_state.replace(/_/g, ' ') : '—';
+    const untapS = c.untapped_outreach_score != null ? parseFloat(c.untapped_outreach_score) : null;
+    const untapClass = untapS == null ? '' : untapS >= 70 ? 'score-high' : untapS >= 40 ? 'score-med' : 'score-low';
     return '<tr>'
       + '<td style="white-space:nowrap">' + (c.full_name||'—') + '</td>'
       + '<td style="white-space:nowrap">' + (c.company_clean||'—') + '</td>'
@@ -1566,6 +1594,9 @@ function renderContactsTable() {
       + '<td style="font-size:0.7rem;color:var(--text-muted)">' + daysAgo + '</td>'
       + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.next_action_date||'—') + '</td>'
       + '<td style="white-space:normal;font-size:0.7rem;max-width:180px">' + ((c.outreach_reason || c.why_priority||'').substring(0,80)) + '</td>'
+      + '<td title="Untapped Outreach Score">' + (untapS != null ? '<span class="score-badge ' + untapClass + '">' + untapS.toFixed(0) + '</span>' : '—') + '</td>'
+      + '<td style="white-space:normal;font-size:0.7rem;max-width:200px">' + (c.untapped_reason || '—') + '</td>'
+      + '<td style="white-space:normal;font-size:0.7rem;max-width:200px">' + (c.first_message_angle || '—') + '</td>'
       + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
       + '</tr>';
   }).join('');
@@ -2882,7 +2913,12 @@ function renderUntapped() {
     makeKpiCard('spain_eu',     'Spain/EU Exploratory Untapped', s.spain_eu_untapped      || 0, '10% exploratory — click to filter', '', 'applyUntappedKpiFilter'),
     makeKpiCard('conn_90d',     'Connected >90 Days, Never Contacted', s.connected_90d_plus_never_contacted || 0, 'click to filter', 'warn', 'applyUntappedKpiFilter'),
     makeKpiCard('conn_180d',    'Connected >180 Days, Never Contacted', s.connected_180d_plus_never_contacted || 0, 'click to filter', 'warn', 'applyUntappedKpiFilter'),
+    makeKpiCard('manual_enriched', 'Active/Manual Enriched Contacts', s.manual_enriched_contacts || 0, 'matched to data/manual/profile_enrichment.csv — click to filter', '', 'applyUntappedKpiFilter'),
   ].join('');
+
+  const noteEl = document.getElementById('untapped-location-note');
+  if (noteEl) noteEl.textContent = (D.meta && D.meta.untapped_scoring_note) ||
+    'LinkedIn export does not include location, but opportunity market can still be inferred from company, title, persona, language, manual enrichment, and message history. These are opportunity signals, not exact geography.';
 
   // This Week Queue
   const queueTbody = document.getElementById('untapped-queue-tbody');
@@ -2958,6 +2994,7 @@ const UNTAPPED_KPI_FILTERS = {
     match: c => ['CONNECTED_90_179D', 'CONNECTED_180_364D', 'CONNECTED_365D_PLUS'].includes(c.connection_age_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
   conn_180d:        { label: 'Connected >180 Days, Never Contacted',
     match: c => ['CONNECTED_180_364D', 'CONNECTED_365D_PLUS'].includes(c.connection_age_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  manual_enriched:  { label: 'Active/Manual Enriched Contacts', match: c => c.is_manual_enriched === true || c.is_manual_enriched === 'True' },
 };
 
 function _updateActiveUntappedKpiCards() {
@@ -3054,7 +3091,7 @@ function renderUntappedTable(kpiLabel) {
   const tbody = document.getElementById('untapped-tbody');
   if (!tbody) return;
   if (!slice.length) {
-    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
   } else {
     tbody.innerHTML = slice.map(c => {
       const url = c.profile_url || '';
@@ -3072,7 +3109,9 @@ function renderUntappedTable(kpiLabel) {
         + '<td>' + untappedBadge(c.contact_history_status) + '</td>'
         + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.untapped_category||'—').replace(/_/g, ' ') + '</td>'
         + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+        + '<td style="white-space:normal;font-size:0.7rem;max-width:220px">' + (c.untapped_reason||'—') + '</td>'
         + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.recommended_first_action||'—').replace(/_/g, ' ') + '</td>'
+        + '<td style="white-space:normal;font-size:0.7rem;max-width:220px">' + (c.first_message_angle||'—') + '</td>'
         + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
         + '</tr>';
     }).join('');

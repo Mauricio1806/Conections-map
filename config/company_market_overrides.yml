@@ -35,6 +35,15 @@ overrides:
   newfire global partners:   {market: LATAM_USD,           category: GLOBAL_STAFFING}
   oxigent technologies:   {market: LATAM_USD,           category: GLOBAL_STAFFING}
 
+  # LATAM / international recruiting company connecting LATAM talent with
+  # U.S. companies. Added for Untapped Outreach Scoring V9 — do not leave
+  # Ubiminds as an unmapped/OTHER company, it is a confirmed LATAM_USD /
+  # GLOBAL_STAFFING recruiting company.
+  ubiminds:                {market: LATAM_USD,           category: GLOBAL_STAFFING}
+  "ubiminds: you, international": {market: LATAM_USD,    category: GLOBAL_STAFFING}
+  "ubiminds you international":   {market: LATAM_USD,    category: GLOBAL_STAFFING}
+  "you international":     {market: LATAM_USD,           category: GLOBAL_STAFFING}
+
   # ── US/Canada Specific ────────────────────────────────────────────────────
   hireclout:              {market: US_CANADA_NEARSHORE, category: GLOBAL_STAFFING}
   shopify:                {market: US_CANADA_NEARSHORE, category: GLOBAL_TECH}
