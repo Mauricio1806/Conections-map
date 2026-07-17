@@ -352,6 +352,252 @@ def build_v5_summary(df: pd.DataFrame) -> dict:
     }
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# Needs Mapping — person + company drill-down backlog (consolidated UX +
+# analytics patch, Parts 2-4). Built from the CURRENT residual population
+# (opportunity_market_v5 == NEEDS_COMPANY_MAPPING) as it stands AFTER
+# company_resolution_v6.py / v7.py have already run and mutated this same
+# column in place — this is the authoritative "still needs mapping" set
+# (matches company_resolution_v7's after_unresolved / opportunity_market_v5_
+# summary's v5_needs_company_mapping), not the older, larger market_v2==
+# UNKNOWN population that unknown_resolution_engine.py still analyzes
+# separately for its own (looser, pre-V6/V7) auto-suggestion pass.
+# ══════════════════════════════════════════════════════════════════════════
+
+# Lightweight, self-contained signal check (mirrors unknown_resolution_engine.
+# py's heuristic at a smaller scale) so a company can be flagged auto-
+# resolvable purely from its name — no dependency on the older UNKNOWN pass.
+_AUTO_STAFFING_KW = [
+    "staffing", "staff augmentation", "nearshore", "nearshoring", "outsourc",
+    "talent solutions", "talent marketplace", "recruitment agency", "headhunting",
+    "executive search", "recruiting", "talent acquisition",
+]
+_AUTO_TECH_KW = ["software", "technology", "tech", "digital", "platform", "cloud", "saas"]
+_AUTO_CONSULTING_KW = ["consulting", "consultoria", "consultancy", "advisory", "professional services"]
+
+
+def _auto_resolve_suggestion(company: str) -> tuple[str, str, str]:
+    """Return (suggested_market, confidence, reason) from company name alone."""
+    cl = (company or "").lower()
+    region = _match_region_keywords(company)
+    if region:
+        return region[0], "HIGH", region[2]
+    for kw in _AUTO_STAFFING_KW:
+        if kw in cl:
+            return GLOBAL_STAFFING, "HIGH", f"company name contains staffing keyword: '{kw}'"
+    for kw in _AUTO_CONSULTING_KW:
+        if kw in cl:
+            return GLOBAL_CONSULTING, "MEDIUM", f"company name contains consulting keyword: '{kw}'"
+    for kw in _AUTO_TECH_KW:
+        if kw in cl:
+            return GLOBAL_TECH, "LOW", f"company name contains tech keyword: '{kw}'"
+    return "", "", ""
+
+
+def _mapping_priority_score(persona: str, priority_score: float, peer_count: int, confidence: str) -> int:
+    score = 0.0
+    if persona in {"Hiring Manager", "Engineering Manager"}:
+        score += 30
+    elif persona in {"Recruiter", "Talent Acquisition", "Sourcer"}:
+        score += 25
+    elif persona in {"Data Engineering Manager", "Head of Data", "Director", "Executive"}:
+        score += 20
+    score += min(25, (priority_score or 0) * 0.25)
+    score += min(20, max(0, peer_count - 1) * 2)
+    score += {"HIGH": 15, "MEDIUM": 10, "LOW": 5}.get(confidence, 0)
+    return int(max(0, min(100, round(score))))
+
+
+def _mapping_reason_short(persona: str, is_high_value: bool, peer_count: int,
+                           is_auto_resolvable: bool, suggested_market: str, confidence: str) -> str:
+    if is_high_value and peer_count >= 3:
+        return (f"High-value {persona} at a company shared by {peer_count - 1} other unresolved "
+                f"contacts — mapping it would resolve all of them.")
+    if is_high_value:
+        return f"High-value {persona} persona — no company match yet."
+    if peer_count >= 3:
+        return f"Company shared by {peer_count} unresolved contacts — high mapping impact."
+    if is_auto_resolvable:
+        return f"Company name suggests {suggested_market} ({confidence.lower()} confidence) — quick override candidate."
+    return "No strong signal found — low-priority residual."
+
+
+NEEDS_MAPPING_PERSON_COLS = [
+    "full_name", "company_clean", "position_clean", "persona",
+    "suggested_opportunity_bucket", "mapping_priority_score",
+    "resolution_source", "mapping_reason_short", "url",
+]
+
+
+def build_needs_mapping_backlog(df: pd.DataFrame) -> dict:
+    """
+    Person + company drill-down for the Opportunity Market "Needs Mapping"
+    KPI cards. Returns sanitized, JSON-ready structures — no raw content,
+    just names/companies/titles/scores already present in the classified
+    dataframe (same privacy posture as Top Contacts / Untapped Network).
+    """
+    if df is None or df.empty or "opportunity_market_v5" not in df.columns:
+        return {"available": False}
+
+    residual = df[df["opportunity_market_v5"] == NEEDS_MAPPING].copy()
+    if residual.empty:
+        return {"available": True, "summary": {"backlog_size": 0}, "companies": [], "people": []}
+
+    for col, default in [("full_name", ""), ("company_clean", ""), ("position_clean", ""),
+                          ("persona", ""), ("url", ""), ("priority_score", 0.0)]:
+        if col not in residual.columns:
+            residual[col] = default
+        residual[col] = residual[col].fillna(default)
+
+    peer_counts = residual["company_clean"].value_counts().to_dict()
+    high_value_personas = HIGH_VALUE_PERSONAS
+
+    suggestions = residual["company_clean"].apply(_auto_resolve_suggestion)
+    residual["suggested_opportunity_bucket"] = [s[0] for s in suggestions]
+    residual["suggested_confidence"]         = [s[1] for s in suggestions]
+    residual["suggested_reason"]             = [s[2] for s in suggestions]
+    residual["is_auto_resolvable"]           = residual["suggested_confidence"].isin(["HIGH", "MEDIUM"])
+    residual["peer_count"]                   = residual["company_clean"].map(peer_counts)
+    residual["is_high_value"]                = residual["persona"].isin(high_value_personas)
+
+    residual["mapping_priority_score"] = residual.apply(
+        lambda r: _mapping_priority_score(
+            r["persona"], float(r.get("priority_score", 0) or 0), int(r["peer_count"]), r["suggested_confidence"],
+        ), axis=1,
+    )
+    residual["mapping_reason_short"] = residual.apply(
+        lambda r: _mapping_reason_short(
+            r["persona"], bool(r["is_high_value"]), int(r["peer_count"]),
+            bool(r["is_auto_resolvable"]), r["suggested_opportunity_bucket"] or "market", r["suggested_confidence"],
+        ), axis=1,
+    )
+    residual["resolution_source"] = residual.apply(
+        lambda r: (f"auto-resolvable: {r['suggested_reason']}" if r["is_auto_resolvable"]
+                    else "no automated signal — needs manual company_market_overrides.yml entry"),
+        axis=1,
+    )
+
+    people_sorted = residual.sort_values("mapping_priority_score", ascending=False)
+
+    # ── Company-level rollup ("Companies to Map First") ─────────────────────
+    companies = (
+        residual.groupby("company_clean")
+        .agg(
+            contacts            = ("company_clean", "size"),
+            recruiters          = ("persona", lambda x: x.isin({"Recruiter", "Sourcer"}).sum()),
+            talent_acquisition  = ("persona", lambda x: (x == "Talent Acquisition").sum()),
+            hiring_managers     = ("persona", lambda x: x.isin({"Hiring Manager", "Engineering Manager"}).sum()),
+            data_leaders        = ("persona", lambda x: x.isin(
+                {"Data Engineering Manager", "Head of Data", "Director", "Executive"}).sum()),
+            high_value_contacts = ("is_high_value", "sum"),
+            auto_resolvable_count = ("is_auto_resolvable", "sum"),
+            mapping_impact_score  = ("mapping_priority_score", "sum"),
+            suggested_opportunity_bucket = ("suggested_opportunity_bucket", "first"),
+        )
+        .reset_index()
+        .sort_values("mapping_impact_score", ascending=False)
+    )
+    for c in ["contacts", "recruiters", "talent_acquisition", "hiring_managers",
+              "data_leaders", "high_value_contacts", "auto_resolvable_count", "mapping_impact_score"]:
+        companies[c] = companies[c].astype(int)
+
+    # ── Summary counts (backing every KPI card on the page) ─────────────────
+    auto_mask = residual["is_auto_resolvable"]
+    summary = {
+        "backlog_size":              int(len(residual)),
+        "high_value_unresolved":     int(residual["is_high_value"].sum()),
+        "recruiters_unresolved":     int(residual["persona"].isin({"Recruiter", "Sourcer"}).sum()),
+        "talent_acquisition_unresolved": int((residual["persona"] == "Talent Acquisition").sum()),
+        "hiring_managers_unresolved":int(residual["persona"].isin({"Hiring Manager", "Engineering Manager"}).sum()),
+        "data_leaders_unresolved":   int(residual["persona"].isin(
+            {"Data Engineering Manager", "Head of Data", "Director", "Executive"}).sum()),
+        "auto_resolvable_contacts":  int(auto_mask.sum()),
+        "auto_resolvable_companies": int(residual.loc[auto_mask, "company_clean"].nunique()),
+        "companies_with_3plus_unresolved": int((companies["contacts"] >= 3).sum()),
+        "total_companies":           int(len(companies)),
+    }
+
+    return {
+        "available": True,
+        "summary": summary,
+        "companies": companies.to_dict(orient="records"),
+        "people": people_sorted[NEEDS_MAPPING_PERSON_COLS].rename(columns={"url": "profile_url"}).to_dict(orient="records"),
+    }
+
+
+def build_needs_mapping_action_plan(backlog: dict, v6_summary: dict | None = None,
+                                     v7_summary: dict | None = None) -> dict:
+    """Part 3 — a deterministic, data-driven 'Needs Mapping Action Plan'."""
+    if not backlog or not backlog.get("available"):
+        return {"available": False}
+
+    s = backlog.get("summary", {})
+    companies = backlog.get("companies", [])
+    v6 = v6_summary or {}
+    v7 = v7_summary or {}
+
+    top_impact_companies = companies[:10]
+    top_impact_reduction = sum(c.get("contacts", 0) for c in top_impact_companies)
+
+    auto_companies = [c for c in companies if c.get("auto_resolvable_count", 0) > 0][:15]
+    multi_contact_companies = [c for c in companies if c.get("contacts", 0) >= 3]
+
+    queue = []
+    people = backlog.get("people", [])
+    p1 = [p for p in people if p.get("persona") in
+          {"Recruiter", "Talent Acquisition", "Sourcer", "Hiring Manager", "Engineering Manager"}][:15]
+    for p in p1:
+        queue.append({"priority": 1, "segment": "High-value recruiter/hiring contact",
+                       "target": p.get("full_name"), "company": p.get("company_clean"),
+                       "action": "Map this contact's company directly — highest individual impact."})
+    for c in top_impact_companies:
+        queue.append({"priority": 2, "segment": "Top impact company",
+                       "target": c.get("company_clean"), "company": c.get("company_clean"),
+                       "action": f"Resolves {c.get('contacts', 0)} contacts at once — add to config/company_market_overrides.yml."})
+    for c in auto_companies:
+        queue.append({"priority": 3, "segment": "Auto-resolvable company",
+                       "target": c.get("company_clean"), "company": c.get("company_clean"),
+                       "action": "Suggested bucket already inferred from company name — quick override, low review effort."})
+    residual_low = s.get("backlog_size", 0) - len(auto_companies) - top_impact_reduction
+    if residual_low > 0:
+        queue.append({"priority": 4, "segment": "Low-value residual",
+                       "target": f"{max(residual_low, 0)} remaining contacts", "company": "",
+                       "action": "Defer — no company match, no evidence, no persona signal. Revisit only if it grows."})
+
+    next_actions = [
+        "Map company aliases in config/company_market_overrides.yml for the top-impact companies below.",
+        "Review top unresolved recruiters/hiring contacts first — they convert into direct outreach immediately.",
+        f"Resolve companies with 3+ unresolved contacts first ({len(multi_contact_companies)} such companies).",
+        "Defer low-value residuals with no company/persona/message signal.",
+    ]
+
+    recommendation = (
+        f"This week: focus on the top {len(top_impact_companies)} impact companies. "
+        f"Expected reduction: ~{top_impact_reduction} contacts. "
+        f"Start with recruiter-heavy unresolved companies "
+        f"({s.get('recruiters_unresolved', 0)} recruiters, {s.get('hiring_managers_unresolved', 0)} hiring managers "
+        f"still unresolved). Use a Sunday hygiene block to clear the "
+        f"{s.get('auto_resolvable_contacts', 0)}-contact auto-resolvable backlog "
+        f"({s.get('auto_resolvable_companies', 0)} companies) — those need only a name-alias override, no research."
+    )
+
+    return {
+        "available": True,
+        "executive_summary": {
+            "backlog_size":               s.get("backlog_size", 0),
+            "high_value_unresolved":      s.get("high_value_unresolved", 0),
+            "recruiters_unresolved":      s.get("recruiters_unresolved", 0),
+            "biggest_impact_companies":   len(top_impact_companies),
+            "auto_resolvable_share_pct":  round(s.get("auto_resolvable_contacts", 0) / s["backlog_size"] * 100, 1)
+                                            if s.get("backlog_size") else 0,
+            "estimated_weekly_reduction_potential": top_impact_reduction + s.get("auto_resolvable_contacts", 0),
+        },
+        "weekly_queue": queue[:40],
+        "next_actions": next_actions,
+        "recommendation": recommendation,
+    }
+
+
 def export_v5_audit(df: pd.DataFrame) -> None:
     """Save detailed V5 audit CSV for review."""
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)

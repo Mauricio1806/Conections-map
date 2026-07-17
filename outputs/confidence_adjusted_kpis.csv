@@ -1,9 +1,9 @@
 ﻿kpi,value
-report_date,2026-07-15
+report_date,2026-07-16
 total_connections,11112
-high_priority,210
-medium_priority,3763
-low_priority,7139
+high_priority,208
+medium_priority,3764
+low_priority,7140
 high_priority_pct,1.9
 medium_priority_pct,33.9
 brazil_count,861
@@ -21,8 +21,8 @@ talent_hr_total,2092
 hiring_managers_total,80
 data_leaders_total,889
 data_peers_total,993
-connected_last_30_days,676
-connected_last_90_days,2188
+connected_last_30_days,642
+connected_last_90_days,2154
 strategic_network_score,97.0
 strategic_network_level,Strong
 strategic_network_desc,"Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders."
@@ -31,7 +31,7 @@ sns_talent_acquisition,992
 sns_hiring_managers,80
 sns_data_leaders,889
 sns_data_peers,993
-sns_high_priority,210
+sns_high_priority,208
 usd_readiness_score,82.3
 usd_readiness_level,Ready
 usd_readiness_desc,Strong USD network. Active outreach should yield job conversations quickly.
@@ -67,8 +67,8 @@ global_recruiters,122
 global_hiring_mgrs,0
 global_data_leaders,34
 actionable_contacts_score,100.0
-actionable_contacts,583
-very_high_priority,210
+actionable_contacts,578
+very_high_priority,208
 unknown_resolution_score,7.5
 unknown_resolution_potential,7.5
 top25_company_coverage,687
@@ -78,7 +78,7 @@ data_quality_risk_score,90.1
 data_quality_risk_level,High Risk
 data_quality_risk_desc,Most market inferences are unresolved. Readiness scores are conservative estimates.
 market_readiness_composite,74.4
-unknown_recruiters_highvalue,200
+unknown_recruiters_highvalue,197
 unknown_hiring_mgrs_highvalue,13
-unknown_data_leaders_highvalue,121
+unknown_data_leaders_highvalue,120
 unknown_peers,757

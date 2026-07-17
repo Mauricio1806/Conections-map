@@ -875,6 +875,94 @@ def _lead_category_v8(process_state: str, reply_obligation: str, cooldown: str) 
     return "Ignore"
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# Lead Reactivation trust layer (Part 1 of the consolidated UX/analytics
+# patch) — a sanitized "explain" layer on top of the V8 engine above. Adds
+# NO new classification logic; it only derives clearer, filterable,
+# human-readable fields from process_state / reply_obligation / evidence
+# codes / confidence that already exist, so the backlog is easier to audit
+# operationally. Never reads or exposes raw message text.
+# ══════════════════════════════════════════════════════════════════════════
+
+_REPLY_OBLIGATION_CONFIDENCE_NUM = {"HIGH": 0.9, "MEDIUM": 0.6, "LOW": 0.3, "NONE": 0.05}
+
+_STALE_EXEMPT_STATES = {"INTERVIEW_PIPELINE", "CV_REQUESTED", "AWAITING_RECRUITER_UPDATE"}
+
+
+def _stale_conversation_flag(process_state: str, reply_obligation: str, days_since_last) -> bool:
+    """True when a conversation has gone quiet (>60d) and isn't in an
+    actively urgent state — the 'last sender was them but it's gone cold'
+    case that should NOT be treated as a confident open obligation."""
+    if reply_obligation == "CONFIRMED" or process_state in _STALE_EXEMPT_STATES:
+        return False
+    d = days_since_last if isinstance(days_since_last, int) else 9999
+    return d > 60
+
+
+def _terminal_state_flag(process_state: str) -> bool:
+    return process_state in TERMINAL_STATES
+
+
+def _recruiter_priority_flag(persona: str, reply_obligation: str, process_state: str) -> bool:
+    """A recruiter/TA/sourcer conversation that is still operationally live
+    (an open obligation or an active pipeline step) — worth surfacing first."""
+    if persona not in RECRUITER_PERSONAS:
+        return False
+    return reply_obligation in ("CONFIRMED", "LIKELY") or process_state in _STALE_EXEMPT_STATES
+
+
+def _reply_obligation_confidence(conversation_state_confidence: str, reply_obligation: str, stale: bool) -> float:
+    """0-1 confidence that the computed reply_obligation is correct. Tightens
+    trust (Part 1.4): a LIKELY/AMBIGUOUS obligation on a conversation that has
+    gone stale and low-value is explicitly downgraded rather than left at
+    face value, even though it isn't reclassified as CONFIRMED/NONE."""
+    conf = _REPLY_OBLIGATION_CONFIDENCE_NUM.get(conversation_state_confidence, 0.5)
+    if stale and reply_obligation in ("LIKELY", "AMBIGUOUS"):
+        conf = min(conf, 0.35)
+    return round(conf, 2)
+
+
+_REPLY_REASON_BY_STATE = {
+    "CV_REQUESTED":                   "Recruiter asked for CV and no reply was sent after that.",
+    "INTERVIEW_PIPELINE":             "Interview process signal found — follow-up recommended.",
+    "AWAITING_RECRUITER_UPDATE":      "They said they'd follow up — worth a nudge if it's overdue.",
+    "REJECTED_CLOSED":                "Terminal / closed / blocked — not urgent.",
+    "LOCATION_ELIGIBILITY_BLOCKED":   "Terminal / closed / blocked — not urgent.",
+    "GEOGRAPHIC_HIRING_RESTRICTION":  "Terminal / closed / blocked — not urgent.",
+    "WORK_AUTHORIZATION_BLOCKED":     "Terminal / closed / blocked — not urgent.",
+    "TALENT_POOL_REDIRECT":           "Terminal / closed / blocked — not urgent.",
+    "CAREER_SITE_REDIRECT":           "Terminal / closed / blocked — not urgent.",
+    "AUTO_REPLY_ONLY":                "Terminal / closed / blocked — not urgent.",
+    "GENERIC_ACKNOWLEDGEMENT":        "Generic conversation with no actionable request.",
+    "ACTIVE_OPPORTUNITY":             "Recent opportunity signal — worth a timely follow-up.",
+    "WARM_RELATIONSHIP_NO_ACTIVE_ROLE": "Warm relationship, no active role right now.",
+    "DORMANT_WARM":                   "Was a real opportunity before, now dormant — good reactivation candidate.",
+    "NO_RESPONSE":                    "You reached out and there has been no reply yet.",
+    "LOW_VALUE":                      "Generic conversation with no actionable request.",
+}
+
+
+def _reply_reason_short(process_state: str, reply_obligation: str, stale: bool, last_sender_type: str) -> str:
+    """One short, sanitized sentence explaining why this conversation is (or
+    isn't) in the queue — never quotes raw message text."""
+    if stale and reply_obligation in ("NONE", "AMBIGUOUS") and last_sender_type == "other":
+        return "Last sender was them, but conversation appears stale and low-value."
+    return _REPLY_REASON_BY_STATE.get(process_state, "No clear actionable signal found.")
+
+
+def _action_priority_reason(action_urgency: str, terminal: bool, recruiter_flag: bool) -> str:
+    if terminal:
+        return "No action needed — terminal/closed state."
+    tag = " (recruiter)" if recruiter_flag else ""
+    if action_urgency == "HIGH":
+        return f"High priority — confirmed reply owed{tag}."
+    if action_urgency == "MEDIUM":
+        return f"Medium priority — likely reply owed{tag}."
+    if action_urgency == "LOW":
+        return "Low priority — ambiguous signal, monitor."
+    return "No action needed right now."
+
+
 _INTENT_LABEL_BY_STATE = {
     "REJECTED_CLOSED": "Process closed",
     "LOCATION_ELIGIBILITY_BLOCKED": "Location/residency constraint",
@@ -1315,6 +1403,27 @@ def build_conversation_intelligence(
             status, signals["cv_request"], signals["interview"], signals["auto_reply"]
         )
 
+        # Lead Reactivation trust layer (Part 1) — sanitized explain fields
+        # derived from the V8 engine's output above, no raw message text.
+        terminal_flag = _terminal_state_flag(conv_state["process_state"])
+        stale_flag = _stale_conversation_flag(
+            conv_state["process_state"], conv_state["reply_obligation"],
+            days_since if days_since < 9999 else 9999,
+        )
+        recruiter_flag = _recruiter_priority_flag(
+            persona, conv_state["reply_obligation"], conv_state["process_state"],
+        )
+        reply_obligation_confidence = _reply_obligation_confidence(
+            conv_state["conversation_state_confidence"], conv_state["reply_obligation"], stale_flag,
+        )
+        reply_reason_short = _reply_reason_short(
+            conv_state["process_state"], conv_state["reply_obligation"], stale_flag,
+            resp_intel["last_sender_type"],
+        )
+        action_priority_reason = _action_priority_reason(
+            conv_state["action_urgency"], terminal_flag, recruiter_flag,
+        )
+
         follow_up_date = ""
         if status == "Follow-up due" and last_date:
             import datetime as _dt
@@ -1397,6 +1506,13 @@ def build_conversation_intelligence(
             "last_actionable_request_date":   conv_state["last_actionable_request_date"],
             "last_actionable_response_date":  conv_state["last_actionable_response_date"],
             "cooldown_state":                 cooldown,
+            # Lead Reactivation trust layer (Part 1) — sanitized explain fields.
+            "reply_obligation_confidence":    reply_obligation_confidence,
+            "reply_reason_short":             reply_reason_short,
+            "action_priority_reason":         action_priority_reason,
+            "terminal_state_flag":            terminal_flag,
+            "stale_conversation_flag":        stale_flag,
+            "recruiter_priority_flag":        recruiter_flag,
         })
 
     if not rows:

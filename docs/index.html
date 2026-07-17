@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1784156133">
+  <link rel="stylesheet" href="./assets/style.css?v=1784249909">
 </head>
 <body>
 
@@ -595,16 +595,59 @@ python src/validate_static_dashboard_runtime.py</pre>
       <div class="metrics-grid" id="v6-resolution-summary"></div>
       <div class="alert alert-info" id="v6-target-note" style="margin-top:.75rem"></div>
 
-      <div class="section-label">Top Companies to Map First (click a card above to filter)</div>
-      <div id="unk-companies-count" style="font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 0.5rem"></div>
+      <div class="section-label">Needs Mapping Drill-Down</div>
+      <div class="table-stats" id="mapping-drilldown-stats"></div>
+      <div class="filters-bar" style="margin-bottom:0.5rem">
+        <button class="btn-ghost" onclick="resetMappingDrilldown()">Reset / Clear Filter</button>
+      </div>
+
+      <div class="section-label" style="margin-top:0.5rem">Companies to Map First</div>
       <div class="table-wrap">
         <table id="unk-companies-table">
           <thead><tr>
-            <th>#</th><th>Company</th><th>Connections</th>
+            <th>#</th><th>Company</th><th>Contacts</th>
             <th>Recruiters</th><th>TA</th><th>Hiring Mgrs</th><th>Data Leaders</th>
-            <th>Avg Score</th><th>Suggested Bucket</th><th>Reason</th>
+            <th>High-Value</th><th>Auto-Resolvable</th><th>Mapping Impact Score</th><th>Suggested Bucket</th>
           </tr></thead>
           <tbody id="unk-companies-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-label">Contacts Behind Selected Mapping Segment</div>
+      <div class="filters-bar" style="margin-bottom:0.5rem">
+        <div class="filter-group"><label>Sort by</label>
+          <select id="mapping-person-sort" onchange="renderMappingPersonTable()">
+            <option value="score">Mapping Priority Score</option>
+            <option value="persona">Persona</option>
+            <option value="bucket">Suggested Bucket</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="mapping-person-table">
+          <thead><tr>
+            <th>Name</th><th>Company</th><th>Role / Title</th><th>Persona</th>
+            <th>Suggested Bucket</th><th>Mapping Priority Score</th>
+            <th>Resolution Source / Suggested Action</th><th>Why / Mapping Reason</th>
+            <th>LinkedIn</th><th>Top Contacts</th>
+          </tr></thead>
+          <tbody id="mapping-person-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="mapping-person-pagination"></div>
+
+      <div class="section-label">Needs Mapping Action Plan</div>
+      <div class="metrics-grid" id="mapping-plan-summary"></div>
+      <div class="alert alert-info" id="mapping-plan-recommendation" style="margin:0.75rem 0"></div>
+      <div class="section-label" style="font-size:0.85rem">Suggested Next Actions</div>
+      <ul id="mapping-plan-actions" style="margin:.2rem 0 1rem 1.2rem;font-size:0.85rem;line-height:1.8"></ul>
+      <div class="section-label" style="font-size:0.85rem">Ranked Weekly Action Queue</div>
+      <div class="table-wrap">
+        <table id="mapping-plan-queue-table">
+          <thead><tr>
+            <th>Priority</th><th>Segment</th><th>Target</th><th>Company</th><th>Action</th>
+          </tr></thead>
+          <tbody id="mapping-plan-queue-tbody"></tbody>
         </table>
       </div>
 
@@ -632,6 +675,9 @@ python src/validate_static_dashboard_runtime.py</pre>
 
         <div class="section-label">Lead Pipeline</div>
         <div class="metrics-grid" id="leads-pipeline"></div>
+
+        <div class="section-label">Operational Summary — Working Queue</div>
+        <div class="metrics-grid" id="leads-operational-summary"></div>
 
         <div id="leads-this-week">
           <div class="section-label">This Week&apos;s Queue (max 55 contacts)</div>
@@ -780,6 +826,21 @@ python src/validate_static_dashboard_runtime.py</pre>
           </div>
           <div class="filter-group"><label>Recruiters only</label>
             <input type="checkbox" id="lead-recruiter-only">
+          </div>
+          <div class="filter-group"><label>High confidence reply obligation only</label>
+            <input type="checkbox" id="lead-high-confidence-only">
+          </div>
+          <div class="filter-group"><label>Stale conversations only</label>
+            <input type="checkbox" id="lead-stale-only">
+          </div>
+          <div class="filter-group"><label>Terminal/closed only</label>
+            <input type="checkbox" id="lead-terminal-only">
+          </div>
+          <div class="filter-group"><label>Warm reactivation only</label>
+            <input type="checkbox" id="lead-warm-only">
+          </div>
+          <div class="filter-group"><label>Interview-related only</label>
+            <input type="checkbox" id="lead-interview-related-only">
           </div>
           <button class="btn-primary" onclick="applyLeadFilters()">Apply</button>
           <button class="btn-ghost" onclick="resetLeadFilters()">Reset</button>
@@ -1063,6 +1124,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1784156133"></script>
+<script src="./assets/app.js?v=1784249909"></script>
 </body>
 </html>

@@ -108,6 +108,13 @@ SAFE_DASHBOARD_COLS = [
     "external_action_type",
     "request_resolved",
     "cooldown_state",
+    # Lead Reactivation trust layer (Part 1) — sanitized explain fields
+    "reply_obligation_confidence",
+    "reply_reason_short",
+    "action_priority_reason",
+    "terminal_state_flag",
+    "stale_conversation_flag",
+    "recruiter_priority_flag",
 ]
 
 # Ambiguous manual-review queue fields (Part 8) — sanitized, no raw content
@@ -359,6 +366,21 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     this_week_count  = int(len(this_week))
     review_queue_count = int(len(review_out))
 
+    # ── Lead Reactivation trust layer (Part 1) — operational summary counts ──
+    # Four working-queue buckets that cut across the raw lead_category taxonomy,
+    # built from the sanitized explain fields added to message_intelligence.py.
+    most_urgent_confirmed_mask   = (df["reply_obligation"] == "CONFIRMED") & (~df["terminal_state_flag"])
+    warm_recruiter_followup_mask = df["recruiter_priority_flag"] & (df["reply_obligation"] != "CONFIRMED")
+    stale_but_valuable_mask      = df["stale_conversation_flag"] & (df["relationship_value_score"] >= 40)
+    closed_low_action_mask       = df["terminal_state_flag"]
+
+    most_urgent_confirmed_count    = int(most_urgent_confirmed_mask.sum())
+    warm_recruiter_followups_count = int(warm_recruiter_followup_mask.sum())
+    stale_but_valuable_count       = int(stale_but_valuable_mask.sum())
+    closed_low_action_count        = int(closed_low_action_mask.sum())
+    recruiter_priority_count       = int(df["recruiter_priority_flag"].sum())
+    high_confidence_reply_count    = int((df["reply_obligation_confidence"] >= 0.7).sum())
+
     # False-urgent check (Part 19): terminal/blocking states whose
     # immediate_action_score is still above the "urgent" threshold would be a
     # bug — should always be 0 after the Part 4 terminal-state cap.
@@ -447,6 +469,13 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
         # Legacy keys for backward compat with JS
         "hot_leads":   hot_count,
         "warm_leads":  warm_count,
+        # Lead Reactivation trust layer (Part 1) — operational summary counts
+        "most_urgent_confirmed_count":    most_urgent_confirmed_count,
+        "warm_recruiter_followups_count": warm_recruiter_followups_count,
+        "stale_but_valuable_count":       stale_but_valuable_count,
+        "closed_low_action_count":        closed_low_action_count,
+        "recruiter_priority_count":       recruiter_priority_count,
+        "high_confidence_reply_count":    high_confidence_reply_count,
         # Internal-only (Untapped Outreach Scoring V9) — never published to the
         # public dashboard JSON, see export_public_dashboard_data.py.
         "company_signal_map": build_company_warm_signal_map(df),

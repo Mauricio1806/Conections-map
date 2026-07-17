@@ -1664,18 +1664,20 @@ function renderCompanyResolutionV6() {
   const el = document.getElementById('v6-resolution-summary');
   if (el && v6.total_connections) {
     el.innerHTML = [
-      makeCard('Needs Mapping — Before V6', v6.needs_mapping_before || 0, v6.needs_mapping_pct_before + '% of network'),
-      makeCard('Needs Mapping — After V6',  v6.needs_mapping_after  || 0, v6.needs_mapping_pct_after + '% of network', v6.target_met ? 'good' : 'warn'),
-      makeCard('Reduced By',                v6.needs_mapping_reduction_count || 0, v6.needs_mapping_reduction_pct + '% reduction', 'good'),
-      makeCard('Same-Company Propagation',  v6.resolved_by_same_company_propagation || 0, '>=2 contacts, >=70% share'),
-      makeCard('Message-Signal Evidence',   v6.resolved_by_message_signal_evidence  || 0, 'local messages.csv only'),
-      makeCard('Persona/Category Fallback', v6.resolved_by_persona_company_category || 0, 'staffing/consulting/tech/strategic'),
+      makeKpiCard('needs_mapping_before', 'Needs Mapping — Before V6', v6.needs_mapping_before || 0, v6.needs_mapping_pct_before + '% of network — click to view current backlog', '', 'applyUnknownKpiFilter'),
+      makeKpiCard('needs_mapping_after',  'Needs Mapping — After V6',  v6.needs_mapping_after  || 0, v6.needs_mapping_pct_after + '% of network — click to filter', v6.target_met ? 'good' : 'warn', 'applyUnknownKpiFilter'),
+      makeKpiCard('reduced_by',           'Reduced By',                v6.needs_mapping_reduction_count || 0, v6.needs_mapping_reduction_pct + '% reduction — click to view current backlog', 'good', 'applyUnknownKpiFilter'),
+      makeKpiCard('same_company_propagation', 'Same-Company Propagation', v6.resolved_by_same_company_propagation || 0, '>=2 contacts, >=70% share — click to view current backlog', '', 'applyUnknownKpiFilter'),
+      makeKpiCard('message_signal_evidence',  'Message-Signal Evidence',  v6.resolved_by_message_signal_evidence  || 0, 'local messages.csv only — click to view current backlog', '', 'applyUnknownKpiFilter'),
+      makeKpiCard('persona_fallback',         'Persona/Category Fallback',v6.resolved_by_persona_company_category || 0, 'staffing/consulting/tech/strategic — click to view current backlog', '', 'applyUnknownKpiFilter'),
     ].join('');
   }
   const noteEl = document.getElementById('v6-target-note');
   if (noteEl) {
     if (v6.target_note) {
-      noteEl.innerHTML = '<span class="alert-icon">' + (v6.target_met ? '&#9989;' : '&#8505;&#65039;') + '</span><span>' + v6.target_note + '</span>';
+      noteEl.innerHTML = '<span class="alert-icon">' + (v6.target_met ? '&#9989;' : '&#8505;&#65039;') + '</span><span>' + v6.target_note
+        + ' <em style="opacity:.75">These evidence types describe HOW past contacts were resolved — they already left the '
+        + 'current backlog, so there is no live per-contact list for them. Clicking shows the current actionable backlog below instead.</em></span>';
       noteEl.className = 'alert ' + (v6.target_met ? 'alert-good' : 'alert-info');
     } else {
       noteEl.innerHTML = '';
@@ -1683,23 +1685,46 @@ function renderCompanyResolutionV6() {
   }
 }
 
-// Clickable-card filters for the Opportunity Market companies table (Objective 4.A).
-// Each filter operates on the SAME top-25/50 companies list already shown in
-// the table — no new per-contact data is fetched or fabricated. 'Auto-Resolvable'
-// intentionally has no card filter here: it's a scalar contact count with no
-// per-company list behind it in the public JSON, so making it "clickable" would
-// have nothing real to filter into.
+// ── Needs Mapping drill-down (consolidated UX + analytics patch, Parts 2-4) ──
+// Every KPI card on this page maps to a REAL backing list: company-level in
+// unknownCompaniesBase/filteredUnknownCompanies, person-level in
+// mappingPeopleBase/filteredMappingPeople. Cards describing evidence types
+// whose contacts already left the current backlog (they were RESOLVED by
+// that mechanism) honestly show the current actionable backlog instead of
+// fabricating a per-row breakdown that doesn't exist — labeled clearly.
 let unknownCompaniesBase = [];
 let filteredUnknownCompanies = [];
+let mappingPeopleBase = [];
+let filteredMappingPeople = [];
 let activeUnknownKpi = null;
+let selectedMappingCompany = null;
+let mappingPersonPage = 1;
+const MAPPING_PERSON_PAGE_SIZE = 25;
 
-const UNKNOWN_KPI_FILTERS = {
-  needs_mapping_total: { label: 'All companies needing mapping', match: () => true, sortKey: 'connection_count' },
-  top25:                { label: 'Top 25 by connection count',    match: () => true, sortKey: 'connection_count' },
-  high_value:           { label: 'High avg priority score (≥60)', match: r => (r.avg_priority_score || 0) >= 60, sortKey: 'avg_priority_score' },
-  recruiters:           { label: 'Has recruiters needing mapping', match: r => (r.recruiter_count || 0) > 0, sortKey: 'recruiter_count' },
-  hiring_mgrs:          { label: 'Has hiring managers needing mapping', match: r => (r.hiring_manager_count || 0) > 0, sortKey: 'hiring_manager_count' },
-  data_leaders:         { label: 'Has data leaders needing mapping', match: r => (r.data_leader_count || 0) > 0, sortKey: 'data_leader_count' },
+const MAPPING_RECRUITER_PERSONAS    = new Set(['Recruiter', 'Sourcer']);
+const MAPPING_HIRING_PERSONAS       = new Set(['Hiring Manager', 'Engineering Manager']);
+const MAPPING_DATA_LEADER_PERSONAS  = new Set(['Data Engineering Manager', 'Head of Data', 'Director', 'Executive']);
+const MAPPING_HIGH_VALUE_PERSONAS   = new Set([
+  ...MAPPING_RECRUITER_PERSONAS, 'Talent Acquisition', ...MAPPING_HIRING_PERSONAS, ...MAPPING_DATA_LEADER_PERSONAS,
+]);
+
+function _isAutoResolvablePerson(p) { return (p.resolution_source || '').indexOf('auto-resolvable') === 0; }
+
+const MAPPING_KPI_FILTERS = {
+  needs_mapping_total: { label: 'All Needs Mapping',                match: () => true },
+  high_value:          { label: 'High-Value Needs Mapping',         match: p => MAPPING_HIGH_VALUE_PERSONAS.has(p.persona) },
+  recruiters:          { label: 'Recruiters Needing Mapping',       match: p => MAPPING_RECRUITER_PERSONAS.has(p.persona) },
+  talent_acquisition:  { label: 'Talent Acquisition Needing Mapping', match: p => p.persona === 'Talent Acquisition' },
+  hiring_mgrs:         { label: 'Hiring Managers Needing Mapping',  match: p => MAPPING_HIRING_PERSONAS.has(p.persona) },
+  data_leaders:        { label: 'Data Leaders Needing Mapping',     match: p => MAPPING_DATA_LEADER_PERSONAS.has(p.persona) },
+  auto_resolvable:     { label: 'Auto-Resolvable',                  match: p => _isAutoResolvablePerson(p) },
+  top25:               { label: 'Top 25 Companies Impact',          match: () => true, top25: true },
+  same_company_propagation: { label: 'Same-Company Propagation — historical; showing current backlog', match: () => true },
+  message_signal_evidence:  { label: 'Message-Signal Evidence — historical; showing current backlog',  match: () => true },
+  persona_fallback:         { label: 'Persona/Category Fallback — historical; showing current backlog', match: () => true },
+  reduced_by:                { label: 'Reduced By — historical reduction; showing current backlog',     match: () => true },
+  needs_mapping_before:      { label: 'Needs Mapping — Before V6 (historical snapshot; showing current backlog)', match: () => true },
+  needs_mapping_after:       { label: 'Needs Mapping — After V6 (current backlog)', match: () => true },
 };
 
 function _updateActiveUnknownKpiCards() {
@@ -1711,51 +1736,181 @@ function _updateActiveUnknownKpiCards() {
 }
 
 window.applyUnknownKpiFilter = function(key) {
-  const def = UNKNOWN_KPI_FILTERS[key];
+  const def = MAPPING_KPI_FILTERS[key];
   if (!def) return;
-  filteredUnknownCompanies = unknownCompaniesBase
-    .filter(def.match)
-    .sort((a, b) => (b[def.sortKey] || 0) - (a[def.sortKey] || 0));
   activeUnknownKpi = key;
+  selectedMappingCompany = null;
+
+  filteredUnknownCompanies = def.top25 ? unknownCompaniesBase.slice(0, 25) : unknownCompaniesBase.slice();
+  const companySet = def.top25 ? new Set(filteredUnknownCompanies.map(c => c.company_clean)) : null;
+  filteredMappingPeople = mappingPeopleBase.filter(p => def.match(p) && (!companySet || companySet.has(p.company_clean)));
+
+  mappingPersonPage = 1;
   _updateActiveUnknownKpiCards();
   renderUnknownCompaniesTable(def.label);
+  renderMappingPersonTable(def.label);
   const table = document.getElementById('unk-companies-table');
   if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
+window.selectMappingCompany = function(company) {
+  selectedMappingCompany = company;
+  activeUnknownKpi = null;
+  _updateActiveUnknownKpiCards();
+  filteredMappingPeople = mappingPeopleBase.filter(p => p.company_clean === company);
+  mappingPersonPage = 1;
+  renderMappingPersonTable(null);
+  const table = document.getElementById('mapping-person-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+window.resetMappingDrilldown = function() {
+  activeUnknownKpi = null;
+  selectedMappingCompany = null;
+  filteredUnknownCompanies = unknownCompaniesBase.slice();
+  filteredMappingPeople = mappingPeopleBase.slice();
+  mappingPersonPage = 1;
+  _updateActiveUnknownKpiCards();
+  renderUnknownCompaniesTable(null);
+  renderMappingPersonTable(null);
+};
+
+function _mappingDrilldownStats(label) {
+  const el = document.getElementById('mapping-drilldown-stats');
+  if (!el) return;
+  if (selectedMappingCompany) {
+    el.textContent = 'Showing ' + filteredMappingPeople.length + ' contacts from ' + selectedMappingCompany + ' — selected company';
+  } else {
+    const nCompanies = new Set(filteredMappingPeople.map(p => p.company_clean)).size;
+    el.textContent = 'Showing ' + filteredMappingPeople.length + ' contacts across ' + nCompanies + ' companies'
+      + (label ? ' — ' + label : '');
+  }
+}
+
 function renderUnknownCompaniesTable(label) {
   const tbody = document.getElementById('unk-companies-tbody');
-  const countEl = document.getElementById('unk-companies-count');
   const rows = filteredUnknownCompanies;
-  if (countEl) countEl.textContent = 'Showing ' + rows.length + ' of ' + unknownCompaniesBase.length
-    + (label ? ' — ' + label : '');
+  _mappingDrilldownStats(label);
   if (!tbody) return;
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">No companies match this filter.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--text-muted)">No companies match this filter.</td></tr>';
     return;
   }
   tbody.innerHTML = rows.map((r, i) => {
-    const sugMarket = r.suggested_market || r.opportunity_bucket || '';
-    const badgeVal  = sugMarket && sugMarket !== 'UNKNOWN' ? sugMarket : 'NEEDS_COMPANY_MAPPING';
-    return '<tr>'
+    const badgeVal = r.suggested_opportunity_bucket || 'NEEDS_COMPANY_MAPPING';
+    const isSelected = selectedMappingCompany === r.company_clean;
+    return '<tr class="' + (isSelected ? 'active' : '') + '" style="cursor:pointer" '
+      + 'onclick="selectMappingCompany(' + JSON.stringify(r.company_clean) + ')" tabindex="0" role="button" '
+      + 'onkeydown="if(event.key===\'Enter\'){selectMappingCompany(' + JSON.stringify(r.company_clean) + ')}">'
     + '<td><strong>#' + (i+1) + '</strong></td>'
-    + '<td style="font-weight:500">' + (r.company_clean||r.company||'') + '</td>'
-    + '<td><strong>' + fmt(r.connection_count) + '</strong></td>'
-    + '<td>' + fmt(r.recruiter_count||0) + '</td>'
-    + '<td>' + fmt(r.talent_count||0) + '</td>'
-    + '<td>' + fmt(r.hiring_manager_count||0) + '</td>'
-    + '<td>' + fmt(r.data_leader_count||0) + '</td>'
-    + '<td>' + (Number(r.avg_priority_score||0).toFixed(0)) + '</td>'
+    + '<td style="font-weight:500">' + (r.company_clean||'') + '</td>'
+    + '<td><strong>' + fmt(r.contacts) + '</strong></td>'
+    + '<td>' + fmt(r.recruiters||0) + '</td>'
+    + '<td>' + fmt(r.talent_acquisition||0) + '</td>'
+    + '<td>' + fmt(r.hiring_managers||0) + '</td>'
+    + '<td>' + fmt(r.data_leaders||0) + '</td>'
+    + '<td>' + fmt(r.high_value_contacts||0) + '</td>'
+    + '<td>' + fmt(r.auto_resolvable_count||0) + '</td>'
+    + '<td>' + fmt(r.mapping_impact_score||0) + '</td>'
     + '<td>' + marketBadge(badgeVal) + '</td>'
-    + '<td style="font-size:0.72rem;max-width:200px">' + String(r.suggested_reason||'').substring(0,80) + '</td>'
     + '</tr>';
   }).join('');
 }
 
+window.renderMappingPersonTable = function(label) {
+  _mappingDrilldownStats(label);
+  const sortMode = document.getElementById('mapping-person-sort')?.value || 'score';
+  const rows = filteredMappingPeople.slice();
+  if (sortMode === 'persona')      rows.sort((a, b) => (a.persona || '').localeCompare(b.persona || ''));
+  else if (sortMode === 'bucket')  rows.sort((a, b) => (a.suggested_opportunity_bucket || '').localeCompare(b.suggested_opportunity_bucket || ''));
+  else                              rows.sort((a, b) => (parseFloat(b.mapping_priority_score) || 0) - (parseFloat(a.mapping_priority_score) || 0));
+
+  const start = (mappingPersonPage - 1) * MAPPING_PERSON_PAGE_SIZE;
+  const slice = rows.slice(start, start + MAPPING_PERSON_PAGE_SIZE);
+  const tbody = document.getElementById('mapping-person-tbody');
+  if (!tbody) return;
+  if (!slice.length) {
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted)">No contacts match the current filter.</td></tr>';
+  } else {
+    tbody.innerHTML = slice.map(p => {
+      const url = p.profile_url || '';
+      const score = parseInt(p.mapping_priority_score) || 0;
+      const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+      return '<tr>'
+        + '<td style="white-space:nowrap">' + (p.full_name||'—') + '</td>'
+        + '<td style="white-space:nowrap">' + (p.company_clean||'—') + '</td>'
+        + '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (p.position_clean||'—') + '</td>'
+        + '<td style="white-space:nowrap">' + (p.persona||'—') + '</td>'
+        + '<td>' + marketBadge(p.suggested_opportunity_bucket||'UNKNOWN') + '</td>'
+        + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+        + '<td style="font-size:0.72rem;max-width:200px">' + String(p.resolution_source||'').substring(0,90) + '</td>'
+        + '<td style="font-size:0.72rem;max-width:200px">' + String(p.mapping_reason_short||'').substring(0,90) + '</td>'
+        + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+        + '<td><button class="btn-ghost" style="font-size:0.7rem;padding:2px 8px" onclick="goToNavPage(\'contacts\')">Open in Top Contacts</button></td>'
+        + '</tr>';
+    }).join('');
+  }
+  renderMappingPersonPagination(rows.length);
+};
+
+function renderMappingPersonPagination(total) {
+  const pages = Math.ceil(total / MAPPING_PERSON_PAGE_SIZE);
+  const pg = document.getElementById('mapping-person-pagination');
+  if (!pg) return;
+  let html = '';
+  for (let i = 1; i <= Math.min(pages, 8); i++) {
+    html += '<button class="pg-btn' + (i === mappingPersonPage ? ' active' : '') + '" onclick="goMappingPersonPage(' + i + ')">' + i + '</button>';
+  }
+  if (pages > 8) html += '<span style="color:var(--text-muted);font-size:0.8rem"> … ' + pages + ' pages</span>';
+  pg.innerHTML = html;
+}
+window.goMappingPersonPage = function(n) { mappingPersonPage = n; renderMappingPersonTable(); };
+
+function renderNeedsMappingActionPlan() {
+  const plan = D.needs_mapping_action_plan || {};
+  const summaryEl = document.getElementById('mapping-plan-summary');
+  if (summaryEl) {
+    if (!plan.available) { summaryEl.innerHTML = ''; }
+    else {
+      const s = plan.executive_summary || {};
+      summaryEl.innerHTML = [
+        makeCard('Backlog Size',              s.backlog_size || 0, 'contacts still needing company mapping', 'warn'),
+        makeCard('High-Value Unresolved',     s.high_value_unresolved || 0, 'recruiters/hiring/data-leader personas'),
+        makeCard('Recruiters Unresolved',     s.recruiters_unresolved || 0),
+        makeCard('Biggest-Impact Companies',  s.biggest_impact_companies || 0, 'top-10 by mapping impact score', 'good'),
+        makeCard('Auto-Resolvable Share',     (s.auto_resolvable_share_pct || 0) + '%', 'quick override, low review effort', 'good'),
+        makeCard('Est. Weekly Reduction Potential', s.estimated_weekly_reduction_potential || 0, 'if this week\'s queue is worked'),
+      ].join('');
+    }
+  }
+  const recEl = document.getElementById('mapping-plan-recommendation');
+  if (recEl) {
+    recEl.innerHTML = plan.available && plan.recommendation
+      ? '<span class="alert-icon">&#128161;</span><span>' + plan.recommendation + '</span>'
+      : '';
+  }
+  const actionsEl = document.getElementById('mapping-plan-actions');
+  if (actionsEl) {
+    actionsEl.innerHTML = (plan.available ? (plan.next_actions || []) : [])
+      .map(a => '<li>' + a + '</li>').join('');
+  }
+  const queueTbody = document.getElementById('mapping-plan-queue-tbody');
+  if (queueTbody) {
+    const q = plan.available ? (plan.weekly_queue || []) : [];
+    queueTbody.innerHTML = q.length
+      ? q.map(r => '<tr>'
+          + '<td><strong>P' + (r.priority ?? '—') + '</strong></td>'
+          + '<td style="font-size:0.8rem">' + (r.segment||'—') + '</td>'
+          + '<td style="white-space:nowrap">' + (r.target||'—') + '</td>'
+          + '<td style="white-space:nowrap">' + (r.company||'—') + '</td>'
+          + '<td style="font-size:0.78rem">' + (r.action||'—') + '</td>'
+          + '</tr>').join('')
+      : '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">No action plan data yet — run the pipeline with a Needs Mapping backlog present.</td></tr>';
+  }
+}
+
 function renderUnknownResolution() {
-  const res   = D.unknown_resolution || {};
   const v5Sum = D.opportunity_market_v5_summary || {};
-  const v5Dist= D.opportunity_market_v5 || {};
   renderCompanyResolutionV6();
 
   // Primary V5 summary cards
@@ -1775,48 +1930,49 @@ function renderUnknownResolution() {
     ].join('');
   }
 
-  // Needs-mapping contacts (renamed from "UNKNOWN") — clickable, filters the
-  // companies table below (Objective 4.A).
-  const hvUnk = res.high_value_unknown_contacts || 0;
+  // Needs-mapping contacts — sourced from the current, post-V6/V7 residual
+  // backlog (D.needs_mapping_backlog), NOT the older/looser market_v2==UNKNOWN
+  // population. Every card here is clickable and filters both the company
+  // table and the person drill-down table below (Parts 2-4).
+  const backlog = D.needs_mapping_backlog || {};
+  const bs = backlog.summary || {};
+  mappingPeopleBase = backlog.people || [];
+  unknownCompaniesBase = backlog.companies || [];
+
   const unkMetEl = document.getElementById('unk-metrics');
   if (unkMetEl) unkMetEl.innerHTML = [
-    makeKpiCard('needs_mapping_total', 'Needs Mapping Total',           v5Sum.v5_needs_company_mapping||0, 'company known, market unresolved — click to filter', '', 'applyUnknownKpiFilter'),
-    makeKpiCard('high_value',          'High-Value Needs Mapping',      hvUnk,   'recruiters + hiring mgrs score ≥60 — click to filter', 'warn', 'applyUnknownKpiFilter'),
-    makeKpiCard('recruiters',          'Recruiters Needing Mapping',    kpi('unknown_recruiters_highvalue'), 'score ≥60 — click to filter', '', 'applyUnknownKpiFilter'),
-    makeKpiCard('hiring_mgrs',         'Hiring Mgrs Needing Mapping',   kpi('unknown_hiring_mgrs_highvalue'), 'score ≥50 — click to filter', '', 'applyUnknownKpiFilter'),
-    makeKpiCard('data_leaders',        'Data Leaders Needing Mapping',  kpi('unknown_data_leaders_highvalue'), 'score ≥50 — click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('needs_mapping_total', 'Needs Mapping Total',           bs.backlog_size||0, 'company known, market unresolved — click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('high_value',          'High-Value Needs Mapping',      bs.high_value_unresolved||0, 'recruiter/hiring/data-leader personas — click to filter', 'warn', 'applyUnknownKpiFilter'),
+    makeKpiCard('recruiters',          'Recruiters Needing Mapping',    bs.recruiters_unresolved||0, 'click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('hiring_mgrs',         'Hiring Mgrs Needing Mapping',   bs.hiring_managers_unresolved||0, 'click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('data_leaders',        'Data Leaders Needing Mapping',  bs.data_leaders_unresolved||0, 'click to filter', '', 'applyUnknownKpiFilter'),
   ].join('');
 
   // Resolution potential
-  const autoRes = res.auto_resolvable_contacts || 0;
-  const top25   = res.top25_coverage || kpi('top25_company_coverage');
-  const top25pct= res.top25_pct_of_unknown || kpi('unknown_resolution_potential');
   const unkResEl = document.getElementById('unk-resolution-metrics');
   if (unkResEl) unkResEl.innerHTML = [
-    makeKpiCard('top25', 'Top 25 Companies Impact', top25,   top25pct + '% of needs-mapping contacts — click to view', 'good', 'applyUnknownKpiFilter'),
-    makeCard('Auto-Resolvable',         autoRes, 'via keyword + heuristics (aggregate count only — not a filterable list)', 'good'),
-    makeCard('Opportunity Bucket Score',kpi('unknown_resolution_score') + '/100', 'higher = better mapped'),
+    makeKpiCard('top25', 'Top 25 Companies Impact', Math.min(25, unknownCompaniesBase.length), 'ranked by mapping impact score — click to view, then click a company for its people', 'good', 'applyUnknownKpiFilter'),
+    makeKpiCard('auto_resolvable', 'Auto-Resolvable', bs.auto_resolvable_contacts||0, bs.auto_resolvable_companies + ' companies — company name alone suggests a bucket — click to filter', 'good', 'applyUnknownKpiFilter'),
+    makeCard('Opportunity Bucket Score', kpi('unknown_resolution_score') + '/100', 'higher = better mapped'),
   ].join('');
 
-  // Top companies needing mapping — prefer V5 backlog, fall back to V2 unknown
-  const backlogData = D.unknown_companies || [];
-  unknownCompaniesBase = (res.top25_companies && Array.isArray(res.top25_companies))
-    ? res.top25_companies
-    : backlogData.slice(0, 25);
-  if (!activeUnknownKpi) {
-    filteredUnknownCompanies = unknownCompaniesBase.slice().sort((a, b) => (b.connection_count||0) - (a.connection_count||0));
+  if (!activeUnknownKpi && !selectedMappingCompany) {
+    filteredUnknownCompanies = unknownCompaniesBase.slice();
+    filteredMappingPeople = mappingPeopleBase.slice();
   }
-  renderUnknownCompaniesTable(activeUnknownKpi ? UNKNOWN_KPI_FILTERS[activeUnknownKpi].label : null);
+  renderUnknownCompaniesTable(activeUnknownKpi ? MAPPING_KPI_FILTERS[activeUnknownKpi].label : null);
+  renderMappingPersonTable(activeUnknownKpi ? MAPPING_KPI_FILTERS[activeUnknownKpi].label : null);
+  renderNeedsMappingActionPlan();
 
   // Persona breakdown for needs-mapping contacts
   const unkPersonaEl = document.getElementById('unk-persona-metrics');
   if (!unkPersonaEl) return;
   unkPersonaEl.innerHTML = [
-    makeCard('Recruiters Needing Mapping',      kpi('unknown_recruiters_highvalue'),   'score ≥60 — map their companies first', 'warn'),
-    makeCard('Talent Acquisition — No Bucket',  kpi('unknown_ta_highvalue') || kpi('unknown_ta') || 0, 'score ≥50'),
-    makeCard('Hiring Mgrs — No Bucket',         kpi('unknown_hiring_mgrs_highvalue'),  'score ≥50 — potential direct hire'),
-    makeCard('Data Leaders — No Bucket',        kpi('unknown_data_leaders_highvalue'), 'referral network value'),
-    makeCard('Data Peers — No Bucket',          kpi('unknown_peers'),                 'lowest priority to map'),
+    makeCard('Recruiters Needing Mapping',      bs.recruiters_unresolved||0,          'map their companies first', 'warn'),
+    makeCard('Talent Acquisition — No Bucket',  bs.talent_acquisition_unresolved||0),
+    makeCard('Hiring Mgrs — No Bucket',         bs.hiring_managers_unresolved||0,     'potential direct hire'),
+    makeCard('Data Leaders — No Bucket',        bs.data_leaders_unresolved||0,        'referral network value'),
+    makeCard('Companies with 3+ Unresolved',    bs.companies_with_3plus_unresolved||0,'highest mapping impact per company'),
   ].join('');
 }
 
@@ -1887,6 +2043,15 @@ function renderLeads() {
     makeKpiCard('dormant',            'Dormant Warm',               lr.dormant_warm_leads         || 0, 'warm but inactive', 'warn'),
     makeKpiCard('no_response',        'No Response',                lr.no_response_leads          || 0, 'sent, no reply'),
     makeKpiCard('reactivate_month',   'Reactivate This Month',      lr.reactivate_this_month      || 0, 'cooldown cleared — safe to reach out', 'good'),
+  ].join('');
+
+  // ── Operational summary — a real working queue, not just a raw taxonomy ────
+  const opEl = document.getElementById('leads-operational-summary');
+  if (opEl) opEl.innerHTML = [
+    makeKpiCard('urgent_confirmed', 'Most Urgent Confirmed Replies', lr.most_urgent_confirmed_count    || 0, 'confirmed, non-terminal — click to filter', 'bad'),
+    makeKpiCard('warm_recruiter',   'Warm Recruiter Follow-ups',     lr.warm_recruiter_followups_count || 0, 'recruiter conversation still live — click to filter', 'warn'),
+    makeKpiCard('stale_valuable',   'Stale But Valuable Leads',      lr.stale_but_valuable_count       || 0, 'gone quiet, still worth revisiting — click to filter', 'warn'),
+    makeKpiCard('closed_low_action','Closed / Low-Action Backlog',   lr.closed_low_action_count        || 0, 'terminal state — not urgent — click to filter'),
   ].join('');
 
   // ── This Week queue (shown first) ─────────────────────────────────────────
@@ -1993,6 +2158,11 @@ window.applyLeadFilters = function() {
   const minScore  = parseFloat(document.getElementById('lead-min-score')?.value) || 0;
   const thisWeekOnly = document.getElementById('lead-this-week-only')?.checked || false;
   const recOnly   = document.getElementById('lead-recruiter-only')?.checked || false;
+  const highConfOnly   = document.getElementById('lead-high-confidence-only')?.checked || false;
+  const staleOnly       = document.getElementById('lead-stale-only')?.checked || false;
+  const terminalOnly    = document.getElementById('lead-terminal-only')?.checked || false;
+  const warmOnly        = document.getElementById('lead-warm-only')?.checked || false;
+  const interviewRelatedOnly = document.getElementById('lead-interview-related-only')?.checked || false;
 
   const lr = D.lead_reactivation || {};
   const thisWeekIds = new Set((lr.this_week_contacts || []).map(c => c.other_person_profile_url || c.other_person_name));
@@ -2034,6 +2204,11 @@ window.applyLeadFilters = function() {
     if ((parseFloat(c.reactivation_priority_score) || 0) < minScore) return false;
     if (thisWeekOnly && !thisWeekIds.has(c.other_person_profile_url || c.other_person_name)) return false;
     if (recOnly && !['Recruiter','Talent Acquisition','Sourcer','Hiring Manager','Engineering Manager'].includes(c.persona)) return false;
+    if (highConfOnly && !((parseFloat(c.reply_obligation_confidence) || 0) >= 0.7)) return false;
+    if (staleOnly && !c.stale_conversation_flag) return false;
+    if (terminalOnly && !c.terminal_state_flag) return false;
+    if (warmOnly && c.lead_category !== 'Warm reactivation') return false;
+    if (interviewRelatedOnly && !(c.has_interview_signal || c.process_state === 'INTERVIEW_PIPELINE')) return false;
     return true;
   });
   activeLeadKpi = null;
@@ -2050,6 +2225,8 @@ window.resetLeadFilters = function() {
   const ms = document.getElementById('lead-min-score'); if (ms) ms.value = '0';
   const tw = document.getElementById('lead-this-week-only'); if (tw) tw.checked = false;
   const r  = document.getElementById('lead-recruiter-only'); if (r) r.checked = false;
+  ['lead-high-confidence-only', 'lead-stale-only', 'lead-terminal-only', 'lead-warm-only',
+   'lead-interview-related-only'].forEach(id => { const el = document.getElementById(id); if (el) el.checked = false; });
   filteredLeads = (D.lead_reactivation || {}).top_reactivation_contacts || [];
   activeLeadKpi = null;
   _updateActiveKpiCards();
@@ -2074,6 +2251,12 @@ const LEAD_KPI_FILTERS = {
   no_response:     { label: 'No Response',             match: c => c.lead_category === 'No response' },
   reactivate_month:{ label: 'Reactivate This Month',   match: c => c.lead_category === 'Reactivate This Month' },
   this_week:       { label: 'This Week Queue',         match: null }, // special-cased below
+  // Operational summary (Part 1) — cuts across lead_category, mirrors the
+  // exact predicates used to compute the card counts in lead_reactivation_engine.py.
+  urgent_confirmed: { label: 'Most Urgent Confirmed Replies', match: c => c.reply_obligation === 'CONFIRMED' && !c.terminal_state_flag },
+  warm_recruiter:    { label: 'Warm Recruiter Follow-ups',    match: c => !!c.recruiter_priority_flag && c.reply_obligation !== 'CONFIRMED' },
+  stale_valuable:     { label: 'Stale But Valuable Leads',     match: c => !!c.stale_conversation_flag && (parseFloat(c.relationship_value_score) || 0) >= 40 },
+  closed_low_action:  { label: 'Closed / Low-Action Backlog',  match: c => !!c.terminal_state_flag },
 };
 
 function _updateActiveKpiCards() {
@@ -2112,9 +2295,10 @@ const NEEDS_RESPONSE_CONF_STYLE = {
   NONE:   'background:#374151;color:#aaa',
 };
 
-function needsResponseBadge(conf) {
+function needsResponseBadge(conf, numericConf) {
   const style = NEEDS_RESPONSE_CONF_STYLE[conf] || NEEDS_RESPONSE_CONF_STYLE.NONE;
-  return '<span style="' + style + ';padding:2px 6px;border-radius:4px;font-size:0.68rem;white-space:nowrap">' + (conf||'NONE') + '</span>';
+  const title = numericConf != null ? ' title="Reply obligation confidence: ' + numericConf + '"' : '';
+  return '<span' + title + ' style="' + style + ';padding:2px 6px;border-radius:4px;font-size:0.68rem;white-space:nowrap">' + (conf||'NONE') + '</span>';
 }
 
 function renderLeadsTable(kpiLabel) {
@@ -2149,10 +2333,13 @@ function renderLeadsTable(kpiLabel) {
       + '<td style="font-size:0.75rem">' + lastSender + '</td>'
       + '<td style="white-space:nowrap;font-size:0.78rem">' + (r.last_message_date||'—') + '</td>'
       + '<td style="text-align:center">' + (r.days_since_last_message ?? '—') + '</td>'
-      + '<td>' + needsResponseBadge(r.needs_response_confidence) + '</td>'
+      + '<td>' + needsResponseBadge(r.needs_response_confidence, r.reply_obligation_confidence) + '</td>'
       + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
       + '<td style="font-size:0.72rem;max-width:170px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
-      + '<td style="font-size:0.7rem;max-width:150px;color:var(--text-muted)">' + String(r.needs_response_reason || r.message_angle ||'').substring(0,70) + '</td>'
+      + '<td style="font-size:0.7rem;max-width:170px;color:var(--text-muted);cursor:help" '
+        + 'title="Intent: ' + (r.sanitized_intent_label||'—') + ' | Confidence: ' + (r.reply_obligation_confidence ?? '—')
+        + ' | Priority: ' + (r.action_priority_reason||'—') + '">'
+        + String(r.reply_reason_short || r.needs_response_reason || '').substring(0,80) + '</td>'
       + '<td style="font-size:0.72rem;white-space:nowrap">' + (r.sanitized_intent_label||'—') + '</td>'
       + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
       + '</tr>';

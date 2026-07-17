@@ -624,6 +624,25 @@ def run_strategy_layer() -> None:
         logger.warning(f"  V5 summary/audit refresh after V6/V7 failed (non-fatal): {exc}")
         v5_data = locals().get("v5_data_pre_v6", {})
 
+    # Needs Mapping — person + company drill-down backlog (consolidated UX +
+    # analytics patch, Parts 2-3). Built from the FINAL post-V6/V7 residual so
+    # every Opportunity Market KPI card drills down to a consistent, current
+    # set of contacts/companies.
+    needs_mapping_backlog = {}
+    needs_mapping_action_plan = {}
+    try:
+        from src.opportunity_market_v5 import build_needs_mapping_backlog, build_needs_mapping_action_plan
+        needs_mapping_backlog = build_needs_mapping_backlog(df)
+        needs_mapping_action_plan = build_needs_mapping_action_plan(
+            needs_mapping_backlog, v6_summary=company_resolution_v6_summary, v7_summary=company_resolution_v7_summary,
+        )
+        logger.info(
+            f"  Needs Mapping backlog: {needs_mapping_backlog.get('summary', {}).get('backlog_size', 0):,} contacts / "
+            f"{needs_mapping_backlog.get('summary', {}).get('total_companies', 0):,} companies"
+        )
+    except Exception as exc:
+        logger.warning(f"  Needs Mapping backlog build failed (non-fatal): {exc}")
+
     _save_csv(df, ENRICHED_CSV, "Enriched Connections")
 
     # 3. Confidence-adjusted KPIs (V3 — 8 separate scores)
@@ -719,6 +738,8 @@ def run_strategy_layer() -> None:
             company_resolution_v6_data=company_resolution_v6_summary,
             company_resolution_v7_data=company_resolution_v7_summary,
             untapped_network_data=untapped_data,
+            needs_mapping_backlog_data=needs_mapping_backlog,
+            needs_mapping_action_plan_data=needs_mapping_action_plan,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

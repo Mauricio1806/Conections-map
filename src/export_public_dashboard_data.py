@@ -55,6 +55,8 @@ SAFE_CONTACT_COLS = [
     # Network page (see build_public_contacts()). Sanitized fields only.
     "untapped_outreach_score", "untapped_reason", "untapped_category",
     "contact_history_status", "recommended_first_action", "first_message_angle",
+    # Needs Mapping backlog (Part 4)
+    "mapping_priority_score", "mapping_reason_short",
 ]
 
 EXCLUDED_PATTERNS = {
@@ -143,6 +145,7 @@ def build_public_contacts(
     n: int = 200,
     outreach_scores: dict = None,
     untapped_scores: dict = None,
+    needs_mapping_scores: dict = None,
 ) -> list:
     df = _enrich_action_fields(df)
 
@@ -173,6 +176,25 @@ def build_public_contacts(
         # (a contacted person, or one outside the top_untapped_contacts pool).
         df["untapped_outreach_score"] = pd.to_numeric(df["untapped_outreach_score"], errors="coerce").fillna(0)
         df["contact_history_status"] = df["contact_history_status"].where(df["contact_history_status"].notna(), "")
+
+    # Merge Needs Mapping backlog fields (Part 4) — lets Top Contacts sort by
+    # mapping_priority_score and cross-navigate from the Opportunity Market
+    # person drill-down without a separate page-routing mechanism.
+    mapping_cols = ["mapping_priority_score", "mapping_reason_short"]
+    if needs_mapping_scores:
+        def _norm_m(url):
+            return str(url or "").strip().rstrip("/").lower()
+
+        for col in mapping_cols:
+            df[col] = None
+        for idx, row in df.iterrows():
+            rec = needs_mapping_scores.get(_norm_m(row.get("url", "")))
+            if rec:
+                for col in mapping_cols:
+                    if col in rec:
+                        df.at[idx, col] = rec[col]
+        df["mapping_priority_score"] = pd.to_numeric(df["mapping_priority_score"], errors="coerce").fillna(0)
+        df["mapping_reason_short"] = df["mapping_reason_short"].where(df["mapping_reason_short"].notna(), "")
 
     # Merge outreach scores (by normalized URL)
     if outreach_scores:
@@ -396,6 +418,9 @@ SAFE_LEAD_COLS = {
     "relationship_value_score", "immediate_action_score",
     "conversation_state_confidence", "state_evidence_codes",
     "external_action_type", "request_resolved", "cooldown_state",
+    # Lead Reactivation trust layer (Part 1) — sanitized explain fields
+    "reply_obligation_confidence", "reply_reason_short", "action_priority_reason",
+    "terminal_state_flag", "stale_conversation_flag", "recruiter_priority_flag",
 }
 
 SAFE_LEAD_SUMMARY_KEYS = {
@@ -418,6 +443,10 @@ SAFE_LEAD_SUMMARY_KEYS = {
     "false_urgent_terminal_state_count", "conversation_state_review_queue_count",
     # contact lists
     "top_reactivation_contacts", "this_week_contacts", "needs_reply_contacts",
+    # Lead Reactivation trust layer (Part 1) — operational summary counts
+    "most_urgent_confirmed_count", "warm_recruiter_followups_count",
+    "stale_but_valuable_count", "closed_low_action_count",
+    "recruiter_priority_count", "high_confidence_reply_count",
 }
 
 
@@ -508,6 +537,72 @@ def build_untapped_network_public(untapped_data: dict) -> dict:
     }
 
 
+# ── Opportunity Market — Needs Mapping person/company drill-down (Parts 2-4) ─
+# Explicit allowlist, defense in depth on top of what opportunity_market_v5.py
+# already builds from already-classified/sanitized fields — no raw content.
+SAFE_NEEDS_MAPPING_SUMMARY_KEYS = {
+    "backlog_size", "high_value_unresolved", "recruiters_unresolved",
+    "talent_acquisition_unresolved", "hiring_managers_unresolved",
+    "data_leaders_unresolved", "auto_resolvable_contacts", "auto_resolvable_companies",
+    "companies_with_3plus_unresolved", "total_companies",
+}
+SAFE_NEEDS_MAPPING_COMPANY_COLS = {
+    "company_clean", "contacts", "recruiters", "talent_acquisition",
+    "hiring_managers", "data_leaders", "high_value_contacts",
+    "auto_resolvable_count", "mapping_impact_score", "suggested_opportunity_bucket",
+}
+SAFE_NEEDS_MAPPING_PERSON_COLS = {
+    "full_name", "company_clean", "position_clean", "persona",
+    "suggested_opportunity_bucket", "mapping_priority_score",
+    "resolution_source", "mapping_reason_short", "profile_url",
+}
+
+
+def build_needs_mapping_public(backlog: dict) -> dict:
+    if not backlog or not backlog.get("available"):
+        return {"available": False}
+    summary = backlog.get("summary", {}) or {}
+    companies = [
+        {k: v for k, v in c.items() if k in SAFE_NEEDS_MAPPING_COMPANY_COLS}
+        for c in (backlog.get("companies") or [])
+    ]
+    people = [
+        {k: v for k, v in p.items() if k in SAFE_NEEDS_MAPPING_PERSON_COLS}
+        for p in (backlog.get("people") or [])
+    ]
+    return {
+        "available": True,
+        "summary": {k: v for k, v in summary.items() if k in SAFE_NEEDS_MAPPING_SUMMARY_KEYS},
+        "companies": companies,
+        "people": people,
+    }
+
+
+SAFE_ACTION_PLAN_SUMMARY_KEYS = {
+    "backlog_size", "high_value_unresolved", "recruiters_unresolved",
+    "biggest_impact_companies", "auto_resolvable_share_pct",
+    "estimated_weekly_reduction_potential",
+}
+SAFE_ACTION_PLAN_QUEUE_COLS = {"priority", "segment", "target", "company", "action"}
+
+
+def build_needs_mapping_action_plan_public(plan: dict) -> dict:
+    if not plan or not plan.get("available"):
+        return {"available": False}
+    exec_summary = plan.get("executive_summary", {}) or {}
+    queue = [
+        {k: v for k, v in q.items() if k in SAFE_ACTION_PLAN_QUEUE_COLS}
+        for q in (plan.get("weekly_queue") or [])
+    ]
+    return {
+        "available": True,
+        "executive_summary": {k: v for k, v in exec_summary.items() if k in SAFE_ACTION_PLAN_SUMMARY_KEYS},
+        "weekly_queue": queue,
+        "next_actions": [str(a) for a in (plan.get("next_actions") or [])],
+        "recommendation": str(plan.get("recommendation", "")),
+    }
+
+
 def export_public_dashboard_data(
     df:      pd.DataFrame,
     kpis:    dict,
@@ -522,6 +617,8 @@ def export_public_dashboard_data(
     company_resolution_v6_data: dict = None,
     company_resolution_v7_data: dict = None,
     untapped_network_data: dict = None,
+    needs_mapping_backlog_data: dict = None,
+    needs_mapping_action_plan_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -549,6 +646,16 @@ def export_public_dashboard_data(
             if u:
                 untapped_scores[u] = c
 
+    # Needs Mapping backlog (Part 4) — index by normalized profile URL so Top
+    # Contacts can merge in mapping_priority_score/mapping_reason_short for
+    # cross-navigation from Opportunity Market's person drill-down.
+    needs_mapping_scores = {}
+    if needs_mapping_backlog_data and needs_mapping_backlog_data.get("available"):
+        for p in needs_mapping_backlog_data.get("people", []):
+            u = str(p.get("profile_url", "") or "").strip().rstrip("/").lower()
+            if u:
+                needs_mapping_scores[u] = p
+
     payload = {
         "meta": {
             "report_date":      str(date.today()),
@@ -574,7 +681,7 @@ def export_public_dashboard_data(
         "action_plan_30":     plan_30.to_dict(orient="records"),
         "action_plan_60":     plan_60.to_dict(orient="records"),
         "action_plan_90":     plan_90.to_dict(orient="records"),
-        "top_contacts":                build_public_contacts(df, n=200, outreach_scores=outreach_scores, untapped_scores=untapped_scores),
+        "top_contacts":                build_public_contacts(df, n=200, outreach_scores=outreach_scores, untapped_scores=untapped_scores, needs_mapping_scores=needs_mapping_scores),
         # Full-network outreach status aggregate (sanitized counts only) — persisted
         # so next week's weekly_kpi_delta.py can compute a real Interview Pipeline /
         # ghosted / replied delta instead of only ever seeing the top-200 slice.
@@ -600,6 +707,9 @@ def export_public_dashboard_data(
         # conversation history (separate from Lead Reactivation). Sanitized:
         # no raw messages, no email, no phone.
         "untapped_network":            build_untapped_network_public(untapped_network_data),
+        # Opportunity Market — Needs Mapping person/company drill-down (Parts 2-4)
+        "needs_mapping_backlog":       build_needs_mapping_public(needs_mapping_backlog_data),
+        "needs_mapping_action_plan":   build_needs_mapping_action_plan_public(needs_mapping_action_plan_data),
         # Action Plan Progress — measurement layer for the Action Plan page.
         # Placeholder here (this function runs before the weekly delta layer
         # exists); src/action_plan_progress.py merges the real sanitized
