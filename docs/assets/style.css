@@ -490,6 +490,17 @@ tr:hover td { background: var(--bg-hover); }
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: .85rem;
 }
+
+/* Strategic Gap action cards specifically — cap desktop to a max of 4
+   columns (3 on narrower desktop) instead of letting auto-fill sprawl to
+   5-6 columns on very wide screens. Tablet (769-1024px, 2 cols) and mobile
+   (<=768px, 1 col) already come from the shared .plan-grid rules below. */
+@media (min-width: 1401px) {
+  #gap-plan-close-grid, #gap-plan-ontrack-grid, #gap-plan-saturated-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1025px) and (max-width: 1400px) {
+  #gap-plan-close-grid, #gap-plan-ontrack-grid, #gap-plan-saturated-grid { grid-template-columns: repeat(3, 1fr); }
+}
 .plan-card {
   background: var(--bg-surface);
   border: 1px solid var(--border);

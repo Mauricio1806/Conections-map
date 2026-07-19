@@ -353,7 +353,33 @@ def build_public_gap_data(gap_df: pd.DataFrame) -> list:
         "strategic_reason", "recommended_action",
     ]
     safe_cols = [c for c in safe_cols if c in gap_df.columns]
-    return gap_df[safe_cols].to_dict(orient="records")
+    records = gap_df[safe_cols].to_dict(orient="records")
+
+    # Attach a realistic LinkedIn search pack per row — never the internal
+    # bucket label itself (see src/strategic_gap_search_builder.py). This
+    # replaces the old frontend behavior of quoting `market` directly into
+    # a LinkedIn keyword query (e.g. '"Hiring Manager" AND "LATAM USD"',
+    # which returns nothing because LATAM_USD is not a real search term).
+    return _enrich_plan_with_search_pack(records)
+
+
+def _enrich_plan_with_search_pack(records: list) -> list:
+    """Same search-pack enrichment as build_public_gap_data, applied to the
+    30/60/90-day Action Plan rows (they share the same market/persona/
+    urgency_level/gap_count shape). Fixes the same bug on the Action Plan
+    page: without this, its client-side fallback query builder could fall
+    through to quoting the raw V2 market label (e.g. "US_CANADA_NEARSHORE",
+    "EUROPE") directly into a LinkedIn search query."""
+    try:
+        from src.strategic_gap_search_builder import build_strategic_gap_search_pack
+        for rec in records:
+            rec["search_pack"] = build_strategic_gap_search_pack(
+                rec.get("market", ""), rec.get("persona", ""),
+                rec.get("urgency_level", "Medium"), rec.get("gap_count", 0),
+            )
+    except Exception as exc:
+        logger.warning(f"  Action Plan search pack build failed (non-fatal): {exc}")
+    return records
 
 
 # ── V2 market label ↔ V5 opportunity-bucket set mapping ─────────────────────
@@ -858,9 +884,9 @@ def export_public_dashboard_data(
         # Strategic Gap people drill-down (Part 3) — segment="current" rows
         # here; weekly_kpi_delta.py appends segment="new_this_week" rows.
         "strategic_gap_people_drilldown": gap_drilldown,
-        "action_plan_30":     plan_30.to_dict(orient="records"),
-        "action_plan_60":     plan_60.to_dict(orient="records"),
-        "action_plan_90":     plan_90.to_dict(orient="records"),
+        "action_plan_30":     _enrich_plan_with_search_pack(plan_30.to_dict(orient="records")),
+        "action_plan_60":     _enrich_plan_with_search_pack(plan_60.to_dict(orient="records")),
+        "action_plan_90":     _enrich_plan_with_search_pack(plan_90.to_dict(orient="records")),
         "top_contacts":                build_public_contacts(df, n=200, outreach_scores=outreach_scores, untapped_scores=untapped_scores, needs_mapping_scores=needs_mapping_scores),
         # Full-network outreach status aggregate (sanitized counts only) — persisted
         # so next week's weekly_kpi_delta.py can compute a real Interview Pipeline /

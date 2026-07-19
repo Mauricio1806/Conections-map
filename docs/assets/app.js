@@ -840,27 +840,72 @@ window.applyGapPersonaMarketFilter = function(market, urgency) {
   if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
+// Readable market labels — display-only, never fed into a LinkedIn query.
+// Mirrors src/strategic_gap_search_builder.py's MARKET_DISPLAY_LABEL.
+const GAP_MARKET_DISPLAY_LABEL = {
+  LATAM_USD: 'LATAM/USD', US_CANADA_NEARSHORE: 'US/Canada Nearshore',
+  SPAIN_EU: 'Spain/EU', EUROPE: 'Europe',
+};
+function gapMarketLabel(market) { return GAP_MARKET_DISPLAY_LABEL[market] || String(market || '').replace(/_/g, ' '); }
+
+const SEARCH_QUALITY_COLOR = { 'High precision': '#22c55e', 'Medium precision': '#f59e0b', 'Broad discovery': '#8b949e' };
+function searchQualityBadge(q) {
+  const color = SEARCH_QUALITY_COLOR[q] || '#8b949e';
+  return '<span class="urgency-badge" style="background:' + color + '20;color:' + color + ';border:1px solid ' + color + '">' + (q || 'Broad discovery') + '</span>';
+}
+
+// Builds one query row: label + query text + Open Search + Copy Query.
+// query is always a plain real-world phrase from the backend search_pack
+// (src/strategic_gap_search_builder.py) — never the raw market/persona
+// bucket labels, and never a nested Boolean expression.
+function _gapQueryRow(label, query, color) {
+  const qAttr = escapeAttr(query);
+  return '<div class="search-pack-row">'
+    + '<span style="font-size:.7rem;font-weight:700;color:' + (color || '#8b949e') + ';min-width:56px;flex-shrink:0">' + label + '</span>'
+    + '<code class="search-query-code" style="flex:1 1 160px">' + query + '</code>'
+    + '<a href="https://www.linkedin.com/search/results/people/?keywords=' + encodeURIComponent(query) + '" target="_blank" rel="noopener" '
+    + 'class="search-pack-btn" style="background:var(--accent);color:#fff;text-decoration:none" title="Open People Search on LinkedIn">Open Search</a>'
+    + '<button type="button" class="btn-ghost search-pack-btn" data-query="' + qAttr + '" onclick="copyQueryBtn(this)" title="Copy this query to clipboard">Copy Query</button>'
+    + '</div>';
+}
+
 function _gapActionCard(r) {
   const market = r.market || '';
   const persona = r.persona || '';
-  const query = '"' + persona + '" AND "' + market.replace(/_/g, ' ') + '"';
-  const qAttr = escapeAttr(query);
+  const marketLabel = gapMarketLabel(market);
   const volume = _gapVolumeForUrgency(r.urgency_level);
-  return '<div class="plan-card ' + (r.urgency_level||'').toLowerCase() + '">'
+  // search_pack is precomputed server-side by build_strategic_gap_search_pack
+  // (src/strategic_gap_search_builder.py) — real-world title+region terms,
+  // never the raw LATAM_USD/SPAIN_EU/US_CANADA_NEARSHORE bucket label.
+  const sp = r.search_pack || {};
+  const primary = sp.primary_query || ('data engineer ' + persona.toLowerCase());
+  const fallback = sp.secondary_query || (sp.fallback_queries && sp.fallback_queries[0]) || '';
+  const mAttr = escapeAttr(market);
+  const uAttr = escapeAttr(r.urgency_level || '');
+  return '<div class="plan-card gap-plan-card ' + (r.urgency_level||'').toLowerCase() + '">'
     + '<div class="plan-card-header"><div>'
-    + '<div class="plan-card-title">Add ' + fmt(r.gap_count) + ' ' + persona + ' — ' + market.replace(/_/g, ' ') + '</div>'
-    + '<div class="plan-card-meta">' + (r.timeframe||'') + ' · suggested pace: ' + volume + '</div>'
-    + '</div>' + urgencyBadge(r.urgency_level) + '</div>'
-    + '<div class="plan-reason">' + (r.recommended_action || r.strategic_reason || '').substring(0, 160) + '</div>'
+    + '<div class="plan-card-title">Add ' + fmt(r.gap_count) + ' ' + persona + ' — ' + marketLabel + '</div>'
+    + '<div class="plan-card-meta">Current ' + fmt(r.current_count) + ' · Target ' + fmt(r.target_count) + ' · Gap ' + fmt(r.gap_count)
+    + ' · ' + (r.timeframe||'') + ' · pace: ' + volume + '</div>'
+    + '</div><div style="display:flex;flex-direction:column;gap:.25rem;align-items:flex-end">' + urgencyBadge(r.urgency_level) + searchQualityBadge(sp.search_quality) + '</div></div>'
+    + _gapQueryRow('Primary', primary, '#3b82f6')
+    + (fallback ? _gapQueryRow('Fallback', fallback, '#8b5cf6') : '')
+    + '<div style="font-size:.7rem;color:var(--info);margin-top:.3rem;overflow-wrap:break-word">&#127717; ' + (sp.recommended_filters || 'People · 2nd degree') + '</div>'
+    + '<div class="plan-reason" style="overflow-wrap:break-word">' + (sp.search_rationale || r.strategic_reason || '').substring(0, 220) + '</div>'
     + '<div class="search-pack-row" style="border-bottom:none">'
-    + '<code class="search-query-code" style="flex:1 1 160px">' + query + '</code>'
-    + '<a href="https://www.linkedin.com/search/results/people/?keywords=' + encodeURIComponent(query) + '" target="_blank" rel="noopener" '
-    + 'class="search-pack-btn" style="background:var(--accent);color:#fff;text-decoration:none">Open Search</a>'
-    + '<button type="button" class="btn-ghost search-pack-btn" data-query="' + qAttr + '" onclick="copyQueryBtn(this)">Copy Query</button>'
-    + '<button type="button" class="btn-ghost search-pack-btn" onclick="applyGapPersonaMarketFilter(\'' + escapeAttr(market) + '\',\'' + escapeAttr(r.urgency_level||'') + '\')">Apply Filter</button>'
+    + '<button type="button" class="btn-ghost search-pack-btn" onclick="applyGapDashboardFilter(\'' + mAttr + '\',\'' + escapeAttr(persona) + '\',\'' + uAttr + '\')" title="Filter the gap table and show the people behind this gap">Apply Dashboard Filter</button>'
     + '</div>'
     + '</div>';
 }
+
+// "Apply Dashboard Filter" (Part 10) — filters the gap table to this exact
+// market+persona AND opens the people drilldown (Tab A) for the same
+// segment, so clicking one button both narrows the table above and shows
+// "Showing X people for MARKET — PERSONA" (or an honest empty state) below.
+window.applyGapDashboardFilter = function(market, persona, urgency) {
+  applyGapPersonaMarketFilter(market, urgency);
+  openGapDrilldown(market, persona);
+};
 
 function renderGapActionPlan(gap) {
   const closeGrid = document.getElementById('gap-plan-close-grid');
@@ -957,7 +1002,8 @@ window.openGapDrilldown = function(market, persona) {
   const panel = document.getElementById('gap-drilldown');
   const titleEl = document.getElementById('gap-drilldown-title');
   if (!panel) return;
-  if (titleEl) titleEl.textContent = (persona || '') + ' — ' + String(market || '').replace(/_/g, ' ');
+  const marketLabel = gapMarketLabel(market);
+  if (titleEl) titleEl.textContent = (persona || '') + ' — ' + marketLabel;
 
   // Tab A — Current Contacts Counted (segment='current'; count always equals
   // this gap row's own current_count since both are built from the same
@@ -977,9 +1023,10 @@ window.openGapDrilldown = function(market, persona) {
       + '<td style="font-size:0.75rem;white-space:nowrap">' + (p.connected_on||'—') + '</td>'
       + '<td>' + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
       + '</tr>').join('')
-      : '<tr><td colspan="9" style="text-align:center;color:var(--text-muted)">No contacts currently counted in this gap.</td></tr>';
+      : '<tr><td colspan="9" style="text-align:center;color:var(--text-muted)">No existing people found for this gap. Use the search query to create new contacts.</td></tr>';
   }
-  _gapTabStats('gap-tab-current', current.length, current.length);
+  const currentStatsEl = document.getElementById('gap-tab-current-stats');
+  if (currentStatsEl) currentStatsEl.textContent = 'Showing ' + current.length + ' people for ' + marketLabel + ' — ' + persona;
 
   // Tab B — New This Week Matching This Gap (segment='new_this_week',
   // appended by src/weekly_kpi_delta.py — empty until a weekly refresh runs
@@ -1522,10 +1569,16 @@ function renderPlan() {
       const gap    = r.gap_count || 0;
       const weekly = Math.max(1, Math.ceil(Math.min(gap, 80) / 4));
       const mktKey = (r.market || '').replace(/\s/g,'_').toUpperCase();
-      const query  = Q[mktKey] || ('"' + (r.persona||'') + '" "' + (r.market||'') + '"');
+      // Prefer the backend search_pack (src/strategic_gap_search_builder.py —
+      // real title+region terms). Q[mktKey] is a legacy fallback for older
+      // cached JSON without a search_pack. NEVER fall back to quoting the
+      // raw market label itself (e.g. '"Recruiter" "US_CANADA_NEARSHORE"') —
+      // that string is not something LinkedIn indexes and returns nothing.
+      const query  = (r.search_pack && r.search_pack.primary_query) || Q[mktKey] || ('data engineer ' + (r.persona||'').toLowerCase());
+      const marketLabel = gapMarketLabel(r.market || '');
       return '<div class="plan-card ' + (r.urgency_level||'').toLowerCase() + '">'
         + '<div class="plan-card-header"><div>'
-        + '<div class="plan-card-title">' + (r.market||'') + ' — ' + (r.persona||'') + '</div>'
+        + '<div class="plan-card-title">' + marketLabel + ' — ' + (r.persona||'') + '</div>'
         + '<div class="plan-card-meta">' + (r.timeframe||'') + '</div>'
         + '</div>' + urgencyBadge(r.urgency_level) + '</div>'
         + '<div class="plan-targets">'
