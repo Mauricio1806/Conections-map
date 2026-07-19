@@ -143,6 +143,14 @@ ALLOWED_CONTACT_FIELDS = {
     "contact_history_status", "untapped_category", "untapped_outreach_score",
     "recommended_first_action", "first_message_angle", "profile_url",
     "conversation_match_confidence", "strategic_focus", "operational_category",
+    # Needs Mapping backlog person rows (needs_mapping_backlog.people)
+    "suggested_opportunity_bucket", "mapping_priority_score",
+    "resolution_source", "mapping_reason_short",
+    # Strategic Gap people drill-down (Part 3)
+    "market", "segment", "reason",
+    # Weekly people delta segments (Part 4)
+    "market_segment", "bucket_group", "previous_value", "current_value",
+    "match_method", "is_actionable",
 }
 
 
@@ -172,9 +180,17 @@ def check_json(path: Path) -> list[str]:
         list(un.get("top_untapped_contacts", []) or []) +
         list(un.get("this_week_queue", []) or [])
     )
+    mapping = list((data.get("needs_mapping_backlog", {}) or {}).get("people", []) or [])
+    gap_drilldown = list(data.get("strategic_gap_people_drilldown", []) or [])
+    weekly_delta = list(data.get("weekly_people_delta_segments", []) or [])
+    opp_segments = list(data.get("opportunity_market_people_segments", []) or [])
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \
-                  [(i, c, "untapped") for i, c in enumerate(untapped)]
+                  [(i, c, "untapped") for i, c in enumerate(untapped)] + \
+                  [(i, c, "mapping") for i, c in enumerate(mapping)] + \
+                  [(i, c, "gap_drilldown") for i, c in enumerate(gap_drilldown)] + \
+                  [(i, c, "weekly_delta") for i, c in enumerate(weekly_delta)] + \
+                  [(i, c, "opp_segment") for i, c in enumerate(opp_segments)]
 
     for i, record, record_type in all_records:
         for field in record:

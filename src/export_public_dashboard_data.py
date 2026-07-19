@@ -72,6 +72,26 @@ def _is_safe_field(field: str) -> bool:
     return field.lower() not in EXCLUDED_PATTERNS
 
 
+def _safe_str(v, default: str = "") -> str:
+    """NaN/None-safe string coercion — a blank pandas cell reads back as
+    float('nan'), which is JSON-illegal (json.dump emits a literal NaN
+    token that fails JSON.parse() in every browser) and also truthy in
+    Python, so a plain `v or default` does not catch it."""
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return default
+    return str(v)
+
+
+def _safe_num(v, default=0):
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return default
+    try:
+        n = float(v)
+        return default if pd.isna(n) else n
+    except (TypeError, ValueError):
+        return default
+
+
 def _enrich_action_fields(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     mkt_col = "market_v2" if "market_v2" in df.columns else "strategic_market"
@@ -336,6 +356,85 @@ def build_public_gap_data(gap_df: pd.DataFrame) -> list:
     return gap_df[safe_cols].to_dict(orient="records")
 
 
+# ── V2 market label ↔ V5 opportunity-bucket set mapping ─────────────────────
+# Strategic Gap targets (generate_action_plan.py) are defined against the
+# older V2 market labels (market_v2/strategic_market column), while Untapped
+# Network / Top Contacts carry the newer V5 opportunity_bucket. This mapping
+# lets a gap segment ("LATAM_USD", "Recruiter") pull the right V5-bucketed
+# never-contacted candidates for its "Recommended to Activate Next" tab.
+# Mirrored client-side in app.js as GAP_MARKET_TO_V5_BUCKETS — keep both in
+# sync if either changes.
+MARKET_V2_TO_V5_BUCKETS = {
+    "LATAM_USD":           ["LATAM_USD_CONFIRMED", "LATAM_USD_LIKELY"],
+    "US_CANADA_NEARSHORE": ["US_CANADA_CONFIRMED", "US_CANADA_LIKELY"],
+    "SPAIN_EU":            ["SPAIN_EU_CONFIRMED", "SPAIN_EU_LIKELY"],
+    "EUROPE":              ["EUROPE_CONFIRMED", "EUROPE_LIKELY"],
+}
+
+SAFE_GAP_DRILLDOWN_COLS = [
+    "full_name", "company_clean", "position_clean", "persona",
+    "market", "opportunity_bucket", "priority_score",
+    "outreach_status", "contact_history_status",
+    "connected_on", "url", "segment", "reason",
+]
+
+
+def build_strategic_gap_people_drilldown(
+    df: pd.DataFrame,
+    gap_df: pd.DataFrame,
+    outreach_scores: dict = None,
+    untapped_scores: dict = None,
+) -> list:
+    """
+    Tab A ("Current Contacts Counted") of the Strategic Gap drill-down.
+    Reuses the EXACT predicate generate_action_plan.py uses for each gap row's
+    current_count, so the drill-down's row count can never drift from the gap
+    table's own number. Tab B ("New This Week") rows are appended later by
+    weekly_kpi_delta.py with segment="new_this_week"; this function only ever
+    emits segment="current" rows.
+    """
+    if gap_df is None or gap_df.empty:
+        return []
+    mkt_col = "market_v2" if "market_v2" in df.columns else "strategic_market"
+    if mkt_col not in df.columns or "persona" not in df.columns:
+        return []
+
+    outreach_scores = outreach_scores or {}
+    untapped_scores = untapped_scores or {}
+
+    def _norm(url):
+        return str(url or "").strip().rstrip("/").lower()
+
+    rows = []
+    for _, gap_row in gap_df.iterrows():
+        market  = gap_row.get("market")
+        persona = gap_row.get("persona")
+        if not market or not persona:
+            continue
+        subset = df[(df[mkt_col] == market) & (df["persona"] == persona)]
+        if subset.empty:
+            continue
+        for _, r in subset.iterrows():
+            u = _norm(r.get("url", ""))
+            outreach = outreach_scores.get(u, {})
+            untapped = untapped_scores.get(u, {})
+            rows.append({
+                "full_name":              _safe_str(r.get("full_name")),
+                "company_clean":          _safe_str(r.get("company_clean")),
+                "position_clean":         _safe_str(r.get("position_clean")),
+                "persona":                _safe_str(r.get("persona")),
+                "market":                 market,
+                "opportunity_bucket":     _safe_str(r.get("opportunity_bucket")),
+                "priority_score":         _safe_num(r.get("priority_score")),
+                "outreach_status":        _safe_str(outreach.get("outreach_status")),
+                "contact_history_status": _safe_str(untapped.get("contact_history_status")),
+                "connected_on":           _safe_str(r.get("connected_on_clean")),
+                "url":                    _safe_str(r.get("url")),
+                "segment":                "current",
+            })
+    return rows
+
+
 def build_public_company_intel(df: pd.DataFrame) -> dict:
     mkt_col = "market_v2" if "market_v2" in df.columns else "strategic_market"
 
@@ -372,6 +471,67 @@ def build_v5_distribution_public(df: pd.DataFrame) -> dict:
     if "opportunity_market_v5" not in df.columns:
         return {}
     return df["opportunity_market_v5"].value_counts().to_dict()
+
+
+# ── Opportunity Market — full-population person segments (Part 5/6) ─────────
+# Mirrors opportunity_market_v5.build_v5_summary()'s own bucket groupings
+# exactly, so every Opportunity Market KPI card's displayed count equals what
+# this array shows when filtered by market_segment — no separate matching
+# logic to keep in sync. Full population (not top-N) — safe because every
+# field here is already in SAFE_CONTACT_COLS/SAFE_NEEDS_MAPPING_PERSON_COLS.
+_CONFIRMED_GEOGRAPHIC_BUCKETS = {
+    "BRAZIL_CONFIRMED", "BRAZIL_LIKELY",
+    "LATAM_USD_CONFIRMED", "LATAM_USD_LIKELY",
+    "US_CANADA_CONFIRMED", "US_CANADA_LIKELY",
+    "SPAIN_EU_CONFIRMED", "SPAIN_EU_LIKELY",
+    "EUROPE_CONFIRMED", "EUROPE_LIKELY",
+}
+_GLOBAL_BUCKETS = {"GLOBAL_STAFFING", "GLOBAL_CONSULTING", "GLOBAL_TECH"}
+_LANGUAGE_BUCKETS = {"LANGUAGE_PORTUGUESE_MARKET", "LANGUAGE_SPANISH_MARKET"}
+
+SAFE_OPPORTUNITY_SEGMENT_COLS = [
+    "full_name", "company_clean", "position_clean", "persona",
+    "opportunity_bucket", "market_segment", "priority_score",
+    "is_actionable", "url",
+]
+
+
+def _opportunity_market_segment(bucket: str) -> str:
+    if bucket in _CONFIRMED_GEOGRAPHIC_BUCKETS:
+        return "confirmed_geographic"
+    if bucket in _GLOBAL_BUCKETS:
+        return "global_buckets"
+    if bucket in _LANGUAGE_BUCKETS:
+        return "language_signal"
+    if bucket == "GLOBAL_OPPORTUNITY":
+        return "global_opportunity"
+    if bucket == "NEEDS_COMPANY_MAPPING":
+        return "needs_mapping"
+    if bucket == "LOW_VALUE_UNRESOLVED":
+        return "low_value"
+    return "other"
+
+
+def build_opportunity_market_people_segments(df: pd.DataFrame) -> list:
+    if "opportunity_bucket" not in df.columns:
+        return []
+    rows = []
+    for _, r in df.iterrows():
+        bucket = _safe_str(r.get("opportunity_bucket"))
+        if not bucket:
+            continue
+        rows.append({
+            "full_name":          _safe_str(r.get("full_name")),
+            "company_clean":      _safe_str(r.get("company_clean")),
+            "position_clean":     _safe_str(r.get("position_clean")),
+            "persona":            _safe_str(r.get("persona")),
+            "opportunity_bucket": bucket,
+            "market_segment":     _opportunity_market_segment(bucket),
+            "priority_score":     _safe_num(r.get("priority_score")),
+            "is_actionable":      bucket != "LOW_VALUE_UNRESOLVED",
+            "url":                _safe_str(r.get("url")),
+        })
+    return rows
 
 
 def build_unknown_companies_public(df: pd.DataFrame) -> list:
@@ -656,6 +816,23 @@ def export_public_dashboard_data(
             if u:
                 needs_mapping_scores[u] = p
 
+    # Strategic Gap people drill-down (Tab A: "Current Contacts Counted") —
+    # Tab B ("New This Week") rows are appended in-place by weekly_kpi_delta.py.
+    gap_drilldown = build_strategic_gap_people_drilldown(
+        df, gap_df, outreach_scores=outreach_scores, untapped_scores=untapped_scores,
+    )
+    if gap_drilldown:
+        pd.DataFrame(gap_drilldown).to_csv(
+            OUTPUTS_DIR / "strategic_gap_people_drilldown.csv", index=False,
+        )
+
+    # Opportunity Market full-population person segments (Part 5/6)
+    opportunity_market_segments = build_opportunity_market_people_segments(df)
+    if opportunity_market_segments:
+        pd.DataFrame(opportunity_market_segments).to_csv(
+            OUTPUTS_DIR / "opportunity_market_people_segments.csv", index=False,
+        )
+
     payload = {
         "meta": {
             "report_date":      str(date.today()),
@@ -678,6 +855,9 @@ def export_public_dashboard_data(
         "persona_distribution":build_public_persona_distribution(df),
         "heatmaps":           build_public_heatmap(df),
         "gap_analysis":       build_public_gap_data(gap_df),
+        # Strategic Gap people drill-down (Part 3) — segment="current" rows
+        # here; weekly_kpi_delta.py appends segment="new_this_week" rows.
+        "strategic_gap_people_drilldown": gap_drilldown,
         "action_plan_30":     plan_30.to_dict(orient="records"),
         "action_plan_60":     plan_60.to_dict(orient="records"),
         "action_plan_90":     plan_90.to_dict(orient="records"),
@@ -698,6 +878,10 @@ def export_public_dashboard_data(
         # V5 Opportunity Market (replaces UNKNOWN as primary business view)
         "opportunity_market_v5":       build_v5_distribution_public(df),
         "opportunity_market_v5_summary": v5_data or {},
+        # Opportunity Market full-population person segments (Part 5/6) —
+        # backs every clickable card on the Opportunity Market page, grouped
+        # client-side by market_segment/company_clean as needed.
+        "opportunity_market_people_segments": opportunity_market_segments,
         # V6 Company Resolution — cross-contact/message/persona mapping improvements
         "company_resolution_v6":       company_resolution_v6_data or {},
         # V7 Company Resolution — iterative fuzzy-cluster/company-message-aggregate/

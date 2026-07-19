@@ -411,13 +411,13 @@ def compute_confidence_adjusted_kpis(df: pd.DataFrame) -> dict:
     market_readiness = round(usd_s * 0.6 + esp_s * 0.4, 1)
 
     # ── Concentration flags ─────────────────────────────────────────────────
+    # NOTE: raw V2 UNKNOWN is intentionally NOT surfaced here as a red
+    # "concentration flag" — it's the expected shape of a LinkedIn export
+    # (no location field), not a data-quality failure. See
+    # technical_geo_limitation_note below, surfaced only in Data Quality's
+    # Section B ("technical limitation"), never as an Executive Overview alert.
     flags = []
     brazil_pct = _pct(brazil, total)
-    if unknown_pct > 70:
-        flags.append(
-            f"HIGH UNKNOWN ({unknown_pct}%): Market confidence is low. "
-            f"Classify top 25 companies in company_market_mapping_template.csv to improve."
-        )
     if brazil_pct > 20:
         flags.append(
             f"Brazil-concentrated ({brazil_pct}% of identified): "
@@ -546,6 +546,18 @@ def compute_confidence_adjusted_kpis(df: pd.DataFrame) -> dict:
 
         # ── Flags ────────────────────────────────────────────────────────────
         "concentration_flags":         flags,
+
+        # ── Technical geographic limitation note (Data Quality Section B) ────
+        # Deliberately NOT a concentration flag — never rendered as a red
+        # Executive Overview alert. Opportunity Market V5/V6/V7 already
+        # classify the vast majority of the network into actionable buckets;
+        # this note explains why exact geography specifically stays unknown.
+        "technical_geo_limitation_note": (
+            "Exact geography is unavailable from LinkedIn export; opportunity "
+            "buckets are inferred from company, title, persona, language, "
+            "message history, and manual enrichment. This is an action "
+            "backlog, not a data failure."
+        ),
 
         # ── Top distributions ────────────────────────────────────────────────
         "top_personas":                df["persona"].value_counts().head(12).to_dict(),

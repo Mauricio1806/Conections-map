@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1784249909">
+  <link rel="stylesheet" href="./assets/style.css?v=1784419323">
 </head>
 <body>
 
@@ -94,7 +94,7 @@
     <div class="page active" id="page-overview">
       <div class="page-header">
         <h2>Executive Network Overview</h2>
-        <p>Confidence is low but strategic value is real. UNKNOWN market does <strong>not</strong> mean the connection is worthless.</p>
+        <p>Opportunity buckets are inferred from company, title, persona, language, message history, and manual enrichment — not exact geography. This is an action backlog, not a data failure.</p>
       </div>
 
       <div id="confidence-banner"></div>
@@ -111,7 +111,7 @@
       <div class="section-label">Persona Groups</div>
       <div class="metrics-grid" id="kpi-personas"></div>
 
-      <div class="section-label">Market Distribution (V2 Inference)</div>
+      <div class="section-label">Opportunity Market Distribution (V5)</div>
       <div class="metrics-grid metrics-grid-wide" id="kpi-markets"></div>
 
       <div class="section-label">Opportunity Market V5 — Breakdown</div>
@@ -126,7 +126,7 @@
 
       <div class="section-label">Visual Distribution</div>
       <div class="chart-grid">
-        <div class="chart-box"><h4>Market Distribution (V2)</h4><canvas id="chart-market"></canvas></div>
+        <div class="chart-box"><h4>Opportunity Market Distribution (V5)</h4><canvas id="chart-market"></canvas></div>
         <div class="chart-box"><h4>Top Personas</h4><canvas id="chart-personas"></canvas></div>
       </div>
 
@@ -202,6 +202,43 @@
           </tr></thead>
           <tbody id="gap-tbody"></tbody>
         </table>
+      </div>
+
+      <!-- Strategic Gap people drill-down (Part 3) — click a row or a chart
+           bar above to populate this; sits directly below the gap table it
+           explains, above the fold, not far down the page. -->
+      <div id="gap-drilldown" style="display:none;margin-top:1.5rem">
+        <div class="section-label">Contacts Behind This Gap: <span id="gap-drilldown-title"></span>
+          <button class="btn-ghost" style="float:right;font-size:0.75rem" onclick="document.getElementById('gap-drilldown').style.display='none'">Close</button>
+        </div>
+        <div class="tabs-container">
+          <div class="tabs-bar">
+            <button class="tab-btn active" data-tab="gap-tab-current">Current Contacts Counted</button>
+            <button class="tab-btn" data-tab="gap-tab-new">New This Week</button>
+            <button class="tab-btn" data-tab="gap-tab-recommended">Recommended to Activate Next</button>
+          </div>
+          <div class="tab-panel active" id="gap-tab-current">
+            <div class="table-stats" id="gap-tab-current-stats"></div>
+            <div class="table-wrap"><table id="gap-tab-current-table">
+              <thead><tr><th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Bucket</th><th>Score</th><th>Status</th><th>Connected</th><th>URL</th></tr></thead>
+              <tbody id="gap-tab-current-tbody"></tbody>
+            </table></div>
+          </div>
+          <div class="tab-panel" id="gap-tab-new">
+            <div class="table-stats" id="gap-tab-new-stats"></div>
+            <div class="table-wrap"><table id="gap-tab-new-table">
+              <thead><tr><th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Bucket</th><th>Connected</th><th>Score</th><th>Why This Matches</th><th>URL</th></tr></thead>
+              <tbody id="gap-tab-new-tbody"></tbody>
+            </table></div>
+          </div>
+          <div class="tab-panel" id="gap-tab-recommended">
+            <div class="table-stats" id="gap-tab-recommended-stats"></div>
+            <div class="table-wrap"><table id="gap-tab-recommended-table">
+              <thead><tr><th>Name</th><th>Company</th><th>Persona</th><th>Bucket</th><th>Untapped Score</th><th>First Message Angle</th><th>URL</th></tr></thead>
+              <tbody id="gap-tab-recommended-tbody"></tbody>
+            </table></div>
+          </div>
+        </div>
       </div>
 
       <div class="section-label" style="margin-top:2rem">Connection Gap Action Plan</div>
@@ -583,6 +620,28 @@ python src/validate_static_dashboard_runtime.py</pre>
           Each company you map resolves all its connections at once.
           <em style="opacity:.7"> — Exact country/location cannot be guaranteed from LinkedIn exports; nothing here is fabricated.</em>
         </span>
+      </div>
+
+      <!-- V5 segment drill-down (Part 5) — click a card above to populate.
+           Company-level rows here filter the person table below them; this
+           is the same click-a-company-row-to-filter-people pattern already
+           used in the Needs Mapping Drill-Down section further down. -->
+      <div id="v5-segment-drilldown" style="display:none;margin-bottom:1.5rem">
+        <div class="table-stats" id="v5-segment-stats"></div>
+        <div class="section-label" style="margin-top:0.5rem">Companies in This Segment</div>
+        <div class="table-wrap">
+          <table id="v5-segment-companies-table">
+            <thead><tr><th>Company</th><th>Contacts</th></tr></thead>
+            <tbody id="v5-segment-companies-tbody"></tbody>
+          </table>
+        </div>
+        <div class="section-label" style="margin-top:1rem">People in This Segment</div>
+        <div class="table-wrap">
+          <table id="v5-segment-table">
+            <thead><tr><th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Bucket</th><th>Score</th><th>LinkedIn</th></tr></thead>
+            <tbody id="v5-segment-tbody"></tbody>
+          </table>
+        </div>
       </div>
 
       <div class="section-label">Contacts Needing Company Mapping (Action Backlog)</div>
@@ -1038,6 +1097,7 @@ python src/validate_static_dashboard_runtime.py</pre>
         </span>
       </div>
       <div class="metrics-grid" id="quality-metrics-b"></div>
+      <div id="quality-geo-note" style="font-size:0.85rem;color:var(--text-muted);margin:0.75rem 0 1rem"></div>
 
       <div class="section-label">How V5 Classification Works</div>
       <div class="card" style="padding:1.5rem">
@@ -1105,6 +1165,25 @@ python src/validate_static_dashboard_runtime.py</pre>
         <div class="metrics-grid" id="weekly-untapped-movement"></div>
         <div id="weekly-untapped-note" style="display:none;font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 1rem"></div>
 
+        <!-- Weekly card drill-down (Part 4) — click any card above to see the
+             exact people behind that delta. Shared panel, sits right below
+             the card sections it explains. -->
+        <div id="weekly-drilldown" style="display:none;margin-bottom:1.5rem">
+          <div class="section-label">People Behind This Card: <span id="weekly-drilldown-title"></span>
+            <button class="btn-ghost" style="float:right;font-size:0.75rem" onclick="document.getElementById('weekly-drilldown').style.display='none'">Close</button>
+          </div>
+          <div class="table-stats" id="weekly-drilldown-stats"></div>
+          <div class="table-wrap">
+            <table id="weekly-drilldown-table">
+              <thead><tr>
+                <th>Name</th><th>Company</th><th>Persona</th><th>Opportunity Bucket</th>
+                <th>Change</th><th>Score</th><th>Match Method</th><th>LinkedIn</th>
+              </tr></thead>
+              <tbody id="weekly-drilldown-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
         <div class="section-label">E. New High-Value Connections This Week</div>
         <div class="table-wrap">
           <table id="weekly-new-contacts-table">
@@ -1124,6 +1203,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1784249909"></script>
+<script src="./assets/app.js?v=1784419323"></script>
 </body>
 </html>

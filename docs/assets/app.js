@@ -298,6 +298,56 @@ function initNav() {
   });
 }
 
+// ── Cross-page routing (Executive Overview clickthroughs, Part 1) ────────────
+// setRoute(pageId, filterPayload) switches to another page (reusing initNav's
+// own click-delegation, not a duplicate routing system) then applies a filter
+// on the destination page and shows an active-filter banner: "Showing X of Y
+// — <label>". filterPayload = { applyFn, applyArgs, label, resetFn }.
+let dashboardState = { activePageId: null, activeLabel: null, resetFn: null };
+
+// Maps a destination pageId to its primary .table-stats element and the
+// filtered/total array getters needed to render "Showing X of Y — <label>"
+// in the SAME element the page's own filters already use — no new DOM.
+function _routeStatsConfig(pageId) {
+  const cfg = {
+    contacts: { el: 'ct-stats',                filtered: () => filteredContacts.length,   total: () => (D.top_contacts || []).length },
+    leads:    { el: 'leads-stats',             filtered: () => filteredLeads.length,      total: () => ((D.lead_reactivation || {}).top_reactivation_contacts || []).length },
+    untapped: { el: 'untapped-stats',          filtered: () => filteredUntapped.length,   total: () => ((D.untapped_network || {}).top_untapped_contacts || []).length },
+    unknown:  { el: 'mapping-drilldown-stats', filtered: () => filteredMappingPeople.length, total: () => mappingPeopleBase.length },
+  };
+  return cfg[pageId];
+}
+
+function renderActiveFilterBanner(pageId, label) {
+  const cfg = _routeStatsConfig(pageId);
+  if (!cfg) return;
+  const el = document.getElementById(cfg.el);
+  if (!el) return;
+  el.textContent = 'Showing ' + cfg.filtered() + ' of ' + cfg.total() + (label ? ' — ' + label : '');
+}
+
+function setRoute(pageId, filterPayload) {
+  const navEl = document.querySelector('.nav-item[data-page="' + pageId + '"]');
+  if (navEl) navEl.click();
+  setTimeout(() => {
+    if (!filterPayload) return;
+    const fn = window[filterPayload.applyFn];
+    if (typeof fn !== 'function') { console.error('[setRoute] unknown applyFn:', filterPayload.applyFn); return; }
+    try { fn.apply(null, filterPayload.applyArgs || []); }
+    catch (e) { console.error('[setRoute] filter apply failed:', e); return; }
+    dashboardState = { activePageId: pageId, activeLabel: filterPayload.label, resetFn: filterPayload.resetFn };
+    renderActiveFilterBanner(pageId, filterPayload.label);
+    const table = document.querySelector('#page-' + pageId + ' .table-wrap table');
+    if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 80); // after initNav's 50ms chart-resize timeout, so the target page is visible first
+}
+
+window.clearRouteFilter = function() {
+  const st = dashboardState;
+  dashboardState = { activePageId: null, activeLabel: null, resetFn: null };
+  if (st.resetFn && typeof window[st.resetFn] === 'function') window[st.resetFn]();
+};
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const kpi = (k, fb = 0) => D?.kpis?.[k] ?? fb;
 const fmt = n => (n === null || n === undefined) ? '—' : (typeof n === 'number' ? n.toLocaleString() : n);
@@ -320,6 +370,24 @@ function makeKpiCard(key, title, value, sub = '', subClass = '', handler = 'appl
        + 'aria-pressed="false" aria-label="Filter by ' + title + '" '
        + 'onclick="' + handler + '(\'' + key + '\')" '
        + 'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();' + handler + '(\'' + key + '\')}">'
+       + '<div class="card-title">' + title + '</div>'
+       + '<div class="card-value">' + fmt(value) + '</div>'
+       + (sub ? '<div class="card-sub ' + subClass + '">' + sub + '</div>' : '')
+       + '</div>';
+}
+
+// Cross-page routing card (Part 1) — same look as makeKpiCard, but the click
+// calls setRoute(route.pageId, route) instead of a same-page handler, so it
+// switches pages AND applies the filter there. `route` is registered on
+// window._ROUTE_CARDS[idx] rather than inlined into the onclick attribute,
+// so card titles/labels never need HTML-attribute escaping.
+window._routeCardRegistry = [];
+function makeRouteCard(title, value, sub, subClass, route) {
+  const idx = window._routeCardRegistry.push(route) - 1;
+  return '<div class="card kpi-card" tabindex="0" role="button" '
+       + 'aria-label="Filter by ' + title + '" '
+       + 'onclick="setRoute(\'' + route.pageId + '\', window._routeCardRegistry[' + idx + '])" '
+       + 'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();setRoute(\'' + route.pageId + '\', window._routeCardRegistry[' + idx + '])}">'
        + '<div class="card-title">' + title + '</div>'
        + '<div class="card-value">' + fmt(value) + '</div>'
        + (sub ? '<div class="card-sub ' + subClass + '">' + sub + '</div>' : '')
@@ -375,6 +443,8 @@ function barChart(canvasId, labels, values, colors, opts) {
     options: {
       indexAxis: isH ? 'y' : 'x',
       responsive: true,
+      onClick: (opts && opts.onBarClick) ? (evt, els) => { if (els.length) opts.onBarClick(els[0].index); } : undefined,
+      onHover: (opts && opts.onBarClick) ? (evt) => { evt.native.target.style.cursor = 'pointer'; } : undefined,
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -501,16 +571,29 @@ function renderOverview() {
   const needsMapCount = v5Sm.v5_needs_company_mapping || 0;
   const lowValCount   = v5Sm.v5_low_value_unresolved  || 0;
   const v5CovPct      = v5Sm.v5_actionable_pct || 0;
+  // Each diag item's `route` (Part 1) is a self-contained setRoute() call —
+  // page + filter + label — so clicking the card shows the exact people/
+  // companies behind the number instead of leaving it as a static bullet.
   const diagItems = [
-    { cls: sns >= 60 ? 'good' : 'warn',  title: 'Network Strength',    text: sns >= 60 ? 'Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders.' : 'Your network is building. Keep adding strategic personas.' },
-    { cls: usd >= 35 ? 'good' : 'warn',  title: 'USD / LATAM Readiness (Primary)',   text: usd >= 35 ? 'USD network is developing. Current 60-day focus: 90% LATAM/USD outreach. You have confirmed contacts in LATAM USD and US/Canada markets.' : 'USD readiness needs work. Current focus: add LATAM USD + US/Canada nearshore recruiters (90% of outreach budget).' },
-    { cls: spain >= 20 ? 'info' : 'info',title: 'Spain/EU Readiness (Exploratory)',  text: 'Spain/EU is a 10% exploratory layer for the next 60 days. Build slowly as optionality while USD pipeline is the primary income target.' },
-    { cls: glob >= 30 ? 'good' : 'warn', title: 'Global Opportunities', text: 'You have ' + kpi('global_opportunity_total') + ' contacts at GLOBAL_STAFFING, GLOBAL_TECH, and GLOBAL_CONSULTING companies — these can hire anywhere. Reactivate warm ones via Lead Reactivation.' },
-    { cls: needsMapCount > 0 ? 'warn' : 'good', title: 'Needs Company Mapping (' + needsMapCount.toLocaleString() + ')', text: needsMapCount + ' contacts have a known company but no opportunity bucket yet. This is an action backlog — not a data failure. Open outputs/unresolved_opportunity_buckets.csv to map them.' },
-    { cls: act >= 100 ? 'good' : 'warn', title: 'Actionable Contacts',  text: act + ' contacts have base priority score ≥60. Default ranking uses outreach-adjusted score from message history. See Top Contacts page.' },
+    { cls: sns >= 60 ? 'good' : 'warn',  title: 'Network Strength',    text: sns >= 60 ? 'Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders.' : 'Your network is building. Keep adding strategic personas.',
+      route: { pageId: 'contacts', applyFn: 'applyExternalContactFilter', applyArgs: [{ minScoreField: 'priority_score', minScore: 60 }], label: 'Executive card: Network Strength', resetFn: 'resetContactFilters' } },
+    { cls: usd >= 35 ? 'good' : 'warn',  title: 'USD / LATAM Readiness (Primary)',   text: usd >= 35 ? 'USD network is developing. Current 60-day focus: 90% LATAM/USD outreach. You have confirmed contacts in LATAM USD and US/Canada markets.' : 'USD readiness needs work. Current focus: add LATAM USD + US/Canada nearshore recruiters (90% of outreach budget).',
+      route: { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['usd_readiness'], label: 'Executive card: USD/LATAM Readiness', resetFn: 'resetUntappedFilters' } },
+    { cls: spain >= 20 ? 'info' : 'info',title: 'Spain/EU Readiness (Exploratory)',  text: 'Spain/EU is a 10% exploratory layer for the next 60 days. Build slowly as optionality while USD pipeline is the primary income target.',
+      route: { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['spain_eu_readiness'], label: 'Executive card: Spain/EU Exploratory', resetFn: 'resetUntappedFilters' } },
+    { cls: glob >= 30 ? 'good' : 'warn', title: 'Global Opportunities', text: 'You have ' + kpi('global_opportunity_total') + ' contacts at GLOBAL_STAFFING, GLOBAL_TECH, and GLOBAL_CONSULTING companies — these can hire anywhere. Reactivate warm ones via Lead Reactivation.',
+      route: { pageId: 'contacts', applyFn: 'applyExternalContactFilter', applyArgs: [{ opportunityBuckets: ['GLOBAL_STAFFING', 'GLOBAL_TECH', 'GLOBAL_CONSULTING', 'GLOBAL_OPPORTUNITY'] }], label: 'Executive card: Global Opportunities', resetFn: 'resetContactFilters' } },
+    { cls: needsMapCount > 0 ? 'warn' : 'good', title: 'Needs Company Mapping (' + needsMapCount.toLocaleString() + ')', text: needsMapCount + ' contacts have a known company but no opportunity bucket yet. This is an action backlog — not a data failure.',
+      route: { pageId: 'unknown', applyFn: 'applyUnknownKpiFilter', applyArgs: ['needs_mapping_total'], label: 'Executive card: Needs Company Mapping', resetFn: 'resetMappingDrilldown' } },
+    { cls: act >= 100 ? 'good' : 'warn', title: 'Actionable Contacts',  text: act + ' contacts have base priority score ≥60. Default ranking uses outreach-adjusted score from message history. See Top Contacts page.',
+      route: { pageId: 'contacts', applyFn: 'applyExternalContactFilter', applyArgs: [{ minScoreAnyFields: ['priority_score', 'outreach_adjusted_score', 'untapped_outreach_score'], minScoreAny: 60 }], label: 'Executive card: Actionable Contacts', resetFn: 'resetContactFilters' } },
   ];
-  document.getElementById('diagnosis-grid').innerHTML = diagItems.map(d =>
-    '<div class="diag-item ' + d.cls + '"><h4>' + d.title + '</h4><p>' + d.text + '</p></div>'
+  window._EXEC_DIAG_ROUTES = diagItems.map(d => d.route);
+  document.getElementById('diagnosis-grid').innerHTML = diagItems.map((d, i) =>
+    '<div class="diag-item ' + d.cls + (d.route ? ' kpi-card' : '') + '"'
+    + (d.route ? ' tabindex="0" role="button" aria-label="Filter by ' + d.title + '" onclick="setRoute(\'' + d.route.pageId + '\', window._EXEC_DIAG_ROUTES[' + i + '])" '
+      + 'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();setRoute(\'' + d.route.pageId + '\', window._EXEC_DIAG_ROUTES[' + i + '])}"' : '')
+    + '><h4>' + d.title + '</h4><p>' + d.text + '</p></div>'
   ).join('');
 
   // KPI Metrics rows
@@ -569,12 +652,18 @@ function renderOverview() {
       lrRow.style.display = '';
       if (lrLabel) lrLabel.style.display = '';
       lrRow.innerHTML = [
-        makeCard('This Week Queue',   lr.this_week_count           || 0, 'action target', 'good'),
-        makeCard('Needs My Response', lr.needs_my_response         || 0, 'reply now',     'bad'),
-        makeCard('Hot Reactivation',  lr.hot_reactivation_leads    || lr.hot_leads  || 0, 'positive signal + recruiter', 'good'),
-        makeCard('Warm Reactivation', lr.warm_reactivation_leads   || lr.warm_leads || 0, 'opportunity signals', 'warn'),
-        makeCard('Career Site',       lr.career_site_follow_ups    || 0, 'submit CV'),
-        makeCard('Follow-ups Due',    lr.follow_up_due             || 0, '7-120d window'),
+        makeRouteCard('This Week Queue',   lr.this_week_count           || 0, 'action target', 'good',
+          { pageId: 'leads', applyFn: 'applyLeadKpiFilter', applyArgs: ['this_week'], label: 'Executive card: This Week Queue', resetFn: 'resetLeadFilters' }),
+        makeRouteCard('Needs My Response', lr.needs_my_response         || 0, 'reply now',     'bad',
+          { pageId: 'leads', applyFn: 'applyLeadKpiFilter', applyArgs: ['needs_response_all'], label: 'Executive card: Needs Reply', resetFn: 'resetLeadFilters' }),
+        makeRouteCard('Hot Reactivation',  lr.hot_reactivation_leads    || lr.hot_leads  || 0, 'positive signal + recruiter', 'good',
+          { pageId: 'leads', applyFn: 'applyLeadKpiFilter', applyArgs: ['hot_reactivation'], label: 'Executive card: Hot Reactivation', resetFn: 'resetLeadFilters' }),
+        makeRouteCard('Warm Reactivation', lr.warm_reactivation_leads   || lr.warm_leads || 0, 'opportunity signals', 'warn',
+          { pageId: 'leads', applyFn: 'applyLeadKpiFilter', applyArgs: ['warm_reactivation'], label: 'Executive card: Warm Reactivation', resetFn: 'resetLeadFilters' }),
+        makeRouteCard('Career Site',       lr.career_site_follow_ups    || 0, 'submit CV', '',
+          { pageId: 'leads', applyFn: 'applyLeadKpiFilter', applyArgs: ['talent_pool'], label: 'Executive card: Career Site', resetFn: 'resetLeadFilters' }),
+        makeRouteCard('Follow-ups Due',    lr.follow_up_due             || 0, '7-120d window', '',
+          { pageId: 'leads', applyFn: 'applyLeadKpiFilter', applyArgs: ['follow_up_due_status'], label: 'Executive card: Follow-ups Due', resetFn: 'resetLeadFilters' }),
       ].join('');
     } else {
       lrRow.style.display = 'none';
@@ -593,13 +682,20 @@ function renderOverview() {
       unRow.style.display = '';
       if (unLabel) unLabel.style.display = '';
       unRow.innerHTML = [
-        makeCard('Never Contacted — Confirmed', unSum.never_contacted_confirmed || 0, 'existing connections, no conversation', 'warn'),
-        makeCard('High-Value Untapped',         unSum.high_value_untapped       || 0, 'strong persona + market fit', 'good'),
-        makeCard('Recruiters/TA Untapped',      (unSum.recruiters_untapped||0) + (unSum.ta_untapped||0), 'never messaged'),
-        makeCard('Hiring Managers Untapped',    unSum.hiring_managers_untapped  || 0, 'never messaged'),
-        makeCard('Primary LATAM/USD Untapped',  unSum.latam_usd_untapped        || 0, '90% short-term focus', 'good'),
-        makeCard('Europe Exploratory Untapped', unSum.spain_eu_untapped         || 0, '10% exploratory'),
-        makeCard('This Week Untapped Queue',    unSum.this_week_queue_count     || 0, 'ready to activate', 'good'),
+        makeRouteCard('Never Contacted — Confirmed', unSum.never_contacted_confirmed || 0, 'existing connections, no conversation', 'warn',
+          { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['never_confirmed'], label: 'Executive card: Never Contacted', resetFn: 'resetUntappedFilters' }),
+        makeRouteCard('High-Value Untapped',         unSum.high_value_untapped       || 0, 'strong persona + market fit', 'good',
+          { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['high_value'], label: 'Executive card: High-Value Untapped', resetFn: 'resetUntappedFilters' }),
+        makeRouteCard('Recruiters/TA Untapped',      (unSum.recruiters_untapped||0) + (unSum.ta_untapped||0), 'never messaged', '',
+          { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['recruiters_ta'], label: 'Executive card: Recruiters/TA Untapped', resetFn: 'resetUntappedFilters' }),
+        makeRouteCard('Hiring Managers Untapped',    unSum.hiring_managers_untapped  || 0, 'never messaged', '',
+          { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['hm'], label: 'Executive card: Hiring Managers Untapped', resetFn: 'resetUntappedFilters' }),
+        makeRouteCard('Primary LATAM/USD Untapped',  unSum.latam_usd_untapped        || 0, '90% short-term focus', 'good',
+          { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['latam'], label: 'Executive card: Primary LATAM/USD Untapped', resetFn: 'resetUntappedFilters' }),
+        makeRouteCard('Europe Exploratory Untapped', unSum.spain_eu_untapped         || 0, '10% exploratory', '',
+          { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['spain_eu'], label: 'Executive card: Europe Exploratory Untapped', resetFn: 'resetUntappedFilters' }),
+        makeRouteCard('This Week Untapped Queue',    unSum.this_week_queue_count     || 0, 'ready to activate', 'good',
+          { pageId: 'untapped', applyFn: 'applyUntappedKpiFilter', applyArgs: ['this_week'], label: 'Executive card: This Week Untapped Queue', resetFn: 'resetUntappedFilters' }),
       ].join('');
       if (unDiag) {
         unDiag.style.display = '';
@@ -662,8 +758,12 @@ function renderOverview() {
   const flags = kpi('concentration_flags', []);
   document.getElementById('flags-list').innerHTML = (Array.isArray(flags) ? flags : [flags])
     .map(f => {
-      const cls  = f.includes('No critical') ? 'alert-good' : (f.startsWith('HIGH') ? 'alert-bad' : 'alert-warn');
-      const icon = f.includes('No critical') ? '&#9989;' : '&#9888;&#65039;';
+      // Defense-in-depth (Part 2): raw V2 UNKNOWN is a technical limitation,
+      // never a red "dashboard is failing" alert — even if an older cached
+      // JSON still carries a HIGH UNKNOWN flag, it can never render red here.
+      const isUnknownNote = /UNKNOWN/i.test(f);
+      const cls  = f.includes('No critical') ? 'alert-good' : (isUnknownNote ? 'alert-info' : (f.startsWith('HIGH') ? 'alert-bad' : 'alert-warn'));
+      const icon = f.includes('No critical') ? '&#9989;' : (isUnknownNote ? '&#8505;&#65039;' : '&#9888;&#65039;');
       return '<div class="alert ' + cls + '"><span class="alert-icon">' + icon + '</span><span>' + f + '</span></div>';
     }).join('');
 }
@@ -807,8 +907,12 @@ function renderGapTable() {
   if (st) st.textContent = 'Showing ' + filteredGap.length + ' rows';
   const tbody = document.getElementById('gap-tbody');
   if (!tbody) return;
-  tbody.innerHTML = filteredGap.map(r =>
-    '<tr>'
+  tbody.innerHTML = filteredGap.map(r => {
+    const mAttr = escapeAttr(r.market || '');
+    const pAttr = escapeAttr(r.persona || '');
+    return '<tr style="cursor:pointer" tabindex="0" role="button" '
+    + 'onclick="openGapDrilldown(\'' + mAttr + '\',\'' + pAttr + '\')" '
+    + 'onkeydown="if(event.key===\'Enter\'){openGapDrilldown(\'' + mAttr + '\',\'' + pAttr + '\')}">'
     + '<td>' + marketBadge(r.market) + '</td>'
     + '<td style="white-space:nowrap">' + (r.persona||'') + '</td>'
     + '<td>' + fmt(r.current_count) + '</td>'
@@ -818,8 +922,8 @@ function renderGapTable() {
     + '<td>' + urgencyBadge(r.urgency_level) + '</td>'
     + '<td>' + (r.timeframe||'') + '</td>'
     + '<td style="white-space:normal;font-size:0.74rem;max-width:200px">' + ((r.strategic_reason||'').substring(0,100)) + '</td>'
-    + '</tr>'
-  ).join('');
+    + '</tr>';
+  }).join('');
 }
 
 function renderGapChart() {
@@ -827,8 +931,113 @@ function renderGapChart() {
   const labels = sorted.map(r => (r.market||'').replace('_',' ') + ' — ' + (r.persona||''));
   const values = sorted.map(r => r.gap_count || 0);
   const colors = sorted.map(r => URGENCY_COLORS[r.urgency_level] || '#555');
-  barChart('chart-gap', labels, values, colors, { horizontal: true });
+  barChart('chart-gap', labels, values, colors, {
+    horizontal: true,
+    onBarClick: i => { const r = sorted[i]; if (r) openGapDrilldown(r.market, r.persona); },
+  });
 }
+
+// ── Strategic Gap people drill-down (Part 3) ─────────────────────────────────
+// Mirrors src/export_public_dashboard_data.py's MARKET_V2_TO_V5_BUCKETS —
+// keep both in sync if either changes.
+const GAP_MARKET_TO_V5_BUCKETS = {
+  LATAM_USD:            ['LATAM_USD_CONFIRMED', 'LATAM_USD_LIKELY'],
+  US_CANADA_NEARSHORE:  ['US_CANADA_CONFIRMED', 'US_CANADA_LIKELY'],
+  SPAIN_EU:             ['SPAIN_EU_CONFIRMED', 'SPAIN_EU_LIKELY'],
+  EUROPE:               ['EUROPE_CONFIRMED', 'EUROPE_LIKELY'],
+};
+const GAP_PERSONA_PRIORITY = ['Recruiter', 'Talent Acquisition', 'Hiring Manager', 'Engineering Manager', 'Head of Data', 'Data Engineering Manager', 'Director'];
+
+function _gapTabStats(tabId, shown, total, extra) {
+  const el = document.getElementById(tabId + '-stats');
+  if (el) el.textContent = 'Showing ' + shown + ' of ' + total + (extra ? ' — ' + extra : '');
+}
+
+window.openGapDrilldown = function(market, persona) {
+  const panel = document.getElementById('gap-drilldown');
+  const titleEl = document.getElementById('gap-drilldown-title');
+  if (!panel) return;
+  if (titleEl) titleEl.textContent = (persona || '') + ' — ' + String(market || '').replace(/_/g, ' ');
+
+  // Tab A — Current Contacts Counted (segment='current'; count always equals
+  // this gap row's own current_count since both are built from the same
+  // predicate — see build_strategic_gap_people_drilldown in export_public_dashboard_data.py)
+  const allGapPeople = D.strategic_gap_people_drilldown || [];
+  const current = allGapPeople.filter(p => p.market === market && p.persona === persona && p.segment === 'current');
+  const currentTbody = document.getElementById('gap-tab-current-tbody');
+  if (currentTbody) {
+    currentTbody.innerHTML = current.length ? current.map(p => '<tr>'
+      + '<td style="white-space:nowrap">' + (p.full_name||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (p.company_clean||'—') + '</td>'
+      + '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (p.position_clean||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (p.persona||'—') + '</td>'
+      + '<td>' + marketBadge(p.opportunity_bucket||'—') + '</td>'
+      + '<td>' + fmt(p.priority_score||0) + '</td>'
+      + '<td style="font-size:0.72rem">' + (p.outreach_status || p.contact_history_status || '—') + '</td>'
+      + '<td style="font-size:0.75rem;white-space:nowrap">' + (p.connected_on||'—') + '</td>'
+      + '<td>' + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+      + '</tr>').join('')
+      : '<tr><td colspan="9" style="text-align:center;color:var(--text-muted)">No contacts currently counted in this gap.</td></tr>';
+  }
+  _gapTabStats('gap-tab-current', current.length, current.length);
+
+  // Tab B — New This Week Matching This Gap (segment='new_this_week',
+  // appended by src/weekly_kpi_delta.py — empty until a weekly refresh runs
+  // with a previous snapshot baseline present)
+  const newThisWeek = allGapPeople.filter(p => p.market === market && p.persona === persona && p.segment === 'new_this_week');
+  const newTbody = document.getElementById('gap-tab-new-tbody');
+  if (newTbody) {
+    newTbody.innerHTML = newThisWeek.length ? newThisWeek.map(p => '<tr>'
+      + '<td style="white-space:nowrap">' + (p.full_name||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (p.company_clean||'—') + '</td>'
+      + '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (p.position_clean||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (p.persona||'—') + '</td>'
+      + '<td>' + marketBadge(p.opportunity_bucket||'—') + '</td>'
+      + '<td style="font-size:0.75rem;white-space:nowrap">' + (p.connected_on||'—') + '</td>'
+      + '<td>' + fmt(p.priority_score||0) + '</td>'
+      + '<td style="font-size:0.72rem;max-width:200px">' + (p.reason||'—') + '</td>'
+      + '<td>' + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+      + '</tr>').join('')
+      : '<tr><td colspan="9" style="text-align:center;color:var(--text-muted)">No new connections matched this gap in the latest weekly snapshot.</td></tr>';
+  }
+  _gapTabStats('gap-tab-new', newThisWeek.length, newThisWeek.length);
+
+  // Tab C — Recommended People to Activate Next: never-contacted Untapped
+  // Network contacts whose opportunity_bucket matches this gap's market,
+  // ranked by untapped_outreach_score, persona priority as tiebreak.
+  const buckets = GAP_MARKET_TO_V5_BUCKETS[market] || [];
+  const untappedSource = (D.untapped_network || {}).top_untapped_contacts || [];
+  let recommended = untappedSource.filter(c =>
+    c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' && buckets.includes(c.opportunity_bucket));
+  if (persona && GAP_PERSONA_PRIORITY.includes(persona)) {
+    // Prefer exact persona match first, then fall back to the same
+    // persona-priority ladder used elsewhere, so a Recruiter gap surfaces
+    // recruiters first even if very few exact matches exist.
+    const exact = recommended.filter(c => c.persona === persona);
+    const rest = recommended.filter(c => c.persona !== persona);
+    recommended = exact.concat(rest);
+  }
+  recommended = recommended
+    .sort((a, b) => (parseFloat(b.untapped_outreach_score) || 0) - (parseFloat(a.untapped_outreach_score) || 0))
+    .slice(0, 50);
+  const recTbody = document.getElementById('gap-tab-recommended-tbody');
+  if (recTbody) {
+    recTbody.innerHTML = recommended.length ? recommended.map(p => '<tr>'
+      + '<td style="white-space:nowrap">' + (p.full_name||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (p.company_clean||'—') + '</td>'
+      + '<td style="white-space:nowrap">' + (p.persona||'—') + '</td>'
+      + '<td>' + marketBadge(p.opportunity_bucket||'—') + '</td>'
+      + '<td>' + fmt(p.untapped_outreach_score||0) + '</td>'
+      + '<td style="font-size:0.72rem;max-width:220px">' + (p.first_message_angle||'—') + '</td>'
+      + '<td>' + (p.profile_url ? '<a href="' + p.profile_url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+      + '</tr>').join('')
+      : '<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">No never-contacted candidates match this gap right now — check Untapped Network directly.</td></tr>';
+  }
+  _gapTabStats('gap-tab-recommended', recommended.length, untappedSource.length, 'never-contacted, matching bucket');
+
+  panel.style.display = '';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
 
 // ── PAGE 4: Action Plan ───────────────────────────────────────────────────────
 
@@ -1540,6 +1749,32 @@ window.resetContactFilters = function() {
   renderContactsTable();
 };
 
+// Cross-page routing entry point (Part 1) — applyContactFilters() only reads
+// the page's own <select> elements and can't express an OR-across-scores
+// filter or an arbitrary opportunity-bucket set, so Executive Overview cards
+// that need those (Actionable Contacts, Global Opportunities) call this
+// instead. Does not touch the filter <select>s — the active-filter banner
+// (setRoute) communicates what's shown instead.
+// spec: { minScoreField, minScore, minScoreAnyFields, minScoreAny, opportunityBuckets }
+window.applyExternalContactFilter = function(spec) {
+  spec = spec || {};
+  const source = D.top_contacts || [];
+  filteredContacts = source.filter(c => {
+    if (spec.opportunityBuckets && !spec.opportunityBuckets.includes(c.opportunity_bucket)) return false;
+    if (spec.minScoreField) {
+      if ((parseFloat(c[spec.minScoreField]) || 0) < (spec.minScore || 0)) return false;
+    }
+    if (spec.minScoreAnyFields) {
+      const best = Math.max(...spec.minScoreAnyFields.map(f => parseFloat(c[f]) || 0));
+      if (best < (spec.minScoreAny || 0)) return false;
+    }
+    return true;
+  });
+  _sortContacts();
+  contactsPage = 1;
+  renderContactsTable();
+};
+
 const OUTREACH_STATUS_STYLE = {
   'Needs Reply':     'background:#ef4444;color:#fff',
   'Interview Pipeline': 'background:#22c55e;color:#fff',
@@ -1659,6 +1894,93 @@ const RESOLUTION_METHOD_LABEL = {
   no_usable_signal:                  'Low value — no usable signal',
 };
 
+// ── V5 Opportunity Market segment drill-down (Part 5) ────────────────────────
+// Backed by D.opportunity_market_people_segments (full population, built by
+// build_opportunity_market_people_segments in export_public_dashboard_data.py
+// using the SAME bucket groupings as opportunity_market_v5.build_v5_summary,
+// so every card's count matches this array exactly).
+let filteredV5Segment = [];
+let selectedV5SegmentCompany = null;
+
+const V5_SEGMENT_KPI_FILTERS = {
+  actionable:           { label: 'Actionable Connections',       match: s => s.is_actionable === true || s.is_actionable === 'True' },
+  confirmed_geographic: { label: 'Confirmed Geographic Signals', match: s => s.market_segment === 'confirmed_geographic' },
+  global_buckets:       { label: 'Global Company Buckets',       match: s => s.market_segment === 'global_buckets' },
+  language_signal:      { label: 'Language Signal (PT/ES)',      match: s => s.market_segment === 'language_signal' },
+  global_opportunity:   { label: 'Global Opportunity',           match: s => s.market_segment === 'global_opportunity' },
+  needs_mapping:        { label: 'Needs Company Mapping',        match: s => s.market_segment === 'needs_mapping' },
+  low_value:            { label: 'Low Value Unresolved',         match: s => s.market_segment === 'low_value' },
+};
+
+function _renderV5SegmentCompanies() {
+  const tbody = document.getElementById('v5-segment-companies-tbody');
+  if (!tbody) return;
+  const byCompany = {};
+  filteredV5Segment.forEach(s => {
+    const c = s.company_clean || '(no company)';
+    byCompany[c] = (byCompany[c] || 0) + 1;
+  });
+  const rows = Object.entries(byCompany).sort((a, b) => b[1] - a[1]).slice(0, 100);
+  tbody.innerHTML = rows.length ? rows.map(([company, count]) => {
+    const cAttr = escapeAttr(company);
+    const isSelected = selectedV5SegmentCompany === company;
+    return '<tr class="' + (isSelected ? 'active' : '') + '" style="cursor:pointer" tabindex="0" role="button" '
+      + 'onclick="selectV5SegmentCompany(\'' + cAttr + '\')" onkeydown="if(event.key===\'Enter\'){selectV5SegmentCompany(\'' + cAttr + '\')}">'
+      + '<td>' + company + '</td><td><strong>' + count + '</strong></td></tr>';
+  }).join('') : '<tr><td colspan="2" style="text-align:center;color:var(--text-muted)">No companies in this segment.</td></tr>';
+}
+
+function _renderV5SegmentPeople() {
+  const tbody = document.getElementById('v5-segment-tbody');
+  if (!tbody) return;
+  const rows = selectedV5SegmentCompany
+    ? filteredV5Segment.filter(s => s.company_clean === selectedV5SegmentCompany)
+    : filteredV5Segment.slice(0, 200);
+  tbody.innerHTML = rows.length ? rows.map(p => '<tr>'
+    + '<td style="white-space:nowrap">' + (p.full_name||'—') + '</td>'
+    + '<td style="white-space:nowrap">' + (p.company_clean||'—') + '</td>'
+    + '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (p.position_clean||'—') + '</td>'
+    + '<td style="white-space:nowrap">' + (p.persona||'—') + '</td>'
+    + '<td>' + marketBadge(p.opportunity_bucket||'—') + '</td>'
+    + '<td>' + fmt(p.priority_score||0) + '</td>'
+    + '<td>' + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+    + '</tr>').join('') : '<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">No contacts match this selection.</td></tr>';
+  const nCompanies = new Set(filteredV5Segment.map(p => p.company_clean)).size;
+  const statsEl = document.getElementById('v5-segment-stats');
+  if (statsEl) {
+    statsEl.textContent = selectedV5SegmentCompany
+      ? 'Showing ' + rows.length + ' contacts from ' + selectedV5SegmentCompany + ' — selected company'
+      : 'Showing ' + filteredV5Segment.length + ' contacts across ' + nCompanies + ' companies — selected segment';
+  }
+}
+
+window.applyV5SegmentFilter = function(key) {
+  const def = V5_SEGMENT_KPI_FILTERS[key];
+  if (!def) return;
+  const source = D.opportunity_market_people_segments || [];
+  filteredV5Segment = source.filter(def.match);
+  selectedV5SegmentCompany = null;
+  document.querySelectorAll('#page-unknown .kpi-card[data-kpi]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(V5_SEGMENT_KPI_FILTERS, el.dataset.kpi)) {
+      const isActive = el.dataset.kpi === key;
+      el.classList.toggle('active', isActive);
+      el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    }
+  });
+  _renderV5SegmentCompanies();
+  _renderV5SegmentPeople();
+  const panel = document.getElementById('v5-segment-drilldown');
+  if (panel) { panel.style.display = ''; panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+};
+
+window.selectV5SegmentCompany = function(company) {
+  selectedV5SegmentCompany = company;
+  _renderV5SegmentCompanies();
+  _renderV5SegmentPeople();
+  const table = document.getElementById('v5-segment-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
 function renderCompanyResolutionV6() {
   const v6 = D.company_resolution_v6 || {};
   const el = document.getElementById('v6-resolution-summary');
@@ -1725,6 +2047,7 @@ const MAPPING_KPI_FILTERS = {
   reduced_by:                { label: 'Reduced By — historical reduction; showing current backlog',     match: () => true },
   needs_mapping_before:      { label: 'Needs Mapping — Before V6 (historical snapshot; showing current backlog)', match: () => true },
   needs_mapping_after:       { label: 'Needs Mapping — After V6 (current backlog)', match: () => true },
+  companies_3plus:           { label: 'Companies with 3+ Unresolved', match: () => true, filterCompanies: c => (c.contacts || 0) >= 3 },
 };
 
 function _updateActiveUnknownKpiCards() {
@@ -1742,7 +2065,8 @@ window.applyUnknownKpiFilter = function(key) {
   selectedMappingCompany = null;
 
   filteredUnknownCompanies = def.top25 ? unknownCompaniesBase.slice(0, 25) : unknownCompaniesBase.slice();
-  const companySet = def.top25 ? new Set(filteredUnknownCompanies.map(c => c.company_clean)) : null;
+  if (def.filterCompanies) filteredUnknownCompanies = filteredUnknownCompanies.filter(def.filterCompanies);
+  const companySet = (def.top25 || def.filterCompanies) ? new Set(filteredUnknownCompanies.map(c => c.company_clean)) : null;
   filteredMappingPeople = mappingPeopleBase.filter(p => def.match(p) && (!companySet || companySet.has(p.company_clean)));
 
   mappingPersonPage = 1;
@@ -1913,20 +2237,22 @@ function renderUnknownResolution() {
   const v5Sum = D.opportunity_market_v5_summary || {};
   renderCompanyResolutionV6();
 
-  // Primary V5 summary cards
+  // Primary V5 summary cards — all clickable (Part 5), backed by the
+  // full-population D.opportunity_market_people_segments array so every
+  // card's count exactly matches what its click reveals.
   const v5TopEl = document.getElementById('v5-resolution-summary');
   if (v5TopEl && v5Sum.total_connections) {
     const needsMapping = v5Sum.v5_needs_company_mapping || 0;
     const lowValue     = v5Sum.v5_low_value_unresolved || 0;
     const actionable   = v5Sum.v5_actionable_total || 0;
     v5TopEl.innerHTML = [
-      makeCard('Actionable Connections',       actionable,                        v5Sum.v5_actionable_pct + '% classified', 'good'),
-      makeCard('Confirmed Geographic Signals', v5Sum.v5_confirmed_geographic||0,  'Brazil · LATAM · US · EU · Spain', 'good'),
-      makeCard('Global Company Buckets',       v5Sum.v5_global_buckets||0,        'Staffing · Consulting · Tech'),
-      makeCard('Language Signal (PT/ES)',      v5Sum.v5_language_inferred||0,     'inferred from title keywords'),
-      makeCard('Global Opportunity',           v5Sum.v5_global_opportunity||0,    'valuable persona, region unresolved'),
-      makeCard('Needs Company Mapping',        needsMapping,                      'action backlog — map in overrides.yml', 'warn'),
-      makeCard('Low Value Unresolved',         lowValue,                          v5Sum.v5_low_value_pct + '% — no usable signal at all'),
+      makeKpiCard('actionable',          'Actionable Connections',       actionable,                        v5Sum.v5_actionable_pct + '% classified — click to filter', 'good', 'applyV5SegmentFilter'),
+      makeKpiCard('confirmed_geographic','Confirmed Geographic Signals', v5Sum.v5_confirmed_geographic||0,  'Brazil · LATAM · US · EU · Spain — click to filter', 'good', 'applyV5SegmentFilter'),
+      makeKpiCard('global_buckets',      'Global Company Buckets',       v5Sum.v5_global_buckets||0,        'Staffing · Consulting · Tech — click to filter', '', 'applyV5SegmentFilter'),
+      makeKpiCard('language_signal',     'Language Signal (PT/ES)',      v5Sum.v5_language_inferred||0,     'inferred from title keywords — click to filter', '', 'applyV5SegmentFilter'),
+      makeKpiCard('global_opportunity',  'Global Opportunity',           v5Sum.v5_global_opportunity||0,    'valuable persona, region unresolved — click to filter', '', 'applyV5SegmentFilter'),
+      makeKpiCard('needs_mapping',       'Needs Company Mapping',        needsMapping,                      'action backlog — click to filter', 'warn', 'applyV5SegmentFilter'),
+      makeKpiCard('low_value',           'Low Value Unresolved',         lowValue,                          v5Sum.v5_low_value_pct + '% — click to filter', '', 'applyV5SegmentFilter'),
     ].join('');
   }
 
@@ -1964,15 +2290,17 @@ function renderUnknownResolution() {
   renderMappingPersonTable(activeUnknownKpi ? MAPPING_KPI_FILTERS[activeUnknownKpi].label : null);
   renderNeedsMappingActionPlan();
 
-  // Persona breakdown for needs-mapping contacts
+  // Persona breakdown for needs-mapping contacts — reuses the existing
+  // MAPPING_KPI_FILTERS keys (recruiters/talent_acquisition/hiring_mgrs/
+  // data_leaders were already defined but unused by any card until now).
   const unkPersonaEl = document.getElementById('unk-persona-metrics');
   if (!unkPersonaEl) return;
   unkPersonaEl.innerHTML = [
-    makeCard('Recruiters Needing Mapping',      bs.recruiters_unresolved||0,          'map their companies first', 'warn'),
-    makeCard('Talent Acquisition — No Bucket',  bs.talent_acquisition_unresolved||0),
-    makeCard('Hiring Mgrs — No Bucket',         bs.hiring_managers_unresolved||0,     'potential direct hire'),
-    makeCard('Data Leaders — No Bucket',        bs.data_leaders_unresolved||0,        'referral network value'),
-    makeCard('Companies with 3+ Unresolved',    bs.companies_with_3plus_unresolved||0,'highest mapping impact per company'),
+    makeKpiCard('recruiters',         'Recruiters Needing Mapping',      bs.recruiters_unresolved||0,          'map their companies first — click to filter', 'warn', 'applyUnknownKpiFilter'),
+    makeKpiCard('talent_acquisition', 'Talent Acquisition — No Bucket',  bs.talent_acquisition_unresolved||0,  'click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('hiring_mgrs',        'Hiring Mgrs — No Bucket',         bs.hiring_managers_unresolved||0,     'potential direct hire — click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('data_leaders',       'Data Leaders — No Bucket',        bs.data_leaders_unresolved||0,        'referral network value — click to filter', '', 'applyUnknownKpiFilter'),
+    makeKpiCard('companies_3plus',    'Companies with 3+ Unresolved',    bs.companies_with_3plus_unresolved||0,'highest mapping impact per company — click to filter', '', 'applyUnknownKpiFilter'),
   ].join('');
 }
 
@@ -2257,6 +2585,13 @@ const LEAD_KPI_FILTERS = {
   warm_recruiter:    { label: 'Warm Recruiter Follow-ups',    match: c => !!c.recruiter_priority_flag && c.reply_obligation !== 'CONFIRMED' },
   stale_valuable:     { label: 'Stale But Valuable Leads',     match: c => !!c.stale_conversation_flag && (parseFloat(c.relationship_value_score) || 0) >= 40 },
   closed_low_action:  { label: 'Closed / Low-Action Backlog',  match: c => !!c.terminal_state_flag },
+  // Executive Overview cross-page routing (Part 1) — combine categories the
+  // way the backend's own summary counts do (see lead_reactivation_engine.py
+  // hot_count/warm_count), so these mirror the Executive card numbers exactly.
+  needs_response_all: { label: 'Needs My Response (Confirmed + Likely)', match: c => c.lead_category === 'Needs my response — Confirmed' || c.lead_category === 'Needs my response — Likely' },
+  hot_reactivation:    { label: 'Hot Reactivation',            match: c => c.lead_category === 'Active Interview Pipeline' || c.lead_category === 'Needs my response — Confirmed' },
+  warm_reactivation:   { label: 'Warm Reactivation',           match: c => c.lead_category === 'Warm reactivation' },
+  follow_up_due_status:{ label: 'Follow-ups Due',              match: c => c.conversation_status === 'Follow-up due' },
 };
 
 function _updateActiveKpiCards() {
@@ -2465,6 +2800,10 @@ function renderQuality() {
       makeCard('V5 Reclassified',          (kpi('unknown_count') - (v5S.v5_needs_company_mapping||0) - (v5S.v5_low_value_unresolved||0)) + '', 'contacts rescued from raw UNKNOWN', 'good'),
     ].join('');
   }
+  const geoNoteEl = document.getElementById('quality-geo-note');
+  if (geoNoteEl) geoNoteEl.textContent = kpi('technical_geo_limitation_note',
+    'Exact geography is unavailable from LinkedIn export; opportunity buckets are inferred from company, ' +
+    'title, persona, language, message history, and manual enrichment. This is an action backlog, not a data failure.');
 
   // V5 doughnut (replaces old market type distribution)
   const chartEl = document.getElementById('chart-mkt-type');
@@ -2506,6 +2845,79 @@ function _deltaSub(n, positiveIsGood = true) {
   return { text: sign + v.toLocaleString() + ' vs previous', cls };
 }
 
+// ── Weekly Evolution card drill-down (Part 4) ────────────────────────────────
+// Every card here filters D.weekly_people_delta_segments (built by
+// src/weekly_kpi_delta.py from a real previous-vs-current snapshot diff, not
+// a fabricated estimate). Signed-delta cards (LATAM/USD Δ, etc.) never force
+// a single list to equal the signed number — they show two separately
+// countable sub-lists ("moved in" / "moved out") whose difference is the
+// card's delta, via `splitInOut`.
+let activeWeeklyKpi = null;
+
+const WEEKLY_KPI_FILTERS = {
+  gross_new:         { label: 'Gross New Connections',        match: r => r.segment === 'new_this_week' },
+  net_growth:        { label: 'Net Growth',                   splitInOut: true, inMatch: r => r.segment === 'new_this_week', outMatch: r => r.segment === 'removed_this_week' },
+  new_recruiters:    { label: 'New Recruiters',                match: r => r.segment === 'new_this_week' && r.persona === 'Recruiter' },
+  new_ta:            { label: 'New Talent Acquisition',       match: r => r.segment === 'new_this_week' && r.persona === 'Talent Acquisition' },
+  new_hm:            { label: 'New Hiring Managers',           match: r => r.segment === 'new_this_week' && ['Hiring Manager', 'Engineering Manager'].includes(r.persona) },
+  new_data_leaders:  { label: 'New Data Leaders',              match: r => r.segment === 'new_this_week' && ['Data Engineering Manager', 'Head of Data', 'Director'].includes(r.persona) },
+  latam_usd_delta:   { label: 'LATAM/USD Δ',                   splitInOut: true, inMatch: r => ['new_this_week', 'bucket_change_in'].includes(r.segment) && r.bucket_group === 'latam_usd', outMatch: r => ['removed_this_week', 'bucket_change_out'].includes(r.segment) && r.bucket_group === 'latam_usd' },
+  us_canada_delta:   { label: 'US/Canada Nearshore Δ',         splitInOut: true, inMatch: r => ['new_this_week', 'bucket_change_in'].includes(r.segment) && r.bucket_group === 'us_canada', outMatch: r => ['removed_this_week', 'bucket_change_out'].includes(r.segment) && r.bucket_group === 'us_canada' },
+  spain_eu_delta:    { label: 'Spain/EU Δ',                    splitInOut: true, inMatch: r => ['new_this_week', 'bucket_change_in'].includes(r.segment) && r.bucket_group === 'spain_eu', outMatch: r => ['removed_this_week', 'bucket_change_out'].includes(r.segment) && r.bucket_group === 'spain_eu' },
+  global_opp_delta:  { label: 'Global Opportunity Δ',          splitInOut: true, inMatch: r => ['new_this_week', 'bucket_change_in'].includes(r.segment) && r.bucket_group === 'global_opportunity', outMatch: r => ['removed_this_week', 'bucket_change_out'].includes(r.segment) && r.bucket_group === 'global_opportunity' },
+  needs_mapping_delta:{ label: 'Needs Mapping Δ',              splitInOut: true, inMatch: r => ['new_this_week', 'bucket_change_in'].includes(r.segment) && r.bucket_group === 'needs_mapping', outMatch: r => ['removed_this_week', 'bucket_change_out'].includes(r.segment) && r.bucket_group === 'needs_mapping' },
+  needs_response_delta:{ label: 'Needs My Response Δ',         match: r => r.segment === 'lead_category_change' && (r.current_value === 'Needs my response — Confirmed' || r.current_value === 'Needs my response — Likely') },
+  hot_leads_delta:   { label: 'Hot Leads Δ',                   match: r => r.segment === 'lead_category_change' && (r.current_value === 'Active Interview Pipeline' || r.current_value === 'Needs my response — Confirmed') },
+  warm_leads_delta:  { label: 'Warm Leads Δ',                  match: r => r.segment === 'lead_category_change' && r.current_value === 'Warm reactivation' },
+  follow_ups_due_delta:{ label: 'Follow-ups Due Δ',            match: r => r.segment === 'lead_category_change' && r.current_value === 'Follow-up due' },
+  interview_pipeline_delta:{ label: 'Interview Pipeline Δ',    match: r => r.segment === 'interview_pipeline_change' },
+  never_contacted_delta:{ label: 'Never Contacted — Confirmed Δ', match: r => r.segment === 'untapped_category_change' && r.current_value === 'HIGH_VALUE_UNTAPPED' },
+  high_value_untapped_delta:{ label: 'High-Value Untapped Δ', match: r => r.segment === 'untapped_category_change' && r.current_value === 'HIGH_VALUE_UNTAPPED' },
+  untapped_recruiters_delta:{ label: 'Untapped Recruiters Δ', match: r => r.segment === 'untapped_category_change' && r.persona === 'Recruiter' },
+  untapped_hm_delta: { label: 'Untapped Hiring Managers Δ',    match: r => r.segment === 'untapped_category_change' && ['Hiring Manager', 'Engineering Manager'].includes(r.persona) },
+  activated_this_week:{ label: 'Activated This Week',          match: r => r.segment === 'activated_this_week' },
+};
+
+window.applyWeeklyKpiFilter = function(key) {
+  const def = WEEKLY_KPI_FILTERS[key];
+  if (!def) return;
+  const source = D.weekly_people_delta_segments || [];
+  const panel = document.getElementById('weekly-drilldown');
+  const titleEl = document.getElementById('weekly-drilldown-title');
+  const tbody = document.getElementById('weekly-drilldown-tbody');
+  const statsEl = document.getElementById('weekly-drilldown-stats');
+  if (!panel || !tbody) return;
+  activeWeeklyKpi = key;
+  if (titleEl) titleEl.textContent = def.label;
+
+  let rows;
+  if (def.splitInOut) {
+    const inRows = source.filter(def.inMatch).map(r => ({ ...r, _dir: 'Moved in' }));
+    const outRows = source.filter(def.outMatch).map(r => ({ ...r, _dir: 'Moved out' }));
+    rows = inRows.concat(outRows);
+    if (statsEl) statsEl.textContent = 'Moved in: ' + inRows.length + '  ·  Moved out: ' + outRows.length
+      + '  (net ' + (inRows.length - outRows.length >= 0 ? '+' : '') + (inRows.length - outRows.length) + ') — ' + def.label;
+  } else {
+    rows = source.filter(def.match).map(r => ({ ...r, _dir: r.current_value || r.segment }));
+    if (statsEl) statsEl.textContent = 'Showing ' + rows.length + ' — ' + def.label;
+  }
+
+  tbody.innerHTML = rows.length ? rows.map(r => '<tr>'
+    + '<td style="white-space:nowrap">' + (r.full_name||'—') + '</td>'
+    + '<td style="white-space:nowrap">' + (r.company_clean||'—') + '</td>'
+    + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
+    + '<td>' + marketBadge(r.opportunity_bucket||'—') + '</td>'
+    + '<td style="font-size:0.72rem">' + (r._dir||'—') + '</td>'
+    + '<td>' + fmt(r.priority_score||0) + '</td>'
+    + '<td style="font-size:0.7rem;color:var(--text-muted)">' + (r.match_method||'—') + '</td>'
+    + '<td>' + (r.url ? '<a href="' + r.url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+    + '</tr>').join('')
+    : '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">No people matched this delta this week. Matched by profile URL/name/company from weekly snapshot comparison.</td></tr>';
+
+  panel.style.display = '';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
 function renderWeekly() {
   const we = D.weekly_evolution || {};
   const noData = document.getElementById('weekly-no-data');
@@ -2535,8 +2947,8 @@ function renderWeekly() {
   if (ngEl) ngEl.innerHTML = [
     makeCard('Previous Connections', ng.previous_connections || 0),
     makeCard('Current Connections',  ng.current_connections  || 0),
-    makeCard('Net Growth', (netGrowth >= 0 ? '+' : '') + netGrowth, 'total connections, previous vs current', netGrowth >= 0 ? 'good' : 'bad'),
-    makeCard('Gross New Connections', grossNew, 'newly identity-matched this period', 'good'),
+    makeKpiCard('net_growth', 'Net Growth', (netGrowth >= 0 ? '+' : '') + netGrowth, 'total connections, previous vs current — click for movers', netGrowth >= 0 ? 'good' : 'bad', 'applyWeeklyKpiFilter'),
+    makeKpiCard('gross_new', 'Gross New Connections', grossNew, 'newly identity-matched this period — click to view', 'good', 'applyWeeklyKpiFilter'),
     makeCard('Removed/Lost/Changed Estimate', churnEstimate, 'gross new minus net growth'),
   ].join('');
   const ngNoteEl = document.getElementById('weekly-network-growth-note');
@@ -2548,32 +2960,32 @@ function renderWeekly() {
   const sg = we.strategic_growth || {};
   const sgEl = document.getElementById('weekly-strategic-growth');
   if (sgEl) sgEl.innerHTML = [
-    makeCard('New Recruiters', sg.new_recruiters || 0, _deltaSub(sg.new_recruiters).text),
-    makeCard('New Talent Acquisition', sg.new_talent_acquisition || 0, _deltaSub(sg.new_talent_acquisition).text),
-    makeCard('New Hiring Managers', sg.new_hiring_managers || 0, _deltaSub(sg.new_hiring_managers).text),
-    makeCard('New Data Leaders', sg.new_data_leaders || 0, _deltaSub(sg.new_data_leaders).text),
+    makeKpiCard('new_recruiters', 'New Recruiters', sg.new_recruiters || 0, _deltaSub(sg.new_recruiters).text, '', 'applyWeeklyKpiFilter'),
+    makeKpiCard('new_ta', 'New Talent Acquisition', sg.new_talent_acquisition || 0, _deltaSub(sg.new_talent_acquisition).text, '', 'applyWeeklyKpiFilter'),
+    makeKpiCard('new_hm', 'New Hiring Managers', sg.new_hiring_managers || 0, _deltaSub(sg.new_hiring_managers).text, '', 'applyWeeklyKpiFilter'),
+    makeKpiCard('new_data_leaders', 'New Data Leaders', sg.new_data_leaders || 0, _deltaSub(sg.new_data_leaders).text, '', 'applyWeeklyKpiFilter'),
   ].join('');
 
   // C. Market / Opportunity Movement
   const mm = we.market_movement || {};
   const mmEl = document.getElementById('weekly-market-movement');
   if (mmEl) mmEl.innerHTML = [
-    makeCard('LATAM/USD Δ', mm.latam_usd_delta || 0, _deltaSub(mm.latam_usd_delta).text, _deltaSub(mm.latam_usd_delta).cls),
-    makeCard('US/Canada Nearshore Δ', mm.us_canada_nearshore_delta || 0, _deltaSub(mm.us_canada_nearshore_delta).text, _deltaSub(mm.us_canada_nearshore_delta).cls),
-    makeCard('Spain/EU Δ', mm.spain_eu_delta || 0, _deltaSub(mm.spain_eu_delta).text, _deltaSub(mm.spain_eu_delta).cls),
-    makeCard('Global Opportunity Δ', mm.global_opportunity_delta || 0, _deltaSub(mm.global_opportunity_delta).text, _deltaSub(mm.global_opportunity_delta).cls),
-    makeCard('Needs Mapping Δ', mm.needs_mapping_delta || 0, _deltaSub(mm.needs_mapping_delta, false).text, _deltaSub(mm.needs_mapping_delta, false).cls),
+    makeKpiCard('latam_usd_delta', 'LATAM/USD Δ', mm.latam_usd_delta || 0, _deltaSub(mm.latam_usd_delta).text, _deltaSub(mm.latam_usd_delta).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('us_canada_delta', 'US/Canada Nearshore Δ', mm.us_canada_nearshore_delta || 0, _deltaSub(mm.us_canada_nearshore_delta).text, _deltaSub(mm.us_canada_nearshore_delta).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('spain_eu_delta', 'Spain/EU Δ', mm.spain_eu_delta || 0, _deltaSub(mm.spain_eu_delta).text, _deltaSub(mm.spain_eu_delta).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('global_opp_delta', 'Global Opportunity Δ', mm.global_opportunity_delta || 0, _deltaSub(mm.global_opportunity_delta).text, _deltaSub(mm.global_opportunity_delta).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('needs_mapping_delta', 'Needs Mapping Δ', mm.needs_mapping_delta || 0, _deltaSub(mm.needs_mapping_delta, false).text, _deltaSub(mm.needs_mapping_delta, false).cls, 'applyWeeklyKpiFilter'),
   ].join('');
 
   // D. Lead Pipeline Movement
   const lp = we.lead_pipeline_movement || {};
   const lpEl = document.getElementById('weekly-lead-pipeline');
   if (lpEl) lpEl.innerHTML = [
-    makeCard('Needs My Response Δ', lp.needs_my_response_delta ?? 0, _deltaSub(lp.needs_my_response_delta, false).text, _deltaSub(lp.needs_my_response_delta, false).cls),
-    makeCard('Hot Leads Δ', lp.hot_leads_delta ?? 0, _deltaSub(lp.hot_leads_delta).text, _deltaSub(lp.hot_leads_delta).cls),
-    makeCard('Warm Leads Δ', lp.warm_leads_delta ?? 0, _deltaSub(lp.warm_leads_delta).text, _deltaSub(lp.warm_leads_delta).cls),
-    makeCard('Follow-ups Due Δ', lp.follow_ups_due_delta ?? 0, _deltaSub(lp.follow_ups_due_delta, false).text, _deltaSub(lp.follow_ups_due_delta, false).cls),
-    makeCard('Interview Pipeline Δ', lp.interview_pipeline_delta ?? '—', _deltaSub(lp.interview_pipeline_delta).text, _deltaSub(lp.interview_pipeline_delta).cls),
+    makeKpiCard('needs_response_delta', 'Needs My Response Δ', lp.needs_my_response_delta ?? 0, _deltaSub(lp.needs_my_response_delta, false).text, _deltaSub(lp.needs_my_response_delta, false).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('hot_leads_delta', 'Hot Leads Δ', lp.hot_leads_delta ?? 0, _deltaSub(lp.hot_leads_delta).text, _deltaSub(lp.hot_leads_delta).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('warm_leads_delta', 'Warm Leads Δ', lp.warm_leads_delta ?? 0, _deltaSub(lp.warm_leads_delta).text, _deltaSub(lp.warm_leads_delta).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('follow_ups_due_delta', 'Follow-ups Due Δ', lp.follow_ups_due_delta ?? 0, _deltaSub(lp.follow_ups_due_delta, false).text, _deltaSub(lp.follow_ups_due_delta, false).cls, 'applyWeeklyKpiFilter'),
+    makeKpiCard('interview_pipeline_delta', 'Interview Pipeline Δ', lp.interview_pipeline_delta ?? '—', _deltaSub(lp.interview_pipeline_delta).text, _deltaSub(lp.interview_pipeline_delta).cls, 'applyWeeklyKpiFilter'),
   ].join('');
 
   // Untapped Network Movement (Part 22) — gracefully degrades on first run
@@ -2592,13 +3004,13 @@ function renderWeekly() {
       if (umNote) { umNote.style.display = ''; umNote.textContent = um.note || ''; }
     } else {
       umEl.innerHTML = [
-        makeCard('Never Contacted — Confirmed Δ', um.never_contacted_confirmed_delta ?? 0, _deltaSub(um.never_contacted_confirmed_delta, false).text, _deltaSub(um.never_contacted_confirmed_delta, false).cls),
-        makeCard('High-Value Untapped Δ', um.high_value_untapped_delta ?? 0, _deltaSub(um.high_value_untapped_delta).text, _deltaSub(um.high_value_untapped_delta).cls),
-        makeCard('Untapped Recruiters Δ', um.untapped_recruiters_delta ?? 0, _deltaSub(um.untapped_recruiters_delta).text, _deltaSub(um.untapped_recruiters_delta).cls),
-        makeCard('Untapped Hiring Managers Δ', um.untapped_hiring_managers_delta ?? 0, _deltaSub(um.untapped_hiring_managers_delta).text, _deltaSub(um.untapped_hiring_managers_delta).cls),
-        makeCard('Activated This Week (est.)', um.untapped_contacts_activated_this_week_estimate ?? 0, 'moved from never-contacted to has-conversation', 'good'),
+        makeKpiCard('never_contacted_delta', 'Never Contacted — Confirmed Δ', um.never_contacted_confirmed_delta ?? 0, _deltaSub(um.never_contacted_confirmed_delta, false).text, _deltaSub(um.never_contacted_confirmed_delta, false).cls, 'applyWeeklyKpiFilter'),
+        makeKpiCard('high_value_untapped_delta', 'High-Value Untapped Δ', um.high_value_untapped_delta ?? 0, _deltaSub(um.high_value_untapped_delta).text, _deltaSub(um.high_value_untapped_delta).cls, 'applyWeeklyKpiFilter'),
+        makeKpiCard('untapped_recruiters_delta', 'Untapped Recruiters Δ', um.untapped_recruiters_delta ?? 0, _deltaSub(um.untapped_recruiters_delta).text, _deltaSub(um.untapped_recruiters_delta).cls, 'applyWeeklyKpiFilter'),
+        makeKpiCard('untapped_hm_delta', 'Untapped Hiring Managers Δ', um.untapped_hiring_managers_delta ?? 0, _deltaSub(um.untapped_hiring_managers_delta).text, _deltaSub(um.untapped_hiring_managers_delta).cls, 'applyWeeklyKpiFilter'),
+        makeKpiCard('activated_this_week', 'Activated This Week', um.untapped_contacts_activated_this_week_estimate ?? 0, 'click to see who — identity-level match', 'good', 'applyWeeklyKpiFilter'),
       ].join('');
-      if (umNote) { umNote.style.display = ''; umNote.textContent = 'Estimate derived from aggregate counts, not identity-level snapshot diffing.'; }
+      if (umNote) { umNote.style.display = ''; umNote.textContent = 'Click a card to see the exact people behind it — matched by profile URL/name/company from weekly snapshot comparison.'; }
     }
   }
 
@@ -3182,7 +3594,30 @@ const UNTAPPED_KPI_FILTERS = {
   conn_180d:        { label: 'Connected >180 Days, Never Contacted',
     match: c => ['CONNECTED_180_364D', 'CONNECTED_365D_PLUS'].includes(c.connection_age_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
   manual_enriched:  { label: 'Active/Manual Enriched Contacts', match: c => c.is_manual_enriched === true || c.is_manual_enriched === 'True' },
+  // Executive Overview cross-page routing (Part 1) — combined/derived keys
+  // not otherwise exposed as a single Untapped Network card.
+  usd_readiness: { label: 'USD/LATAM Readiness — Untapped', match: c =>
+    ['LATAM_USD_CONFIRMED', 'LATAM_USD_LIKELY', 'US_CANADA_CONFIRMED', 'US_CANADA_LIKELY', 'GLOBAL_STAFFING', 'GLOBAL_OPPORTUNITY'].includes(c.opportunity_bucket)
+    && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  spain_eu_readiness: { label: 'Spain/EU Readiness — Untapped', match: c =>
+    ['SPAIN_EU_CONFIRMED', 'SPAIN_EU_LIKELY', 'EUROPE_CONFIRMED', 'EUROPE_LIKELY'].includes(c.opportunity_bucket)
+    && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  recruiters_ta: { label: 'Recruiters/TA Untapped', match: c =>
+    ['Recruiter', 'Talent Acquisition'].includes(c.persona) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
+  this_week: { label: 'This Week Untapped Queue', match: null }, // special-cased below
 };
+
+// Persona priority used to sort the two Executive-routed "readiness" keys
+// above so Recruiter/TA/Hiring-Manager/Data-Leader candidates surface first.
+const _EXEC_PERSONA_PRIORITY = ['Recruiter', 'Talent Acquisition', 'Hiring Manager', 'Engineering Manager', 'Head of Data', 'Data Engineering Manager', 'Director'];
+function _sortByExecPersonaPriority(rows) {
+  return [...rows].sort((a, b) => {
+    const pa = _EXEC_PERSONA_PRIORITY.indexOf(a.persona); const pb = _EXEC_PERSONA_PRIORITY.indexOf(b.persona);
+    const ra = pa === -1 ? 999 : pa; const rb = pb === -1 ? 999 : pb;
+    if (ra !== rb) return ra - rb;
+    return (parseFloat(b.untapped_outreach_score) || 0) - (parseFloat(a.untapped_outreach_score) || 0);
+  });
+}
 
 function _updateActiveUntappedKpiCards() {
   document.querySelectorAll('#page-untapped .kpi-card').forEach(el => {
@@ -3196,7 +3631,15 @@ window.applyUntappedKpiFilter = function(key) {
   const def = UNTAPPED_KPI_FILTERS[key];
   if (!def) return;
   const source = (D.untapped_network || {}).top_untapped_contacts || [];
-  filteredUntapped = source.filter(def.match);
+  if (key === 'this_week') {
+    const ids = new Set(((D.untapped_network || {}).this_week_queue || []).map(c => c.profile_url));
+    filteredUntapped = source.filter(c => ids.has(c.profile_url));
+  } else {
+    filteredUntapped = source.filter(def.match);
+  }
+  if (key === 'usd_readiness' || key === 'spain_eu_readiness') {
+    filteredUntapped = _sortByExecPersonaPriority(filteredUntapped);
+  }
   activeUntappedKpi = key;
   untappedPage = 1;
   _updateActiveUntappedKpiCards();

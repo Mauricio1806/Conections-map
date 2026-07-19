@@ -209,6 +209,271 @@ def _weekly_diagnosis(kpi_df: pd.DataFrame, current: dict) -> dict:
     }
 
 
+def _norm_url(u) -> str:
+    return _safe_str(u).strip().rstrip("/").lower()
+
+
+def _name_key(name, company) -> str:
+    return f"{_safe_str(name).strip().lower()} @ {_safe_str(company).strip().lower()}"
+
+
+def _safe_str(v, default: str = "") -> str:
+    """NaN/None-safe string coercion — see export_public_dashboard_data.py's
+    identical helper for why a plain `v or default` is not sufficient."""
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return default
+    return str(v)
+
+
+def _safe_num(v, default=0):
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return default
+    try:
+        n = float(v)
+        return default if pd.isna(n) else n
+    except (TypeError, ValueError):
+        return default
+
+
+SAFE_WEEKLY_DELTA_SEGMENT_COLS = [
+    "full_name", "company_clean", "persona", "opportunity_bucket",
+    "segment", "bucket_group", "previous_value", "current_value",
+    "priority_score", "url", "match_method",
+]
+
+_BUCKET_GROUPS = {
+    "latam_usd": {"LATAM_USD_CONFIRMED", "LATAM_USD_LIKELY"},
+    "us_canada": {"US_CANADA_CONFIRMED", "US_CANADA_LIKELY"},
+    "spain_eu": {"SPAIN_EU_CONFIRMED", "SPAIN_EU_LIKELY"},
+    "global_opportunity": {"GLOBAL_OPPORTUNITY"},
+    "needs_mapping": {"NEEDS_COMPANY_MAPPING"},
+}
+
+
+def _bucket_group(bucket: str) -> str | None:
+    for group, buckets in _BUCKET_GROUPS.items():
+        if bucket in buckets:
+            return group
+    return None
+
+
+def build_weekly_people_delta_segments(previous: dict, current: dict, new_conn_df: pd.DataFrame) -> list:
+    """
+    Part 4 — full person-level backing for every Weekly Evolution card.
+    One flat list; every row tagged `segment` so the frontend can filter it
+    per-card. Never forces a single list to equal a *signed* delta (moved-in
+    vs moved-out are always kept as two separately countable segments).
+    """
+    rows: list[dict] = []
+
+    # ── new_this_week (from the already-enriched weekly_new_connections.csv)
+    if new_conn_df is not None and not new_conn_df.empty:
+        for _, r in new_conn_df.iterrows():
+            full_name = f"{_safe_str(r.get('first_name'))} {_safe_str(r.get('last_name'))}".strip()
+            bucket = _safe_str(r.get("opportunity_bucket"))
+            rows.append({
+                "full_name": full_name,
+                "company_clean": _safe_str(r.get("company")) or _safe_str(r.get("company_canonical")),
+                "persona": _safe_str(r.get("persona")),
+                "opportunity_bucket": bucket,
+                "segment": "new_this_week",
+                "bucket_group": _bucket_group(bucket),
+                "priority_score": _safe_num(r.get("priority_score")),
+                "url": _safe_str(r.get("url")),
+                "match_method": "profile_url" if _norm_url(r.get("url")) else "name_company_key",
+            })
+
+    # ── removed_this_week (from weekly_missing_connections.csv, if present)
+    missing_path = OUTPUTS_DIR / "weekly_missing_connections.csv"
+    if missing_path.exists():
+        try:
+            missing_df = pd.read_csv(missing_path, dtype=str, encoding="utf-8-sig")
+            for _, r in missing_df.iterrows():
+                full_name = f"{_safe_str(r.get('first_name'))} {_safe_str(r.get('last_name'))}".strip()
+                rows.append({
+                    "full_name": full_name,
+                    "company_clean": _safe_str(r.get("company")),
+                    "persona": "", "opportunity_bucket": "",
+                    "segment": "removed_this_week", "bucket_group": None,
+                    "priority_score": 0, "url": _safe_str(r.get("url")),
+                    "match_method": "profile_url" if _norm_url(r.get("url")) else "name_company_key",
+                })
+        except Exception as exc:
+            logger.warning(f"  Could not read weekly_missing_connections.csv: {exc}")
+
+    # ── bucket_change_in / bucket_change_out (current vs previous full enriched_connections.csv)
+    prev_enriched_path = ROOT / "data" / "processed" / "_previous_enriched_connections.csv"
+    cur_enriched_path = OUTPUTS_DIR / "enriched_connections.csv"
+    if prev_enriched_path.exists() and cur_enriched_path.exists():
+        try:
+            prev_df = pd.read_csv(prev_enriched_path, low_memory=False)
+            cur_df = pd.read_csv(cur_enriched_path, low_memory=False)
+            if "url" in prev_df.columns and "url" in cur_df.columns and \
+               "opportunity_bucket" in prev_df.columns and "opportunity_bucket" in cur_df.columns:
+                prev_df["_u"] = prev_df["url"].map(_norm_url)
+                cur_df["_u"] = cur_df["url"].map(_norm_url)
+                prev_by_url = prev_df[prev_df["_u"] != ""].set_index("_u")["opportunity_bucket"].to_dict()
+                for _, r in cur_df[cur_df["_u"] != ""].iterrows():
+                    u = r["_u"]
+                    old_bucket = prev_by_url.get(u)
+                    new_bucket = _safe_str(r.get("opportunity_bucket"))
+                    if old_bucket is None or (isinstance(old_bucket, float) and pd.isna(old_bucket)) or old_bucket == new_bucket:
+                        continue
+                    old_bucket = _safe_str(old_bucket)
+                    common = {
+                        "full_name": _safe_str(r.get("full_name")), "company_clean": _safe_str(r.get("company_clean")),
+                        "persona": _safe_str(r.get("persona")), "priority_score": _safe_num(r.get("priority_score")),
+                        "url": _safe_str(r.get("url")), "match_method": "profile_url",
+                    }
+                    rows.append({**common, "opportunity_bucket": old_bucket, "segment": "bucket_change_out",
+                                 "bucket_group": _bucket_group(old_bucket)})
+                    rows.append({**common, "opportunity_bucket": new_bucket, "segment": "bucket_change_in",
+                                 "bucket_group": _bucket_group(new_bucket)})
+        except Exception as exc:
+            logger.warning(f"  Could not diff enriched_connections.csv against previous snapshot: {exc}")
+
+    # ── lead_category_change (previous vs current lead_reactivation contacts)
+    # "Follow-up due" is tracked on conversation_status, not lead_category, but
+    # the Weekly Evolution card (follow_ups_due_delta) needs the same identity-
+    # level tracking — fold it into the same effective-category signature so
+    # one diff loop backs both the lead_category-based and conversation_status-
+    # based Weekly Evolution cards.
+    def _effective_lead_category(c):
+        if c.get("conversation_status") == "Follow-up due":
+            return "Follow-up due"
+        return c.get("lead_category")
+
+    plr = (previous.get("lead_reactivation") or {}).get("top_reactivation_contacts") or []
+    clr = (current.get("lead_reactivation") or {}).get("top_reactivation_contacts") or []
+    if clr:
+        prev_by_key = {}
+        for c in plr:
+            key = _norm_url(c.get("other_person_profile_url")) or _name_key(c.get("other_person_name"), c.get("company_clean"))
+            prev_by_key[key] = _effective_lead_category(c)
+        for c in clr:
+            u = _norm_url(c.get("other_person_profile_url"))
+            key = u or _name_key(c.get("other_person_name"), c.get("company_clean"))
+            prev_cat = prev_by_key.get(key)
+            cur_cat = _effective_lead_category(c)
+            if prev_cat == cur_cat:
+                continue
+            rows.append({
+                "full_name": _safe_str(c.get("other_person_name")), "company_clean": _safe_str(c.get("company_clean")),
+                "persona": _safe_str(c.get("persona")), "opportunity_bucket": "",
+                "segment": "lead_category_change", "bucket_group": None,
+                "previous_value": _safe_str(prev_cat, None), "current_value": _safe_str(cur_cat, None),
+                "priority_score": _safe_num(c.get("reactivation_priority_score")),
+                "url": _safe_str(c.get("other_person_profile_url")),
+                "match_method": "profile_url" if u else "name_company_key",
+            })
+
+    # ── untapped_category_change / activated_this_week
+    pun = (previous.get("untapped_network") or {}).get("top_untapped_contacts") or []
+    cun = (current.get("untapped_network") or {}).get("top_untapped_contacts") or []
+    pun_by_key = {}
+    for c in pun:
+        key = _norm_url(c.get("profile_url")) or _name_key(c.get("full_name"), c.get("company_clean"))
+        pun_by_key[key] = c.get("untapped_category")
+    cun_keys = set()
+    for c in cun:
+        u = _norm_url(c.get("profile_url"))
+        key = u or _name_key(c.get("full_name"), c.get("company_clean"))
+        cun_keys.add(key)
+        prev_cat = pun_by_key.get(key)
+        cur_cat = c.get("untapped_category")
+        if key in pun_by_key and prev_cat != cur_cat:
+            rows.append({
+                "full_name": _safe_str(c.get("full_name")), "company_clean": _safe_str(c.get("company_clean")),
+                "persona": _safe_str(c.get("persona")), "opportunity_bucket": _safe_str(c.get("opportunity_bucket")),
+                "segment": "untapped_category_change", "bucket_group": None,
+                "previous_value": _safe_str(prev_cat, None), "current_value": _safe_str(cur_cat, None),
+                "priority_score": _safe_num(c.get("untapped_outreach_score")),
+                "url": _safe_str(c.get("profile_url")),
+                "match_method": "profile_url" if u else "name_company_key",
+            })
+    # Activated this week = was in the untapped pool last snapshot, no longer
+    # never-contacted this snapshot (moved into lead_reactivation/top_contacts
+    # with message history) — a genuine identity-level list, not an estimate.
+    clr_urls = {_norm_url(c.get("other_person_profile_url")) for c in clr}
+    for c in pun:
+        key = _norm_url(c.get("profile_url")) or _name_key(c.get("full_name"), c.get("company_clean"))
+        if key in cun_keys:
+            continue  # still in the untapped pool, not activated
+        u = _norm_url(c.get("profile_url"))
+        if u and u in clr_urls:
+            rows.append({
+                "full_name": _safe_str(c.get("full_name")), "company_clean": _safe_str(c.get("company_clean")),
+                "persona": _safe_str(c.get("persona")), "opportunity_bucket": _safe_str(c.get("opportunity_bucket")),
+                "segment": "activated_this_week", "bucket_group": None,
+                "priority_score": _safe_num(c.get("untapped_outreach_score")),
+                "url": _safe_str(c.get("profile_url")), "match_method": "profile_url",
+            })
+
+    # ── interview_pipeline_change (top-200 tracked pool in both snapshots only)
+    ptc = previous.get("top_contacts") or []
+    ctc = current.get("top_contacts") or []
+    ptc_by_url = {_norm_url(c.get("url")): c.get("outreach_status") for c in ptc if _norm_url(c.get("url"))}
+    for c in ctc:
+        if c.get("outreach_status") != "Interview Pipeline":
+            continue
+        u = _norm_url(c.get("url"))
+        if not u:
+            continue
+        if ptc_by_url.get(u) == "Interview Pipeline":
+            continue  # already was in the pipeline last snapshot, not a change
+        rows.append({
+            "full_name": _safe_str(c.get("full_name")), "company_clean": _safe_str(c.get("company_clean")),
+            "persona": _safe_str(c.get("persona")), "opportunity_bucket": _safe_str(c.get("opportunity_bucket")),
+            "segment": "interview_pipeline_change", "bucket_group": None,
+            "priority_score": _safe_num(c.get("priority_score")), "url": _safe_str(c.get("url")),
+            "match_method": "profile_url (limited to top-200 tracked pool in both snapshots)",
+        })
+
+    return rows
+
+
+def _append_gap_drilldown_new_this_week(current: dict, weekly_segments: list) -> None:
+    """Append segment='new_this_week' rows onto strategic_gap_people_drilldown
+    (Tab B) by matching each new-connection's market_v2-equivalent bucket
+    group + persona against the gap_analysis targets, via
+    export_public_dashboard_data.MARKET_V2_TO_V5_BUCKETS."""
+    try:
+        from src.export_public_dashboard_data import MARKET_V2_TO_V5_BUCKETS
+    except Exception:
+        return
+    gap_rows = current.get("gap_analysis") or []
+    existing = current.get("strategic_gap_people_drilldown") or []
+    # Idempotent: drop any new_this_week rows from a prior run before re-adding.
+    existing = [r for r in existing if r.get("segment") != "new_this_week"]
+
+    bucket_to_market = {}
+    for market, buckets in MARKET_V2_TO_V5_BUCKETS.items():
+        for b in buckets:
+            bucket_to_market[b] = market
+
+    gap_personas_by_market = {}
+    for g in gap_rows:
+        gap_personas_by_market.setdefault(g.get("market"), set()).add(g.get("persona"))
+
+    for row in weekly_segments:
+        if row.get("segment") != "new_this_week":
+            continue
+        market = bucket_to_market.get(row.get("opportunity_bucket"))
+        if not market or row.get("persona") not in gap_personas_by_market.get(market, set()):
+            continue
+        existing.append({
+            "full_name": row.get("full_name", ""), "company_clean": row.get("company_clean", ""),
+            "position_clean": "", "persona": row.get("persona", ""),
+            "market": market, "opportunity_bucket": row.get("opportunity_bucket", ""),
+            "priority_score": row.get("priority_score", 0),
+            "outreach_status": "", "contact_history_status": "",
+            "connected_on": "", "url": row.get("url", ""),
+            "segment": "new_this_week",
+            "reason": f"New connection this week matching {market} / {row.get('persona','')}",
+        })
+    current["strategic_gap_people_drilldown"] = existing
+
+
 def build_weekly_evolution(previous: dict, current: dict, snapshot_meta: dict) -> dict:
     kpi_df = build_kpi_delta(previous, current)
     kpi_df.to_csv(OUTPUTS_DIR / "weekly_kpi_delta.csv", index=False, encoding="utf-8-sig")
@@ -338,9 +603,30 @@ def main():
     evolution = build_weekly_evolution(previous, current, snapshot_meta)
     current["weekly_evolution"] = evolution
 
+    # Part 4 — full person-level backing for every Weekly Evolution card.
+    new_conn_df = pd.DataFrame()
+    new_conn_path = OUTPUTS_DIR / "weekly_new_connections.csv"
+    if new_conn_path.exists():
+        new_conn_df = pd.read_csv(new_conn_path, dtype=str, encoding="utf-8-sig")
+    weekly_segments = build_weekly_people_delta_segments(previous, current, new_conn_df)
+    current["weekly_people_delta_segments"] = weekly_segments
+    if weekly_segments:
+        pd.DataFrame(weekly_segments)[SAFE_WEEKLY_DELTA_SEGMENT_COLS].to_csv(
+            OUTPUTS_DIR / "weekly_people_delta_segments.csv", index=False, encoding="utf-8-sig",
+        )
+    logger.info(f"  Built weekly_people_delta_segments: {len(weekly_segments)} rows")
+
+    # Strategic Gap drill-down Tab B — "New This Week Matching This Gap"
+    _append_gap_drilldown_new_this_week(current, weekly_segments)
+    gap_drilldown_all = current.get("strategic_gap_people_drilldown") or []
+    if gap_drilldown_all:
+        pd.DataFrame(gap_drilldown_all).to_csv(
+            OUTPUTS_DIR / "strategic_gap_people_drilldown.csv", index=False, encoding="utf-8-sig",
+        )
+
     for path in [PUBLIC_JSON_OUTPUTS]:
         path.write_text(json.dumps(current, ensure_ascii=False, default=str, indent=2), encoding="utf-8")
-    logger.info("  weekly_evolution merged into outputs/public_dashboard_data.json")
+    logger.info("  weekly_evolution + weekly_people_delta_segments merged into outputs/public_dashboard_data.json")
     logger.info(f"  Diagnosis: {evolution['diagnosis']}")
 
 
