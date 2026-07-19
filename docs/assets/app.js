@@ -2906,6 +2906,11 @@ function _deltaSub(n, positiveIsGood = true) {
 // countable sub-lists ("moved in" / "moved out") whose difference is the
 // card's delta, via `splitInOut`.
 let activeWeeklyKpi = null;
+// 'latest' | 'cumulative' | a snapshot_number (as string) from D.weekly_history.
+// Person-level drilldown (D.weekly_people_delta_segments) only ever reflects
+// the LATEST comparison — selecting any other week must never silently show
+// the latest week's people under a mislabeled historical selection.
+let selectedWeeklyWeek = 'latest';
 
 const WEEKLY_KPI_FILTERS = {
   gross_new:         { label: 'Gross New Connections',        match: r => r.segment === 'new_this_week' },
@@ -2934,7 +2939,6 @@ const WEEKLY_KPI_FILTERS = {
 window.applyWeeklyKpiFilter = function(key) {
   const def = WEEKLY_KPI_FILTERS[key];
   if (!def) return;
-  const source = D.weekly_people_delta_segments || [];
   const panel = document.getElementById('weekly-drilldown');
   const titleEl = document.getElementById('weekly-drilldown-title');
   const tbody = document.getElementById('weekly-drilldown-tbody');
@@ -2942,6 +2946,20 @@ window.applyWeeklyKpiFilter = function(key) {
   if (!panel || !tbody) return;
   activeWeeklyKpi = key;
   if (titleEl) titleEl.textContent = def.label;
+
+  // Part 4 — honesty guard: identity-level segments only ever cover the
+  // LATEST snapshot comparison. Never show them under a historical/
+  // cumulative week selection — that would misattribute the latest week's
+  // people to a different period.
+  if (selectedWeeklyWeek !== 'latest') {
+    if (statsEl) statsEl.textContent = 'Selected week — ' + def.label + ' (aggregate only)';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">'
+      + 'No identity-level list is available for this metric. This value is aggregate-only.</td></tr>';
+    panel.style.display = '';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+  const source = D.weekly_people_delta_segments || [];
 
   let rows;
   if (def.splitInOut) {
@@ -2971,24 +2989,323 @@ window.applyWeeklyKpiFilter = function(key) {
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-function renderWeekly() {
-  const we = D.weekly_evolution || {};
-  const noData = document.getElementById('weekly-no-data');
-  const mainContent = document.getElementById('weekly-main-content');
+// ── Part 2/3 — multi-week support ────────────────────────────────────────────
+// Maps a flat outputs/action_plan_weekly_history.csv row (D.weekly_history
+// entry) onto the same nested shape build_weekly_evolution() produces, so
+// the EXACT SAME card-rendering function (_renderWeeklyCardsFromEvolution)
+// works for both the live "latest" comparison and any recorded past week.
+// Fields the flat history row does not carry (follow-ups due, interview
+// pipeline, most untapped sub-deltas) are left null — _deltaSub(null)
+// already renders those as "not tracked yet", never a fabricated 0.
+function _historyRowToEvolutionShape(row) {
+  if (!row) return null;
+  return {
+    current_snapshot_label: row.current_snapshot_date,
+    previous_snapshot_label: row.previous_snapshot_date,
+    network_growth: {
+      previous_connections: row.total_connections_previous,
+      current_connections: row.total_connections_current,
+      new_connections: row.gross_new_connections,
+      net_growth: row.net_connection_growth,
+    },
+    strategic_growth: {
+      new_recruiters: row.new_recruiters,
+      new_talent_acquisition: row.new_talent_acquisition,
+      new_hiring_managers: row.new_hiring_managers,
+      new_data_leaders: row.new_data_leaders,
+    },
+    market_movement: {
+      latam_usd_delta: row.latam_usd_delta,
+      us_canada_nearshore_delta: row.us_canada_delta,
+      spain_eu_delta: row.spain_eu_delta,
+      global_opportunity_delta: row.global_opportunity_delta,
+      needs_mapping_delta: row.needs_company_mapping_delta,
+    },
+    lead_pipeline_movement: {
+      needs_my_response_delta: row.needs_my_response_delta,
+      hot_leads_delta: row.hot_reactivation_delta,
+      warm_leads_delta: row.warm_reactivation_delta,
+      follow_ups_due_delta: null,
+      interview_pipeline_delta: null,
+    },
+    untapped_network_movement: {
+      available: row.untapped_activated_this_week !== null && row.untapped_activated_this_week !== undefined,
+      tracked_since_last_snapshot: true,
+      never_contacted_confirmed_delta: null,
+      high_value_untapped_delta: null,
+      untapped_recruiters_delta: null,
+      untapped_hiring_managers_delta: null,
+      untapped_contacts_activated_this_week_estimate: row.untapped_activated_this_week,
+    },
+    new_high_value_connections: [], // never fabricated for a past week — no per-person list exists here
+    diagnosis: {
+      strongest_growth_area: null,
+      weakest_strategic_area: null,
+      allocation_90_10_note: row.strategy_mix_status ? ('Strategy mix status: ' + row.strategy_mix_status) : null,
+      highest_value_next_action: row.recommendation || null,
+    },
+  };
+}
 
-  if (!we || !we.network_growth) {
-    if (noData) noData.style.display = '';
-    if (mainContent) mainContent.style.display = 'none';
+function _weeklyHistoryLabel(row) {
+  return (row.previous_snapshot_date || '—') + ' → ' + (row.current_snapshot_date || '—');
+}
+
+// "All available weeks / cumulative view" — sums additive fields across
+// every recorded week, keeps the earliest previous_connections / latest
+// current_connections (summing connection counts across weeks would be
+// meaningless), and is always clearly labeled as cumulative, never
+// presented as if it were a single week.
+function _buildCumulativeHistoryRow(history) {
+  if (!history || !history.length) return null;
+  const sorted = [...history].sort((a, b) => (a.snapshot_number || 0) - (b.snapshot_number || 0));
+  const first = sorted[0], last = sorted[sorted.length - 1];
+  const sum = key => sorted.reduce((s, r) => s + (parseFloat(r[key]) || 0), 0);
+  return {
+    snapshot_number: 'cumulative',
+    previous_snapshot_date: first.previous_snapshot_date,
+    current_snapshot_date: last.current_snapshot_date,
+    total_connections_previous: first.total_connections_previous,
+    total_connections_current: last.total_connections_current,
+    gross_new_connections: sum('gross_new_connections'),
+    net_connection_growth: sum('net_connection_growth'),
+    connection_churn_or_removed_estimate: sum('connection_churn_or_removed_estimate'),
+    new_recruiters: sum('new_recruiters'),
+    new_talent_acquisition: sum('new_talent_acquisition'),
+    new_hiring_managers: sum('new_hiring_managers'),
+    new_data_leaders: sum('new_data_leaders'),
+    latam_usd_delta: sum('latam_usd_delta'),
+    us_canada_delta: sum('us_canada_delta'),
+    spain_eu_delta: sum('spain_eu_delta'),
+    global_opportunity_delta: sum('global_opportunity_delta'),
+    needs_company_mapping_delta: sum('needs_company_mapping_delta'),
+    needs_my_response_delta: sum('needs_my_response_delta'),
+    hot_reactivation_delta: sum('hot_reactivation_delta'),
+    warm_reactivation_delta: sum('warm_reactivation_delta'),
+    untapped_activated_this_week: sum('untapped_activated_this_week'),
+    actual_primary_share: last.actual_primary_share,
+    actual_europe_share: last.actual_europe_share,
+    strategy_mix_status: last.strategy_mix_status,
+    diagnosis_summary: 'Cumulative across ' + sorted.length + ' recorded week(s).',
+    recommendation: last.recommendation,
+    new_connections_target_min: null, new_connections_target_max: null,
+  };
+}
+
+window.applyWeeklyWeekFilter = function(value) {
+  selectedWeeklyWeek = value;
+  const history = D.weekly_history || [];
+  const noteEl = document.getElementById('weekly-selection-note');
+  const labelEl = document.getElementById('weekly-snapshot-label');
+
+  let evolutionShape, historyRow = null, prevRow = null;
+  if (value === 'latest') {
+    evolutionShape = D.weekly_evolution || {};
+    const sorted = [...history].sort((a, b) => (a.snapshot_number || 0) - (b.snapshot_number || 0));
+    historyRow = sorted[sorted.length - 1] || null;
+    prevRow = sorted[sorted.length - 2] || null;
+    if (noteEl) noteEl.textContent = '';
+  } else if (value === 'cumulative') {
+    historyRow = _buildCumulativeHistoryRow(history);
+    evolutionShape = _historyRowToEvolutionShape(historyRow) || {};
+    if (noteEl) noteEl.textContent = 'Cumulative view across ' + history.length + ' recorded week(s) — person-level drilldown is not available for this view.';
+  } else {
+    historyRow = history.find(r => String(r.snapshot_number) === String(value)) || null;
+    const sorted = [...history].sort((a, b) => (a.snapshot_number || 0) - (b.snapshot_number || 0));
+    const idx = sorted.findIndex(r => String(r.snapshot_number) === String(value));
+    prevRow = idx > 0 ? sorted[idx - 1] : null;
+    evolutionShape = _historyRowToEvolutionShape(historyRow) || {};
+    if (noteEl) noteEl.textContent = historyRow ? 'Historical week — person-level drilldown is not available for past weeks (aggregate numbers only).' : 'No recorded data for this week.';
+  }
+
+  if (labelEl) labelEl.textContent =
+    'Current Snapshot: ' + (evolutionShape.current_snapshot_label || '—') +
+    '   |   Previous Snapshot: ' + (evolutionShape.previous_snapshot_label || '—');
+
+  _renderWeeklyCardsFromEvolution(evolutionShape);
+  renderSundayStrategyReview(historyRow, prevRow);
+
+  // Closing any open drilldown panel on a week switch avoids showing a
+  // stale identity-level list (from the previously selected week) under
+  // the newly selected week's label.
+  const panel = document.getElementById('weekly-drilldown');
+  if (panel) panel.style.display = 'none';
+};
+
+function _populateWeeklyWeekSelector() {
+  const sel = document.getElementById('weekly-week-selector');
+  if (!sel) return;
+  const history = D.weekly_history || [];
+  const sorted = [...history].sort((a, b) => (a.snapshot_number || 0) - (b.snapshot_number || 0));
+  const existing = new Set(Array.from(sel.options).map(o => o.value));
+  sorted.forEach(row => {
+    const val = String(row.snapshot_number);
+    if (existing.has(val)) return;
+    const o = document.createElement('option');
+    o.value = val;
+    o.textContent = _weeklyHistoryLabel(row);
+    sel.appendChild(o);
+  });
+  if (sorted.length && !existing.has('cumulative')) {
+    const o = document.createElement('option');
+    o.value = 'cumulative';
+    o.textContent = 'All available weeks / cumulative view';
+    sel.appendChild(o);
+  }
+}
+
+function renderWeeklyHistoryTable() {
+  const tbody = document.getElementById('weekly-history-tbody');
+  const statsEl = document.getElementById('weekly-history-stats');
+  if (!tbody) return;
+  const history = [...(D.weekly_history || [])].sort((a, b) => (b.snapshot_number || 0) - (a.snapshot_number || 0));
+  if (statsEl) statsEl.textContent = history.length
+    ? 'Showing ' + history.length + ' recorded week(s)'
+    : 'No recorded weeks yet.';
+  tbody.innerHTML = history.length ? history.map(r => '<tr>'
+    + '<td style="white-space:nowrap">Week ' + (r.snapshot_number ?? '—') + '</td>'
+    + '<td style="white-space:nowrap">' + (r.previous_snapshot_date || '—') + '</td>'
+    + '<td style="white-space:nowrap">' + (r.current_snapshot_date || '—') + '</td>'
+    + '<td>' + fmt(r.gross_new_connections) + '</td>'
+    + '<td>' + fmt(r.net_connection_growth) + '</td>'
+    + '<td>' + fmt(r.connection_churn_or_removed_estimate) + '</td>'
+    + '<td>' + fmt(r.new_recruiters) + '</td>'
+    + '<td>' + fmt(r.new_talent_acquisition) + '</td>'
+    + '<td>' + fmt(r.new_hiring_managers) + '</td>'
+    + '<td>' + (r.latam_usd_delta ?? '—') + '</td>'
+    + '<td>' + (r.us_canada_delta ?? '—') + '</td>'
+    + '<td>' + (r.spain_eu_delta ?? '—') + '</td>'
+    + '<td>' + (r.needs_company_mapping_delta ?? '—') + '</td>'
+    + '<td>' + (r.hot_reactivation_delta ?? '—') + '</td>'
+    + '<td>' + (r.warm_reactivation_delta ?? '—') + '</td>'
+    + '<td>' + (r.needs_my_response_delta ?? '—') + '</td>'
+    + '<td style="font-size:0.72rem;max-width:220px;white-space:normal">' + (r.diagnosis_summary || '—').substring(0, 160) + '</td>'
+    + '</tr>').join('')
+    : '<tr><td colspan="17" style="text-align:center;color:var(--text-muted)">No recorded weeks yet. Keep adding weekly snapshots every Sunday.</td></tr>';
+}
+
+function renderWeeklyTrendChart() {
+  const history = [...(D.weekly_history || [])].sort((a, b) => (a.snapshot_number || 0) - (b.snapshot_number || 0));
+  const msgEl = document.getElementById('weekly-trend-msg');
+  const msgTextEl = document.getElementById('weekly-trend-msg-text');
+  if (history.length < 2) {
+    destroyChart('chart-weekly-trend');
+    if (msgEl) msgEl.style.display = '';
+    if (msgTextEl) msgTextEl.textContent = 'Not enough weekly history yet. Keep adding weekly snapshots every Sunday.';
     return;
   }
-  if (noData) noData.style.display = 'none';
-  if (mainContent) mainContent.style.display = '';
+  if (msgEl) msgEl.style.display = 'none';
+  const labels = history.map(r => 'Week ' + (r.snapshot_number ?? '—'));
+  groupedBarChart('chart-weekly-trend', labels, [
+    { label: 'Gross New Connections', data: history.map(r => r.gross_new_connections || 0), color: '#3b82f6' },
+    { label: 'Net Growth', data: history.map(r => r.net_connection_growth || 0), color: '#22c55e' },
+    { label: 'Recruiter + TA Growth', data: history.map(r => (parseFloat(r.new_recruiters) || 0) + (parseFloat(r.new_talent_acquisition) || 0)), color: '#f59e0b' },
+    { label: 'LATAM/USD Growth', data: history.map(r => r.latam_usd_delta || 0), color: '#d97706' },
+    { label: 'Spain/EU Growth', data: history.map(r => r.spain_eu_delta || 0), color: '#dc2626' },
+    { label: 'Needs Mapping Movement', data: history.map(r => r.needs_company_mapping_delta || 0), color: '#8b5cf6' },
+  ]);
+}
 
-  const labelEl = document.getElementById('weekly-snapshot-label');
-  if (labelEl) labelEl.textContent =
-    'Current Snapshot: ' + (we.current_snapshot_label || '—') +
-    '   |   Previous Snapshot: ' + (we.previous_snapshot_label || '—');
+// ── Part 6 — Sunday Strategy Review: deterministic rules only, no
+// free-text/AI generation. Operates on one weekly_history row (+ the prior
+// row for trend comparisons, when available) — same field shape whether
+// the selected week is the latest or a historical one.
+function renderSundayStrategyReview(row, prevRow) {
+  const el = document.getElementById('weekly-strategy-review');
+  if (!el) return;
+  if (!row) {
+    el.innerHTML = '<div class="alert alert-info"><span class="alert-icon">&#8505;&#65039;</span>'
+      + '<span>Not enough weekly history yet. Keep adding weekly snapshots every Sunday.</span></div>';
+    return;
+  }
 
+  const items = [];
+  const num = v => (v === null || v === undefined || v === '') ? null : parseFloat(v);
+
+  // 1. Weekly connection target
+  const gross = num(row.gross_new_connections);
+  const tmin = num(row.new_connections_target_min), tmax = num(row.new_connections_target_max);
+  if (gross !== null && tmin !== null && tmax !== null) {
+    const hit = gross >= tmin && gross <= tmax;
+    const above = gross > tmax;
+    items.push({ cls: hit ? 'good' : (above ? 'info' : 'warn'),
+      text: 'Weekly connection target: ' + gross + ' new connections vs target ' + tmin + '-' + tmax + '/wk — '
+        + (hit ? 'on target.' : above ? 'above target.' : 'below target.') });
+  } else {
+    items.push({ cls: '', text: 'Weekly connection target: no target configured for this week — cannot assess.' });
+  }
+
+  // 2. 90% LATAM/USD + 10% Spain/EU exploratory mix
+  if (row.strategy_mix_status) {
+    const onStrategy = row.strategy_mix_status === 'ON_STRATEGY' || row.strategy_mix_status === 'ON_TRACK';
+    items.push({ cls: onStrategy ? 'good' : 'warn',
+      text: '90/10 LATAM/USD vs Spain/EU mix: ' + row.strategy_mix_status.replace(/_/g, ' ')
+        + (row.actual_primary_share != null ? (' (primary ' + Math.round(row.actual_primary_share * 100) + '%, Europe ' + Math.round((row.actual_europe_share || 0) * 100) + '%)') : '') + '.' });
+  }
+
+  // 3. Recruiter/TA pipeline trend
+  const recTa = (v => v === null ? null : (parseFloat(v.new_recruiters) || 0) + (parseFloat(v.new_talent_acquisition) || 0));
+  const recTaCur = recTa(row), recTaPrev = prevRow ? recTa(prevRow) : null;
+  if (recTaPrev !== null) {
+    items.push({ cls: recTaCur >= recTaPrev ? 'good' : 'warn',
+      text: 'Recruiter/TA pipeline: ' + recTaCur + ' this week vs ' + recTaPrev + ' last week — '
+        + (recTaCur > recTaPrev ? 'improved.' : recTaCur === recTaPrev ? 'flat.' : 'declined.') });
+  } else {
+    items.push({ cls: '', text: 'Recruiter/TA pipeline: not enough history to assess trend yet.' });
+  }
+
+  // 4. Hiring manager pipeline trend
+  const hmCur = num(row.new_hiring_managers), hmPrev = prevRow ? num(prevRow.new_hiring_managers) : null;
+  if (hmCur !== null && hmPrev !== null) {
+    items.push({ cls: hmCur >= hmPrev ? 'good' : 'warn',
+      text: 'Hiring manager pipeline: ' + hmCur + ' this week vs ' + hmPrev + ' last week — '
+        + (hmCur > hmPrev ? 'improved.' : hmCur === hmPrev ? 'flat.' : 'declined.') });
+  } else {
+    items.push({ cls: '', text: 'Hiring manager pipeline: not enough history to assess trend yet.' });
+  }
+
+  // 5. Needs Mapping
+  const needsMapDelta = num(row.needs_company_mapping_delta);
+  if (needsMapDelta !== null) {
+    items.push({ cls: needsMapDelta > 0 ? 'bad' : (needsMapDelta < 0 ? 'good' : ''),
+      text: 'Needs Company Mapping: ' + (needsMapDelta > 0 ? '+' : '') + needsMapDelta + ' this week — '
+        + (needsMapDelta > 0 ? 'got worse.' : needsMapDelta < 0 ? 'improved.' : 'no change.') });
+  }
+
+  // 6. Lead reactivation
+  const hotD = num(row.hot_reactivation_delta), warmD = num(row.warm_reactivation_delta), needsRespD = num(row.needs_my_response_delta);
+  if (hotD !== null || warmD !== null) {
+    const net = (hotD || 0) + (warmD || 0);
+    items.push({ cls: net > 0 ? 'good' : (net < 0 ? 'warn' : ''),
+      text: 'Lead reactivation: hot ' + (hotD ?? '—') + ', warm ' + (warmD ?? '—')
+        + (needsRespD != null ? (', needs-my-response ' + (needsRespD > 0 ? '+' : '') + needsRespD) : '') + ' — '
+        + (net > 0 ? 'improved.' : net < 0 ? 'declined.' : 'flat.') });
+  }
+
+  // 7. Next-week focus — deterministic combination rules
+  const latamDelta = num(row.latam_usd_delta);
+  const focusRules = [];
+  if (gross !== null && tmax !== null && gross > tmax && latamDelta !== null && latamDelta < Math.max(2, Math.round(gross * 0.2))) {
+    focusRules.push('Gross New Connections is above target but LATAM/USD confirmed growth is low — recommend mapping new companies and prioritizing LATAM recruiter outreach.');
+  }
+  if (needsMapDelta !== null && needsMapDelta > 0) {
+    focusRules.push('Needs Mapping increased — recommend mapping top unresolved companies before adding more broad connections.');
+  }
+  if (row.actual_europe_share != null && row.actual_europe_share > 0.10) {
+    focusRules.push('Spain/EU growth is above 10% — do not over-invest in Europe yet; the next 60 days are still LATAM/USD-first.');
+  }
+  if (!focusRules.length) {
+    focusRules.push('No specific rule triggered this week — continue the current 90% LATAM/USD / 10% Spain/EU outreach plan.');
+  }
+  focusRules.forEach(text => items.push({ cls: 'info', text: 'Next week focus: ' + text }));
+
+  el.innerHTML = items.map(i => '<div class="alert alert-' + (i.cls === 'good' ? 'good' : i.cls === 'bad' ? 'bad' : i.cls === 'warn' ? 'warn' : 'info') + '">'
+    + '<span class="alert-icon">' + (i.cls === 'good' ? '&#9989;' : i.cls === 'bad' ? '&#10060;' : i.cls === 'warn' ? '&#9888;&#65039;' : '&#8505;&#65039;') + '</span>'
+    + '<span>' + i.text + '</span></div>').join('');
+}
+
+function _renderWeeklyCardsFromEvolution(we) {
+  we = we || {};
   // A. Network Growth — gross new connections vs net growth are DIFFERENT
   // numbers on purpose: gross can exceed net when some prior connections
   // disappear, are removed, or exports change between snapshots.
@@ -3099,6 +3416,31 @@ function renderWeekly() {
     '<p><strong>90/10 allocation check:</strong> ' + (diag.allocation_90_10_note || '—') + '</p>',
     '<p><strong>Highest-value next action:</strong> ' + (diag.highest_value_next_action || '—') + '</p>',
   ].join('');
+}
+
+function renderWeekly() {
+  const we = D.weekly_evolution || {};
+  const noData = document.getElementById('weekly-no-data');
+  const mainContent = document.getElementById('weekly-main-content');
+
+  if (!we || !we.network_growth) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  selectedWeeklyWeek = 'latest';
+  _populateWeeklyWeekSelector();
+  const sel = document.getElementById('weekly-week-selector');
+  if (sel) sel.value = 'latest';
+  window.applyWeeklyWeekFilter('latest');
+
+  // History table + trend chart always show every recorded week, regardless
+  // of the selector above — that is their purpose (Part 3).
+  renderWeeklyHistoryTable();
+  renderWeeklyTrendChart();
 }
 
 // ── PAGE: Action Plan — Plan Progress tab ─────────────────────────────────────
@@ -3407,6 +3749,7 @@ function renderPlanProgress() {
       makeCard('Career Sites Submitted', manual.career_sites_submitted ?? 0),
       makeCard('Manual DMs Sent', manual.manual_dms_sent ?? 0),
       makeCard('Manual Follow-ups Done', manual.manual_followups_done ?? 0),
+      makeCard('Companies Mapped', manual.companies_mapped ?? 'Not logged', manual.companies_mapped == null ? 'column not in log yet' : ''),
     ].join('');
   } else {
     if (manualNoteEl) manualNoteEl.textContent = 'No manual activity log entry for this week — measured where available, nothing fabricated.';

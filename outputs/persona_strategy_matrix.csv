@@ -12,12 +12,12 @@ Head of Data,US_CANADA_NEARSHORE,2,30,28,93,Critical,60d,Heads of Data who spons
 Head of Data,EUROPE,3,40,37,92,Critical,90d,European data leaders who can refer or hire for data engineering roles
 Hiring Manager,US_CANADA_NEARSHORE,6,50,44,88,Critical,45d,Decision-makers at companies with active LATAM remote hiring
 Director,SPAIN_EU,5,40,35,88,Critical,90d,Directors at Spain/EU tech companies with international hiring culture
-Talent Acquisition,SPAIN_EU,12,60,48,80,Critical,60d,TA professionals at Spain/EU tech companies open to international hires
 Recruiter,US_CANADA_NEARSHORE,17,80,63,79,High,30d,US/Canada recruiters who place LATAM contractors in USD-paying roles
 Recruiter,EUROPE,13,60,47,78,High,75d,"European recruiters (Germany, Netherlands, Ireland) for data engineering"
+Talent Acquisition,SPAIN_EU,14,60,46,77,High,60d,TA professionals at Spain/EU tech companies open to international hires
 Talent Acquisition,US_CANADA_NEARSHORE,22,60,38,63,High,30d,TA teams at nearshore-friendly US/Canada tech companies
-Talent Acquisition,EUROPE,22,50,28,56,Medium,75d,TA professionals at European tech companies open to Data Engineers
+Talent Acquisition,EUROPE,21,50,29,58,Medium,75d,TA professionals at European tech companies open to Data Engineers
 Recruiter,LATAM_USD,40,80,40,50,Medium,30d,Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms
 Director,US_CANADA_NEARSHORE,15,25,10,40,Medium,60d,Directors at US/Canada companies with nearshore-friendly culture
 Talent Acquisition,LATAM_USD,49,60,11,18,Low,30d,TA specialists at LATAM companies that hire remote contractors
-Director,LATAM_USD,27,20,0,0,Saturated,60d,Directors at LATAM-USD companies with budget for remote data engineers
+Director,LATAM_USD,28,20,0,0,Saturated,60d,Directors at LATAM-USD companies with budget for remote data engineers

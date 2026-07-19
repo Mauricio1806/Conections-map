@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1784421495">
+  <link rel="stylesheet" href="./assets/style.css?v=1784478670">
 </head>
 <body>
 
@@ -1148,6 +1148,21 @@ python src/validate_static_dashboard_runtime.py</pre>
       </div>
 
       <div id="weekly-main-content">
+        <!-- Week selector (Part 2) — switches the card sections below between
+             the latest live comparison, a specific recorded historical week,
+             or a cumulative view across all recorded weeks. The History
+             table and Trend chart further down always show every recorded
+             week regardless of this selection — that's their purpose. -->
+        <div class="filters-bar" style="margin-bottom:1rem">
+          <div class="filter-group">
+            <label>Compare</label>
+            <select id="weekly-week-selector" onchange="applyWeeklyWeekFilter(this.value)">
+              <option value="latest">Latest week</option>
+            </select>
+          </div>
+        </div>
+        <div id="weekly-selection-note" style="font-size:0.8rem;color:var(--text-muted);margin:-0.5rem 0 1rem"></div>
+
         <div class="section-label">A. Network Growth</div>
         <div class="metrics-grid" id="weekly-network-growth"></div>
         <div id="weekly-network-growth-note" style="font-size:0.8rem;color:var(--text-muted);margin:-0.25rem 0 1rem"></div>
@@ -1196,6 +1211,41 @@ python src/validate_static_dashboard_runtime.py</pre>
 
         <div class="section-label">F. Weekly Diagnosis</div>
         <div class="card" id="weekly-diagnosis-card" style="padding:1.5rem"></div>
+
+        <!-- Sunday Strategy Review (Part 6) — deterministic rule-based
+             review of the selected week, not free-text/AI-generated. -->
+        <div class="section-label">G. Sunday Strategy Review</div>
+        <div id="weekly-strategy-review"></div>
+
+        <!-- Weekly Evolution History (Part 3) — always shows every recorded
+             week (upsert-by-snapshot_number, same file the Action Plan
+             page's Week 1-4 tabs already use). -->
+        <div class="section-label">H. Weekly Evolution History</div>
+        <div class="table-stats" id="weekly-history-stats"></div>
+        <div class="table-wrap">
+          <table id="weekly-history-table">
+            <thead><tr>
+              <th>Week</th><th>Previous</th><th>Current</th><th>Gross New</th><th>Net Growth</th>
+              <th>Removed/Lost/Changed</th><th>New Recruiters</th><th>New TA</th><th>New HM</th>
+              <th>LATAM/USD &Delta;</th><th>US/Canada &Delta;</th><th>Spain/EU &Delta;</th>
+              <th>Needs Mapping &Delta;</th><th>Hot Leads &Delta;</th><th>Warm Leads &Delta;</th>
+              <th>Needs Reply &Delta;</th><th>Diagnosis</th>
+            </tr></thead>
+            <tbody id="weekly-history-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Weekly Growth Trend (Part 2) — honest "not enough weeks yet"
+             message below 2 recorded weeks, same rule as the Action Plan
+             page's chart-progress-weekly-comparison. -->
+        <div class="section-label">I. Weekly Growth Trend</div>
+        <div id="weekly-trend-msg" style="display:none" class="alert alert-info">
+          <span class="alert-icon">&#8505;&#65039;</span>
+          <span id="weekly-trend-msg-text"></span>
+        </div>
+        <div class="chart-box" style="max-width:100%">
+          <canvas id="chart-weekly-trend" style="max-height:360px"></canvas>
+        </div>
       </div>
     </div>
 
@@ -1203,6 +1253,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1784421495"></script>
+<script src="./assets/app.js?v=1784478670"></script>
 </body>
 </html>

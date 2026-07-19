@@ -291,6 +291,17 @@ def load_manual_log(week_end: str | None) -> dict:
         return {"manual_activity_available": False}
 
     row = match.iloc[-1]
+
+    # companies_mapped is a newer optional column — older weekly_action_log.csv
+    # rows/files won't have it at all. Distinguish "column absent" (None =
+    # not logged) from "column present with value 0" (a real logged zero),
+    # same honesty rule the rest of this dict already follows.
+    if "companies_mapped" in df.columns:
+        _cm = pd.to_numeric(row.get("companies_mapped"), errors="coerce")
+        companies_mapped = int(_cm) if pd.notna(_cm) else None
+    else:
+        companies_mapped = None
+
     return {
         "manual_activity_available": True,
         "week_start": str(row.get("week_start", "") or ""),
@@ -300,6 +311,7 @@ def load_manual_log(week_end: str | None) -> dict:
         "career_sites_submitted": int(pd.to_numeric(row.get("career_sites_submitted"), errors="coerce") or 0),
         "manual_dms_sent": int(pd.to_numeric(row.get("manual_dms_sent"), errors="coerce") or 0),
         "manual_followups_done": int(pd.to_numeric(row.get("manual_followups_done"), errors="coerce") or 0),
+        "companies_mapped": companies_mapped,
     }
 
 
@@ -708,10 +720,16 @@ HISTORY_COLUMNS = [
     "untapped_outreach_target_min", "untapped_outreach_target_max",
     "europe_exploratory_target_min", "europe_exploratory_target_max",
     "gross_new_connections", "net_connection_growth", "connection_churn_or_removed_estimate",
-    "new_recruiters", "new_talent_acquisition", "new_hiring_managers",
+    "total_connections_previous", "total_connections_current",
+    "new_recruiters", "new_talent_acquisition", "new_hiring_managers", "new_data_leaders",
     "new_conversations_started", "needs_my_response_current", "needs_my_response_delta",
     "hot_reactivation_delta", "warm_reactivation_delta",
     "untapped_activated_this_week", "needs_company_mapping_delta",
+    # Weekly Evolution multi-week support — sourced from weekly_evolution.market_movement
+    # (already computed every run by weekly_kpi_delta.py), added here rather than
+    # recomputed, so the Weekly Evolution History table/trend chart and the Action
+    # Plan Week 1-4 tabs share one upsert-by-snapshot_number history file.
+    "latam_usd_delta", "us_canada_delta", "spain_eu_delta", "global_opportunity_delta",
     "actual_primary_share", "actual_europe_share", "strategy_mix_status",
     "classification_risk_status", "overall_status", "diagnosis_summary", "recommendation",
 ]
@@ -720,7 +738,10 @@ HISTORY_COLUMNS = [
 def build_weekly_history_row(snapshot_number: int, week_key: str, week_cfg: dict, period: dict,
                               network: dict, strategic: dict, persona: dict, leads: dict,
                               untapped: dict, quality: dict, diagnosis: list, overall_status: str,
-                              recommendation: str) -> dict:
+                              recommendation: str, market_movement: dict = None,
+                              evolution_network_growth: dict = None) -> dict:
+    market_movement = market_movement or {}
+    evolution_network_growth = evolution_network_growth or {}
     return {
         "available": True,
         "snapshot_number": snapshot_number,
@@ -742,9 +763,12 @@ def build_weekly_history_row(snapshot_number: int, week_key: str, week_cfg: dict
         "gross_new_connections": network["gross_new_connections"],
         "net_connection_growth": network["net_connection_growth"],
         "connection_churn_or_removed_estimate": network["connection_churn_or_removed_estimate"],
+        "total_connections_previous": evolution_network_growth.get("previous_connections"),
+        "total_connections_current": evolution_network_growth.get("current_connections"),
         "new_recruiters": persona.get("new_recruiters", 0),
         "new_talent_acquisition": persona.get("new_talent_acquisition", 0),
         "new_hiring_managers": persona.get("new_hiring_managers", 0),
+        "new_data_leaders": persona.get("new_data_leaders", 0),
         "new_conversations_started": leads["new_conversations_started"],
         "needs_my_response_current": leads["needs_my_response_current"],
         "needs_my_response_delta": leads.get("needs_my_response_delta"),
@@ -752,6 +776,10 @@ def build_weekly_history_row(snapshot_number: int, week_key: str, week_cfg: dict
         "warm_reactivation_delta": leads.get("warm_reactivation_delta"),
         "untapped_activated_this_week": untapped["untapped_activated_this_week"],
         "needs_company_mapping_delta": quality["needs_company_mapping_delta"],
+        "latam_usd_delta": market_movement.get("latam_usd_delta"),
+        "us_canada_delta": market_movement.get("us_canada_nearshore_delta"),
+        "spain_eu_delta": market_movement.get("spain_eu_delta"),
+        "global_opportunity_delta": market_movement.get("global_opportunity_delta"),
         "actual_primary_share": strategic["actual_primary_share"],
         "actual_europe_share": strategic["actual_europe_share"],
         "strategy_mix_status": strategic["strategy_mix_status"],
@@ -997,11 +1025,17 @@ def build_public_block(week_key: str, week_index: int, snapshot_count: int, base
     }
 
 
-def merge_into_public_json(block: dict) -> None:
+def merge_into_public_json(block: dict, weekly_history: list = None) -> None:
     current = load_current_json()
     current["action_plan_progress"] = block
+    # Top-level weekly_history (Part 3) — same upsert-by-snapshot_number array
+    # already built for action_plan_progress.weekly_history/by_week (Action
+    # Plan page's Week 1-4 tabs, untouched), mirrored here so the Weekly
+    # Evolution page can read D.weekly_history directly without reaching into
+    # action_plan_progress's nested shape.
+    current["weekly_history"] = weekly_history if weekly_history is not None else []
     PUBLIC_JSON.write_text(json.dumps(current, ensure_ascii=False, default=str, indent=2), encoding="utf-8")
-    logger.info("  action_plan_progress merged into outputs/public_dashboard_data.json")
+    logger.info("  action_plan_progress + weekly_history merged into outputs/public_dashboard_data.json")
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -1050,16 +1084,26 @@ def main():
                        persona, leads, untapped, top_contacts, quality, manual, diagnosis,
                        overall_status, recommendation)
 
+    # Weekly Evolution multi-week support (Part 2/3) — weekly_kpi_delta.py has
+    # already computed these into weekly_evolution this same run; read them
+    # from current_json rather than recomputing, so the history row can never
+    # drift from what the Weekly Evolution page itself shows for "latest".
+    evolution = current_json.get("weekly_evolution") or {}
+    market_movement = evolution.get("market_movement") or {}
+    evolution_network_growth = evolution.get("network_growth") or {}
+
     history_row = build_weekly_history_row(snapshot_count, week_key, week_cfg, period, network, strategic,
                                             persona, leads, untapped, quality, diagnosis,
-                                            overall_status, recommendation)
+                                            overall_status, recommendation,
+                                            market_movement=market_movement,
+                                            evolution_network_growth=evolution_network_growth)
     history_df = upsert_weekly_history(history_row)
     history_block = build_weekly_history_block(history_df)
 
     block = build_public_block(week_key, week_index, snapshot_count, baseline_available, week_cfg,
                                 network, strategic, persona, leads, untapped, top_contacts, quality,
                                 manual, diagnosis, overall_status, recommendation, period, history_block)
-    merge_into_public_json(block)
+    merge_into_public_json(block, weekly_history=history_block["weekly_history"])
 
     logger.info("=" * 70)
     logger.info(f"  Plan week: {week_key} (snapshot #{snapshot_count})  baseline_available={baseline_available}")

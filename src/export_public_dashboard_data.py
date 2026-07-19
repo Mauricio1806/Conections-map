@@ -925,6 +925,10 @@ def export_public_dashboard_data(
         # exists); src/action_plan_progress.py merges the real sanitized
         # block in afterward, same pattern as weekly_evolution below.
         "action_plan_progress":        {"available": False},
+        # Weekly Evolution multi-week history (Part 3) — placeholder here;
+        # src/action_plan_progress.py merges the real sanitized array in
+        # afterward (same pattern as action_plan_progress above).
+        "weekly_history":              [],
     }
 
     for path in [PUBLIC_JSON_DOCS, PUBLIC_JSON_OUTPUTS]:

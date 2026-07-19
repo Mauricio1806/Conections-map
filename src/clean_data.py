@@ -13,6 +13,23 @@ logger = logging.getLogger(__name__)
 # Common unicode/special chars that appear in names from LinkedIn exports
 _CLEAN_RE = re.compile(r"[\u0300-\u036f\u200b-\u200d\ufeff]")
 
+# LinkedIn's "Position" field is free text the connection wrote themselves \u2014
+# it's self-reported, not an export artifact, so it occasionally contains an
+# email address or phone number the person put in their own headline/title
+# (e.g. "Recruiter at X \u2014 email: someone@example.com"). position_clean flows
+# straight into the public dashboard JSON (SAFE_CONTACT_COLS and friends), so
+# it must be redacted here at the source, not trusted as safe display text.
+_EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
+_PHONE_RE = re.compile(r"(?<!-)\b\d{10,15}\b")
+
+
+def _redact_pii(text: str) -> str:
+    if not text:
+        return text
+    text = _EMAIL_RE.sub("[redacted]", text)
+    text = _PHONE_RE.sub("[redacted]", text)
+    return text
+
 
 def _strip(val) -> str:
     """Strip whitespace and return empty string for NaN/None."""
@@ -60,15 +77,17 @@ def _clean_company(company: str) -> str:
     # Remove trailing punctuation / extra spaces
     company = re.sub(r"\s+", " ", company)
     company = company.strip(" .,;")
-    return company
+    return _redact_pii(company)
 
 
 def _clean_position(position: str) -> str:
-    """Basic normalization of job title / position."""
+    """Basic normalization of job title / position. Position is self-
+    reported free text — redact any email/phone the connection embedded in
+    their own headline before this ever reaches the public dashboard."""
     if not position:
         return ""
     position = re.sub(r"\s+", " ", position)
-    return position.strip()
+    return _redact_pii(position.strip())
 
 
 def clean_connections(df: pd.DataFrame) -> pd.DataFrame:

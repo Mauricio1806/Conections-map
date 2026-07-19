@@ -215,6 +215,19 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
 }
 
+/* Weekly Evolution page (Part 6/8) — cap card width on wide desktops so
+   cards stop stretching when a row has only 2-3 cards. Scoped to the
+   desktop-only band (min-width:1025px, matching the existing tablet
+   breakpoint below) so it never overrides the tablet 2-col / mobile 1-col
+   rules further down — an unscoped #id selector would otherwise win over
+   those .metrics-grid media-query rules regardless of source order. */
+@media (min-width: 1025px) {
+  #weekly-network-growth, #weekly-strategic-growth, #weekly-market-movement,
+  #weekly-lead-pipeline, #weekly-untapped-movement {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 220px));
+  }
+}
+
 /* ── Score Gauges ───────────────────────────────── */
 .gauges-row {
   display: flex;
