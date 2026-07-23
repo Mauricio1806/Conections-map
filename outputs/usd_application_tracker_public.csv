@@ -1,1 +1,1 @@
-﻿application_date,company_name,role_title,role_url,source,currency,expected_rate,status,cv_version,recruiter_contacted,follow_up_date,result,rejection_reason
+﻿name,company,role,persona,opportunity_bucket,source,record_type,status,score,priority,recommended_action,reason,next_action,next_action_date,profile_url,role_url,currency,rate_range,remote_policy,timezone_required,timezone_risk,payment_risk,contract_risk

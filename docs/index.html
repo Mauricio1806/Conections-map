@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1784768145">
+  <link rel="stylesheet" href="./assets/style.css?v=1784805924">
 </head>
 <body>
 
@@ -1044,39 +1044,77 @@ python src/validate_static_dashboard_runtime.py</pre>
     <div class="page" id="page-usdcrm">
       <div class="page-header">
         <h2>USD Contract CRM</h2>
-        <p>Real USD job opportunities, recruiter outreach, applications, interviews, follow-ups, and contingency risk — from local/manual CSV inputs only. No LinkedIn scraping, no automated applications.</p>
+        <p>Real USD job opportunities, recruiter outreach, applications, interviews, follow-ups, and contingency risk — hybrid CRM combining manual logs with auto-suggested pipeline records. No LinkedIn scraping, browsing, or automation.</p>
       </div>
 
-      <div id="usdcrm-no-data">
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#8505;&#65039;</span>
+        <span>Manual application data is optional. This CRM also uses existing Lead Reactivation, Untapped Network, Top Contacts, and Opportunity Market intelligence to recommend USD pipeline actions. Manual CSVs confirm real applications/processes; auto-suggested leads are recommended actions, not confirmed applications.</span>
+      </div>
+
+      <div id="usdcrm-no-data" style="display:none">
         <div class="alert alert-info">
           <span class="alert-icon">&#128181;</span>
-          <span>No USD CRM data yet. Create <code>data/manual/usd_pipeline.csv</code>, <code>job_applications.csv</code>, and <code>recruiter_outreach_log.csv</code> to start tracking applications.</span>
+          <span>No USD CRM data yet. Add manual CSVs or run the weekly pipeline to generate Lead Reactivation / Untapped / Top Contacts intelligence.</span>
         </div>
       </div>
 
-      <div id="usdcrm-main-content" style="display:none">
+      <div id="usdcrm-main-content">
 
-        <!-- 1. Executive USD Pipeline Summary -->
-        <div class="section-label">1. Executive USD Pipeline Summary</div>
+        <!-- 1. USD Pipeline Summary -->
+        <div class="section-label">1. USD Pipeline Summary</div>
         <div class="metrics-grid" id="usdcrm-summary"></div>
 
-        <!-- 2. USD Opportunities Table -->
-        <div class="section-label">2. USD Opportunities</div>
+        <!-- 2. Recommended USD Actions This Week -->
+        <div class="section-label">2. Recommended USD Actions This Week</div>
+        <div class="table-wrap">
+          <table id="usdcrm-weekly-actions-table">
+            <thead><tr>
+              <th>#</th><th>Name</th><th>Company</th><th>Status</th><th>Score</th>
+              <th>Recommended Action</th><th>Next Action Date</th><th>Link</th>
+            </tr></thead>
+            <tbody id="usdcrm-weekly-actions-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Weekly USD Operating Flow (Part 7) -->
+        <div class="section-label">Weekly USD Operating Flow</div>
+        <div class="metrics-grid" id="usdcrm-weekly-flow">
+          <div class="card"><div class="card-title">Monday</div><div class="card-sub">Reply to Needs My Response + active interview signals.</div></div>
+          <div class="card"><div class="card-title">Tuesday</div><div class="card-sub">Message high-score untapped LATAM/USD recruiters.</div></div>
+          <div class="card"><div class="card-title">Wednesday</div><div class="card-sub">Apply to manual USD opportunities and log applications.</div></div>
+          <div class="card"><div class="card-title">Thursday</div><div class="card-sub">Follow up with warm recruiters and no-response leads.</div></div>
+          <div class="card"><div class="card-title">Friday</div><div class="card-sub">Review pipeline risk, backup opportunities, and next week priorities.</div></div>
+        </div>
+
+        <!-- Shared filter bar — applies to every section table below (Part 5) -->
+        <div class="section-label">Filters (apply to all sections below)</div>
         <div class="filters-bar">
-          <div class="filter-group" style="min-width:160px"><label>Search company/role</label>
+          <div class="filter-group" style="min-width:160px"><label>Search name/company/role</label>
             <input type="text" id="usdcrm-search" placeholder="e.g. Acme, Data Engineer...">
+          </div>
+          <div class="filter-group"><label>Source</label>
+            <select id="usdcrm-source-filter">
+              <option value="">All</option>
+              <option value="manual">Manual</option>
+              <option value="lead_reactivation">Lead Reactivation</option>
+              <option value="untapped_network">Untapped</option>
+              <option value="top_contacts">Top Contacts</option>
+              <option value="opportunity_market">Opportunity Market</option>
+              <option value="strategic_gap">Strategic Gap</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Record Type</label>
+            <select id="usdcrm-record-type-filter"><option value="">All</option></select>
           </div>
           <div class="filter-group"><label>Status</label>
             <select id="usdcrm-status-filter"><option value="">All</option></select>
           </div>
-          <div class="filter-group"><label>Currency</label>
-            <select id="usdcrm-currency-filter"><option value="">All</option></select>
+          <div class="filter-group"><label>Persona</label>
+            <select id="usdcrm-persona-filter"><option value="">All</option></select>
           </div>
-          <div class="filter-group"><label>Market / Source Type</label>
-            <select id="usdcrm-source-type-filter"><option value="">All</option></select>
-          </div>
-          <div class="filter-group"><label>Remote Policy</label>
-            <input type="text" id="usdcrm-remote-filter" placeholder="e.g. Brazil, worldwide..." style="width:140px">
+          <div class="filter-group"><label>Opportunity Bucket</label>
+            <select id="usdcrm-bucket-filter"><option value="">All</option></select>
           </div>
           <div class="filter-group"><label>Priority</label>
             <select id="usdcrm-priority-filter">
@@ -1087,6 +1125,9 @@ python src/validate_static_dashboard_runtime.py</pre>
               <option value="BACKUP">Backup</option>
             </select>
           </div>
+          <div class="filter-group"><label>Score minimum</label>
+            <input type="number" id="usdcrm-score-min" value="0" min="0" max="100" style="width:70px">
+          </div>
           <div class="filter-group"><label>Timezone Risk</label>
             <select id="usdcrm-tzrisk-filter">
               <option value="">All</option>
@@ -1095,109 +1136,79 @@ python src/validate_static_dashboard_runtime.py</pre>
               <option value="HIGH">High</option>
             </select>
           </div>
-          <div class="filter-group"><label>Contract Risk</label>
-            <select id="usdcrm-contractrisk-filter">
-              <option value="">All</option>
-              <option value="LOW">Low</option>
-              <option value="MEDIUM">Medium</option>
-              <option value="HIGH">High</option>
-            </select>
+          <div class="filter-group"><label>Currency</label>
+            <select id="usdcrm-currency-filter"><option value="">All</option></select>
           </div>
           <div class="filter-group"><label>Next action due/overdue</label>
             <input type="checkbox" id="usdcrm-due-only">
           </div>
+          <div class="filter-group"><label>Manual only</label>
+            <input type="checkbox" id="usdcrm-manual-only">
+          </div>
+          <div class="filter-group"><label>Auto-suggested only</label>
+            <input type="checkbox" id="usdcrm-auto-only">
+          </div>
           <button class="btn-primary" onclick="applyUsdCrmFilters()">Apply</button>
           <button class="btn-ghost" onclick="resetUsdCrmFilters()">Reset</button>
         </div>
-        <div class="table-stats" id="usdcrm-stats"></div>
+
+        <!-- 3. Auto-Suggested USD Leads -->
+        <div class="section-label" id="usdcrm-section-leads">3. Auto-Suggested USD Leads</div>
+        <div class="table-stats" id="usdcrm-leads-stats"></div>
         <div class="table-wrap">
-          <table id="usdcrm-pipeline-table">
-            <thead><tr>
-              <th>Company</th><th>Role</th><th>Market</th><th>Currency</th><th>Rate</th>
-              <th>Contract</th><th>Remote Policy</th><th>Tech Stack</th><th>Status</th>
-              <th>Score</th><th>Priority</th><th>TZ Risk</th><th>Payment Risk</th><th>Contract Risk</th>
-              <th>Recruiter</th><th>Next Action</th><th>Next Action Date</th><th>Link</th>
-            </tr></thead>
-            <tbody id="usdcrm-pipeline-tbody"></tbody>
-          </table>
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-leads-tbody"></tbody></table>
         </div>
 
-        <!-- 3. Recruiter Outreach Table -->
-        <div class="section-label">3. Recruiter Outreach</div>
-        <div class="filters-bar">
-          <div class="filter-group"><label>Contact Status</label>
-            <select id="usdcrm-outreach-status-filter"><option value="">All</option></select>
-          </div>
-        </div>
+        <!-- 4. Recruiter Pipeline -->
+        <div class="section-label" id="usdcrm-section-recruiters">4. Recruiter Pipeline</div>
+        <div class="table-stats" id="usdcrm-recruiters-stats"></div>
         <div class="table-wrap">
-          <table id="usdcrm-outreach-table">
-            <thead><tr>
-              <th>Date</th><th>Contact</th><th>Company</th><th>Message Type</th><th>Status</th>
-              <th>Last Reply</th><th>Next Action</th><th>Next Action Date</th>
-              <th>USD</th><th>LATAM</th><th>TZ Fit</th><th>Profile</th>
-            </tr></thead>
-            <tbody id="usdcrm-outreach-tbody"></tbody>
-          </table>
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-recruiters-tbody"></tbody></table>
         </div>
 
-        <!-- 4. Applications Tracker -->
-        <div class="section-label">4. Applications Tracker</div>
+        <!-- 5. First Outreach Queue -->
+        <div class="section-label" id="usdcrm-section-outreach">5. First Outreach Queue</div>
+        <div class="table-stats" id="usdcrm-outreach-stats"></div>
         <div class="table-wrap">
-          <table id="usdcrm-applications-table">
-            <thead><tr>
-              <th>Date</th><th>Company</th><th>Role</th><th>Source</th><th>Currency</th>
-              <th>Expected Rate</th><th>Status</th><th>CV Version</th><th>Recruiter Contacted</th>
-              <th>Follow-up Date</th><th>Result</th><th>Link</th>
-            </tr></thead>
-            <tbody id="usdcrm-applications-tbody"></tbody>
-          </table>
-        </div>
-
-        <!-- 5. Interview / Active Process Pipeline -->
-        <div class="section-label">5. Interview / Active Process Pipeline</div>
-        <div class="table-wrap">
-          <table id="usdcrm-active-table">
-            <thead><tr>
-              <th>Company</th><th>Role</th><th>Status</th><th>Score</th>
-              <th>Recruiter</th><th>Next Action</th><th>Next Action Date</th><th>Link</th>
-            </tr></thead>
-            <tbody id="usdcrm-active-tbody"></tbody>
-          </table>
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-outreach-tbody"></tbody></table>
         </div>
 
         <!-- 6. Follow-up Queue -->
-        <div class="section-label">6. Follow-up Queue</div>
+        <div class="section-label" id="usdcrm-section-followup">6. Follow-up Queue</div>
+        <div class="table-stats" id="usdcrm-followup-stats"></div>
         <div class="table-wrap">
-          <table id="usdcrm-followup-table">
-            <thead><tr>
-              <th>Source</th><th>Name</th><th>Next Action</th><th>Due Date</th>
-              <th>Status</th><th>Priority</th><th>Overdue</th>
-            </tr></thead>
-            <tbody id="usdcrm-followup-tbody"></tbody>
-          </table>
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-followup-tbody"></tbody></table>
         </div>
 
-        <!-- 7. Contingency Risk View -->
-        <div class="section-label">7. Contingency Risk View — High Risk</div>
+        <!-- 7. Active Process / Interview Signals -->
+        <div class="section-label" id="usdcrm-section-active">7. Active Process / Interview Signals</div>
+        <div class="table-stats" id="usdcrm-active-stats"></div>
         <div class="table-wrap">
-          <table id="usdcrm-risk-high-table">
-            <thead><tr>
-              <th>Company</th><th>Role</th><th>Status</th><th>Score</th>
-              <th>TZ Risk</th><th>Payment Risk</th><th>Contract Risk</th><th>Link</th>
-            </tr></thead>
-            <tbody id="usdcrm-risk-high-tbody"></tbody>
-          </table>
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-active-tbody"></tbody></table>
         </div>
 
-        <div class="section-label">Contingency Risk View — Backup Opportunities</div>
+        <!-- 8. Manual Opportunities -->
+        <div class="section-label" id="usdcrm-section-manual">8. Manual Opportunities</div>
+        <div class="table-stats" id="usdcrm-manual-stats"></div>
         <div class="table-wrap">
-          <table id="usdcrm-risk-backup-table">
-            <thead><tr>
-              <th>Company</th><th>Role</th><th>Status</th><th>Score</th>
-              <th>Currency</th><th>Remote Policy</th><th>Link</th>
-            </tr></thead>
-            <tbody id="usdcrm-risk-backup-tbody"></tbody>
-          </table>
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-manual-tbody"></tbody></table>
+        </div>
+
+        <!-- 9. Manual Applications Tracker -->
+        <div class="section-label" id="usdcrm-section-applications">9. Manual Applications Tracker</div>
+        <div class="table-stats" id="usdcrm-applications-stats"></div>
+        <div class="table-wrap">
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-applications-tbody"></tbody></table>
+        </div>
+
+        <!-- 10. Contingency Risk View -->
+        <div class="section-label" id="usdcrm-section-risk">10. Contingency Risk View — High Risk (manual)</div>
+        <div class="table-wrap">
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-risk-high-tbody"></tbody></table>
+        </div>
+        <div class="section-label">Contingency Risk View — Backup Opportunities (manual)</div>
+        <div class="table-wrap">
+          <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-risk-backup-tbody"></tbody></table>
         </div>
 
       </div>
@@ -1419,6 +1430,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1784768145"></script>
+<script src="./assets/app.js?v=1784805924"></script>
 </body>
 </html>

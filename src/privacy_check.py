@@ -158,18 +158,13 @@ ALLOWED_CONTACT_FIELDS = {
     # Weekly people delta segments (Part 4)
     "market_segment", "bucket_group", "previous_value", "current_value",
     "match_method", "is_actionable",
-    # USD Contract CRM — sanitized fields only (see src/usd_contract_crm.py
-    # and build_usd_contract_crm_public() in export_public_dashboard_data.py)
-    "company_name", "role_title", "role_url", "source_type", "currency",
-    "rate_range", "rate_type", "contract_type", "remote_policy",
-    "timezone_required", "overlap_required", "tech_stack", "status",
-    "next_action", "priority", "timezone_risk", "payment_risk",
-    "contract_risk", "usd_pipeline_score", "recruiter_name",
-    "recruiter_profile_url", "application_date", "source", "expected_rate",
-    "cv_version", "recruiter_contacted", "follow_up_date", "result",
-    "rejection_reason", "date", "contact_name", "profile_url", "company",
-    "message_type", "last_reply_date", "usd_signal", "latam_signal",
-    "timezone_signal", "name", "overdue",
+    # USD Contract CRM (hybrid: manual + auto-suggested) — sanitized unified
+    # row schema only (see src/usd_contract_crm.py PUBLIC_ROW_FIELDS and
+    # build_usd_contract_crm_public() in export_public_dashboard_data.py).
+    "name", "company", "role", "source", "record_type", "status", "score",
+    "priority", "recommended_action", "reason", "next_action", "profile_url",
+    "role_url", "currency", "rate_range", "remote_policy",
+    "timezone_required", "timezone_risk", "payment_risk", "contract_risk",
 }
 
 
@@ -205,12 +200,15 @@ def check_json(path: Path) -> list[str]:
     opp_segments = list(data.get("opportunity_market_people_segments", []) or [])
     usd_crm = data.get("usd_contract_crm", {}) or {}
     usd_crm_records = (
-        list(usd_crm.get("pipeline", []) or []) +
-        list(usd_crm.get("applications", []) or []) +
-        list(usd_crm.get("outreach_contacts", []) or []) +
+        list(usd_crm.get("manual_opportunities", []) or []) +
+        list(usd_crm.get("auto_suggested_usd_leads", []) or []) +
+        list(usd_crm.get("recruiter_pipeline", []) or []) +
+        list(usd_crm.get("first_outreach_queue", []) or []) +
         list(usd_crm.get("follow_up_queue", []) or []) +
-        list((usd_crm.get("risk_view", {}) or {}).get("high_risk", []) or []) +
-        list((usd_crm.get("risk_view", {}) or {}).get("backup", []) or [])
+        list(usd_crm.get("active_process_pipeline", []) or []) +
+        list(usd_crm.get("manual_applications", []) or []) +
+        list((usd_crm.get("contingency_risk", {}) or {}).get("high_risk", []) or []) +
+        list((usd_crm.get("contingency_risk", {}) or {}).get("backup", []) or [])
     )
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \

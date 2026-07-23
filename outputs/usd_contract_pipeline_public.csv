@@ -1,1 +1,1 @@
-﻿company_name,role_title,role_url,source_type,currency,rate_range,rate_type,contract_type,remote_policy,timezone_required,overlap_required,tech_stack,status,next_action,next_action_date,priority,timezone_risk,payment_risk,contract_risk,usd_pipeline_score,recruiter_name,recruiter_profile_url
+﻿name,company,role,persona,opportunity_bucket,source,record_type,status,score,priority,recommended_action,reason,next_action,next_action_date,profile_url,role_url,currency,rate_range,remote_policy,timezone_required,timezone_risk,payment_risk,contract_risk

@@ -129,9 +129,14 @@ def main():
         logger.info(f"  Top contacts:            {info['contacts']}")
         usd_crm = info.get("usd_crm", {})
         if usd_crm.get("available"):
-            logger.info(f"  USD Contract CRM:        {usd_crm.get('summary', {}).get('usd_opportunities_found', 0)} opportunities tracked")
+            ucs = usd_crm.get("summary", {})
+            logger.info(
+                f"  USD Contract CRM:        manual={ucs.get('manual_usd_opportunities', 0)} "
+                f"auto-suggested={ucs.get('auto_suggested_usd_leads', 0)} "
+                f"recruiters={ucs.get('recommended_recruiters_to_contact', 0)}"
+            )
         else:
-            logger.info("  USD Contract CRM:        no manual CSVs found (optional)")
+            logger.info("  USD Contract CRM:        no manual or auto-suggested data (optional)")
         if info["issues"]:
             for issue in info["issues"]:
                 logger.warning(f"  [WARN] {issue}")

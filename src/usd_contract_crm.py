@@ -2,35 +2,31 @@
 """
 usd_contract_crm.py
 ====================
-USD Contract CRM — tracks real USD job opportunities, recruiter outreach,
-applications, interviews, follow-ups, and contingency risk.
+USD Contract CRM — a HYBRID CRM combining:
 
-Inputs are local/manual only, entirely optional, gitignored, and never
-committed (see .gitignore):
-  - data/manual/usd_pipeline.csv
-  - data/manual/job_applications.csv
-  - data/manual/recruiter_outreach_log.csv
+  1. Manual records from data/manual/*.csv (real, confirmed opportunities/
+     applications the user logs by hand — optional, gitignored, can be
+     entirely empty/absent).
+  2. Auto-suggested USD pipeline records derived from intelligence the
+     pipeline ALREADY computed and sanitized this run: Lead Reactivation
+     (src/lead_reactivation_engine.py), Untapped Network Intelligence
+     (src/untapped_network_intelligence.py), and the classified connections
+     dataframe + outreach-adjusted scores (src/outreach_adjusted_scoring.py)
+     — i.e. the same data that backs Top Contacts / Opportunity Market.
 
-No LinkedIn scraping, no application automation — this module only reads
-CSVs the user fills in by hand and computes sanitized aggregates/scores.
+No LinkedIn scraping, browsing, or automation of any kind — every input here
+is either a hand-filled local CSV or an in-memory dataframe/dict this
+pipeline already produced from local exports.
 
-Expected enum-style values (informal, tolerant — unknown/blank values never
-crash, they just don't contribute to the relevant KPI):
-  status (usd_pipeline.csv):  NEW, RESEARCHING, OUTREACH_SENT,
-    RECRUITER_REPLIED, CV_REQUESTED, CV_SENT, SUBMITTED_TO_CLIENT,
-    RECRUITER_CALL_SCHEDULED, RECRUITER_CALL_DONE,
-    TECHNICAL_INTERVIEW_SCHEDULED, TECHNICAL_INTERVIEW_DONE,
-    FINAL_INTERVIEW, OFFER, CLOSED_WON, CLOSED_LOST, REJECTED, ON_HOLD
-  priority (usd_pipeline.csv): HIGH, MEDIUM, LOW, BACKUP
-  timezone_risk / payment_risk / contract_risk: LOW, MEDIUM, HIGH
-  status (job_applications.csv): APPLIED, IN_REVIEW, INTERVIEW, OFFER,
-    REJECTED, WITHDRAWN
-  status (recruiter_outreach_log.csv): SENT, REPLIED, NO_RESPONSE,
-    GHOSTED, SCHEDULED_CALL, CLOSED
+CRITICAL distinction (never fabricate real applications):
+  - Auto-suggested contacts/leads are RECOMMENDED ACTIONS, not confirmed
+    applications. They must never be counted as "applications sent", "CVs
+    sent", "client submissions", or "technical interviews" — those numbers
+    can ONLY come from data/manual/*.csv or explicit message-intelligence
+    signals (has_cv_signal / has_interview_signal from Lead Reactivation).
 
 Private fields (notes_private, raw message content, emails, phone numbers)
-are never emitted in any public/sanitized output — see PRIVATE_FIELDS and
-the explicit allowlists below.
+are never emitted in any public/sanitized output.
 """
 
 from __future__ import annotations
@@ -77,7 +73,7 @@ OUTREACH_COLUMNS = [
 
 PRIVATE_FIELDS = {"notes_private"}
 
-# ── Pipeline funnel stages (Part: USD Pipeline Score + KPI cards) ───────────
+# ── Manual pipeline funnel stages (score for MANUAL usd_pipeline.csv rows) ──
 # A row's `status` is its CURRENT stage — since the funnel is monotonic
 # (you cannot be SUBMITTED_TO_CLIENT without having been RECRUITER_REPLIED
 # and CV_REQUESTED first), ordinal >= comparisons let a handful of milestone
@@ -121,6 +117,37 @@ TARGET_MIN_RATE = {
     "annual":  60000,  # USD/year
 }
 
+# ── Auto-suggested candidate scoring vocabulary (Part 3) ────────────────────
+CRM_RECRUITING_PERSONAS = {"Recruiter", "Talent Acquisition", "Sourcer"}
+# "Data Leader" umbrella (matches the DATA_LEADER_PERSONAS convention already
+# used by src/untapped_network_intelligence.py) + Hiring Manager per spec.
+CRM_HIRING_DATA_LEADER_PERSONAS = {"Hiring Manager", "Head of Data", "Data Engineering Manager", "Director"}
+CRM_TARGET_PERSONAS = CRM_RECRUITING_PERSONAS | CRM_HIRING_DATA_LEADER_PERSONAS
+
+USD_TARGET_BUCKET_SUBSTRINGS = ("LATAM_USD", "US_CANADA", "GLOBAL_STAFFING", "GLOBAL_OPPORTUNITY")
+CONFIRMED_HIGH_VALUE_BUCKETS = {"LATAM_USD_CONFIRMED", "US_CANADA_CONFIRMED"}
+USD_STRATEGIC_MARKETS = {"LATAM_USD", "US_CANADA_NEARSHORE", "GLOBAL_STAFFING"}
+
+NEVER_CONTACTED_STATUSES = {"NEVER_CONTACTED_CONFIRMED", "LIKELY_NEVER_CONTACTED"}
+
+# Company/title keyword signal (Part 1B / Part 3) — word-boundary matched so
+# "us" doesn't false-positive inside unrelated words.
+KEYWORD_SIGNAL_RE = re.compile(
+    r"\b(latam|usa|united states|nearshore|contractor|staffing|recruiting|talent acquisition|us)\b",
+    re.IGNORECASE,
+)
+
+# lead_category vocabulary produced by src/message_intelligence.py's
+# _lead_category_v8() — see that module for the authoritative list.
+FOLLOWUP_LEAD_CATEGORIES = {
+    "Needs my response — Confirmed", "Needs my response — Likely",
+    "Warm reactivation", "Dormant warm", "Active Interview Pipeline",
+    "Awaiting Recruiter Update", "Reactivate This Month",
+}
+ACTIVE_PROCESS_LEAD_CATEGORIES = {"Active Interview Pipeline", "Awaiting Recruiter Update"}
+BLOCKED_LEAD_CATEGORIES = {"Location / Eligibility Blocked"}
+TERMINAL_LEAD_CATEGORIES = {"Rejected / Closed", "Closed / no action"}
+
 
 def _norm(v) -> str:
     if v is None or (isinstance(v, float) and pd.isna(v)):
@@ -130,6 +157,26 @@ def _norm(v) -> str:
 
 def _norm_lower(v) -> str:
     return _norm(v).lower()
+
+
+def _norm_url(v) -> str:
+    return _norm(v).lower().rstrip("/")
+
+
+def _truthy(v) -> bool:
+    if isinstance(v, bool):
+        return v
+    return str(v).strip().lower() in ("true", "1", "yes")
+
+
+def _to_num(v, default=0.0) -> float:
+    if v is None or v == "":
+        return default
+    try:
+        f = float(v)
+        return default if pd.isna(f) else f
+    except (TypeError, ValueError):
+        return default
 
 
 def _parse_date(s) -> date | None:
@@ -198,7 +245,7 @@ def _drop_blank_template_rows(df: pd.DataFrame, label: str) -> pd.DataFrame:
     return df[has_identity].reset_index(drop=True)
 
 
-# ── Score/flag helpers ──────────────────────────────────────────────────────
+# ── Manual pipeline score helpers (unchanged from V1) ───────────────────────
 
 def _accepts_brazil_latam(remote_policy: str) -> bool:
     text = _norm_lower(remote_policy)
@@ -260,10 +307,9 @@ def _stage_index(status: str) -> int:
 
 
 def compute_usd_pipeline_score(row: dict) -> int:
-    """0-100 USD Pipeline Score — additive rules per the CRM spec. Never
-    overwrites/interacts with relationship_value_score, immediate_action_score,
-    outreach_adjusted_score, untapped_outreach_score, or base priority_score;
-    this is an entirely separate, independent score."""
+    """0-100 score for MANUAL usd_pipeline.csv rows. Never overwrites/interacts
+    with relationship_value_score, immediate_action_score, outreach_adjusted_score,
+    untapped_outreach_score, or base priority_score — entirely separate score."""
     score = 0
     currency = _norm(row.get("currency", "")).upper()
     status   = _norm(row.get("status", "")).upper()
@@ -304,79 +350,455 @@ def _rate_range(rate_min: str, rate_max: str) -> str:
     return hi or lo or ""
 
 
-# ── Sanitized public builders ────────────────────────────────────────────────
+# ── Auto-suggested candidate scoring (Part 3 — usd_crm_score) ───────────────
 
-PUBLIC_PIPELINE_FIELDS = [
-    "company_name", "role_title", "role_url", "source_type", "currency",
-    "rate_range", "rate_type", "contract_type", "remote_policy",
-    "timezone_required", "overlap_required", "tech_stack", "status",
-    "next_action", "next_action_date", "priority", "timezone_risk",
-    "payment_risk", "contract_risk", "usd_pipeline_score", "recruiter_name",
-    "recruiter_profile_url",
+def _company_text(rec: dict) -> str:
+    return f"{rec.get('company','') or ''} {rec.get('role','') or ''}"
+
+
+def _has_keyword_signal(text: str) -> bool:
+    return bool(KEYWORD_SIGNAL_RE.search(text or ""))
+
+
+def _bucket_matches_target(bucket: str) -> bool:
+    b = (bucket or "").upper()
+    return any(t in b for t in USD_TARGET_BUCKET_SUBSTRINGS)
+
+
+def _is_never_contacted(rec: dict) -> bool:
+    return rec.get("contact_history_status") in NEVER_CONTACTED_STATUSES
+
+
+def compute_usd_crm_score(rec: dict) -> int:
+    """0-100 usd_crm_score for AUTO-SUGGESTED contacts (lead_reactivation /
+    untapped_network / classified connections + outreach-adjusted scores).
+    Never overwrites relationship_value_score, immediate_action_score,
+    outreach_adjusted_score, untapped_outreach_score, or base priority_score
+    — those are read-only inputs to this independent score."""
+    score = 0
+    bucket        = str(rec.get("opportunity_bucket", "") or "").upper()
+    persona       = str(rec.get("persona", "") or "")
+    lead_category = str(rec.get("lead_category", "") or "")
+
+    if bucket in CONFIRMED_HIGH_VALUE_BUCKETS:
+        score += 30
+    if bucket == "GLOBAL_STAFFING":
+        score += 25
+    if bucket == "GLOBAL_OPPORTUNITY":
+        score += 20
+    if persona in CRM_RECRUITING_PERSONAS:
+        score += 25
+    if persona in CRM_HIRING_DATA_LEADER_PERSONAS:
+        score += 20
+    if _to_num(rec.get("untapped_outreach_score")) >= 85:
+        score += 20
+    if _to_num(rec.get("outreach_adjusted_score")) >= 85:
+        score += 15
+    if _to_num(rec.get("relationship_value_score")) >= 80:
+        score += 15
+    if lead_category == "Active Interview Pipeline":
+        score += 20
+    if lead_category == "Needs my response — Confirmed":
+        score += 20
+    if lead_category == "Reactivate This Month":  # "Follow-up due" proxy
+        score += 15
+    if lead_category == "Warm reactivation":
+        score += 15
+    if _has_keyword_signal(_company_text(rec)):
+        score += 10
+    if _is_never_contacted(rec):
+        score += 10
+
+    rel_val = _to_num(rec.get("relationship_value_score"))
+    if lead_category in TERMINAL_LEAD_CATEGORIES and rel_val < 40:
+        score -= 25
+    if lead_category in BLOCKED_LEAD_CATEGORIES:
+        score -= 20
+
+    has_any_usd_signal = (
+        _bucket_matches_target(bucket)
+        or persona in CRM_TARGET_PERSONAS
+        or _has_keyword_signal(_company_text(rec))
+        or lead_category in FOLLOWUP_LEAD_CATEGORIES
+    )
+    if not has_any_usd_signal:
+        score -= 15
+
+    return int(max(0, min(100, score)))
+
+
+def _priority_from_score(score: int) -> str:
+    if score >= 70:
+        return "HIGH"
+    if score >= 40:
+        return "MEDIUM"
+    return "LOW"
+
+
+def _build_usd_crm_reason(rec: dict) -> str:
+    reasons = []
+    bucket        = str(rec.get("opportunity_bucket", "") or "").upper()
+    persona       = str(rec.get("persona", "") or "")
+    lead_category = str(rec.get("lead_category", "") or "")
+
+    if bucket in CONFIRMED_HIGH_VALUE_BUCKETS:
+        reasons.append(f"confirmed {bucket.replace('_', ' ').title()} opportunity")
+    elif bucket == "GLOBAL_STAFFING":
+        reasons.append("global staffing company")
+    elif bucket == "GLOBAL_OPPORTUNITY":
+        reasons.append("global opportunity signal")
+    if persona in CRM_RECRUITING_PERSONAS:
+        reasons.append(f"{persona} persona")
+    elif persona in CRM_HIRING_DATA_LEADER_PERSONAS:
+        reasons.append(f"{persona} persona (hiring authority)")
+    us = _to_num(rec.get("untapped_outreach_score"))
+    if us:
+        reasons.append(f"untapped outreach score {int(us)}")
+    oa = _to_num(rec.get("outreach_adjusted_score"))
+    if oa:
+        reasons.append(f"outreach adjusted score {int(oa)}")
+    rv = _to_num(rec.get("relationship_value_score"))
+    if rv:
+        reasons.append(f"relationship value score {int(rv)}")
+    if lead_category:
+        reasons.append(f"lead status: {lead_category}")
+    if _has_keyword_signal(_company_text(rec)):
+        reasons.append("company/title USD or LATAM keyword match")
+    if _is_never_contacted(rec):
+        reasons.append("connected but never contacted")
+    if not reasons:
+        reasons.append("matched USD pipeline criteria")
+    return "; ".join(reasons)
+
+
+def _build_usd_crm_recommended_action(rec: dict, record_type: str) -> str:
+    if rec.get("recommended_first_action"):
+        return rec["recommended_first_action"]
+    if rec.get("recommended_next_action"):
+        return rec["recommended_next_action"]
+    return {
+        "recruiter_pipeline": "CONTACT_RECRUITER",
+        "auto_suggested_lead": "REVIEW_AND_CONTACT",
+        "first_outreach": "SEND_FIRST_MESSAGE",
+        "auto_followup": "SEND_FOLLOW_UP",
+        "active_process": "CHECK_PROCESS_STATUS",
+    }.get(record_type, "REVIEW")
+
+
+def _resolve_next_action_date(rec: dict) -> str:
+    return _norm(rec.get("lead_next_action_date")) or _norm(rec.get("outreach_next_action_date")) or ""
+
+
+# ── Unified public row schema (Part 4) ──────────────────────────────────────
+# Every row across every array (manual or auto-suggested) is normalized into
+# this exact, explicit field set — nothing else is ever emitted.
+PUBLIC_ROW_FIELDS = [
+    "name", "company", "role", "persona", "opportunity_bucket", "source",
+    "record_type", "status", "score", "priority", "recommended_action",
+    "reason", "next_action", "next_action_date", "profile_url", "role_url",
+    "currency", "rate_range", "remote_policy", "timezone_required",
+    "timezone_risk", "payment_risk", "contract_risk",
 ]
 
-PUBLIC_APPLICATION_FIELDS = [
-    "application_date", "company_name", "role_title", "role_url", "source",
-    "currency", "expected_rate", "status", "cv_version", "recruiter_contacted",
-    "follow_up_date", "result", "rejection_reason",
-]
 
-PUBLIC_OUTREACH_FIELDS = [
-    "date", "contact_name", "profile_url", "company", "source",
-    "opportunity_bucket", "message_type", "status", "last_reply_date",
-    "next_action", "next_action_date", "usd_signal", "latam_signal",
-    "timezone_signal",
-]
+def _empty_public_row() -> dict:
+    row = {k: "" for k in PUBLIC_ROW_FIELDS}
+    row["score"] = 0
+    return row
 
 
-def _build_public_pipeline(df: pd.DataFrame) -> list[dict]:
+def _auto_row_to_public(rec: dict, record_type: str, source: str) -> dict:
+    score = compute_usd_crm_score(rec)
+    row = _empty_public_row()
+    row.update({
+        "name":               rec.get("full_name", "") or "",
+        "company":            rec.get("company", "") or "",
+        "role":               rec.get("role", "") or "",
+        "persona":            rec.get("persona", "") or "",
+        "opportunity_bucket": rec.get("opportunity_bucket", "") or "",
+        "source":             source,
+        "record_type":        record_type,
+        "status":             rec.get("lead_category") or rec.get("contact_history_status") or "",
+        "score":              score,
+        "priority":           _priority_from_score(score),
+        "recommended_action": _build_usd_crm_recommended_action(rec, record_type),
+        "reason":             _build_usd_crm_reason(rec),
+        "next_action":        rec.get("recommended_next_action") or rec.get("recommended_first_action") or "",
+        "next_action_date":   _resolve_next_action_date(rec),
+        "profile_url":        rec.get("profile_url", "") or "",
+    })
+    return row
+
+
+def _manual_pipeline_row_to_public(r: dict) -> dict:
+    row = _empty_public_row()
+    score = int(r.get("usd_pipeline_score", 0) or 0)
+    row.update({
+        "name":               _norm(r.get("recruiter_name")),
+        "company":            _norm(r.get("company_name")),
+        "role":               _norm(r.get("role_title")),
+        "persona":            "",
+        "opportunity_bucket": _norm(r.get("source_type")).upper(),
+        "source":             "manual",
+        "record_type":        "manual_opportunity",
+        "status":             _norm(r.get("status")).upper(),
+        "score":              score,
+        "priority":           _norm(r.get("priority")).upper() or _priority_from_score(score),
+        "recommended_action": "",
+        "reason":             "",
+        "next_action":        _norm(r.get("next_action")),
+        "next_action_date":   _norm(r.get("next_action_date")),
+        "profile_url":        _norm(r.get("recruiter_profile_url")),
+        "role_url":           _norm(r.get("role_url")),
+        "currency":           _norm(r.get("currency")),
+        "rate_range":         _rate_range(r.get("rate_min", ""), r.get("rate_max", "")),
+        "remote_policy":      _norm(r.get("remote_policy")),
+        "timezone_required":  _norm(r.get("timezone_required")),
+        "timezone_risk":      _norm(r.get("timezone_risk")).upper(),
+        "payment_risk":       _norm(r.get("payment_risk")).upper(),
+        "contract_risk":      _norm(r.get("contract_risk")).upper(),
+    })
+    return row
+
+
+def _manual_application_row_to_public(r: dict) -> dict:
+    row = _empty_public_row()
+    follow_up = _norm(r.get("follow_up_date"))
+    row.update({
+        "company":          _norm(r.get("company_name")),
+        "role":              _norm(r.get("role_title")),
+        "source":            "manual",
+        "record_type":       "manual_application",
+        "status":            _norm(r.get("status")).upper(),
+        "reason":            _norm(r.get("rejection_reason")),
+        "next_action":       "Follow up on application" if follow_up else "",
+        "next_action_date":  follow_up,
+        "role_url":          _norm(r.get("role_url")),
+        "currency":          _norm(r.get("currency")),
+        "rate_range":        _norm(r.get("expected_rate")),
+    })
+    return row
+
+
+def _manual_outreach_row_to_public(r: dict) -> dict:
+    row = _empty_public_row()
+    row.update({
+        "name":             _norm(r.get("contact_name")),
+        "company":          _norm(r.get("company")),
+        "opportunity_bucket": _norm(r.get("opportunity_bucket")).upper(),
+        "source":           "manual",
+        "record_type":      "manual_outreach",
+        "status":           _norm(r.get("status")).upper(),
+        "next_action":      _norm(r.get("next_action")),
+        "next_action_date": _norm(r.get("next_action_date")),
+        "profile_url":      _norm(r.get("profile_url")),
+    })
+    return row
+
+
+# ── Auto-suggested candidate pool (Part 1B-E) ───────────────────────────────
+# Merges already-sanitized, already-computed signals from the classified
+# connections dataframe, outreach-adjusted scores, Untapped Network
+# Intelligence, and Lead Reactivation into ONE per-profile-URL index, so each
+# of the four auto-suggested sections is a simple filter over the same pool
+# instead of four separate re-derivations.
+
+def _build_auto_candidate_pool(
+    classified_df: pd.DataFrame | None,
+    outreach_scores: dict | None,
+    untapped_data: dict | None,
+    lead_data: dict | None,
+) -> dict:
+    pool: dict[str, dict] = {}
+
+    def _entry(url: str) -> dict:
+        return pool.setdefault(url, {"profile_url": url})
+
+    if classified_df is not None and not classified_df.empty:
+        cols = ["full_name", "company_clean", "position_clean", "persona",
+                "opportunity_bucket", "priority_score", "url"]
+        for col in cols:
+            if col not in classified_df.columns:
+                classified_df = classified_df.assign(**{col: ""})
+        for _, r in classified_df[cols].iterrows():
+            url = _norm_url(r.get("url", ""))
+            if not url:
+                continue
+            e = _entry(url)
+            e["full_name"]          = _norm(r.get("full_name"))
+            e["company"]            = _norm(r.get("company_clean"))
+            e["role"]               = _norm(r.get("position_clean"))
+            e["persona"]            = _norm(r.get("persona"))
+            e["opportunity_bucket"] = _norm(r.get("opportunity_bucket")).upper()
+            e["priority_score"]     = _to_num(r.get("priority_score"))
+
+    for url_raw, rec in (outreach_scores or {}).items():
+        u = _norm_url(url_raw)
+        if not u:
+            continue
+        e = _entry(u)
+        e["outreach_adjusted_score"]  = rec.get("outreach_adjusted_score")
+        e["relationship_value_score"] = rec.get("relationship_value_score")
+        e["immediate_action_score"]   = rec.get("immediate_action_score")
+        e["process_state"]            = rec.get("process_state")
+        e["reply_obligation"]         = rec.get("reply_obligation")
+        e["outreach_next_action_date"] = rec.get("next_action_date")
+
+    for c in (untapped_data or {}).get("top_untapped_contacts", []) or []:
+        u = _norm_url(c.get("profile_url", ""))
+        if not u:
+            continue
+        e = _entry(u)
+        e["untapped_outreach_score"]  = _to_float(c.get("untapped_outreach_score"))
+        e["contact_history_status"]   = c.get("contact_history_status")
+        e["untapped_category"]        = c.get("untapped_category")
+        e["strategic_focus"]          = c.get("strategic_focus")
+        e["recommended_first_action"] = c.get("recommended_first_action")
+        e["first_message_angle"]      = c.get("first_message_angle")
+        e.setdefault("full_name", _norm(c.get("full_name")))
+        e.setdefault("company", _norm(c.get("company_clean")))
+        e.setdefault("role", _norm(c.get("position_clean")))
+        e.setdefault("persona", _norm(c.get("persona")))
+        e.setdefault("opportunity_bucket", _norm(c.get("opportunity_bucket")).upper())
+
+    for c in (lead_data or {}).get("top_reactivation_contacts", []) or []:
+        u = _norm_url(c.get("other_person_profile_url", ""))
+        if not u:
+            continue
+        e = _entry(u)
+        e["lead_category"]               = c.get("lead_category")
+        e["reactivation_priority_score"] = _to_float(c.get("reactivation_priority_score"))
+        e["recommended_next_action"]     = c.get("recommended_next_action")
+        e["lead_next_action_date"]       = c.get("next_action_date")
+        e["has_cv_signal"]               = _truthy(c.get("has_cv_signal"))
+        e["has_interview_signal"]        = _truthy(c.get("has_interview_signal"))
+        e["has_positive_signal"]         = _truthy(c.get("has_positive_signal"))
+        e["strategic_market"]            = c.get("strategic_market")
+        e.setdefault("full_name", _norm(c.get("other_person_name")))
+        e.setdefault("company", _norm(c.get("company_clean")))
+        e.setdefault("role", _norm(c.get("position_clean")))
+        e.setdefault("persona", _norm(c.get("persona")))
+
+    return pool
+
+
+def _match_section_b_lead(rec: dict) -> bool:
+    """Auto-Suggested USD Recruiter Pipeline (Part 1B) — inclusion criteria."""
+    if _bucket_matches_target(rec.get("opportunity_bucket", "")):
+        return True
+    if rec.get("persona") in CRM_TARGET_PERSONAS:
+        return True
+    if _to_num(rec.get("untapped_outreach_score")) >= 70:
+        return True
+    if _to_num(rec.get("outreach_adjusted_score")) >= 70:
+        return True
+    if _to_num(rec.get("relationship_value_score")) >= 70:
+        return True
+    if rec.get("lead_category") in {
+        "Warm reactivation", "Active Interview Pipeline",
+        "Needs my response — Confirmed", "Needs my response — Likely",
+        "Reactivate This Month",
+    }:
+        return True
+    if _has_keyword_signal(_company_text(rec)):
+        return True
+    return False
+
+
+def _match_section_c_followup(rec: dict) -> bool:
+    """Auto-Suggested Follow-up Queue (Part 1C) — inclusion criteria."""
+    if rec.get("lead_category") in FOLLOWUP_LEAD_CATEGORIES:
+        return True
+    if rec.get("has_cv_signal"):
+        return True
+    if rec.get("lead_category") == "No response" and (
+        _to_num(rec.get("relationship_value_score")) >= 50
+        or _bucket_matches_target(rec.get("opportunity_bucket", ""))
+        or str(rec.get("strategic_market", "")) in USD_STRATEGIC_MARKETS
+    ):
+        return True
+    return False
+
+
+def _match_section_d_first_outreach(rec: dict) -> bool:
+    """Auto-Suggested First Outreach Queue (Part 1D) — Untapped Network only."""
+    if not _is_never_contacted(rec):
+        return False
+    if rec.get("persona") in CRM_TARGET_PERSONAS:
+        return True
+    if rec.get("strategic_focus") == "PRIMARY_LATAM_USD":
+        return True
+    if _to_num(rec.get("untapped_outreach_score")) >= 70:
+        return True
+    if rec.get("untapped_category") == "HIGH_VALUE_UNTAPPED":
+        return True
+    return False
+
+
+def _match_section_e_active_process(rec: dict) -> bool:
+    """Auto-Suggested Interview / Active Process Pipeline (Part 1E)."""
+    if rec.get("lead_category") in ACTIVE_PROCESS_LEAD_CATEGORIES:
+        return True
+    if rec.get("has_cv_signal") or rec.get("has_interview_signal"):
+        return True
+    return False
+
+
+def _auto_source_label(rec: dict) -> str:
+    if _bucket_matches_target(rec.get("opportunity_bucket", "")):
+        return "opportunity_market"
+    if rec.get("lead_category"):
+        return "lead_reactivation"
+    if rec.get("untapped_outreach_score") is not None:
+        return "untapped_network"
+    return "top_contacts"
+
+
+def _build_auto_suggested_sections(pool: dict) -> dict:
+    auto_leads, recruiter_pipeline = [], []
+    follow_up_auto, first_outreach, active_process_auto = [], [], []
+
+    for rec in pool.values():
+        if _match_section_b_lead(rec):
+            source = _auto_source_label(rec)
+            auto_leads.append(_auto_row_to_public(rec, "auto_suggested_lead", source))
+            if rec.get("persona") in CRM_TARGET_PERSONAS:
+                recruiter_pipeline.append(_auto_row_to_public(rec, "recruiter_pipeline", source))
+        if _match_section_c_followup(rec):
+            source = "lead_reactivation" if rec.get("lead_category") else "top_contacts"
+            follow_up_auto.append(_auto_row_to_public(rec, "auto_followup", source))
+        if _match_section_d_first_outreach(rec):
+            first_outreach.append(_auto_row_to_public(rec, "first_outreach", "untapped_network"))
+        if _match_section_e_active_process(rec):
+            active_process_auto.append(_auto_row_to_public(rec, "active_process", "lead_reactivation"))
+
+    for lst in (auto_leads, recruiter_pipeline, follow_up_auto, first_outreach, active_process_auto):
+        lst.sort(key=lambda r: r["score"], reverse=True)
+
+    cv_signal_count = sum(1 for rec in pool.values() if rec.get("has_cv_signal"))
+
+    return {
+        "auto_suggested_usd_leads": auto_leads,
+        "recruiter_pipeline":       recruiter_pipeline,
+        "follow_up_auto":           follow_up_auto,
+        "first_outreach_queue":     first_outreach,
+        "active_process_auto":      active_process_auto,
+        "auto_cv_signal_count":     cv_signal_count,
+    }
+
+
+# ── Manual sanitized builders ────────────────────────────────────────────────
+
+def _build_manual_opportunities(df: pd.DataFrame) -> list[dict]:
     if df.empty:
         return []
-    rows = []
-    for _, r in df.iterrows():
-        rows.append({
-            "company_name":          _norm(r.get("company_name")),
-            "role_title":            _norm(r.get("role_title")),
-            "role_url":              _norm(r.get("role_url")),
-            "source_type":           _norm(r.get("source_type")),
-            "currency":              _norm(r.get("currency")),
-            "rate_range":            _rate_range(r.get("rate_min", ""), r.get("rate_max", "")),
-            "rate_type":             _norm(r.get("rate_type")),
-            "contract_type":         _norm(r.get("contract_type")),
-            "remote_policy":         _norm(r.get("remote_policy")),
-            "timezone_required":     _norm(r.get("timezone_required")),
-            "overlap_required":      _norm(r.get("overlap_required")),
-            "tech_stack":            _norm(r.get("tech_stack")),
-            "status":                _norm(r.get("status")).upper(),
-            "next_action":           _norm(r.get("next_action")),
-            "next_action_date":      _norm(r.get("next_action_date")),
-            "priority":              _norm(r.get("priority")).upper(),
-            "timezone_risk":         _norm(r.get("timezone_risk")).upper(),
-            "payment_risk":          _norm(r.get("payment_risk")).upper(),
-            "contract_risk":         _norm(r.get("contract_risk")).upper(),
-            "usd_pipeline_score":    int(r.get("usd_pipeline_score", 0) or 0),
-            "recruiter_name":        _norm(r.get("recruiter_name")),
-            "recruiter_profile_url": _norm(r.get("recruiter_profile_url")),
-        })
-    return rows
+    return [_manual_pipeline_row_to_public(r) for _, r in df.iterrows()]
 
 
-def _build_public_applications(df: pd.DataFrame) -> list[dict]:
+def _build_manual_applications(df: pd.DataFrame) -> list[dict]:
     if df.empty:
         return []
-    rows = []
-    for _, r in df.iterrows():
-        rows.append({k: _norm(r.get(k)) for k in PUBLIC_APPLICATION_FIELDS})
-    return rows
-
-
-def _build_public_outreach_contacts(df: pd.DataFrame) -> list[dict]:
-    if df.empty:
-        return []
-    rows = []
-    for _, r in df.iterrows():
-        rows.append({k: _norm(r.get(k)) for k in PUBLIC_OUTREACH_FIELDS})
-    return rows
+    return [_manual_application_row_to_public(r) for _, r in df.iterrows()]
 
 
 def _build_outreach_summary(df: pd.DataFrame) -> dict:
@@ -399,127 +821,113 @@ def _build_outreach_summary(df: pd.DataFrame) -> dict:
     }
 
 
-# ── Follow-up queue ──────────────────────────────────────────────────────────
+# ── Follow-up queue (hybrid: manual + auto) ─────────────────────────────────
 
 def _build_follow_up_queue(pipeline_df: pd.DataFrame, applications_df: pd.DataFrame,
-                            outreach_df: pd.DataFrame) -> list[dict]:
-    today = date.today()
+                            outreach_df: pd.DataFrame, auto_followups: list[dict]) -> list[dict]:
     rows: list[dict] = []
 
     for _, r in pipeline_df.iterrows():
         status = _norm(r.get("status")).upper()
         if status in CLOSED_NEGATIVE_STATUSES or status == "CLOSED_WON":
             continue
-        d = _parse_date(r.get("next_action_date", ""))
-        if not d:
+        if not _norm(r.get("next_action_date")):
             continue
-        rows.append({
-            "source_type":      "pipeline",
-            "name":             f"{_norm(r.get('company_name'))} — {_norm(r.get('role_title'))}".strip(" —"),
-            "next_action":      _norm(r.get("next_action")),
-            "next_action_date": str(d),
-            "status":           status,
-            "priority":         _norm(r.get("priority")).upper(),
-            "overdue":          d < today,
-        })
+        row = _manual_pipeline_row_to_public(r.to_dict())
+        row["record_type"] = "manual_followup"
+        rows.append(row)
 
     for _, r in applications_df.iterrows():
         status = _norm(r.get("status")).upper()
-        if status in ("REJECTED", "WITHDRAWN"):
+        if status in ("REJECTED", "WITHDRAWN") or not _norm(r.get("follow_up_date")):
             continue
-        d = _parse_date(r.get("follow_up_date", ""))
-        if not d:
-            continue
-        rows.append({
-            "source_type":      "application",
-            "name":             f"{_norm(r.get('company_name'))} — {_norm(r.get('role_title'))}".strip(" —"),
-            "next_action":      "Follow up on application",
-            "next_action_date": str(d),
-            "status":           status,
-            "priority":         "",
-            "overdue":          d < today,
-        })
+        row = _manual_application_row_to_public(r.to_dict())
+        row["record_type"] = "manual_followup"
+        rows.append(row)
 
     for _, r in outreach_df.iterrows():
         status = _norm(r.get("status")).upper()
-        if status == "CLOSED":
+        if status == "CLOSED" or not _norm(r.get("next_action_date")):
             continue
-        d = _parse_date(r.get("next_action_date", ""))
-        if not d:
-            continue
-        rows.append({
-            "source_type":      "outreach",
-            "name":             f"{_norm(r.get('contact_name'))} — {_norm(r.get('company'))}".strip(" —"),
-            "next_action":      _norm(r.get("next_action")),
-            "next_action_date": str(d),
-            "status":           status,
-            "priority":         "",
-            "overdue":          d < today,
-        })
+        row = _manual_outreach_row_to_public(r.to_dict())
+        row["record_type"] = "manual_followup"
+        rows.append(row)
 
-    rows.sort(key=lambda x: x["next_action_date"])
+    rows.extend(auto_followups)
+    rows.sort(key=lambda x: (x["next_action_date"] == "", x["next_action_date"]))
     return rows
 
 
-# ── Contingency risk view ────────────────────────────────────────────────────
+def _count_due_or_overdue(follow_up_queue: list[dict]) -> int:
+    today = date.today()
+    count = 0
+    for r in follow_up_queue:
+        d = _parse_date(r.get("next_action_date", ""))
+        if d and d <= today:
+            count += 1
+    return count
 
-def _build_risk_view(public_pipeline: list[dict]) -> dict:
+
+# ── Contingency risk view (manual pipeline only, per spec) ──────────────────
+
+def _build_contingency_risk(manual_opportunities: list[dict]) -> dict:
     high_risk = [
-        r for r in public_pipeline
+        r for r in manual_opportunities
         if "HIGH" in (r.get("timezone_risk", ""), r.get("payment_risk", ""), r.get("contract_risk", ""))
     ]
-    backup = [r for r in public_pipeline if r.get("priority") == "BACKUP"]
+    backup = [r for r in manual_opportunities if r.get("priority") == "BACKUP"]
     return {"high_risk": high_risk, "backup": backup}
 
 
-# ── Summary (Executive cards) ────────────────────────────────────────────────
+# ── Summary (Part 4) ─────────────────────────────────────────────────────────
 
-def _build_summary(pipeline_df: pd.DataFrame, applications_df: pd.DataFrame,
-                    outreach_df: pd.DataFrame, follow_up_queue: list[dict],
-                    risk_view: dict) -> dict:
-    statuses = pipeline_df["status"].fillna("").str.upper() if not pipeline_df.empty else pd.Series([], dtype=str)
-    stages = statuses.apply(_stage_index)
-
-    outreach_statuses = outreach_df["status"].fillna("").str.upper() if not outreach_df.empty else pd.Series([], dtype=str)
-    has_reply_date = (
-        outreach_df.get("last_reply_date", pd.Series([""] * len(outreach_df))).fillna("").astype(str).str.strip() != ""
-        if not outreach_df.empty else pd.Series([], dtype=bool)
-    )
-    recruiters_replied = int(((outreach_statuses == "REPLIED") | has_reply_date).sum())
-
-    due_or_overdue = sum(1 for r in follow_up_queue if _parse_date(r["next_action_date"]) and _parse_date(r["next_action_date"]) <= date.today())
+def _build_summary(manual_opportunities: list[dict], manual_applications: list[dict],
+                    outreach_summary: dict, follow_up_queue: list[dict],
+                    contingency_risk: dict, auto_sections: dict,
+                    manual_pipeline_df: pd.DataFrame, active_process_pipeline: list[dict]) -> dict:
+    manual_cv_signals = int((
+        manual_pipeline_df["status"].fillna("").str.upper().apply(_stage_index) >= STATUS_ORDER["CV_REQUESTED"]
+    ).sum()) if not manual_pipeline_df.empty else 0
 
     return {
-        "usd_opportunities_found":  len(pipeline_df),
-        "applications_sent":       len(applications_df),
-        "recruiters_contacted":    len(outreach_df),
-        "recruiters_replied":      recruiters_replied,
-        "cvs_sent":                int((stages >= STATUS_ORDER["CV_SENT"]).sum()),
-        "client_submissions":      int((stages >= STATUS_ORDER["SUBMITTED_TO_CLIENT"]).sum()),
-        "recruiter_calls_booked":  int((stages >= STATUS_ORDER["RECRUITER_CALL_SCHEDULED"]).sum()),
-        "technical_interviews":    int((stages >= STATUS_ORDER["TECHNICAL_INTERVIEW_SCHEDULED"]).sum()),
-        "active_usd_processes":    int(statuses.isin(ACTIVE_PROCESS_STATUSES).sum()),
-        "follow_ups_due":          due_or_overdue,
-        "high_risk_opportunities": len(risk_view["high_risk"]),
-        "backup_opportunities":    len(risk_view["backup"]),
+        "manual_usd_opportunities":       len(manual_opportunities),
+        "auto_suggested_usd_leads":       len(auto_sections["auto_suggested_usd_leads"]),
+        "recommended_recruiters_to_contact": len(auto_sections["recruiter_pipeline"]),
+        "recommended_first_outreach":     len(auto_sections["first_outreach_queue"]),
+        "recommended_followups":          len(follow_up_queue),
+        "active_interview_signals":       len(active_process_pipeline),
+        "manual_applications_sent":       len(manual_applications),
+        "cv_requested_or_sent_signals":   manual_cv_signals + auto_sections["auto_cv_signal_count"],
+        "recruiters_replied":             outreach_summary.get("total_replied", 0),
+        "followups_due":                  _count_due_or_overdue(follow_up_queue),
+        "high_risk_manual_opportunities": len(contingency_risk["high_risk"]),
+        "backup_manual_opportunities":    len(contingency_risk["backup"]),
     }
 
 
 # ── Main entry point ─────────────────────────────────────────────────────────
 
-def run_usd_contract_crm() -> dict:
-    """Reads the three manual CSVs (if present), computes the USD Pipeline
-    Score, sanitized aggregates, and writes the five sanitized output CSVs.
-    Returns a dict consumed by export_public_dashboard_data.py to build the
-    public `usd_contract_crm` JSON key. Entirely safe to call when none of
-    the manual CSVs exist — returns {"available": False} and writes nothing."""
+def run_usd_contract_crm(
+    classified_df: pd.DataFrame | None = None,
+    lead_data: dict | None = None,
+    untapped_data: dict | None = None,
+    outreach_scores: dict | None = None,
+) -> dict:
+    """Hybrid USD Contract CRM:
+      1. Manual records from data/manual/*.csv (optional, can be empty).
+      2. Auto-suggested USD pipeline records derived from Lead Reactivation,
+         Untapped Network Intelligence, and classified connections + outreach
+         scores — so the CRM is never empty just because manual CSVs are
+         empty/absent, as long as the weekly pipeline has produced any of
+         that intelligence.
+
+    Returns {"available": False} only when BOTH manual CSVs AND auto-suggested
+    intelligence are entirely absent (e.g. no LinkedIn export has ever been
+    processed at all).
+    """
     pipeline_raw     = _read_manual_csv(USD_PIPELINE_CSV, PIPELINE_COLUMNS, "usd_pipeline")
     applications_raw = _read_manual_csv(JOB_APPLICATIONS_CSV, APPLICATION_COLUMNS, "job_applications")
     outreach_raw      = _read_manual_csv(RECRUITER_OUTREACH_CSV, OUTREACH_COLUMNS, "recruiter_outreach_log")
-
-    if pipeline_raw is None and applications_raw is None and outreach_raw is None:
-        logger.info("  USD Contract CRM: no manual CSVs found — skipping (this is normal/optional).")
-        return {"available": False}
 
     pipeline_df     = pipeline_raw if pipeline_raw is not None else pd.DataFrame(columns=PIPELINE_COLUMNS)
     applications_df = applications_raw if applications_raw is not None else pd.DataFrame(columns=APPLICATION_COLUMNS)
@@ -537,50 +945,79 @@ def run_usd_contract_crm() -> dict:
     else:
         pipeline_df["usd_pipeline_score"] = pd.Series(dtype=int)
 
-    public_pipeline      = _build_public_pipeline(pipeline_df)
-    public_applications  = _build_public_applications(applications_df)
-    public_outreach      = _build_public_outreach_contacts(outreach_df)
-    outreach_summary     = _build_outreach_summary(outreach_df)
-    follow_up_queue      = _build_follow_up_queue(pipeline_df, applications_df, outreach_df)
-    risk_view            = _build_risk_view(public_pipeline)
-    summary              = _build_summary(pipeline_df, applications_df, outreach_df, follow_up_queue, risk_view)
+    pool = _build_auto_candidate_pool(classified_df, outreach_scores, untapped_data, lead_data)
+    auto_sections = _build_auto_suggested_sections(pool)
+
+    manual_available = not (pipeline_df.empty and applications_df.empty and outreach_df.empty)
+    auto_available = any(auto_sections[k] for k in (
+        "auto_suggested_usd_leads", "recruiter_pipeline", "follow_up_auto",
+        "first_outreach_queue", "active_process_auto",
+    ))
+
+    if not manual_available and not auto_available:
+        logger.info("  USD Contract CRM: no manual CSVs and no auto-suggested intelligence — skipping.")
+        return {"available": False}
+
+    manual_opportunities = _build_manual_opportunities(pipeline_df)
+    manual_applications  = _build_manual_applications(applications_df)
+    outreach_summary      = _build_outreach_summary(outreach_df)
+    follow_up_queue       = _build_follow_up_queue(pipeline_df, applications_df, outreach_df, auto_sections["follow_up_auto"])
+    contingency_risk      = _build_contingency_risk(manual_opportunities)
+    active_process_pipeline = []
+    if not pipeline_df.empty:
+        active_mask = pipeline_df["status"].fillna("").str.upper().isin(ACTIVE_PROCESS_STATUSES)
+        for r in pipeline_df[active_mask].to_dict(orient="records"):
+            row = _manual_pipeline_row_to_public(r)
+            row["record_type"] = "manual_active_process"
+            active_process_pipeline.append(row)
+    active_process_pipeline.extend(auto_sections["active_process_auto"])
+
+    summary = _build_summary(
+        manual_opportunities, manual_applications, outreach_summary,
+        follow_up_queue, contingency_risk, auto_sections, pipeline_df,
+        active_process_pipeline,
+    )
 
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     pd.DataFrame([{"metric": k, "value": v} for k, v in summary.items()]).to_csv(
         OUTPUTS_DIR / "usd_contract_pipeline_summary.csv", index=False, encoding="utf-8-sig",
     )
-    pd.DataFrame(public_pipeline, columns=PUBLIC_PIPELINE_FIELDS).to_csv(
+    pd.DataFrame(manual_opportunities, columns=PUBLIC_ROW_FIELDS).to_csv(
         OUTPUTS_DIR / "usd_contract_pipeline_public.csv", index=False, encoding="utf-8-sig",
     )
     pd.DataFrame([{"metric": k, "value": v} for k, v in outreach_summary.items()]).to_csv(
         OUTPUTS_DIR / "usd_recruiter_outreach_summary.csv", index=False, encoding="utf-8-sig",
     )
-    pd.DataFrame(public_applications, columns=PUBLIC_APPLICATION_FIELDS).to_csv(
+    pd.DataFrame(manual_applications, columns=PUBLIC_ROW_FIELDS).to_csv(
         OUTPUTS_DIR / "usd_application_tracker_public.csv", index=False, encoding="utf-8-sig",
     )
-    pd.DataFrame(follow_up_queue).to_csv(
+    pd.DataFrame(follow_up_queue, columns=PUBLIC_ROW_FIELDS if follow_up_queue else None).to_csv(
         OUTPUTS_DIR / "usd_follow_up_queue.csv", index=False, encoding="utf-8-sig",
     )
 
     logger.info(
-        f"  USD Contract CRM: {summary['usd_opportunities_found']} opportunities | "
-        f"{summary['applications_sent']} applications | "
-        f"{summary['recruiters_contacted']} recruiters contacted "
-        f"({summary['recruiters_replied']} replied) | "
-        f"{summary['active_usd_processes']} active processes | "
-        f"{summary['follow_ups_due']} follow-ups due | "
-        f"{summary['high_risk_opportunities']} high-risk"
+        f"  USD Contract CRM: manual_opportunities={summary['manual_usd_opportunities']} "
+        f"auto_suggested_leads={summary['auto_suggested_usd_leads']} "
+        f"recommended_recruiters={summary['recommended_recruiters_to_contact']} "
+        f"first_outreach={summary['recommended_first_outreach']} "
+        f"followups={summary['recommended_followups']} (due={summary['followups_due']}) "
+        f"active_interview_signals={summary['active_interview_signals']} "
+        f"manual_applications={summary['manual_applications_sent']} "
+        f"high_risk={summary['high_risk_manual_opportunities']}"
     )
 
     return {
-        "available":         True,
-        "summary":           summary,
-        "pipeline":          public_pipeline,
-        "applications":      public_applications,
-        "outreach_contacts": public_outreach,
-        "outreach_summary":  outreach_summary,
-        "follow_up_queue":   follow_up_queue,
-        "risk_view":         risk_view,
+        "available":              True,
+        "summary":                summary,
+        "manual_opportunities":   manual_opportunities,
+        "auto_suggested_usd_leads": auto_sections["auto_suggested_usd_leads"],
+        "recruiter_pipeline":     auto_sections["recruiter_pipeline"],
+        "first_outreach_queue":   auto_sections["first_outreach_queue"],
+        "follow_up_queue":        follow_up_queue,
+        "active_process_pipeline": active_process_pipeline,
+        "manual_applications":    manual_applications,
+        "contingency_risk":       contingency_risk,
+        "outreach_summary":       outreach_summary,
     }
 
 
@@ -588,7 +1025,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s  %(message)s")
     result = run_usd_contract_crm()
     if not result.get("available"):
-        print("No USD CRM data yet. Create data/manual/usd_pipeline.csv, "
-              "job_applications.csv, and recruiter_outreach_log.csv to start tracking applications.")
+        print("No USD CRM data yet. Add manual CSVs or run the weekly pipeline to "
+              "generate Lead Reactivation / Untapped / Top Contacts intelligence.")
     else:
         print(result["summary"])

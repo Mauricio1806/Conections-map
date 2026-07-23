@@ -764,42 +764,26 @@ def build_needs_mapping_public(backlog: dict) -> dict:
     }
 
 
-# ── USD Contract CRM — explicit allowlist, defense in depth on top of what
-# src/usd_contract_crm.py already sanitizes (drops notes_private/raw content
-# before it ever reaches this dict). Never emits notes_private, raw message
-# content, email, or phone.
+# ── USD Contract CRM (hybrid: manual + auto-suggested) — explicit allowlist,
+# defense in depth on top of what src/usd_contract_crm.py already sanitizes
+# (drops notes_private/raw content before it ever reaches this dict). Never
+# emits notes_private, raw message content, email, or phone. Every row across
+# every array — manual or auto-suggested — is normalized to this ONE field
+# set (mirrors src/usd_contract_crm.py's PUBLIC_ROW_FIELDS).
 SAFE_USD_CRM_SUMMARY_KEYS = {
-    "usd_opportunities_found", "applications_sent", "recruiters_contacted",
-    "recruiters_replied", "cvs_sent", "client_submissions",
-    "recruiter_calls_booked", "technical_interviews", "active_usd_processes",
-    "follow_ups_due", "high_risk_opportunities", "backup_opportunities",
+    "manual_usd_opportunities", "auto_suggested_usd_leads",
+    "recommended_recruiters_to_contact", "recommended_first_outreach",
+    "recommended_followups", "active_interview_signals",
+    "manual_applications_sent", "cv_requested_or_sent_signals",
+    "recruiters_replied", "followups_due",
+    "high_risk_manual_opportunities", "backup_manual_opportunities",
 }
-SAFE_USD_CRM_PIPELINE_COLS = {
-    "company_name", "role_title", "role_url", "source_type", "currency",
-    "rate_range", "rate_type", "contract_type", "remote_policy",
-    "timezone_required", "overlap_required", "tech_stack", "status",
-    "next_action", "next_action_date", "priority", "timezone_risk",
-    "payment_risk", "contract_risk", "usd_pipeline_score", "recruiter_name",
-    "recruiter_profile_url",
-}
-SAFE_USD_CRM_APPLICATION_COLS = {
-    "application_date", "company_name", "role_title", "role_url", "source",
-    "currency", "expected_rate", "status", "cv_version", "recruiter_contacted",
-    "follow_up_date", "result", "rejection_reason",
-}
-SAFE_USD_CRM_OUTREACH_COLS = {
-    "date", "contact_name", "profile_url", "company", "source",
-    "opportunity_bucket", "message_type", "status", "last_reply_date",
-    "next_action", "next_action_date", "usd_signal", "latam_signal",
-    "timezone_signal",
-}
-SAFE_USD_CRM_OUTREACH_SUMMARY_KEYS = {
-    "total_contacted", "total_replied", "reply_rate_pct", "scheduled_calls",
-    "ghosted", "no_response",
-}
-SAFE_USD_CRM_FOLLOWUP_COLS = {
-    "source_type", "name", "next_action", "next_action_date", "status",
-    "priority", "overdue",
+SAFE_USD_CRM_ROW_COLS = {
+    "name", "company", "role", "persona", "opportunity_bucket", "source",
+    "record_type", "status", "score", "priority", "recommended_action",
+    "reason", "next_action", "next_action_date", "profile_url", "role_url",
+    "currency", "rate_range", "remote_policy", "timezone_required",
+    "timezone_risk", "payment_risk", "contract_risk",
 }
 
 
@@ -811,21 +795,20 @@ def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
     if not usd_crm_data or not usd_crm_data.get("available"):
         return {"available": False}
     summary = usd_crm_data.get("summary", {}) or {}
-    risk = usd_crm_data.get("risk_view", {}) or {}
+    risk = usd_crm_data.get("contingency_risk", {}) or {}
     return {
         "available": True,
         "summary": {k: v for k, v in summary.items() if k in SAFE_USD_CRM_SUMMARY_KEYS},
-        "pipeline": _sanitize_records(usd_crm_data.get("pipeline"), SAFE_USD_CRM_PIPELINE_COLS),
-        "applications": _sanitize_records(usd_crm_data.get("applications"), SAFE_USD_CRM_APPLICATION_COLS),
-        "outreach_contacts": _sanitize_records(usd_crm_data.get("outreach_contacts"), SAFE_USD_CRM_OUTREACH_COLS),
-        "outreach_summary": {
-            k: v for k, v in (usd_crm_data.get("outreach_summary", {}) or {}).items()
-            if k in SAFE_USD_CRM_OUTREACH_SUMMARY_KEYS
-        },
-        "follow_up_queue": _sanitize_records(usd_crm_data.get("follow_up_queue"), SAFE_USD_CRM_FOLLOWUP_COLS),
-        "risk_view": {
-            "high_risk": _sanitize_records(risk.get("high_risk"), SAFE_USD_CRM_PIPELINE_COLS),
-            "backup":    _sanitize_records(risk.get("backup"), SAFE_USD_CRM_PIPELINE_COLS),
+        "manual_opportunities":     _sanitize_records(usd_crm_data.get("manual_opportunities"), SAFE_USD_CRM_ROW_COLS),
+        "auto_suggested_usd_leads": _sanitize_records(usd_crm_data.get("auto_suggested_usd_leads"), SAFE_USD_CRM_ROW_COLS),
+        "recruiter_pipeline":       _sanitize_records(usd_crm_data.get("recruiter_pipeline"), SAFE_USD_CRM_ROW_COLS),
+        "first_outreach_queue":     _sanitize_records(usd_crm_data.get("first_outreach_queue"), SAFE_USD_CRM_ROW_COLS),
+        "follow_up_queue":          _sanitize_records(usd_crm_data.get("follow_up_queue"), SAFE_USD_CRM_ROW_COLS),
+        "active_process_pipeline":  _sanitize_records(usd_crm_data.get("active_process_pipeline"), SAFE_USD_CRM_ROW_COLS),
+        "manual_applications":      _sanitize_records(usd_crm_data.get("manual_applications"), SAFE_USD_CRM_ROW_COLS),
+        "contingency_risk": {
+            "high_risk": _sanitize_records(risk.get("high_risk"), SAFE_USD_CRM_ROW_COLS),
+            "backup":    _sanitize_records(risk.get("backup"), SAFE_USD_CRM_ROW_COLS),
         },
     }
 
