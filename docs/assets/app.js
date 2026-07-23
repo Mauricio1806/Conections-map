@@ -220,6 +220,7 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Opportunity', renderUnknownResolution);
       safeRender('Leads',       renderLeads);
       safeRender('Untapped',    renderUntapped);
+      safeRender('Usdcrm',      renderUsdCrm);
       safeRender('Quality',     renderQuality);
       safeRender('Weekly',      renderWeekly);
     })
@@ -4158,3 +4159,284 @@ function renderUntappedPagination() {
 }
 
 window.goUntappedPage = function(n) { untappedPage = n; renderUntappedTable(); };
+
+// ── USD Contract CRM ─────────────────────────────────────────────────────────
+let filteredUsdCrmPipeline = [];
+
+function riskBadge(level) {
+  return '<span class="urgency-badge urgency-' + (level || '').toLowerCase() + '">' + (level || '—') + '</span>';
+}
+function priorityBadge(p) {
+  return '<span class="urgency-badge urgency-' + (p || '').toLowerCase() + '">' + (p || '—') + '</span>';
+}
+
+function _usdCrmPopulateSelect(id, values) {
+  const sel = document.getElementById(id);
+  if (!sel || sel.options.length > 1) return;
+  [...new Set(values.filter(Boolean))].sort().forEach(v => {
+    const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o);
+  });
+}
+
+function renderUsdCrm() {
+  const crm = D.usd_contract_crm || {};
+  const noData = document.getElementById('usdcrm-no-data');
+  const mainContent = document.getElementById('usdcrm-main-content');
+
+  if (!crm.available) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  const s = crm.summary || {};
+  const pipeline = crm.pipeline || [];
+  const applications = crm.applications || [];
+  const outreach = crm.outreach_contacts || [];
+  const followUps = crm.follow_up_queue || [];
+  const risk = crm.risk_view || {};
+
+  // 1. Executive summary cards
+  const sumEl = document.getElementById('usdcrm-summary');
+  if (sumEl) sumEl.innerHTML = [
+    makeCard('USD Opportunities Found', s.usd_opportunities_found || 0),
+    makeCard('Applications Sent', s.applications_sent || 0),
+    makeCard('Recruiters Contacted', s.recruiters_contacted || 0),
+    makeCard('Recruiters Replied', s.recruiters_replied || 0),
+    makeCard('CVs Sent', s.cvs_sent || 0),
+    makeCard('Client Submissions', s.client_submissions || 0),
+    makeCard('Recruiter Calls Booked', s.recruiter_calls_booked || 0),
+    makeCard('Technical Interviews', s.technical_interviews || 0),
+    makeCard('Active USD Processes', s.active_usd_processes || 0, '', 'good'),
+    makeCard('Follow-ups Due', s.follow_ups_due || 0, s.follow_ups_due ? 'action needed' : '', 'warn'),
+    makeCard('High-Risk Opportunities', s.high_risk_opportunities || 0, '', s.high_risk_opportunities ? 'warn' : ''),
+    makeCard('Backup Opportunities', s.backup_opportunities || 0),
+  ].join('');
+
+  // Populate filter dropdowns
+  _usdCrmPopulateSelect('usdcrm-status-filter', pipeline.map(p => p.status));
+  _usdCrmPopulateSelect('usdcrm-currency-filter', pipeline.map(p => p.currency));
+  _usdCrmPopulateSelect('usdcrm-source-type-filter', pipeline.map(p => p.source_type));
+  _usdCrmPopulateSelect('usdcrm-outreach-status-filter', outreach.map(o => o.status));
+
+  filteredUsdCrmPipeline = pipeline;
+  renderUsdCrmPipelineTable();
+
+  // 3. Recruiter Outreach table (static — its own single filter re-renders in place)
+  window._usdCrmOutreachSource = outreach;
+  renderUsdCrmOutreachTable(outreach);
+
+  // 4. Applications Tracker
+  const appTbody = document.getElementById('usdcrm-applications-tbody');
+  if (appTbody) {
+    if (!applications.length) {
+      appTbody.innerHTML = '<tr><td colspan="12" style="text-align:center;color:var(--text-muted)">No applications logged yet.</td></tr>';
+    } else {
+      appTbody.innerHTML = applications.map(a => {
+        const url = a.role_url || '';
+        return '<tr>'
+          + '<td style="white-space:nowrap;font-size:0.75rem">' + (a.application_date || '—') + '</td>'
+          + '<td style="white-space:nowrap">' + (a.company_name || '—') + '</td>'
+          + '<td>' + (a.role_title || '—') + '</td>'
+          + '<td style="font-size:0.75rem">' + (a.source || '—') + '</td>'
+          + '<td>' + (a.currency || '—') + '</td>'
+          + '<td>' + (a.expected_rate || '—') + '</td>'
+          + '<td style="font-size:0.72rem">' + (a.status || '—') + '</td>'
+          + '<td style="font-size:0.75rem">' + (a.cv_version || '—') + '</td>'
+          + '<td style="font-size:0.75rem">' + (a.recruiter_contacted || '—') + '</td>'
+          + '<td style="font-size:0.75rem;white-space:nowrap">' + (a.follow_up_date || '—') + '</td>'
+          + '<td style="font-size:0.75rem">' + (a.result || '—') + '</td>'
+          + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+  }
+
+  // 5. Interview / Active Process Pipeline
+  const ACTIVE_STATUSES = ['SUBMITTED_TO_CLIENT', 'RECRUITER_CALL_SCHEDULED', 'RECRUITER_CALL_DONE',
+    'TECHNICAL_INTERVIEW_SCHEDULED', 'TECHNICAL_INTERVIEW_DONE', 'FINAL_INTERVIEW', 'OFFER'];
+  const activeRows = pipeline.filter(p => ACTIVE_STATUSES.includes((p.status || '').toUpperCase()));
+  const activeTbody = document.getElementById('usdcrm-active-tbody');
+  if (activeTbody) {
+    if (!activeRows.length) {
+      activeTbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">No active interview processes right now.</td></tr>';
+    } else {
+      activeTbody.innerHTML = activeRows.map(p => _usdCrmPipelineRow(p, ['company_name', 'role_title', 'status', 'score', 'recruiter_name', 'next_action', 'next_action_date', 'link'])).join('');
+    }
+  }
+
+  // 6. Follow-up Queue
+  const fuTbody = document.getElementById('usdcrm-followup-tbody');
+  if (fuTbody) {
+    if (!followUps.length) {
+      fuTbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">No follow-ups scheduled.</td></tr>';
+    } else {
+      fuTbody.innerHTML = followUps.map(f => '<tr' + (f.overdue ? ' style="color:#f85149"' : '') + '>'
+        + '<td style="font-size:0.72rem;white-space:nowrap">' + (f.source_type || '—') + '</td>'
+        + '<td>' + (f.name || '—') + '</td>'
+        + '<td style="font-size:0.75rem">' + (f.next_action || '—') + '</td>'
+        + '<td style="font-size:0.75rem;white-space:nowrap">' + (f.next_action_date || '—') + '</td>'
+        + '<td style="font-size:0.72rem">' + (f.status || '—') + '</td>'
+        + '<td>' + (f.priority ? priorityBadge(f.priority) : '—') + '</td>'
+        + '<td>' + (f.overdue ? '<strong>Overdue</strong>' : 'On track') + '</td>'
+        + '</tr>').join('');
+    }
+  }
+
+  // 7. Contingency Risk View
+  const highRiskTbody = document.getElementById('usdcrm-risk-high-tbody');
+  if (highRiskTbody) {
+    const hr = risk.high_risk || [];
+    highRiskTbody.innerHTML = !hr.length
+      ? '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">No high-risk opportunities.</td></tr>'
+      : hr.map(p => _usdCrmPipelineRow(p, ['company_name', 'role_title', 'status', 'score', 'tzrisk', 'payrisk', 'contractrisk', 'link'])).join('');
+  }
+  const backupTbody = document.getElementById('usdcrm-risk-backup-tbody');
+  if (backupTbody) {
+    const bk = risk.backup || [];
+    backupTbody.innerHTML = !bk.length
+      ? '<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">No backup opportunities logged.</td></tr>'
+      : bk.map(p => _usdCrmPipelineRow(p, ['company_name', 'role_title', 'status', 'score', 'currency', 'remote_policy', 'link'])).join('');
+  }
+}
+
+// Shared row-cell renderer keyed by a small set of column tokens, used by the
+// Active Pipeline / High-Risk / Backup tables (each shows a different subset
+// of the same sanitized pipeline record).
+function _usdCrmPipelineRow(p, cols) {
+  const url = p.role_url || '';
+  const score = parseInt(p.usd_pipeline_score) || 0;
+  const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+  const cellMap = {
+    company_name:  '<td style="white-space:nowrap">' + (p.company_name || '—') + '</td>',
+    role_title:    '<td>' + (p.role_title || '—') + '</td>',
+    status:        '<td style="font-size:0.72rem">' + (p.status || '—') + '</td>',
+    score:         '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>',
+    recruiter_name:'<td style="white-space:nowrap">' + (p.recruiter_name || '—') + '</td>',
+    next_action:   '<td style="font-size:0.75rem">' + (p.next_action || '—') + '</td>',
+    next_action_date: '<td style="font-size:0.75rem;white-space:nowrap">' + (p.next_action_date || '—') + '</td>',
+    tzrisk:        '<td>' + riskBadge(p.timezone_risk) + '</td>',
+    payrisk:       '<td>' + riskBadge(p.payment_risk) + '</td>',
+    contractrisk:  '<td>' + riskBadge(p.contract_risk) + '</td>',
+    currency:      '<td>' + (p.currency || '—') + '</td>',
+    remote_policy: '<td style="font-size:0.72rem;max-width:200px">' + (p.remote_policy || '—') + '</td>',
+    link:          '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>',
+  };
+  return '<tr>' + cols.map(c => cellMap[c] || '<td>—</td>').join('') + '</tr>';
+}
+
+function renderUsdCrmOutreachTable(source) {
+  const statusFilter = document.getElementById('usdcrm-outreach-status-filter')?.value || '';
+  const rows = statusFilter ? source.filter(o => o.status === statusFilter) : source;
+  const tbody = document.getElementById('usdcrm-outreach-tbody');
+  if (!tbody) return;
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="12" style="text-align:center;color:var(--text-muted)">No recruiter outreach logged yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(o => {
+    const url = o.profile_url || '';
+    return '<tr>'
+      + '<td style="font-size:0.72rem;white-space:nowrap">' + (o.date || '—') + '</td>'
+      + '<td style="white-space:nowrap">' + (o.contact_name || '—') + '</td>'
+      + '<td style="white-space:nowrap">' + (o.company || '—') + '</td>'
+      + '<td style="font-size:0.72rem">' + (o.message_type || '—') + '</td>'
+      + '<td style="font-size:0.72rem">' + (o.status || '—') + '</td>'
+      + '<td style="font-size:0.72rem;white-space:nowrap">' + (o.last_reply_date || '—') + '</td>'
+      + '<td style="font-size:0.72rem">' + (o.next_action || '—') + '</td>'
+      + '<td style="font-size:0.72rem;white-space:nowrap">' + (o.next_action_date || '—') + '</td>'
+      + '<td style="text-align:center">' + (String(o.usd_signal).toLowerCase() === 'true' ? '&#9989;' : '—') + '</td>'
+      + '<td style="text-align:center">' + (String(o.latam_signal).toLowerCase() === 'true' ? '&#9989;' : '—') + '</td>'
+      + '<td style="text-align:center">' + (String(o.timezone_signal).toLowerCase() === 'true' ? '&#9989;' : '—') + '</td>'
+      + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+document.addEventListener('change', e => {
+  if (e.target && e.target.id === 'usdcrm-outreach-status-filter') {
+    renderUsdCrmOutreachTable(window._usdCrmOutreachSource || []);
+  }
+});
+
+window.applyUsdCrmFilters = function() {
+  const crm = D.usd_contract_crm || {};
+  const source = crm.pipeline || [];
+  const search    = (document.getElementById('usdcrm-search')?.value || '').trim().toLowerCase();
+  const status    = document.getElementById('usdcrm-status-filter')?.value || '';
+  const currency  = document.getElementById('usdcrm-currency-filter')?.value || '';
+  const sourceType= document.getElementById('usdcrm-source-type-filter')?.value || '';
+  const remote    = (document.getElementById('usdcrm-remote-filter')?.value || '').trim().toLowerCase();
+  const priority  = document.getElementById('usdcrm-priority-filter')?.value || '';
+  const tzRisk    = document.getElementById('usdcrm-tzrisk-filter')?.value || '';
+  const cRisk     = document.getElementById('usdcrm-contractrisk-filter')?.value || '';
+  const dueOnly   = document.getElementById('usdcrm-due-only')?.checked || false;
+  const today     = new Date().toISOString().slice(0, 10);
+
+  filteredUsdCrmPipeline = source.filter(p => {
+    if (search) {
+      const hay = ((p.company_name||'') + ' ' + (p.role_title||'')).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    if (status && p.status !== status) return false;
+    if (currency && p.currency !== currency) return false;
+    if (sourceType && p.source_type !== sourceType) return false;
+    if (remote && !(p.remote_policy || '').toLowerCase().includes(remote)) return false;
+    if (priority && p.priority !== priority) return false;
+    if (tzRisk && p.timezone_risk !== tzRisk) return false;
+    if (cRisk && p.contract_risk !== cRisk) return false;
+    if (dueOnly && !(p.next_action_date && p.next_action_date <= today)) return false;
+    return true;
+  });
+  renderUsdCrmPipelineTable();
+};
+
+window.resetUsdCrmFilters = function() {
+  const ids = ['usdcrm-search', 'usdcrm-status-filter', 'usdcrm-currency-filter', 'usdcrm-source-type-filter',
+    'usdcrm-remote-filter', 'usdcrm-priority-filter', 'usdcrm-tzrisk-filter', 'usdcrm-contractrisk-filter'];
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const due = document.getElementById('usdcrm-due-only'); if (due) due.checked = false;
+  filteredUsdCrmPipeline = (D.usd_contract_crm || {}).pipeline || [];
+  renderUsdCrmPipelineTable();
+};
+
+function renderUsdCrmPipelineTable() {
+  const st = document.getElementById('usdcrm-stats');
+  const total = ((D.usd_contract_crm || {}).pipeline || []).length;
+  if (st) st.textContent = 'Showing ' + filteredUsdCrmPipeline.length + ' of ' + total + ' opportunities';
+
+  const sorted = [...filteredUsdCrmPipeline].sort((a, b) => (parseFloat(b.usd_pipeline_score) || 0) - (parseFloat(a.usd_pipeline_score) || 0));
+  const tbody = document.getElementById('usdcrm-pipeline-tbody');
+  if (!tbody) return;
+  if (!sorted.length) {
+    tbody.innerHTML = '<tr><td colspan="18" style="text-align:center;color:var(--text-muted)">No opportunities match the current filters.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = sorted.map(p => {
+    const url = p.role_url || '';
+    const score = parseInt(p.usd_pipeline_score) || 0;
+    const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+    return '<tr>'
+      + '<td style="white-space:nowrap">' + (p.company_name || '—') + '</td>'
+      + '<td>' + (p.role_title || '—') + '</td>'
+      + '<td style="font-size:0.72rem;white-space:nowrap">' + (p.source_type || '—') + '</td>'
+      + '<td>' + (p.currency || '—') + '</td>'
+      + '<td style="white-space:nowrap">' + (p.rate_range || '—') + (p.rate_type ? ' <span style="color:var(--text-muted);font-size:0.7rem">/' + p.rate_type + '</span>' : '') + '</td>'
+      + '<td style="font-size:0.72rem;max-width:150px">' + (p.contract_type || '—') + '</td>'
+      + '<td style="font-size:0.72rem;max-width:180px">' + (p.remote_policy || '—') + '</td>'
+      + '<td style="font-size:0.7rem;max-width:180px">' + (p.tech_stack || '—') + '</td>'
+      + '<td style="font-size:0.72rem">' + (p.status || '—') + '</td>'
+      + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+      + '<td>' + priorityBadge(p.priority) + '</td>'
+      + '<td>' + riskBadge(p.timezone_risk) + '</td>'
+      + '<td>' + riskBadge(p.payment_risk) + '</td>'
+      + '<td>' + riskBadge(p.contract_risk) + '</td>'
+      + '<td style="white-space:nowrap">' + (p.recruiter_name || '—') + '</td>'
+      + '<td style="font-size:0.72rem">' + (p.next_action || '—') + '</td>'
+      + '<td style="font-size:0.72rem;white-space:nowrap">' + (p.next_action_date || '—') + '</td>'
+      + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+      + '</tr>';
+  }).join('');
+}

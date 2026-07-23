@@ -728,6 +728,17 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Untapped Network Intelligence failed (non-fatal): {exc}")
 
+    # 7b4. USD Contract CRM — reads local/manual CSVs (data/manual/usd_pipeline.csv,
+    # job_applications.csv, recruiter_outreach_log.csv) if present. Entirely
+    # independent of the connections dataframe; safe/no-op when the manual
+    # CSVs don't exist.
+    usd_crm_data = {}
+    try:
+        from src.usd_contract_crm import run_usd_contract_crm
+        usd_crm_data = run_usd_contract_crm()
+    except Exception as exc:
+        logger.warning(f"  USD Contract CRM failed (non-fatal): {exc}")
+
     # 7c. Export public dashboard JSON (for static GitHub Pages dashboard)
     logger.info("  Exporting public dashboard JSON ...")
     try:
@@ -740,6 +751,7 @@ def run_strategy_layer() -> None:
             untapped_network_data=untapped_data,
             needs_mapping_backlog_data=needs_mapping_backlog,
             needs_mapping_action_plan_data=needs_mapping_action_plan,
+            usd_crm_data=usd_crm_data,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

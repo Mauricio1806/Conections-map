@@ -7,17 +7,17 @@ NTT DATA Europe & Latam,51,62.5,Other,LATAM_USD
 Deloitte,50,28.8,Other,UNKNOWN
 Databricks,49,60.0,Other,US_CANADA_NEARSHORE
 Grupo Boticário,49,23.2,Other,UNKNOWN
-Tata Consultancy Services,45,28.8,Other,UNKNOWN
-Capgemini,43,29.6,Other,UNKNOWN
+Tata Consultancy Services,45,28.7,Other,UNKNOWN
+Capgemini,43,29.5,Other,UNKNOWN
 Larco Petróleo,40,13.5,Other,UNKNOWN
 Randstad Brasil,39,24.5,Other,BRAZIL
-Bradesco,39,34.6,Other,BRAZIL
+Bradesco,39,34.5,Other,BRAZIL
 iFood,36,29.5,Other,BRAZIL
-Michael Page,34,26.4,Other,UNKNOWN
+Michael Page,34,26.3,Other,UNKNOWN
 IBM,32,26.8,Other,UNKNOWN
 GE Renewable Energy,32,15.0,Other,UNKNOWN
 CI&T,31,24.7,Other,UNKNOWN
-EY,29,34.1,Other,UNKNOWN
+EY,29,33.9,Other,UNKNOWN
 LM Soluções de Mobilidade,28,14.2,Other,UNKNOWN
 Zup Innovation,27,44.5,Other,BRAZIL
 AB InBev,26,28.0,Data Engineer,UNKNOWN
@@ -32,10 +32,10 @@ Amazon Web Services (AWS),19,46.7,Other,US_CANADA_NEARSHORE
 Serasa Experian,19,27.0,Other,UNKNOWN
 Delivery Hero,19,56.1,Other,EUROPE
 Globo,19,20.3,Other,UNKNOWN
-Mercado Livre,19,26.2,Other,UNKNOWN
+Mercado Livre,19,26.0,Other,UNKNOWN
 Indicium AI,19,36.5,Data Engineer,BRAZIL
 Freelance,18,28.6,Recruiter,UNKNOWN
-Accenture Brasil,18,44.3,Other,BRAZIL
+Accenture Brasil,18,44.2,Other,BRAZIL
 Artefact,18,30.7,Data Engineer,UNKNOWN
 TELUS Digital,18,31.1,Other,UNKNOWN
 Microsoft,17,50.1,Other,US_CANADA_NEARSHORE
@@ -46,7 +46,7 @@ Melt Group,15,20.6,Consultant,UNKNOWN
 Ambev Tech,15,39.0,HR,UNKNOWN
 PRINCIPIA,15,12.1,Other,UNKNOWN
 Banco Itaú,15,37.7,Data Engineer,BRAZIL
-Qubika,15,35.0,Data Engineer,UNKNOWN
+Qubika,15,34.8,Data Engineer,UNKNOWN
 Factored,14,32.2,Data Engineer,UNKNOWN
 Inter,14,26.5,Data Engineer,UNKNOWN
 Sicredi,14,22.9,Other,UNKNOWN
@@ -65,7 +65,7 @@ Amazon,13,52.6,Other,US_CANADA_NEARSHORE
 NTConsult,12,33.0,Other,UNKNOWN
 PicPay,12,29.1,Other,UNKNOWN
 PetroReconcavo,12,14.6,Other,UNKNOWN
-Semantix,12,37.7,Other,BRAZIL
+Semantix,12,37.2,Other,BRAZIL
 NTT DATA Business Solutions,11,42.6,Other,UNKNOWN
 Compass UOL,11,26.5,Data Engineer,UNKNOWN
 Nortal,11,29.0,Other,UNKNOWN
@@ -74,10 +74,10 @@ Globant,11,33.2,Other,UNKNOWN
 XP Inc,11,36.0,Data Engineer,BRAZIL
 Continental,10,9.5,Other,UNKNOWN
 Siemens Energy,10,40.9,Other,EUROPE
-Zallpy Digital,10,30.4,HR,UNKNOWN
+Zallpy Digital,10,30.1,HR,UNKNOWN
 Korn Ferry,10,34.7,Other,UNKNOWN
 Keyrus,10,36.0,Talent Acquisition,UNKNOWN
-Lojas Renner S.A,10,27.7,Other,UNKNOWN
+Lojas Renner S.A,10,27.4,Other,UNKNOWN
 Randstad Enterprise,10,41.2,Recruiter,UNKNOWN
 K2 Partnering Solutions,10,45.8,Recruiter,UNKNOWN
 DIS AG,10,21.7,Other,UNKNOWN
@@ -91,19 +91,19 @@ EloGroup,10,26.9,Data Engineer,UNKNOWN
 Minsait,10,48.6,Other,SPAIN_EU
 Shopee,10,21.5,Other,UNKNOWN
 Adecco,10,26.8,Consultant,UNKNOWN
-Datum,10,24.4,Other,UNKNOWN
+Datum,10,24.0,Other,UNKNOWN
 Capitani Group,9,22.4,Other,UNKNOWN
 Contabilizei,9,34.8,Other,BRAZIL
 Babbel,9,34.0,Hiring Manager,UNKNOWN
 Sigma Software Group,9,36.6,Other,UNKNOWN
 PageGroup,9,35.4,HR,UNKNOWN
-Vale,9,32.1,Other,BRAZIL
+Vale,9,31.7,Other,BRAZIL
 Aliare,9,25.7,Other,UNKNOWN
 Oracle,9,31.8,Other,UNKNOWN
 Global Group,9,13.3,Other,UNKNOWN
 Asaas,9,24.7,Other,UNKNOWN
 Cadastra,9,28.7,Data Engineer,UNKNOWN
-Coforge,9,52.7,Talent Acquisition,UNKNOWN
+Coforge,9,52.3,Talent Acquisition,UNKNOWN
 Snowflake,9,50.8,Other,US_CANADA_NEARSHORE
 Gi Group,8,28.9,Other,UNKNOWN
 The Adecco Group,8,25.0,Consultant,UNKNOWN
@@ -112,7 +112,7 @@ TPC Logística Inteligente,8,17.8,Other,UNKNOWN
 Neoenergia,8,15.6,Other,UNKNOWN
 SulAmérica,8,22.9,Other,UNKNOWN
 Flink,8,35.4,Director,UNKNOWN
-CWI Software,8,41.8,Recruiter,UNKNOWN
+CWI Software,8,41.2,Recruiter,UNKNOWN
 Arco Educação,8,33.2,Other,UNKNOWN
 Insi,8,35.4,Recruiter,UNKNOWN
 TIVIT,8,28.9,Other,UNKNOWN
@@ -120,12 +120,12 @@ SThree,8,26.1,Consultant,UNKNOWN
 Robert Walters,8,23.8,Consultant,UNKNOWN
 Decision,8,41.9,Recruiter,UNKNOWN
 NTT DATA Europe & LATAM,8,70.2,Talent Acquisition,LATAM_USD
-Amaris Consulting,8,43.6,Consultant,UNKNOWN
+Amaris Consulting,8,43.2,Consultant,UNKNOWN
 Indicium,8,40.8,Data Engineer,BRAZIL
 Self-employed,8,23.5,Other,UNKNOWN
 Cielo,8,31.1,Data Engineer,UNKNOWN
 Randstad Uruguay,8,48.9,Other,LATAM_USD
-Profesional independiente,7,25.4,Other,UNKNOWN
+Profesional independiente,7,25.0,Other,UNKNOWN
 Capco,7,29.1,Data Engineer,UNKNOWN
 Sodexo,7,13.3,Other,UNKNOWN
 TIM Brasil,7,29.4,Other,BRAZIL
@@ -139,14 +139,14 @@ Ambev,7,11.6,Other,UNKNOWN
 Walmart Chile,7,45.6,Other,LATAM_USD
 Uber,7,33.0,Recruiter,UNKNOWN
 E-Solutions,7,61.0,Recruiter,UNKNOWN
-Vivo (Telefônica Brasil),7,28.7,Other,BRAZIL
+Vivo (Telefônica Brasil),7,28.3,Other,BRAZIL
 banco BV,7,21.6,Data Analyst,UNKNOWN
 Natura,7,25.3,Other,UNKNOWN
-Construtora Tenda,7,21.1,Other,UNKNOWN
+Construtora Tenda,7,20.7,Other,UNKNOWN
 Banco Bmg,6,28.7,Other,UNKNOWN
 Jump,6,26.8,Data Engineer,UNKNOWN
 Superlógica Tecnologias,6,35.7,Director,UNKNOWN
-Suzano,6,18.0,HR,UNKNOWN
+Suzano,6,17.5,HR,UNKNOWN
 Boston Consulting Group (BCG),6,61.3,Consultant,US_CANADA_NEARSHORE
 Nestlé,6,26.0,Other,UNKNOWN
 ilegra,6,27.0,Other,UNKNOWN
@@ -171,10 +171,10 @@ Hire With Near,6,34.7,Sourcer,UNKNOWN
 DP6,6,33.0,Other,UNKNOWN
 "NTT DATA, Inc",6,35.5,Data Engineer,UNKNOWN
 Inetum,6,38.0,Talent Acquisition,UNKNOWN
-Infosys,6,37.5,Other,UNKNOWN
+Infosys,6,37.0,Other,UNKNOWN
 V4 Company,6,30.7,Other,UNKNOWN
 Grupo MAG,6,13.7,Other,UNKNOWN
-Dev.Pro,6,38.3,Recruiter,UNKNOWN
+Dev.Pro,6,37.8,Recruiter,UNKNOWN
 PagBank,6,26.3,Other,BRAZIL
 Petlove,6,23.3,Data Analyst,UNKNOWN
 Dataside,6,53.3,Data Engineer,BRAZIL

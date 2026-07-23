@@ -78,6 +78,9 @@ FORBIDDEN_FIELDS = {
     "phone_number",
     "mobile",
     "whatsapp",
+    # USD Contract CRM — private manual-input fields that must never reach
+    # the public JSON (see src/usd_contract_crm.py PRIVATE_FIELDS).
+    "notes_private",
 }
 
 # Regex patterns that must NOT appear anywhere in the JSON text
@@ -94,10 +97,14 @@ FORBIDDEN_PATTERNS = [
     (r"(?<!-)\b\d{10,15}\b",           "Possible phone number (10-15 digits)"),
     # Email pattern — exclude LinkedIn URLs to avoid false positives
     (r"(?<!linkedin\.com)[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}", "Email address pattern"),
+    # USD Contract CRM — defense in depth: these must never appear anywhere
+    # in the JSON text, not just as field names.
+    (r'"notes_private"',              "notes_private key found in JSON"),
+    (r"raw message",                  "Raw message content phrase found"),
 ]
 
 # Raw message content field names that must NOT appear in top_contacts
-FORBIDDEN_RAW_FIELDS = {"content", "attachments", "raw_content", "raw_message"}
+FORBIDDEN_RAW_FIELDS = {"content", "attachments", "raw_content", "raw_message", "notes_private"}
 
 # Keys in contact records that are explicitly allowed
 ALLOWED_CONTACT_FIELDS = {
@@ -151,6 +158,18 @@ ALLOWED_CONTACT_FIELDS = {
     # Weekly people delta segments (Part 4)
     "market_segment", "bucket_group", "previous_value", "current_value",
     "match_method", "is_actionable",
+    # USD Contract CRM — sanitized fields only (see src/usd_contract_crm.py
+    # and build_usd_contract_crm_public() in export_public_dashboard_data.py)
+    "company_name", "role_title", "role_url", "source_type", "currency",
+    "rate_range", "rate_type", "contract_type", "remote_policy",
+    "timezone_required", "overlap_required", "tech_stack", "status",
+    "next_action", "priority", "timezone_risk", "payment_risk",
+    "contract_risk", "usd_pipeline_score", "recruiter_name",
+    "recruiter_profile_url", "application_date", "source", "expected_rate",
+    "cv_version", "recruiter_contacted", "follow_up_date", "result",
+    "rejection_reason", "date", "contact_name", "profile_url", "company",
+    "message_type", "last_reply_date", "usd_signal", "latam_signal",
+    "timezone_signal", "name", "overdue",
 }
 
 
@@ -184,13 +203,23 @@ def check_json(path: Path) -> list[str]:
     gap_drilldown = list(data.get("strategic_gap_people_drilldown", []) or [])
     weekly_delta = list(data.get("weekly_people_delta_segments", []) or [])
     opp_segments = list(data.get("opportunity_market_people_segments", []) or [])
+    usd_crm = data.get("usd_contract_crm", {}) or {}
+    usd_crm_records = (
+        list(usd_crm.get("pipeline", []) or []) +
+        list(usd_crm.get("applications", []) or []) +
+        list(usd_crm.get("outreach_contacts", []) or []) +
+        list(usd_crm.get("follow_up_queue", []) or []) +
+        list((usd_crm.get("risk_view", {}) or {}).get("high_risk", []) or []) +
+        list((usd_crm.get("risk_view", {}) or {}).get("backup", []) or [])
+    )
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \
                   [(i, c, "untapped") for i, c in enumerate(untapped)] + \
                   [(i, c, "mapping") for i, c in enumerate(mapping)] + \
                   [(i, c, "gap_drilldown") for i, c in enumerate(gap_drilldown)] + \
                   [(i, c, "weekly_delta") for i, c in enumerate(weekly_delta)] + \
-                  [(i, c, "opp_segment") for i, c in enumerate(opp_segments)]
+                  [(i, c, "opp_segment") for i, c in enumerate(opp_segments)] + \
+                  [(i, c, "usd_crm") for i, c in enumerate(usd_crm_records)]
 
     for i, record, record_type in all_records:
         for field in record:

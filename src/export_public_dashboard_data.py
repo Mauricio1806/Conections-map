@@ -764,6 +764,72 @@ def build_needs_mapping_public(backlog: dict) -> dict:
     }
 
 
+# ── USD Contract CRM — explicit allowlist, defense in depth on top of what
+# src/usd_contract_crm.py already sanitizes (drops notes_private/raw content
+# before it ever reaches this dict). Never emits notes_private, raw message
+# content, email, or phone.
+SAFE_USD_CRM_SUMMARY_KEYS = {
+    "usd_opportunities_found", "applications_sent", "recruiters_contacted",
+    "recruiters_replied", "cvs_sent", "client_submissions",
+    "recruiter_calls_booked", "technical_interviews", "active_usd_processes",
+    "follow_ups_due", "high_risk_opportunities", "backup_opportunities",
+}
+SAFE_USD_CRM_PIPELINE_COLS = {
+    "company_name", "role_title", "role_url", "source_type", "currency",
+    "rate_range", "rate_type", "contract_type", "remote_policy",
+    "timezone_required", "overlap_required", "tech_stack", "status",
+    "next_action", "next_action_date", "priority", "timezone_risk",
+    "payment_risk", "contract_risk", "usd_pipeline_score", "recruiter_name",
+    "recruiter_profile_url",
+}
+SAFE_USD_CRM_APPLICATION_COLS = {
+    "application_date", "company_name", "role_title", "role_url", "source",
+    "currency", "expected_rate", "status", "cv_version", "recruiter_contacted",
+    "follow_up_date", "result", "rejection_reason",
+}
+SAFE_USD_CRM_OUTREACH_COLS = {
+    "date", "contact_name", "profile_url", "company", "source",
+    "opportunity_bucket", "message_type", "status", "last_reply_date",
+    "next_action", "next_action_date", "usd_signal", "latam_signal",
+    "timezone_signal",
+}
+SAFE_USD_CRM_OUTREACH_SUMMARY_KEYS = {
+    "total_contacted", "total_replied", "reply_rate_pct", "scheduled_calls",
+    "ghosted", "no_response",
+}
+SAFE_USD_CRM_FOLLOWUP_COLS = {
+    "source_type", "name", "next_action", "next_action_date", "status",
+    "priority", "overdue",
+}
+
+
+def _sanitize_records(records: list, allowed: set) -> list:
+    return [{k: v for k, v in r.items() if k in allowed} for r in (records or [])]
+
+
+def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
+    if not usd_crm_data or not usd_crm_data.get("available"):
+        return {"available": False}
+    summary = usd_crm_data.get("summary", {}) or {}
+    risk = usd_crm_data.get("risk_view", {}) or {}
+    return {
+        "available": True,
+        "summary": {k: v for k, v in summary.items() if k in SAFE_USD_CRM_SUMMARY_KEYS},
+        "pipeline": _sanitize_records(usd_crm_data.get("pipeline"), SAFE_USD_CRM_PIPELINE_COLS),
+        "applications": _sanitize_records(usd_crm_data.get("applications"), SAFE_USD_CRM_APPLICATION_COLS),
+        "outreach_contacts": _sanitize_records(usd_crm_data.get("outreach_contacts"), SAFE_USD_CRM_OUTREACH_COLS),
+        "outreach_summary": {
+            k: v for k, v in (usd_crm_data.get("outreach_summary", {}) or {}).items()
+            if k in SAFE_USD_CRM_OUTREACH_SUMMARY_KEYS
+        },
+        "follow_up_queue": _sanitize_records(usd_crm_data.get("follow_up_queue"), SAFE_USD_CRM_FOLLOWUP_COLS),
+        "risk_view": {
+            "high_risk": _sanitize_records(risk.get("high_risk"), SAFE_USD_CRM_PIPELINE_COLS),
+            "backup":    _sanitize_records(risk.get("backup"), SAFE_USD_CRM_PIPELINE_COLS),
+        },
+    }
+
+
 SAFE_ACTION_PLAN_SUMMARY_KEYS = {
     "backlog_size", "high_value_unresolved", "recruiters_unresolved",
     "biggest_impact_companies", "auto_resolvable_share_pct",
@@ -805,6 +871,7 @@ def export_public_dashboard_data(
     untapped_network_data: dict = None,
     needs_mapping_backlog_data: dict = None,
     needs_mapping_action_plan_data: dict = None,
+    usd_crm_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -920,6 +987,11 @@ def export_public_dashboard_data(
         # Opportunity Market — Needs Mapping person/company drill-down (Parts 2-4)
         "needs_mapping_backlog":       build_needs_mapping_public(needs_mapping_backlog_data),
         "needs_mapping_action_plan":   build_needs_mapping_action_plan_public(needs_mapping_action_plan_data),
+        # USD Contract CRM — real USD job opportunities, recruiter outreach,
+        # applications, interviews, follow-ups, contingency risk. Local/manual
+        # CSV inputs only (data/manual/*.csv, gitignored). Sanitized: no
+        # notes_private, no raw message content, no email, no phone.
+        "usd_contract_crm":            build_usd_contract_crm_public(usd_crm_data),
         # Action Plan Progress — measurement layer for the Action Plan page.
         # Placeholder here (this function runs before the weekly delta layer
         # exists); src/action_plan_progress.py merges the real sanitized

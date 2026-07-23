@@ -19,7 +19,7 @@
 18,NEON,4,103,4.6,0,0,0,0,21.8,,0.0,no usable signal yet — candidate for manual company mapping override
 19,WELLHUB,4,107,4.7,0,0,0,0,24.8,,0.0,no usable signal yet — candidate for manual company mapping override
 20,THE HEINEKEN COMPANY,4,111,4.9,0,0,0,0,22.8,,0.0,no usable signal yet — candidate for manual company mapping override
-21,SELBSTSTÄNDIG,4,115,5.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+21,SELBSTSTÄNDIG,4,115,5.1,0,0,0,0,11.0,,0.0,no usable signal yet — candidate for manual company mapping override
 22,AMAXO,3,118,5.2,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 23,ARTEVIE,3,121,5.3,0,0,0,0,19.3,,0.0,no usable signal yet — candidate for manual company mapping override
 24,QUARTILE,3,124,5.5,0,0,0,0,21.7,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -59,7 +59,7 @@
 58,BANCO BMG,3,226,10.0,0,0,0,0,27.3,,0.0,no usable signal yet — candidate for manual company mapping override
 59,BEES,3,229,10.1,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 60,ELEVATION PARTNERS,3,232,10.3,0,0,0,0,20.7,,0.0,no usable signal yet — candidate for manual company mapping override
-61,DIAGEO,3,235,10.4,0,0,0,0,16.3,,0.0,no usable signal yet — candidate for manual company mapping override
+61,DIAGEO,3,235,10.4,0,0,0,0,15.3,,0.0,no usable signal yet — candidate for manual company mapping override
 62,DATUM,3,238,10.5,0,0,0,0,16.0,,0.0,no usable signal yet — candidate for manual company mapping override
 63,ELEVATION,3,241,10.6,0,0,0,0,14.3,,0.0,no usable signal yet — candidate for manual company mapping override
 64,AEGEA SANEAMENTO,2,243,10.7,0,0,0,0,15.5,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -106,7 +106,7 @@
 105,NORTREZ,2,325,14.4,0,0,0,0,26.0,,0.0,no usable signal yet — candidate for manual company mapping override
 106,NORDEX,2,327,14.4,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 107,PYTHIAN,2,329,14.5,0,0,0,0,31.0,,0.0,no usable signal yet — candidate for manual company mapping override
-108,POSITIVO TECNOLOGIA,2,331,14.6,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
+108,POSITIVO TECNOLOGIA,2,331,14.6,0,0,0,0,26.5,,0.0,no usable signal yet — candidate for manual company mapping override
 109,PHILIP MORRIS INTERNATIONAL,2,333,14.7,0,0,0,0,25.5,,0.0,no usable signal yet — candidate for manual company mapping override
 110,RECARGAPAY,2,335,14.8,0,0,0,0,31.5,,0.0,no usable signal yet — candidate for manual company mapping override
 111,QSOFT,2,337,14.9,0,0,0,0,27.5,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -159,7 +159,7 @@
 158,F1RST TECNOLOGIA,2,431,19.0,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 159,FALKEN PERSONALBERATUNG,2,433,19.1,0,0,0,0,16.0,,0.0,no usable signal yet — candidate for manual company mapping override
 160,FORWARD,2,435,19.2,0,0,0,0,24.5,,0.0,no usable signal yet — candidate for manual company mapping override
-161,GP JOULE GRUPPE,2,437,19.3,0,0,0,0,16.5,,0.0,no usable signal yet — candidate for manual company mapping override
+161,GP JOULE GRUPPE,2,437,19.3,0,0,0,0,14.5,,0.0,no usable signal yet — candidate for manual company mapping override
 162,FYGI,2,439,19.4,0,0,0,0,15.5,,0.0,no usable signal yet — candidate for manual company mapping override
 163,FALCONI,2,441,19.5,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 164,HR PATH,2,443,19.6,0,0,0,0,32.5,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -219,7 +219,7 @@
 218,N1CO,1,516,22.8,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 219,NECTAR,1,517,22.8,0,0,0,0,36.0,,0.0,no usable signal yet — candidate for manual company mapping override
 220,NEXWAVE,1,518,22.9,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
-221,NOTRO,1,519,22.9,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
+221,NOTRO,1,519,22.9,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 222,BASICFOX,1,520,23.0,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 223,BATERIAS PIONEIRO,1,521,23.0,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 224,BATHILDISHEIM E.V,1,522,23.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -228,7 +228,7 @@
 227,BE INTELLIGENCE,1,525,23.2,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 228,BENEX AKADEMIE & CO,1,526,23.2,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 229,BESMART,1,527,23.3,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
-230,BEACH BUM,1,528,23.3,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
+230,BEACH BUM,1,528,23.3,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 231,BEATRIZ HERDY,1,529,23.4,0,0,0,0,16.0,,0.0,no usable signal yet — candidate for manual company mapping override
 232,BEE ENGINEERING ICT,1,530,23.4,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 233,BELASTINGDIENST,1,531,23.5,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -271,7 +271,7 @@
 270,BÜSSER & ZEIDLER,1,568,25.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 271,C3 ENGENHARIA & SOLUÇÕES,1,569,25.1,0,0,0,0,7.0,,0.0,no usable signal yet — candidate for manual company mapping override
 272,BLUHM SYSTEME,1,570,25.2,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
-273,BOEHRINGER INGELHEIM,1,571,25.2,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
+273,BOEHRINGER INGELHEIM,1,571,25.2,0,0,0,0,11.0,,0.0,no usable signal yet — candidate for manual company mapping override
 274,BOEN GROEN,1,572,25.3,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 275,BOLD TALENT CO,1,573,25.3,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 276,BOMBON BOSS,1,574,25.4,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -302,7 +302,7 @@
 301,BUNGE,1,599,26.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 302,COREX LOGISTICS,1,600,26.5,0,0,0,0,32.0,,0.0,no usable signal yet — candidate for manual company mapping override
 303,CORVUS UTV,1,601,26.6,0,0,0,0,37.0,,0.0,no usable signal yet — candidate for manual company mapping override
-304,COS,1,602,26.6,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
+304,COS,1,602,26.6,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 305,COSEM IAMPP,1,603,26.6,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 306,CPQD,1,604,26.7,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 307,CPQD,1,605,26.7,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -324,7 +324,7 @@
 323,CAPRIOLE COFFEE | B ™,1,621,27.4,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 324,CIB EGYPT,1,622,27.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 325,CIEE - CENTRO DE INTEGRAÇÃO EMPRESA-ESCOLA,1,623,27.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
-326,CJ RECRUITMENT,1,624,27.6,0,0,0,0,31.0,,0.0,no usable signal yet — candidate for manual company mapping override
+326,CJ RECRUITMENT,1,624,27.6,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
 327,"CLI - INTEGRAÇÃO, IA, TAX, DADOS",1,625,27.6,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 328,CLIMB,1,626,27.7,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 329,CMO VENDAS,1,627,27.7,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -432,7 +432,7 @@
 431,CORPORACIÓN,1,729,32.2,0,0,0,0,17.0,,0.0,no usable signal yet — candidate for manual company mapping override
 432,COVETRUS,1,730,32.3,0,0,0,0,34.0,,0.0,no usable signal yet — candidate for manual company mapping override
 433,CREATEFUTURE,1,731,32.3,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
-434,CREDALUGA,1,732,32.3,0,0,0,0,26.0,,0.0,no usable signal yet — candidate for manual company mapping override
+434,CREDALUGA,1,732,32.3,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
 435,CRESCENT,1,733,32.4,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
 436,CRESOL COOPERATIVA,1,734,32.4,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 437,CUESTA PARTNERS,1,735,32.5,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -495,7 +495,7 @@
 494,DOUTOR FINANÇAS,1,792,35.0,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 495,DRIVA,1,793,35.0,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 496,DEAL,1,794,35.1,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
-497,DEFTSOFT,1,795,35.1,0,0,0,0,34.0,,0.0,no usable signal yet — candidate for manual company mapping override
+497,DEFTSOFT,1,795,35.1,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
 498,DELFIA,1,796,35.2,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 499,DELTA A SALUD,1,797,35.2,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 500,DELTACUBES,1,798,35.3,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -609,7 +609,7 @@
 608,FARMERS INSURANCE,1,906,40.0,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 609,FAROD ESTATÍSTICAS,1,907,40.1,0,0,0,0,32.0,,0.0,no usable signal yet — candidate for manual company mapping override
 610,EXADEL,1,908,40.1,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
-611,EXITLAG,1,909,40.2,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
+611,EXITLAG,1,909,40.2,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 612,EXPLORTAL LOGISTICS,1,910,40.2,0,0,0,0,14.0,,0.0,no usable signal yet — candidate for manual company mapping override
 613,F&J CONSULTANTS,1,911,40.3,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 614,FIEMG,1,912,40.3,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -626,7 +626,7 @@
 625,FINE & COUNTRY ALGARVE,1,923,40.8,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
 626,FINIK,1,924,40.8,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 627,FIQUEM SABENDO,1,925,40.9,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
-628,FISERV,1,926,40.9,0,0,0,0,43.0,,0.0,no usable signal yet — candidate for manual company mapping override
+628,FISERV,1,926,40.9,0,0,0,0,40.0,,0.0,no usable signal yet — candidate for manual company mapping override
 629,FUNDACENTRO - FUNDAÇÃO JORGE DUPRAT FIGUEIREDO DE SEGURANÇA E MEDICINA DO TRABALHO,1,927,41.0,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 630,FABLETICS,1,928,41.0,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 631,FACULDADE CESUSC,1,929,41.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -657,14 +657,14 @@
 656,FUNDAÇÃO PAULISTA DE TECNOLOGIA E EDUCAÇÃO,1,954,42.2,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 657,FUNDAÇÃO PARA INOVAÇÕES TECNOLÓGICAS - FITEC,1,955,42.2,0,0,0,0,33.0,,0.0,no usable signal yet — candidate for manual company mapping override
 658,G2I,1,956,42.2,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
-659,GASCADE GASTRANSPORT,1,957,42.3,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
+659,GASCADE GASTRANSPORT,1,957,42.3,0,0,0,0,11.0,,0.0,no usable signal yet — candidate for manual company mapping override
 660,GCB INVESTIMENTOS,1,958,42.3,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
 661,GEIA,1,959,42.4,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 662,FIVERR,1,960,42.4,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
-663,FIXED,1,961,42.5,0,0,0,0,33.0,,0.0,no usable signal yet — candidate for manual company mapping override
+663,FIXED,1,961,42.5,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
 664,FIZIX,1,962,42.5,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
 665,FLASH,1,963,42.6,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
-666,FLATTRADE,1,964,42.6,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
+666,FLATTRADE,1,964,42.6,0,0,0,0,26.0,,0.0,no usable signal yet — candidate for manual company mapping override
 667,FLOEHIRE,1,965,42.6,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 668,FLOW,1,966,42.7,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 669,FLYWHEEL,1,967,42.7,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -719,7 +719,7 @@
 718,GREEN RIVER,1,1016,44.9,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 719,GREENTUBE,1,1017,44.9,0,0,0,0,34.0,,0.0,no usable signal yet — candidate for manual company mapping override
 720,GROOO INTERNATIONAL,1,1018,45.0,0,0,0,0,31.0,,0.0,no usable signal yet — candidate for manual company mapping override
-721,GROWDEV,1,1019,45.0,0,0,0,0,35.0,,0.0,no usable signal yet — candidate for manual company mapping override
+721,GROWDEV,1,1019,45.0,0,0,0,0,32.0,,0.0,no usable signal yet — candidate for manual company mapping override
 722,GROWTH HACKERZ,1,1020,45.1,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 723,GROWTH MACHINE,1,1021,45.1,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 724,GRUPO,1,1022,45.2,0,0,0,0,17.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -767,7 +767,7 @@
 766,GRUPO MULTILASER,1,1064,47.0,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
 767,GRUPO MUP,1,1065,47.1,0,0,0,0,34.0,,0.0,no usable signal yet — candidate for manual company mapping override
 768,GRUPO NEXO INFINITY,1,1066,47.1,0,0,0,0,37.0,,0.0,no usable signal yet — candidate for manual company mapping override
-769,GRUPO ORBENK,1,1067,47.1,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
+769,GRUPO ORBENK,1,1067,47.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 770,GRUPO PANVEL,1,1068,47.2,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
 771,GRUPO PETRÓPOLIS,1,1069,47.2,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
 772,GRUPO PLATA,1,1070,47.3,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -786,7 +786,7 @@
 785,GRUPPO GETRA,1,1083,47.9,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 786,GUMMY ORIGINAL,1,1084,47.9,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 787,H+H THE MATCH,1,1085,47.9,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
-788,HAPEKO ÖSTERREICH,1,1086,48.0,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
+788,HAPEKO ÖSTERREICH,1,1086,48.0,0,0,0,0,14.0,,0.0,no usable signal yet — candidate for manual company mapping override
 789,HEALTH2U-MX | VIBE BSA AESTHETICS,1,1087,48.0,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
 790,HEART ME & FOLLOW,1,1088,48.1,0,0,0,0,29.0,,0.0,no usable signal yet — candidate for manual company mapping override
 791,HEMES,1,1089,48.1,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -853,9 +853,9 @@
 852,IORQ,1,1150,50.8,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
 853,IP SOLUÇÕES EM RH,1,1151,50.9,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 854,IQVIA,1,1152,50.9,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
-855,HOWDY.COM,1,1153,51.0,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
+855,HOWDY.COM,1,1153,51.0,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 856,HUB INFINITY,1,1154,51.0,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
-857,HUBSYNC,1,1155,51.0,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
+857,HUBSYNC,1,1155,51.0,0,0,0,0,17.0,,0.0,no usable signal yet — candidate for manual company mapping override
 858,HUMAN PHI,1,1156,51.1,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
 859,HUMANA,1,1157,51.1,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
 860,HUMANA MENTE - SALUD MENTAL Y DESARROLLO ORGANIZACIONAL,1,1158,51.2,0,0,0,0,35.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -923,7 +923,7 @@
 922,JPMORGANCHASE,1,1220,53.9,0,0,0,0,11.0,,0.0,no usable signal yet — candidate for manual company mapping override
 923,JADARA,1,1221,54.0,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
 924,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO CEARÁ",1,1222,54.0,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
-925,INSTITUTO NACIONAL DE COLONIZACIÓN,1,1223,54.0,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
+925,INSTITUTO NACIONAL DE COLONIZACIÓN,1,1223,54.0,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 926,JUMPSTART IMMIGRATION,1,1224,54.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 927,JUST EAT TAKEAWAY.COM,1,1225,54.1,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
 928,INVENERGY,1,1226,54.2,0,0,0,0,11.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -941,7 +941,7 @@
 940,ASSURESOFT,1,1238,54.7,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 941,ANHANGUERA EDUCACIONAL,1,1239,54.8,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 942,KASPAROV FINANCE & BI,1,1240,54.8,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
-943,KATA VEGH PSYCHOLOGIST,1,1241,54.8,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+943,KATA VEGH PSYCHOLOGIST,1,1241,54.8,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 944,KAZULO DISPLAYS,1,1242,54.9,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 945,KEBOOLA,1,1243,54.9,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
 946,JAMBO EDUCATION,1,1244,55.0,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -992,7 +992,7 @@
 991,LA CAJA DE AHORRO Y SEGURO,1,1289,57.0,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 992,LA SALLE BCN,1,1290,57.0,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 993,LABPRO,1,1291,57.0,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
-994,LAGHETTO,1,1292,57.1,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
+994,LAGHETTO,1,1292,57.1,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 995,LANCESOFT UAE,1,1293,57.1,0,0,0,0,14.0,,0.0,no usable signal yet — candidate for manual company mapping override
 996,LAPÔNIA - CONCESSIONÁRIO DE CAMINHÕES E CHASSIS DE ÔNIBUS VOLVO,1,1294,57.2,0,0,0,0,32.0,,0.0,no usable signal yet — candidate for manual company mapping override
 997,LARISSA SANFORD,1,1295,57.2,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1009,7 +1009,7 @@
 1008,LEROY MERLIN,1,1306,57.7,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1009,LESAFFRE,1,1307,57.8,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1010,LEVEL.WORKS,1,1308,57.8,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1011,LEVELUP HCS,1,1309,57.8,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1011,LEVELUP HCS,1,1309,57.8,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1012,LIFEMATE FURNITURE,1,1310,57.9,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1013,LIGHTSOUND,1,1311,57.9,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1014,LINGODA,1,1312,58.0,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1106,12 +1106,12 @@
 1105,MERCADO BITCOIN,1,1403,62.0,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1106,MERCAFACIL,1,1404,62.0,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1107,MERCURY THEATRE,1,1405,62.1,0,0,0,0,13.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1108,MESSAGEMATCH,1,1406,62.1,0,0,0,0,14.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1108,MESSAGEMATCH,1,1406,62.1,0,0,0,0,11.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1109,METSO,1,1407,62.2,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1110,MEU BESS,1,1408,62.2,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1111,MEWA,1,1409,62.3,0,0,0,0,17.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1112,MIBBERS,1,1410,62.3,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1113,MICHELIN,1,1411,62.4,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1113,MICHELIN,1,1411,62.4,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1114,MICROLINS,1,1412,62.4,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1115,MIDWAY,1,1413,62.4,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1116,MIGNOW,1,1414,62.5,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1208,7 +1208,7 @@
 1207,OOLOOROO.IO,1,1505,66.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1208,OPEN (YC W24),1,1506,66.5,0,0,0,0,29.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1209,OPENCON,1,1507,66.6,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1210,OPENTALENT,1,1508,66.6,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1210,OPENTALENT,1,1508,66.6,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1211,NUAGEIT,1,1509,66.7,0,0,0,0,54.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1212,NURTUR,1,1510,66.7,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1213,NUTRATA,1,1511,66.8,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1219,7 +1219,7 @@
 1218,ORANGE BUSINESS,1,1516,67.0,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1219,ORANGELOOPS,1,1517,67.0,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1220,ORBITAL GAMING,1,1518,67.1,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1221,ORTOBOM,1,1519,67.1,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1221,ORTOBOM,1,1519,67.1,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1222,OTIS ELEVATOR CO,1,1520,67.2,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1223,OVERMIND,1,1521,67.2,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1224,OWEN DANIELS,1,1522,67.3,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1228,7 +1228,7 @@
 1227,OCTRONX™,1,1525,67.4,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1228,ODEABANK,1,1526,67.4,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1229,ODEBRECHT ANGOLA,1,1527,67.5,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1230,ALLGEMEINE RENTENANSTALT PENSIONSKASSE,1,1528,67.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1230,ALLGEMEINE RENTENANSTALT PENSIONSKASSE,1,1528,67.5,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1231,ALLIANT INSURANCE,1,1529,67.6,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1232,ALLO BANK,1,1530,67.6,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1233,ALMAPBBDO,1,1531,67.7,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1297,7 +1297,7 @@
 1296,PREFEITURA MUNICIPAL DE GUARUJÁ,1,1594,70.4,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1297,PREFEITURA MUNICIPAL DE LAURO DE FREITAS,1,1595,70.5,0,0,0,0,9.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1298,PREFEITURA MUNICIPAL DE POÇOS DE CALDAS,1,1596,70.5,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1299,PHARMBILLS,1,1597,70.6,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1299,PHARMBILLS,1,1597,70.6,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1300,PIF PAF ALIMENTOS,1,1598,70.6,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1301,PINKROCCADE LOCAL GOVERNMENT,1,1599,70.7,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1302,PIPEIMOB,1,1600,70.7,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1386,7 +1386,7 @@
 1385,ALGO,1,1683,74.4,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1386,REED RECRUITMENT MALTA,1,1684,74.4,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1387,REFLEX AEROSPACE,1,1685,74.5,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1388,REMAX SIIMGROUP,1,1686,74.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1388,REMAX SIIMGROUP,1,1686,74.5,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1389,RB SOLUÇÕES EM CAPITAL HUMANO,1,1687,74.5,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1390,RISK WOMEN,1,1688,74.6,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1391,RESIMPLE,1,1689,74.6,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1472,7 +1472,7 @@
 1471,"SEGUROS, TENDENCIAS Y RIESGOS SURA",1,1769,78.2,0,0,0,0,13.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1472,SELLCORD,1,1770,78.2,0,0,0,0,37.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1473,SELPE GENTE E GESTÃO,1,1771,78.3,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1474,SENDIO,1,1772,78.3,0,0,0,0,26.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1474,SENDIO,1,1772,78.3,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1475,SENTRY,1,1773,78.3,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1476,SEPROTEC MULTILINGUAL,1,1774,78.4,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1477,SERENA,1,1775,78.4,0,0,0,0,33.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1543,7 +1543,7 @@
 1542,SOPRA STERIA,1,1840,81.3,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1543,SOURCE RESOURCES PVT,1,1841,81.4,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1544,SOURCICLE,1,1842,81.4,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1545,SOZIAL-KONZEPT,1,1843,81.4,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1545,SOZIAL-KONZEPT,1,1843,81.4,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1546,SPACEDEV,1,1844,81.5,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1547,SPARK,1,1845,81.5,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1548,SPARKASSE HANNOVER,1,1846,81.6,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1590,11 +1590,11 @@
 1589,SYNEOS HEALTH VIA AMS,1,1887,83.4,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1590,SYNERGIE EXECUTIVE,1,1888,83.4,0,0,0,0,26.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1591,SYONE,1,1889,83.5,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1592,SYSMAP,1,1890,83.5,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1592,SYSMAP,1,1890,83.5,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1593,AGAPE,1,1891,83.6,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1594,AGILE,1,1892,83.6,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1595,AXA BUSINESS (AXA GBS),1,1893,83.7,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1596,AARIN,1,1894,83.7,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1596,AARIN,1,1894,83.7,0,0,0,0,11.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1597,AAROHAAN SALES AND,1,1895,83.7,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1598,TALENTLY,1,1896,83.8,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1599,TD SYNNEX MULTI-COUNTRY AREA (ESPAÑOL),1,1897,83.8,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1604,7 +1604,7 @@
 1603,THACO,1,1901,84.0,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1604,THRYVE,1,1902,84.0,0,0,0,0,18.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1605,TITANS CZ,1,1903,84.1,0,0,0,0,20.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1606,TK CHAUFFEUR-UND FAHRSERVICE,1,1904,84.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1606,TK CHAUFFEUR-UND FAHRSERVICE,1,1904,84.1,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1607,TLTD HR,1,1905,84.2,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1608,TMLABS,1,1906,84.2,0,0,0,0,16.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1609,TOP CABLE,1,1907,84.3,0,0,0,0,21.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1629,13 +1629,13 @@
 1628,TALENTFUL,1,1926,85.1,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1629,TALENTIA,1,1927,85.2,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1630,TEXAS MCCOMBS SCHOOL OF BUSINESS,1,1928,85.2,0,0,0,0,35.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1631,TEXAS PSYCHIATRY,1,1929,85.2,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1631,TEXAS PSYCHIATRY,1,1929,85.2,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1632,TEXFYT | NONWOVEN,1,1930,85.3,0,0,0,0,31.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1633,THE CITCO,1,1931,85.3,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1634,THE CROSS-CULTURAL COMMUNITY ASSOCIATION (TCCSA),1,1932,85.4,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1635,THE DREAM SCHOOL,1,1933,85.4,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1636,TALENTO,1,1934,85.5,0,0,0,0,34.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1637,TALENTO HUMANO EMPRESARIAL . INDEPENDENT PROFESSIONAL,1,1935,85.5,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1637,TALENTO HUMANO EMPRESARIAL . INDEPENDENT PROFESSIONAL,1,1935,85.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1638,TALENTSCHUPPEN,1,1936,85.6,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1639,TANISHA SYSTEMS,1,1937,85.6,0,0,0,0,15.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1640,TANTA UNIVERSITY,1,1938,85.6,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1649,7 +1649,7 @@
 1648,THE UNIVERSITY OF HONG KONG,1,1946,86.0,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1649,THE UNIVERSITY OF MANCHESTER,1,1947,86.0,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1650,THINK IT,1,1948,86.1,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1651,THOMMES & KOLLEGEN - ARCHITEKTEN UND INGENIEUR PARTGMBB,1,1949,86.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1651,THOMMES & KOLLEGEN - ARCHITEKTEN UND INGENIEUR PARTGMBB,1,1949,86.1,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1652,TIBBER,1,1950,86.2,0,0,0,0,23.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1653,TICMOBILE EMPRESAS - DISTRIBUIDOR ORANGE,1,1951,86.2,0,0,0,0,31.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1654,TIENDAMIA,1,1952,86.3,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1718,7 +1718,7 @@
 1717,UNIPER,1,2015,89.0,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1718,UNIT,1,2016,89.1,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1719,UNITE TALENT,1,2017,89.1,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1720,UNITY,1,2018,89.2,0,0,0,0,30.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1720,UNITY,1,2018,89.2,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1721,UNIVERSIDAD CATÓLICA DEL URUGUAY,1,2019,89.2,0,0,0,0,40.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1722,TRILLION HEALTH AND HORMONE,1,2020,89.3,0,0,0,0,28.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1723,TRIMBLE,1,2021,89.3,0,0,0,0,19.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1726,7 +1726,7 @@
 1725,TRUPROPEL,1,2023,89.4,0,0,0,0,37.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1726,UNIVERSIDADE CIMATEC,1,2024,89.4,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1727,UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL,1,2025,89.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1728,UNIVERSIDADE PRESBITERIANA MACKENZIE,1,2026,89.5,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1728,UNIVERSIDADE PRESBITERIANA MACKENZIE,1,2026,89.5,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1729,UNIVERSIDADE DE PASSO FUNDO,1,2027,89.6,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1730,UNIVERSITAS NEGERI MAKASSAR,1,2028,89.6,0,0,0,0,8.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1731,UNIVERSITAT CARLEMANY,1,2029,89.7,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
@@ -1865,7 +1865,7 @@
 1864,XPERIUN,1,2162,95.5,0,0,0,0,34.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1865,XPERTSCOUT,1,2163,95.6,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1866,YDUQS,1,2164,95.6,0,0,0,0,27.0,,0.0,no usable signal yet — candidate for manual company mapping override
-1867,YHA AUSTRALIA,1,2165,95.7,0,0,0,0,25.0,,0.0,no usable signal yet — candidate for manual company mapping override
+1867,YHA AUSTRALIA,1,2165,95.7,0,0,0,0,22.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1868,YAHOO,1,2166,95.7,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1869,YALLA CAR - ALUGUEL DE CARROS,1,2167,95.8,0,0,0,0,24.0,,0.0,no usable signal yet — candidate for manual company mapping override
 1870,BSIDE,1,2168,95.8,0,0,0,0,12.0,,0.0,no usable signal yet — candidate for manual company mapping override

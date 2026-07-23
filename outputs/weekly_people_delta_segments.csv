@@ -367,10 +367,10 @@ Elsa Marquínez Legarda,Glovo,HR,NEEDS_COMPANY_MAPPING,bucket_change_out,needs_m
 Elsa Marquínez Legarda,Glovo,HR,SPAIN_EU_CONFIRMED,bucket_change_in,spain_eu,,,44.0,https://www.linkedin.com/in/elsa-marqu%C3%ADnez-legarda-816346195,profile_url
 Hayane Cicuto,Emais Urbanismo,Other,NEEDS_COMPANY_MAPPING,bucket_change_out,needs_mapping,,,15.0,https://www.linkedin.com/in/hayane-cicuto-48006a176,profile_url
 Hayane Cicuto,Emais Urbanismo,Other,GLOBAL_TECH,bucket_change_in,,,,15.0,https://www.linkedin.com/in/hayane-cicuto-48006a176,profile_url
-Gunther Andreas Wuest,TrendAI,Talent Acquisition,GLOBAL_STAFFING,bucket_change_out,,,,48.0,https://www.linkedin.com/in/gunther-wuest,profile_url
-Gunther Andreas Wuest,TrendAI,Talent Acquisition,GLOBAL_OPPORTUNITY,bucket_change_in,global_opportunity,,,48.0,https://www.linkedin.com/in/gunther-wuest,profile_url
-João França,Marlin,Other,NEEDS_COMPANY_MAPPING,bucket_change_out,needs_mapping,,,20.0,https://www.linkedin.com/in/joaopcfb,profile_url
-João França,Marlin,Other,LATAM_USD_CONFIRMED,bucket_change_in,latam_usd,,,20.0,https://www.linkedin.com/in/joaopcfb,profile_url
+Gunther Andreas Wuest,TrendAI,Talent Acquisition,GLOBAL_STAFFING,bucket_change_out,,,,44.0,https://www.linkedin.com/in/gunther-wuest,profile_url
+Gunther Andreas Wuest,TrendAI,Talent Acquisition,GLOBAL_OPPORTUNITY,bucket_change_in,global_opportunity,,,44.0,https://www.linkedin.com/in/gunther-wuest,profile_url
+João França,Marlin,Other,NEEDS_COMPANY_MAPPING,bucket_change_out,needs_mapping,,,16.0,https://www.linkedin.com/in/joaopcfb,profile_url
+João França,Marlin,Other,LATAM_USD_CONFIRMED,bucket_change_in,latam_usd,,,16.0,https://www.linkedin.com/in/joaopcfb,profile_url
 Lincoln Nunes,Delly's,Head of Data,BRAZIL_CONFIRMED,bucket_change_out,,,,43.0,https://www.linkedin.com/in/lincolnzifino,profile_url
 Lincoln Nunes,Delly's,Head of Data,GLOBAL_OPPORTUNITY,bucket_change_in,global_opportunity,,,43.0,https://www.linkedin.com/in/lincolnzifino,profile_url
 Marcos Rebello,Vibra,Data Engineer,NEEDS_COMPANY_MAPPING,bucket_change_out,needs_mapping,,,26.0,https://www.linkedin.com/in/marcos-rebello-a47346b5,profile_url
@@ -421,257 +421,252 @@ Cecília Batalha,Hitachi Energy,Other,LANGUAGE_PORTUGUESE_MARKET,bucket_change_o
 Cecília Batalha,Hitachi Energy,Other,LATAM_USD_CONFIRMED,bucket_change_in,latam_usd,,,36.0,https://www.linkedin.com/in/cec%C3%ADliabatalha,profile_url
 Bárbara Pires,Auren Energia,Other,NEEDS_COMPANY_MAPPING,bucket_change_out,needs_mapping,,,11.0,https://www.linkedin.com/in/barbara-pires-silva,profile_url
 Bárbara Pires,Auren Energia,Other,BRAZIL_CONFIRMED,bucket_change_in,,,,11.0,https://www.linkedin.com/in/barbara-pires-silva,profile_url
-Ro Maia Headhunter,Ro Maia DHO,Recruiter,,lead_category_change,,Warm reactivation,Needs my response — Likely,94.0,https://www.linkedin.com/in/ro-maia-headhunter-11ba3b2aa,profile_url
 Luiz Gouvêa,Straumann Group,Director,,lead_category_change,,,Closed / no action,93.0,https://www.linkedin.com/in/luizgouvea,profile_url
-Eduardo Rubini,Pegasystems,Director,,lead_category_change,,,Closed / no action,85.0,https://www.linkedin.com/in/eduardorezenderubini,profile_url
-Pedro Debiazi,Grupo Educacional Primum,Head of Data,,lead_category_change,,Follow-up due,Closed / no action,84.0,https://www.linkedin.com/in/pedrodebiazi,profile_url
-Vitória Ribeiro,Marlabs Brasil,Talent Acquisition,,lead_category_change,,Follow-up due,Active Interview Pipeline,83.0,https://www.linkedin.com/in/vitóriab-ribeiro,profile_url
+Ro Maia Headhunter,Ro Maia DHO,Recruiter,,lead_category_change,,Warm reactivation,Needs my response — Likely,90.0,https://www.linkedin.com/in/ro-maia-headhunter-11ba3b2aa,profile_url
+Eduardo Rubini,Pegasystems,Director,,lead_category_change,,,Follow-up due,89.0,https://www.linkedin.com/in/eduardorezenderubini,profile_url
 Sebastian Giardello,Perficient Latin America,Director,,lead_category_change,,,Active Interview Pipeline,81.0,https://www.linkedin.com/in/giardello,profile_url
-Fernanda Rivas ,CodeRoad Inc,Talent Acquisition,,lead_category_change,,Follow-up due,Closed / no action,74.0,https://www.linkedin.com/in/fernanda-rivas-a337071ba,profile_url
-Andrea Soria,Microsoft,Sourcer,,lead_category_change,,,Warm reactivation,73.0,https://www.linkedin.com/in/andreasoria01,profile_url
+Melisa Ramírez Habitzreuter,Lenovo,Director,,lead_category_change,,,Follow-up due,77.0,https://www.linkedin.com/in/melrho,profile_url
+Andrea Soria,Microsoft,Sourcer,,lead_category_change,,,Follow-up due,77.0,https://www.linkedin.com/in/andreasoria01,profile_url
+Mohan Kumar Chebrolu,iCube Solutions LLC,Recruiter,,lead_category_change,,,Follow-up due,76.0,https://www.linkedin.com/in/mohan-kumar-chebrolu-31a8a61a3,profile_url
+Fernanda Rivas ,CodeRoad Inc,Talent Acquisition,,lead_category_change,,Follow-up due,Closed / no action,73.0,https://www.linkedin.com/in/fernanda-rivas-a337071ba,profile_url
 Ivan Livić,VendueTech,Executive,,lead_category_change,,,Active Interview Pipeline,73.0,https://www.linkedin.com/in/ivanlivic,profile_url
-Melisa Ramírez Habitzreuter,Lenovo,Director,,lead_category_change,,,Warm reactivation,73.0,https://www.linkedin.com/in/melrho,profile_url
-Oleksandra Skalko,Relevant Search,Sourcer,,lead_category_change,,,Closed / no action,72.0,https://www.linkedin.com/in/oleksandra-skalko,profile_url
-Mohan Kumar Chebrolu,iCube Solutions LLC,Recruiter,,lead_category_change,,,Active Interview Pipeline,72.0,https://www.linkedin.com/in/mohan-kumar-chebrolu-31a8a61a3,profile_url
 Mercedes Espinosa,Resilient Co,Talent Acquisition,,lead_category_change,,,Closed / no action,72.0,https://www.linkedin.com/in/mercedes-espinosa-52a93b67,profile_url
+Natanael Carvalho,"Ubiminds: You, International",Recruiter,,lead_category_change,,,Follow-up due,72.0,https://www.linkedin.com/in/natanaeltcarvalho,profile_url
+Sabrina Diaz F.,Gorilla Logic,Recruiter,,lead_category_change,,,Follow-up due,70.0,https://www.linkedin.com/in/sabrinadiazferro,profile_url
 Uday Ganesh Singh,Dexian,Other,,lead_category_change,,,Closed / no action,70.0,https://www.linkedin.com/in/udayganeshsingh,profile_url
-Taís Marques,Decision,Recruiter,,lead_category_change,,Follow-up due,Rejected / Closed,68.0,https://www.linkedin.com/in/taís-m-7275a0141,profile_url
-Natanael Carvalho,"Ubiminds: You, International",Recruiter,,lead_category_change,,,Warm reactivation,68.0,https://www.linkedin.com/in/natanaeltcarvalho,profile_url
-Benhur Mente⧗,Atlantis IT Group,Recruiter,,lead_category_change,,,Warm reactivation,67.0,https://www.linkedin.com/in/benhur-mente⧗-1944a9244,profile_url
-Jason Haney,NerdBench Technical Recruiting,Recruiter,,lead_category_change,,,Warm reactivation,67.0,https://www.linkedin.com/in/jasonhaneyjones,profile_url
+Alline de Sousa Moreno,Biz2People,Other,,lead_category_change,,,Follow-up due,70.0,https://www.linkedin.com/in/alline-de-sousa-moreno,profile_url
+Camilla Marques Teixeira,Cargill,Director,,lead_category_change,,,Follow-up due,69.0,https://www.linkedin.com/in/camilla-marques-teixeira,profile_url
+Jorge Abaunza,EPAM Systems,Recruiter,,lead_category_change,,,Follow-up due,69.0,https://www.linkedin.com/in/jorgeabaunza,profile_url
+Ciro Civale,Proclinical Staffing,Recruiter,,lead_category_change,,,Follow-up due,69.0,https://www.linkedin.com/in/ciro-civale,profile_url
+Robson Mendonça,Whirlpool Corporation,Head of Data,,lead_category_change,,,Follow-up due,69.0,https://www.linkedin.com/in/robsonpmendonca,profile_url
+Adrian Del Val Rives,Savino Del Bene,Talent Acquisition,,lead_category_change,,,Follow-up due,69.0,https://www.linkedin.com/in/adelvalr,profile_url
+Oleksandra Skalko,Relevant Search,Sourcer,,lead_category_change,,,Closed / no action,68.0,https://www.linkedin.com/in/oleksandra-skalko,profile_url
+Hutan M. Fatemi,Proclinical Staffing,Recruiter,,lead_category_change,,,Follow-up due,68.0,https://www.linkedin.com/in/hutan-m-fatemi-6673a8114,profile_url
 Marta Aragón Santos,Cash Converters España,Talent Acquisition,,lead_category_change,,,Warm reactivation,67.0,https://www.linkedin.com/in/marta-aragón-santos,profile_url
 Mara Toribio,Timestamp España,Talent Acquisition,,lead_category_change,,,Closed / no action,67.0,https://www.linkedin.com/in/mara-toribio-45249761,profile_url
-Alline de Sousa Moreno,Biz2People,Other,,lead_category_change,,,Closed / no action,66.0,https://www.linkedin.com/in/alline-de-sousa-moreno,profile_url
+Sara Ramos Tellez,P&D TALENT,Recruiter,,lead_category_change,,,Follow-up due,67.0,https://www.linkedin.com/in/sara-ramos-tellez-5151aa1b7,profile_url
+Benhur Mente⧗,Atlantis IT Group,Recruiter,,lead_category_change,,,Warm reactivation,67.0,https://www.linkedin.com/in/benhur-mente⧗-1944a9244,profile_url
+Lays Tupina,Page Outsourcing,Recruiter,,lead_category_change,,,Follow-up due,66.0,https://www.linkedin.com/in/lays-tupina-706561189,profile_url
 Fabian Arizona,VALCE Talent Solutions,Talent Acquisition,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/fabian-arizona-0641b11bb,profile_url
 Mariela Gomez,Univar Solutions,Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/mariela-gomez-b2b667b4,profile_url
-Sabrina Diaz F.,Gorilla Logic,Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/sabrinadiazferro,profile_url
-Lakhan Joshi,E-Solutions,Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/lakhan-joshi-7468301a9,profile_url
-Jessica Souza Andrade,Nava | Tech for Business,Recruiter,,lead_category_change,,Follow-up due,Warm reactivation,66.0,https://www.linkedin.com/in/jessica-souza-andrade-aba062219,profile_url
-Bárbara Baliano,"Ubiminds: You, International",Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/bárbara-baliano-7aaa9a105,profile_url
-Adriana  Monroy,Software Mind Americas,Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/adriana-monroy-2a1474178,profile_url
 Neha Jain,Worldclass Tech Talent Pvt. Ltd,Other,,lead_category_change,,,Active Interview Pipeline,66.0,https://www.linkedin.com/in/neha-jain-atwtt,profile_url
-Jorge Abaunza,EPAM Systems,Recruiter,,lead_category_change,,,Warm reactivation,65.0,https://www.linkedin.com/in/jorgeabaunza,profile_url
-Ciro Civale,Proclinical Staffing,Recruiter,,lead_category_change,,,Warm reactivation,65.0,https://www.linkedin.com/in/ciro-civale,profile_url
-María Camila Vélez Vélez,Truelogic Software,Talent Acquisition,,lead_category_change,,,Closed / no action,65.0,https://www.linkedin.com/in/mariacamilavelez2,profile_url
-Robson Mendonça,Whirlpool Corporation,Head of Data,,lead_category_change,,,Warm reactivation,65.0,https://www.linkedin.com/in/robsonpmendonca,profile_url
-Camilla Marques Teixeira,Cargill,Director,,lead_category_change,,,Warm reactivation,65.0,https://www.linkedin.com/in/camilla-marques-teixeira,profile_url
-Adrian Del Val Rives,Savino Del Bene,Talent Acquisition,,lead_category_change,,,Warm reactivation,65.0,https://www.linkedin.com/in/adelvalr,profile_url
-Kisa Zaidi,HRDisruptive,Talent Acquisition,,lead_category_change,,,Warm reactivation,65.0,https://www.linkedin.com/in/kisazaidi,profile_url
+Adriana  Monroy,Software Mind Americas,Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/adriana-monroy-2a1474178,profile_url
+Bárbara Baliano,"Ubiminds: You, International",Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/bárbara-baliano-7aaa9a105,profile_url
+Guilherme Salles,Casa dos Ventos Energias Renováveis,Other,,lead_category_change,,,Follow-up due,66.0,https://www.linkedin.com/in/guilhermesalles,profile_url
+Lakhan Joshi,E-Solutions,Recruiter,,lead_category_change,,,Warm reactivation,66.0,https://www.linkedin.com/in/lakhan-joshi-7468301a9,profile_url
+Nayeli Márquez,Cummins Inc,Recruiter,,lead_category_change,,,Follow-up due,65.0,https://www.linkedin.com/in/nayeli-marquez,profile_url
+Maíra Vidal Mathias,Talent Group,Other,,lead_category_change,,,Follow-up due,65.0,https://www.linkedin.com/in/maíra-vidal-mathias,profile_url
 Daniela Parra Sepúlveda,SGF Global,Recruiter,,lead_category_change,,,Warm reactivation,65.0,https://www.linkedin.com/in/daniela-parra-sepulveda,profile_url
-Ann Huerta,KogniVera,Talent Acquisition,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/anahuerta1,profile_url
-Maca Martinez,Leadtech Group,Talent Acquisition,,lead_category_change,,Follow-up due,Closed / no action,64.0,https://www.linkedin.com/in/maca-martinez,profile_url
-Hutan M. Fatemi,Proclinical Staffing,Recruiter,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/hutan-m-fatemi-6673a8114,profile_url
-Camila Santos Rabelo,LTM,Recruiter,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/camila-santos-rs,profile_url
-Anusha Raj,OptimHire,Hiring Manager,,lead_category_change,,Follow-up due,Warm reactivation,64.0,https://www.linkedin.com/in/anusha-raj-a327a4244,profile_url
-Gimena Ponzio,Freelance | Self-Employed,Recruiter,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/gimena-ponzio-36107220a,profile_url
+Larissa Bianchi,NowVertical BR (Formerly Grupo IN),Director,,lead_category_change,,,Follow-up due,65.0,https://www.linkedin.com/in/larissa-bianchi-53695b2b,profile_url
+María Camila Vélez Vélez,Truelogic Software,Talent Acquisition,,lead_category_change,,,Closed / no action,65.0,https://www.linkedin.com/in/mariacamilavelez2,profile_url
 Felipe Conde de Salles,Russell Tobin,Recruiter,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/felipe-conde-de-salles-a11541282,profile_url
-Sara Ramos Tellez,P&D TALENT,Recruiter,,lead_category_change,,,Closed / no action,63.0,https://www.linkedin.com/in/sara-ramos-tellez-5151aa1b7,profile_url
+Gimena Ponzio,Freelance | Self-Employed,Recruiter,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/gimena-ponzio-36107220a,profile_url
+Taís Marques,Decision,Recruiter,,lead_category_change,,Follow-up due,Rejected / Closed,64.0,https://www.linkedin.com/in/taís-m-7275a0141,profile_url
+Camila Santos Rabelo,LTM,Recruiter,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/camila-santos-rs,profile_url
+Ann Huerta,KogniVera,Talent Acquisition,,lead_category_change,,,Warm reactivation,64.0,https://www.linkedin.com/in/anahuerta1,profile_url
+Luisa María Londoño,10Pearls,Recruiter,,lead_category_change,,,Closed / no action,63.0,https://www.linkedin.com/in/luisamar,profile_url
 Sk Sahil,Digital Alpha Platforms,Recruiter,,lead_category_change,,,Warm reactivation,63.0,https://www.linkedin.com/in/sk-sahil-b40906187,profile_url
 Gandharv Singh,ConoV8 Systems,Recruiter,,lead_category_change,,,Warm reactivation,63.0,https://www.linkedin.com/in/gandharv-singh-connecting-vibes,profile_url
-Bharathi Vijay,Pure Talent Consulting,Recruiter,,lead_category_change,,,Warm reactivation,63.0,https://www.linkedin.com/in/bharathi-vijay-96740b226,profile_url
-Fernando Henrique Spizzca,triggo.ai,Data Engineer,,lead_category_change,,,Closed / no action,63.0,https://www.linkedin.com/in/fernando-henrique-spizzca-39990b2a,profile_url
-Luisa María Londoño,10Pearls,Recruiter,,lead_category_change,,,Closed / no action,63.0,https://www.linkedin.com/in/luisamar,profile_url
 Ritunjai Sonkar,Global IT Con. LLC,Recruiter,,lead_category_change,,,Warm reactivation,63.0,https://www.linkedin.com/in/ritunjai-sonkar-032461204,profile_url
-Guilherme Salles,Casa dos Ventos Energias Renováveis,Other,,lead_category_change,,,Closed / no action,62.0,https://www.linkedin.com/in/guilhermesalles,profile_url
+Lidia Sánchez,Grupo Administrativo Mexicano,Talent Acquisition,,lead_category_change,,,Follow-up due,63.0,https://www.linkedin.com/in/lidsad1989,profile_url
+Fernando Henrique Spizzca,triggo.ai,Data Engineer,,lead_category_change,,,Closed / no action,63.0,https://www.linkedin.com/in/fernando-henrique-spizzca-39990b2a,profile_url
+Alberto Pérez Penedo,BRETEMA HR CONSULTING,Recruiter,,lead_category_change,,,Follow-up due,63.0,https://www.linkedin.com/in/albertoperezpenedo,profile_url
+Jason Haney,NerdBench Technical Recruiting,Recruiter,,lead_category_change,,,Warm reactivation,63.0,https://www.linkedin.com/in/jasonhaneyjones,profile_url
+Bharathi Vijay,Pure Talent Consulting,Recruiter,,lead_category_change,,,Warm reactivation,63.0,https://www.linkedin.com/in/bharathi-vijay-96740b226,profile_url
 Natalia Rivera Jimenez,EHCA - European Healthcare Agency,Talent Acquisition,,lead_category_change,,,Closed / no action,62.0,https://www.linkedin.com/in/natalia-rivera-jimenez,profile_url
-Andressa Mariante,,,,lead_category_change,,,Rejected / Closed,62.0,,name_company_key
-Lays Tupina,Page Outsourcing,Recruiter,,lead_category_change,,,Warm reactivation,62.0,https://www.linkedin.com/in/lays-tupina-706561189,profile_url
-Aracely  Lopez Mineiro ,Capgemini,Other,,lead_category_change,,,Closed / no action,61.0,https://www.linkedin.com/in/aracely-lopez-mineiro-3868141a2,profile_url
-Viviane Alves de Andrade,NTConsult,Recruiter,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/vivianeaa,profile_url
-Larissa Bianchi,NowVertical BR (Formerly Grupo IN),Director,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/larissa-bianchi-53695b2b,profile_url
 Shubham Mishra,Vastika Inc,Recruiter,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/shubham-mishra-20a719259,profile_url
 Thiago Belan,triggo.ai,Other,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/thiagobelan,profile_url
-Nayeli Márquez,Cummins Inc,Recruiter,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/nayeli-marquez,profile_url
+Viviane Alves de Andrade,NTConsult,Recruiter,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/vivianeaa,profile_url
+Paulo Bastos,BB IT Recruiters,Executive,,lead_category_change,,,Follow-up due,61.0,https://www.linkedin.com/in/paulo-bastos-b88679162,profile_url
+Amauri Evilacio,,,,lead_category_change,,,Follow-up due,61.0,https://www.linkedin.com/in/amaurievilacio,profile_url
+Alice Ayres,Feel Tech RH - Recrutamento ágil e assertivo para TI,Recruiter,,lead_category_change,,,Follow-up due,61.0,https://www.linkedin.com/in/aliceayresrh,profile_url
+Huy Dinh,EON TECH,Executive,,lead_category_change,,,Follow-up due,61.0,https://www.linkedin.com/in/huy-dinh-tuan,profile_url
 Valentina Damonte,Univar Solutions,Recruiter,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/valentina-damonte,profile_url
-Maíra Vidal Mathias,Talent Group,Other,,lead_category_change,,,Active Interview Pipeline,61.0,https://www.linkedin.com/in/maíra-vidal-mathias,profile_url
+Kisa Zaidi,HRDisruptive,Talent Acquisition,,lead_category_change,,,Warm reactivation,61.0,https://www.linkedin.com/in/kisazaidi,profile_url
+Aracely  Lopez Mineiro ,Capgemini,Other,,lead_category_change,,,Closed / no action,61.0,https://www.linkedin.com/in/aracely-lopez-mineiro-3868141a2,profile_url
 Shivangi Shukla,Tech RCS,Recruiter,,lead_category_change,,,Warm reactivation,60.0,https://www.linkedin.com/in/shivangi-shukla-854aab242,profile_url
+Valeria Ballestero Naranjo,CWT,Talent Acquisition,,lead_category_change,,,Follow-up due,60.0,https://www.linkedin.com/in/valeria-ballestero-naranjo-672101169,profile_url
+Sandra Mercado Mignacca,Stateside,Recruiter,,lead_category_change,,,Follow-up due,60.0,https://www.linkedin.com/in/sandra-m-0a4b39121,profile_url
 Luke Gendron,"Spyglass Partners, LLC",Recruiter,,lead_category_change,,,Warm reactivation,60.0,https://www.linkedin.com/in/lukegendron,profile_url
-Alberto Pérez Penedo,BRETEMA HR CONSULTING,Recruiter,,lead_category_change,,,Warm reactivation,59.0,https://www.linkedin.com/in/albertoperezpenedo,profile_url
-Mirella Lima,V4 Company,Talent Acquisition,,lead_category_change,,Closed / no action,Follow-up due,59.0,https://www.linkedin.com/in/mirella-lima-a0b824119,profile_url
+🎧  JC Salazar,Factored,Recruiter,,lead_category_change,,,Follow-up due,60.0,https://www.linkedin.com/in/jcsalazarg,profile_url
+Mayara Dias,Mayara Dias | Headhunter & Talent Strategy,Recruiter,,lead_category_change,,,Follow-up due,60.0,https://www.linkedin.com/in/mayara-dias-43455574,profile_url
+Renata Selotto,TI Hunting,Recruiter,,lead_category_change,,,Follow-up due,60.0,https://www.linkedin.com/in/renata-selotto-a8698a20,profile_url
+Elena Rodríguez de Robles,"KALEIDO, Ideas & Logistics",Director,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/elena-rodríguez-de-robles-92302821,profile_url
+Martina Nobile Giusto,Bloom Talent Partners,Recruiter,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/martina-nobile-giusto,profile_url
 Sukhesh K,Gerbera Technologies,Recruiter,,lead_category_change,,,Warm reactivation,59.0,https://www.linkedin.com/in/sukhesh-k,profile_url
-Lidia Sánchez,Grupo Administrativo Mexicano,Talent Acquisition,,lead_category_change,,,Warm reactivation,59.0,https://www.linkedin.com/in/lidsad1989,profile_url
-Adriana Oliveira,Talent Group,Other,,lead_category_change,,,Active Interview Pipeline,58.0,https://www.linkedin.com/in/adriana-oliveira-comercial,profile_url
+Oliver Sinclair,Bitpanda,Talent Acquisition,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/oliver-sinclair,profile_url
+Andrea Pastor Albert,AmRest,Talent Acquisition,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/andrea-p-9a4800152,profile_url
+Isabelle Santos,HUNTER - Consultoria de Recrutamento e Seleção,Recruiter,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/isabellerecruta,profile_url
+Mariana Viriato,UltraCon Consultoria,Recruiter,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/mariana-viriato-5887b719a,profile_url
+Marta Mestres,Anticipa Real Estate,Recruiter,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/marta-mestres-b12977a3,profile_url
+Mª Elena Pérez Rodríguez,Animum Creativity Advanced School,Talent Acquisition,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/mariaelenaperezrodriguez,profile_url
+Carolina Gros,South,Recruiter,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/carolina-gros,profile_url
+Alex Franco Garcia,Dogfy Diet,Talent Acquisition,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/alex-franco-garcia-b75a20285,profile_url
+Lucília Coelho,Gi Group,Recruiter,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/lucília-coelho,profile_url
+Eduardo Seijo Rodríguez,AllPeople,Director,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/eduardoseijorodriguez,profile_url
+Mirella Lima,V4 Company,Talent Acquisition,,lead_category_change,,Closed / no action,Follow-up due,59.0,https://www.linkedin.com/in/mirella-lima-a0b824119,profile_url
+Josefina Albarello Medin,"Kopius, Inc",Recruiter,,lead_category_change,,,Follow-up due,59.0,https://www.linkedin.com/in/josefinaalbarello,profile_url
+Andressa Mariante,,,,lead_category_change,,,Rejected / Closed,58.0,,name_company_key
+Sam Jackson,Randstad Enterprise,Sourcer,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/sam-jackson-london,profile_url
+"Sophie-Marie Kaufmann, BSc. MSc.",Michael Page,Director,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/sophie-marie-kaufmann-bsc-msc-75313099,profile_url
+Sarah Grote,Randstad Enterprise,Director,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/sarah-grote-629302124,profile_url
+Juan V. Echagüe,Practia Global,Director,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/juanechague,profile_url
+Cheila Carvalho,Clan,Talent Acquisition,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/cheila-carvalho-455287197,profile_url
+Sergio Neira Araujo,Evenia Hotels,Talent Acquisition,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/sergio-neira-araujo-05b174255,profile_url
+Adán Alcalá García ,Hospitales Star Médica,Talent Acquisition,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/adanag,profile_url
 Manindra Jason M J  Gupta,"CSG | Corporate Solutions General, Inc",Recruiter,,lead_category_change,,,Warm reactivation,58.0,https://www.linkedin.com/in/manindra-jason-m-j-gupta-64a495233,profile_url
+Oscar Canals Morata,S.A. RECASENS,Director,,lead_category_change,,,Follow-up due,58.0,https://www.linkedin.com/in/oscar-canals-morata-00442a53,profile_url
 Azam Mohammad,Vector Technologies LLC,Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/azam-mohammad-47543b99,profile_url
-Alice Ayres,Feel Tech RH - Recrutamento ágil e assertivo para TI,Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/aliceayresrh,profile_url
-Avnish Naagar,"SBase Technologies, Inc",Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/avnishnaagar5,profile_url
-Huy Dinh,EON TECH,Executive,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/huy-dinh-tuan,profile_url
-Shivam Dubey .,ALIS Software LLC,Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/shivam-dubey-4b06b9171,profile_url
-Lia Trindade,Gramado Parks,Other,,lead_category_change,,Warm reactivation,Talent Pool / Career Site,57.0,https://www.linkedin.com/in/liatrindade,profile_url
-Paulo Bastos,BB IT Recruiters,Executive,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/paulo-bastos-b88679162,profile_url
+Sofia Achaval,Bloom Talent Partners,Recruiter,,lead_category_change,,,Follow-up due,57.0,https://www.linkedin.com/in/sofiaachaval,profile_url
+Siddharth Padepu,Ekcel Technologies Inc,Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/siddharth-padepu-a775731ab,profile_url
+Nadieje Macedo,Neo Negócios & Carreira,Director,,lead_category_change,,,Follow-up due,57.0,https://www.linkedin.com/in/nadieje-macedo,profile_url
 Murali Dharan,"Reveille Technologies,Inc",Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/murali-dharan-304536108,profile_url
+Lia Trindade,Gramado Parks,Other,,lead_category_change,,Warm reactivation,Talent Pool / Career Site,57.0,https://www.linkedin.com/in/liatrindade,profile_url
+Shivam Dubey .,ALIS Software LLC,Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/shivam-dubey-4b06b9171,profile_url
 Braian Saldico,MUTT DATA,Talent Acquisition,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/braian-saldico,profile_url
 Baskar S,"DATAMAXIS, Inc",Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/baskar-s-794956125,profile_url
-Amauri Evilacio,,,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/amaurievilacio,profile_url
+Avnish Naagar,"SBase Technologies, Inc",Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/avnishnaagar5,profile_url
 Aditya Chaudhary,Laiba technology,Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/aditya-chaudhary-a8621321b,profile_url
-Siddharth Padepu,Ekcel Technologies Inc,Recruiter,,lead_category_change,,,Warm reactivation,57.0,https://www.linkedin.com/in/siddharth-padepu-a775731ab,profile_url
-Elisa Aguilera,Hanbai.io,Talent Acquisition,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/elisaag,profile_url
-Deepika Jha,Cyber1Armor,Other,,lead_category_change,,,Closed / no action,56.0,https://www.linkedin.com/in/deepika-jha-166b30a8,profile_url
-Sofia Rosero,Accenture Colombia,HR,,lead_category_change,,Warm reactivation,Closed / no action,56.0,https://www.linkedin.com/in/sofia-r-281904179,profile_url
-Pedro Torres Herrera,In All Media,Recruiter,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/pedro-t-4a3081157,profile_url
-Valeria Ballestero Naranjo,CWT,Talent Acquisition,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/valeria-ballestero-naranjo-672101169,profile_url
-Sandra Mercado Mignacca,Stateside,Recruiter,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/sandra-m-0a4b39121,profile_url
-🎧  JC Salazar,Factored,Recruiter,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/jcsalazarg,profile_url
 Víctor Fernández,Enterprise Quality Management,Talent Acquisition,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/víctor-fernández-814751162,profile_url
+Elisa Aguilera,Hanbai.io,Talent Acquisition,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/elisaag,profile_url
 Claudia Rodriguez Cardoso,Open to work,Recruiter,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/claudia-rodriguez-cardoso-1146974a,profile_url
-Renata Selotto,TI Hunting,Recruiter,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/renata-selotto-a8698a20,profile_url
-Mayara Dias,Mayara Dias | Headhunter & Talent Strategy,Recruiter,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/mayara-dias-43455574,profile_url
-Eduardo Seijo Rodríguez,AllPeople,Director,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/eduardoseijorodriguez,profile_url
-Apsara Shahul,NSR Information Systems,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/apsara-shahul-811593205,profile_url
-Ashwani Maurya,TechRooted inc,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/ashwani-maurya-6053b2184,profile_url
-Alex Franco Garcia,Dogfy Diet,Talent Acquisition,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/alex-franco-garcia-b75a20285,profile_url
+Pedro Torres Herrera,In All Media,Recruiter,,lead_category_change,,,Warm reactivation,56.0,https://www.linkedin.com/in/pedro-t-4a3081157,profile_url
 Nilay  dwivedi,Excelon Solutions,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/nilay-dwivedi-a95bbb247,profile_url
-Agustin Weich,Lana Talent,Talent Acquisition,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/agustinweich,profile_url
-Karishma Wadhwani,Augusta Hitech,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/karishma-wadhwani-69aa23214,profile_url
-Carolina Gros,South,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/carolina-gros,profile_url
-Mariana Viriato,UltraCon Consultoria,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/mariana-viriato-5887b719a,profile_url
-Natália Nunes Ferreira,FitNext Co,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/natália-nunes-ferreira-985657178,profile_url
-Anas Ansari ,ClifyX,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/anas-ansari-748400253,profile_url
-Elena Rodríguez de Robles,"KALEIDO, Ideas & Logistics",Director,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/elena-rodríguez-de-robles-92302821,profile_url
-Ayush Sharma,Stellent IT,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/ayush-sharma-5697b9190,profile_url
-Andrea Pastor Albert,AmRest,Talent Acquisition,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/andrea-p-9a4800152,profile_url
-Mª Elena Pérez Rodríguez,Animum Creativity Advanced School,Talent Acquisition,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/mariaelenaperezrodriguez,profile_url
-Madhu Reddy,Vastika Inc,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/madhu-reddy-823a93b1,profile_url
-Rayaprolu Srinivasrao,Pronix Inc,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/srini-8081,profile_url
-Lucília Coelho,Gi Group,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/lucília-coelho,profile_url
-Isabelle Santos,HUNTER - Consultoria de Recrutamento e Seleção,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/isabellerecruta,profile_url
-Marta Mestres,Anticipa Real Estate,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/marta-mestres-b12977a3,profile_url
-Josefina Albarello Medin,"Kopius, Inc",Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/josefinaalbarello,profile_url
-Oliver Sinclair,Bitpanda,Talent Acquisition,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/oliver-sinclair,profile_url
 Carmen Mª Villanueva Moragón,Grupo Alonso,Talent Acquisition,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/carmen-mª-villanueva-moragón-95a64a34,profile_url
-Milagros Aguirre,Kopius | Careers,Talent Acquisition,,lead_category_change,,Follow-up due,Rejected / Closed,55.0,https://www.linkedin.com/in/milagros-ca-aguirre,profile_url
+Rayaprolu Srinivasrao,Pronix Inc,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/srini-8081,profile_url
+Ayush Sharma,Stellent IT,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/ayush-sharma-5697b9190,profile_url
+Karishma Wadhwani,Augusta Hitech,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/karishma-wadhwani-69aa23214,profile_url
+Madhu Reddy,Vastika Inc,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/madhu-reddy-823a93b1,profile_url
+Apsara Shahul,NSR Information Systems,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/apsara-shahul-811593205,profile_url
 Katherin Cordova Newbery ,Paradigm Senior Services,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/katherin-cordova-newbery,profile_url
+Anas Ansari ,ClifyX,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/anas-ansari-748400253,profile_url
+Agustin Weich,Lana Talent,Talent Acquisition,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/agustinweich,profile_url
+Natália Nunes Ferreira,FitNext Co,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/natália-nunes-ferreira-985657178,profile_url
 Nhat Linh Pham,CMC Telecom,Talent Acquisition,,lead_category_change,,,Follow-up due,55.0,https://www.linkedin.com/in/nhatlinhhr,profile_url
-Martina Nobile Giusto,Bloom Talent Partners,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/martina-nobile-giusto,profile_url
-Cheila Carvalho,Clan,Talent Acquisition,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/cheila-carvalho-455287197,profile_url
-Sergio Neira Araujo,Evenia Hotels,Talent Acquisition,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/sergio-neira-araujo-05b174255,profile_url
-"Sophie-Marie Kaufmann, BSc. MSc.",Michael Page,Director,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/sophie-marie-kaufmann-bsc-msc-75313099,profile_url
-Sarah Grote,Randstad Enterprise,Director,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/sarah-grote-629302124,profile_url
-Oscar Canals Morata,S.A. RECASENS,Director,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/oscar-canals-morata-00442a53,profile_url
-Juan V. Echagüe,Practia Global,Director,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/juanechague,profile_url
-Sam Jackson,Randstad Enterprise,Sourcer,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/sam-jackson-london,profile_url
-Adán Alcalá García ,Hospitales Star Médica,Talent Acquisition,,lead_category_change,,,Warm reactivation,54.0,https://www.linkedin.com/in/adanag,profile_url
-Samikshya Rana,Proiasys Inc,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/samikshya-rana-15a481236,profile_url
-Sharique Khan,Pivotal Leap,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/sharique-khan-09a9061b1,profile_url
-Krishan Sharma,Alpha Silicon,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/krishankumar836,profile_url
+Ashwani Maurya,TechRooted inc,Recruiter,,lead_category_change,,,Warm reactivation,55.0,https://www.linkedin.com/in/ashwani-maurya-6053b2184,profile_url
+Adriana Oliveira,Talent Group,Other,,lead_category_change,,,Active Interview Pipeline,54.0,https://www.linkedin.com/in/adriana-oliveira-comercial,profile_url
 Andrea Mondino,Customertimes,Talent Acquisition,,lead_category_change,,Rejected / Closed,Closed / no action,53.0,https://www.linkedin.com/in/andrea-mondino-8a5404188,profile_url
-Sofia Achaval,Bloom Talent Partners,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/sofiaachaval,profile_url
-Nadieje Macedo,Neo Negócios & Carreira,Director,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/nadieje-macedo,profile_url
 Suzi Silva,Microsoft,Consultant,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/suzi-silva-14428b41,profile_url
 Sonam Gain,Lumen Solutions Group Inc,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/sonam-gain-838323246,profile_url
+Krishan Sharma,Alpha Silicon,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/krishankumar836,profile_url
+Sharique Khan,Pivotal Leap,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/sharique-khan-09a9061b1,profile_url
+Samikshya Rana,Proiasys Inc,Recruiter,,lead_category_change,,,Warm reactivation,53.0,https://www.linkedin.com/in/samikshya-rana-15a481236,profile_url
+Sofia Rosero,Accenture Colombia,HR,,lead_category_change,,Warm reactivation,Closed / no action,52.0,https://www.linkedin.com/in/sofia-r-281904179,profile_url
 "Gale Campugan, RPm",Reed Elsevier Philippines,Talent Acquisition,,lead_category_change,,Warm reactivation,Follow-up due,52.0,https://www.linkedin.com/in/gale-campugan-rpm-7b679296,profile_url
 Anderson Souza,Extractta,Data Engineer,,lead_category_change,,Warm reactivation,Awaiting Recruiter Update,52.0,https://www.linkedin.com/in/andjsouza,profile_url
-Marcos Rodrigues,ASYMA.AI,Executive,,lead_category_change,,Warm reactivation,Follow-up due,50.0,https://www.linkedin.com/in/marcos-rodrigues-cto,profile_url
-Rosana Carla Santos,mazzatech,Other,,lead_category_change,,,Warm reactivation,50.0,https://www.linkedin.com/in/rosanacarlas,profile_url
-Owais Orakzai ,Xperion,Other,,lead_category_change,,,Active Interview Pipeline,50.0,https://www.linkedin.com/in/owaisorakzai,profile_url
-Andrea Páez Suárez,Michael Page,Consultant,,lead_category_change,,,Warm reactivation,50.0,https://www.linkedin.com/in/jennyandreapaezs,profile_url
-Aida C. Cantillo G.,People A&M,Consultant,,lead_category_change,,,Warm reactivation,50.0,https://www.linkedin.com/in/aidacantillo,profile_url
-Akemy Doku ,Akemy Doku - Consultoría en Desarrollo Humano,HR,,lead_category_change,,,Warm reactivation,50.0,https://www.linkedin.com/in/akemy-doku,profile_url
-Duani Reis,RPC Ventures,Executive,,lead_category_change,,Warm reactivation,Follow-up due,50.0,https://www.linkedin.com/in/duani,profile_url
-Carmen Arroyo,Adalab,Consultant,,lead_category_change,,,Warm reactivation,50.0,https://www.linkedin.com/in/carmenarroyomellado,profile_url
-Enzo Bertini,Grupo onCar,Executive,,lead_category_change,,Warm reactivation,Follow-up due,50.0,https://www.linkedin.com/in/enzo-bertini,profile_url
+Deepika Jha,Cyber1Armor,Other,,lead_category_change,,,Closed / no action,52.0,https://www.linkedin.com/in/deepika-jha-166b30a8,profile_url
+Milagros Aguirre,Kopius | Careers,Talent Acquisition,,lead_category_change,,Follow-up due,Rejected / Closed,51.0,https://www.linkedin.com/in/milagros-ca-aguirre,profile_url
 Luiz Fernando de Andrade Araujo,Lean Tech,Other,,lead_category_change,,,Active Interview Pipeline,50.0,https://www.linkedin.com/in/laraujodwbi,profile_url
-Carlos Eduardo Cortes Garcia,TP,Other,,lead_category_change,,,Warm reactivation,50.0,https://www.linkedin.com/in/carlos-cortes-rh,profile_url
-Muhammad Mudabir,HRDisruptive,Other,,lead_category_change,,,Warm reactivation,49.0,https://www.linkedin.com/in/muhammad-mudabir-75a329227,profile_url
+Marcos Rodrigues,ASYMA.AI,Executive,,lead_category_change,,Warm reactivation,Follow-up due,50.0,https://www.linkedin.com/in/marcos-rodrigues-cto,profile_url
+Enzo Bertini,Grupo onCar,Executive,,lead_category_change,,Warm reactivation,Follow-up due,50.0,https://www.linkedin.com/in/enzo-bertini,profile_url
+Duani Reis,RPC Ventures,Executive,,lead_category_change,,Warm reactivation,Follow-up due,50.0,https://www.linkedin.com/in/duani,profile_url
 Lucy Alfaro,TELUS Digital,Other,,lead_category_change,,,Warm reactivation,49.0,https://www.linkedin.com/in/lucy-alfaro,profile_url
-Jorge López Marcos,Capgemini,Other,,lead_category_change,,,Warm reactivation,49.0,https://www.linkedin.com/in/jorgelópezmarcos,profile_url
-LLara Pinteño,TikTok,Other,,lead_category_change,,,Closed / no action,49.0,https://www.linkedin.com/in/llara-pinteño,profile_url
 Anastasia Mollo,Hexagon Geosystems,Other,,lead_category_change,,,Warm reactivation,49.0,https://www.linkedin.com/in/anastasiamollo,profile_url
-Jessica Alcantara,Construtora Tenda,Other,,lead_category_change,,Warm reactivation,Active Interview Pipeline,48.0,https://www.linkedin.com/in/jessica-alcantara-recursoshumanos,profile_url
+Jorge López Marcos,Capgemini,Other,,lead_category_change,,,Warm reactivation,49.0,https://www.linkedin.com/in/jorgelópezmarcos,profile_url
+Jessica Alcantara,Construtora Tenda,Other,,lead_category_change,,Warm reactivation,Active Interview Pipeline,47.0,https://www.linkedin.com/in/jessica-alcantara-recursoshumanos,profile_url
 Melany Cumplido Tuiran ,Samtel Consultores Colombia,Other,,lead_category_change,,,Warm reactivation,47.0,https://www.linkedin.com/in/melany-cumplido07,profile_url
-Tatiana Pereira,Adecco Permanent Recruitment,Other,,lead_category_change,,,Warm reactivation,47.0,https://www.linkedin.com/in/tatianapereirarh,profile_url
-Susana Cadete Costa,Gi Group,Consultant,,lead_category_change,,,Warm reactivation,47.0,https://www.linkedin.com/in/susana-cadete-costa-2a0833225,profile_url
-Florencia Torro,Accenture España,HR,,lead_category_change,,,Warm reactivation,47.0,https://www.linkedin.com/in/florenciatorro,profile_url
-Raúl García Casanova,Synergym España,HR,,lead_category_change,,,Warm reactivation,47.0,https://www.linkedin.com/in/raúl-garcía-casanova,profile_url
 Laura  Robles,Manpower España,Consultant,,lead_category_change,,,Warm reactivation,47.0,https://www.linkedin.com/in/laura-robles-dlp,profile_url
-Maíra Souto,Clan,Operations,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/maíra-souto,profile_url
-Carolina Souto Diéguez,Manpower España,Consultant,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/carolina-souto-diéguez-040abb3b,profile_url
+Owais Orakzai ,Xperion,Other,,lead_category_change,,,Active Interview Pipeline,46.0,https://www.linkedin.com/in/owaisorakzai,profile_url
 José Mendes,The Latino Agent,Other,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/jacm98,profile_url
-Aline   Silva,Grão Inteligência,Recruiter,,lead_category_change,,,Dormant warm,45.0,https://www.linkedin.com/in/alinesilva25,profile_url
+Akemy Doku ,Akemy Doku - Consultoría en Desarrollo Humano,HR,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/akemy-doku,profile_url
+Aida C. Cantillo G.,People A&M,Consultant,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/aidacantillo,profile_url
+Carmen Arroyo,Adalab,Consultant,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/carmenarroyomellado,profile_url
+Rosana Carla Santos,mazzatech,Other,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/rosanacarlas,profile_url
+Andrea Páez Suárez,Michael Page,Consultant,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/jennyandreapaezs,profile_url
+Carlos Eduardo Cortes Garcia,TP,Other,,lead_category_change,,,Warm reactivation,46.0,https://www.linkedin.com/in/carlos-cortes-rh,profile_url
+Muhammad Mudabir,HRDisruptive,Other,,lead_category_change,,,Warm reactivation,45.0,https://www.linkedin.com/in/muhammad-mudabir-75a329227,profile_url
 Fernando Barnes,Fujifilm España,Other,,lead_category_change,,,Warm reactivation,45.0,https://www.linkedin.com/in/fernandobarnes,profile_url
-Serafín Núñez Chozas,Evaria XXI S.L,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/serafín-núñez-chozas-2446b9146,profile_url
+Aline   Silva,Grão Inteligência,Recruiter,,lead_category_change,,,Dormant warm,45.0,https://www.linkedin.com/in/alinesilva25,profile_url
+LLara Pinteño,TikTok,Other,,lead_category_change,,,Closed / no action,45.0,https://www.linkedin.com/in/llara-pinteño,profile_url
+Talyssa Rocha,Avenida,Other,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/talyssa-rocha-9989a73a,profile_url
 Víctor Sallán Monfort,Grupo IMESE,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/vsallan,profile_url
 Clemente Casado Alarcón,CORVUS UTV,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/clemente-casado-psicologo,profile_url
-Nicolas Banegas Menacho,Entidad Ejecutora de Conversión a Gas Natural Vehicular,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/nicolas-banegas-menacho-7179b6238,profile_url
-Talyssa Rocha,Avenida,Other,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/talyssa-rocha-9989a73a,profile_url
-María de las Heras,Sonde3,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/maría-de-las-heras-273868228,profile_url
 José García Ríos,Amefruits,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/josé-garcía-ríos-7b0333172,profile_url
-Salva González Fernández,Airzone Control,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/salvagonzalezfernandez,profile_url
-Carla Briñardeli Scheibli,Almirall,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/carlabriñardeli,profile_url
-Antia Blanco Espiñeira,"GalChimia, S.A",HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/antiablanco,profile_url
-Gorka Hermo Uruñuela,Constellium,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/gorkahermo,profile_url
-Silvana Soares Barbosa,SNGULAR,HR,,lead_category_change,,,Warm reactivation,44.0,https://www.linkedin.com/in/silvana-soares-barbosa-b22a17140,profile_url
-Javier Yébenes Fajardo,CONTALENTO Strategy For People,HR,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/javieryebenesfajardo,profile_url
-Lourdes Mosquera,Michael Page,Consultant,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/lourdes-mosquera-634b442b1,profile_url
-Lucimara Oliveira,La Serenisima,HR,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/lucimara-oliveira-165b3484,profile_url
-Carolina Hernández Vanegas,Q-Vision Technologies,Other,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/carolinahernandezv,profile_url
-Andressa Karoline Da Silva,ManpowerGroup Brasil,Other,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/andressa-karoline-da-silva-32193719b,profile_url
-Edit Gusztav,SNGULAR,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/edit-gusztav,profile_url
-Alexandra Pedrero,Grupo Construcía,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/alexandrapedrero,profile_url
-María González Ortiz,Cactus,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/maría-gonzález-ortiz-37b5b6b1,profile_url
-Mari Carmen Roldán Valiente,ZAFIRO TELECOM,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/maricarmenroldanvaliente,profile_url
-"David Turk, CSM, GISP, CFM",Forbes Technology Council,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/david-w-turk,profile_url
-Vanderleia Mac Donald,BIZAY,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/vanderleia-mac-donald-a053b8197,profile_url
-Amira Eid Aburdene,Compañía de Inversiones Las Brisas S.A,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/amira-eid-aburdene190995,profile_url
-Teresa Berlanga Porras,Administrativando Abogados,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/teresa-berlanga,profile_url
-Marialejandra Saavedra Mendez,Quantumgo,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/marialejandra-saavedra-mendez,profile_url
-Victoria Hernando Garcés ,ENTRERRIOS AUTOMATIZACION S.A,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/victoria-hernando-garcés-106575306,profile_url
-Andrea Ortiz,GSE Gestión de Seguridad Electrónica S.A,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/andrea-ortiz-1aa236191,profile_url
-Claudia Mata Cucart,Melt Group,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/claudia-mata-cucart-595159329,profile_url
-Mario Pacheco Fuentes,BBVA Technology en Europa,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/mario-pacheco-fuentes-b9840a58,profile_url
-Bárbara Cianni,"pml, we know how",Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/barcianni,profile_url
-Jéssica Coelho,NTConsult,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/cjessicacoelho,profile_url
-Lorena González,Safeguard Global,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/lorenagonzalezgarcia,profile_url
-Carolina Parada Martínez,INGETEC,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/carolina-parada-martínez-721ba533,profile_url
-Pablo Gómez Pérez,Bombon Boss,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/pablo-gómez-pérez-a46a96ab,profile_url
-Sabrina Barreto,Gi Group,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/sabrina-barreto,profile_url
-Alberto Campello,Konecta,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/alberto-campello,profile_url
-Guadalupe  Franco Nieto,Peopleing,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/guadalupefranie,profile_url
-JOHANA RODRIGUEZ T,Michael Page,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/johana-rodriguez-t-0b1112a4,profile_url
-Daria Stranadko,Tricura Insurance Group,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/stranadko-daria,profile_url
-Preksha S,Diksha Australia,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/preksha-s-a79513307,profile_url
-Luciano  Vicidomini,Axial Structural Solutions,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/luciano-vicidomini,profile_url
-Sergi Fuertes,Ership Grupo,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/sergifuertes,profile_url
-Mariana Ganchas,Clan,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/marianaganchas,profile_url
-Cristiane Stankus,Avanade,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/cristiane-stankus-10618610b,profile_url
+Raúl García Casanova,Synergym España,HR,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/raúl-garcía-casanova,profile_url
+Tatiana Pereira,Adecco Permanent Recruitment,Other,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/tatianapereirarh,profile_url
+Susana Cadete Costa,Gi Group,Consultant,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/susana-cadete-costa-2a0833225,profile_url
+Florencia Torro,Accenture España,HR,,lead_category_change,,,Warm reactivation,43.0,https://www.linkedin.com/in/florenciatorro,profile_url
 María Pilato,Melt Group,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/maría-pilato,profile_url
+Amira Eid Aburdene,Compañía de Inversiones Las Brisas S.A,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/amira-eid-aburdene190995,profile_url
+Jéssica Coelho,NTConsult,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/cjessicacoelho,profile_url
+Luciano  Vicidomini,Axial Structural Solutions,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/luciano-vicidomini,profile_url
+Maíra Souto,Clan,Operations,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/maíra-souto,profile_url
+Victoria Hernando Garcés ,ENTRERRIOS AUTOMATIZACION S.A,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/victoria-hernando-garcés-106575306,profile_url
+Carolina Souto Diéguez,Manpower España,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/carolina-souto-diéguez-040abb3b,profile_url
+Lorena González,Safeguard Global,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/lorenagonzalezgarcia,profile_url
+Daria Stranadko,Tricura Insurance Group,Other,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/stranadko-daria,profile_url
+Guadalupe  Franco Nieto,Peopleing,HR,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/guadalupefranie,profile_url
+Claudia Mata Cucart,Melt Group,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/claudia-mata-cucart-595159329,profile_url
+Cristiane Stankus,Avanade,Consultant,,lead_category_change,,,Warm reactivation,42.0,https://www.linkedin.com/in/cristiane-stankus-10618610b,profile_url
 Tiziana Stringer,bet365,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/tiziana-stringer-970085299,profile_url
-David Lopez,"Summa, Centro de servicios digital",Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/david-lopez-b74454182,profile_url
-Corazon Jaime,TeamStation,Operations,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/corazon-jaime-a9529a350,profile_url
 Mercedes Ferron,tapi,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/mercedes-ferron,profile_url
 Cindy Amaya Olmos,Hornitos® Panadería Pastelería,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/cindy-amaya-olmos-psicologa,profile_url
-Sandra Gaitán Batllería,Mayoral Moda Infantil,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/sandragaitanbatlleria,profile_url
-Cátia Higa,Talent Group,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/catiahiga,profile_url
-Sònia Martínez Casanovas,TOP CABLE,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/sònia-martínez-casanovas-60760860,profile_url
-Julieta Giacinti,Capgemini,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/julieta-giacinti-78b19293,profile_url
-Juliana Alonso Romero,Michael Page,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/juliana-alonso-romero-b67350332,profile_url
-María Pérez Pereiro,Marine Instruments,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/maría-pérez-pereiro-732442b3,profile_url
-Lucas Kwiecien Ortiz,Luxoft,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/lucaskwiecien,profile_url
-Catarina Marquez,TMC,Other,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/catarina-marquez-3977b514b,profile_url
-Gabriela Duque,Infotree Global Solutions,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/gabriela-duque-a42ba6211,profile_url
-Fran Prieto,SoftProject,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/franprieto,profile_url
+Corazon Jaime,TeamStation,Operations,,lead_category_change,,,Warm reactivation,41.0,https://www.linkedin.com/in/corazon-jaime-a9529a350,profile_url
+Ana Carolina  Buss Alberton Araujo,Ana Recrutamento e Seleção,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/ana-carolina-buss-alberton-araujo-a3a52321b,profile_url
+Cátia Moreira,Gi Group,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/cátia-moreira-42a82ab8,profile_url
+María de las Heras,Sonde3,HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/maría-de-las-heras-273868228,profile_url
+Nicolas Banegas Menacho,Entidad Ejecutora de Conversión a Gas Natural Vehicular,HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/nicolas-banegas-menacho-7179b6238,profile_url
+Antia Blanco Espiñeira,"GalChimia, S.A",HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/antiablanco,profile_url
 Alejandro Corpas Marrondo,La Salle BCN,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/alejandro-corpas,profile_url
-Sara Aramendi Monasterio,ORBEA,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/sara-aramendi-monasterio-216a00275,profile_url
+Silvana Soares Barbosa,SNGULAR,HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/silvana-soares-barbosa-b22a17140,profile_url
+Carla Briñardeli Scheibli,Almirall,HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/carlabriñardeli,profile_url
+Salva González Fernández,Airzone Control,HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/salvagonzalezfernandez,profile_url
+Serafín Núñez Chozas,Evaria XXI S.L,HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/serafín-núñez-chozas-2446b9146,profile_url
+Gorka Hermo Uruñuela,Constellium,HR,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/gorkahermo,profile_url
 Ángela Espiérrez Manovel,Levitec,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/angelaespierrezmanovel,profile_url
 Vanessa Alvarez Ruiz,Quality Temporal (ETT),Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/vanessaalvarezr,profile_url
-Monica Zuleta Galvis,"Summa, Centro de servicios digital",Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/monica-zuleta-galvis-b00709136,profile_url
-Carlos Javier Gómez Parro,Gebomsa,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/carlosjgómez,profile_url
-Ana María Correa Vélez,Tania - Tiendas de ropa íntima S.A,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/ana-maría-correa-vélez-7127a2100,profile_url
-Ana Carolina  Buss Alberton Araujo,Ana Recrutamento e Seleção,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/ana-carolina-buss-alberton-araujo-a3a52321b,profile_url
-Celsa Gonzalez Piñon,Reganosa,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/celsagonzalez,profile_url
-Joyce Brandao,Y3 Gestão e Consultoria em Telecom,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/joyce-brandao-8666124a,profile_url
-Júlia Faraleski,Total Express,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/julia-faraleski,profile_url
-Daniel Perez Colomer,Cecotec,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/daniel-perez-colomer-626446223,profile_url
-Márcia Correia,Clan,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/márciacorreia,profile_url
-Cátia Moreira,Gi Group,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/cátia-moreira-42a82ab8,profile_url
-António Pita,Adecco,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/antónio-pita,profile_url
-Lina Marcela Galvis Hernández,MAKAIA,Other,,lead_category_change,,,Warm reactivation,40.0,https://www.linkedin.com/in/lina-marcela-galvis-hernández-39a2a6102,profile_url
+Lourdes Mosquera,Michael Page,Consultant,,lead_category_change,,,Warm reactivation,39.0,https://www.linkedin.com/in/lourdes-mosquera-634b442b1,profile_url
+Carolina Hernández Vanegas,Q-Vision Technologies,Other,,lead_category_change,,,Warm reactivation,39.0,https://www.linkedin.com/in/carolinahernandezv,profile_url
+Javier Yébenes Fajardo,CONTALENTO Strategy For People,HR,,lead_category_change,,,Warm reactivation,39.0,https://www.linkedin.com/in/javieryebenesfajardo,profile_url
+Lucimara Oliveira,La Serenisima,HR,,lead_category_change,,,Warm reactivation,39.0,https://www.linkedin.com/in/lucimara-oliveira-165b3484,profile_url
+Andressa Karoline Da Silva,ManpowerGroup Brasil,Other,,lead_category_change,,,Warm reactivation,39.0,https://www.linkedin.com/in/andressa-karoline-da-silva-32193719b,profile_url
+Preksha S,Diksha Australia,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/preksha-s-a79513307,profile_url
+Mariana Ganchas,Clan,Consultant,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/marianaganchas,profile_url
+Carolina Parada Martínez,INGETEC,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/carolina-parada-martínez-721ba533,profile_url
+"David Turk, CSM, GISP, CFM",Forbes Technology Council,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/david-w-turk,profile_url
+Alberto Campello,Konecta,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/alberto-campello,profile_url
+Mario Pacheco Fuentes,BBVA Technology en Europa,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/mario-pacheco-fuentes-b9840a58,profile_url
+María González Ortiz,Cactus,HR,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/maría-gonzález-ortiz-37b5b6b1,profile_url
+Teresa Berlanga Porras,Administrativando Abogados,HR,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/teresa-berlanga,profile_url
+Vanderleia Mac Donald,BIZAY,HR,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/vanderleia-mac-donald-a053b8197,profile_url
+Bárbara Cianni,"pml, we know how",Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/barcianni,profile_url
+Sergi Fuertes,Ership Grupo,HR,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/sergifuertes,profile_url
+JOHANA RODRIGUEZ T,Michael Page,Consultant,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/johana-rodriguez-t-0b1112a4,profile_url
+Pablo Gómez Pérez,Bombon Boss,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/pablo-gómez-pérez-a46a96ab,profile_url
 Yzzia Souza,Deep,HR,,lead_category_change,,Follow-up due,Closed / no action,38.0,https://www.linkedin.com/in/yzzia-souza-a6aba21b4,profile_url
+Edit Gusztav,SNGULAR,HR,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/edit-gusztav,profile_url
+Mari Carmen Roldán Valiente,ZAFIRO TELECOM,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/maricarmenroldanvaliente,profile_url
+Sabrina Barreto,Gi Group,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/sabrina-barreto,profile_url
+Andrea Ortiz,GSE Gestión de Seguridad Electrónica S.A,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/andrea-ortiz-1aa236191,profile_url
+Alexandra Pedrero,Grupo Construcía,Other,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/alexandrapedrero,profile_url
+Marialejandra Saavedra Mendez,Quantumgo,Consultant,,lead_category_change,,,Warm reactivation,38.0,https://www.linkedin.com/in/marialejandra-saavedra-mendez,profile_url
 Lucero Abigail  Nuñez ,,,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/lucero-abigail-nuñez-3755861a3,profile_url
-Tayná Franckilin,Otis Elevator Co,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/tayná-franckilin-76798aa0,profile_url
-Ainhoa Juaristi González,Fondo Formación Euskadi,Other,,lead_category_change,,,Rejected / Closed,33.0,https://www.linkedin.com/in/ainhoa-juaristi-gonzález,profile_url
+David Lopez,"Summa, Centro de servicios digital",Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/david-lopez-b74454182,profile_url
+Cátia Higa,Talent Group,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/catiahiga,profile_url
+Sònia Martínez Casanovas,TOP CABLE,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/sònia-martínez-casanovas-60760860,profile_url
+Julieta Giacinti,Capgemini,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/julieta-giacinti-78b19293,profile_url
+María Pérez Pereiro,Marine Instruments,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/maría-pérez-pereiro-732442b3,profile_url
+Catarina Marquez,TMC,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/catarina-marquez-3977b514b,profile_url
+Lucas Kwiecien Ortiz,Luxoft,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/lucaskwiecien,profile_url
+Sandra Gaitán Batllería,Mayoral Moda Infantil,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/sandragaitanbatlleria,profile_url
+Juliana Alonso Romero,Michael Page,Other,,lead_category_change,,,Warm reactivation,37.0,https://www.linkedin.com/in/juliana-alonso-romero-b67350332,profile_url
+Márcia Correia,Clan,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/márciacorreia,profile_url
+Júlia Faraleski,Total Express,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/julia-faraleski,profile_url
+Gabriela Duque,Infotree Global Solutions,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/gabriela-duque-a42ba6211,profile_url
+Lina Marcela Galvis Hernández,MAKAIA,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/lina-marcela-galvis-hernández-39a2a6102,profile_url
+António Pita,Adecco,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/antónio-pita,profile_url
+Daniel Perez Colomer,Cecotec,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/daniel-perez-colomer-626446223,profile_url
+Monica Zuleta Galvis,"Summa, Centro de servicios digital",Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/monica-zuleta-galvis-b00709136,profile_url
+Joyce Brandao,Y3 Gestão e Consultoria em Telecom,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/joyce-brandao-8666124a,profile_url
+Sara Aramendi Monasterio,ORBEA,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/sara-aramendi-monasterio-216a00275,profile_url
+Carlos Javier Gómez Parro,Gebomsa,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/carlosjgómez,profile_url
+Ana María Correa Vélez,Tania - Tiendas de ropa íntima S.A,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/ana-maría-correa-vélez-7127a2100,profile_url
+Fran Prieto,SoftProject,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/franprieto,profile_url
+Celsa Gonzalez Piñon,Reganosa,Other,,lead_category_change,,,Warm reactivation,36.0,https://www.linkedin.com/in/celsagonzalez,profile_url
+Tayná Franckilin,Otis Elevator Co,Other,,lead_category_change,,,Warm reactivation,33.0,https://www.linkedin.com/in/tayná-franckilin-76798aa0,profile_url
 🐥 Paola Gonzalez,DataArt,Other,,lead_category_change,,Follow-up due,Warm reactivation,32.0,https://www.linkedin.com/in/paoedithgonzalez,profile_url
 Nirit Stempo (Shechter),Fiverr,HR,,lead_category_change,,Follow-up due,Warm reactivation,31.0,https://www.linkedin.com/in/nirit-stempo,profile_url
+Ainhoa Juaristi González,Fondo Formación Euskadi,Other,,lead_category_change,,,Rejected / Closed,29.0,https://www.linkedin.com/in/ainhoa-juaristi-gonzález,profile_url
 Jefferson Araujo,SPL Engenharia,Other,,lead_category_change,,,No response,0.0,https://www.linkedin.com/in/jefferson-araujo-jef,profile_url
 Jacob  House,Jude's,Other,,lead_category_change,,,No response,0.0,https://www.linkedin.com/in/jacob-house-595592234,profile_url
 Mariane Silveira,Talent&Tech,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,RECRUITER_UNTAPPED,HIGH_VALUE_UNTAPPED,75.0,https://www.linkedin.com/in/marianesilveiraa,profile_url
@@ -683,26 +678,38 @@ Giovanna Pecci,Avanade,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,RE
 Amanda Zanin,NTConsult,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,RECRUITER_UNTAPPED,HIGH_VALUE_UNTAPPED,75.0,https://www.linkedin.com/in/amanda-zanin,profile_url
 Glauce Barderi,Avanade,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,RECRUITER_UNTAPPED,HIGH_VALUE_UNTAPPED,75.0,https://www.linkedin.com/in/glaucebarderi,profile_url
 Priscilla Assunção,AMS,Talent Acquisition,LATAM_USD_CONFIRMED,untapped_category_change,,LATAM_USD_UNTAPPED,HIGH_VALUE_UNTAPPED,70.0,https://www.linkedin.com/in/priscilla-a-6684032a,profile_url
+Jaime Villamizar Aponte,RSI Remote Staffing International,Recruiter,GLOBAL_STAFFING,untapped_category_change,,RECRUITER_UNTAPPED,HIGH_VALUE_UNTAPPED,70.0,https://www.linkedin.com/in/jaime-villamizar-aponte-a34780217,profile_url
 Karan Kumar,Infojini Inc,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,RECRUITER_UNTAPPED,HIGH_VALUE_UNTAPPED,70.0,https://www.linkedin.com/in/karan-kumar-25a419212,profile_url
 Camilo Andrés Ramírez Pérez,Balance Staffing Company,Recruiter,GLOBAL_STAFFING,untapped_category_change,,RECRUITER_UNTAPPED,HIGH_VALUE_UNTAPPED,70.0,https://www.linkedin.com/in/camilo-andr%C3%A9s-ram%C3%ADrez-p%C3%A9rez-855114b7,profile_url
 Anderson Silva,Finnet,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,TALENT_ACQUISITION_UNTAPPED,RECRUITER_UNTAPPED,65.0,https://www.linkedin.com/in/-silva-anderson,profile_url
 Anna Zeőke-Szőke,Self Employed,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,SPAIN_EU_EXPLORATORY_UNTAPPED,RECRUITER_UNTAPPED,60.0,https://www.linkedin.com/in/annazeokeszoke,profile_url
 Luana Oliveira,Sympla,Talent Acquisition,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,TALENT_ACQUISITION_UNTAPPED,50.0,https://www.linkedin.com/in/luanaaoliveira,profile_url
-Gunther Andreas Wuest,TrendAI,Talent Acquisition,GLOBAL_OPPORTUNITY,untapped_category_change,,LATAM_USD_UNTAPPED,TALENT_ACQUISITION_UNTAPPED,50.0,https://www.linkedin.com/in/gunther-wuest,profile_url
 Mohit Rajput,Simprosys InfoMedia,Recruiter,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,RECRUITER_UNTAPPED,50.0,https://www.linkedin.com/in/mohit-rajput-884a7a242,profile_url
+Gunther Andreas Wuest,TrendAI,Talent Acquisition,GLOBAL_OPPORTUNITY,untapped_category_change,,LATAM_USD_UNTAPPED,TALENT_ACQUISITION_UNTAPPED,50.0,https://www.linkedin.com/in/gunther-wuest,profile_url
 Cecilia Jeraldine Sosa Rondoy,Torre.ai,Talent Acquisition,GLOBAL_OPPORTUNITY,untapped_category_change,,LONG_TERM_UNTAPPED,TALENT_ACQUISITION_UNTAPPED,50.0,https://www.linkedin.com/in/cecilia-sosarondoy,profile_url
 Leandro Lima,Glean,Other,LATAM_USD_CONFIRMED,untapped_category_change,,GLOBAL_TECH_UNTAPPED,LATAM_USD_UNTAPPED,45.0,https://www.linkedin.com/in/leandrolima0907,profile_url
 Cecília Batalha,Hitachi Energy,Other,LATAM_USD_CONFIRMED,untapped_category_change,,LONG_TERM_UNTAPPED,LATAM_USD_UNTAPPED,45.0,https://www.linkedin.com/in/cec%C3%ADliabatalha,profile_url
 "Nagaraju ""David"" Gollapalli ☁️",Zyxware Technologies,Director,GLOBAL_OPPORTUNITY,untapped_category_change,,TALENT_ACQUISITION_UNTAPPED,DATA_LEADER_UNTAPPED,40.0,https://www.linkedin.com/in/graju,profile_url
 Sanali Kaushalya,WOMEN IN TECH ® Global,Director,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,DATA_LEADER_UNTAPPED,40.0,https://www.linkedin.com/in/sanali-kaushalya-2422b0b3,profile_url
+Romulo Roque Pieta,Pieta.tech,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,40.0,https://www.linkedin.com/in/romulo-roque-pieta,profile_url
 Kalina Borislavova Manova,JOOR,Head of Data,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,DATA_LEADER_UNTAPPED,40.0,https://www.linkedin.com/in/kbmanova,profile_url
+Gustavo Castanheira,DOJO - Smart Ways,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,40.0,https://www.linkedin.com/in/gustavo-castanheira,profile_url
+"Dezső Dudás, PMP, CSPO",CineProMatica,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,40.0,https://www.linkedin.com/in/dezsodudaspmp,profile_url
+Konrad Kucharski,Aviato,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,40.0,https://www.linkedin.com/in/konrad-kucharski-18140065,profile_url
+Sergio Bruni,MoMa Labs,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,40.0,https://www.linkedin.com/in/sergiobruni,profile_url
+Marcelo Maehara,Agrobens,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,40.0,https://www.linkedin.com/in/marcelo-maehara-61a526248,profile_url
 Claudio Yamaguchi,Zayra,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,40.0,https://www.linkedin.com/in/claudio-yamaguchi-42a288,profile_url
 Lincoln Nunes,Delly's,Head of Data,GLOBAL_OPPORTUNITY,untapped_category_change,,LATAM_USD_UNTAPPED,DATA_LEADER_UNTAPPED,40.0,https://www.linkedin.com/in/lincolnzifino,profile_url
+João Ignácio Neto,media-core®,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,40.0,https://www.linkedin.com/in/joaodotneto,profile_url
+Andréia Macedo,AM Gestão de Talentos,Executive,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,40.0,https://www.linkedin.com/in/andreiacmacedo,profile_url
 Fabiano de Oliveira e Souza,NTT DATA Europe & Latam,Director,GLOBAL_CONSULTING,untapped_category_change,,GLOBAL_CONSULTING_UNTAPPED,DATA_LEADER_UNTAPPED,35.0,https://www.linkedin.com/in/fabiano-oliveira-souza,profile_url
 Naresh Kumar Jettem,Trinite Consulting,Talent Acquisition,GLOBAL_CONSULTING,untapped_category_change,,RECRUITER_UNTAPPED,TALENT_ACQUISITION_UNTAPPED,35.0,https://www.linkedin.com/in/nareshkumarjettem,profile_url
 Ifan Hembrough,Amey,Recruiter,GLOBAL_CONSULTING,untapped_category_change,,TALENT_ACQUISITION_UNTAPPED,RECRUITER_UNTAPPED,35.0,https://www.linkedin.com/in/ifanhembrough,profile_url
+Jesús Manuel Orozco,IFIT Solutions,Consultant,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,35.0,https://www.linkedin.com/in/jes%C3%BAs-manuel-orozco-b571b5177,profile_url
 Leandro Soares,Taller,Data Engineer,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,35.0,https://www.linkedin.com/in/lesoame,profile_url
+Anna René Pérez,IFIT Solutions,Other,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,35.0,https://www.linkedin.com/in/anna-ren%C3%A9-p%C3%A9rez-0837ab260,profile_url
 Ana Paula Tartari Seidenstucker,Solutis Tecnologias,Software Engineer,GLOBAL_OPPORTUNITY,untapped_category_change,,GLOBAL_CONSULTING_UNTAPPED,CONNECTED_180D_NO_MESSAGE,35.0,https://www.linkedin.com/in/ana-tartari,profile_url
+Math Figueiredo,Factored,Data Scientist,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,35.0,https://www.linkedin.com/in/mathfigueiredo,profile_url
 Diego Braun,NTConsult,Other,GLOBAL_STAFFING,untapped_category_change,,LONG_TERM_UNTAPPED,LATAM_USD_UNTAPPED,35.0,https://www.linkedin.com/in/diego-braun,profile_url
 "Luciana Vieira, M.A.",Korn Ferry,Other,GLOBAL_STAFFING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,LATAM_USD_UNTAPPED,35.0,https://www.linkedin.com/in/lucianavv,profile_url
 Rafaela Melo,NTConsult,Other,GLOBAL_STAFFING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LATAM_USD_UNTAPPED,35.0,https://www.linkedin.com/in/rafaela-melo-374330232,profile_url
@@ -713,50 +720,118 @@ Fábio Luis Correia da Silva,ArcelorMittal Brasil,Hiring Manager,BRAZIL_CONFIRME
 Elaine Coimbra,AI Safety Brazil,Director,BRAZIL_CONFIRMED,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,DATA_LEADER_UNTAPPED,25.0,https://www.linkedin.com/in/elainecoimbra,profile_url
 Gabriela Gutterres de Brito,Ekantika Consultoria,Director,BRAZIL_CONFIRMED,untapped_category_change,,LATAM_USD_UNTAPPED,DATA_LEADER_UNTAPPED,25.0,https://www.linkedin.com/in/gabriela-brito,profile_url
 Piyush sachdeva,ReelDrop,Founder,GLOBAL_OPPORTUNITY,untapped_category_change,,GLOBAL_TECH_UNTAPPED,CONNECTED_180D_NO_MESSAGE,25.0,https://www.linkedin.com/in/piyush-sachdeva,profile_url
-João França,Marlin,Other,LATAM_USD_CONFIRMED,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LATAM_USD_UNTAPPED,25.0,https://www.linkedin.com/in/joaopcfb,profile_url
+Marcos Tendler,Vacinas.net,Founder,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,25.0,https://www.linkedin.com/in/mtendler,profile_url
+Ranjana Sharma,Newstrokes,Founder,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,25.0,https://www.linkedin.com/in/ranjanasharma,profile_url
+Jan Weitz,Beutler Saghari & Partner GmbH,Partner,GLOBAL_OPPORTUNITY,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,25.0,https://www.linkedin.com/in/jan-weitz-866089191,profile_url
 Laiane Cavalcante,Industrias San Miguel,HR,LATAM_USD_CONFIRMED,untapped_category_change,,LONG_TERM_UNTAPPED,LATAM_USD_UNTAPPED,25.0,https://www.linkedin.com/in/laiane-cavalcante16,profile_url
+João França,Marlin,Other,LATAM_USD_CONFIRMED,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LATAM_USD_UNTAPPED,25.0,https://www.linkedin.com/in/joaopcfb,profile_url
 Mateus Etruri,Databricks,Other,GLOBAL_TECH,untapped_category_change,,GLOBAL_CONSULTING_UNTAPPED,GLOBAL_TECH_UNTAPPED,0.0,https://www.linkedin.com/in/mateus-etruri-456111113,profile_url
 Elsa Marquínez Legarda,Glovo,HR,SPAIN_EU_CONFIRMED,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,SPAIN_EU_EXPLORATORY_UNTAPPED,0.0,https://www.linkedin.com/in/elsa-marqu%C3%ADnez-legarda-816346195,profile_url
 Barbara Joanna Stolorz,Stealth Startup,Founder,GLOBAL_TECH,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,GLOBAL_TECH_UNTAPPED,0.0,https://www.linkedin.com/in/barbara-stolorz,profile_url
 Raico Wong,Delivery Hero,HR,EUROPE_CONFIRMED,untapped_category_change,,TALENT_ACQUISITION_UNTAPPED,SPAIN_EU_EXPLORATORY_UNTAPPED,0.0,https://www.linkedin.com/in/raico-wong,profile_url
 Marcos Reis,iFood,Data Engineer,BRAZIL_CONFIRMED,untapped_category_change,,GLOBAL_CONSULTING_UNTAPPED,LATAM_USD_UNTAPPED,0.0,https://www.linkedin.com/in/marcos-reis-filho,profile_url
-Jaqueline Michaelsen,Growdev,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/jaqueline-m,profile_url
+Gabriel Rezende,Prosigliere,Data Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/gabriel-monteiro-rezende,profile_url
 Sonia Satumari,Datafied,Data Analyst,GLOBAL_TECH,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,GLOBAL_TECH_UNTAPPED,0.0,https://www.linkedin.com/in/soniasatumari,profile_url
+Igor Lessa,Nigra - Gestão da Mudança e Cultura Organizacional,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/igorlessa,profile_url
+Luiz Fernando dos Santos,Hand Talk by Sorenson,Data Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/luizsantosde,profile_url
+Lucas Raupp,N-iX,Data Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/lucas-raupp-01193b1a1,profile_url
+Henrique Novaes,Lírio do Vale Distribuidora de Artigos Religiosos,Data Analyst,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/henriquenovaess,profile_url
+Jaqueline Michaelsen,Growdev,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/jaqueline-m,profile_url
 Gisele Rosa,"GERAR - Geração de Emprego, Renda e Apoio ao Desenvolvimento Regional",HR,GLOBAL_TECH,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,GLOBAL_TECH_UNTAPPED,0.0,https://www.linkedin.com/in/gisele-rosa-ab416088,profile_url
-Deysi Felix,ALFA Educação,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/deysi-felix,profile_url
-Gabriel Sales,ExitLag,Data Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/gabriel-sales-bandoli,profile_url
+"Ronerio Macena, SHRM-CP",Suominen Corporation,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/ronerio-macena,profile_url
 Carol Zanon,Luby,Consultant,NEEDS_COMPANY_MAPPING,untapped_category_change,,TALENT_ACQUISITION_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/carol190967241,profile_url
+Anshika Sharma,Deftsoft,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/anshika-sharma-,profile_url
 Mirian Macedo de Sam Amaral,Aliare,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,DATA_LEADER_UNTAPPED,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/mirian-macedo-de-sam-amaral-b74a5414,profile_url
 Alyona Shtanhei,NDA (UGV & Military Tech),Consultant,GLOBAL_TECH,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,GLOBAL_TECH_UNTAPPED,0.0,https://www.linkedin.com/in/biretso,profile_url
-Maick Soares,Universidade Iguaçu,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/maick-soares-836ab1128,profile_url
+Bruno Oliveira,SysMap Solutions,Data Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/brxno-oliveira,profile_url
+Gabriel Sales,ExitLag,Data Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/gabriel-sales-bandoli,profile_url
 Victor Rodrigues,Ancar,Data Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,LATAM_USD_UNTAPPED,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/victor-rodrigues7703,profile_url
 Rafaela Pinheiro Siqueira,HR Path,Project / Program Manager,NEEDS_COMPANY_MAPPING,untapped_category_change,,GLOBAL_TECH_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/rafaelapinheirosiqueira,profile_url
-Vivian Haguiuda,Laghetto,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/vivian-haguiuda-03a8b45b,profile_url
+Deysi Felix,ALFA Educação,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/deysi-felix,profile_url
+Pedro Henrique Gerolin,Cruzeiro do Sul Educacional S/A,Data Engineer,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/pedrogerolin,profile_url
+Er.SURIYA D,Flattrade,Project / Program Manager,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/er-suriya-d-49bb121a1,profile_url
+Yaw BOATENG,TOPSTEP GmbH,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/yaw-boateng-69366b66,profile_url
+Vessela Krissel,Mindful Concepts,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/vessela-krissel,profile_url
+Maick Soares,Universidade Iguaçu,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/maick-soares-836ab1128,profile_url
+Graziele Souza,Essencial Energia,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/graziele-adriano-souza,profile_url
+Dalton Carvalho,Quartile,Data Analyst,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/d-carvalhoo,profile_url
+Éric Fadul,Qeevo Group,Data Analyst,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/ericfadul,profile_url
+Thaan da Costa Lima,SONDA,Data Analyst,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/thaancosta,profile_url
+Beatriz Pinheiro,Sertran Transportes,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/beatrizoliveiraspinheiro,profile_url
+Marcia Souto,FSJ LOGÍSTICA,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/marcia-souto-04b277115,profile_url
 Izabele Araujo,Loomy Smart Solutions,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/izabele-araujo-a8709514a,profile_url
 Allan Medeiros,Deep,Data Scientist,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,GLOBAL_TECH_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/allan-medeiros,profile_url
+Wasi Abbas,Fresh Basket,Data Analyst,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/wasiabbas1,profile_url
 Kyara Andrews,Archive,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,DATA_LEADER_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/kyaratave,profile_url
 Wiliam Rosa,GFT Technologies,Other,GLOBAL_CONSULTING,untapped_category_change,,GLOBAL_TECH_UNTAPPED,GLOBAL_CONSULTING_UNTAPPED,0.0,https://www.linkedin.com/in/wiliam-rosa,profile_url
+Stuart Gough,Taylor Hopkinson | Powered by Brunel,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/stuartgough1,profile_url
+Renata Viana,ZEISS Group,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/rebviana,profile_url
+Sandrina Salvado,Bee Engineering ICT,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/sandrinasalvado,profile_url
+Fabiana Flauzino,Algar Telecom,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/fabiana-flauzino,profile_url
 "Kaio Rocha, PhD",Flywheel,BI Analyst,NEEDS_COMPANY_MAPPING,untapped_category_change,,GLOBAL_CONSULTING_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/kaiodtr,profile_url
 Julio Cesar da Silva Souza,Paraná Banco S/A,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,GLOBAL_TECH_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/juliocesar-silvasouza,profile_url
+Reinaldo Celestino,Brisanet Telecomunicações,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/reinaldo-celestino,profile_url
+Victor Eiras,Nova,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/victoreiras,profile_url
+Patrick Siwy,ambass GmbH,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/patrick-siwy-b57223218,profile_url
+Vivian Haguiuda,Laghetto,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/vivian-haguiuda-03a8b45b,profile_url
 Solange Miguel,Consultoria Recursos Humanos,HR,GLOBAL_CONSULTING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,GLOBAL_CONSULTING_UNTAPPED,0.0,https://www.linkedin.com/in/solange-miguel-b0a3a7164,profile_url
+Ariani Rossi Miranda,Grupo J. R. M. LTDA,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/ariani-rossi,profile_url
+Alex Manhães,Office Engenharia,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/alex-manh%C3%A3es-8664857a,profile_url
+Renata Pelegrino Pinho,Pentágono Engenharia,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/renata-pelegrino-pinho-0b8454314,profile_url
 Aline Rezende,Belgo Arames,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/aline-r-39641248,profile_url
+Brenda Lizeth Barbosa Alfonso,Ready,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/brenda-lizeth-barbosa,profile_url
+Nikoly Gomes,Grupo Querino Oficial,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/nikoly-gomes-49462a1b0,profile_url
 Livia Fazolato,Vibra,Data Analyst,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,LATAM_USD_UNTAPPED,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/livia-fazolato,profile_url
 Thaís Costa,Stone,Other,BRAZIL_CONFIRMED,untapped_category_change,,TALENT_ACQUISITION_UNTAPPED,LATAM_USD_UNTAPPED,0.0,https://www.linkedin.com/in/tha%C3%ADs-costa-1b951b140,profile_url
 Eliandro Sabaini,Estratég.IA Financeira e Analítica,Consultant,NEEDS_COMPANY_MAPPING,untapped_category_change,,SPAIN_EU_EXPLORATORY_UNTAPPED,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/eliandrosabaini,profile_url
 Fabíola Vitorino,Auren Energia,Consultant,BRAZIL_CONFIRMED,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,LATAM_USD_UNTAPPED,0.0,https://www.linkedin.com/in/fabiolavitorino,profile_url
 Muhammad Akbar,EpsiHome,Software Engineer,NEEDS_COMPANY_MAPPING,untapped_category_change,,GLOBAL_TECH_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/muhammad-a-28b6511aa,profile_url
-Nina Barbosa,Farmácias Pague Menos,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/nina-barbosa-058b86180,profile_url
+Gulshan Kaleel,George Bernard,Consultant,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/gulshan-kaleel,profile_url
+Aubrey Lantican,Troocoo,Consultant,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/aubrey-lantican,profile_url
+Igor Moraes,notro,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/igor-moraes-a5a4b615a,profile_url
+Wendy Vespa Rojo,Grupo PAZ,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,NEW_CONNECTION_NO_MESSAGE,CONNECTED_30D_NO_MESSAGE,0.0,https://www.linkedin.com/in/wendy-vespa-rojo,profile_url
+Andrea Lopes,Kazulo Displays,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/andrea-lopes-800961175,profile_url
+Jasmine Smith,THRYVE,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/jasmine-smith-germantech-thryve,profile_url
+Ester Ferreira Godoi,Grupo Dimensão,HR,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/estergodoi,profile_url
+Marcelo Folco,Ortobom,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/marcelo-folco,profile_url
+Luciana Pires,Last Mile Logística,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/lucianapirescoaching,profile_url
 Rarissa Bernardes,Growdev,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,RECRUITER_UNTAPPED,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/rarissabernardes,profile_url
 Agustina Burs,AudioCodes,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,LATAM_USD_UNTAPPED,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/agustinaburs,profile_url
 Felipe Yoshimoto,Labdata FIA,Other,GLOBAL_TECH,untapped_category_change,,LONG_TERM_UNTAPPED,GLOBAL_TECH_UNTAPPED,0.0,https://www.linkedin.com/in/felipe-yoshimoto,profile_url
+Gordon Jäckel,GP JOULE Gruppe,HR,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/gordon-jaeckel,profile_url
+Nina Barbosa,Farmácias Pague Menos,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_30D_NO_MESSAGE,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/nina-barbosa-058b86180,profile_url
+Monique Pena,Apsen Farmacêutica,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/moniqueoliveirapena,profile_url
+Gabrielle Moraes Figueiredo,Tivita,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/gabriellemfigueiredo,profile_url
 Aparecida Lima,Espro,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/aparecida-lima-a8010057,profile_url
 Thirsa Zampieri,Deep,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,LATAM_USD_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/thirsa-zampieri-499877169,profile_url
+Kleber Eduardo Fernandes da Costa e Silva,SRM ASSET,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/kleber-eduardo-fernandes-da-costa-e-silva,profile_url
 Hayane Cicuto,Emais Urbanismo,Other,GLOBAL_TECH,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,GLOBAL_TECH_UNTAPPED,0.0,https://www.linkedin.com/in/hayane-cicuto-48006a176,profile_url
-Brenik Domingos,RCA TRANSPORTES LTDA,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/brenik-domingos-4455a4238,profile_url
+Thomas Krauss,HAPEKO Österreich GmbH,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/kraussthomas,profile_url
 Rouglas Strapazzon,Vallora Benefícios,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,GLOBAL_CONSULTING_UNTAPPED,CONNECTED_90D_NO_MESSAGE,0.0,https://www.linkedin.com/in/rouglas-strapazzon,profile_url
+Renata Egypto,OPLIUM,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/renata-egypto,profile_url
+Carlos Caridade,Dadoteca,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/carlos-caridade-07939925,profile_url
+Téo Calvo,Téo Me Why,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/teocalvo,profile_url
+Jed Tarling,Uptick,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/jedtarling,profile_url
+Talita Oliveira Jesus,Grupo Tombini,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_90D_NO_MESSAGE,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/talita-oliveira-jesus-746a60172,profile_url
 Elba Maria Caseres,Learnlight,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,LATAM_USD_UNTAPPED,CONNECTED_180D_NO_MESSAGE,0.0,https://www.linkedin.com/in/elba-maria-caseres-887b62217,profile_url
+Annalena Klehr,R+V Versicherung,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/annalena-klehr-729085a0,profile_url
+Antônio Farias,Emerging Venture Capital Fellows,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/tonifarias,profile_url
+Adriana Braz,Boehringer Ingelheim,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/adrianabraz,profile_url
+Carolina Bittencourt,Aarin,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/carolina-bittencourt-campanha,profile_url
+Maithê Jezler,ALLOS,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/maithejezler,profile_url
+Marc Lindemann,GASCADE Gastransport GmbH,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/lindemannmarc,profile_url
+Brenik Domingos,RCA TRANSPORTES LTDA,Other,LANGUAGE_PORTUGUESE_MARKET,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/brenik-domingos-4455a4238,profile_url
 Bruna Raphaela Almeida,Mosaic Fertilizantes,Other,GLOBAL_CONSULTING,untapped_category_change,,LATAM_USD_UNTAPPED,GLOBAL_CONSULTING_UNTAPPED,0.0,https://www.linkedin.com/in/brunaaraphaela,profile_url
 Bárbara Pires,Auren Energia,Other,BRAZIL_CONFIRMED,untapped_category_change,,LONG_TERM_UNTAPPED,LATAM_USD_UNTAPPED,0.0,https://www.linkedin.com/in/barbara-pires-silva,profile_url
+Katia Rangel,Remax Siimgroup,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/katia-rangel,profile_url
+Barbara Ferreira,OpenTalent,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/barbara-ferreira-b9a160304,profile_url
+Eduardo Cantero Esteves Gonçalves,Universidade Presbiteriana Mackenzie,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/ecegoncalves,profile_url
+Katalin Vegh Arregoces,Kata Vegh Psychologist,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/katavegharregoces,profile_url
+Jürgen A.T.T. Tiedemann Motorräder e.K.,Selbstständig,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/j%C3%BCrgen-a-t-t-tiedemann-motorr%C3%A4der-e-k-842a0114b,profile_url
+Katrin Muny,TK Chauffeur-und Fahrservice GmbH,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/katrin-muny-4ab699235,profile_url
+Udo Unbehaun,Sozial-Konzept AG,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/udo-unbehaun-63453016,profile_url
+Matthias G. Bumann,Thommes & Kollegen - Architekten und Ingenieur PartGmbB,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/dimagb,profile_url
+Peter Fietz,Allgemeine Rentenanstalt Pensionskasse,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,CONNECTED_180D_NO_MESSAGE,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/peter-fietz-363912114,profile_url
 Helton Chagas,Universidade de Passo Fundo,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,GLOBAL_TECH_UNTAPPED,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/helton-chagas,profile_url
 Lucas Brito,"SEGPRIME - Treinamento, Serviços e Engenharia",Other,BRAZIL_CONFIRMED,untapped_category_change,,LONG_TERM_UNTAPPED,LATAM_USD_UNTAPPED,0.0,https://www.linkedin.com/in/lucas-brito-137b27110,profile_url
 Maria Eduarda Yoyo,Comercial 10x,Other,NEEDS_COMPANY_MAPPING,untapped_category_change,,LATAM_USD_UNTAPPED,LONG_TERM_UNTAPPED,0.0,https://www.linkedin.com/in/maria-eduarda-y-lima,profile_url

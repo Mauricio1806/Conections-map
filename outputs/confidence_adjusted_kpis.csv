@@ -1,9 +1,9 @@
 ﻿kpi,value
-report_date,2026-07-19
+report_date,2026-07-22
 total_connections,11286
-high_priority,213
-medium_priority,3823
-low_priority,7250
+high_priority,211
+medium_priority,3822
+low_priority,7253
 high_priority_pct,1.9
 medium_priority_pct,33.9
 brazil_count,861
@@ -21,8 +21,8 @@ talent_hr_total,2139
 hiring_managers_total,81
 data_leaders_total,903
 data_peers_total,1000
-connected_last_30_days,725
-connected_last_90_days,2280
+connected_last_30_days,678
+connected_last_90_days,2136
 strategic_network_score,97.2
 strategic_network_level,Strong
 strategic_network_desc,"Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders."
@@ -31,7 +31,7 @@ sns_talent_acquisition,1013
 sns_hiring_managers,81
 sns_data_leaders,903
 sns_data_peers,1000
-sns_high_priority,213
+sns_high_priority,211
 usd_readiness_score,82.5
 usd_readiness_level,Ready
 usd_readiness_desc,Strong USD network. Active outreach should yield job conversations quickly.
@@ -46,8 +46,8 @@ usd_us_ca_hiring_mgrs,6
 usd_global_recruiters_partial,86
 usd_global_ta_partial,37
 usd_global_hm_partial,0
-usd_unknown_high_value_partial,67
-spain_eu_readiness_score,62.7
+usd_unknown_high_value_partial,66
+spain_eu_readiness_score,62.6
 spain_eu_readiness_level,Ready
 spain_eu_readiness_desc,Strong Spain/EU foundation. Good positioning for relocation.
 spain_eu_readiness_next,"You have 16 confirmed Spain/EU recruiters (target: 40). Add 24 more via ERNI, Stratesys, Capgemini Spain."
@@ -67,8 +67,8 @@ global_recruiters,123
 global_hiring_mgrs,0
 global_data_leaders,35
 actionable_contacts_score,100.0
-actionable_contacts,579
-very_high_priority,213
+actionable_contacts,575
+very_high_priority,211
 unknown_resolution_score,7.5
 unknown_resolution_potential,7.5
 top25_company_coverage,695
@@ -77,9 +77,9 @@ top100_company_coverage,1374
 data_quality_risk_score,90.3
 data_quality_risk_level,High Risk
 data_quality_risk_desc,Most market inferences are unresolved. Readiness scores are conservative estimates.
-market_readiness_composite,74.6
-unknown_recruiters_highvalue,201
+market_readiness_composite,74.5
+unknown_recruiters_highvalue,199
 unknown_hiring_mgrs_highvalue,13
-unknown_data_leaders_highvalue,123
+unknown_data_leaders_highvalue,122
 unknown_peers,765
 technical_geo_limitation_note,"Exact geography is unavailable from LinkedIn export; opportunity buckets are inferred from company, title, persona, language, message history, and manual enrichment. This is an action backlog, not a data failure."

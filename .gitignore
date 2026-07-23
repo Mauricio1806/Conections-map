@@ -81,6 +81,21 @@ Messages.csv
 data/raw/messages.csv
 data/raw/Messages.csv
 
+# ─── USD Contract CRM — manual pipeline/application/outreach logs, NEVER commit ──
+# Real USD job opportunities, recruiter names/profile URLs, application status,
+# and private notes. Already covered by data/manual/*.csv above; these extra
+# patterns are defense in depth in case a file is ever moved out of data/manual/.
+data/manual/usd_pipeline.csv
+data/manual/job_applications.csv
+data/manual/recruiter_outreach_log.csv
+*usd_pipeline*.csv
+*job_applications*.csv
+*recruiter_outreach*.csv
+# Exception: the sanitized AGGREGATE-ONLY summary (counts, no names/URLs/
+# notes) that src/usd_contract_crm.py writes for the public dashboard —
+# without this it would also be swallowed by the broad glob above.
+!outputs/usd_recruiter_outreach_summary.csv
+
 # ─── Processed / output data ─────────────────────────────────────────────────
 # Uncomment the lines below if you do NOT want to commit output CSVs:
 # outputs/*.csv

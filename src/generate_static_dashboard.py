@@ -71,7 +71,8 @@ def _check_json_sanity(path: Path) -> dict:
             if "email" in field.lower() or "phone" in field.lower():
                 issues.append(f"PII field in contact #{i+1}: {field}")
 
-    return {"kpis": kpis, "contacts": len(contacts), "issues": issues}
+    usd_crm = data.get("usd_contract_crm", {}) or {}
+    return {"kpis": kpis, "contacts": len(contacts), "issues": issues, "usd_crm": usd_crm}
 
 
 def _inject_cache_bust(build_ts: str) -> None:
@@ -126,6 +127,11 @@ def main():
         logger.info(f"  Market Confidence:       {kpis.get('market_confidence_score', '?')}/100")
         logger.info(f"  Unknown %:               {kpis.get('unknown_pct', '?')}%")
         logger.info(f"  Top contacts:            {info['contacts']}")
+        usd_crm = info.get("usd_crm", {})
+        if usd_crm.get("available"):
+            logger.info(f"  USD Contract CRM:        {usd_crm.get('summary', {}).get('usd_opportunities_found', 0)} opportunities tracked")
+        else:
+            logger.info("  USD Contract CRM:        no manual CSVs found (optional)")
         if info["issues"]:
             for issue in info["issues"]:
                 logger.warning(f"  [WARN] {issue}")
