@@ -839,6 +839,47 @@ def build_opportunity_history_public(oh_data: dict) -> dict:
     }
 
 
+# ── Monthly Executive Queue (src/monthly_executive_queue.py) — explicit
+# allowlist, defense in depth on top of what that module already sanitizes
+# (booleans/scores/dates/short controlled-vocabulary labels + the 4 fixed
+# message-angle templates with only a first name interpolated — never raw
+# message content). Mirrors QUEUE_ROW_FIELDS there field-for-field.
+SAFE_MONTHLY_QUEUE_SUMMARY_KEYS = {
+    "inbound_opportunities_this_month", "reactivation_due_this_month",
+    "soft_closed_keep_warm", "usd_recruiter_followups", "monthly_backlog",
+    "high_priority_this_month", "overdue_reactivations",
+    "active_opportunity_signals",
+}
+SAFE_MONTHLY_QUEUE_ROW_COLS = {
+    "queue_name", "rank", "contact_name", "company", "role", "persona",
+    "profile_url", "event_month", "event_date", "last_contact_date",
+    "opportunity_event_type", "opportunity_stage", "opportunity_signal_strength",
+    "opportunity_bucket", "usd_signal", "latam_signal", "remote_signal",
+    "score", "priority", "recommended_action", "next_action_date",
+    "reason_short", "message_angle",
+}
+SAFE_MONTHLY_CHART_COLS = {
+    "month", "inbound_opportunities", "reactivation_due", "soft_closed", "usd_followups",
+}
+
+
+def build_monthly_executive_queue_public(meq_data: dict) -> dict:
+    if not meq_data or not meq_data.get("available"):
+        return {"available": False}
+    summary = meq_data.get("summary", {}) or {}
+    return {
+        "available": True,
+        "summary": {k: v for k, v in summary.items() if k in SAFE_MONTHLY_QUEUE_SUMMARY_KEYS},
+        "inbound_top20":            _sanitize_records(meq_data.get("inbound_top20"), SAFE_MONTHLY_QUEUE_ROW_COLS),
+        "reactivation_top20":        _sanitize_records(meq_data.get("reactivation_top20"), SAFE_MONTHLY_QUEUE_ROW_COLS),
+        "soft_closed_top20":         _sanitize_records(meq_data.get("soft_closed_top20"), SAFE_MONTHLY_QUEUE_ROW_COLS),
+        "usd_followups_top20":       _sanitize_records(meq_data.get("usd_followups_top20"), SAFE_MONTHLY_QUEUE_ROW_COLS),
+        "monthly_backlog_top50":     _sanitize_records(meq_data.get("monthly_backlog_top50"), SAFE_MONTHLY_QUEUE_ROW_COLS),
+        "all_monthly_queue_records": _sanitize_records(meq_data.get("all_monthly_queue_records"), SAFE_MONTHLY_QUEUE_ROW_COLS),
+        "monthly_chart":             _sanitize_records(meq_data.get("monthly_chart"), SAFE_MONTHLY_CHART_COLS),
+    }
+
+
 def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
     if not usd_crm_data or not usd_crm_data.get("available"):
         return {"available": False}
@@ -862,6 +903,10 @@ def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
         # see src/opportunity_history_engine.py. Distinct from A/B above;
         # never merged into their counts.
         "opportunity_history": build_opportunity_history_public(usd_crm_data.get("opportunity_history")),
+        # New section (this update): Monthly Executive Queue — curated top-20
+        # execution lists, see src/monthly_executive_queue.py. Execution
+        # queues, not confirmed applications; never merged into A/B's counts.
+        "monthly_executive_queue": build_monthly_executive_queue_public(usd_crm_data.get("monthly_executive_queue")),
     }
 
 

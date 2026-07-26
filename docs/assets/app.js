@@ -222,6 +222,7 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Untapped',    renderUntapped);
       safeRender('Usdcrm',      renderUsdCrm);
       safeRender('Opphist',     renderOpportunityHistory);
+      safeRender('Meq',         renderMonthlyExecutiveQueue);
       safeRender('Quality',     renderQuality);
       safeRender('Weekly',      renderWeekly);
     })
@@ -4702,6 +4703,212 @@ window.applyOpphistKpiFilter = function(key) {
     if (monthSel) { monthSel.value = _opphistCurrentMonth(); applyOpphistFilters(); }
   }
   const targetId = OPPHIST_KPI_SCROLL[key];
+  const target = targetId && document.getElementById(targetId);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+// ── Monthly Executive Queue (curated top-20 execution lists) ───────────────
+// Lives inside the USD Contract CRM page, near the top. Every row uses the
+// unified queue schema from src/monthly_executive_queue.py (QUEUE_ROW_FIELDS)
+// — queue_name, rank, contact_name, company, role, persona, event_month/date,
+// last_contact_date, opportunity_event_type/stage/strength, opportunity_bucket,
+// usd/latam/remote_signal, score, priority, recommended_action,
+// next_action_date, reason_short, message_angle — no raw message content ever.
+
+const MEQ_MAX_RENDERED_ROWS = 200;
+
+const MEQ_COLUMNS = [
+  'Rank', 'Contact', 'Company', 'Role', 'Persona', 'Month', 'Event Type',
+  'Stage', 'Strength', 'Bucket', 'Score', 'Priority', 'Next Action Date',
+  'Reason', 'Message Angle', 'Link',
+];
+
+function meqTableHeaderHtml() {
+  return '<tr>' + MEQ_COLUMNS.map(c => '<th>' + c + '</th>').join('') + '</tr>';
+}
+
+function meqRowHtml(r) {
+  const score = parseInt(r.score) || 0;
+  const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+  const link = r.profile_url || '';
+  return '<tr>'
+    + '<td><strong>#' + (r.rank || '—') + '</strong></td>'
+    + '<td style="white-space:nowrap">' + (r.contact_name || '—') + '</td>'
+    + '<td style="white-space:nowrap">' + (r.company || '—') + '</td>'
+    + '<td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.role || '—') + '</td>'
+    + '<td style="font-size:0.75rem">' + (r.persona || '—') + '</td>'
+    + '<td style="font-size:0.72rem;white-space:nowrap">' + (r.event_month || '—') + '</td>'
+    + '<td style="font-size:0.72rem;max-width:140px;white-space:normal">' + (r.opportunity_event_type || '—') + '</td>'
+    + '<td style="font-size:0.72rem;max-width:130px;white-space:normal">' + (r.opportunity_stage || '—') + '</td>'
+    + '<td>' + opphistStrengthBadge(r.opportunity_signal_strength) + '</td>'
+    + '<td>' + (r.opportunity_bucket ? marketBadge(r.opportunity_bucket) : '—') + '</td>'
+    + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+    + '<td>' + (r.priority ? priorityBadge(r.priority) : '—') + '</td>'
+    + '<td style="font-size:0.72rem;white-space:nowrap">' + (r.next_action_date || '—') + '</td>'
+    + '<td style="font-size:0.7rem;max-width:200px;white-space:normal">' + (r.reason_short || '—') + '</td>'
+    + '<td style="font-size:0.7rem;max-width:220px;white-space:normal">' + (r.message_angle || '—') + '</td>'
+    + '<td>' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+    + '</tr>';
+}
+
+function _meqData() {
+  return ((D.usd_contract_crm || {}).monthly_executive_queue) || { available: false };
+}
+
+function renderMonthlyExecutiveQueue() {
+  const meq = _meqData();
+  const noData = document.getElementById('meq-no-data');
+  const mainContent = document.getElementById('meq-main-content');
+
+  if (!meq.available) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  document.querySelectorAll('#page-usdcrm .meq-table thead').forEach(t => {
+    if (!t.innerHTML.trim()) t.innerHTML = meqTableHeaderHtml();
+  });
+
+  const s = meq.summary || {};
+  const sumEl = document.getElementById('meq-summary');
+  if (sumEl) sumEl.innerHTML = [
+    makeKpiCard('meq_inbound',    'Inbound Opportunities This Month', s.inbound_opportunities_this_month || 0, 'click to view', 'good', 'applyMeqKpiFilter'),
+    makeKpiCard('meq_reactivation','Reactivation Due This Month',      s.reactivation_due_this_month || 0,      'click to view', '',     'applyMeqKpiFilter'),
+    makeKpiCard('meq_softclosed', 'Soft-Closed Keep-Warm',             s.soft_closed_keep_warm || 0,            'click to view', '',     'applyMeqKpiFilter'),
+    makeKpiCard('meq_usdfollowup','USD Recruiter Follow-ups',          s.usd_recruiter_followups || 0,          'click to view', '',     'applyMeqKpiFilter'),
+    makeKpiCard('meq_backlog',    'Monthly Backlog',                   s.monthly_backlog || 0,                  'click to view', '',     'applyMeqKpiFilter'),
+    makeKpiCard('meq_highprio',   'High Priority This Month',          s.high_priority_this_month || 0,         'click to view', 'good', 'applyMeqKpiFilter'),
+    makeKpiCard('meq_overdue',    'Overdue Reactivations',             s.overdue_reactivations || 0, s.overdue_reactivations ? 'action needed' : '', 'warn', 'applyMeqKpiFilter'),
+    makeKpiCard('meq_active',     'Active Opportunity Signals',        s.active_opportunity_signals || 0,       'click to view', 'good', 'applyMeqKpiFilter'),
+  ].join('');
+
+  renderMeqMonthlyChart(meq.monthly_chart || []);
+
+  const allRecords = meq.all_monthly_queue_records || [];
+  _usdCrmPopulateSelect('meq-month-filter', allRecords.map(r => r.event_month));
+  _usdCrmPopulateSelect('meq-persona-filter', allRecords.map(r => r.persona));
+  _usdCrmPopulateSelect('meq-bucket-filter', allRecords.map(r => r.opportunity_bucket));
+
+  applyMeqFilters();
+}
+
+function renderMeqMonthlyChart(rows) {
+  const canvas = document.getElementById('chart-meq-monthly');
+  if (!canvas) return;
+  const sorted = [...rows].sort((a, b) => (a.month || '').localeCompare(b.month || ''));
+  const labels = sorted.map(m => m.month);
+  groupedBarChart('chart-meq-monthly', labels, [
+    { label: 'Inbound Opportunities', data: sorted.map(m => m.inbound_opportunities || 0), color: '#3fb950' },
+    { label: 'Reactivation Due',      data: sorted.map(m => m.reactivation_due || 0), color: '#f85149' },
+    { label: 'Soft Closed',           data: sorted.map(m => m.soft_closed || 0), color: '#d29922' },
+    { label: 'USD Follow-ups',        data: sorted.map(m => m.usd_followups || 0), color: '#3b82f6' },
+  ]);
+}
+
+function renderMeqSection(tbodyId, statsId, sourceArr, pred) {
+  const filtered = sourceArr.filter(pred).sort((a, b) => (a.rank || 999) - (b.rank || 999));
+  const statsEl = document.getElementById(statsId);
+  if (statsEl) statsEl.textContent = 'Showing ' + filtered.length + ' of ' + sourceArr.length;
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="16" style="text-align:center;color:var(--text-muted)">No records match the current filters.</td></tr>';
+    return;
+  }
+  const shown = filtered.slice(0, MEQ_MAX_RENDERED_ROWS);
+  let html = shown.map(meqRowHtml).join('');
+  if (filtered.length > MEQ_MAX_RENDERED_ROWS) {
+    html += '<tr><td colspan="16" style="text-align:center;color:var(--text-muted);font-size:0.75rem">'
+      + '… ' + (filtered.length - MEQ_MAX_RENDERED_ROWS) + ' more rows — narrow the filters above to see them</td></tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+window.applyMeqFilters = function() {
+  const search      = _usdCrmVal('meq-search').toLowerCase();
+  const month       = _usdCrmVal('meq-month-filter');
+  const queueType   = _usdCrmVal('meq-queue-filter');
+  const strength    = _usdCrmVal('meq-strength-filter');
+  const persona     = _usdCrmVal('meq-persona-filter');
+  const bucket      = _usdCrmVal('meq-bucket-filter');
+  const priority    = _usdCrmVal('meq-priority-filter');
+  const scoreMin    = parseFloat(_usdCrmVal('meq-score-min')) || 0;
+  const overdueOnly = _usdCrmChecked('meq-overdue-only');
+  const inboundOnly = _usdCrmChecked('meq-inbound-only');
+  const softClosedOnly = _usdCrmChecked('meq-soft-closed-only');
+  const activeOnly  = _usdCrmChecked('meq-active-only');
+  const today       = new Date().toISOString().slice(0, 10);
+  const ACTIVE_TYPES = ['Inbound Opportunity', 'Recruiter Outreach', 'Active Talent Pool',
+    'Salary Expectations Requested', 'CV Requested', 'Application Requested',
+    'Recruiter Call Proposed', 'Interview Process', 'Client Submission',
+    'Technical Interview', 'Offer / Contract Discussion'];
+
+  function pred(r) {
+    if (search) {
+      const hay = ((r.contact_name || '') + ' ' + (r.company || '')).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    if (month && r.event_month !== month) return false;
+    if (queueType && r.queue_name !== queueType) return false;
+    if (strength && r.opportunity_signal_strength !== strength) return false;
+    if (persona && r.persona !== persona) return false;
+    if (bucket && r.opportunity_bucket !== bucket) return false;
+    if (priority && r.priority !== priority) return false;
+    if ((parseFloat(r.score) || 0) < scoreMin) return false;
+    if (overdueOnly && !(r.next_action_date && r.next_action_date < today)) return false;
+    if (inboundOnly && !(r.opportunity_event_type === 'Inbound Opportunity')) return false;
+    if (softClosedOnly && !(r.opportunity_event_type === 'No Current Role / Keep on Radar')) return false;
+    if (activeOnly && !ACTIVE_TYPES.includes(r.opportunity_event_type)) return false;
+    return true;
+  }
+
+  const meq = _meqData();
+  renderMeqSection('meq-inbound-tbody',      'meq-inbound-stats',      meq.inbound_top20 || [], pred);
+  renderMeqSection('meq-reactivation-tbody', 'meq-reactivation-stats', meq.reactivation_top20 || [], pred);
+  renderMeqSection('meq-softclosed-tbody',   'meq-softclosed-stats',   meq.soft_closed_top20 || [], pred);
+  renderMeqSection('meq-usdfollowup-tbody',  'meq-usdfollowup-stats',  meq.usd_followups_top20 || [], pred);
+  renderMeqSection('meq-backlog-tbody',      'meq-backlog-stats',      meq.monthly_backlog_top50 || [], pred);
+};
+
+window.resetMeqFilters = function() {
+  const el = document.getElementById('meq-search'); if (el) el.value = '';
+  ['meq-month-filter', 'meq-queue-filter', 'meq-strength-filter', 'meq-persona-filter',
+   'meq-bucket-filter', 'meq-priority-filter'].forEach(id => {
+    const s = document.getElementById(id); if (s) s.value = '';
+  });
+  const sm = document.getElementById('meq-score-min'); if (sm) sm.value = '0';
+  ['meq-overdue-only', 'meq-inbound-only', 'meq-soft-closed-only', 'meq-active-only'].forEach(id => {
+    const c = document.getElementById(id); if (c) c.checked = false;
+  });
+  applyMeqFilters();
+};
+
+const MEQ_KPI_SCROLL = {
+  meq_inbound:     'meq-section-inbound',
+  meq_reactivation:'meq-section-reactivation',
+  meq_softclosed:  'meq-section-softclosed',
+  meq_usdfollowup: 'meq-section-usdfollowup',
+  meq_backlog:     'meq-section-backlog',
+  meq_highprio:    'meq-section-inbound',
+  meq_overdue:     'meq-section-reactivation',
+  meq_active:      'meq-section-inbound',
+};
+
+window.applyMeqKpiFilter = function(key) {
+  if (key === 'meq_overdue') {
+    const el = document.getElementById('meq-overdue-only');
+    if (el) { el.checked = true; applyMeqFilters(); }
+  } else if (key === 'meq_active') {
+    const el = document.getElementById('meq-active-only');
+    if (el) { el.checked = true; applyMeqFilters(); }
+  } else if (key === 'meq_highprio') {
+    const el = document.getElementById('meq-priority-filter');
+    if (el) { el.value = 'HIGH'; applyMeqFilters(); }
+  }
+  const targetId = MEQ_KPI_SCROLL[key];
   const target = targetId && document.getElementById(targetId);
   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };

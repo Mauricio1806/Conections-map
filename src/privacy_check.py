@@ -178,6 +178,10 @@ ALLOWED_CONTACT_FIELDS = {
     "future_reactivation_candidate", "reactivation_date", "message_angle",
     "tech_stack_signal", "usd_signal", "latam_signal", "remote_signal",
     "reason_short",
+    # Monthly Executive Queue (src/monthly_executive_queue.py) — sanitized
+    # unified queue-row schema only (see QUEUE_ROW_FIELDS there and
+    # build_monthly_executive_queue_public() in export_public_dashboard_data.py).
+    "queue_name", "rank", "last_contact_date",
 }
 
 
@@ -230,6 +234,15 @@ def check_json(path: Path) -> list[str]:
         list(oh.get("soft_closed_future_leads", []) or []) +
         list(oh.get("reactivation_calendar", []) or [])
     )
+    meq = usd_crm.get("monthly_executive_queue", {}) or {}
+    monthly_queue_records = (
+        list(meq.get("inbound_top20", []) or []) +
+        list(meq.get("reactivation_top20", []) or []) +
+        list(meq.get("soft_closed_top20", []) or []) +
+        list(meq.get("usd_followups_top20", []) or []) +
+        list(meq.get("monthly_backlog_top50", []) or []) +
+        list(meq.get("all_monthly_queue_records", []) or [])
+    )
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \
                   [(i, c, "untapped") for i, c in enumerate(untapped)] + \
@@ -238,7 +251,8 @@ def check_json(path: Path) -> list[str]:
                   [(i, c, "weekly_delta") for i, c in enumerate(weekly_delta)] + \
                   [(i, c, "opp_segment") for i, c in enumerate(opp_segments)] + \
                   [(i, c, "usd_crm") for i, c in enumerate(usd_crm_records)] + \
-                  [(i, c, "opportunity_history") for i, c in enumerate(opportunity_history_records)]
+                  [(i, c, "opportunity_history") for i, c in enumerate(opportunity_history_records)] + \
+                  [(i, c, "monthly_queue") for i, c in enumerate(monthly_queue_records)]
 
     for i, record, record_type in all_records:
         for field in record:

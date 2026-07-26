@@ -759,6 +759,22 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  USD Contract CRM failed (non-fatal): {exc}")
 
+    # 7b6. Monthly Executive Queue — curated top-20 execution lists (inbound
+    # this month, reactivation due, soft-closed keep-warm, USD recruiter
+    # follow-ups) + a top-50 secondary backlog, built from Opportunity
+    # History + the USD Contract CRM dict just computed above. Runs LAST so
+    # it can read usd_crm_data's follow_up_queue/active_process_pipeline.
+    # Embedded into usd_crm_data itself so it flows into the public JSON the
+    # same way Opportunity History does (usd_contract_crm.monthly_executive_queue).
+    try:
+        from src.monthly_executive_queue import run_monthly_executive_queue
+        monthly_executive_queue_data = run_monthly_executive_queue(
+            opportunity_history_data=opportunity_history_data, usd_crm_data=usd_crm_data,
+        )
+        usd_crm_data["monthly_executive_queue"] = monthly_executive_queue_data
+    except Exception as exc:
+        logger.warning(f"  Monthly Executive Queue failed (non-fatal): {exc}")
+
     # 7c. Export public dashboard JSON (for static GitHub Pages dashboard)
     logger.info("  Exporting public dashboard JSON ...")
     try:
