@@ -728,19 +728,33 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Untapped Network Intelligence failed (non-fatal): {exc}")
 
-    # 7b4. USD Contract CRM (hybrid) — reads local/manual CSVs (data/manual/
+    # 7b4. Opportunity History Engine — monthly message-intelligence-derived
+    # opportunity events (inbound contacts, active talent pool, salary/CV/
+    # interview requests, client submissions, rejections, soft-closed
+    # "keep on radar" leads, location/eligibility blocks, career-site
+    # redirects) built from messages.csv. Runs BEFORE the USD Contract CRM
+    # so its sanitized output can be embedded as that page's Opportunity
+    # History section.
+    opportunity_history_data = {}
+    try:
+        from src.opportunity_history_engine import run_opportunity_history_engine
+        opportunity_history_data = run_opportunity_history_engine(classified_df=df)
+    except Exception as exc:
+        logger.warning(f"  Opportunity History Engine failed (non-fatal): {exc}")
+
+    # 7b5. USD Contract CRM (hybrid) — reads local/manual CSVs (data/manual/
     # usd_pipeline.csv, job_applications.csv, recruiter_outreach_log.csv) if
     # present, AND auto-populates a recommended USD pipeline from the
     # already-sanitized intelligence this run just produced (classified
     # connections + opportunity buckets, outreach-adjusted scores, Untapped
-    # Network Intelligence, Lead Reactivation). Never empty just because the
-    # manual CSVs are absent — see src/usd_contract_crm.py.
+    # Network Intelligence, Lead Reactivation, Opportunity History). Never
+    # empty just because the manual CSVs are absent — see src/usd_contract_crm.py.
     usd_crm_data = {}
     try:
         from src.usd_contract_crm import run_usd_contract_crm
         usd_crm_data = run_usd_contract_crm(
             classified_df=df, lead_data=lead_data, untapped_data=untapped_data,
-            outreach_scores=outreach_scores,
+            outreach_scores=outreach_scores, opportunity_history_data=opportunity_history_data,
         )
     except Exception as exc:
         logger.warning(f"  USD Contract CRM failed (non-fatal): {exc}")

@@ -13,6 +13,11 @@ USD Contract CRM — a HYBRID CRM combining:
      (src/untapped_network_intelligence.py), and the classified connections
      dataframe + outreach-adjusted scores (src/outreach_adjusted_scoring.py)
      — i.e. the same data that backs Top Contacts / Opportunity Market.
+  3. Monthly opportunity history (src/opportunity_history_engine.py) —
+     inbound opportunities, active talent pool invites, salary/CV/interview
+     requests, client submissions, soft-closed "keep on radar" leads, and a
+     reactivation calendar, classified from messages.csv. Passed through as
+     its own section — never merged into (1)/(2)'s counts.
 
 No LinkedIn scraping, browsing, or automation of any kind — every input here
 is either a hand-filled local CSV or an in-memory dataframe/dict this
@@ -912,18 +917,27 @@ def run_usd_contract_crm(
     lead_data: dict | None = None,
     untapped_data: dict | None = None,
     outreach_scores: dict | None = None,
+    opportunity_history_data: dict | None = None,
 ) -> dict:
-    """Hybrid USD Contract CRM:
-      1. Manual records from data/manual/*.csv (optional, can be empty).
-      2. Auto-suggested USD pipeline records derived from Lead Reactivation,
+    """Hybrid USD Contract CRM — five distinct, never-conflated sections:
+      A. Manual records from data/manual/*.csv (optional, can be empty).
+      B. Auto-suggested USD pipeline records derived from Lead Reactivation,
          Untapped Network Intelligence, and classified connections + outreach
          scores — so the CRM is never empty just because manual CSVs are
          empty/absent, as long as the weekly pipeline has produced any of
          that intelligence.
+      C. Inbound opportunity history (src/opportunity_history_engine.py) —
+         monthly message-intelligence-derived events. Passed through
+         unmodified (already sanitized/classified upstream); never merged
+         into A/B's counts, so soft-closed or auto-suggested items can never
+         be counted as manual applications or confirmed opportunities.
+      D. Reactivation calendar (from the same opportunity history engine).
+      E. Soft-closed future leads (from the same engine) — never counted as
+         active applications or as a rejection.
 
-    Returns {"available": False} only when BOTH manual CSVs AND auto-suggested
-    intelligence are entirely absent (e.g. no LinkedIn export has ever been
-    processed at all).
+    Returns {"available": False} only when manual CSVs, auto-suggested
+    intelligence, AND opportunity history are all entirely absent (e.g. no
+    LinkedIn export has ever been processed at all).
     """
     pipeline_raw     = _read_manual_csv(USD_PIPELINE_CSV, PIPELINE_COLUMNS, "usd_pipeline")
     applications_raw = _read_manual_csv(JOB_APPLICATIONS_CSV, APPLICATION_COLUMNS, "job_applications")
@@ -953,9 +967,11 @@ def run_usd_contract_crm(
         "auto_suggested_usd_leads", "recruiter_pipeline", "follow_up_auto",
         "first_outreach_queue", "active_process_auto",
     ))
+    opportunity_history_available = bool(opportunity_history_data and opportunity_history_data.get("available"))
 
-    if not manual_available and not auto_available:
-        logger.info("  USD Contract CRM: no manual CSVs and no auto-suggested intelligence — skipping.")
+    if not manual_available and not auto_available and not opportunity_history_available:
+        logger.info("  USD Contract CRM: no manual CSVs, no auto-suggested intelligence, and no "
+                    "opportunity history — skipping.")
         return {"available": False}
 
     manual_opportunities = _build_manual_opportunities(pipeline_df)
@@ -995,6 +1011,7 @@ def run_usd_contract_crm(
         OUTPUTS_DIR / "usd_follow_up_queue.csv", index=False, encoding="utf-8-sig",
     )
 
+    oh_summary = (opportunity_history_data or {}).get("summary", {}) if opportunity_history_available else {}
     logger.info(
         f"  USD Contract CRM: manual_opportunities={summary['manual_usd_opportunities']} "
         f"auto_suggested_leads={summary['auto_suggested_usd_leads']} "
@@ -1003,7 +1020,10 @@ def run_usd_contract_crm(
         f"followups={summary['recommended_followups']} (due={summary['followups_due']}) "
         f"active_interview_signals={summary['active_interview_signals']} "
         f"manual_applications={summary['manual_applications_sent']} "
-        f"high_risk={summary['high_risk_manual_opportunities']}"
+        f"high_risk={summary['high_risk_manual_opportunities']} | "
+        f"opportunity_history: inbound={oh_summary.get('inbound_opportunities_total', 0)} "
+        f"soft_closed={oh_summary.get('soft_closed_total', 0)} "
+        f"reactivation_due_now={oh_summary.get('reactivation_due_now', 0)}"
     )
 
     return {
@@ -1018,6 +1038,11 @@ def run_usd_contract_crm(
         "manual_applications":    manual_applications,
         "contingency_risk":       contingency_risk,
         "outreach_summary":       outreach_summary,
+        # C/D/E — Opportunity History (src/opportunity_history_engine.py).
+        # Passed through as its own section: never merged into manual/auto
+        # counts above, so soft-closed or inbound-only events can never be
+        # miscounted as confirmed applications or active processes.
+        "opportunity_history":    opportunity_history_data or {"available": False},
     }
 
 

@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1784805924">
+  <link rel="stylesheet" href="./assets/style.css?v=1785078027">
 </head>
 <body>
 
@@ -1211,6 +1211,123 @@ python src/validate_static_dashboard_runtime.py</pre>
           <table class="usdcrm-table"><thead></thead><tbody id="usdcrm-risk-backup-tbody"></tbody></table>
         </div>
 
+        <!-- 11. Opportunity History & Monthly Pipeline (message-intelligence-derived) -->
+        <div class="page-header" style="margin-top:2rem">
+          <h2>Opportunity History &amp; Monthly Pipeline</h2>
+          <p>Built from LinkedIn message intelligence only — no scraping, no raw message content. Every event is a short, classified signal (inbound contact, salary/CV/interview request, rejection, soft-close, blocker, redirect).</p>
+        </div>
+
+        <div id="opphist-no-data" style="display:none">
+          <div class="alert alert-info">
+            <span class="alert-icon">&#128197;</span>
+            <span>No opportunity history yet. Run the weekly pipeline with messages.csv present to populate this section.</span>
+          </div>
+        </div>
+
+        <div id="opphist-main-content">
+          <div class="metrics-grid" id="opphist-summary"></div>
+
+          <div class="section-label">1. Monthly Opportunity Timeline</div>
+          <div class="chart-box" style="max-width:900px;margin:1rem 0">
+            <h4>Monthly Opportunity Signals</h4>
+            <canvas id="chart-opphist-monthly"></canvas>
+          </div>
+          <div class="table-wrap">
+            <table id="opphist-monthly-table">
+              <thead><tr>
+                <th>Month</th><th>Inbound</th><th>Active Talent Pool</th><th>Salary Requested</th>
+                <th>CV Requested</th><th>Calls Requested</th><th>Interviews</th><th>Client Submissions</th>
+                <th>Soft-Closed</th><th>Hard Rejections</th><th>Location Blockers</th>
+                <th>Reactivation Due</th><th>Hot</th><th>Warm</th>
+              </tr></thead>
+              <tbody id="opphist-monthly-tbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Shared filter bar for the event-level tables below -->
+          <div class="section-label">Filters (apply to sections 2-6 below)</div>
+          <div class="filters-bar">
+            <div class="filter-group" style="min-width:160px"><label>Search name/company</label>
+              <input type="text" id="opphist-search" placeholder="e.g. Qubika, Mariana...">
+            </div>
+            <div class="filter-group"><label>Month</label>
+              <select id="opphist-month-filter"><option value="">All</option></select>
+            </div>
+            <div class="filter-group"><label>Event Type</label>
+              <select id="opphist-event-type-filter"><option value="">All</option></select>
+            </div>
+            <div class="filter-group"><label>Stage</label>
+              <select id="opphist-stage-filter"><option value="">All</option></select>
+            </div>
+            <div class="filter-group"><label>Signal Strength</label>
+              <select id="opphist-strength-filter">
+                <option value="">All</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <div class="filter-group"><label>Persona</label>
+              <select id="opphist-persona-filter"><option value="">All</option></select>
+            </div>
+            <div class="filter-group"><label>Company</label>
+              <input type="text" id="opphist-company-filter" placeholder="e.g. Qubika" style="width:140px">
+            </div>
+            <div class="filter-group"><label>Opportunity Bucket</label>
+              <select id="opphist-bucket-filter"><option value="">All</option></select>
+            </div>
+            <div class="filter-group"><label>Inbound only</label>
+              <input type="checkbox" id="opphist-inbound-only">
+            </div>
+            <div class="filter-group"><label>Reactivation due this month</label>
+              <input type="checkbox" id="opphist-reactivation-due-only">
+            </div>
+            <div class="filter-group"><label>Soft closed only</label>
+              <input type="checkbox" id="opphist-soft-closed-only">
+            </div>
+            <div class="filter-group"><label>Active opportunities only</label>
+              <input type="checkbox" id="opphist-active-only">
+            </div>
+            <button class="btn-primary" onclick="applyOpphistFilters()">Apply</button>
+            <button class="btn-ghost" onclick="resetOpphistFilters()">Reset</button>
+          </div>
+
+          <!-- 2. Inbound Opportunities -->
+          <div class="section-label" id="opphist-section-inbound">2. Inbound Opportunities</div>
+          <div class="table-stats" id="opphist-inbound-stats"></div>
+          <div class="table-wrap">
+            <table class="opphist-table"><thead></thead><tbody id="opphist-inbound-tbody"></tbody></table>
+          </div>
+
+          <!-- 3. Active Talent Pool / Salary Requested -->
+          <div class="section-label" id="opphist-section-active">3. Active Talent Pool / Salary Requested</div>
+          <div class="table-stats" id="opphist-active-stats"></div>
+          <div class="table-wrap">
+            <table class="opphist-table"><thead></thead><tbody id="opphist-active-tbody"></tbody></table>
+          </div>
+
+          <!-- 4. Soft-Closed Future Reactivation -->
+          <div class="section-label" id="opphist-section-softclosed">4. Soft-Closed Future Reactivation</div>
+          <div class="table-stats" id="opphist-softclosed-stats"></div>
+          <div class="table-wrap">
+            <table class="opphist-table"><thead></thead><tbody id="opphist-softclosed-tbody"></tbody></table>
+          </div>
+
+          <!-- 5. Rejected / Closed Processes -->
+          <div class="section-label" id="opphist-section-rejected">5. Rejected / Closed Processes</div>
+          <div class="table-stats" id="opphist-rejected-stats"></div>
+          <div class="table-wrap">
+            <table class="opphist-table"><thead></thead><tbody id="opphist-rejected-tbody"></tbody></table>
+          </div>
+
+          <!-- 6. Reactivation Calendar -->
+          <div class="section-label" id="opphist-section-calendar">6. Reactivation Calendar</div>
+          <div class="table-stats" id="opphist-calendar-stats"></div>
+          <div class="table-wrap">
+            <table class="opphist-table"><thead></thead><tbody id="opphist-calendar-tbody"></tbody></table>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1430,6 +1547,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1784805924"></script>
+<script src="./assets/app.js?v=1785078027"></script>
 </body>
 </html>

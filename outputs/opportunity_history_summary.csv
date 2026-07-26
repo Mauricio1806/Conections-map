@@ -1,0 +1,16 @@
+﻿metric,value
+total_events,4202
+total_conversations,4131
+inbound_opportunities_total,123
+active_talent_pool_total,1
+salary_requested_total,41
+cv_requested_total,65
+calls_requested_total,25
+interviews_total,8
+client_submissions_total,0
+soft_closed_total,77
+hard_rejections_total,3
+location_blockers_total,5
+reactivation_due_now,464
+hot_opportunities_total,132
+warm_opportunities_total,157

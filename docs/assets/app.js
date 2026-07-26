@@ -221,6 +221,7 @@ window.addEventListener('DOMContentLoaded', () => {
       safeRender('Leads',       renderLeads);
       safeRender('Untapped',    renderUntapped);
       safeRender('Usdcrm',      renderUsdCrm);
+      safeRender('Opphist',     renderOpportunityHistory);
       safeRender('Quality',     renderQuality);
       safeRender('Weekly',      renderWeekly);
     })
@@ -4452,6 +4453,255 @@ window.applyUsdCrmKpiFilter = function(key) {
     if (el) { el.checked = true; applyUsdCrmFilters(); }
   }
   const targetId = USDCRM_KPI_SCROLL[key];
+  const target = targetId && document.getElementById(targetId);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+// ── Opportunity History & Monthly Pipeline (message-intelligence-derived) ──
+// Lives inside the USD Contract CRM page. Every row uses the unified event
+// schema from src/opportunity_history_engine.py (see EVENT_COLUMNS) —
+// contact_name, company, role, persona, event_month/date, opportunity_event_type,
+// opportunity_stage, opportunity_signal_strength, score, reactivation_date,
+// reason_short, message_angle, profile_url — no raw message content ever.
+
+const OPPHIST_MAX_RENDERED_ROWS = 500;
+
+const OPPHIST_COLUMNS = [
+  'Month', 'Contact', 'Company', 'Role', 'Persona', 'Event Type', 'Stage',
+  'Strength', 'Score', 'Reactivation Date', 'Reason', 'Message Angle', 'Link',
+];
+
+function opphistTableHeaderHtml() {
+  return '<tr>' + OPPHIST_COLUMNS.map(c => '<th>' + c + '</th>').join('') + '</tr>';
+}
+
+function opphistStrengthBadge(s) {
+  const cls = s === 'High' ? 'urgency-critical' : s === 'Medium' ? 'urgency-medium' : 'urgency-low';
+  return '<span class="urgency-badge ' + cls + '">' + (s || '—') + '</span>';
+}
+
+function opphistRowHtml(e) {
+  const score = parseInt(e.score) || 0;
+  const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+  const link = e.profile_url || '';
+  return '<tr>'
+    + '<td style="font-size:0.72rem;white-space:nowrap">' + (e.event_month || '—') + '</td>'
+    + '<td style="white-space:nowrap">' + (e.contact_name || '—') + '</td>'
+    + '<td style="white-space:nowrap">' + (e.company || '—') + '</td>'
+    + '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (e.role || '—') + '</td>'
+    + '<td style="font-size:0.75rem">' + (e.persona || '—') + '</td>'
+    + '<td style="font-size:0.72rem;max-width:150px;white-space:normal">' + (e.opportunity_event_type || '—') + '</td>'
+    + '<td style="font-size:0.72rem;max-width:150px;white-space:normal">' + (e.opportunity_stage || '—') + '</td>'
+    + '<td>' + opphistStrengthBadge(e.opportunity_signal_strength) + '</td>'
+    + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+    + '<td style="font-size:0.72rem;white-space:nowrap">' + (e.reactivation_date || '—') + '</td>'
+    + '<td style="font-size:0.7rem;max-width:220px;white-space:normal">' + (e.reason_short || '—') + '</td>'
+    + '<td style="font-size:0.7rem;max-width:220px;white-space:normal">' + (e.message_angle || '—') + '</td>'
+    + '<td>' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
+    + '</tr>';
+}
+
+function _opphistCurrentMonth() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+}
+
+function _opphistData() {
+  return ((D.usd_contract_crm || {}).opportunity_history) || { available: false };
+}
+
+function renderOpportunityHistory() {
+  const oh = _opphistData();
+  const noData = document.getElementById('opphist-no-data');
+  const mainContent = document.getElementById('opphist-main-content');
+
+  if (!oh.available) {
+    if (noData) noData.style.display = '';
+    if (mainContent) mainContent.style.display = 'none';
+    return;
+  }
+  if (noData) noData.style.display = 'none';
+  if (mainContent) mainContent.style.display = '';
+
+  document.querySelectorAll('#page-usdcrm .opphist-table thead').forEach(t => {
+    if (!t.innerHTML.trim()) t.innerHTML = opphistTableHeaderHtml();
+  });
+
+  const s = oh.summary || {};
+  const currentMonth = _opphistCurrentMonth();
+  const inboundThisMonth = (oh.inbound_opportunities || []).filter(e => e.event_month === currentMonth).length;
+
+  const sumEl = document.getElementById('opphist-summary');
+  if (sumEl) sumEl.innerHTML = [
+    makeKpiCard('inbound_this_month', 'Inbound Opportunities This Month', inboundThisMonth, 'click to view', 'good', 'applyOpphistKpiFilter'),
+    makeKpiCard('salary_requested',   'Salary Requested',                 s.salary_requested_total || 0,      'click to view', '',     'applyOpphistKpiFilter'),
+    makeKpiCard('calls_requested',    'Calls Requested',                  s.calls_requested_total || 0,       'click to view', '',     'applyOpphistKpiFilter'),
+    makeKpiCard('active_talent_pool', 'Active Talent Pool',               s.active_talent_pool_total || 0,    'click to view', 'good', 'applyOpphistKpiFilter'),
+    makeKpiCard('cv_requested',       'CV Requested',                     s.cv_requested_total || 0,          'click to view', '',     'applyOpphistKpiFilter'),
+    makeKpiCard('soft_closed',        'Soft-Closed / Keep on Radar',      s.soft_closed_total || 0,           'click to view', '',     'applyOpphistKpiFilter'),
+    makeKpiCard('reactivation_due',   'Reactivation Due',                 s.reactivation_due_now || 0, s.reactivation_due_now ? 'action needed' : '', 'warn', 'applyOpphistKpiFilter'),
+    makeKpiCard('rejected',           'Rejected / Closed',                s.hard_rejections_total || 0,       'click to view', '',     'applyOpphistKpiFilter'),
+    makeKpiCard('location_blockers',  'Location Blockers',                s.location_blockers_total || 0,     'click to view', '',     'applyOpphistKpiFilter'),
+  ].join('');
+
+  renderOpphistMonthlyTable(oh.monthly_pipeline || []);
+  renderOpphistMonthlyChart(oh.monthly_pipeline || []);
+
+  const allEvents = oh.events || [];
+  _usdCrmPopulateSelect('opphist-month-filter', (oh.monthly_pipeline || []).map(m => m.month));
+  _usdCrmPopulateSelect('opphist-event-type-filter', allEvents.map(e => e.opportunity_event_type));
+  _usdCrmPopulateSelect('opphist-stage-filter', allEvents.map(e => e.opportunity_stage));
+  _usdCrmPopulateSelect('opphist-persona-filter', allEvents.map(e => e.persona));
+  _usdCrmPopulateSelect('opphist-bucket-filter', allEvents.map(e => e.opportunity_bucket));
+
+  applyOpphistFilters();
+}
+
+function renderOpphistMonthlyTable(rows) {
+  const tbody = document.getElementById('opphist-monthly-tbody');
+  if (!tbody) return;
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:var(--text-muted)">No monthly data yet.</td></tr>';
+    return;
+  }
+  const sorted = [...rows].sort((a, b) => (a.month || '').localeCompare(b.month || ''));
+  tbody.innerHTML = sorted.map(m => '<tr>'
+    + '<td style="white-space:nowrap"><strong>' + (m.month || '—') + '</strong></td>'
+    + '<td>' + (m.inbound_opportunities || 0) + '</td>'
+    + '<td>' + (m.active_talent_pool || 0) + '</td>'
+    + '<td>' + (m.salary_requested || 0) + '</td>'
+    + '<td>' + (m.cv_requested || 0) + '</td>'
+    + '<td>' + (m.calls_requested || 0) + '</td>'
+    + '<td>' + (m.interviews || 0) + '</td>'
+    + '<td>' + (m.client_submissions || 0) + '</td>'
+    + '<td>' + (m.soft_closed_keep_radar || 0) + '</td>'
+    + '<td>' + (m.hard_rejections || 0) + '</td>'
+    + '<td>' + (m.location_blockers || 0) + '</td>'
+    + '<td>' + (m.reactivation_due || 0) + '</td>'
+    + '<td>' + (m.hot_opportunities || 0) + '</td>'
+    + '<td>' + (m.warm_opportunities || 0) + '</td>'
+    + '</tr>').join('');
+}
+
+function renderOpphistMonthlyChart(rows) {
+  const canvas = document.getElementById('chart-opphist-monthly');
+  if (!canvas) return;
+  const sorted = [...rows].sort((a, b) => (a.month || '').localeCompare(b.month || ''));
+  const labels = sorted.map(m => m.month);
+  groupedBarChart('chart-opphist-monthly', labels, [
+    { label: 'Inbound Opportunities', data: sorted.map(m => m.inbound_opportunities || 0), color: '#3fb950' },
+    { label: 'Calls / Interviews',    data: sorted.map(m => (m.calls_requested || 0) + (m.interviews || 0)), color: '#3b82f6' },
+    { label: 'Soft Closed',           data: sorted.map(m => m.soft_closed_keep_radar || 0), color: '#d29922' },
+    { label: 'Reactivation Due',      data: sorted.map(m => m.reactivation_due || 0), color: '#f85149' },
+  ]);
+}
+
+function renderOpphistSection(tbodyId, statsId, sourceArr, pred) {
+  const filtered = sourceArr.filter(pred).sort((a, b) => (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0));
+  const statsEl = document.getElementById(statsId);
+  if (statsEl) statsEl.textContent = 'Showing ' + filtered.length + ' of ' + sourceArr.length;
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;color:var(--text-muted)">No events match the current filters.</td></tr>';
+    return;
+  }
+  const shown = filtered.slice(0, OPPHIST_MAX_RENDERED_ROWS);
+  let html = shown.map(opphistRowHtml).join('');
+  if (filtered.length > OPPHIST_MAX_RENDERED_ROWS) {
+    html += '<tr><td colspan="13" style="text-align:center;color:var(--text-muted);font-size:0.75rem">'
+      + '… ' + (filtered.length - OPPHIST_MAX_RENDERED_ROWS) + ' more rows — narrow the filters above to see them</td></tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+window.applyOpphistFilters = function() {
+  const search        = _usdCrmVal('opphist-search').toLowerCase();
+  const month         = _usdCrmVal('opphist-month-filter');
+  const eventType     = _usdCrmVal('opphist-event-type-filter');
+  const stage         = _usdCrmVal('opphist-stage-filter');
+  const strength      = _usdCrmVal('opphist-strength-filter');
+  const persona       = _usdCrmVal('opphist-persona-filter');
+  const company       = _usdCrmVal('opphist-company-filter').toLowerCase();
+  const bucket        = _usdCrmVal('opphist-bucket-filter');
+  const inboundOnly   = _usdCrmChecked('opphist-inbound-only');
+  const reactivationDueOnly = _usdCrmChecked('opphist-reactivation-due-only');
+  const softClosedOnly = _usdCrmChecked('opphist-soft-closed-only');
+  const activeOnly    = _usdCrmChecked('opphist-active-only');
+  const currentMonth  = _opphistCurrentMonth();
+
+  const ACTIVE_TYPES = ['Inbound Opportunity', 'Recruiter Outreach', 'Active Talent Pool',
+    'Salary Expectations Requested', 'CV Requested', 'Application Requested',
+    'Recruiter Call Proposed', 'Interview Process', 'Client Submission',
+    'Technical Interview', 'Offer / Contract Discussion'];
+
+  function pred(e) {
+    if (search) {
+      const hay = ((e.contact_name || '') + ' ' + (e.company || '')).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    if (month && e.event_month !== month) return false;
+    if (eventType && e.opportunity_event_type !== eventType) return false;
+    if (stage && e.opportunity_stage !== stage) return false;
+    if (strength && e.opportunity_signal_strength !== strength) return false;
+    if (persona && e.persona !== persona) return false;
+    if (company && !(e.company || '').toLowerCase().includes(company)) return false;
+    if (bucket && e.opportunity_bucket !== bucket) return false;
+    if (inboundOnly && !(e.opportunity_event_type === 'Inbound Opportunity' || e.inbound_recruiter_contact)) return false;
+    if (reactivationDueOnly && !(e.reactivation_date && e.reactivation_date.slice(0, 7) === currentMonth)) return false;
+    if (softClosedOnly && !e.soft_closed) return false;
+    if (activeOnly && !ACTIVE_TYPES.includes(e.opportunity_event_type)) return false;
+    return true;
+  }
+
+  const oh = _opphistData();
+  const allEvents = oh.events || [];
+  renderOpphistSection('opphist-inbound-tbody', 'opphist-inbound-stats', oh.inbound_opportunities || [], pred);
+  renderOpphistSection('opphist-active-tbody', 'opphist-active-stats',
+    allEvents.filter(e => e.active_talent_pool_signal || e.salary_expectation_requested), pred);
+  renderOpphistSection('opphist-softclosed-tbody', 'opphist-softclosed-stats', oh.soft_closed_future_leads || [], pred);
+  renderOpphistSection('opphist-rejected-tbody', 'opphist-rejected-stats',
+    allEvents.filter(e => e.rejected_or_closed), pred);
+  renderOpphistSection('opphist-calendar-tbody', 'opphist-calendar-stats', oh.reactivation_calendar || [], pred);
+};
+
+window.resetOpphistFilters = function() {
+  const el = document.getElementById('opphist-search'); if (el) el.value = '';
+  const co = document.getElementById('opphist-company-filter'); if (co) co.value = '';
+  ['opphist-month-filter', 'opphist-event-type-filter', 'opphist-stage-filter',
+   'opphist-strength-filter', 'opphist-persona-filter', 'opphist-bucket-filter'].forEach(id => {
+    const s = document.getElementById(id); if (s) s.value = '';
+  });
+  ['opphist-inbound-only', 'opphist-reactivation-due-only', 'opphist-soft-closed-only', 'opphist-active-only'].forEach(id => {
+    const c = document.getElementById(id); if (c) c.checked = false;
+  });
+  applyOpphistFilters();
+};
+
+const OPPHIST_KPI_SCROLL = {
+  inbound_this_month: 'opphist-section-inbound',
+  salary_requested:   'opphist-section-active',
+  calls_requested:    'opphist-section-active',
+  active_talent_pool: 'opphist-section-active',
+  cv_requested:        'opphist-section-active',
+  soft_closed:         'opphist-section-softclosed',
+  reactivation_due:    'opphist-section-calendar',
+  rejected:            'opphist-section-rejected',
+  location_blockers:   'opphist-section-rejected',
+};
+
+window.applyOpphistKpiFilter = function(key) {
+  if (key === 'reactivation_due') {
+    const el = document.getElementById('opphist-reactivation-due-only');
+    if (el) { el.checked = true; applyOpphistFilters(); }
+  } else if (key === 'soft_closed') {
+    const el = document.getElementById('opphist-soft-closed-only');
+    if (el) { el.checked = true; applyOpphistFilters(); }
+  } else if (key === 'inbound_this_month') {
+    const monthSel = document.getElementById('opphist-month-filter');
+    if (monthSel) { monthSel.value = _opphistCurrentMonth(); applyOpphistFilters(); }
+  }
+  const targetId = OPPHIST_KPI_SCROLL[key];
   const target = targetId && document.getElementById(targetId);
   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };

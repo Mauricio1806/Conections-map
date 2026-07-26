@@ -85,6 +85,7 @@ AE Talents Group Inc,NEEDS_COMPANY_MAPPING,0.4,ae talents
 AEP Talento,NEEDS_COMPANY_MAPPING,0.4,aep talento
 AEVO,BRAZIL_CONFIRMED,0.85,aevo
 AFAP Itaú,BRAZIL_CONFIRMED,0.85,afap itaú
+AFFINITY,GLOBAL_OPPORTUNITY,0.55,affinity
 AFIP-Associação Fundo de Incentivo à Pesquisa,LANGUAGE_PORTUGUESE_MARKET,0.65,afip-associação fundo de incentivo à pesquisa
 AFPESP,LANGUAGE_PORTUGUESE_MARKET,0.65,afpesp
 AG.labs,LANGUAGE_PORTUGUESE_MARKET,0.65,.labs
@@ -97,7 +98,7 @@ AHU Technologies Pvt Ltd,GLOBAL_OPPORTUNITY,0.55,ahu pvt
 AI Futures,GLOBAL_TECH,0.75,ai futures
 AI Safety Brazil,BRAZIL_CONFIRMED,0.85,ai safety
 AI Spaces LLC,GLOBAL_OPPORTUNITY,0.55,ai spaces
-AI/R,GLOBAL_OPPORTUNITY,0.55,ai/r
+AI/R,GLOBAL_TECH,0.75,ai/r
 AI/R Everymind,GLOBAL_TECH,0.75,ai/r everymind
 AI71,GLOBAL_TECH,0.75,ai71
 AIESEC in Hungary,GLOBAL_TECH,0.75,aiesec in hungary
@@ -108,7 +109,7 @@ AIPERIA,GLOBAL_TECH,0.75,aiperia
 AJ FLX,GLOBAL_OPPORTUNITY,0.55,aj flx
 AJOB TALENTS,BRAZIL_CONFIRMED,0.85,ajob talents
 AK Business Intelligence LLC,NEEDS_COMPANY_MAPPING,0.4,ak business intelligence
-AL Consultoria Tech,GLOBAL_OPPORTUNITY,0.55,al
+AL Consultoria Tech | Recrutamento Estratégico Tech,GLOBAL_OPPORTUNITY,0.55,al | recrutamento estratégico
 ALB Representações,LANGUAGE_PORTUGUESE_MARKET,0.65,alb representações
 "ALFA - Consultoria SAP, ERP, BPM e IA",GLOBAL_TECH,0.9,"alfa - sap, erp, bpm e ia"
 ALFA - Sistemas de Gestão SAP Business One (ERP),GLOBAL_TECH,0.9,alfa - de gestão sap business one (erp)
@@ -142,7 +143,6 @@ ANBIMA,BRAZIL_CONFIRMED,0.85,anbima
 ANWB,NEEDS_COMPANY_MAPPING,0.4,anwb
 ANYMARKET HUB,GLOBAL_OPPORTUNITY,0.55,anymarket hub
 ANZ Talent Hub,GLOBAL_OPPORTUNITY,0.55,anz talent hub
-AP BEVERAGE,NEEDS_COMPANY_MAPPING,0.4,ap beverage
 APAA – Associação Paulista dos Amigos da Arte,BRAZIL_CONFIRMED,0.85,apaa – associação paulista dos amigos da arte
 APCRS - Associação de Profissionais de Cibersegurança do Rio Grande do Sul,BRAZIL_CONFIRMED,0.85,apcrs - associação de profissionais de cibersegurança do rio grande do sul
 APGAR,LATAM_USD_CONFIRMED,0.85,apgar
@@ -174,6 +174,7 @@ AS White Global,GLOBAL_OPPORTUNITY,0.55,as white
 ASA,LOW_VALUE_UNRESOLVED,0.1,asa
 ASA Digital,GLOBAL_OPPORTUNITY,0.55,asa
 ASB Bank,GLOBAL_OPPORTUNITY,0.55,asb bank
+ASHRAE Brasília Student Branch,NEEDS_COMPANY_MAPPING,0.4,ashrae brasília student branch
 ASK Consulting,GLOBAL_CONSULTING,0.9,ask
 ASM Tech Solutions,GLOBAL_TECH,0.75,asm
 ASSA ABLOY Group,NEEDS_COMPANY_MAPPING,0.4,assa abloy
@@ -196,7 +197,7 @@ AUTOLAB,GLOBAL_OPPORTUNITY,0.55,autolab
 AUTOPASS S/A,BRAZIL_CONFIRMED,0.85,autopass
 AVA Bioenergia,NEEDS_COMPANY_MAPPING,0.4,ava bioenergia
 AVANT Gestão Financeira,LANGUAGE_PORTUGUESE_MARKET,0.65,avant gestão financeira
-AVANTTi,GLOBAL_OPPORTUNITY,0.72,avantti
+AVANTTi,GLOBAL_OPPORTUNITY,0.55,avantti
 AVLIS Talent,GLOBAL_OPPORTUNITY,0.55,avlis talent
 AWS User Group Passo Fundo,GLOBAL_TECH,0.9,aws user passo fundo
 AXA Global Business Services (AXA GBS),NEEDS_COMPANY_MAPPING,0.4,axa business (axa gbs)
@@ -244,6 +245,7 @@ Accion Labs,GLOBAL_OPPORTUNITY,0.55,accion labs
 Accord Innovations,GLOBAL_OPPORTUNITY,0.55,accord innovations
 Accorp Partners CPA LLC,GLOBAL_OPPORTUNITY,0.55,accorp partners cpa
 Acelen,LANGUAGE_PORTUGUESE_MARKET,0.65,acelen
+Acentecom,GLOBAL_OPPORTUNITY,0.55,acentecom
 Acerto,LANGUAGE_PORTUGUESE_MARKET,0.65,acerto
 Achs,LANGUAGE_PORTUGUESE_MARKET,0.65,achs
 Achs Seguro Laboral,NEEDS_COMPANY_MAPPING,0.4,achs seguro laboral
@@ -271,10 +273,10 @@ Addvisor Group,GLOBAL_OPPORTUNITY,0.55,addvisor
 Adecco,GLOBAL_STAFFING,0.9,adecco
 Adecco Permanent Recruitment,GLOBAL_STAFFING,0.9,adecco permanent recruitment
 Adecoagro,LANGUAGE_PORTUGUESE_MARKET,0.65,adecoagro
-Adelanta,GLOBAL_OPPORTUNITY,0.55,adelanta
 Ademicon,LANGUAGE_PORTUGUESE_MARKET,0.65,ademicon
 Aden,NEEDS_COMPANY_MAPPING,0.4,aden
 Adentis Portugal,SPAIN_EU_CONFIRMED,0.85,adentis portugal
+Aditelsa,GLOBAL_OPPORTUNITY,0.55,aditelsa
 Aditi Consulting,GLOBAL_CONSULTING,0.9,aditi
 Adium,LATAM_USD_LIKELY,0.66,adium
 Adler Consulting,GLOBAL_CONSULTING,0.9,adler
@@ -298,7 +300,7 @@ Aegea Saneamento,NEEDS_COMPANY_MAPPING,0.4,aegea saneamento
 Aegro,NEEDS_COMPANY_MAPPING,0.4,aegro
 Aerosend,NEEDS_COMPANY_MAPPING,0.4,aerosend
 Aerospace,NEEDS_COMPANY_MAPPING,0.4,aerospace
-Afinz,BRAZIL_CONFIRMED,0.85,afinz
+Afinz,LANGUAGE_PORTUGUESE_MARKET,0.65,afinz
 Afriam International,NEEDS_COMPANY_MAPPING,0.4,afriam international
 Africa,LANGUAGE_PORTUGUESE_MARKET,0.65,africa
 Afya,LANGUAGE_PORTUGUESE_MARKET,0.72,afya
@@ -353,6 +355,7 @@ Alegra,GLOBAL_OPPORTUNITY,0.55,alegra
 Alelo Brasil,BRAZIL_CONFIRMED,0.85,alelo
 Alere,LANGUAGE_PORTUGUESE_MARKET,0.65,alere
 Alert Brasil,BRAZIL_CONFIRMED,0.85,alert
+Alerta Médica,NEEDS_COMPANY_MAPPING,0.4,alerta médica
 Alexander Thamm [at],NEEDS_COMPANY_MAPPING,0.4,alexander thamm [at]
 Alfa Center Imóveis,LANGUAGE_PORTUGUESE_MARKET,0.65,alfa center imóveis
 AlfaPeople,NEEDS_COMPANY_MAPPING,0.4,alfapeople
@@ -366,6 +369,7 @@ Algoworks,NEEDS_COMPANY_MAPPING,0.4,algoworks
 Alianzo,LANGUAGE_PORTUGUESE_MARKET,0.65,alianzo
 Aliança Metalurgica S/A,GLOBAL_TECH,0.9,aliança metalurgica
 Aliare,LANGUAGE_PORTUGUESE_MARKET,0.65,aliare
+Alicorp,LATAM_USD_LIKELY,0.66,alicorp
 Alimentos Bloxom,NEEDS_COMPANY_MAPPING,0.4,alimentos bloxom
 "Alimentos Gourmet, S.A",LANGUAGE_PORTUGUESE_MARKET,0.65,alimentos gourmet
 Alimentos Trendy,LATAM_USD_CONFIRMED,0.85,alimentos trendy
@@ -385,6 +389,7 @@ Allied Global,GLOBAL_OPPORTUNITY,0.55,allied
 Allied Global Technology Services,GLOBAL_OPPORTUNITY,0.55,allied
 Allo Bank,NEEDS_COMPANY_MAPPING,0.4,allo bank
 Alltech,BRAZIL_CONFIRMED,0.85,alltech
+"Alltech Consulting Services, Inc",GLOBAL_CONSULTING,0.9,alltech
 AlmapBBDO,NEEDS_COMPANY_MAPPING,0.4,almapbbdo
 Almaviva Solutions,LANGUAGE_PORTUGUESE_MARKET,0.65,almaviva
 Almeida Mercados,LANGUAGE_PORTUGUESE_MARKET,0.65,almeida mercados
@@ -432,6 +437,7 @@ Amcor,LANGUAGE_PORTUGUESE_MARKET,0.65,amcor
 Amdocs,NEEDS_COMPANY_MAPPING,0.4,amdocs
 Amefruits,NEEDS_COMPANY_MAPPING,0.4,amefruits
 Amenitiz,NEEDS_COMPANY_MAPPING,0.4,amenitiz
+American Association of Exporters and Importers (AAEI),NEEDS_COMPANY_MAPPING,0.4,american association of exporters and importers (aaei)
 American IT Systems,GLOBAL_OPPORTUNITY,0.55,american it systems
 American Red Cross,NEEDS_COMPANY_MAPPING,0.4,american red cross
 American Tower do Brasil,BRAZIL_CONFIRMED,0.85,american tower do
@@ -458,6 +464,7 @@ Ana Gaming,NEEDS_COMPANY_MAPPING,0.4,ana gaming
 Ana Recrutamento e Seleção,BRAZIL_CONFIRMED,0.85,ana recrutamento e seleção
 Analisia,BRAZIL_CONFIRMED,0.85,analisia
 Analítica Soluções Inovadoras,NEEDS_COMPANY_MAPPING,0.4,analítica soluções inovadoras
+Ananda Trabajo Temporal,LANGUAGE_PORTUGUESE_MARKET,0.65,ananda trabajo temporal
 Ancar,NEEDS_COMPANY_MAPPING,0.4,ancar
 Ancient - The Wisdom of Technology,GLOBAL_OPPORTUNITY,0.55,ancient - the wisdom of
 Andela,US_CANADA_LIKELY,0.9,andela
@@ -492,10 +499,3 @@ Appai - Associação Beneficente dos Professores RJ,GLOBAL_TECH,0.75,appai - ass
 Appdome,GLOBAL_OPPORTUNITY,0.55,appdome
 Appfire,GLOBAL_OPPORTUNITY,0.55,appfire
 Appinventiv,NEEDS_COMPANY_MAPPING,0.4,appinventiv
-Apple,US_CANADA_CONFIRMED,0.85,apple
-AppleOne Employment Services,GLOBAL_TECH,0.9,appleone employment
-Applica corp,GLOBAL_OPPORTUNITY,0.55,applica
-Applied Materials,GLOBAL_OPPORTUNITY,0.55,applied materials
-Applied Systems,GLOBAL_OPPORTUNITY,0.55,applied systems
-Appmax,BRAZIL_CONFIRMED,0.85,appmax
-Appning by Forvia,NEEDS_COMPANY_MAPPING,0.4,appning by forvia

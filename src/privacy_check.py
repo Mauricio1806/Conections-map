@@ -165,6 +165,19 @@ ALLOWED_CONTACT_FIELDS = {
     "priority", "recommended_action", "reason", "next_action", "profile_url",
     "role_url", "currency", "rate_range", "remote_policy",
     "timezone_required", "timezone_risk", "payment_risk", "contract_risk",
+    # Opportunity History (src/opportunity_history_engine.py) — sanitized
+    # unified event schema only (see EVENT_COLUMNS / MONTHLY_PIPELINE_COLUMNS
+    # there and build_opportunity_history_public() in export_public_dashboard_data.py).
+    "event_id", "conversation_id_hash", "contact_name", "event_month",
+    "event_date", "opportunity_event_type", "opportunity_stage",
+    "opportunity_signal_strength", "inbound_recruiter_contact",
+    "active_talent_pool_signal", "salary_expectation_requested",
+    "cv_requested", "application_requested", "interview_or_call_requested",
+    "client_submission_signal", "technical_interview_signal",
+    "rejected_or_closed", "soft_closed", "location_or_eligibility_blocked",
+    "future_reactivation_candidate", "reactivation_date", "message_angle",
+    "tech_stack_signal", "usd_signal", "latam_signal", "remote_signal",
+    "reason_short",
 }
 
 
@@ -210,6 +223,13 @@ def check_json(path: Path) -> list[str]:
         list((usd_crm.get("contingency_risk", {}) or {}).get("high_risk", []) or []) +
         list((usd_crm.get("contingency_risk", {}) or {}).get("backup", []) or [])
     )
+    oh = usd_crm.get("opportunity_history", {}) or {}
+    opportunity_history_records = (
+        list(oh.get("events", []) or []) +
+        list(oh.get("inbound_opportunities", []) or []) +
+        list(oh.get("soft_closed_future_leads", []) or []) +
+        list(oh.get("reactivation_calendar", []) or [])
+    )
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \
                   [(i, c, "untapped") for i, c in enumerate(untapped)] + \
@@ -217,7 +237,8 @@ def check_json(path: Path) -> list[str]:
                   [(i, c, "gap_drilldown") for i, c in enumerate(gap_drilldown)] + \
                   [(i, c, "weekly_delta") for i, c in enumerate(weekly_delta)] + \
                   [(i, c, "opp_segment") for i, c in enumerate(opp_segments)] + \
-                  [(i, c, "usd_crm") for i, c in enumerate(usd_crm_records)]
+                  [(i, c, "usd_crm") for i, c in enumerate(usd_crm_records)] + \
+                  [(i, c, "opportunity_history") for i, c in enumerate(opportunity_history_records)]
 
     for i, record, record_type in all_records:
         for field in record:

@@ -791,6 +791,54 @@ def _sanitize_records(records: list, allowed: set) -> list:
     return [{k: v for k, v in r.items() if k in allowed} for r in (records or [])]
 
 
+# ── Opportunity History (src/opportunity_history_engine.py) — explicit
+# allowlist, defense in depth on top of what that module already sanitizes
+# (it emits only booleans/scores/dates/short controlled-vocabulary labels —
+# never raw message content, email, phone, or attachments). Mirrors
+# EVENT_COLUMNS / MONTHLY_PIPELINE_COLUMNS there field-for-field.
+SAFE_OPPORTUNITY_HISTORY_SUMMARY_KEYS = {
+    "total_events", "total_conversations", "inbound_opportunities_total",
+    "active_talent_pool_total", "salary_requested_total", "cv_requested_total",
+    "calls_requested_total", "interviews_total", "client_submissions_total",
+    "soft_closed_total", "hard_rejections_total", "location_blockers_total",
+    "reactivation_due_now", "hot_opportunities_total", "warm_opportunities_total",
+}
+SAFE_OPPORTUNITY_EVENT_COLS = {
+    "event_id", "conversation_id_hash", "contact_name", "company", "role",
+    "persona", "profile_url", "event_month", "event_date",
+    "opportunity_event_type", "opportunity_stage", "opportunity_signal_strength",
+    "inbound_recruiter_contact", "active_talent_pool_signal",
+    "salary_expectation_requested", "cv_requested", "application_requested",
+    "interview_or_call_requested", "client_submission_signal",
+    "technical_interview_signal", "rejected_or_closed", "soft_closed",
+    "location_or_eligibility_blocked", "future_reactivation_candidate",
+    "reactivation_date", "recommended_action", "message_angle",
+    "tech_stack_signal", "opportunity_bucket", "usd_signal", "latam_signal",
+    "remote_signal", "score", "reason_short",
+}
+SAFE_MONTHLY_PIPELINE_COLS = {
+    "month", "inbound_opportunities", "active_talent_pool", "salary_requested",
+    "cv_requested", "calls_requested", "interviews", "client_submissions",
+    "soft_closed_keep_radar", "hard_rejections", "location_blockers",
+    "reactivation_due", "hot_opportunities", "warm_opportunities",
+}
+
+
+def build_opportunity_history_public(oh_data: dict) -> dict:
+    if not oh_data or not oh_data.get("available"):
+        return {"available": False}
+    summary = oh_data.get("summary", {}) or {}
+    return {
+        "available": True,
+        "summary": {k: v for k, v in summary.items() if k in SAFE_OPPORTUNITY_HISTORY_SUMMARY_KEYS},
+        "monthly_pipeline":         _sanitize_records(oh_data.get("monthly_pipeline"), SAFE_MONTHLY_PIPELINE_COLS),
+        "events":                   _sanitize_records(oh_data.get("events"), SAFE_OPPORTUNITY_EVENT_COLS),
+        "inbound_opportunities":    _sanitize_records(oh_data.get("inbound_opportunities"), SAFE_OPPORTUNITY_EVENT_COLS),
+        "soft_closed_future_leads": _sanitize_records(oh_data.get("soft_closed_future_leads"), SAFE_OPPORTUNITY_EVENT_COLS),
+        "reactivation_calendar":    _sanitize_records(oh_data.get("reactivation_calendar"), SAFE_OPPORTUNITY_EVENT_COLS),
+    }
+
+
 def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
     if not usd_crm_data or not usd_crm_data.get("available"):
         return {"available": False}
@@ -810,6 +858,10 @@ def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
             "high_risk": _sanitize_records(risk.get("high_risk"), SAFE_USD_CRM_ROW_COLS),
             "backup":    _sanitize_records(risk.get("backup"), SAFE_USD_CRM_ROW_COLS),
         },
+        # New section (this update): Opportunity History & Monthly Pipeline —
+        # see src/opportunity_history_engine.py. Distinct from A/B above;
+        # never merged into their counts.
+        "opportunity_history": build_opportunity_history_public(usd_crm_data.get("opportunity_history")),
     }
 
 
