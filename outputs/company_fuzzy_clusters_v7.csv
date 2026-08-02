@@ -47,6 +47,7 @@ Mineral Resources,NEXA RESOURCES,83.9,below conservative threshold — not merge
 Nômad Recursos Humanos,ADMITA RECURSOS HUMANOS,84.4,below conservative threshold — not merged,False,
 Ocean Investment,CANDOR INVESTMENT,84.8,below conservative threshold — not merged,False,
 Page Executive,HAGER EXECUTIVE,89.7,below conservative threshold — not merged,False,
+Pensecom - Inteligência em Recursos Humanos,PENSECOM®️ INTELIGÊNCIA EM RECURSOS HUMANOS,95.3,token_set_ratio>=90 + shared meaningful token,True,0.68
 Pontifícia Universidade Católica do Rio Grande do Sul,PONTIFÍCIA UNIVERSIDADE CATÓLICA DO PARANÁ,84.8,below conservative threshold — not merged,False,
 Presence Tecnologia,OPEN TECNOLOGIA,82.4,below conservative threshold — not merged,False,
 ProV International,INTERNATIONAL SOS,85.7,below conservative threshold — not merged,False,

@@ -91,6 +91,29 @@
         "company_follows": "8bd541a6dc5101ec"
       },
       "previous_snapshot_id": "snap-2026-07-19"
+    },
+    {
+      "snapshot_id": "snap-2026-08-02",
+      "snapshot_date": "2026-08-02",
+      "folder": "02-08",
+      "ingested_at": "2026-08-02T11:09:50",
+      "connections_rows": 11661,
+      "invitations_rows": 5471,
+      "messages_rows": 7996,
+      "company_follows_rows": 99,
+      "schema_hashes": {
+        "connections": "21a0ae310c07",
+        "invitations": "df23d51f73dd",
+        "messages": "d196d0cc912f",
+        "company_follows": "cf462610629b"
+      },
+      "file_hashes": {
+        "connections": "8e9dbee294631d60",
+        "invitations": "eb7d7a4a16fae05d",
+        "messages": "085af2666871cd5b",
+        "company_follows": "e8fd9910d87c1536"
+      },
+      "previous_snapshot_id": "snap-2026-07-26"
     }
   ]
 }
