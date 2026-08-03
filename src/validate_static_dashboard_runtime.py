@@ -6,16 +6,19 @@ Validates that the static dashboard is ready to run in a browser.
 Run after generate_static_dashboard.py + privacy_check.py.
 
 Checks:
-  1. Required files exist
-  2. dashboard_data.json is valid JSON
-  3. JSON has at least one known data key
+  1. Required files exist (+ docs/assets/data/ dir and every page file)
+  2. dashboard_data.json is valid JSON (lightweight manifest)
+  3. JSON has at least one known manifest key (meta/kpis/page_manifest)
   4. index.html references app.js and style.css
-  5. JS syntax is clean (via node --check if available)
+  5. app.js references lazy loading safely (PAGE_REGISTRY/ensurePageData/ensurePageRendered)
+  6. Every docs/assets/data/*.json page file is valid JSON
+  7. JS syntax is clean (via node --check if available)
 
 Exit code 0 = all checks pass. Non-zero = failure.
 """
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -31,15 +34,34 @@ INDEX_HTML = DOCS_DIR / "index.html"
 APP_JS     = ASSETS_DIR / "app.js"
 STYLE_CSS  = ASSETS_DIR / "style.css"
 DATA_JSON  = ASSETS_DIR / "dashboard_data.json"
+DATA_DIR   = ASSETS_DIR / "data"
 
-REQUIRED_DATA_KEYS = {
-    "metrics", "kpis", "top_contacts",
-    "lead_reactivation", "opportunity_bucket_distribution",
-    "opportunity_market_v5", "market_distribution",
-}
+REQUIRED_DATA_KEYS = {"meta", "kpis", "page_manifest"}
 
 PASS = "[PASS]"
 FAIL = "[FAIL]"
+
+
+def _extract_js_function_body(js_text: str, func_name: str) -> str | None:
+    """Brace-counting extraction of a top-level `function <func_name>(...) {...}`
+    (or `async function ...`) body — regex lookaheads over-extend across
+    nested/sibling braces and silently pull in unrelated code, so this walks
+    braces explicitly instead."""
+    m = re.search(r'(?:async\s+)?function\s+' + re.escape(func_name) + r'\s*\(', js_text)
+    if not m:
+        return None
+    start = js_text.find('{', m.end())
+    if start == -1:
+        return None
+    depth = 0
+    for i in range(start, len(js_text)):
+        if js_text[i] == '{':
+            depth += 1
+        elif js_text[i] == '}':
+            depth -= 1
+            if depth == 0:
+                return js_text[m.start():i + 1]
+    return None
 
 
 def check(label, ok, detail=""):
@@ -90,6 +112,40 @@ def main():
                      f"found: {found_keys or 'NONE'} (expected one of {REQUIRED_DATA_KEYS})"):
             failures += 1
 
+    # 3b. docs/assets/data/ exists, and every page_manifest entry's file
+    # exists and is valid JSON (Data Payload Optimization V1)
+    ok = DATA_DIR.exists() and DATA_DIR.is_dir()
+    if not check(f"docs/assets/data/ directory exists", ok):
+        failures += 1
+
+    page_manifest = (data or {}).get("page_manifest", {})
+    if not check("dashboard_data.json has a non-empty page_manifest", bool(page_manifest)):
+        failures += 1
+
+    for page_id, info in sorted(page_manifest.items()):
+        rel_file = info.get("file", "")
+        page_path = ASSETS_DIR / rel_file if rel_file else None
+        exists = bool(page_path) and page_path.exists()
+        if not check(f"page_manifest['{page_id}'] file exists: {rel_file}", exists):
+            failures += 1
+            continue
+        try:
+            page_data = json.loads(page_path.read_text(encoding="utf-8"), parse_constant=_reject_non_finite)
+            kb = page_path.stat().st_size // 1024
+            check(f"  {rel_file} is valid JSON ({kb} KB)", True)
+            if not page_data and info.get("available"):
+                check(f"  {rel_file} is non-empty (marked available)", False,
+                      "page_manifest says available=true but the file has no keys")
+                failures += 1
+        except Exception as e:
+            check(f"  {rel_file} is valid JSON", False, str(e))
+            failures += 1
+        for dep in info.get("dependencies", []):
+            dep_info = page_manifest.get(dep, {})
+            dep_path = ASSETS_DIR / dep_info.get("file", "") if dep_info.get("file") else None
+            if not check(f"  dependency '{dep}' (needed by '{page_id}') file exists", bool(dep_path) and dep_path.exists()):
+                failures += 1
+
     # 4. index.html references app.js and style.css (with cache-bust ?v=)
     if INDEX_HTML.exists():
         html = INDEX_HTML.read_text(encoding="utf-8")
@@ -115,8 +171,25 @@ def main():
                          "Missing stability guard — rerun the failsafe patch"):
                 failures += 1
 
+        # Data Payload Optimization V1 — lazy-loading machinery must be present
+        # and page-level failures must degrade gracefully (never fatalAppError).
+        for symbol in ["PAGE_REGISTRY", "ensurePageData", "ensurePageRendered", "_fetchJsonWithFallback"]:
+            ok = symbol in js
+            if not check(f"app.js contains lazy-load symbol '{symbol}'", ok,
+                         "Missing lazy-loading machinery — Data Payload Optimization V1 not applied"):
+                failures += 1
+        ensure_rendered_body = _extract_js_function_body(js, "ensurePageRendered")
+        if ensure_rendered_body:
+            ok = "fatalAppError" not in ensure_rendered_body
+            if not check("ensurePageRendered does NOT call fatalAppError on page-load failure", ok,
+                         "a per-page data failure must show a page-level error, not crash the whole dashboard"):
+                failures += 1
+        else:
+            check("ensurePageRendered does NOT call fatalAppError on page-load failure", False,
+                  "could not locate ensurePageRendered function body to inspect")
+            failures += 1
+
         # Forbidden: onerror must not directly call showBootError
-        import re
         onerror_block = re.search(r'window\.onerror\s*=.*?(?=window\.addEventListener|function \w)', js, re.S)
         if onerror_block:
             bad = "showBootError" in onerror_block.group(0)

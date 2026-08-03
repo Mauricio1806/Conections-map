@@ -13,7 +13,7 @@ Privacy rules:
 
 import json
 import logging
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -24,6 +24,7 @@ ROOT        = Path(__file__).resolve().parent.parent
 OUTPUTS_DIR = ROOT / "outputs"
 DOCS_DIR    = ROOT / "docs"
 ASSETS_DIR  = DOCS_DIR / "assets"
+DATA_DIR    = ASSETS_DIR / "data"
 
 PUBLIC_JSON_DOCS    = ASSETS_DIR / "dashboard_data.json"
 PUBLIC_JSON_OUTPUTS = OUTPUTS_DIR / "public_dashboard_data.json"
@@ -980,6 +981,183 @@ def build_needs_mapping_action_plan_public(plan: dict) -> dict:
         "weekly_queue": queue,
         "next_actions": [str(a) for a in (plan.get("next_actions") or [])],
         "recommendation": str(plan.get("recommendation", "")),
+    }
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Data Payload Optimization V1 — splits the full sanitized payload into a
+# lightweight manifest (docs/assets/dashboard_data.json) plus per-page JSON
+# files (docs/assets/data/<page>.json), loaded on demand by app.js.
+#
+# This is called from generate_static_dashboard.py, NOT from
+# export_public_dashboard_data() below — weekly_kpi_delta.py and
+# action_plan_progress.py both enrich outputs/public_dashboard_data.json
+# in place AFTER this module runs (adding weekly_evolution,
+# weekly_people_delta_segments, action_plan_progress, weekly_history), so the
+# split must happen only once that full enrichment pipeline has finished,
+# reading the final outputs/public_dashboard_data.json. export_public_dashboard_data()
+# itself still writes the full (unsplit) payload to both
+# outputs/public_dashboard_data.json (kept as a compatibility artifact) and
+# docs/assets/dashboard_data.json (a placeholder, immediately overwritten by
+# the split manifest at the end of the pipeline).
+# ══════════════════════════════════════════════════════════════════════════
+
+# pageId -> nav data-page attribute in docs/index.html; also the key used in
+# PAGE_DATA_MAP / PAGE_FILE_NAME / PAGE_DEPENDENCIES below.
+PAGE_DATA_MAP = {
+    "overview": [
+        "opportunity_market_v5", "opportunity_market_v5_summary",
+        "persona_distribution", "market_distribution",
+        "lead_reactivation_summary", "untapped_network_summary",
+    ],
+    "heatmap": ["heatmaps"],
+    "gap": ["gap_analysis", "strategic_gap_people_drilldown"],
+    "plan": ["action_plan_30", "action_plan_60", "action_plan_90", "action_plan_progress"],
+    "contacts": ["top_contacts"],
+    "weekly": ["weekly_evolution", "weekly_history", "weekly_people_delta_segments"],
+    "companies": ["company_intel"],
+    "unknown": [
+        "opportunity_market_v5", "opportunity_market_v5_summary",
+        "opportunity_market_people_segments", "needs_mapping_backlog",
+        "needs_mapping_action_plan", "company_resolution_v6", "company_resolution_v7",
+        "unknown_companies", "unknown_resolution",
+    ],
+    "leads": ["lead_reactivation"],
+    "untapped": ["untapped_network"],
+    "usdcrm": ["usd_contract_crm"],
+    "quality": [
+        "opportunity_market_v5", "opportunity_market_v5_summary",
+        "company_resolution_v6", "company_resolution_v7",
+        "untapped_network_summary", "outreach_summary",
+    ],
+}
+
+PAGE_FILE_NAME = {
+    "overview":  "executive_overview.json",
+    "heatmap":   "network_heatmap.json",
+    "gap":       "strategic_gap.json",
+    "plan":      "action_plan.json",
+    "contacts":  "top_contacts.json",
+    "weekly":    "weekly_evolution.json",
+    "companies": "company_intel.json",
+    "unknown":   "opportunity_market.json",
+    "leads":     "lead_reactivation.json",
+    "untapped":  "untapped_network.json",
+    "usdcrm":    "usd_contract_crm.json",
+    "quality":   "data_quality.json",
+}
+
+# Pages whose full functionality needs ANOTHER page's data too (kept
+# separate rather than duplicating a multi-MB array into both files) — e.g.
+# Strategic Gap's "Recommended People to Activate Next" tab reads the same
+# never-contacted population as the Untapped Network page. The frontend
+# loader fetches these dependency files before rendering the page.
+PAGE_DEPENDENCIES = {
+    "gap": ["untapped"],
+}
+
+# Keys that ALWAYS stay in the lightweight manifest — needed cross-page
+# (the kpi() helper, meta/untapped_scoring_note) and tiny (a few KB).
+MANIFEST_KEYS = ["meta", "kpis"]
+
+
+def _build_lead_reactivation_summary(lead_reactivation: dict) -> dict:
+    """Tiny, scalar-only extract for Executive Overview's Lead Reactivation
+    KPI row — avoids Overview needing the full multi-MB lead_reactivation.json
+    just to show six counts."""
+    lr = lead_reactivation or {}
+    fields = [
+        "messages_csv_available", "total_conversations", "this_week_count",
+        "needs_my_response", "hot_reactivation_leads", "hot_leads",
+        "warm_reactivation_leads", "warm_leads", "career_site_follow_ups",
+        "follow_up_due",
+    ]
+    return {k: lr[k] for k in fields if k in lr}
+
+
+def _build_untapped_network_summary(untapped_network: dict) -> dict:
+    """Tiny extract (summary counts + match-method breakdown, no per-contact
+    arrays) for Executive Overview and Data Quality — avoids either needing
+    the full multi-MB untapped_network.json just for a handful of numbers."""
+    un = untapped_network or {}
+    if not un.get("available"):
+        return {"available": False}
+    return {
+        "available": True,
+        "summary": un.get("summary", {}),
+        "match_method_breakdown": un.get("match_method_breakdown", {}),
+    }
+
+
+def split_payload_into_pages(payload: dict) -> tuple[dict, dict]:
+    """
+    Splits a full sanitized dashboard payload into:
+      - manifest: the lightweight dict written to docs/assets/dashboard_data.json
+      - pages:    {pageId: page_dict} written to docs/assets/data/<file>.json
+
+    Every top-level payload key referenced anywhere in PAGE_DATA_MAP /
+    MANIFEST_KEYS ends up in the manifest and/or at least one page; a key
+    that belongs to no page (should not happen — every payload key above is
+    accounted for) is simply never emitted, never silently duplicated.
+    """
+    payload = dict(payload)  # shallow copy — never mutate the caller's dict
+    payload["lead_reactivation_summary"] = _build_lead_reactivation_summary(payload.get("lead_reactivation"))
+    payload["untapped_network_summary"]  = _build_untapped_network_summary(payload.get("untapped_network"))
+
+    pages = {
+        page_id: {k: payload[k] for k in keys if k in payload}
+        for page_id, keys in PAGE_DATA_MAP.items()
+    }
+    manifest = {k: payload[k] for k in MANIFEST_KEYS if k in payload}
+    return manifest, pages
+
+
+def write_split_dashboard_data(payload: dict) -> dict:
+    """
+    Writes the lightweight manifest to docs/assets/dashboard_data.json and
+    each page's data to docs/assets/data/<file>.json.
+
+    Returns a size report dict (Data Payload Optimization V1, Part 5):
+      {"manifest_kb": int, "pages": {pageId: {"file", "kb"}},
+       "total_data_kb": int, "largest_page": (pageId, kb) | (None, 0)}
+    """
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    manifest, pages = split_payload_into_pages(payload)
+
+    page_manifest = {}
+    page_sizes = {}
+    for page_id, page_payload in pages.items():
+        filename = PAGE_FILE_NAME[page_id]
+        path = DATA_DIR / filename
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(page_payload, f, ensure_ascii=False, default=str, indent=2)
+        size_kb = path.stat().st_size // 1024
+        page_sizes[page_id] = size_kb
+        page_manifest[page_id] = {
+            "file": "data/" + filename,
+            "size_kb": size_kb,
+            "available": bool(page_payload),
+            "dependencies": PAGE_DEPENDENCIES.get(page_id, []),
+        }
+
+    manifest["page_manifest"] = page_manifest
+    manifest["build"] = {
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "schema": "split-v1",
+    }
+
+    with open(PUBLIC_JSON_DOCS, "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, default=str, indent=2)
+    manifest_kb = PUBLIC_JSON_DOCS.stat().st_size // 1024
+
+    total_data_kb = sum(page_sizes.values())
+    largest = max(page_sizes.items(), key=lambda kv: kv[1]) if page_sizes else (None, 0)
+
+    return {
+        "manifest_kb": manifest_kb,
+        "pages": {pid: {"file": PAGE_FILE_NAME[pid], "kb": kb} for pid, kb in page_sizes.items()},
+        "total_data_kb": total_data_kb,
+        "largest_page": largest,
     }
 
 

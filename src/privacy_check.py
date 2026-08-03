@@ -2,8 +2,11 @@
 """
 privacy_check.py
 ================
-Validates docs/assets/dashboard_data.json for PII exposure.
-Fails with exit code 1 if any forbidden field or pattern is found.
+Validates every public dashboard JSON for PII exposure — the lightweight
+manifest (docs/assets/dashboard_data.json), every lazy-loaded page file
+(docs/assets/data/*.json, Data Payload Optimization V1), and the
+outputs/public_dashboard_data.json compatibility artifact if present.
+Fails with exit code 1 if any forbidden field or pattern is found in ANY of them.
 
 Run after generate_static_dashboard.py:
     python src/privacy_check.py
@@ -19,8 +22,10 @@ if hasattr(sys.stdout, "buffer"):
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-ROOT      = Path(__file__).resolve().parent.parent
-JSON_PATH = ROOT / "docs" / "assets" / "dashboard_data.json"
+ROOT        = Path(__file__).resolve().parent.parent
+JSON_PATH   = ROOT / "docs" / "assets" / "dashboard_data.json"
+DATA_DIR    = ROOT / "docs" / "assets" / "data"
+OUTPUTS_JSON_PATH = ROOT / "outputs" / "public_dashboard_data.json"
 
 # ─── Part 18 (weekly snapshot refresh) — raw snapshot/export tracking check ───
 # Root-level raw LinkedIn export filenames that must never be committed.
@@ -101,6 +106,12 @@ FORBIDDEN_PATTERNS = [
     # in the JSON text, not just as field names.
     (r'"notes_private"',              "notes_private key found in JSON"),
     (r"raw message",                  "Raw message content phrase found"),
+    # Data Payload Optimization V1, Part 6 — explicit key-name scans as raw
+    # text, defense in depth on top of the FORBIDDEN_RAW_FIELDS record scan
+    # below (catches these key names anywhere in the JSON, not just inside
+    # the specific record arrays this script already knows to walk).
+    (r'"content"\s*:',                "CONTENT key found in JSON"),
+    (r'"attachments"\s*:',            "ATTACHMENTS key found in JSON"),
 ]
 
 # Raw message content field names that must NOT appear in top_contacts
@@ -282,48 +293,91 @@ def check_json(path: Path) -> list[str]:
                 f"found {len(filtered)} matches, sample: {sample}"
             )
 
-    # ── 3. Structure check — top_contacts should exist ───────────────────────
-    if "top_contacts" not in data:
-        violations.append("Missing 'top_contacts' section in JSON")
-
-    if "meta" not in data:
-        violations.append("Missing 'meta' section in JSON")
-
     return violations
+
+
+def check_manifest_structure(manifest_path: Path) -> list[str]:
+    """Structure check specific to the lightweight manifest (dashboard_data.json)
+    — 'top_contacts'/etc. now live in docs/assets/data/*.json instead, so this
+    check no longer applies to every file, only to the manifest itself."""
+    if not manifest_path.exists():
+        return [f"File not found: {manifest_path}"]
+    try:
+        data = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        return [f"JSON parse error: {e}"]
+
+    violations = []
+    if "meta" not in data:
+        violations.append("Missing 'meta' section in manifest")
+    if "page_manifest" not in data:
+        violations.append("Missing 'page_manifest' section in manifest")
+    else:
+        for page_id, info in data["page_manifest"].items():
+            page_path = DATA_DIR / Path(info.get("file", "")).name
+            if info.get("available") and not page_path.exists():
+                violations.append(f"page_manifest references missing file for '{page_id}': {info.get('file')}")
+    return violations
+
+
+def _collect_target_files() -> list[Path]:
+    files = [JSON_PATH]
+    if DATA_DIR.exists():
+        files += sorted(DATA_DIR.glob("*.json"))
+    if OUTPUTS_JSON_PATH.exists():
+        files.append(OUTPUTS_JSON_PATH)
+    return files
 
 
 def main():
     print("=" * 60)
-    print("  Privacy Check — docs/assets/dashboard_data.json")
+    print("  Privacy Check — public dashboard JSON (Data Payload Optimization V1)")
     print("=" * 60)
 
-    violations = check_json(JSON_PATH)
+    targets = _collect_target_files()
+    print(f"  Scanning {len(targets)} file(s):")
+    for p in targets:
+        print(f"    - {p.relative_to(ROOT)}")
+    print()
+
+    all_violations: list[str] = []
+    file_stats: dict[Path, dict] = {}
+    for path in targets:
+        violations = check_json(path)
+        if violations:
+            all_violations += [f"[{path.relative_to(ROOT)}] {v}" for v in violations]
+        else:
+            file_stats[path] = {"size_kb": path.stat().st_size // 1024}
+
+    all_violations += [f"[manifest] {v}" for v in check_manifest_structure(JSON_PATH)]
 
     snapshot_violations = check_no_tracked_raw_snapshots()
     if snapshot_violations:
-        violations = violations + snapshot_violations
+        all_violations += snapshot_violations
     else:
         print("  [OK] No raw LinkedIn export or dated snapshot folder is tracked in git.")
 
-    if violations:
-        print(f"\n  [FAIL] {len(violations)} violation(s) found:\n")
-        for v in violations:
+    if all_violations:
+        print(f"\n  [FAIL] {len(all_violations)} violation(s) found:\n")
+        for v in all_violations:
             print(f"    • {v}")
         print("\n  Fix these issues before publishing to GitHub Pages.")
         print("=" * 60)
         sys.exit(1)
     else:
-        # Load for stats
+        print(f"\n  [PASS] All {len(targets)} file(s) clean.\n")
+        for path, stats in file_stats.items():
+            print(f"     {path.relative_to(ROOT)}  ({stats['size_kb']} KB)")
+        # Extra detail on the two most commonly inspected files
         try:
-            data = json.loads(JSON_PATH.read_text(encoding="utf-8"))
-            contacts = data.get("top_contacts", [])
-            print(f"\n  [PASS]")
-            print(f"     File:     {JSON_PATH.relative_to(JSON_PATH.parent.parent.parent)}")
-            print(f"     Contacts: {len(contacts)}")
-            print(f"     Fields:   {list(contacts[0].keys()) if contacts else 'N/A'}")
-            print(f"     Size:     {JSON_PATH.stat().st_size // 1024} KB")
+            contacts_path = DATA_DIR / "top_contacts.json"
+            if contacts_path.exists():
+                contacts = json.loads(contacts_path.read_text(encoding="utf-8")).get("top_contacts", [])
+                print(f"\n     top_contacts.json: {len(contacts)} contacts")
+                if contacts:
+                    print(f"     Fields: {list(contacts[0].keys())}")
         except Exception:
-            print("\n  [PASS] (no violations found)")
+            pass
 
     print("=" * 60)
 

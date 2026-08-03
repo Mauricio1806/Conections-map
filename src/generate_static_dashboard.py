@@ -20,7 +20,6 @@ Production URL:
 
 import json
 import logging
-import shutil
 import sys
 import time
 from pathlib import Path
@@ -30,16 +29,26 @@ if hasattr(sys.stdout, "buffer"):
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-ROOT        = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from src.export_public_dashboard_data import (  # noqa: E402
+    write_split_dashboard_data, PAGE_DATA_MAP, PAGE_FILE_NAME,
+)
+
 OUTPUTS_DIR = ROOT / "outputs"
 DOCS_DIR    = ROOT / "docs"
 ASSETS_DIR  = DOCS_DIR / "assets"
+DATA_DIR    = ASSETS_DIR / "data"
 
 SRC_JSON    = OUTPUTS_DIR / "public_dashboard_data.json"
 DST_JSON    = ASSETS_DIR  / "dashboard_data.json"
 INDEX_HTML  = DOCS_DIR    / "index.html"
 STYLE_CSS   = ASSETS_DIR  / "style.css"
 APP_JS      = ASSETS_DIR  / "app.js"
+
+MAX_MANIFEST_MB   = 10   # hard target from Data Payload Optimization V1
+MAX_SINGLE_JSON_MB = 50  # GitHub's soft limit — any single public JSON must stay under this
 
 logging.basicConfig(
     level=logging.INFO,
@@ -52,27 +61,60 @@ logger = logging.getLogger(__name__)
 REQUIRED_FILES = [INDEX_HTML, DST_JSON, STYLE_CSS, APP_JS]
 
 
-def _check_json_sanity(path: Path) -> dict:
-    """Basic sanity check on the dashboard JSON."""
-    with open(path, encoding="utf-8") as f:
-        data = json.load(f)
-    kpis     = data.get("kpis", {})
-    contacts = data.get("top_contacts", [])
-    issues   = []
+def _check_json_sanity(manifest_path: Path, size_report: dict) -> dict:
+    """Basic sanity check across the manifest + every page file it references."""
+    with open(manifest_path, encoding="utf-8") as f:
+        manifest = json.load(f)
+    kpis   = manifest.get("kpis", {})
+    issues = []
 
-    # Check key V3 scores exist
     for key in ["strategic_network_score", "usd_readiness_score", "spain_eu_readiness_score"]:
         if key not in kpis:
             issues.append(f"Missing KPI: {key}")
 
-    # Privacy check
-    for i, c in enumerate(contacts[:10]):
-        for field in c:
-            if "email" in field.lower() or "phone" in field.lower():
-                issues.append(f"PII field in contact #{i+1}: {field}")
+    page_manifest = manifest.get("page_manifest", {})
+    for page_id in PAGE_DATA_MAP:
+        if page_id not in page_manifest:
+            issues.append(f"Missing page_manifest entry: {page_id}")
+            continue
+        page_path = DATA_DIR / PAGE_FILE_NAME[page_id]
+        if not page_path.exists():
+            issues.append(f"Missing page data file: {page_path.relative_to(ROOT)}")
+            continue
+        try:
+            with open(page_path, encoding="utf-8") as f:
+                page_data = json.load(f)
+        except json.JSONDecodeError as e:
+            issues.append(f"Invalid JSON in {page_path.name}: {e}")
+            continue
+        # Privacy check — sweep every dict's keys for obviously unsafe field names
+        for row in (page_data.get("top_contacts") or [])[:10]:
+            for field in row:
+                if "email" in field.lower() or "phone" in field.lower():
+                    issues.append(f"PII field in {page_path.name} top_contacts: {field}")
 
-    usd_crm = data.get("usd_contract_crm", {}) or {}
-    return {"kpis": kpis, "contacts": len(contacts), "issues": issues, "usd_crm": usd_crm}
+    contacts_path = DATA_DIR / PAGE_FILE_NAME["contacts"]
+    contacts_count = 0
+    if contacts_path.exists():
+        with open(contacts_path, encoding="utf-8") as f:
+            contacts_count = len(json.load(f).get("top_contacts", []))
+
+    usd_crm = {}
+    usdcrm_path = DATA_DIR / PAGE_FILE_NAME["usdcrm"]
+    if usdcrm_path.exists():
+        with open(usdcrm_path, encoding="utf-8") as f:
+            usd_crm = json.load(f).get("usd_contract_crm", {}) or {}
+
+    if size_report["manifest_kb"] / 1024 > MAX_MANIFEST_MB:
+        issues.append(
+            f"dashboard_data.json is {size_report['manifest_kb']/1024:.2f} MB — above the "
+            f"{MAX_MANIFEST_MB} MB manifest target"
+        )
+    for page_id, info in size_report["pages"].items():
+        if info["kb"] / 1024 > MAX_SINGLE_JSON_MB:
+            issues.append(f"data/{info['file']} is {info['kb']/1024:.2f} MB — above GitHub's {MAX_SINGLE_JSON_MB} MB soft limit")
+
+    return {"kpis": kpis, "contacts": contacts_count, "issues": issues, "usd_crm": usd_crm}
 
 
 def _inject_cache_bust(build_ts: str) -> None:
@@ -99,26 +141,33 @@ def main():
 
     build_ts = str(int(time.time()))
 
-    # Ensure docs/assets/ exists
+    # Ensure docs/assets/ and docs/assets/data/ exist
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Step 1: Copy dashboard_data.json to docs/assets/
-    logger.info("Step 1/4: Copying dashboard_data.json to docs/assets/ ...")
+    # Step 1: Split public_dashboard_data.json into a lightweight manifest
+    # (docs/assets/dashboard_data.json) + per-page files (docs/assets/data/*.json).
+    # SRC_JSON is the fully-enriched payload — build_strategy_layer.py,
+    # weekly_kpi_delta.py, and action_plan_progress.py have all already run.
+    logger.info("Step 1/4: Splitting dashboard data into lazy-loaded page payloads ...")
     if not SRC_JSON.exists():
         logger.error(f"Source JSON not found: {SRC_JSON}")
         logger.error("Run `python src/build_strategy_layer.py` first.")
         sys.exit(1)
 
-    shutil.copy2(SRC_JSON, DST_JSON)
-    logger.info(f"  Copied: {SRC_JSON.name} → docs/assets/ ({DST_JSON.stat().st_size // 1024}KB)")
+    with open(SRC_JSON, encoding="utf-8") as f:
+        full_payload = json.load(f)
+    size_report = write_split_dashboard_data(full_payload)
+    logger.info(f"  Manifest: {DST_JSON.name} ({size_report['manifest_kb']}KB)")
+    logger.info(f"  Page files written: {len(size_report['pages'])} (total {size_report['total_data_kb']}KB) → docs/assets/data/")
 
     # Step 1b: Inject cache-bust timestamp
     _inject_cache_bust(build_ts)
 
-    # Step 2: Sanity check the JSON
-    logger.info("Step 2/4: Validating dashboard_data.json ...")
+    # Step 2: Sanity check the manifest + every page file
+    logger.info("Step 2/4: Validating dashboard_data.json + docs/assets/data/*.json ...")
     try:
-        info = _check_json_sanity(DST_JSON)
+        info = _check_json_sanity(DST_JSON, size_report)
         kpis = info["kpis"]
         logger.info(f"  Total connections:       {kpis.get('total_connections', '?')}")
         logger.info(f"  Strategic Network Score: {kpis.get('strategic_network_score', '?')}/100 ({kpis.get('strategic_network_level', '?')})")
@@ -145,7 +194,8 @@ def main():
     except Exception as e:
         logger.warning(f"  JSON validation failed (non-fatal): {e}")
 
-    # Step 3: Verify all required files exist
+    # Step 3: Verify all required files exist (core static files + every
+    # page data file the manifest references)
     logger.info("Step 3/4: Verifying all static files ...")
     all_ok = True
     for f in REQUIRED_FILES:
@@ -154,6 +204,18 @@ def main():
         else:
             logger.error(f"  [MISSING] {f.relative_to(ROOT)}")
             all_ok = False
+
+    if not DATA_DIR.exists():
+        logger.error(f"  [MISSING] {DATA_DIR.relative_to(ROOT)}")
+        all_ok = False
+    else:
+        for page_id, filename in PAGE_FILE_NAME.items():
+            p = DATA_DIR / filename
+            if p.exists():
+                logger.info(f"  [OK] {p.relative_to(ROOT)} ({p.stat().st_size // 1024}KB)")
+            else:
+                logger.error(f"  [MISSING] {p.relative_to(ROOT)} (page: {page_id})")
+                all_ok = False
 
     if not all_ok:
         logger.error("Some required files are missing. Check the docs/ directory.")
@@ -176,6 +238,32 @@ def main():
         logger.info("  node not found — skipping JS syntax check")
     except Exception as e:
         logger.warning(f"  JS syntax check failed: {e}")
+
+    # Step 5: Payload size report (Data Payload Optimization V1, Part 5)
+    logger.info("")
+    logger.info("=" * 60)
+    logger.info("  Payload Size Report")
+    logger.info("=" * 60)
+    manifest_mb = size_report["manifest_kb"] / 1024
+    logger.info(f"  docs/assets/dashboard_data.json:  {manifest_mb:.2f} MB")
+    for page_id, info in sorted(size_report["pages"].items(), key=lambda kv: -kv[1]["kb"]):
+        logger.info(f"    data/{info['file']:<28s} {info['kb']/1024:7.2f} MB   (page: {page_id})")
+    logger.info(f"  Total docs/assets/data/:          {size_report['total_data_kb']/1024:.2f} MB")
+    largest_id, largest_kb = size_report["largest_page"]
+    if largest_id:
+        logger.info(f"  Largest page file:                {PAGE_FILE_NAME[largest_id]} ({largest_kb/1024:.2f} MB)")
+    manifest_ok = manifest_mb < MAX_MANIFEST_MB
+    logger.info(f"  dashboard_data.json < {MAX_MANIFEST_MB}MB:        {'YES' if manifest_ok else 'NO — ' + f'{manifest_mb:.2f}MB'}")
+    # GitHub-Pages-served files only (docs/assets/**) — outputs/public_dashboard_data.json
+    # is explicitly allowed to stay large (it is never fetched by the browser).
+    any_served_over_50 = manifest_mb > MAX_SINGLE_JSON_MB or any(
+        info["kb"] / 1024 > MAX_SINGLE_JSON_MB for info in size_report["pages"].values()
+    )
+    if SRC_JSON.exists():
+        src_mb = SRC_JSON.stat().st_size / 1024 / 1024
+        logger.info(f"  outputs/public_dashboard_data.json: {src_mb:.2f} MB (compatibility artifact, not served by GitHub Pages — size limit does not apply)")
+    logger.info(f"  Any GitHub-Pages-served JSON > {MAX_SINGLE_JSON_MB}MB: {'YES — see above' if any_served_over_50 else 'NO'}")
+    logger.info("=" * 60)
 
     logger.info("")
     logger.info("=" * 60)

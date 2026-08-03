@@ -164,15 +164,26 @@ function safeRender(name, fn) {
 }
 
 // ── Boot ─────────────────────────────────────────────────────────────────────
-const BUILD_TS = '1782687775';
-const DATA_PATHS = [
-  'assets/dashboard_data.json?v=' + BUILD_TS,
-  './assets/dashboard_data.json?v=' + BUILD_TS,
-  '/Conections-map/assets/dashboard_data.json?v=' + BUILD_TS,
-];
+// Data Payload Optimization V1: dashboard_data.json is now a lightweight
+// manifest (meta, kpis, page_manifest) loaded once at boot. Each nav page's
+// full data lives in its own docs/assets/data/<file>.json, fetched on first
+// visit to that page (see PAGE_REGISTRY / ensurePageData below) and merged
+// into the same global D object every render function already reads from —
+// render functions themselves are unchanged, they just see D populated
+// incrementally instead of all at once.
+const BUILD_TS = '1785796188';
 
-async function tryFetchData() {
-  for (const path of DATA_PATHS) {
+function _dataPathVariants(relPath) {
+  return [
+    'assets/' + relPath + (relPath.includes('?') ? '&' : '?') + 'v=' + BUILD_TS,
+    './assets/' + relPath + (relPath.includes('?') ? '&' : '?') + 'v=' + BUILD_TS,
+    '/Conections-map/assets/' + relPath + (relPath.includes('?') ? '&' : '?') + 'v=' + BUILD_TS,
+  ];
+}
+
+async function _fetchJsonWithFallback(relPath) {
+  let lastErr = null;
+  for (const path of _dataPathVariants(relPath)) {
     try {
       const r = await fetch(path);
       if (r.ok) {
@@ -180,10 +191,125 @@ async function tryFetchData() {
         console.log('[Dashboard] Loaded from:', path, '| Keys:', Object.keys(data));
         return data;
       }
-    } catch(_) { /* try next */ }
+      lastErr = new Error('HTTP ' + r.status + ' loading ' + path);
+    } catch (e) { lastErr = e; /* try next path variant */ }
   }
-  throw new Error('Could not load dashboard_data.json. Tried:\n' + DATA_PATHS.join('\n'));
+  throw lastErr || new Error('Could not load ' + relPath);
 }
+
+async function tryFetchData() {
+  try {
+    return await _fetchJsonWithFallback('dashboard_data.json');
+  } catch (e) {
+    throw new Error('Could not load dashboard_data.json. Tried:\n' + _dataPathVariants('dashboard_data.json').join('\n'));
+  }
+}
+
+// ── Lazy page-data registry ───────────────────────────────────────────────────
+// pageId (matches .nav-item[data-page] / #page-<id> in index.html) -> the
+// render function(s) to call once that page's data file has been merged into D.
+const PAGE_REGISTRY = {
+  overview:  { renderFns: [renderOverview] },
+  heatmap:   { renderFns: [renderHeatmaps] },
+  gap:       { renderFns: [renderGap] },
+  plan:      { renderFns: [renderPlan, renderPlanProgress, renderPlanExecSummary, renderWeekHistoryPanels] },
+  contacts:  { renderFns: [renderContacts] },
+  weekly:    { renderFns: [renderWeekly] },
+  companies: { renderFns: [renderCompanies] },
+  unknown:   { renderFns: [renderUnknownResolution] },
+  leads:     { renderFns: [renderLeads] },
+  untapped:  { renderFns: [renderUntapped] },
+  usdcrm:    { renderFns: [renderUsdCrm, renderOpportunityHistory, renderMonthlyExecutiveQueue] },
+  quality:   { renderFns: [renderQuality] },
+};
+
+const loadedPages    = new Set();  // pageId -> data already merged into D
+const renderedPages  = new Set();  // pageId -> render function(s) already ran once
+const pageLoadPromises = {};       // pageId -> in-flight fetch promise (de-dupes concurrent clicks)
+
+// Fetches (and merges into D) a page's data file, first recursively loading
+// any pages it depends on (e.g. 'gap' needs 'untapped' for its "Recommended
+// People to Activate Next" tab) — never fetches the same file twice.
+async function ensurePageData(pageId) {
+  if (loadedPages.has(pageId)) return;
+  if (pageLoadPromises[pageId]) return pageLoadPromises[pageId];
+
+  const info = (D && D.page_manifest) ? D.page_manifest[pageId] : null;
+  if (!info) { loadedPages.add(pageId); return; }
+
+  const p = (async () => {
+    for (const dep of (info.dependencies || [])) {
+      await ensurePageData(dep);
+    }
+    const json = await _fetchJsonWithFallback(info.file);
+    Object.assign(D, json);
+    loadedPages.add(pageId);
+  })();
+  pageLoadPromises[pageId] = p;
+  try { await p; }
+  finally { delete pageLoadPromises[pageId]; }
+}
+
+function _pageHeaderEl(pageId) {
+  const page = document.getElementById('page-' + pageId);
+  return page ? page.querySelector('.page-header') : null;
+}
+
+function _clearPageBanner(pageId) {
+  const loadEl = document.getElementById('page-load-banner-' + pageId);
+  if (loadEl) loadEl.remove();
+  const errEl = document.getElementById('page-load-error-' + pageId);
+  if (errEl) errEl.remove();
+}
+
+function _showPageLoading(pageId) {
+  _clearPageBanner(pageId);
+  const header = _pageHeaderEl(pageId);
+  if (!header) return;
+  header.insertAdjacentHTML('afterend',
+    '<div class="alert alert-info" id="page-load-banner-' + pageId + '">'
+    + '<span class="alert-icon">&#8987;</span><span>Loading data&hellip;</span></div>');
+}
+
+function _showPageLoadError(pageId, err) {
+  _clearPageBanner(pageId);
+  const header = _pageHeaderEl(pageId);
+  if (!header) return;
+  const msg = (err && err.message) ? err.message : 'Unknown error';
+  header.insertAdjacentHTML('afterend',
+    '<div class="alert alert-bad" id="page-load-error-' + pageId + '">'
+    + '<span class="alert-icon">&#9888;&#65039;</span>'
+    + '<span><strong>Could not load this page’s data.</strong> ' + msg
+    + ' <button class="btn-ghost" style="padding:2px 10px;font-size:0.75rem" '
+    + 'onclick="retryPageLoad(\'' + pageId + '\')">Retry</button></span></div>');
+}
+
+// Loads (if needed) and renders a page exactly once — safe to call on every
+// nav click; a page already rendered is left as-is (matches the dashboard's
+// original render-once-then-just-show/hide behavior). Never throws — a data
+// load failure shows a page-level error banner, never a fatal dashboard crash.
+async function ensurePageRendered(pageId) {
+  const reg = PAGE_REGISTRY[pageId];
+  if (!reg || renderedPages.has(pageId)) return;
+
+  _showPageLoading(pageId);
+  try {
+    await ensurePageData(pageId);
+  } catch (err) {
+    console.error('[Dashboard] Failed to load page data for "' + pageId + '":', err);
+    _showPageLoadError(pageId, err);
+    return;
+  }
+  _clearPageBanner(pageId);
+  reg.renderFns.forEach(fn => safeRender(pageId, fn));
+  renderedPages.add(pageId);
+  setTimeout(() => { Object.values(charts).forEach(c => { try { c.resize(); } catch(_){} }); }, 50);
+}
+
+window.retryPageLoad = function(pageId) {
+  _clearPageBanner(pageId);
+  ensurePageRendered(pageId);
+};
 
 window.addEventListener('DOMContentLoaded', () => {
   let booted = false;
@@ -201,30 +327,19 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 12000);
 
   tryFetchData()
-    .then(data => {
+    .then(manifest => {
       booted = true;
       clearTimeout(watchdog);
-      D = data;
+      D = manifest; // lightweight: meta, kpis, page_manifest, build — full
+                     // page data is merged in on demand (see ensurePageData)
       document.getElementById('loading').style.display = 'none';
       document.getElementById('app').style.display     = 'flex';
       initNav();
-      safeRender('Overview',    renderOverview);
-      safeRender('Heatmaps',    renderHeatmaps);
-      safeRender('Gap',         renderGap);
-      safeRender('Plan',        renderPlan);
-      safeRender('PlanProgress', renderPlanProgress);
-      safeRender('PlanExecSummary', renderPlanExecSummary);
-      safeRender('WeekHistoryPanels', renderWeekHistoryPanels);
-      safeRender('Contacts',    renderContacts);
-      safeRender('Companies',   renderCompanies);
-      safeRender('Opportunity', renderUnknownResolution);
-      safeRender('Leads',       renderLeads);
-      safeRender('Untapped',    renderUntapped);
-      safeRender('Usdcrm',      renderUsdCrm);
-      safeRender('Opphist',     renderOpportunityHistory);
-      safeRender('Meq',         renderMonthlyExecutiveQueue);
-      safeRender('Quality',     renderQuality);
-      safeRender('Weekly',      renderWeekly);
+      // Render only the initially-active nav page (Executive Overview by
+      // default) — every other page loads+renders on first visit/click.
+      const initialNav = document.querySelector('.nav-item.active');
+      const initialPageId = (initialNav && initialNav.dataset.page) || 'overview';
+      ensurePageRendered(initialPageId);
     })
     .catch(err => {
       booted = true;
@@ -259,17 +374,26 @@ function initMobileSidebar() {
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
+// Pure DOM page switch — decoupled from data loading so setRoute() can
+// activate the destination page immediately (showing its loading state)
+// without waiting on the network.
+function activatePageUI(pageId) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const navEl = document.querySelector('.nav-item[data-page="' + pageId + '"]');
+  if (navEl) navEl.classList.add('active');
+  const pg = document.getElementById('page-' + pageId);
+  if (pg) pg.classList.add('active');
+  // Resize charts after page switch so Chart.js recalculates dimensions
+  setTimeout(() => { Object.values(charts).forEach(c => { try { c.resize(); } catch(_){} }); }, 50);
+}
+
 function initNav() {
   document.querySelectorAll('.nav-item').forEach(el => {
     el.addEventListener('click', () => {
       const page = el.dataset.page;
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
-      const pg = document.getElementById('page-' + page);
-      if (pg) pg.classList.add('active');
-      // Resize charts after page switch so Chart.js recalculates dimensions
-      setTimeout(() => { Object.values(charts).forEach(c => { try { c.resize(); } catch(_){} }); }, 50);
+      activatePageUI(page);
+      ensurePageRendered(page); // fetches on first visit only; no-op if already rendered
     });
   });
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -329,20 +453,23 @@ function renderActiveFilterBanner(pageId, label) {
   el.textContent = 'Showing ' + cfg.filtered() + ' of ' + cfg.total() + (label ? ' — ' + label : '');
 }
 
-function setRoute(pageId, filterPayload) {
-  const navEl = document.querySelector('.nav-item[data-page="' + pageId + '"]');
-  if (navEl) navEl.click();
-  setTimeout(() => {
-    if (!filterPayload) return;
-    const fn = window[filterPayload.applyFn];
-    if (typeof fn !== 'function') { console.error('[setRoute] unknown applyFn:', filterPayload.applyFn); return; }
-    try { fn.apply(null, filterPayload.applyArgs || []); }
-    catch (e) { console.error('[setRoute] filter apply failed:', e); return; }
-    dashboardState = { activePageId: pageId, activeLabel: filterPayload.label, resetFn: filterPayload.resetFn };
-    renderActiveFilterBanner(pageId, filterPayload.label);
-    const table = document.querySelector('#page-' + pageId + ' .table-wrap table');
-    if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 80); // after initNav's 50ms chart-resize timeout, so the target page is visible first
+async function setRoute(pageId, filterPayload) {
+  activatePageUI(pageId);
+  try {
+    await ensurePageRendered(pageId); // loads the destination page's data (+ dependencies) before filtering
+  } catch (e) {
+    console.error('[setRoute] page render failed for', pageId, e);
+    return;
+  }
+  if (!filterPayload) return;
+  const fn = window[filterPayload.applyFn];
+  if (typeof fn !== 'function') { console.error('[setRoute] unknown applyFn:', filterPayload.applyFn); return; }
+  try { fn.apply(null, filterPayload.applyArgs || []); }
+  catch (e) { console.error('[setRoute] filter apply failed:', e); return; }
+  dashboardState = { activePageId: pageId, activeLabel: filterPayload.label, resetFn: filterPayload.resetFn };
+  renderActiveFilterBanner(pageId, filterPayload.label);
+  const table = document.querySelector('#page-' + pageId + ' .table-wrap table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 window.clearRouteFilter = function() {
@@ -647,7 +774,10 @@ function renderOverview() {
   }
 
   // Lead reactivation row (additive — only shown when message data is available)
-  const lr = D.lead_reactivation || {};
+  // D.lead_reactivation_summary is the lightweight scalar-only extract that
+  // ships with executive_overview.json; D.lead_reactivation (the full,
+  // multi-MB object) is preferred if the Leads page has already been visited.
+  const lr = D.lead_reactivation || D.lead_reactivation_summary || {};
   const lrRow = document.getElementById('kpi-lead-reactivation');
   const lrLabel = document.getElementById('kpi-lead-reactivation-label');
   if (lrRow) {
@@ -675,7 +805,11 @@ function renderOverview() {
   }
 
   // Untapped Network Opportunity row (Part 19 — additive, own section)
-  const un = D.untapped_network || {};
+  // D.untapped_network_summary is the lightweight extract (summary counts +
+  // match_method_breakdown, no per-contact arrays) shipped with
+  // executive_overview.json; D.untapped_network (the full object) is
+  // preferred if the Untapped Network page has already been visited.
+  const un = D.untapped_network || D.untapped_network_summary || {};
   const unSum = un.summary || {};
   const unRow = document.getElementById('kpi-untapped');
   const unLabel = document.getElementById('kpi-untapped-label');
@@ -2822,9 +2956,12 @@ function renderQuality() {
   }
 
   // Untapped Matching Quality (Part 23)
+  // D.untapped_network_summary ships with data_quality.json (summary +
+  // match_method_breakdown only); D.untapped_network (full object) wins if
+  // the Untapped Network page has already been visited.
   const unMatchTbody = document.getElementById('quality-untapped-match-tbody');
   if (unMatchTbody) {
-    const un = D.untapped_network || {};
+    const un = D.untapped_network || D.untapped_network_summary || {};
     const breakdown = un.match_method_breakdown || {};
     const entries = Object.entries(breakdown).sort((a, b) => b[1] - a[1]);
     const grand = (un.summary && un.summary.total_connections) || entries.reduce((s, [, v]) => s + v, 0) || 1;

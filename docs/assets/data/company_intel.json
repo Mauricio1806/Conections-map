@@ -1,0 +1,822 @@
+{
+  "company_intel": {
+    "all_companies": [
+      {
+        "company": "Itaú Unibanco",
+        "count": 76
+      },
+      {
+        "company": "Hays",
+        "count": 75
+      },
+      {
+        "company": "GE Vernova",
+        "count": 56
+      },
+      {
+        "company": "SENAI CIMATEC",
+        "count": 55
+      },
+      {
+        "company": "NTT DATA Europe & Latam",
+        "count": 50
+      },
+      {
+        "company": "Deloitte",
+        "count": 50
+      },
+      {
+        "company": "Databricks",
+        "count": 49
+      },
+      {
+        "company": "Grupo Boticário",
+        "count": 48
+      },
+      {
+        "company": "Michael Page",
+        "count": 47
+      },
+      {
+        "company": "Tata Consultancy Services",
+        "count": 44
+      },
+      {
+        "company": "Capgemini",
+        "count": 42
+      },
+      {
+        "company": "Larco Petróleo",
+        "count": 40
+      },
+      {
+        "company": "Bradesco",
+        "count": 40
+      },
+      {
+        "company": "Randstad Brasil",
+        "count": 39
+      },
+      {
+        "company": "iFood",
+        "count": 36
+      },
+      {
+        "company": "CI&T",
+        "count": 34
+      },
+      {
+        "company": "IBM",
+        "count": 32
+      },
+      {
+        "company": "GE Renewable Energy",
+        "count": 31
+      },
+      {
+        "company": "Zup Innovation",
+        "count": 29
+      },
+      {
+        "company": "EY",
+        "count": 29
+      },
+      {
+        "company": "LM Soluções de Mobilidade",
+        "count": 28
+      },
+      {
+        "company": "GFT Technologies",
+        "count": 28
+      },
+      {
+        "company": "act digital",
+        "count": 27
+      },
+      {
+        "company": "Accenture",
+        "count": 26
+      },
+      {
+        "company": "AB InBev",
+        "count": 26
+      },
+      {
+        "company": "Nubank",
+        "count": 25
+      },
+      {
+        "company": "TOTVS",
+        "count": 24
+      },
+      {
+        "company": "Ford Motor Company",
+        "count": 23
+      },
+      {
+        "company": "SAP",
+        "count": 22
+      },
+      {
+        "company": "TELUS Digital",
+        "count": 22
+      }
+    ],
+    "recruiting": [
+      {
+        "company": "act digital",
+        "count": 10
+      },
+      {
+        "company": "K2 Partnering Solutions",
+        "count": 9
+      },
+      {
+        "company": "EPAM Systems",
+        "count": 8
+      },
+      {
+        "company": "E-Solutions",
+        "count": 8
+      },
+      {
+        "company": "TELUS Digital",
+        "count": 8
+      },
+      {
+        "company": "Coforge",
+        "count": 8
+      },
+      {
+        "company": "Michael Page",
+        "count": 8
+      },
+      {
+        "company": "Freelance",
+        "count": 8
+      },
+      {
+        "company": "Leidos",
+        "count": 8
+      },
+      {
+        "company": "EY",
+        "count": 7
+      },
+      {
+        "company": "Capgemini",
+        "count": 7
+      },
+      {
+        "company": "Keyrus",
+        "count": 6
+      },
+      {
+        "company": "Qubika",
+        "count": 6
+      },
+      {
+        "company": "GFT Technologies",
+        "count": 6
+      },
+      {
+        "company": "Hays",
+        "count": 6
+      },
+      {
+        "company": "Decision",
+        "count": 5
+      },
+      {
+        "company": "ICON Solutions do Brasil",
+        "count": 5
+      },
+      {
+        "company": "Truelogic Software",
+        "count": 5
+      },
+      {
+        "company": "Strategic Staffing Solutions",
+        "count": 5
+      },
+      {
+        "company": "NTT DATA Europe & LATAM",
+        "count": 5
+      }
+    ],
+    "data_companies": [
+      {
+        "company": "Itaú Unibanco",
+        "count": 24
+      },
+      {
+        "company": "NTT DATA Europe & Latam",
+        "count": 18
+      },
+      {
+        "company": "iFood",
+        "count": 17
+      },
+      {
+        "company": "Bradesco",
+        "count": 17
+      },
+      {
+        "company": "CI&T",
+        "count": 17
+      },
+      {
+        "company": "Grupo Boticário",
+        "count": 14
+      },
+      {
+        "company": "AB InBev",
+        "count": 14
+      },
+      {
+        "company": "Nubank",
+        "count": 14
+      },
+      {
+        "company": "Artefact",
+        "count": 12
+      },
+      {
+        "company": "Inter",
+        "count": 11
+      },
+      {
+        "company": "Tata Consultancy Services",
+        "count": 10
+      },
+      {
+        "company": "Factored",
+        "count": 9
+      },
+      {
+        "company": "Stone",
+        "count": 9
+      },
+      {
+        "company": "Indicium AI",
+        "count": 7
+      },
+      {
+        "company": "Accenture",
+        "count": 7
+      },
+      {
+        "company": "EloGroup",
+        "count": 7
+      },
+      {
+        "company": "Blip",
+        "count": 7
+      },
+      {
+        "company": "Ambev Tech",
+        "count": 7
+      },
+      {
+        "company": "Accenture Brasil",
+        "count": 6
+      },
+      {
+        "company": "NTT DATA",
+        "count": 6
+      }
+    ],
+    "latam_usd": [
+      {
+        "company": "NTT DATA Europe & Latam",
+        "count": 50
+      },
+      {
+        "company": "Globant",
+        "count": 12
+      },
+      {
+        "company": "GE Vernova",
+        "count": 10
+      },
+      {
+        "company": "NTT DATA Europe & LATAM",
+        "count": 8
+      },
+      {
+        "company": "Athyna",
+        "count": 6
+      },
+      {
+        "company": "BairesDev",
+        "count": 5
+      },
+      {
+        "company": "TEAM International",
+        "count": 4
+      },
+      {
+        "company": "AgileEngine",
+        "count": 4
+      },
+      {
+        "company": "UST España & Latam",
+        "count": 3
+      },
+      {
+        "company": "E-Solutions",
+        "count": 3
+      },
+      {
+        "company": "LatamCent",
+        "count": 3
+      },
+      {
+        "company": "Andela",
+        "count": 3
+      },
+      {
+        "company": "Wizeline",
+        "count": 3
+      },
+      {
+        "company": "Ubiminds: You, International",
+        "count": 3
+      },
+      {
+        "company": "TIVIT LATAM",
+        "count": 3
+      },
+      {
+        "company": "Perficient Latin America",
+        "count": 3
+      },
+      {
+        "company": "Tata Consultancy Services",
+        "count": 3
+      },
+      {
+        "company": "Perficient",
+        "count": 3
+      },
+      {
+        "company": "Oxigent Technologies",
+        "count": 2
+      },
+      {
+        "company": "Plugg Technologies",
+        "count": 2
+      }
+    ],
+    "spain_eu": [
+      {
+        "company": "Delivery Hero",
+        "count": 19
+      },
+      {
+        "company": "YER Deutschland",
+        "count": 14
+      },
+      {
+        "company": "Siemens Energy",
+        "count": 10
+      },
+      {
+        "company": "Minsait",
+        "count": 10
+      },
+      {
+        "company": "Indra",
+        "count": 7
+      },
+      {
+        "company": "adesso SE",
+        "count": 6
+      },
+      {
+        "company": "SEIDOR",
+        "count": 5
+      },
+      {
+        "company": "Randstad Deutschland",
+        "count": 5
+      },
+      {
+        "company": "Bonial Germany",
+        "count": 5
+      },
+      {
+        "company": "Deloitte Deutschland",
+        "count": 4
+      },
+      {
+        "company": "Deutsche Telekom",
+        "count": 4
+      },
+      {
+        "company": "Siemens Healthineers",
+        "count": 3
+      },
+      {
+        "company": "Akkodis",
+        "count": 3
+      },
+      {
+        "company": "KWS Group",
+        "count": 3
+      },
+      {
+        "company": "Capgemini",
+        "count": 3
+      },
+      {
+        "company": "Cobalt Deutschland GmbH",
+        "count": 3
+      },
+      {
+        "company": "Pipedrive",
+        "count": 3
+      },
+      {
+        "company": "Zalando",
+        "count": 3
+      },
+      {
+        "company": "Randstad Professional Deutschland (vormals GULP)",
+        "count": 3
+      },
+      {
+        "company": "Epsilon France",
+        "count": 2
+      }
+    ],
+    "global_staffing": [
+      {
+        "company": "Globant",
+        "count": 12
+      },
+      {
+        "company": "Athyna",
+        "count": 6
+      },
+      {
+        "company": "Strategic Staffing Solutions",
+        "count": 5
+      },
+      {
+        "company": "BairesDev",
+        "count": 5
+      },
+      {
+        "company": "AgileEngine",
+        "count": 4
+      },
+      {
+        "company": "TEAM International",
+        "count": 4
+      },
+      {
+        "company": "Akkodis",
+        "count": 3
+      },
+      {
+        "company": "Wizeline",
+        "count": 3
+      },
+      {
+        "company": "Andela",
+        "count": 3
+      },
+      {
+        "company": "LatamCent",
+        "count": 3
+      },
+      {
+        "company": "Proclinical Staffing",
+        "count": 3
+      },
+      {
+        "company": "Turing",
+        "count": 3
+      },
+      {
+        "company": "Ubiminds: You, International",
+        "count": 3
+      },
+      {
+        "company": "Team 360 Staffing",
+        "count": 3
+      },
+      {
+        "company": "Reed Talent Solutions",
+        "count": 3
+      },
+      {
+        "company": "Page Outsourcing",
+        "count": 2
+      },
+      {
+        "company": "Nimble.LA",
+        "count": 2
+      },
+      {
+        "company": "Nearshore Business Solutions",
+        "count": 2
+      },
+      {
+        "company": "Oxigent Technologies",
+        "count": 2
+      },
+      {
+        "company": "VALCE Talent Solutions",
+        "count": 2
+      }
+    ],
+    "global_tech": [
+      {
+        "company": "Databricks",
+        "count": 49
+      },
+      {
+        "company": "iFood",
+        "count": 36
+      },
+      {
+        "company": "Zup Innovation",
+        "count": 29
+      },
+      {
+        "company": "Nubank",
+        "count": 25
+      },
+      {
+        "company": "TOTVS",
+        "count": 24
+      },
+      {
+        "company": "Stone",
+        "count": 18
+      },
+      {
+        "company": "Microsoft",
+        "count": 17
+      },
+      {
+        "company": "Google",
+        "count": 17
+      },
+      {
+        "company": "Amazon",
+        "count": 14
+      },
+      {
+        "company": "Santander Brasil",
+        "count": 13
+      },
+      {
+        "company": "XP Inc",
+        "count": 11
+      },
+      {
+        "company": "Contabilizei",
+        "count": 9
+      },
+      {
+        "company": "Snowflake",
+        "count": 9
+      },
+      {
+        "company": "Superlógica Tecnologias",
+        "count": 6
+      },
+      {
+        "company": "PagBank",
+        "count": 5
+      },
+      {
+        "company": "C6 Bank",
+        "count": 5
+      },
+      {
+        "company": "Deutsche Telekom",
+        "count": 4
+      },
+      {
+        "company": "Meta",
+        "count": 4
+      },
+      {
+        "company": "Zalando",
+        "count": 3
+      },
+      {
+        "company": "StackSpot",
+        "count": 3
+      }
+    ],
+    "global_consulting": [
+      {
+        "company": "Deloitte",
+        "count": 50
+      },
+      {
+        "company": "Tata Consultancy Services",
+        "count": 44
+      },
+      {
+        "company": "Capgemini",
+        "count": 42
+      },
+      {
+        "company": "EY",
+        "count": 29
+      },
+      {
+        "company": "act digital",
+        "count": 27
+      },
+      {
+        "company": "Accenture",
+        "count": 26
+      },
+      {
+        "company": "Indicium AI",
+        "count": 20
+      },
+      {
+        "company": "Thoughtworks",
+        "count": 14
+      },
+      {
+        "company": "Semantix",
+        "count": 12
+      },
+      {
+        "company": "NTT DATA",
+        "count": 11
+      },
+      {
+        "company": "NTT DATA Business Solutions",
+        "count": 11
+      },
+      {
+        "company": "Keyrus",
+        "count": 10
+      },
+      {
+        "company": "Minsait",
+        "count": 10
+      },
+      {
+        "company": "Amaris Consulting",
+        "count": 8
+      },
+      {
+        "company": "CWI Software",
+        "count": 8
+      },
+      {
+        "company": "Cognizant",
+        "count": 8
+      },
+      {
+        "company": "Infosys",
+        "count": 7
+      },
+      {
+        "company": "Indra",
+        "count": 7
+      },
+      {
+        "company": "Indicium",
+        "count": 7
+      },
+      {
+        "company": "Dataside",
+        "count": 7
+      }
+    ],
+    "unknown_top": [
+      {
+        "company": "Hays",
+        "count": 73
+      },
+      {
+        "company": "SENAI CIMATEC",
+        "count": 54
+      },
+      {
+        "company": "Grupo Boticário",
+        "count": 48
+      },
+      {
+        "company": "GE Vernova",
+        "count": 46
+      },
+      {
+        "company": "Michael Page",
+        "count": 46
+      },
+      {
+        "company": "Larco Petróleo",
+        "count": 40
+      },
+      {
+        "company": "CI&T",
+        "count": 34
+      },
+      {
+        "company": "GE Renewable Energy",
+        "count": 31
+      },
+      {
+        "company": "IBM",
+        "count": 30
+      },
+      {
+        "company": "LM Soluções de Mobilidade",
+        "count": 28
+      },
+      {
+        "company": "GFT Technologies",
+        "count": 26
+      },
+      {
+        "company": "AB InBev",
+        "count": 25
+      },
+      {
+        "company": "Ford Motor Company",
+        "count": 23
+      },
+      {
+        "company": "TELUS Digital",
+        "count": 21
+      },
+      {
+        "company": "Amazon Web Services (AWS)",
+        "count": 20
+      },
+      {
+        "company": "SAP",
+        "count": 19
+      },
+      {
+        "company": "Globo",
+        "count": 19
+      },
+      {
+        "company": "Serasa Experian",
+        "count": 19
+      },
+      {
+        "company": "Melt Group",
+        "count": 18
+      },
+      {
+        "company": "Freelance",
+        "count": 18
+      },
+      {
+        "company": "Mercado Livre",
+        "count": 18
+      },
+      {
+        "company": "Artefact",
+        "count": 18
+      },
+      {
+        "company": "LM Mobilidade",
+        "count": 16
+      },
+      {
+        "company": "Qubika",
+        "count": 15
+      },
+      {
+        "company": "Randstad",
+        "count": 15
+      },
+      {
+        "company": "Factored",
+        "count": 14
+      },
+      {
+        "company": "Sicredi",
+        "count": 14
+      },
+      {
+        "company": "Autônomo",
+        "count": 14
+      },
+      {
+        "company": "Inter",
+        "count": 14
+      },
+      {
+        "company": "PRINCIPIA",
+        "count": 14
+      }
+    ]
+  }
+}
