@@ -1,16 +1,16 @@
 ﻿first_name,last_name,company,position,connected_on,url,persona,seniority,opportunity_bucket,priority_score,company_canonical,outreach_adjusted_score
-Susana,Bazan,Akkodis,Senior IT Talent Acquisition,30 Jul 2026,https://www.linkedin.com/in/susana-bazan,Talent Acquisition,Senior,EUROPE_CONFIRMED,81,AKKODIS,20.0
-María del Mar,Rodríguez Givaudant,Jungheinrich Digital Solutions Spain,Seniot HR Talent Manager ,31 Jul 2026,https://www.linkedin.com/in/mariadelmarrodriguez,Talent Acquisition,Manager,SPAIN_EU_CONFIRMED,81,JUNGHEINRICH SPAIN,20.0
-Karen,Vasquez,Cognizant,"A.I. - Cloud, Analytics and IT Infrastructure Recruiter at Cognizant USA",29 Jul 2026,https://www.linkedin.com/in/karen-vasquez-8a66a6159,Recruiter,Unknown,GLOBAL_CONSULTING,77,COGNIZANT,20.0
-Israí,Bahena,Alapai Global Holdings LLC,Technical HeadHunter Mx & USA,30 Jul 2026,https://www.linkedin.com/in/israibahena,Recruiter,Unknown,US_CANADA_CONFIRMED,77,ALAPAI,20.0
-Ander,Delgado Alonso,Randstad Digital España,Senior IT Talent Acquisition,28 Jul 2026,https://www.linkedin.com/in/ander-delgado-alonso-814176223,Talent Acquisition,Senior,GLOBAL_STAFFING,77,RANDSTAD ESPAÑA,17.0
-Ankit,Kumar,E-Solutions,Technical recruiter  - LATAM  Operations,23 Jul 2026,https://www.linkedin.com/in/ankitkumarrecruiter,Recruiter,Unknown,LATAM_USD_CONFIRMED,75,E,18.0
+Susana,Bazan,Akkodis,Senior IT Talent Acquisition,30 Jul 2026,https://www.linkedin.com/in/susana-bazan,Talent Acquisition,Senior,EUROPE_CONFIRMED,81,AKKODIS,
+María del Mar,Rodríguez Givaudant,Jungheinrich Digital Solutions Spain,Seniot HR Talent Manager ,31 Jul 2026,https://www.linkedin.com/in/mariadelmarrodriguez,Talent Acquisition,Manager,SPAIN_EU_CONFIRMED,81,JUNGHEINRICH SPAIN,
+Karen,Vasquez,Cognizant,"A.I. - Cloud, Analytics and IT Infrastructure Recruiter at Cognizant USA",29 Jul 2026,https://www.linkedin.com/in/karen-vasquez-8a66a6159,Recruiter,Unknown,GLOBAL_CONSULTING,77,COGNIZANT,
+Israí,Bahena,Alapai Global Holdings LLC,Technical HeadHunter Mx & USA,30 Jul 2026,https://www.linkedin.com/in/israibahena,Recruiter,Unknown,US_CANADA_CONFIRMED,77,ALAPAI,
+Ander,Delgado Alonso,Randstad Digital España,Senior IT Talent Acquisition,28 Jul 2026,https://www.linkedin.com/in/ander-delgado-alonso-814176223,Talent Acquisition,Senior,GLOBAL_STAFFING,77,RANDSTAD ESPAÑA,
+Ankit,Kumar,E-Solutions,Technical recruiter  - LATAM  Operations,23 Jul 2026,https://www.linkedin.com/in/ankitkumarrecruiter,Recruiter,Unknown,LATAM_USD_CONFIRMED,75,E,
 Lobelia,Jimenez Vargas,3Pillar,Talent Acquisition Lead,26 Apr 2026,https://www.linkedin.com/in/lobelia-jimenez-vargas-315648134,Talent Acquisition,Lead,LATAM_USD_CONFIRMED,75,3PILLAR,
 Andrea,Camargo Sanchez,Indra,Technical Recruiter,02 Aug 2026,https://www.linkedin.com/in/andrea-camargo-sanchez-36b228141,Recruiter,Unknown,SPAIN_EU_LIKELY,73,INDRA,
 Daniel,Valenti,BIX Tech,Director of Administration and Finance Officer,28 Jul 2026,https://www.linkedin.com/in/danielvalentii,Director,Director,GLOBAL_OPPORTUNITY,70,BIX,
 Michael,Collins,iO Associates - UK/EU,Director - Manchester,31 Jul 2026,https://www.linkedin.com/in/michaelcollinsio,Director,Director,EUROPE_CONFIRMED,70,IO ASSOCIATES - UK/EU,
 Maharaja,A,Bull IT Services,Senior Information Technology Recruiter,27 Jul 2026,https://www.linkedin.com/in/maharaja-a-7b009925b,Recruiter,Senior,GLOBAL_CONSULTING,66,BULL IT,
-Mônica C. Menezes,Fantone,GFT Technologies,Senior Talent Acquisition,27 Jul 2026,https://www.linkedin.com/in/monica-menezes,Talent Acquisition,Senior,GLOBAL_CONSULTING,64,GFT,31.0
+Mônica C. Menezes,Fantone,GFT Technologies,Senior Talent Acquisition,27 Jul 2026,https://www.linkedin.com/in/monica-menezes,Talent Acquisition,Senior,GLOBAL_CONSULTING,64,GFT,
 Janaina,Candido da Silva Fante,Sigga - Technologies,Senior HR Business Partner | Global Talent Acquisition,27 Jul 2026,https://www.linkedin.com/in/janaina-candido-da-silva-fante-2bb7a81a,Talent Acquisition,Senior,GLOBAL_OPPORTUNITY,64,SIGGA,
 Manuel,Paladini,Zima Talent,Executive Head Hunter,27 Jul 2026,https://www.linkedin.com/in/manuel-paladini-59682640,Recruiter,Executive,GLOBAL_OPPORTUNITY,63,ZIMA TALENT,
 Kantha M,(Ashwin),Naveera Technology LLC,Senior Talent Acquisition Specialist,31 Jul 2026,https://www.linkedin.com/in/kantha-m-ashwin-186ba3244,Talent Acquisition,Mid,GLOBAL_OPPORTUNITY,61,NAVEERA,
@@ -40,7 +40,7 @@ Vinícius,Zamperlini,Amazon Web Services (AWS),Sr. Enterprise Account Executive 
 Dina,Buccellato,"SKYMAX Industries, LLC",Managing Director,28 Jul 2026,https://www.linkedin.com/in/dina-b-46b6b13,Director,Director,GLOBAL_OPPORTUNITY,51,SKYMAX INDUSTRIES,
 Alejandro,Arrufat,Amenitiz,Senior Engineering Manager,30 Jul 2026,https://www.linkedin.com/in/arrufatalejandro,Hiring Manager,Senior,GLOBAL_OPPORTUNITY,51,AMENITIZ,
 Ivana,Blagojevic,HTEC,Senior Talent Acquisition Specialist,29 Jul 2026,https://www.linkedin.com/in/ivana-blagojevic,Talent Acquisition,Mid,GLOBAL_OPPORTUNITY,51,HTEC,
-Daniel,Amorim,Bluedot | BPO Solutions,Chief Executive Officer,29 Jul 2026,https://www.linkedin.com/in/dannempreendedor,Executive,Executive,GLOBAL_OPPORTUNITY,50,BLUEDOT | BPO,27.0
+Daniel,Amorim,Bluedot | BPO Solutions,Chief Executive Officer,29 Jul 2026,https://www.linkedin.com/in/dannempreendedor,Executive,Executive,GLOBAL_OPPORTUNITY,50,BLUEDOT | BPO,
 María Belén,Telesca,Profesional independiente,Headhunter Freelance,28 Jul 2026,https://www.linkedin.com/in/mar%C3%ADa-bel%C3%A9n-telesca,Recruiter,Unknown,GLOBAL_OPPORTUNITY,50,PROFESIONAL INDEPENDIENTE,
 Verónica,Balbás,Kambda,IT Recruiter,30 Jul 2026,https://www.linkedin.com/in/balbasveronica,Recruiter,Unknown,GLOBAL_OPPORTUNITY,50,KAMBDA,
 Jade,St.Denis,HeartCentrix Solutions,Recruiter,29 Jul 2026,https://www.linkedin.com/in/jalstdenis,Recruiter,Unknown,GLOBAL_OPPORTUNITY,50,HEARTCENTRIX,
@@ -60,7 +60,7 @@ Victoria,Tolón Martínez,Embention,"HR & Talent Management | Spain, UAE & USA",
 Fernanda,Lourenço ,Grupo Bolt,Talent Acquisition Partner Mid-Level,30 Jan 2026,https://www.linkedin.com/in/fernanda-louren%C3%A7o-hr,Talent Acquisition,Mid,GLOBAL_OPPORTUNITY,45,GRUPO BOLT,
 Humberto,Carballo,DistantJob,Technical Recruiter,10 Apr 2026,https://www.linkedin.com/in/humbertocarballo,Recruiter,Unknown,GLOBAL_OPPORTUNITY,44,DISTANTJOB,
 Ekin,Kurtulan,BlueCloud,Senior HR Business Partner,27 Jul 2026,https://www.linkedin.com/in/ekin-kurtulan-90a881190,HR,Senior,GLOBAL_TECH,43,BLUECLOUD,
-Mariia,Pulavska 🌻,DevKit,Talent Sourcer,01 Aug 2026,https://www.linkedin.com/in/mariia-pulavska-%F0%9F%8C%BB-372734219,Sourcer,Unknown,GLOBAL_OPPORTUNITY,43,DEVKIT,
+Mariia,Pulavska 🌻,DevKit,Talent Sourcer,01 Aug 2026,https://www.linkedin.com/in/mariia-pulavska-%F0%9F%8C%BB-372734219,Sourcer,Unknown,GLOBAL_OPPORTUNITY,43,DEVKIT,43.0
 Gustavo,Schneiter,Human Guardrail,Founder & Principal Engineer,28 Jul 2026,https://www.linkedin.com/in/gustavo-schneiter,Founder,Lead,GLOBAL_TECH,43,HUMAN GUARDRAIL,
 Jorge,Intriago,Casa de Avivamiento Portoviejo,Administrador de base de datos (Voluntariado),29 Jul 2026,https://www.linkedin.com/in/jorge-intriago-data,Other,Unknown,LATAM_USD_CONFIRMED,41,CASA DE AVIVAMIENTO PORTOVIEJO,
 María Inés,Calderón,TELUS Digital,Project Coordinator Generative AI,31 Jul 2026,https://www.linkedin.com/in/mar%C3%ADa-in%C3%A9s-calder%C3%B3n-240343b5,Machine Learning / AI,Manager,GLOBAL_TECH,40,TELUS,

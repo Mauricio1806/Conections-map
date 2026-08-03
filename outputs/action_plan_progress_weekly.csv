@@ -66,7 +66,7 @@ LEAD_REACTIVATION,reactivation_weekly_target_max,25
 LEAD_REACTIVATION,reactivation_period_target_min,15.0
 LEAD_REACTIVATION,reactivation_period_target_max,25.0
 LEAD_REACTIVATION,reactivation_pace_status,AHEAD
-LEAD_REACTIVATION,followups_due_current,1000
+LEAD_REACTIVATION,followups_due_current,1020
 LEAD_REACTIVATION,needs_my_response_current,69
 LEAD_REACTIVATION,needs_my_response_previous,64
 LEAD_REACTIVATION,needs_my_response_delta,5
@@ -91,9 +91,9 @@ UNTAPPED_NETWORK,new_connections_not_contacted_yet,74
 UNTAPPED_NETWORK,untapped_queue_completed_estimate,20
 UNTAPPED_NETWORK,untapped_backlog_change,0
 UNTAPPED_NETWORK,available,True
-TOP_CONTACTS,top_priority_contacts_current,228
+TOP_CONTACTS,top_priority_contacts_current,227
 TOP_CONTACTS,top_priority_contacts_previous,225
-TOP_CONTACTS,outreach_adjusted_score_avg_current,41.0
+TOP_CONTACTS,outreach_adjusted_score_avg_current,50.3
 TOP_CONTACTS,outreach_adjusted_score_avg_previous,41.4
 DATA_QUALITY,needs_company_mapping_current,2310
 DATA_QUALITY,needs_company_mapping_previous,2281

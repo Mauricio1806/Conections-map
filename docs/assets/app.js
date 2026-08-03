@@ -1633,7 +1633,7 @@ function renderPlan() {
 }
 
 // ── PAGE 5: Top Contacts ──────────────────────────────────────────────────────
-let contactSortMode = 'outreach'; // 'outreach' | 'relvalue' | 'base' | 'untapped'
+let contactSortMode = 'outreach'; // 'outreach' | 'relvalue' | 'base' | 'untapped' | 'activation'
 
 // Preferred display order for Outreach Status — anything not listed here
 // (e.g. a future new status) is appended alphabetically at the end.
@@ -1699,6 +1699,8 @@ function _sortContacts() {
     filteredContacts.sort((a, b) => (parseFloat(b.priority_score) || 0) - (parseFloat(a.priority_score) || 0));
   } else if (contactSortMode === 'untapped') {
     filteredContacts.sort((a, b) => (parseFloat(b.untapped_outreach_score) || 0) - (parseFloat(a.untapped_outreach_score) || 0));
+  } else if (contactSortMode === 'activation') {
+    filteredContacts.sort((a, b) => (parseFloat(b.untapped_activation_potential_score) || 0) - (parseFloat(a.untapped_activation_potential_score) || 0));
   } else {
     // Default (Part 14): Immediate Action descending, then Relationship Value
     // descending — this is what prevents a recently-rejected high-value
@@ -1718,10 +1720,12 @@ window.setContactSort = function(mode) {
   const b2 = document.getElementById('ct-sort-relvalue');
   const b3 = document.getElementById('ct-sort-base');
   const b4 = document.getElementById('ct-sort-untapped');
+  const b5 = document.getElementById('ct-sort-activation');
   if (b1) b1.classList.toggle('active', mode === 'outreach');
   if (b2) b2.classList.toggle('active', mode === 'relvalue');
   if (b3) b3.classList.toggle('active', mode === 'base');
   if (b4) b4.classList.toggle('active', mode === 'untapped');
+  if (b5) b5.classList.toggle('active', mode === 'activation');
   _sortContacts();
   contactsPage = 1;
   renderContactsTable();
@@ -3914,6 +3918,85 @@ function renderUntapped() {
     makeKpiCard('manual_enriched', 'Active/Manual Enriched Contacts', s.manual_enriched_contacts || 0, 'matched to data/manual/profile_enrichment.csv — click to filter', '', 'applyUntappedKpiFilter'),
   ].join('');
 
+  // Activation Potential KPI cards (V10) — all clickable, computed client-side
+  // from top_untapped_contacts since these are cross-cutting (persona +
+  // connected-age + activation_category), not part of the base summary dict.
+  const source0 = un.top_untapped_contacts || [];
+  const activationCounts = {
+    long_connected_recruiters: source0.filter(UNTAPPED_KPI_FILTERS.long_connected_recruiters.match).length,
+    days_365_plus: source0.filter(UNTAPPED_KPI_FILTERS.days_365_plus.match).length,
+    latam_intl_recruiters: source0.filter(UNTAPPED_KPI_FILTERS.latam_intl_recruiters.match).length,
+    global_talent_partners: source0.filter(UNTAPPED_KPI_FILTERS.global_talent_partners.match).length,
+    highest_activation: source0.filter(UNTAPPED_KPI_FILTERS.highest_activation.match).length,
+    first_message_now: source0.filter(UNTAPPED_KPI_FILTERS.first_message_now.match).length,
+  };
+  const actEl = document.getElementById('untapped-activation-cards');
+  if (actEl) actEl.innerHTML = [
+    makeKpiCard('long_connected_recruiters', 'Long-Connected Recruiters Untapped', activationCounts.long_connected_recruiters,
+      'connected 180+ days, recruiter/TA/sourcer/talent partner — click to filter', 'warn', 'applyUntappedKpiFilter'),
+    makeKpiCard('days_365_plus', '365+ Days Never Contacted', activationCounts.days_365_plus,
+      'click to filter', 'warn', 'applyUntappedKpiFilter'),
+    makeKpiCard('latam_intl_recruiters', 'LATAM/International Recruiters Untapped', activationCounts.latam_intl_recruiters,
+      'click to filter', 'good', 'applyUntappedKpiFilter'),
+    makeKpiCard('global_talent_partners', 'Global Talent Partners Untapped', activationCounts.global_talent_partners,
+      'click to filter', 'good', 'applyUntappedKpiFilter'),
+    makeKpiCard('highest_activation', 'Highest Activation Potential', activationCounts.highest_activation,
+      'activation score 80+ — click to filter', 'good', 'applyUntappedKpiFilter'),
+    makeKpiCard('first_message_now', 'First Message Now', activationCounts.first_message_now,
+      'first_message_priority = TODAY — click to filter', 'warn', 'applyUntappedKpiFilter'),
+  ].join('');
+
+  // Activation Pattern Learning (V10) — sanitized aggregate evidence
+  const apl = un.activation_pattern_learning || {};
+  const aplNoData = document.getElementById('untapped-activation-pattern-no-data');
+  const aplContent = document.getElementById('untapped-activation-pattern-content');
+  if (!apl.available) {
+    if (aplNoData) aplNoData.style.display = '';
+    if (aplContent) aplContent.style.display = 'none';
+  } else {
+    if (aplNoData) aplNoData.style.display = 'none';
+    if (aplContent) aplContent.style.display = '';
+    const aplSumEl = document.getElementById('untapped-activation-pattern-summary');
+    if (aplSumEl) aplSumEl.innerHTML = [
+      makeCard('Long-Connected Contacts Activated', apl.long_connected_contacted_all_time || 0, 'first messaged 90+ days after connecting'),
+      makeCard('Activated This Week', apl.long_connected_contacted_this_week || 0, 'first messaged in the last 7 days', 'good'),
+      makeCard('Replied', apl.long_connected_replied || 0),
+      makeCard('Became Warm Lead', apl.long_connected_became_warm || 0, '', 'good'),
+      makeCard('CV / Interview Requested', apl.long_connected_cv_or_interview_requested || 0),
+      makeCard('Overall Conversion Rate', (apl.conversion_rate_overall_pct || 0) + '%', 'replied ÷ activated', 'good'),
+    ].join('');
+
+    const _aplRow = (r, keyLabel) => '<tr>'
+      + '<td>' + (r[keyLabel] || '—').toString().replace(/_/g, ' ') + '</td>'
+      + '<td style="text-align:center">' + (r.contacted || 0) + '</td>'
+      + '<td style="text-align:center">' + (r.replied || 0) + '</td>'
+      + '<td style="text-align:center">' + (r.became_warm || 0) + '</td>'
+      + '<td style="text-align:center">' + (r.conversion_rate_pct || 0) + '%</td>'
+      + '</tr>';
+
+    const personaTbody = document.getElementById('activation-pattern-persona-tbody');
+    if (personaTbody) {
+      const rows = apl.by_persona || [];
+      personaTbody.innerHTML = rows.length
+        ? rows.map(r => _aplRow(r, 'persona')).join('')
+        : '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">No data yet.</td></tr>';
+    }
+    const ageTbody = document.getElementById('activation-pattern-age-tbody');
+    if (ageTbody) {
+      const rows = apl.by_connected_age_bucket || [];
+      ageTbody.innerHTML = rows.length
+        ? rows.map(r => _aplRow(r, 'connected_age_bucket')).join('')
+        : '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">No data yet.</td></tr>';
+    }
+    const bucketTbody = document.getElementById('activation-pattern-bucket-tbody');
+    if (bucketTbody) {
+      const rows = apl.by_opportunity_bucket || [];
+      bucketTbody.innerHTML = rows.length
+        ? rows.map(r => _aplRow(r, 'opportunity_bucket')).join('')
+        : '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">No data yet.</td></tr>';
+    }
+  }
+
   const noteEl = document.getElementById('untapped-location-note');
   if (noteEl) noteEl.textContent = (D.meta && D.meta.untapped_scoring_note) ||
     'LinkedIn export does not include location, but opportunity market can still be inferred from company, title, persona, language, manual enrichment, and message history. These are opportunity signals, not exact geography.';
@@ -3969,6 +4052,12 @@ function renderUntapped() {
       const o = document.createElement('option'); o.value = v; o.textContent = v; senSel.appendChild(o);
     });
   }
+  const actCatSel = document.getElementById('untapped-activation-category-filter');
+  if (actCatSel && actCatSel.options.length <= 1) {
+    [...new Set(source.map(c => c.activation_category).filter(Boolean))].sort().forEach(v => {
+      const o = document.createElement('option'); o.value = v; o.textContent = v.replace(/_/g, ' '); actCatSel.appendChild(o);
+    });
+  }
 
   filteredUntapped = source;
   renderUntappedTable();
@@ -3993,6 +4082,22 @@ const UNTAPPED_KPI_FILTERS = {
   conn_180d:        { label: 'Connected >180 Days, Never Contacted',
     match: c => ['CONNECTED_180_364D', 'CONNECTED_365D_PLUS'].includes(c.connection_age_bucket) && c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' },
   manual_enriched:  { label: 'Active/Manual Enriched Contacts', match: c => c.is_manual_enriched === true || c.is_manual_enriched === 'True' },
+  // Activation Potential (V10) — clickable cards for long-connected /
+  // LATAM-international / global-recruiter / highest-potential / today
+  // never-contacted recruiters, TA, sourcers and talent partners.
+  long_connected_recruiters: { label: 'Long-Connected Recruiters Untapped', match: c =>
+    c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED'
+    && ['Recruiter', 'Talent Acquisition', 'Sourcer'].includes(c.persona)
+    && ['181-365 days', '365+ days'].includes(c.connected_age_bucket) },
+  days_365_plus: { label: '365+ Days Never Contacted', match: c =>
+    c.contact_history_status === 'NEVER_CONTACTED_CONFIRMED' && c.connected_age_bucket === '365+ days' },
+  latam_intl_recruiters: { label: 'LATAM/International Recruiters Untapped', match: c =>
+    c.activation_category === 'LATAM_INTERNATIONAL_RECRUITER' },
+  global_talent_partners: { label: 'Global Talent Partners Untapped', match: c =>
+    ['GLOBAL_RECRUITER_UNTAPPED', 'HOT_UNTAPPED_TALENT_PARTNER'].includes(c.activation_category) },
+  highest_activation: { label: 'Highest Activation Potential', match: c =>
+    (parseFloat(c.untapped_activation_potential_score) || 0) >= 80 },
+  first_message_now: { label: 'First Message Now', match: c => c.first_message_priority === 'TODAY' },
   // Executive Overview cross-page routing (Part 1) — combined/derived keys
   // not otherwise exposed as a single Untapped Network card.
   usd_readiness: { label: 'USD/LATAM Readiness — Untapped', match: c =>
@@ -4060,6 +4165,14 @@ window.applyUntappedFilters = function() {
   const minConf  = parseFloat(document.getElementById('untapped-min-confidence')?.value) || 0;
   const primaryOnly = document.getElementById('untapped-primary-only')?.checked || false;
   const europeOnly  = document.getElementById('untapped-europe-only')?.checked || false;
+  const activationCat = document.getElementById('untapped-activation-category-filter')?.value || '';
+  const connectedAgeBucket = document.getElementById('untapped-connected-age-filter')?.value || '';
+  const firstMsgPriority = document.getElementById('untapped-first-message-priority-filter')?.value || '';
+  const minActivationScore = parseFloat(document.getElementById('untapped-min-activation-score')?.value) || 0;
+  const latamIntlOnly = document.getElementById('untapped-latam-intl-only')?.checked || false;
+  const recruiterTaOnly = document.getElementById('untapped-recruiter-ta-only')?.checked || false;
+  const connected180Only = document.getElementById('untapped-connected-180-only')?.checked || false;
+  const connected365Only = document.getElementById('untapped-connected-365-only')?.checked || false;
 
   const source = (D.untapped_network || {}).top_untapped_contacts || [];
   filteredUntapped = source.filter(c => {
@@ -4078,6 +4191,14 @@ window.applyUntappedFilters = function() {
     if ((parseFloat(c.conversation_match_confidence) || 0) < minConf) return false;
     if (primaryOnly && c.strategic_focus !== 'PRIMARY_LATAM_USD') return false;
     if (europeOnly && c.strategic_focus !== 'SPAIN_EU_EXPLORATORY') return false;
+    if (activationCat && c.activation_category !== activationCat) return false;
+    if (connectedAgeBucket && c.connected_age_bucket !== connectedAgeBucket) return false;
+    if (firstMsgPriority && c.first_message_priority !== firstMsgPriority) return false;
+    if ((parseFloat(c.untapped_activation_potential_score) || 0) < minActivationScore) return false;
+    if (latamIntlOnly && !['LATAM_INTERNATIONAL_RECRUITER', 'GLOBAL_RECRUITER_UNTAPPED'].includes(c.activation_category)) return false;
+    if (recruiterTaOnly && !['Recruiter', 'Talent Acquisition', 'Sourcer'].includes(c.persona)) return false;
+    if (connected180Only && !['181-365 days', '365+ days'].includes(c.connected_age_bucket)) return false;
+    if (connected365Only && c.connected_age_bucket !== '365+ days') return false;
     return true;
   });
   activeUntappedKpi = null;
@@ -4089,13 +4210,20 @@ window.applyUntappedFilters = function() {
 window.resetUntappedFilters = function() {
   ['untapped-search'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   ['untapped-status-filter', 'untapped-category-filter', 'untapped-persona-filter', 'untapped-bucket-filter',
-   'untapped-focus-filter', 'untapped-age-filter', 'untapped-seniority-filter'].forEach(id => {
+   'untapped-focus-filter', 'untapped-age-filter', 'untapped-seniority-filter',
+   'untapped-activation-category-filter', 'untapped-connected-age-filter',
+   'untapped-first-message-priority-filter'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   const ms = document.getElementById('untapped-min-score'); if (ms) ms.value = '0';
   const mc = document.getElementById('untapped-min-confidence'); if (mc) mc.value = '0';
+  const mas = document.getElementById('untapped-min-activation-score'); if (mas) mas.value = '0';
   const po = document.getElementById('untapped-primary-only'); if (po) po.checked = false;
   const eo = document.getElementById('untapped-europe-only'); if (eo) eo.checked = false;
+  const lio = document.getElementById('untapped-latam-intl-only'); if (lio) lio.checked = false;
+  const rto = document.getElementById('untapped-recruiter-ta-only'); if (rto) rto.checked = false;
+  const c180 = document.getElementById('untapped-connected-180-only'); if (c180) c180.checked = false;
+  const c365 = document.getElementById('untapped-connected-365-only'); if (c365) c365.checked = false;
   filteredUntapped = (D.untapped_network || {}).top_untapped_contacts || [];
   activeUntappedKpi = null;
   untappedPage = 1;
@@ -4111,6 +4239,11 @@ function renderUntappedTable(kpiLabel) {
     st.textContent = 'Showing ' + filteredUntapped.length + ' of ' + total + ' matching contacts' + (label ? ' — ' + label : '');
   }
   filteredUntapped = [...filteredUntapped].sort((a, b) => {
+    // Default ranking (V10): untapped_execution_score first — the blended
+    // max() of untapped_outreach_score, untapped_activation_potential_score,
+    // and never-contacted-recruiter-adjusted priority_score.
+    const e = (parseFloat(b.untapped_execution_score) || 0) - (parseFloat(a.untapped_execution_score) || 0);
+    if (e !== 0) return e;
     const s = (parseFloat(b.untapped_outreach_score) || 0) - (parseFloat(a.untapped_outreach_score) || 0);
     if (s !== 0) return s;
     return (parseFloat(b.priority_score) || 0) - (parseFloat(a.priority_score) || 0);
@@ -4120,12 +4253,16 @@ function renderUntappedTable(kpiLabel) {
   const tbody = document.getElementById('untapped-tbody');
   if (!tbody) return;
   if (!slice.length) {
-    tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="21" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
   } else {
     tbody.innerHTML = slice.map(c => {
       const url = c.profile_url || '';
       const score = parseInt(c.untapped_outreach_score) || 0;
       const sCls = score >= 70 ? 'score-high' : score >= 40 ? 'score-med' : 'score-low';
+      const actScore = parseInt(c.untapped_activation_potential_score) || 0;
+      const actCls = actScore >= 70 ? 'score-high' : actScore >= 40 ? 'score-med' : 'score-low';
+      const execScore = parseInt(c.untapped_execution_score) || 0;
+      const execCls = execScore >= 70 ? 'score-high' : execScore >= 40 ? 'score-med' : 'score-low';
       return '<tr>'
         + '<td style="white-space:nowrap">' + (c.full_name||'—') + '</td>'
         + '<td style="white-space:nowrap">' + (c.company_clean||'—') + '</td>'
@@ -4135,10 +4272,16 @@ function renderUntappedTable(kpiLabel) {
         + '<td>' + marketBadge(c.opportunity_bucket||'UNKNOWN') + '</td>'
         + '<td style="font-size:0.75rem;white-space:nowrap">' + (c.connected_on||'—') + '</td>'
         + '<td style="text-align:center">' + (c.days_connected ?? '—') + '</td>'
+        + '<td style="font-size:0.75rem;white-space:nowrap">' + (c.connected_age_bucket||'—') + '</td>'
         + '<td>' + untappedBadge(c.contact_history_status) + '</td>'
         + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.untapped_category||'—').replace(/_/g, ' ') + '</td>'
         + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+        + '<td><span class="score-badge ' + actCls + '">' + actScore + '</span></td>'
+        + '<td><span class="score-badge ' + execCls + '">' + execScore + '</span></td>'
+        + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.activation_category||'—').replace(/_/g, ' ') + '</td>'
         + '<td style="white-space:normal;font-size:0.7rem;max-width:220px">' + (c.untapped_reason||'—') + '</td>'
+        + '<td style="white-space:normal;font-size:0.7rem;max-width:220px">' + (c.activation_reason||'—') + '</td>'
+        + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.first_message_priority||'—').replace(/_/g, ' ') + '</td>'
         + '<td style="font-size:0.7rem;white-space:nowrap">' + (c.recommended_first_action||'—').replace(/_/g, ' ') + '</td>'
         + '<td style="white-space:normal;font-size:0.7rem;max-width:220px">' + (c.first_message_angle||'—') + '</td>'
         + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'

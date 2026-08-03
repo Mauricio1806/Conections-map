@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1785679946">
+  <link rel="stylesheet" href="./assets/style.css?v=1785793541">
 </head>
 <body>
 
@@ -479,6 +479,7 @@ python src/validate_static_dashboard_runtime.py</pre>
           <button id="ct-sort-relvalue" class="btn-ghost"          onclick="setContactSort('relvalue')" style="font-size:0.8rem;padding:4px 10px">Relationship Value</button>
           <button id="ct-sort-base"     class="btn-ghost"          onclick="setContactSort('base')"     style="font-size:0.8rem;padding:4px 10px">Base Network Score</button>
           <button id="ct-sort-untapped" class="btn-ghost"          onclick="setContactSort('untapped')" style="font-size:0.8rem;padding:4px 10px">Untapped Outreach Score</button>
+          <button id="ct-sort-activation" class="btn-ghost"        onclick="setContactSort('activation')" style="font-size:0.8rem;padding:4px 10px">Untapped Activation Potential</button>
         </div>
         <div class="filter-group"><label>Min Base Score</label>
           <input type="number" id="ct-min-score" value="0" min="0" max="100" style="width:60px">
@@ -952,6 +953,51 @@ python src/validate_static_dashboard_runtime.py</pre>
         <div class="section-label">Untapped Opportunity</div>
         <div class="metrics-grid" id="untapped-opportunity"></div>
 
+        <div class="section-label">Activation Potential — Long-Connected Recruiters/TA/Talent Partners</div>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin:-0.3rem 0 0.6rem">
+          Ranks never-contacted recruiters/TA/sourcers/talent partners by title and company signal even before
+          their company has been mapped to a market — this is what surfaces long-connected profiles like a
+          "Global Recruiter &amp; Sr Talent Partner connecting LATAM talent with international teams" who would
+          otherwise wait behind company resolution.
+        </p>
+        <div class="metrics-grid" id="untapped-activation-cards"></div>
+
+        <div class="section-label">Activation Pattern Learning</div>
+        <div id="untapped-activation-pattern-no-data" style="display:none">
+          <div class="alert alert-info">
+            <span class="alert-icon">&#128202;</span>
+            <span>Not enough message history yet to show activation-pattern evidence.</span>
+          </div>
+        </div>
+        <div id="untapped-activation-pattern-content" style="display:none">
+          <p style="color:var(--text-muted);font-size:0.85rem;margin:-0.3rem 0 0.6rem">
+            Sanitized, aggregate-only evidence (no names, no raw messages) that long-connected contacts —
+            first messaged more than 90 days after connecting — convert into real conversations once activated.
+          </p>
+          <div class="metrics-grid" id="untapped-activation-pattern-summary"></div>
+          <div class="section-label" style="font-size:0.75rem;margin-top:0.6rem">Conversion by Persona</div>
+          <div class="table-wrap">
+            <table id="activation-pattern-persona-table">
+              <thead><tr><th>Persona</th><th>Contacted</th><th>Replied</th><th>Became Warm</th><th>Conversion Rate</th></tr></thead>
+              <tbody id="activation-pattern-persona-tbody"></tbody>
+            </table>
+          </div>
+          <div class="section-label" style="font-size:0.75rem">Conversion by Connected-Age Bucket</div>
+          <div class="table-wrap">
+            <table id="activation-pattern-age-table">
+              <thead><tr><th>Connected Age</th><th>Contacted</th><th>Replied</th><th>Became Warm</th><th>Conversion Rate</th></tr></thead>
+              <tbody id="activation-pattern-age-tbody"></tbody>
+            </table>
+          </div>
+          <div class="section-label" style="font-size:0.75rem">Conversion by Opportunity Bucket</div>
+          <div class="table-wrap">
+            <table id="activation-pattern-bucket-table">
+              <thead><tr><th>Opportunity Bucket</th><th>Contacted</th><th>Replied</th><th>Became Warm</th><th>Conversion Rate</th></tr></thead>
+              <tbody id="activation-pattern-bucket-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
         <div class="section-label">This Week — Untapped Outreach Queue (max 20)</div>
         <div class="table-wrap">
           <table id="untapped-queue-table">
@@ -1019,6 +1065,43 @@ python src/validate_static_dashboard_runtime.py</pre>
           <div class="filter-group"><label>Europe exploratory only</label>
             <input type="checkbox" id="untapped-europe-only">
           </div>
+          <div class="filter-group"><label>Activation Category</label>
+            <select id="untapped-activation-category-filter"><option value="">All</option></select>
+          </div>
+          <div class="filter-group"><label>Connected Age Bucket</label>
+            <select id="untapped-connected-age-filter">
+              <option value="">All</option>
+              <option value="0-30 days">0-30 days</option>
+              <option value="31-90 days">31-90 days</option>
+              <option value="91-180 days">91-180 days</option>
+              <option value="181-365 days">181-365 days</option>
+              <option value="365+ days">365+ days</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>First Message Priority</label>
+            <select id="untapped-first-message-priority-filter">
+              <option value="">All</option>
+              <option value="TODAY">Today</option>
+              <option value="THIS_WEEK">This Week</option>
+              <option value="BACKLOG">Backlog</option>
+              <option value="LOW_PRIORITY">Low Priority</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Min Activation Score</label>
+            <input type="number" id="untapped-min-activation-score" value="0" min="0" max="100" style="width:70px">
+          </div>
+          <div class="filter-group"><label>LATAM/international signal only</label>
+            <input type="checkbox" id="untapped-latam-intl-only">
+          </div>
+          <div class="filter-group"><label>Recruiter/TA/Talent Partner only</label>
+            <input type="checkbox" id="untapped-recruiter-ta-only">
+          </div>
+          <div class="filter-group"><label>Connected &gt;180 days</label>
+            <input type="checkbox" id="untapped-connected-180-only">
+          </div>
+          <div class="filter-group"><label>Connected &gt;365 days</label>
+            <input type="checkbox" id="untapped-connected-365-only">
+          </div>
           <button class="btn-primary" onclick="applyUntappedFilters()">Apply</button>
           <button class="btn-ghost" onclick="resetUntappedFilters()">Reset</button>
         </div>
@@ -1028,9 +1111,11 @@ python src/validate_static_dashboard_runtime.py</pre>
           <table id="untapped-table">
             <thead><tr>
               <th>Name</th><th>Company</th><th>Role</th><th>Persona</th><th>Seniority</th>
-              <th>Opportunity Bucket</th><th>Connected On</th><th>Days</th>
+              <th>Opportunity Bucket</th><th>Connected On</th><th>Days</th><th>Connected Age Bucket</th>
               <th>History Status</th><th>Untapped Category</th><th>Score</th>
-              <th>Why This Score?</th>
+              <th>Activation Score</th><th>Execution Score</th><th>Activation Category</th>
+              <th>Why This Score?</th><th>Activation Reason</th>
+              <th>First Message Priority</th>
               <th>Recommended Action</th><th>First Message Angle</th><th>LinkedIn</th>
             </tr></thead>
             <tbody id="untapped-tbody"></tbody>
@@ -1677,6 +1762,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1785679946"></script>
+<script src="./assets/app.js?v=1785793541"></script>
 </body>
 </html>

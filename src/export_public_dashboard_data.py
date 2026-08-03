@@ -55,6 +55,9 @@ SAFE_CONTACT_COLS = [
     # Network page (see build_public_contacts()). Sanitized fields only.
     "untapped_outreach_score", "untapped_reason", "untapped_category",
     "contact_history_status", "recommended_first_action", "first_message_angle",
+    # Untapped Activation Potential Scoring (V10) — same merge-in path as V9.
+    "untapped_activation_potential_score", "untapped_execution_score",
+    "activation_category", "activation_reason", "first_message_priority",
     # Needs Mapping backlog (Part 4)
     "mapping_priority_score", "mapping_reason_short",
 ]
@@ -177,6 +180,9 @@ def build_public_contacts(
     untapped_cols = [
         "untapped_outreach_score", "untapped_reason", "untapped_category",
         "contact_history_status", "recommended_first_action", "first_message_angle",
+        # Untapped Activation Potential Scoring (V10)
+        "untapped_activation_potential_score", "untapped_execution_score",
+        "activation_category", "activation_reason", "first_message_priority",
     ]
     if untapped_scores:
         def _norm_u(url):
@@ -196,6 +202,13 @@ def build_public_contacts(
         # (a contacted person, or one outside the top_untapped_contacts pool).
         df["untapped_outreach_score"] = pd.to_numeric(df["untapped_outreach_score"], errors="coerce").fillna(0)
         df["contact_history_status"] = df["contact_history_status"].where(df["contact_history_status"].notna(), "")
+        # Untapped Activation Potential Scoring (V10) — same NaN-safe defaults.
+        df["untapped_activation_potential_score"] = pd.to_numeric(
+            df["untapped_activation_potential_score"], errors="coerce"
+        ).fillna(0)
+        df["untapped_execution_score"] = pd.to_numeric(df["untapped_execution_score"], errors="coerce").fillna(0)
+        for col in ("activation_category", "activation_reason", "first_message_priority"):
+            df[col] = df[col].where(df[col].notna(), "")
 
     # Merge Needs Mapping backlog fields (Part 4) — lets Top Contacts sort by
     # mapping_priority_score and cross-navigate from the Opportunity Market
@@ -260,7 +273,8 @@ def build_public_contacts(
         act_v = pd.to_numeric(df.get("immediate_action_score"), errors="coerce").fillna(0)
         base_v = pd.to_numeric(df["priority_score"], errors="coerce").fillna(0)
         untap_v = pd.to_numeric(df.get("untapped_outreach_score"), errors="coerce").fillna(0)
-        df["_selection_score"] = pd.concat([base_v, rel_v, act_v, untap_v], axis=1).max(axis=1)
+        exec_v = pd.to_numeric(df.get("untapped_execution_score"), errors="coerce").fillna(0)
+        df["_selection_score"] = pd.concat([base_v, rel_v, act_v, untap_v, exec_v], axis=1).max(axis=1)
         sort_col = "_selection_score"
     elif untapped_scores:
         # No message-history scores this run, but untapped scores are
@@ -268,7 +282,8 @@ def build_public_contacts(
         # make the top-N pool even if their base priority_score is modest.
         base_v = pd.to_numeric(df["priority_score"], errors="coerce").fillna(0)
         untap_v = pd.to_numeric(df.get("untapped_outreach_score"), errors="coerce").fillna(0)
-        df["_selection_score"] = pd.concat([base_v, untap_v], axis=1).max(axis=1)
+        exec_v = pd.to_numeric(df.get("untapped_execution_score"), errors="coerce").fillna(0)
+        df["_selection_score"] = pd.concat([base_v, untap_v, exec_v], axis=1).max(axis=1)
         sort_col = "_selection_score"
     else:
         sort_col = "priority_score"
@@ -703,11 +718,41 @@ SAFE_UNTAPPED_CONTACT_COLS = {
     "untapped_reason", "untapped_opportunity_market", "untapped_market_confidence",
     "untapped_market_reason", "exact_location_available", "observed_location_manual",
     "is_manual_enriched",
+    # Untapped Activation Potential Scoring (V10)
+    "untapped_activation_potential_score", "untapped_execution_score",
+    "connected_age_bucket", "activation_category", "activation_reason",
+    "first_message_priority", "priority_score",
+}
+
+# Activation Pattern Learning (V10) — already aggregate-only (counts/rates
+# and persona/bucket/age-bucket labels, no names, no raw messages) as built
+# by build_activation_pattern_learning() — explicit allowlist here is
+# defense in depth, same pattern as every other safe-* builder in this file.
+SAFE_ACTIVATION_PATTERN_KEYS = {
+    "available", "long_connected_contacted_all_time", "long_connected_contacted_this_week",
+    "long_connected_replied", "long_connected_became_warm",
+    "long_connected_cv_or_interview_requested", "conversion_rate_overall_pct",
+}
+SAFE_ACTIVATION_PATTERN_ROW_COLS = {
+    "persona", "connected_age_bucket", "opportunity_bucket",
+    "contacted", "replied", "became_warm", "conversion_rate_pct",
 }
 
 
 def _sanitize_untapped_contacts(contacts: list) -> list:
     return [{k: v for k, v in c.items() if k in SAFE_UNTAPPED_CONTACT_COLS} for c in (contacts or [])]
+
+
+def build_activation_pattern_learning_public(data: dict) -> dict:
+    if not data or not data.get("available"):
+        return {"available": False}
+    safe = {k: v for k, v in data.items() if k in SAFE_ACTIVATION_PATTERN_KEYS}
+    for list_key in ("by_persona", "by_connected_age_bucket", "by_opportunity_bucket"):
+        safe[list_key] = [
+            {k: v for k, v in row.items() if k in SAFE_ACTIVATION_PATTERN_ROW_COLS}
+            for row in (data.get(list_key) or [])
+        ]
+    return safe
 
 
 def build_untapped_network_public(untapped_data: dict) -> dict:
@@ -720,6 +765,9 @@ def build_untapped_network_public(untapped_data: dict) -> dict:
         "match_method_breakdown": untapped_data.get("match_method_breakdown", {}),
         "top_untapped_contacts": _sanitize_untapped_contacts(untapped_data.get("top_untapped_contacts", [])),
         "this_week_queue": _sanitize_untapped_contacts(untapped_data.get("this_week_queue", [])),
+        "activation_pattern_learning": build_activation_pattern_learning_public(
+            untapped_data.get("activation_pattern_learning", {})
+        ),
     }
 
 

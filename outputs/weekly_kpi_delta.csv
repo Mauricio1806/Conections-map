@@ -1,7 +1,7 @@
 ﻿category,metric,previous_value,current_value,absolute_delta,percentage_delta
 NETWORK,total_connections,11482,11613,131,1.1
-NETWORK,high_priority,225,228,3,1.3
-NETWORK,medium_priority,3899,3927,28,0.7
+NETWORK,high_priority,225,227,2,0.9
+NETWORK,medium_priority,3899,3926,27,0.7
 NETWORK,actionable_contacts,11374,11505,131,1.2
 PERSONAS,recruiters,1275,1303,28,2.2
 PERSONAS,talent_acquisition_hr,2205,2234,29,1.3
@@ -22,6 +22,6 @@ MESSAGE_INTELLIGENCE,needs_my_response,64,69,5,7.8
 MESSAGE_INTELLIGENCE,hot_reactivation,121,124,3,2.5
 MESSAGE_INTELLIGENCE,warm_reactivation,2452,2532,80,3.3
 MESSAGE_INTELLIGENCE,dormant_warm,118,118,0,0.0
-MESSAGE_INTELLIGENCE,follow_ups_due,957,1000,43,4.5
+MESSAGE_INTELLIGENCE,follow_ups_due,957,1020,63,6.6
 MESSAGE_INTELLIGENCE,no_response,720,720,0,0.0
 MESSAGE_INTELLIGENCE,interview_pipeline,14,15,1,7.1

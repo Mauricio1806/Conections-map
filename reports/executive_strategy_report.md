@@ -1,5 +1,5 @@
 # Executive Strategy Report
-> Generated: **August 02, 2026**  
+> Generated: **August 03, 2026**  
 > ⚠️ *LinkedIn exports do not include location data. Market classification is inferred from company/title keywords only.*
 
 ---

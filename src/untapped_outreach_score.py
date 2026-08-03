@@ -480,3 +480,354 @@ def _first_message_angle_v9(persona: str, final_bucket: str, title_l: str) -> st
     if persona in RECRUITING_PERSONAS:
         return _ANGLE_LATAM_USD_RECRUITER
     return None
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Untapped Activation Potential Scoring (V10)
+# ══════════════════════════════════════════════════════════════════════════
+# A SEPARATE, additive 0-100 score — untapped_activation_potential_score —
+# that answers a narrower question than untapped_outreach_score above: "does
+# this never-contacted 1st-degree connection look like a recruiter / TA /
+# sourcer / talent partner who places LATAM / international / USD talent,
+# regardless of whether their company or opportunity bucket has been
+# resolved yet?" It exists because company/bucket resolution lags behind
+# title signal — a "Global Recruiter & Sr Talent Partner | Connecting LATAM
+# Talent with International Teams" profile at a company that hasn't been
+# mapped to any market yet should not wait for company resolution to rank
+# near the top of the weekly outreach queue.
+#
+# Does NOT replace untapped_outreach_score (above), outreach_adjusted_score,
+# relationship_value_score, immediate_action_score, or the base
+# priority_score. See untapped_network_intelligence.py for how this combines
+# with those into untapped_execution_score (the page's default ranking).
+#
+# Same design principle as V9: never-contacted is the opportunity, not a
+# penalty — this module never subtracts points solely because a contact has
+# no message history.
+
+ACTIVATION_RECRUITING_PERSONAS = RECRUITING_PERSONAS | {"Talent Partner", "HR Recruiter"}
+ACTIVATION_NEVER_CONTACTED_STATUSES = {"NEVER_CONTACTED_CONFIRMED", "LIKELY_NEVER_CONTACTED"}
+
+ACTIVATION_LATAM_KW = [
+    "latam", "latin america", "américa latina", "america latina", "south america",
+]
+ACTIVATION_INTL_KW = [
+    "international", "global", "remote", "nearshore",
+    "u.s.", "us", "usa", "united states",
+]
+ACTIVATION_STRONG_TITLE_KW = [
+    "global recruiter", "talent partner", "talent acquisition", "it recruiter",
+    "tech recruiter", "senior recruiter", "headhunter", "sourcer",
+]
+ACTIVATION_STAFFING_KW = [
+    "staffing", "recruiting", "consulting", "talent solutions", "talent partner",
+    "international teams",
+]
+ACTIVATION_ROLE_TECH_KW = [
+    "data", "it", "tech", "cloud", "engineering", "software", "analytics",
+]
+
+ACTIVATION_STRONG_BUCKETS = {
+    "LATAM_USD_CONFIRMED", "US_CANADA_CONFIRMED", "GLOBAL_STAFFING",
+    "GLOBAL_OPPORTUNITY", "GLOBAL_CONSULTING",
+}
+ACTIVATION_LOW_VALUE_BUCKETS = {"LOW_VALUE_UNRESOLVED", "LOW_VALUE"}
+
+# ── New category labels (V10) ──────────────────────────────────────────────
+CAT_HOT_RECRUITER          = "HOT_UNTAPPED_RECRUITER"
+CAT_HOT_TALENT_PARTNER     = "HOT_UNTAPPED_TALENT_PARTNER"
+CAT_HIGH_POTENTIAL_LONG    = "HIGH_POTENTIAL_LONG_CONNECTED"
+CAT_LATAM_INTL_RECRUITER   = "LATAM_INTERNATIONAL_RECRUITER"
+CAT_GLOBAL_RECRUITER       = "GLOBAL_RECRUITER_UNTAPPED"
+CAT_FIRST_MESSAGE_NOW      = "FIRST_MESSAGE_NOW"
+CAT_FIRST_MESSAGE_WEEK     = "FIRST_MESSAGE_THIS_WEEK"
+CAT_BACKLOG                = "BACKLOG_UNTAPPED"
+
+# Default weekly-queue priority order (most to least urgent) — used by
+# untapped_network_intelligence.py's build_weekly_untapped_queue() to rank
+# WITHIN each strategic-focus allocation bucket, without changing the
+# existing ~90/10 LATAM/EU allocation itself.
+ACTIVATION_CATEGORY_QUEUE_PRIORITY = [
+    CAT_HOT_RECRUITER, CAT_LATAM_INTL_RECRUITER, CAT_HIGH_POTENTIAL_LONG, CAT_GLOBAL_RECRUITER,
+]
+
+_ANGLE_ACTIVATION_LATAM_INTL = (
+    "Hi [Name], thanks for being connected. I noticed your work connecting LATAM "
+    "talent with international teams. I'm a Data Engineer focused on Azure, AWS, "
+    "Databricks, SQL, Python and ETL/ELT pipelines, currently open to remote "
+    "LATAM/US-aligned opportunities. Happy to stay in touch if you work with "
+    "data engineering roles."
+)
+_ANGLE_ACTIVATION_GLOBAL_RECRUITER = (
+    "Hi [Name], thanks for being connected. I saw your background in global "
+    "recruiting / talent partnerships. I'm a Data Engineer with experience in "
+    "cloud data platforms, Azure, AWS, Databricks, SQL and Python. I'd be happy "
+    "to stay in touch for remote Data Engineering opportunities."
+)
+_ANGLE_ACTIVATION_IT_TECH_RECRUITER = (
+    "Hi [Name], thanks for being connected. I'm a Data Engineer focused on "
+    "cloud data platforms, ETL/ELT, Azure, AWS, Databricks, SQL and Python. "
+    "Happy to connect in case you work with Data Engineering, Cloud Data or "
+    "Analytics Engineering roles."
+)
+
+
+def activation_age_bucket_label(days) -> str:
+    """Human-readable connected-age bucket for the Activation Pattern
+    Learning UI — same boundaries as _connection_age_bucket() in
+    untapped_network_intelligence.py, human-readable labels for direct
+    display/filtering as the `connected_age_bucket` public field."""
+    try:
+        d = int(days) if days not in (None, "") else None
+    except (TypeError, ValueError):
+        d = None
+    if d is None or d < 0:
+        return "Unknown"
+    if d <= 30:
+        return "0-30 days"
+    if d <= 90:
+        return "31-90 days"
+    if d <= 180:
+        return "91-180 days"
+    if d <= 365:
+        return "181-365 days"
+    return "365+ days"
+
+
+def _activation_category(
+    score: int, is_recruiting_persona: bool, latam_kw: str | None, intl_kw: str | None,
+    strong_title_kw: str | None, days,
+) -> str:
+    has_recruiter_signal = is_recruiting_persona or bool(strong_title_kw)
+    age_long = days is not None and days >= 180
+
+    if score >= 80 and latam_kw and has_recruiter_signal:
+        return CAT_LATAM_INTL_RECRUITER
+    if score >= 80 and not latam_kw and (intl_kw or strong_title_kw) and has_recruiter_signal:
+        return CAT_GLOBAL_RECRUITER
+    if score >= 80 and is_recruiting_persona:
+        return CAT_HOT_RECRUITER
+    if score >= 80 and strong_title_kw and "talent partner" in strong_title_kw:
+        return CAT_HOT_TALENT_PARTNER
+    if score >= 60 and age_long:
+        return CAT_HIGH_POTENTIAL_LONG
+    if score >= 70:
+        return CAT_FIRST_MESSAGE_NOW
+    if score >= 50:
+        return CAT_FIRST_MESSAGE_WEEK
+    return CAT_BACKLOG
+
+
+def _activation_reason_sentence(score: int, positives: list[str], negatives: list[str]) -> str:
+    if not positives:
+        return "Lower activation priority: no recruiting/data/market signal found."
+    if score >= 85:
+        lead = "Very high activation potential"
+    elif score >= 70:
+        lead = "High activation potential"
+    elif score >= 50:
+        lead = "Good activation candidate"
+    else:
+        lead = "Lower activation priority"
+    detail = " + ".join(positives[:5])
+    sentence = f"{lead}: {detail}."
+    if negatives and score < 50:
+        sentence += " " + negatives[0] + "."
+    return sentence
+
+
+def score_activation_potential(
+    full_name: str,
+    company_clean: str,
+    position_clean: str,
+    persona: str,
+    opportunity_bucket: str,
+    history_status: str,
+    days_connected,
+    company_has_warm_signal: bool = False,
+) -> dict:
+    """
+    Untapped Activation Potential Scoring (V10) — see module section header.
+
+    Returns:
+      {
+        "untapped_activation_potential_score": int 0-100,
+        "activation_category":  str (one of the CAT_* labels above),
+        "activation_reason":    str (sanitized, human-readable),
+        "first_message_priority": "TODAY" | "THIS_WEEK" | "BACKLOG" | "LOW_PRIORITY",
+        "first_message_angle":  str | None,  # None => caller falls back to V9/generic
+      }
+
+    Never penalizes a contact solely for having no message history, and
+    never penalizes solely for being long-connected — long-connected +
+    never-contacted is exactly the opportunity this function exists to find.
+    """
+    title      = str(position_clean or "")
+    title_l    = title.lower()
+    company    = str(company_clean or "")
+    company_l  = company.lower()
+    combined_l = (title_l + " " + company_l).strip()
+    persona    = str(persona or "")
+    bucket     = str(opportunity_bucket or "").strip().upper()
+    status     = str(history_status or "").strip().upper()
+
+    try:
+        days = int(days_connected) if days_connected not in (None, "") else None
+    except (TypeError, ValueError):
+        days = None
+
+    score = 0.0
+    positives: list[str] = []
+
+    is_recruiting_persona = persona in ACTIVATION_RECRUITING_PERSONAS
+
+    if status in ACTIVATION_NEVER_CONTACTED_STATUSES:
+        score += 30
+        positives.append("never contacted — this is the opportunity, not a penalty")
+
+    if is_recruiting_persona:
+        score += 25
+        positives.append(f"{persona.lower()} persona")
+
+    latam_kw = _kw_hit(combined_l, ACTIVATION_LATAM_KW)
+    if latam_kw:
+        score += 20
+        positives.append(f"LATAM signal ('{latam_kw}')")
+
+    intl_kw = _kw_hit(combined_l, ACTIVATION_INTL_KW)
+    if intl_kw:
+        score += 20
+        positives.append(f"international/global/remote/US signal ('{intl_kw}')")
+
+    strong_title_kw = _kw_hit(title_l, ACTIVATION_STRONG_TITLE_KW)
+    if strong_title_kw:
+        score += 20
+        positives.append(f"strong recruiter/talent-partner title ('{strong_title_kw}')")
+
+    staffing_kw = _kw_hit(combined_l, ACTIVATION_STAFFING_KW)
+    if staffing_kw:
+        score += 15
+        positives.append(f"staffing/recruiting/talent-solutions signal ('{staffing_kw}')")
+
+    age_gt_180 = days is not None and days > 180
+    age_gt_365 = days is not None and days > 365
+    if age_gt_180:
+        score += 15
+        positives.append(f"connected {days}d — long-standing 1st-degree connection")
+    if age_gt_365:
+        score += 10
+        positives.append("connected 365+ days")
+
+    if bucket in ACTIVATION_STRONG_BUCKETS:
+        score += 15
+        positives.append(f"opportunity bucket {bucket}")
+
+    role_tech_kw = _kw_hit(title_l, ACTIVATION_ROLE_TECH_KW)
+    if role_tech_kw:
+        score += 15
+        positives.append(f"role relevance signal ('{role_tech_kw}')")
+
+    if company_has_warm_signal:
+        score += 10
+        positives.append(f"{company} already produced replies/warm leads/opportunities")
+
+    # Never-contacted, 1st-degree — the premise of this entire population;
+    # never a penalty, always a small credit (see module docstring).
+    score += 10
+    positives.append("existing 1st-degree connection, never contacted")
+
+    age_gt_90 = days is not None and days > 90
+    if age_gt_90 and is_recruiting_persona:
+        score += 10
+        positives.append("connected 90+ days and recruiter/TA persona")
+
+    # ── Negative signals — never fires solely for "never contacted" ──────────
+    negatives: list[str] = []
+    has_any_positive_signal = bool(
+        is_recruiting_persona or latam_kw or intl_kw or strong_title_kw
+        or staffing_kw or role_tech_kw or bucket in ACTIVATION_STRONG_BUCKETS
+    )
+    if not has_any_positive_signal:
+        score -= 30
+        negatives.append("persona/title unrelated to recruiting, data, or market opportunity")
+
+    has_recruiter_title_signal = bool(is_recruiting_persona or strong_title_kw or staffing_kw)
+    if bucket in ACTIVATION_LOW_VALUE_BUCKETS and not has_recruiter_title_signal:
+        score -= 20
+        negatives.append("low-value/unresolved company with no recruiter/TA/sourcer/title signal")
+
+    if bucket in ACTIVATION_LOW_VALUE_BUCKETS:
+        score -= 20
+        negatives.append("opportunity bucket is low value")
+
+    age_very_recent = days is not None and days < 30
+    if age_very_recent and not has_any_positive_signal:
+        score -= 15
+        negatives.append("connected very recently with no market/persona signal yet")
+
+    final_score = int(max(0, min(100, round(score))))
+
+    category = _activation_category(
+        final_score, is_recruiting_persona, latam_kw, intl_kw, strong_title_kw, days,
+    )
+
+    if final_score >= 80 or category in (
+        CAT_HOT_RECRUITER, CAT_HOT_TALENT_PARTNER, CAT_LATAM_INTL_RECRUITER, CAT_GLOBAL_RECRUITER,
+    ):
+        priority = "TODAY"
+    elif final_score >= 55:
+        priority = "THIS_WEEK"
+    elif final_score >= 30:
+        priority = "BACKLOG"
+    else:
+        priority = "LOW_PRIORITY"
+
+    reason = _activation_reason_sentence(final_score, positives, negatives)
+
+    angle = None
+    if latam_kw and (is_recruiting_persona or strong_title_kw):
+        angle = _ANGLE_ACTIVATION_LATAM_INTL
+    elif (intl_kw or strong_title_kw) and is_recruiting_persona:
+        angle = _ANGLE_ACTIVATION_GLOBAL_RECRUITER
+    elif role_tech_kw and (is_recruiting_persona or strong_title_kw):
+        angle = _ANGLE_ACTIVATION_IT_TECH_RECRUITER
+
+    return {
+        "untapped_activation_potential_score": final_score,
+        "activation_category": category,
+        "activation_reason": reason,
+        "first_message_priority": priority,
+        "first_message_angle": angle,
+    }
+
+
+def compute_untapped_execution_score(
+    untapped_outreach_score,
+    untapped_activation_potential_score,
+    priority_score,
+    persona: str,
+    history_status: str,
+) -> int:
+    """
+    Untapped Network default-ranking score (V10):
+
+        untapped_execution_score = max(
+            untapped_outreach_score,
+            untapped_activation_potential_score,
+            base priority_score adjusted by never-contacted recruiter potential,
+        )
+
+    Purely a ranking convenience — never mutates or replaces
+    untapped_outreach_score, outreach_adjusted_score, relationship_value_score,
+    immediate_action_score, or priority_score.
+    """
+    outreach_v   = float(untapped_outreach_score or 0)
+    activation_v = float(untapped_activation_potential_score or 0)
+    base_v       = float(priority_score or 0)
+
+    status  = str(history_status or "").strip().upper()
+    persona = str(persona or "")
+    if status in ACTIVATION_NEVER_CONTACTED_STATUSES and persona in ACTIVATION_RECRUITING_PERSONAS:
+        base_v = min(100.0, base_v + 15.0)
+
+    return int(max(0, min(100, round(max(outreach_v, activation_v, base_v)))))
