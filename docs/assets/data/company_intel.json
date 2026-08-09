@@ -7,7 +7,7 @@
       },
       {
         "company": "Hays",
-        "count": 75
+        "count": 74
       },
       {
         "company": "GE Vernova",
@@ -18,24 +18,24 @@
         "count": 55
       },
       {
-        "company": "NTT DATA Europe & Latam",
-        "count": 50
-      },
-      {
         "company": "Deloitte",
-        "count": 50
+        "count": 51
       },
       {
         "company": "Databricks",
         "count": 49
       },
       {
-        "company": "Grupo Boticário",
-        "count": 48
+        "company": "NTT DATA Europe & Latam",
+        "count": 49
       },
       {
         "company": "Michael Page",
-        "count": 47
+        "count": 48
+      },
+      {
+        "company": "Grupo Boticário",
+        "count": 48
       },
       {
         "company": "Tata Consultancy Services",
@@ -43,19 +43,19 @@
       },
       {
         "company": "Capgemini",
-        "count": 42
+        "count": 44
+      },
+      {
+        "company": "Bradesco",
+        "count": 41
       },
       {
         "company": "Larco Petróleo",
         "count": 40
       },
       {
-        "company": "Bradesco",
-        "count": 40
-      },
-      {
         "company": "Randstad Brasil",
-        "count": 39
+        "count": 40
       },
       {
         "company": "iFood",
@@ -64,6 +64,10 @@
       {
         "company": "CI&T",
         "count": 34
+      },
+      {
+        "company": "EY",
+        "count": 32
       },
       {
         "company": "IBM",
@@ -78,36 +82,32 @@
         "count": 29
       },
       {
-        "company": "EY",
-        "count": 29
+        "company": "GFT Technologies",
+        "count": 28
+      },
+      {
+        "company": "act digital",
+        "count": 28
       },
       {
         "company": "LM Soluções de Mobilidade",
         "count": 28
       },
       {
-        "company": "GFT Technologies",
-        "count": 28
-      },
-      {
-        "company": "act digital",
+        "company": "Accenture",
         "count": 27
       },
       {
-        "company": "Accenture",
-        "count": 26
+        "company": "AB InBev",
+        "count": 27
       },
       {
-        "company": "AB InBev",
-        "count": 26
+        "company": "TOTVS",
+        "count": 25
       },
       {
         "company": "Nubank",
         "count": 25
-      },
-      {
-        "company": "TOTVS",
-        "count": 24
       },
       {
         "company": "Ford Motor Company",
@@ -132,7 +132,23 @@
         "count": 9
       },
       {
+        "company": "Michael Page",
+        "count": 9
+      },
+      {
+        "company": "EY",
+        "count": 8
+      },
+      {
+        "company": "Capgemini",
+        "count": 8
+      },
+      {
         "company": "EPAM Systems",
+        "count": 8
+      },
+      {
+        "company": "Leidos",
         "count": 8
       },
       {
@@ -144,31 +160,15 @@
         "count": 8
       },
       {
-        "company": "Coforge",
-        "count": 8
-      },
-      {
-        "company": "Michael Page",
-        "count": 8
-      },
-      {
         "company": "Freelance",
-        "count": 8
-      },
-      {
-        "company": "Leidos",
-        "count": 8
-      },
-      {
-        "company": "EY",
         "count": 7
       },
       {
-        "company": "Capgemini",
+        "company": "Coforge",
         "count": 7
       },
       {
-        "company": "Keyrus",
+        "company": "Hays",
         "count": 6
       },
       {
@@ -176,11 +176,19 @@
         "count": 6
       },
       {
+        "company": "Keyrus",
+        "count": 6
+      },
+      {
+        "company": "Deloitte",
+        "count": 6
+      },
+      {
         "company": "GFT Technologies",
         "count": 6
       },
       {
-        "company": "Hays",
+        "company": "Delivery Hero",
         "count": 6
       },
       {
@@ -188,19 +196,11 @@
         "count": 5
       },
       {
-        "company": "ICON Solutions do Brasil",
-        "count": 5
-      },
-      {
         "company": "Truelogic Software",
         "count": 5
       },
       {
-        "company": "Strategic Staffing Solutions",
-        "count": 5
-      },
-      {
-        "company": "NTT DATA Europe & LATAM",
+        "company": "Andersen Lab",
         "count": 5
       }
     ],
@@ -208,14 +208,6 @@
       {
         "company": "Itaú Unibanco",
         "count": 24
-      },
-      {
-        "company": "NTT DATA Europe & Latam",
-        "count": 18
-      },
-      {
-        "company": "iFood",
-        "count": 17
       },
       {
         "company": "Bradesco",
@@ -226,19 +218,27 @@
         "count": 17
       },
       {
+        "company": "iFood",
+        "count": 17
+      },
+      {
+        "company": "NTT DATA Europe & Latam",
+        "count": 17
+      },
+      {
+        "company": "AB InBev",
+        "count": 15
+      },
+      {
         "company": "Grupo Boticário",
         "count": 14
       },
       {
-        "company": "AB InBev",
-        "count": 14
+        "company": "Artefact",
+        "count": 12
       },
       {
         "company": "Nubank",
-        "count": 14
-      },
-      {
-        "company": "Artefact",
         "count": 12
       },
       {
@@ -258,6 +258,10 @@
         "count": 9
       },
       {
+        "company": "Ambev Tech",
+        "count": 7
+      },
+      {
         "company": "Indicium AI",
         "count": 7
       },
@@ -274,22 +278,18 @@
         "count": 7
       },
       {
-        "company": "Ambev Tech",
-        "count": 7
-      },
-      {
-        "company": "Accenture Brasil",
+        "company": "Compass UOL",
         "count": 6
       },
       {
-        "company": "NTT DATA",
+        "company": "EY",
         "count": 6
       }
     ],
     "latam_usd": [
       {
         "company": "NTT DATA Europe & Latam",
-        "count": 50
+        "count": 49
       },
       {
         "company": "Globant",
@@ -305,38 +305,30 @@
       },
       {
         "company": "Athyna",
-        "count": 6
+        "count": 7
       },
       {
         "company": "BairesDev",
         "count": 5
       },
       {
-        "company": "TEAM International",
-        "count": 4
-      },
-      {
         "company": "AgileEngine",
         "count": 4
       },
       {
-        "company": "UST España & Latam",
-        "count": 3
-      },
-      {
-        "company": "E-Solutions",
-        "count": 3
-      },
-      {
         "company": "LatamCent",
-        "count": 3
+        "count": 4
+      },
+      {
+        "company": "TEAM International",
+        "count": 4
       },
       {
         "company": "Andela",
         "count": 3
       },
       {
-        "company": "Wizeline",
+        "company": "Perficient",
         "count": 3
       },
       {
@@ -348,7 +340,15 @@
         "count": 3
       },
       {
-        "company": "Perficient Latin America",
+        "company": "Wizeline",
+        "count": 3
+      },
+      {
+        "company": "UST España & Latam",
+        "count": 3
+      },
+      {
+        "company": "E-Solutions",
         "count": 3
       },
       {
@@ -356,15 +356,15 @@
         "count": 3
       },
       {
-        "company": "Perficient",
+        "company": "Perficient Latin America",
         "count": 3
       },
       {
-        "company": "Oxigent Technologies",
+        "company": "Equifax",
         "count": 2
       },
       {
-        "company": "Plugg Technologies",
+        "company": "Oracle",
         "count": 2
       }
     ],
@@ -375,7 +375,7 @@
       },
       {
         "company": "YER Deutschland",
-        "count": 14
+        "count": 15
       },
       {
         "company": "Siemens Energy",
@@ -387,11 +387,15 @@
       },
       {
         "company": "Indra",
-        "count": 7
+        "count": 8
       },
       {
         "company": "adesso SE",
         "count": 6
+      },
+      {
+        "company": "Bonial Germany",
+        "count": 5
       },
       {
         "company": "SEIDOR",
@@ -402,16 +406,16 @@
         "count": 5
       },
       {
-        "company": "Bonial Germany",
-        "count": 5
+        "company": "Deutsche Telekom",
+        "count": 4
       },
       {
         "company": "Deloitte Deutschland",
         "count": 4
       },
       {
-        "company": "Deutsche Telekom",
-        "count": 4
+        "company": "Pipedrive",
+        "count": 3
       },
       {
         "company": "Siemens Healthineers",
@@ -434,7 +438,7 @@
         "count": 3
       },
       {
-        "company": "Pipedrive",
+        "company": "Randstad Professional Deutschland (vormals GULP)",
         "count": 3
       },
       {
@@ -442,11 +446,7 @@
         "count": 3
       },
       {
-        "company": "Randstad Professional Deutschland (vormals GULP)",
-        "count": 3
-      },
-      {
-        "company": "Epsilon France",
+        "company": "Goodman Masson Deutschland",
         "count": 2
       }
     ],
@@ -457,7 +457,7 @@
       },
       {
         "company": "Athyna",
-        "count": 6
+        "count": 7
       },
       {
         "company": "Strategic Staffing Solutions",
@@ -468,7 +468,7 @@
         "count": 5
       },
       {
-        "company": "AgileEngine",
+        "company": "LatamCent",
         "count": 4
       },
       {
@@ -476,11 +476,11 @@
         "count": 4
       },
       {
-        "company": "Akkodis",
-        "count": 3
+        "company": "AgileEngine",
+        "count": 4
       },
       {
-        "company": "Wizeline",
+        "company": "Team 360 Staffing",
         "count": 3
       },
       {
@@ -488,11 +488,11 @@
         "count": 3
       },
       {
-        "company": "LatamCent",
+        "company": "Proclinical Staffing",
         "count": 3
       },
       {
-        "company": "Proclinical Staffing",
+        "company": "Nearshore Business Solutions",
         "count": 3
       },
       {
@@ -504,7 +504,7 @@
         "count": 3
       },
       {
-        "company": "Team 360 Staffing",
+        "company": "Wizeline",
         "count": 3
       },
       {
@@ -512,19 +512,19 @@
         "count": 3
       },
       {
-        "company": "Page Outsourcing",
+        "company": "Akkodis",
+        "count": 3
+      },
+      {
+        "company": "Toptal",
         "count": 2
       },
       {
-        "company": "Nimble.LA",
+        "company": "Plugg Technologies",
         "count": 2
       },
       {
-        "company": "Nearshore Business Solutions",
-        "count": 2
-      },
-      {
-        "company": "Oxigent Technologies",
+        "company": "Golabs",
         "count": 2
       },
       {
@@ -546,23 +546,23 @@
         "count": 29
       },
       {
+        "company": "TOTVS",
+        "count": 25
+      },
+      {
         "company": "Nubank",
         "count": 25
       },
       {
-        "company": "TOTVS",
-        "count": 24
-      },
-      {
         "company": "Stone",
-        "count": 18
-      },
-      {
-        "company": "Microsoft",
         "count": 17
       },
       {
         "company": "Google",
+        "count": 17
+      },
+      {
+        "company": "Microsoft",
         "count": 17
       },
       {
@@ -571,18 +571,18 @@
       },
       {
         "company": "Santander Brasil",
-        "count": 13
+        "count": 14
       },
       {
         "company": "XP Inc",
         "count": 11
       },
       {
-        "company": "Contabilizei",
+        "company": "Snowflake",
         "count": 9
       },
       {
-        "company": "Snowflake",
+        "company": "Contabilizei",
         "count": 9
       },
       {
@@ -590,11 +590,11 @@
         "count": 6
       },
       {
-        "company": "PagBank",
+        "company": "C6 Bank",
         "count": 5
       },
       {
-        "company": "C6 Bank",
+        "company": "PagBank",
         "count": 5
       },
       {
@@ -603,45 +603,45 @@
       },
       {
         "company": "Meta",
-        "count": 4
-      },
-      {
-        "company": "Zalando",
         "count": 3
       },
       {
-        "company": "StackSpot",
+        "company": "Semrush",
+        "count": 3
+      },
+      {
+        "company": "Datadog",
         "count": 3
       }
     ],
     "global_consulting": [
       {
         "company": "Deloitte",
-        "count": 50
+        "count": 51
+      },
+      {
+        "company": "Capgemini",
+        "count": 44
       },
       {
         "company": "Tata Consultancy Services",
         "count": 44
       },
       {
-        "company": "Capgemini",
-        "count": 42
-      },
-      {
         "company": "EY",
-        "count": 29
+        "count": 32
       },
       {
         "company": "act digital",
-        "count": 27
+        "count": 28
       },
       {
         "company": "Accenture",
-        "count": 26
+        "count": 27
       },
       {
         "company": "Indicium AI",
-        "count": 20
+        "count": 21
       },
       {
         "company": "Thoughtworks",
@@ -652,11 +652,11 @@
         "count": 12
       },
       {
-        "company": "NTT DATA",
+        "company": "NTT DATA Business Solutions",
         "count": 11
       },
       {
-        "company": "NTT DATA Business Solutions",
+        "company": "NTT DATA",
         "count": 11
       },
       {
@@ -668,7 +668,7 @@
         "count": 10
       },
       {
-        "company": "Amaris Consulting",
+        "company": "Cognizant",
         "count": 8
       },
       {
@@ -676,30 +676,30 @@
         "count": 8
       },
       {
-        "company": "Cognizant",
+        "company": "Indra",
         "count": 8
+      },
+      {
+        "company": "Amaris Consulting",
+        "count": 7
+      },
+      {
+        "company": "Dataside",
+        "count": 7
       },
       {
         "company": "Infosys",
         "count": 7
       },
       {
-        "company": "Indra",
-        "count": 7
-      },
-      {
-        "company": "Indicium",
-        "count": 7
-      },
-      {
-        "company": "Dataside",
-        "count": 7
+        "company": "Boston Consulting Group (BCG)",
+        "count": 6
       }
     ],
     "unknown_top": [
       {
         "company": "Hays",
-        "count": 73
+        "count": 72
       },
       {
         "company": "SENAI CIMATEC",
@@ -710,11 +710,11 @@
         "count": 48
       },
       {
-        "company": "GE Vernova",
-        "count": 46
+        "company": "Michael Page",
+        "count": 47
       },
       {
-        "company": "Michael Page",
+        "company": "GE Vernova",
         "count": 46
       },
       {
@@ -743,7 +743,7 @@
       },
       {
         "company": "AB InBev",
-        "count": 25
+        "count": 26
       },
       {
         "company": "Ford Motor Company",
@@ -762,19 +762,19 @@
         "count": 19
       },
       {
-        "company": "Globo",
-        "count": 19
-      },
-      {
         "company": "Serasa Experian",
         "count": 19
       },
       {
-        "company": "Melt Group",
+        "company": "Globo",
+        "count": 19
+      },
+      {
+        "company": "Artefact",
         "count": 18
       },
       {
-        "company": "Freelance",
+        "company": "Melt Group",
         "count": 18
       },
       {
@@ -782,39 +782,39 @@
         "count": 18
       },
       {
-        "company": "Artefact",
-        "count": 18
-      },
-      {
-        "company": "LM Mobilidade",
-        "count": 16
-      },
-      {
-        "company": "Qubika",
-        "count": 15
+        "company": "Freelance",
+        "count": 17
       },
       {
         "company": "Randstad",
         "count": 15
       },
       {
-        "company": "Factored",
-        "count": 14
+        "company": "Goldwind",
+        "count": 15
       },
       {
-        "company": "Sicredi",
-        "count": 14
+        "company": "Qubika",
+        "count": 15
       },
       {
-        "company": "Autônomo",
-        "count": 14
+        "company": "LM Mobilidade",
+        "count": 15
       },
       {
         "company": "Inter",
         "count": 14
       },
       {
+        "company": "Factored",
+        "count": 14
+      },
+      {
         "company": "PRINCIPIA",
+        "count": 14
+      },
+      {
+        "company": "Avanade",
         "count": 14
       }
     ]

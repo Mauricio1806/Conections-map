@@ -83,6 +83,12 @@ LOGICAL_DATASETS = {
     "company_follows":   {"tokens": ["company", "follow"]},
 }
 
+# Invitations.csv is not always present in a weekly LinkedIn export — LinkedIn
+# only generates it on demand. Treat it as optional everywhere: the refresh
+# must proceed without it, never fabricate invitation numbers, and never
+# silently reuse a stale prior-week Invitations.csv as if it were current.
+OPTIONAL_DATASETS = {"invitations"}
+
 ACTIVE_TARGET = {
     "connections":     DATA_RAW_DIR / "Connections.csv",
     "invitations":      DATA_RAW_DIR / "Invitations.csv",
@@ -123,11 +129,18 @@ def discover_snapshot_files(folder: Path) -> dict[str, Path]:
             resolved[logical] = match
 
     missing = [k for k in LOGICAL_DATASETS if k not in resolved]
-    if missing:
+    missing_required = [k for k in missing if k not in OPTIONAL_DATASETS]
+    if missing_required:
         raise FileNotFoundError(
-            f"Snapshot folder '{folder.name}' is missing required dataset(s): {missing}. "
+            f"Snapshot folder '{folder.name}' is missing required dataset(s): {missing_required}. "
             f"Found CSV files: {[f.name for f in csv_files]}"
         )
+    for k in missing:
+        if k in OPTIONAL_DATASETS:
+            logger.warning(
+                f"  Optional dataset '{k}' not found in snapshot folder '{folder.name}' — "
+                f"continuing without it (no fabricated data will be produced for it)."
+            )
     return resolved
 
 
@@ -255,7 +268,7 @@ def update_manifest(snapshot_id: str, snapshot_date: str, folder: str, row_count
         "folder": folder,
         "ingested_at": datetime.now().isoformat(timespec="seconds"),
         "connections_rows": row_counts.get("connections", 0),
-        "invitations_rows": row_counts.get("invitations", 0),
+        "invitations_rows": row_counts.get("invitations"),
         "messages_rows": row_counts.get("messages", 0),
         "company_follows_rows": row_counts.get("company_follows", 0),
         "schema_hashes": schema_hashes,
@@ -274,6 +287,18 @@ def update_manifest(snapshot_id: str, snapshot_date: str, folder: str, row_count
 def activate_snapshot(resolved: dict[str, Path]) -> None:
     DATA_RAW_DIR.mkdir(parents=True, exist_ok=True)
     for logical, target in ACTIVE_TARGET.items():
+        if logical not in resolved:
+            if logical not in OPTIONAL_DATASETS:
+                raise FileNotFoundError(f"Required dataset '{logical}' missing from resolved snapshot files.")
+            # Optional dataset absent this week — remove any stale copy left
+            # over from a previous week so downstream code can't mistake it
+            # for current data.
+            if target.exists():
+                target.unlink()
+                logger.warning(f"  {logical}: absent this week — removed stale {target.name} from active pipeline input.")
+            else:
+                logger.warning(f"  {logical}: absent this week and no stale file was present.")
+            continue
         src = resolved[logical]
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, target)
@@ -466,7 +491,22 @@ def build_message_delta(current_path: Path, previous_path: Path | None) -> dict:
 # PART 8 — Invitations delta
 # ══════════════════════════════════════════════════════════════════════════
 
-def build_invitation_delta(current_path: Path, previous_path: Path | None) -> dict:
+def build_invitation_delta(current_path: Path | None, previous_path: Path | None, snapshot_date: str) -> dict:
+    if current_path is None or not current_path.exists():
+        logger.warning(
+            f"  Invitations.csv not found for {snapshot_date}; invitation metrics unavailable for this week."
+        )
+        row = {
+            "previous_total": None, "current_total": None, "total_delta": None,
+            "previous_outgoing": None, "current_outgoing": None,
+            "previous_incoming": None, "current_incoming": None,
+            "available": False,
+            "note": f"Invitations.csv not present in the {snapshot_date} snapshot — invitation metrics "
+                    f"unavailable for this week. Not fabricated, not carried over from a prior week.",
+        }
+        pd.DataFrame([row]).to_csv(OUTPUTS_DIR / "weekly_invitation_summary.csv", index=False, encoding="utf-8-sig")
+        return row
+
     cur = _read_csv_flexible(current_path)
     prev = _read_csv_flexible(previous_path) if (previous_path and previous_path.exists()) else pd.DataFrame()
 
@@ -616,7 +656,7 @@ def main():
         current_resolved["messages"], previous_resolved.get("messages")
     )
     inv_delta = build_invitation_delta(
-        current_resolved["invitations"], previous_resolved.get("invitations")
+        current_resolved.get("invitations"), previous_resolved.get("invitations"), args.snapshot_date
     )
     cf_delta = build_company_follows_delta(
         current_resolved["company_follows"], previous_resolved.get("company_follows")

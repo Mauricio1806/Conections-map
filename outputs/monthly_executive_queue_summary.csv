@@ -1,9 +1,9 @@
 ﻿metric,value
-inbound_opportunities_this_month,0
+inbound_opportunities_this_month,16
 reactivation_due_this_month,20
 soft_closed_keep_warm,20
 usd_recruiter_followups,20
 monthly_backlog,50
-high_priority_this_month,110
+high_priority_this_month,118
 overdue_reactivations,13
-active_opportunity_signals,0
+active_opportunity_signals,16

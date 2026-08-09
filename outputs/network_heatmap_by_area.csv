@@ -1,70 +1,70 @@
 ﻿area,strategic_market,count
-Analytics,UNKNOWN,374
-Analytics,BRAZIL,58
+Analytics,UNKNOWN,379
+Analytics,BRAZIL,59
 Analytics,US_CANADA_NEARSHORE,17
 Analytics,LATAM_USD,14
-Analytics,EUROPE,8
+Analytics,EUROPE,7
 Analytics,SPAIN_EU,3
-BI,UNKNOWN,61
+BI,UNKNOWN,62
 BI,BRAZIL,6
 BI,US_CANADA_NEARSHORE,4
 BI,LATAM_USD,1
-Consulting,UNKNOWN,531
-Consulting,EUROPE,42
+Consulting,UNKNOWN,538
+Consulting,EUROPE,43
 Consulting,BRAZIL,23
 Consulting,LATAM_USD,16
-Consulting,US_CANADA_NEARSHORE,14
+Consulting,US_CANADA_NEARSHORE,13
 Consulting,SPAIN_EU,8
-Data Engineering,UNKNOWN,463
-Data Engineering,BRAZIL,105
-Data Engineering,LATAM_USD,15
+Data Engineering,UNKNOWN,468
+Data Engineering,BRAZIL,103
+Data Engineering,LATAM_USD,12
 Data Engineering,US_CANADA_NEARSHORE,12
 Data Engineering,EUROPE,5
 Data Engineering,SPAIN_EU,3
 Data Science / AI,UNKNOWN,118
-Data Science / AI,BRAZIL,26
+Data Science / AI,BRAZIL,27
 Data Science / AI,EUROPE,6
 Data Science / AI,LATAM_USD,4
 Data Science / AI,US_CANADA_NEARSHORE,3
 Data Science / AI,SPAIN_EU,1
-HR,UNKNOWN,993
-HR,BRAZIL,75
-HR,LATAM_USD,22
-HR,US_CANADA_NEARSHORE,15
+HR,UNKNOWN,1024
+HR,BRAZIL,80
+HR,LATAM_USD,24
+HR,US_CANADA_NEARSHORE,17
 HR,SPAIN_EU,13
 HR,EUROPE,8
-Management,UNKNOWN,1979
-Management,BRAZIL,227
-Management,EUROPE,120
-Management,LATAM_USD,117
-Management,US_CANADA_NEARSHORE,50
+Management,UNKNOWN,1998
+Management,BRAZIL,230
+Management,EUROPE,119
+Management,LATAM_USD,116
+Management,US_CANADA_NEARSHORE,51
 Management,SPAIN_EU,31
-Operations,UNKNOWN,128
+Operations,UNKNOWN,129
 Operations,BRAZIL,12
 Operations,LATAM_USD,4
-Operations,US_CANADA_NEARSHORE,3
 Operations,EUROPE,2
 Operations,SPAIN_EU,2
-Other,UNKNOWN,2690
-Other,BRAZIL,282
-Other,US_CANADA_NEARSHORE,108
-Other,LATAM_USD,99
-Other,EUROPE,91
-Other,SPAIN_EU,37
-Product,UNKNOWN,83
-Product,BRAZIL,19
+Operations,US_CANADA_NEARSHORE,2
+Other,UNKNOWN,2723
+Other,BRAZIL,287
+Other,US_CANADA_NEARSHORE,106
+Other,LATAM_USD,100
+Other,EUROPE,93
+Other,SPAIN_EU,39
+Product,UNKNOWN,85
+Product,BRAZIL,20
 Product,EUROPE,3
 Product,US_CANADA_NEARSHORE,3
 Product,SPAIN_EU,1
-Recruiting,UNKNOWN,1990
-Recruiting,LATAM_USD,101
-Recruiting,BRAZIL,78
-Recruiting,EUROPE,67
-Recruiting,US_CANADA_NEARSHORE,41
+Recruiting,UNKNOWN,2045
+Recruiting,LATAM_USD,107
+Recruiting,BRAZIL,81
+Recruiting,EUROPE,69
+Recruiting,US_CANADA_NEARSHORE,44
 Recruiting,SPAIN_EU,38
-Software Engineering,UNKNOWN,104
-Software Engineering,BRAZIL,20
-Software Engineering,US_CANADA_NEARSHORE,7
+Software Engineering,UNKNOWN,103
+Software Engineering,BRAZIL,22
+Software Engineering,US_CANADA_NEARSHORE,8
 Software Engineering,EUROPE,4
 Software Engineering,LATAM_USD,3
 Software Engineering,SPAIN_EU,2

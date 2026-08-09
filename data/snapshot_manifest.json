@@ -114,6 +114,27 @@
         "company_follows": "e8fd9910d87c1536"
       },
       "previous_snapshot_id": "snap-2026-07-26"
+    },
+    {
+      "snapshot_id": "snap-2026-08-09",
+      "snapshot_date": "2026-08-09",
+      "folder": "09-08",
+      "ingested_at": "2026-08-09T11:33:13",
+      "connections_rows": 11853,
+      "invitations_rows": null,
+      "messages_rows": 8547,
+      "company_follows_rows": 99,
+      "schema_hashes": {
+        "connections": "21a0ae310c07",
+        "messages": "d196d0cc912f",
+        "company_follows": "cf462610629b"
+      },
+      "file_hashes": {
+        "connections": "fd77dc8d91643c6e",
+        "messages": "a15df4c242f0c387",
+        "company_follows": "6a3afa3af5a5774f"
+      },
+      "previous_snapshot_id": "snap-2026-08-02"
     }
   ]
 }
