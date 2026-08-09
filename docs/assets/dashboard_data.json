@@ -169,7 +169,7 @@
     },
     "gap": {
       "file": "data/strategic_gap.json",
-      "size_kb": 171,
+      "size_kb": 172,
       "available": true,
       "dependencies": [
         "untapped"
@@ -183,13 +183,13 @@
     },
     "contacts": {
       "file": "data/top_contacts.json",
-      "size_kb": 618,
+      "size_kb": 617,
       "available": true,
       "dependencies": []
     },
     "weekly": {
       "file": "data/weekly_evolution.json",
-      "size_kb": 463,
+      "size_kb": 669,
       "available": true,
       "dependencies": []
     },
@@ -201,7 +201,7 @@
     },
     "unknown": {
       "file": "data/opportunity_market.json",
-      "size_kb": 6720,
+      "size_kb": 7419,
       "available": true,
       "dependencies": []
     },
@@ -213,13 +213,13 @@
     },
     "untapped": {
       "file": "data/untapped_network.json",
-      "size_kb": 15317,
+      "size_kb": 15325,
       "available": true,
       "dependencies": []
     },
     "usdcrm": {
       "file": "data/usd_contract_crm.json",
-      "size_kb": 24997,
+      "size_kb": 25205,
       "available": true,
       "dependencies": []
     },
@@ -231,7 +231,7 @@
     }
   },
   "build": {
-    "generated_at": "2026-08-09T12:31:36",
+    "generated_at": "2026-08-09T19:33:14",
     "schema": "split-v1"
   }
 }

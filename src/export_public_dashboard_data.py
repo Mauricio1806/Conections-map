@@ -860,6 +860,50 @@ def build_company_follow_public(data: dict) -> dict:
     }
 
 
+# ── Company Mapping Workbench — explicit allowlist, defense in depth. Every
+# field is a company-level aggregate/classification derived from already-
+# sanitized upstream fields (persona counts, keyword matches, cross-source
+# counts) — no person names, no raw messages, no email, no phone.
+SAFE_MAPPING_WORKBENCH_SUMMARY_KEYS = {
+    "candidate_count", "needs_mapping_total", "workbench_candidates",
+    "with_suggested_bucket", "followed_needing_review", "recruiter_ta_candidates",
+    "usd_latam_suggested", "staffing_suggested", "global_opportunity_suggested",
+    "top50_impact",
+}
+SAFE_MAPPING_WORKBENCH_ROW_COLS = {
+    "company_name", "normalized_company", "current_bucket", "suggested_bucket",
+    "suggested_category", "confidence", "manual_review_required",
+    "matched_connection_count", "matched_recruiters", "matched_talent_acquisition",
+    "matched_hiring_managers", "matched_data_leaders", "matched_top_contacts",
+    "matched_untapped_contacts", "matched_lead_reactivation_contacts",
+    "matched_inbound_opportunities", "matched_usd_crm_leads", "matched_soft_closed_leads",
+    "followed_company_signal", "recently_followed_signal", "message_history_signal",
+    "opportunity_history_signal", "usd_signal", "latam_signal", "us_canada_signal",
+    "spain_eu_signal", "global_staffing_signal", "global_consulting_signal",
+    "reason_short", "impact_if_mapped", "priority_score", "yaml_suggestion",
+}
+
+
+def build_company_mapping_workbench_public(data: dict) -> dict:
+    if not data or not data.get("available"):
+        return {
+            "available": False,
+            "reason": (data or {}).get("reason", "Needs Company Mapping backlog unavailable"),
+            "geography_note": (data or {}).get("geography_note", ""),
+        }
+    summary = data.get("summary", {}) or {}
+    companies = [
+        {k: v for k, v in c.items() if k in SAFE_MAPPING_WORKBENCH_ROW_COLS}
+        for c in (data.get("companies", []) or [])
+    ]
+    return {
+        "available": True,
+        "summary": {k: v for k, v in summary.items() if k in SAFE_MAPPING_WORKBENCH_SUMMARY_KEYS},
+        "companies": companies,
+        "geography_note": data.get("geography_note", ""),
+    }
+
+
 # ── USD Contract CRM (hybrid: manual + auto-suggested) — explicit allowlist,
 # defense in depth on top of what src/usd_contract_crm.py already sanitizes
 # (drops notes_private/raw content before it ever reaches this dict). Never
@@ -1067,7 +1111,7 @@ PAGE_DATA_MAP = {
         "opportunity_market_v5", "opportunity_market_v5_summary",
         "opportunity_market_people_segments", "needs_mapping_backlog",
         "needs_mapping_action_plan", "company_resolution_v6", "company_resolution_v7",
-        "unknown_companies", "unknown_resolution",
+        "unknown_companies", "unknown_resolution", "company_mapping_workbench",
     ],
     "leads": ["lead_reactivation"],
     "untapped": ["untapped_network"],
@@ -1242,6 +1286,7 @@ def export_public_dashboard_data(
     needs_mapping_action_plan_data: dict = None,
     usd_crm_data: dict = None,
     company_follow_data: dict = None,
+    company_mapping_workbench_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -1361,6 +1406,10 @@ def export_public_dashboard_data(
         # additional company-relevance/opportunity-market signal. Never
         # fabricates exact geography (see geography_note in the payload).
         "company_follow_intelligence": build_company_follow_public(company_follow_data),
+        # Company Mapping Workbench — ranked manual-mapping worklist synthesizing
+        # every safe signal computed this run. Never auto-edits the real
+        # overrides file; suggestion-only, always manual_review_required.
+        "company_mapping_workbench": build_company_mapping_workbench_public(company_mapping_workbench_data),
         # USD Contract CRM — real USD job opportunities, recruiter outreach,
         # applications, interviews, follow-ups, contingency risk. Local/manual
         # CSV inputs only (data/manual/*.csv, gitignored). Sanitized: no

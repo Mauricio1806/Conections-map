@@ -426,6 +426,16 @@ tr:hover td { background: var(--bg-hover); }
   white-space: nowrap;
 }
 
+/* Copy-friendly monospace block — Company Mapping Workbench YAML suggestions */
+.yaml-block {
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.78rem;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;
+  line-height: 1.5;
+}
+
 /* ── Filters ─────────────────────────────────────── */
 .filters-bar {
   display: flex;

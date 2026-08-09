@@ -205,6 +205,15 @@ ALLOWED_CONTACT_FIELDS = {
     "matched_soft_closed_leads", "matched_usd_crm_leads",
     "likely_company_category", "likely_opportunity_bucket",
     "follow_signal_confidence", "company_follow_reason", "signals",
+    # Company Mapping Workbench (src/company_mapping_workbench.py) —
+    # company-level aggregates/classification only, no person-level PII, see
+    # build_company_mapping_workbench_public() in export_public_dashboard_data.py.
+    "normalized_company", "current_bucket", "suggested_bucket", "suggested_category",
+    "confidence", "manual_review_required", "matched_soft_closed_leads",
+    "recently_followed_signal", "message_history_signal", "opportunity_history_signal",
+    "usd_signal", "latam_signal", "us_canada_signal", "spain_eu_signal",
+    "global_staffing_signal", "global_consulting_signal", "reason_short",
+    "impact_if_mapped", "priority_score", "yaml_suggestion",
 }
 
 
@@ -272,6 +281,8 @@ def check_json(path: Path) -> list[str]:
         list(cf.get("needs_review", []) or []) +
         list(cf.get("mapping_candidates", []) or [])
     )
+    mw = data.get("company_mapping_workbench", {}) or {}
+    mapping_workbench_records = list(mw.get("companies", []) or [])
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \
                   [(i, c, "untapped") for i, c in enumerate(untapped)] + \
@@ -282,7 +293,8 @@ def check_json(path: Path) -> list[str]:
                   [(i, c, "usd_crm") for i, c in enumerate(usd_crm_records)] + \
                   [(i, c, "opportunity_history") for i, c in enumerate(opportunity_history_records)] + \
                   [(i, c, "monthly_queue") for i, c in enumerate(monthly_queue_records)] + \
-                  [(i, c, "company_follow") for i, c in enumerate(company_follow_records)]
+                  [(i, c, "company_follow") for i, c in enumerate(company_follow_records)] + \
+                  [(i, c, "mapping_workbench") for i, c in enumerate(mapping_workbench_records)]
 
     for i, record, record_type in all_records:
         for field in record:
@@ -350,6 +362,15 @@ COMPANY_FOLLOW_CSV_OUTPUTS = [
     ROOT / "outputs" / "company_follow_resolution_summary.csv",
 ]
 
+# Company Mapping Workbench — same rationale: these outputs (including the
+# YAML suggestions file) get committed to the public repo, so scan them too.
+MAPPING_WORKBENCH_OUTPUTS = [
+    ROOT / "outputs" / "company_mapping_workbench.csv",
+    ROOT / "outputs" / "company_mapping_priority_queue.csv",
+    ROOT / "outputs" / "company_mapping_impact_estimate.csv",
+    ROOT / "outputs" / "company_mapping_yaml_suggestions.yml",
+]
+
 
 def check_csv_text(path: Path) -> list[str]:
     """Raw-text scan of a committed CSV output for the same forbidden
@@ -372,11 +393,12 @@ def check_csv_text(path: Path) -> list[str]:
                 f"Pattern violation ({description}): found {len(filtered)} matches in {path.name}"
             )
 
-    header = text.splitlines()[0].lower().replace('"', '') if text.splitlines() else ""
-    header_fields = {f.strip() for f in header.split(",")}
-    for forbidden in (FORBIDDEN_RAW_FIELDS | FORBIDDEN_FIELDS):
-        if forbidden in header_fields:
-            violations.append(f"Forbidden field '{forbidden}' found in header of {path.name}")
+    if path.suffix.lower() == ".csv":
+        header = text.splitlines()[0].lower().replace('"', '') if text.splitlines() else ""
+        header_fields = {f.strip() for f in header.split(",")}
+        for forbidden in (FORBIDDEN_RAW_FIELDS | FORBIDDEN_FIELDS):
+            if forbidden in header_fields:
+                violations.append(f"Forbidden field '{forbidden}' found in header of {path.name}")
     return violations
 
 
@@ -411,9 +433,9 @@ def main():
 
     all_violations += [f"[manifest] {v}" for v in check_manifest_structure(JSON_PATH)]
 
-    csv_targets = [p for p in COMPANY_FOLLOW_CSV_OUTPUTS if p.exists()]
+    csv_targets = [p for p in (COMPANY_FOLLOW_CSV_OUTPUTS + MAPPING_WORKBENCH_OUTPUTS) if p.exists()]
     if csv_targets:
-        print(f"  Scanning {len(csv_targets)} committed CSV output(s):")
+        print(f"  Scanning {len(csv_targets)} committed CSV/YAML output(s):")
         for p in csv_targets:
             print(f"    - {p.relative_to(ROOT)}")
         print()

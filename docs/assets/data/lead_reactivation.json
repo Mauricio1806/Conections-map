@@ -1,36 +1,9 @@
 {
   "lead_reactivation": {
-    "awaiting_recruiter_update": 15,
-    "needs_my_response_likely": 60,
-    "ambiguous_review_count": 1,
-    "reactivate_this_month": 9,
-    "message_review_queue_count": 1,
-    "warm_recruiter_followups_count": 103,
-    "false_urgent_terminal_state_count": 0,
-    "follow_up_candidate": 0,
-    "follow_up_due": 1022,
-    "conversation_state_review_queue_count": 1,
-    "needs_my_response_confirmed": 9,
-    "hot_leads": 135,
-    "talent_pool_career_site": 19,
-    "weekly_action_plan": {
-      "Monday": "Reply to 'Needs my response — Confirmed' contacts first (check leads-reply queue)",
-      "Tuesday": "Reply to 'Needs my response — Likely' + follow up with Hot reactivation leads",
-      "Wednesday": "Submit CV to career site leads (up to 10)",
-      "Thursday": "Recontact Warm reactivation leads and dormant warm leads",
-      "Friday": "Clear the small Ambiguous — Review queue (outputs/message_review_queue.csv)"
-    },
-    "warm_leads": 2737,
-    "career_site_follow_ups": 19,
-    "no_response_leads": 720,
-    "dormant_warm_leads": 117,
-    "needs_my_response": 69,
-    "active_interview_pipeline": 126,
     "messages_csv_available": true,
-    "closed_no_action": 339,
-    "previous_process_reusable": 0,
-    "warm_reactivation_leads": 2737,
-    "stale_but_valuable_count": 231,
+    "warm_leads": 2737,
+    "needs_my_response": 69,
+    "closed_low_action_count": 452,
     "this_week_contacts": [
       {
         "other_person_name": "Ludimila Vitorino",
@@ -2728,13 +2701,33 @@
         "recruiter_priority_flag": false
       }
     ],
-    "rejected_closed": 46,
-    "this_week_count": 55,
-    "recruiter_priority_count": 106,
-    "high_confidence_reply_count": 1295,
-    "closed_low_action_count": 452,
-    "hot_reactivation_leads": 135,
     "rejected_closed_reusable": 46,
+    "needs_my_response_likely": 60,
+    "high_confidence_reply_count": 1295,
+    "ambiguous_review_count": 1,
+    "recruiter_priority_count": 106,
+    "total_conversations": 4487,
+    "reactivate_this_month": 9,
+    "awaiting_recruiter_update": 15,
+    "most_urgent_confirmed_count": 9,
+    "talent_pool_career_site": 19,
+    "this_week_count": 55,
+    "location_eligibility_blocked": 7,
+    "needs_my_response_confirmed": 9,
+    "warm_recruiter_followups_count": 103,
+    "weekly_action_plan": {
+      "Monday": "Reply to 'Needs my response — Confirmed' contacts first (check leads-reply queue)",
+      "Tuesday": "Reply to 'Needs my response — Likely' + follow up with Hot reactivation leads",
+      "Wednesday": "Submit CV to career site leads (up to 10)",
+      "Thursday": "Recontact Warm reactivation leads and dormant warm leads",
+      "Friday": "Clear the small Ambiguous — Review queue (outputs/message_review_queue.csv)"
+    },
+    "follow_up_due": 1022,
+    "false_urgent_terminal_state_count": 0,
+    "hot_leads": 135,
+    "follow_up_candidate": 0,
+    "hot_reactivation_leads": 135,
+    "rejected_closed": 46,
     "top_reactivation_contacts": [
       {
         "other_person_name": "Thais Cruz",
@@ -208782,7 +208775,11 @@
         "recruiter_priority_flag": false
       }
     ],
-    "location_eligibility_blocked": 7,
+    "dormant_warm_leads": 117,
+    "no_response_leads": 720,
+    "stale_but_valuable_count": 231,
+    "previous_process_reusable": 0,
+    "closed_no_action": 339,
     "needs_reply_contacts": [
       {
         "other_person_name": "Valdeone Santos",
@@ -209520,7 +209517,10 @@
         "recruiter_priority_flag": true
       }
     ],
-    "total_conversations": 4487,
-    "most_urgent_confirmed_count": 9
+    "career_site_follow_ups": 19,
+    "message_review_queue_count": 1,
+    "warm_reactivation_leads": 2737,
+    "active_interview_pipeline": 126,
+    "conversation_state_review_queue_count": 1
   }
 }

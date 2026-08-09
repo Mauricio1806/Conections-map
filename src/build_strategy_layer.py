@@ -837,6 +837,27 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Company Follow Intelligence (Stage B) failed (non-fatal): {exc}")
 
+    # 7b8. Company Mapping Workbench — synthesizes Company Follow
+    # Intelligence + Opportunity History + USD Contract CRM + Untapped
+    # Network + Lead Reactivation + Top Contacts into one ranked worklist
+    # for bulk manual mapping. Runs last among the 7b* steps so every one of
+    # those CSVs is already on disk. Never edits config/company_market_overrides.yml
+    # — only writes suggestion files a human reviews and pastes in manually.
+    company_mapping_workbench_data = {}
+    try:
+        from src.company_mapping_workbench import run_company_mapping_workbench
+        company_mapping_workbench_data = run_company_mapping_workbench(df)
+        if company_mapping_workbench_data.get("available"):
+            s = company_mapping_workbench_data.get("summary", {})
+            logger.info(
+                f"  Company Mapping Workbench: {s.get('candidate_count', 0)} companies ranked "
+                f"({s.get('needs_mapping_total', 0)} contacts) | "
+                f"with_suggestion={s.get('with_suggested_bucket', 0)} "
+                f"top50_impact={s.get('top50_impact', 0)}"
+            )
+    except Exception as exc:
+        logger.warning(f"  Company Mapping Workbench failed (non-fatal): {exc}")
+
     # 7c. Export public dashboard JSON (for static GitHub Pages dashboard)
     logger.info("  Exporting public dashboard JSON ...")
     try:
@@ -851,6 +872,7 @@ def run_strategy_layer() -> None:
             needs_mapping_action_plan_data=needs_mapping_action_plan,
             usd_crm_data=usd_crm_data,
             company_follow_data=company_follow_data,
+            company_mapping_workbench_data=company_mapping_workbench_data,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

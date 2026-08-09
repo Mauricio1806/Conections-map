@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1786289495">
+  <link rel="stylesheet" href="./assets/style.css?v=1786314792">
 </head>
 <body>
 
@@ -738,6 +738,44 @@ python src/validate_static_dashboard_runtime.py</pre>
 
       <div class="section-label">High-Value Contacts Needing Mapping (by Persona)</div>
       <div class="metrics-grid" id="unk-persona-metrics"></div>
+
+      <div class="section-label" style="margin-top:2rem">Company Mapping Workbench — Top Companies to Map This Sunday</div>
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#9432;</span>
+        <span>Ranks every unmapped company by mapping impact using Company Follow, Opportunity History, USD CRM,
+        Untapped Network, and Lead Reactivation signals already computed this run. A suggested bucket only appears
+        when a keyword, dictionary, or persona/message signal supports it — LinkedIn exports carry no exact
+        location, so nothing here is fabricated geography, and nothing is applied automatically.</span>
+      </div>
+      <div class="metrics-grid metrics-grid-wide" id="mw-metrics"></div>
+
+      <div class="table-stats" id="mw-stats"></div>
+      <div class="filters-bar" style="margin-bottom:0.5rem">
+        <button class="btn-ghost" onclick="resetMappingWorkbenchFilter()">Reset / Clear Filter</button>
+      </div>
+      <div class="table-wrap">
+        <table id="mw-table">
+          <thead><tr>
+            <th>Company</th><th>Suggested Bucket</th><th>Confidence</th><th>Impact</th>
+            <th>Connections</th><th>Recruiters</th><th>TA</th><th>Hiring Mgrs</th><th>Data Leaders</th>
+            <th>Inbound Ops</th><th>USD CRM Leads</th><th>Followed</th><th>Reason</th><th>YAML Suggestion</th>
+          </tr></thead>
+          <tbody id="mw-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-label" style="margin-top:1.5rem">Suggested YAML Overrides — Top 25 of Current Filter</div>
+      <div class="alert alert-info" style="margin-bottom:0.75rem">
+        <span class="alert-icon">&#9432;</span>
+        <span>Review every line before pasting into config/company_market_overrides.yml (under its
+        <code>overrides:</code> key). Nothing here is applied automatically — confidence never reaches the
+        0.95 "manual override" tier from this heuristic alone.</span>
+      </div>
+      <div class="filters-bar" style="margin-bottom:0.5rem">
+        <button class="btn-primary" onclick="copyMappingYaml()">Copy YAML Block</button>
+        <span id="mw-yaml-copied" style="font-size:0.8rem;color:var(--text-muted);margin-left:0.5rem"></span>
+      </div>
+      <pre id="mw-yaml-block" class="table-wrap yaml-block"></pre>
     </div>
 
     <!-- PAGE: Lead Reactivation -->
@@ -1788,6 +1826,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1786289495"></script>
+<script src="./assets/app.js?v=1786314792"></script>
 </body>
 </html>

@@ -2635,6 +2635,7 @@ function renderUnknownResolution() {
   renderUnknownCompaniesTable(activeUnknownKpi ? MAPPING_KPI_FILTERS[activeUnknownKpi].label : null);
   renderMappingPersonTable(activeUnknownKpi ? MAPPING_KPI_FILTERS[activeUnknownKpi].label : null);
   renderNeedsMappingActionPlan();
+  renderCompanyMappingWorkbench();
 
   // Persona breakdown for needs-mapping contacts — reuses the existing
   // MAPPING_KPI_FILTERS keys (recruiters/talent_acquisition/hiring_mgrs/
@@ -2648,6 +2649,165 @@ function renderUnknownResolution() {
     makeKpiCard('data_leaders',       'Data Leaders — No Bucket',        bs.data_leaders_unresolved||0,        'referral network value — click to filter', '', 'applyUnknownKpiFilter'),
     makeKpiCard('companies_3plus',    'Companies with 3+ Unresolved',    bs.companies_with_3plus_unresolved||0,'highest mapping impact per company — click to filter', '', 'applyUnknownKpiFilter'),
   ].join('');
+}
+
+// ── Company Mapping Workbench ─────────────────────────────────────────────
+// A ranked, weekly manual-mapping worklist synthesizing every signal already
+// computed this run (Company Follow, Opportunity History, USD CRM, Untapped,
+// Lead Reactivation, Top Contacts). Every card filters the SAME table below
+// it — no separate matching logic to keep in sync. Never auto-edits the real
+// overrides file; the YAML block is copy-paste-review-only.
+let activeMappingWorkbenchKpi = 'candidates';
+let filteredMappingWorkbench = [];
+
+const MAPPING_WORKBENCH_KPI_FILTERS = {
+  needs_total: {
+    label: 'Needs Mapping Total — historical contact count; table shows current company candidates',
+    match: () => true,
+  },
+  candidates: { label: 'Top Companies to Map This Sunday', match: () => true },
+  top50: { label: 'Top 50 Impact', match: () => true, top: 50 },
+  followed_review: {
+    label: 'Followed Companies Needing Review', match: c => !!c.followed_company_signal,
+  },
+  recruiter_ta: {
+    label: 'Recruiter/TA Companies Needing Mapping',
+    match: c => (parseInt(c.matched_recruiters) || 0) + (parseInt(c.matched_talent_acquisition) || 0) > 0,
+  },
+  usd_latam: {
+    label: 'USD/LATAM Suggested',
+    match: c => ['LATAM_USD_CONFIRMED', 'LATAM_USD_LIKELY', 'US_CANADA_CONFIRMED', 'US_CANADA_LIKELY'].includes(c.suggested_bucket),
+  },
+  staffing: { label: 'Staffing Suggested', match: c => c.suggested_bucket === 'GLOBAL_STAFFING' },
+  global_opportunity: { label: 'Global Opportunity Suggested', match: c => c.suggested_bucket === 'GLOBAL_OPPORTUNITY' },
+};
+
+function _updateActiveMappingWorkbenchCards() {
+  document.querySelectorAll('#mw-metrics .kpi-card').forEach(el => {
+    const isActive = el.getAttribute('data-kpi') === activeMappingWorkbenchKpi;
+    el.classList.toggle('active', isActive);
+    el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+}
+
+window.applyMappingWorkbenchKpiFilter = function(key) {
+  const def = MAPPING_WORKBENCH_KPI_FILTERS[key];
+  if (!def) return;
+  const mw = D.company_mapping_workbench || {};
+  const base = mw.companies || [];
+  let filtered = base.filter(def.match);
+  if (def.top) filtered = filtered.slice(0, def.top);
+  filteredMappingWorkbench = filtered;
+  activeMappingWorkbenchKpi = key;
+  _updateActiveMappingWorkbenchCards();
+  renderMappingWorkbenchTable(def.label);
+  renderMappingWorkbenchYaml();
+  const table = document.getElementById('mw-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+window.resetMappingWorkbenchFilter = function() { applyMappingWorkbenchKpiFilter('candidates'); };
+
+function renderMappingWorkbenchTable(label) {
+  const mw = D.company_mapping_workbench || {};
+  const total = (mw.companies || []).length;
+  const st = document.getElementById('mw-stats');
+  if (st) {
+    st.textContent = 'Showing ' + filteredMappingWorkbench.length + ' of ' + total + ' candidate companies'
+      + (label ? ' — ' + label : '');
+  }
+  const tbody = document.getElementById('mw-tbody');
+  if (!tbody) return;
+  if (!filteredMappingWorkbench.length) {
+    tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:var(--text-muted)">No candidate companies match the current filter.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filteredMappingWorkbench.slice(0, 200).map(c => {
+    const bucket = c.suggested_bucket && c.suggested_bucket !== 'NEEDS_COMPANY_MAPPING'
+      ? marketBadge(c.suggested_bucket)
+      : '<span style="color:var(--text-muted)">No suggestion</span>';
+    const conf = c.confidence ? (parseFloat(c.confidence) * 100).toFixed(0) + '%' : '—';
+    return '<tr>'
+      + '<td style="white-space:nowrap">' + (c.company_name || '—') + '</td>'
+      + '<td>' + bucket + '</td>'
+      + '<td>' + conf + '</td>'
+      + '<td><strong>' + (c.impact_if_mapped || 0) + '</strong></td>'
+      + '<td>' + (c.matched_connection_count || 0) + '</td>'
+      + '<td>' + (c.matched_recruiters || 0) + '</td>'
+      + '<td>' + (c.matched_talent_acquisition || 0) + '</td>'
+      + '<td>' + (c.matched_hiring_managers || 0) + '</td>'
+      + '<td>' + (c.matched_data_leaders || 0) + '</td>'
+      + '<td>' + (c.matched_inbound_opportunities || 0) + '</td>'
+      + '<td>' + (c.matched_usd_crm_leads || 0) + '</td>'
+      + '<td>' + (c.followed_company_signal ? '<span class="signal-chip">FOLLOWED</span>' : '—') + '</td>'
+      + '<td style="max-width:220px;font-size:0.72rem">' + (c.reason_short || '—') + '</td>'
+      + '<td style="max-width:200px"><code style="font-size:0.68rem;white-space:pre-wrap">' + (c.yaml_suggestion ? _escapeHtml(c.yaml_suggestion) : '—') + '</code></td>'
+      + '</tr>';
+  }).join('');
+}
+
+function _escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderMappingWorkbenchYaml() {
+  const el = document.getElementById('mw-yaml-block');
+  if (!el) return;
+  const lines = filteredMappingWorkbench
+    .filter(c => c.yaml_suggestion)
+    .slice(0, 25)
+    .map(c => c.yaml_suggestion)
+    .join('\n');
+  el.textContent = lines ? 'overrides:\n' + lines : '# No suggestions in the current filter — every candidate here still lacks a supporting signal.';
+}
+
+window.copyMappingYaml = function() {
+  const el = document.getElementById('mw-yaml-block');
+  const status = document.getElementById('mw-yaml-copied');
+  if (!el) return;
+  const text = el.textContent || '';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      if (status) { status.textContent = 'Copied!'; setTimeout(() => { status.textContent = ''; }, 2000); }
+    }).catch(() => { if (status) status.textContent = 'Copy failed — select and copy manually.'; });
+  } else if (status) {
+    status.textContent = 'Clipboard unavailable — select and copy manually.';
+  }
+};
+
+function renderCompanyMappingWorkbench() {
+  const mw = D.company_mapping_workbench || {};
+  const metEl = document.getElementById('mw-metrics');
+  if (!mw.available) {
+    if (metEl) metEl.innerHTML = '<div class="card"><div class="card-title">Company Mapping Workbench</div>'
+      + '<div class="card-value" style="font-size:1rem;color:var(--text-muted)">Unavailable this run</div>'
+      + '<div class="card-sub">' + (mw.reason || 'Needs Company Mapping backlog unavailable.') + '</div></div>';
+    const tbody = document.getElementById('mw-tbody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:var(--text-muted)">No data this run.</td></tr>';
+    return;
+  }
+
+  const s = mw.summary || {};
+  if (metEl) metEl.innerHTML = [
+    makeKpiCard('needs_total', 'Needs Mapping Total', s.needs_mapping_total || 0,
+      'contacts still unmapped', 'warn', 'applyMappingWorkbenchKpiFilter'),
+    makeKpiCard('candidates', 'Workbench Candidates', s.candidate_count || 0,
+      'companies ranked this run', '', 'applyMappingWorkbenchKpiFilter'),
+    makeKpiCard('top50', 'Top 50 Impact', s.top50_impact || 0,
+      'contacts resolved if top 50 mapped', 'good', 'applyMappingWorkbenchKpiFilter'),
+    makeKpiCard('followed_review', 'Followed Needing Review', s.followed_needing_review || 0,
+      'followed company, no bucket yet', '', 'applyMappingWorkbenchKpiFilter'),
+    makeKpiCard('recruiter_ta', 'Recruiter/TA Companies', s.recruiter_ta_candidates || 0,
+      'recruiter or TA present', '', 'applyMappingWorkbenchKpiFilter'),
+    makeKpiCard('usd_latam', 'USD/LATAM Suggested', s.usd_latam_suggested || 0,
+      'region keyword or signal found', '', 'applyMappingWorkbenchKpiFilter'),
+    makeKpiCard('staffing', 'Staffing Suggested', s.staffing_suggested || 0,
+      'staffing/recruiting keyword found', '', 'applyMappingWorkbenchKpiFilter'),
+    makeKpiCard('global_opportunity', 'Global Opportunity Suggested', s.global_opportunity_suggested || 0,
+      'signal present, region unresolved', '', 'applyMappingWorkbenchKpiFilter'),
+  ].join('');
+
+  applyMappingWorkbenchKpiFilter(activeMappingWorkbenchKpi);
 }
 
 

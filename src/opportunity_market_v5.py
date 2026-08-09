@@ -113,12 +113,30 @@ HIGH_VALUE_PERSONAS = {
 
 
 def _load_manual_overrides() -> dict:
+    """
+    Parses config/company_market_overrides.yml into {company_lower: MARKET_STRING}.
+
+    The file's real shape is a top-level "overrides:" key wrapping a dict of
+    company -> {market: ..., category: ...} (see the file's own header
+    comment). Handles that nested shape; also accepts a flat
+    company -> "MARKET" string for backward compatibility, so both authoring
+    styles keep working.
+    """
     if not OVERRIDES_YML.exists():
         return {}
     try:
         with open(OVERRIDES_YML, encoding="utf-8") as f:
             raw = yaml.safe_load(f) or {}
-        return {k.strip().lower(): str(v).strip().upper() for k, v in raw.items() if v}
+        entries = raw.get("overrides", raw) if isinstance(raw, dict) else {}
+        result = {}
+        for k, v in (entries or {}).items():
+            if isinstance(v, dict):
+                market = v.get("market") or v.get("MARKET")
+            else:
+                market = v
+            if market:
+                result[str(k).strip().lower()] = str(market).strip().upper()
+        return result
     except Exception:
         return {}
 

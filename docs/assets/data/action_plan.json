@@ -1180,7 +1180,7 @@
       "untapped_network": {
         "never_contacted_current": 7337,
         "never_contacted_previous": 7401,
-        "high_value_untapped_current": 64,
+        "high_value_untapped_current": 65,
         "high_value_untapped_previous": 110,
         "untapped_activated_this_week": 64,
         "untapped_activated_weekly_pace": 64.0,
@@ -1189,13 +1189,13 @@
         "untapped_activated_pace_status": "AHEAD",
         "new_connections_not_contacted_yet": 63,
         "untapped_queue_completed_estimate": 20,
-        "untapped_backlog_change": -46,
+        "untapped_backlog_change": -45,
         "available": true
       },
       "top_contacts": {
         "top_priority_contacts_current": 235,
         "top_priority_contacts_previous": 227,
-        "outreach_adjusted_score_avg_current": 50.3,
+        "outreach_adjusted_score_avg_current": 50.2,
         "outreach_adjusted_score_avg_previous": 50.3
       },
       "data_quality": {
@@ -1203,7 +1203,7 @@
         "needs_company_mapping_previous": 2310,
         "needs_company_mapping_delta": 39,
         "business_classification_coverage_current": 99.1,
-        "confirmed_geographic_signals_current": 3101
+        "confirmed_geographic_signals_current": 3253
       },
       "manual_activity": {
         "manual_activity_available": false
@@ -1386,7 +1386,7 @@
       "untapped_movement": [
         {
           "label": "High-Value Untapped",
-          "value": 64
+          "value": 65
         },
         {
           "label": "Activated This Week",
@@ -1472,7 +1472,7 @@
       }
     ],
     "next_week_recommendations": [
-      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 69 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 64 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
+      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 69 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 65 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
     ],
     "weekly_history": [
       {
@@ -1696,13 +1696,13 @@
         "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED",
         "overall_status": "REBALANCE_NEEDED",
         "diagnosis_summary": "Connection growth is above weekly pace. Keep quality control. | Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus. | Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts. | Use existing 1st-degree network before adding more cold connections. | Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.",
-        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 69 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 64 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
+        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 69 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 65 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
         "total_connections_previous": "11613",
         "total_connections_current": "11803",
         "new_data_leaders": 5.0,
-        "latam_usd_delta": "1",
-        "us_canada_delta": "3",
-        "spain_eu_delta": "3",
+        "latam_usd_delta": "4",
+        "us_canada_delta": "151",
+        "spain_eu_delta": "-11",
         "global_opportunity_delta": "68"
       }
     ],

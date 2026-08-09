@@ -1,23 +1,23 @@
 ﻿full_name,company_clean,position_clean,persona,market,opportunity_bucket,priority_score,outreach_status,contact_history_status,connected_on,url,segment
 Robson Mendonça,Whirlpool Corporation,Head of Data Analytics & AI Products - LATAM,Head of Data,LATAM_USD,LATAM_USD_CONFIRMED,72.0,Ghosted,,2025-11-28,https://www.linkedin.com/in/robsonpmendonca,current
 Ehsan Boumari,Siemens Energy,Digital Engineering Data Manager,Data Engineering Manager,EUROPE,EUROPE_CONFIRMED,66.0,,NEVER_CONTACTED_CONFIRMED,2026-01-12,https://www.linkedin.com/in/ehsnbmri,current
-Andrea Camargo Sanchez,Indra,Technical Recruiter,Recruiter,SPAIN_EU,SPAIN_EU_LIKELY,73.0,Pending Reply,,2026-08-02,https://www.linkedin.com/in/andrea-camargo-sanchez-36b228141,current
+Andrea Camargo Sanchez,Indra,Technical Recruiter,Recruiter,SPAIN_EU,SPAIN_EU_CONFIRMED,73.0,Pending Reply,,2026-08-02,https://www.linkedin.com/in/andrea-camargo-sanchez-36b228141,current
 Jessica Vasquez,SEIDOR Ecuador,IT Recruiter - Talent Management Analyst,Recruiter,SPAIN_EU,SPAIN_EU_CONFIRMED,72.0,Ghosted,,2026-04-06,https://www.linkedin.com/in/jessicavasquez93,current
 Brenda Lima,Seidor Brasil,Tech Recruiter - SAP e outras tecnologias,Recruiter,SPAIN_EU,SPAIN_EU_CONFIRMED,49.0,,NEVER_CONTACTED_CONFIRMED,2025-07-07,https://www.linkedin.com/in/brenda-lima88,current
 the Mike,Semrush,Director of Data,Head of Data,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,50.0,No Contact,,2026-05-25,https://www.linkedin.com/in/the-mike,current
-Sanjay Rughwani,Google,"Head of Analytics, Google Play",Head of Data,US_CANADA_NEARSHORE,GLOBAL_TECH,74.0,Ghosted,,2026-03-30,https://www.linkedin.com/in/sanjay-rughwani,current
+Sanjay Rughwani,Google,"Head of Analytics, Google Play",Head of Data,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,74.0,Ghosted,,2026-03-30,https://www.linkedin.com/in/sanjay-rughwani,current
 András Balázs,Deutsche Telekom,VP - Head of Data Europe,Head of Data,EUROPE,EUROPE_CONFIRMED,69.0,Warm Lead,,2026-06-25,https://www.linkedin.com/in/andrasbalazs,current
 Daljeet Singh,Siemens Healthineers,Head of Data Governance,Head of Data,EUROPE,EUROPE_CONFIRMED,66.0,,NEVER_CONTACTED_CONFIRMED,2026-01-20,https://www.linkedin.com/in/daljeet-s-3a31a0a9,current
 Yavuz Özsöz,Delivery Hero,Director of Data Science - Agentic AI & Machine Learning,Head of Data,EUROPE,EUROPE_CONFIRMED,66.0,,NEVER_CONTACTED_CONFIRMED,2025-10-16,https://www.linkedin.com/in/yavuz-oezsoez,current
 Shubham Patel,LG Ad Solutions,Senior Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,48.0,Ghosted,,2026-06-23,https://www.linkedin.com/in/shubhampateliitm,current
-Rohit Goyal,Amazon,Data Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,GLOBAL_TECH,76.0,,NEVER_CONTACTED_CONFIRMED,2026-03-22,https://www.linkedin.com/in/rohit-goyal-6348baa1,current
-Clecio Silva,Databricks,Field Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,GLOBAL_TECH,86.0,,NEVER_CONTACTED_CONFIRMED,2026-03-17,https://www.linkedin.com/in/cleciosilva,current
-Eugenia Moreno,Databricks,Sr. Field Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,GLOBAL_TECH,82.0,,NEVER_CONTACTED_CONFIRMED,2025-12-30,https://www.linkedin.com/in/eugeniamorenozerdan,current
-Tomer Hemo,Meta,Senior Data Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,GLOBAL_TECH,72.0,,NEVER_CONTACTED_CONFIRMED,2025-12-07,https://www.linkedin.com/in/tomer-hemo-21526924,current
-Jose Rodrigo Mendoza,Minsait,"Director - Nearshore Strategy, Business Development & Tech Solutions",Director,SPAIN_EU,SPAIN_EU_LIKELY,68.0,No Contact,,2026-05-03,https://www.linkedin.com/in/jrodrigo-mendoza,current
+Rohit Goyal,Amazon,Data Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,76.0,,NEVER_CONTACTED_CONFIRMED,2026-03-22,https://www.linkedin.com/in/rohit-goyal-6348baa1,current
+Clecio Silva,Databricks,Field Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,86.0,,NEVER_CONTACTED_CONFIRMED,2026-03-17,https://www.linkedin.com/in/cleciosilva,current
+Eugenia Moreno,Databricks,Sr. Field Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,82.0,,NEVER_CONTACTED_CONFIRMED,2025-12-30,https://www.linkedin.com/in/eugeniamorenozerdan,current
+Tomer Hemo,Meta,Senior Data Engineering Manager,Hiring Manager,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,72.0,,NEVER_CONTACTED_CONFIRMED,2025-12-07,https://www.linkedin.com/in/tomer-hemo-21526924,current
+Jose Rodrigo Mendoza,Minsait,"Director - Nearshore Strategy, Business Development & Tech Solutions",Director,SPAIN_EU,SPAIN_EU_CONFIRMED,68.0,No Contact,,2026-05-03,https://www.linkedin.com/in/jrodrigo-mendoza,current
 Oldack Sérgio Rabelo Coutinho,SEIDOR,Diretor de arquitetura empresarial,Director,SPAIN_EU,SPAIN_EU_CONFIRMED,68.0,,NEVER_CONTACTED_CONFIRMED,2026-01-11,https://www.linkedin.com/in/oldack,current
 Juliano Melo,SEIDOR Brasil,Sales Director - Large Enterprises,Director,SPAIN_EU,SPAIN_EU_CONFIRMED,54.0,,NEVER_CONTACTED_CONFIRMED,2025-12-29,https://www.linkedin.com/in/julianoamelo,current
-José Luiz Gomes Vieira,Minsait,Diretor do Mercado de Seguros,Director,SPAIN_EU,SPAIN_EU_LIKELY,68.0,,NEVER_CONTACTED_CONFIRMED,2025-12-23,https://www.linkedin.com/in/jos%C3%A9luizgomesvieira,current
+José Luiz Gomes Vieira,Minsait,Diretor do Mercado de Seguros,Director,SPAIN_EU,SPAIN_EU_CONFIRMED,68.0,,NEVER_CONTACTED_CONFIRMED,2025-12-23,https://www.linkedin.com/in/jos%C3%A9luizgomesvieira,current
 Bruno Pritsch,ABA - WORK in AUSTRIA (Austrian Business Agency),Market Director - Brazil and Portugal,Director,SPAIN_EU,SPAIN_EU_CONFIRMED,64.0,,NEVER_CONTACTED_CONFIRMED,2025-07-09,https://www.linkedin.com/in/brunopritsch,current
 Gabi Godoy,WA FENIX Portugal,Global IT Recruiter | Europe positions 🇵🇹 🇪🇸,Recruiter,EUROPE,EUROPE_CONFIRMED,73.0,Ghosted,,2026-07-23,https://www.linkedin.com/in/gabrielagodoyrh,current
 Faiza Malik - Sameera,SoftNice,UK Europe IT Recruiter,Recruiter,EUROPE,EUROPE_CONFIRMED,66.0,Needs Reply,,2026-06-22,https://www.linkedin.com/in/faiza-malik-sameera-a8baa9284,current
@@ -35,20 +35,20 @@ Victoria Veraart,Revolut,Business Recruiter,Recruiter,EUROPE,EUROPE_CONFIRMED,40
 Ygor Araujo,Syngenta,Senior Tech Talent Partner I Europe & North America,Recruiter,EUROPE,EUROPE_CONFIRMED,46.0,,NEVER_CONTACTED_CONFIRMED,2025-06-24,https://www.linkedin.com/in/ygor-araujo-28945a131,current
 María del Mar Rodríguez Givaudant,Jungheinrich Digital Solutions Spain,Seniot HR Talent Manager,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,81.0,Pending Reply,,2026-07-31,https://www.linkedin.com/in/mariadelmarrodriguez,current
 Alejandro Escobar Avila,SEIDOR,IT Talent Acquisition,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,71.0,Ghosted,,2026-07-22,https://www.linkedin.com/in/alejandro-escobar-avila,current
-Nicole Sotomayor López,Indra,Analista de Atracción de Talento,Talent Acquisition,SPAIN_EU,SPAIN_EU_LIKELY,74.0,,,2026-07-22,https://www.linkedin.com/in/nicolesotomayorl%C3%B3pez,current
+Nicole Sotomayor López,Indra,Analista de Atracción de Talento,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,74.0,,,2026-07-22,https://www.linkedin.com/in/nicolesotomayorl%C3%B3pez,current
 Marta Aragón Santos,Cash Converters España,Talent Manager Spain & Portugal,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,81.0,,,2026-07-17,https://www.linkedin.com/in/marta-arag%C3%B3n-santos,current
 Adrian Del Val Rives,Savino Del Bene,HR SPAIN MGR | HRBP | Int Talent acquisition | People&Culture | S&H,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,71.0,Ghosted,,2026-07-13,https://www.linkedin.com/in/adelvalr,current
 Sara Marques,SYVANTECH,Talent Manager,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,65.0,Rejected,,2026-06-25,https://www.linkedin.com/in/sara-marques-937a98109,current
-Belen Vazquez,ERNI,"IT Talent Lead, Senior Talent and Strategic Business Partner & Mentor",Talent Acquisition,SPAIN_EU,SPAIN_EU_LIKELY,74.0,Rejected,,2026-06-25,https://www.linkedin.com/in/maria-belen-vazquez,current
+Belen Vazquez,ERNI,"IT Talent Lead, Senior Talent and Strategic Business Partner & Mentor",Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,74.0,Rejected,,2026-06-25,https://www.linkedin.com/in/maria-belen-vazquez,current
 Cristina Navas Guerrero,Arelance,IT Talent Acquisition,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,45.0,Ghosted,,2026-06-24,https://www.linkedin.com/in/cristinanavasguerrero,current
-Miriam Masdeu,STRATESYS,People & Employee Experience and Talent Acquisition Specialist,Talent Acquisition,SPAIN_EU,SPAIN_EU_LIKELY,71.0,Ghosted,,2026-06-23,https://www.linkedin.com/in/miriam-masdeu,current
+Miriam Masdeu,STRATESYS,People & Employee Experience and Talent Acquisition Specialist,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,71.0,Ghosted,,2026-06-23,https://www.linkedin.com/in/miriam-masdeu,current
 Claudia A Escalona Gálvez,SEIDOR,Analista de Atracción de Talento TI,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,71.0,,,2026-05-11,https://www.linkedin.com/in/claudia-a-escalona-g%C3%A1lvez-6b2427217,current
 Cristina Cabrera Adrada,Logicalis Spain,People & Talent Acquisition,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,65.0,Ghosted,,2026-04-24,https://www.linkedin.com/in/cristina-cabrera-adrada-8883841ab,current
 Lucia Micaela Bonomo,MDW,HR & IT Talent Acquisition | Spain & Switzerland,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,65.0,,NEVER_CONTACTED_CONFIRMED,2026-03-20,https://www.linkedin.com/in/lucia-micaela-bonomo-8a3018170,current
 Vanessa Coy Páez,Indra Group,Líder de Selección y Atracción de Talento,Talent Acquisition,SPAIN_EU,SPAIN_EU_LIKELY,73.0,,NEVER_CONTACTED_CONFIRMED,2026-02-17,https://www.linkedin.com/in/vanessa-coy-p%C3%A1ez-0833a5166,current
 Ana Paula Mendonça,SGF Global,"Talent Acquisition Manager — Brazil, Portugal & Costa Rica",Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,75.0,,NEVER_CONTACTED_CONFIRMED,2025-09-01,https://www.linkedin.com/in/ana-paula-mendonca,current
 Clara Moreiro,Jungheinrich Digital Solutions Spain,HR Talent Manager,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,75.0,,NEVER_CONTACTED_CONFIRMED,2025-08-13,https://www.linkedin.com/in/clara-moreiro-3595001a2,current
-Alessandra Costa,Indra,Gerente de Talent Acquisition,Talent Acquisition,SPAIN_EU,SPAIN_EU_LIKELY,71.0,,NEVER_CONTACTED_CONFIRMED,2025-07-31,https://www.linkedin.com/in/alessandra-soares-costa,current
+Alessandra Costa,Indra,Gerente de Talent Acquisition,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,71.0,,NEVER_CONTACTED_CONFIRMED,2025-07-31,https://www.linkedin.com/in/alessandra-soares-costa,current
 Bianca Maion Turrini,Viceri-Seidor,Senior Talent Acquisition,Talent Acquisition,SPAIN_EU,SPAIN_EU_CONFIRMED,67.0,Dormant,,2025-06-04,https://www.linkedin.com/in/bianca-maion-turrini,current
 Antuaned Miranda Torres,Praxis,Senior IT Recruiter - USA,Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,83.0,CV / Follow-up,,2026-08-06,https://www.linkedin.com/in/antuaned-miranda-torres-a6b321183,current
 Israí Bahena,Alapai Global Holdings LLC,Technical HeadHunter Mx & USA,Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,77.0,Pending Reply,,2026-07-30,https://www.linkedin.com/in/israibahena,current
@@ -57,7 +57,7 @@ Jenny Huang,Thoughtworks,Americas Senior Tech Recruiter,Recruiter,US_CANADA_NEAR
 Kartikay Dwivedi,E-Solutions,Senior Technical Recruiter (Canada/Latam),Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,81.0,Rejected,,2026-07-22,https://www.linkedin.com/in/kartikay-dwivedi-9a4189181,current
 • Om Prakash •,Acnovate Corporation,"Senior IT Recruiter - US, Canada , LATAM & India.",Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,78.0,Ghosted,,2026-06-29,https://www.linkedin.com/in/omprakash23892,current
 Eyvanna Connole,HIRECLOUT,"Senior Recruiter & Business Development Associate, Tech & GTM (L5)",Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,80.0,Ghosted,,2026-06-27,https://www.linkedin.com/in/eyvanna,current
-Suellen Vieira,NTT DATA Business Solutions,Senior Tech Recruiter,Recruiter,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,63.0,Ghosted,,2026-06-24,https://www.linkedin.com/in/suellen-vieira-83185945,current
+Suellen Vieira,NTT DATA Business Solutions,Senior Tech Recruiter,Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,63.0,Ghosted,,2026-06-24,https://www.linkedin.com/in/suellen-vieira-83185945,current
 Jessica Paola Garcés Cueva,Thoughtworks,Americas Senior Tech Recruiter,Recruiter,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,50.0,,,2026-05-07,https://www.linkedin.com/in/jessica-paola-garc%C3%A9s-cueva-564095109,current
 Sandra Olmo,Keyrus,IT Recruiter & HRBP,Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,44.0,Pending Reply,,2026-04-03,https://www.linkedin.com/in/sandra-olmo-19577b138,current
 Puja Tiwari,Raas Infotek,Senior Technical Recruiter (USA/Canada),Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,77.0,,NEVER_CONTACTED_CONFIRMED,2026-03-13,https://www.linkedin.com/in/puja-tiwari-199809193,current
@@ -68,9 +68,9 @@ Benhur Mente⧗🕷️,Atlantis IT Group,IT Recruiter (USA/Canada) (SVK Informat
 Hemanth Narayanapurapu,CriticalRiver Inc,Talent Partner - Recruitment (USA & LATAM),Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,69.0,Ghosted,,2026-01-26,https://www.linkedin.com/in/hemanth-narayanapurapu-21964462,current
 Viviane Alves de Andrade,NTConsult,Senior Tech Recruiter | North America,Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,50.0,Ghosted,,2026-01-05,https://www.linkedin.com/in/vivianeaa,current
 Lakhan Joshi,E-Solutions,"Senior IT Recruiter | Global Talent Acquisition (USA, Canada, LATAM & India)",Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,77.0,Ghosted,,2025-12-01,https://www.linkedin.com/in/lakhan-joshi-7468301a9,current
-Grace Kang,Google,"Full Cycle Recruiter - THS (Tech, Horizontals, Sales)",Recruiter,US_CANADA_NEARSHORE,GLOBAL_TECH,71.0,,NEVER_CONTACTED_CONFIRMED,2025-11-05,https://www.linkedin.com/in/gkangj,current
-Darragh Burke,Amazon,Technical Recruiter,Recruiter,US_CANADA_NEARSHORE,GLOBAL_TECH,71.0,Ghosted,,2025-10-01,https://www.linkedin.com/in/darragh-burke-amzn-emea-science-intern-recruiter,current
-Noor Minhaj,Amazon,"Full Lifecycle Recruiter (Tech) , Amazon University",Recruiter,US_CANADA_NEARSHORE,GLOBAL_TECH,71.0,,NEVER_CONTACTED_CONFIRMED,2025-08-24,https://www.linkedin.com/in/noor-minhaj-1a3ab0123,current
+Grace Kang,Google,"Full Cycle Recruiter - THS (Tech, Horizontals, Sales)",Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,71.0,,NEVER_CONTACTED_CONFIRMED,2025-11-05,https://www.linkedin.com/in/gkangj,current
+Darragh Burke,Amazon,Technical Recruiter,Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,71.0,Ghosted,,2025-10-01,https://www.linkedin.com/in/darragh-burke-amzn-emea-science-intern-recruiter,current
+Noor Minhaj,Amazon,"Full Lifecycle Recruiter (Tech) , Amazon University",Recruiter,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,71.0,,NEVER_CONTACTED_CONFIRMED,2025-08-24,https://www.linkedin.com/in/noor-minhaj-1a3ab0123,current
 Adenike Adekunbi,Thoughtworks,European Recruiter,Recruiter,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,44.0,,NEVER_CONTACTED_CONFIRMED,2025-08-10,https://www.linkedin.com/in/adenike-adekunbi-9764281a1,current
 Rosa Vega,Keyrus,International Talent Acquisition Manager,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,55.0,Ghosted,,2026-07-06,https://www.linkedin.com/in/rosa-vega-a33bba119,current
 Kirti .,E-Solutions,"Talent Acquisition Specialist - (USA, LATAM & Canada)",Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,75.0,Ghosted,,2026-06-29,https://www.linkedin.com/in/kirti-1085b21a3,current
@@ -79,8 +79,8 @@ Cynthia Ramos,Brillio,Senior Talent Acquisition Specialist for Mexico,Talent Acq
 Alexandra Damart,Keyrus,Senior Global Talent Acquisition Expert,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,51.0,Ghosted,,2026-06-25,https://www.linkedin.com/in/alexandra-damart-2aa9a711b,current
 Veronica Litvinova,Semrush,Lead Talent Acquisition Partner,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,53.0,Ghosted,,2026-06-24,https://www.linkedin.com/in/veronica-l-82108462,current
 "Justin Sperry, MBA. CDR",MediaLab,"Principal, Talent Acquisition Partner, Americas",Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,80.0,Ghosted,,2026-06-16,https://www.linkedin.com/in/justinsperry90,current
-Marco Bolivar,Toptal,Talent Specialist,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_LIKELY,73.0,Ghosted,,2026-06-13,https://www.linkedin.com/in/marco-bolivar-quesada,current
-Maria Fernanda Vega,Databricks,Talent Acquisition Specialist,Talent Acquisition,US_CANADA_NEARSHORE,GLOBAL_TECH,85.0,Ghosted,,2026-06-12,https://www.linkedin.com/in/maria-fernanda-vega-3aab4a1b3,current
+Marco Bolivar,Toptal,Talent Specialist,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,73.0,Ghosted,,2026-06-13,https://www.linkedin.com/in/marco-bolivar-quesada,current
+Maria Fernanda Vega,Databricks,Talent Acquisition Specialist,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,85.0,Ghosted,,2026-06-12,https://www.linkedin.com/in/maria-fernanda-vega-3aab4a1b3,current
 Sara Cabrera Martín,Thoughtworks,"Senior EU Talent Acquisition - Engineering, Data, Product and SG&A / Referral Champion",Talent Acquisition,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,48.0,Ghosted,,2026-04-30,https://www.linkedin.com/in/saracabreramartin,current
 Iara Torres,Inclusion. The Cloud Company,LATAM ⇄ USA Tech Talent Acquisition Specialist,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,80.0,Interview Pipeline,,2026-04-20,https://www.linkedin.com/in/iara-torresr,current
 Srikanth Reddy,HL Solutions LLC,"Sr Talent Acquisition Specialist (USA, Canada, Mexico)",Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,72.0,Warm Lead,,2026-04-20,https://www.linkedin.com/in/srikanth-reddy-9b8bba17a,current
@@ -89,10 +89,10 @@ Harpreet Kaur,Infoblox,Senior Talent Acquisition Partner (North America),Talent 
 Dominique Pirolo- IBM ex SAP Alum Mentor PCC ICF Career Coach Advisor,IBM,Senior Talent Acquisition Partner-IBM Canada Consulting Technology- SAP Practice Technology +,Talent Acquisition,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,75.0,,NEVER_CONTACTED_CONFIRMED,2026-03-12,https://www.linkedin.com/in/dominiquetalentintelligence,current
 Rolando Pascacio Hernández,Kraft Heinz,Talent Acquisition Partner- North America,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,42.0,,NEVER_CONTACTED_CONFIRMED,2026-03-11,https://www.linkedin.com/in/rolando-pascacio-hern%C3%A1ndez-36b7a85,current
 Alex Ganyukov,Semrush,Global Head of Talent Acquisition Operations and Excellence,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,72.0,No Contact,,2025-10-22,https://www.linkedin.com/in/aganyukov,current
-Angèle Vannier,Snowflake,University Talent Acquisition Specialist,Talent Acquisition,US_CANADA_NEARSHORE,GLOBAL_TECH,72.0,Ghosted,,2025-10-09,https://www.linkedin.com/in/angelevannier,current
+Angèle Vannier,Snowflake,University Talent Acquisition Specialist,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,72.0,Ghosted,,2025-10-09,https://www.linkedin.com/in/angelevannier,current
 Stefanny Villamizar (She/Her),Keyrus,Talent Acquisition Specialist,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,45.0,,NEVER_CONTACTED_CONFIRMED,2025-08-29,https://www.linkedin.com/in/stefanny-villamizar-prieto,current
 Felipe Lobato,Nortal,Senior Talent Acquisition Specialist North America,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,45.0,Ghosted,,2025-08-22,https://www.linkedin.com/in/felipe-lobato-ferreira,current
-Rita Oliveira,Accenture,Senior Talent Acquisition Analyst,Talent Acquisition,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,41.0,,NEVER_CONTACTED_CONFIRMED,2025-07-31,https://www.linkedin.com/in/rita-oliveira-recruiter,current
+Rita Oliveira,Accenture,Senior Talent Acquisition Analyst,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,41.0,,NEVER_CONTACTED_CONFIRMED,2025-07-31,https://www.linkedin.com/in/rita-oliveira-recruiter,current
 Daniel Carpi,AB InBev,Talent Acquisition Specialist (BR & North America),Talent Acquisition,US_CANADA_NEARSHORE,BRAZIL_CONFIRMED,41.0,,NEVER_CONTACTED_CONFIRMED,2025-07-11,https://www.linkedin.com/in/dancarpi,current
 Thaís Oliveira,Keyrus,Talent Acquisition - Pleno,Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,41.0,,,2025-07-01,https://www.linkedin.com/in/tha%C3%ADs-oliveira-2371ab125,current
 Ann Huerta,KogniVera,Lead IT Talent Acquisition Specialist (USA and LATAM),Talent Acquisition,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,66.0,Ghosted,,2025-05-26,https://www.linkedin.com/in/anahuerta1,current
@@ -104,7 +104,7 @@ Sandra García Carrera,Akkodis,Talent Acquisition Specialist - Industria / Energ
 Jason Castro,MOIA,"Working Student - Talent Acquisition, P&R Berlin",Talent Acquisition,EUROPE,EUROPE_CONFIRMED,61.0,Ghosted,,2026-05-04,https://www.linkedin.com/in/jason-castro-torres,current
 Kim Williams,Syntax,"Talent Acquisition Lead - Africa, India and Europe",Talent Acquisition,EUROPE,EUROPE_CONFIRMED,50.0,Ghosted,,2026-04-23,https://www.linkedin.com/in/kimtwilliams,current
 Veera A,DELTACLASS TECHNOLOGY SOLUTIONS LIMITED,Talent Acquisition Specialist (UK & EU),Talent Acquisition,EUROPE,EUROPE_CONFIRMED,74.0,Ghosted,,2026-03-25,https://www.linkedin.com/in/veera-a-3060481ab,current
-Larissa Sanches,Adyen,Senior Talent Acquisition LATAM,Talent Acquisition,EUROPE,GLOBAL_TECH,73.0,Ghosted,,2026-01-30,https://www.linkedin.com/in/larissa-sanches-24899114a,current
+Larissa Sanches,Adyen,Senior Talent Acquisition LATAM,Talent Acquisition,EUROPE,EUROPE_CONFIRMED,73.0,Ghosted,,2026-01-30,https://www.linkedin.com/in/larissa-sanches-24899114a,current
 Monica Elena Guinea (Nedelcu),KWS Group,"Talent Acquisition Specialist | Focus: Romania, Germany & Interns Globally",Talent Acquisition,EUROPE,EUROPE_CONFIRMED,64.0,,NEVER_CONTACTED_CONFIRMED,2026-01-05,https://www.linkedin.com/in/monica-elena-guinea-nedelcu-32554222a,current
 Maike Caroline Hartung,Bonial Germany,Team Lead Talent Acquisition & Employer Branding,Talent Acquisition,EUROPE,EUROPE_CONFIRMED,69.0,,NEVER_CONTACTED_CONFIRMED,2025-10-30,https://www.linkedin.com/in/maikehartung,current
 Mădălina Negrilă,Zalando,Talent Acquisition Partner,Talent Acquisition,EUROPE,EUROPE_CONFIRMED,61.0,,NEVER_CONTACTED_CONFIRMED,2025-10-19,https://www.linkedin.com/in/madalinapetrescu,current
@@ -127,16 +127,16 @@ Paula Caraballo,LatamCent,Senior Talent Partner,Recruiter,LATAM_USD,LATAM_USD_CO
 Flavio Hernandez,LatamCent,Talent Partner,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,72.0,Ghosted,,2026-06-24,https://www.linkedin.com/in/flavio-hernandez-28065a178,current
 Alberto López Fernández,NTT Data Europe & Latam,IT Recruiter,Recruiter,LATAM_USD,GLOBAL_CONSULTING,82.0,,,2026-06-12,https://www.linkedin.com/in/alberto-l%C3%B3pez-fern%C3%A1ndez-66ab4314b,current
 Andrea Barrios,Búsquedas Latam,Recruiter,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,72.0,Ghosted,,2026-06-05,https://www.linkedin.com/in/andrea-barrios-617168a0,current
-Guadalupe Roger de Arzuaga,Globant,Staffing Analyst,Recruiter,LATAM_USD,LATAM_USD_LIKELY,50.0,Ghosted,,2026-05-20,https://www.linkedin.com/in/guadalupe-roger-de-arzuaga,current
+Guadalupe Roger de Arzuaga,Globant,Staffing Analyst,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,50.0,Ghosted,,2026-05-20,https://www.linkedin.com/in/guadalupe-roger-de-arzuaga,current
 Ishika Srivastava,Otyms Consultings Services Inc,Technical Recruiter (LATAM),Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,82.0,Ghosted,,2026-05-19,https://www.linkedin.com/in/ishika-srivastava-373a4b50,current
-Virginia Silvero,Globant,Regional Recruiter Lead for South Of Latin America,Recruiter,LATAM_USD,LATAM_USD_LIKELY,77.0,Warm Lead,,2026-05-04,https://www.linkedin.com/in/msilvero,current
+Virginia Silvero,Globant,Regional Recruiter Lead for South Of Latin America,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,77.0,Warm Lead,,2026-05-04,https://www.linkedin.com/in/msilvero,current
 Javier Velázquez,"Laidon Group, LLC",Sr. IT Recruiter LATAM,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,75.0,Warm Lead,,2026-04-29,https://www.linkedin.com/in/javierit,current
 Ricardo Hernández,"Laidon Group, LLC",Sr Technical Recruiter US and LATAM,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,69.0,Ghosted,,2026-04-29,https://www.linkedin.com/in/yourinvitationiswelcome,current
 Valentina C. Klimenko,TEAM International,Talent Acquisition Specialist/ Head Hunter/ Human Resources/ I'm Hiring,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,66.0,Ghosted,,2026-04-29,https://www.linkedin.com/in/valentina-c-klimenko-67422313a,current
 Juan David Bustos Torres,Gallagher,Senior Recruiter LatAm GCoE,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,75.0,Ghosted,,2026-04-29,https://www.linkedin.com/in/juan-david-bustos-torres-226b4714a,current
 Marco Antonio Ojeda Cervantes,NTT DATA Services,Talent Acquisition - LATAM Corporate Recruiter,Recruiter,LATAM_USD,GLOBAL_CONSULTING,79.0,Ghosted,,2026-04-28,https://www.linkedin.com/in/marco-antonio-ojeda-cervantes-54453897,current
 Eric Henriquez,HubSpot,GTM Recruiter (LATAM),Recruiter,LATAM_USD,GLOBAL_TECH,69.0,Ghosted,,2026-04-25,https://www.linkedin.com/in/erichenriquez,current
-Anna Skripnikova,Globant,Senior Tech Recruiter Lead/Specialist,Recruiter,LATAM_USD,LATAM_USD_LIKELY,47.0,Rejected,,2026-04-23,https://www.linkedin.com/in/anna-skripnikova,current
+Anna Skripnikova,Globant,Senior Tech Recruiter Lead/Specialist,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,47.0,Rejected,,2026-04-23,https://www.linkedin.com/in/anna-skripnikova,current
 Marco Alves,Quantum World Technologies Inc,Senior Technical Recruiter / ATL (Latam/Mexico),Recruiter,LATAM_USD,LATAM_USD_LIKELY,85.0,Warm Lead,,2026-04-20,https://www.linkedin.com/in/marco-alves-897b7a21b,current
 Kunal Prajapati,E-Solutions,IT Talent Recruiter – LATAM,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,69.0,Follow-up Due,,2026-04-19,https://www.linkedin.com/in/kunalprajapati167,current
 Daniel Martinez,Plugg Technologies,Senior Technical Recruiter,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,60.0,Ghosted,,2026-04-17,https://www.linkedin.com/in/daniel-martinez-121044148,current
@@ -160,21 +160,21 @@ Bárbara Baliano,"Ubiminds: You, International",Tech Recruiter LaTam,Recruiter,L
 Daniela Garcia Chavez,LatamCent,Talent Partner,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,65.0,Pending Reply,,2025-08-06,https://www.linkedin.com/in/danielagarciachavez,current
 Thammy Oliveira,Turner & Townsend,Recruiter LATAM,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,65.0,,NEVER_CONTACTED_CONFIRMED,2025-07-23,https://www.linkedin.com/in/thammyoliveira-1996,current
 Maria Alice F. Santos,DBServices Portugal,Senior Tech Recruiter | Global Talent Acquisition | LATAM,Recruiter,LATAM_USD,LATAM_USD_CONFIRMED,69.0,Needs Reply,,2025-06-16,https://www.linkedin.com/in/mariaalicefsantos,current
-Denny Lee,Databricks,"Product Management Director, Startups & Ecosystem",Director,US_CANADA_NEARSHORE,GLOBAL_TECH,82.0,,NEVER_CONTACTED_CONFIRMED,2026-03-16,https://www.linkedin.com/in/dennyglee,current
-Gustavo Amici,Databricks,Director - Digital Natives / Startups,Director,US_CANADA_NEARSHORE,GLOBAL_TECH,82.0,,NEVER_CONTACTED_CONFIRMED,2026-03-12,https://www.linkedin.com/in/gustavoamici,current
-Luiz Antunes,Databricks,Field Engineering Director for Financial Services Brazil,Director,US_CANADA_NEARSHORE,GLOBAL_TECH,64.0,,NEVER_CONTACTED_CONFIRMED,2026-03-04,https://www.linkedin.com/in/luizcantunes,current
-Leandro Ruiz,Google,Director Analytics & AI - Google Cloud,Director,US_CANADA_NEARSHORE,GLOBAL_TECH,72.0,,NEVER_CONTACTED_CONFIRMED,2026-02-13,https://www.linkedin.com/in/ruizleandro,current
-Adrian Roberts,Databricks,"Director, Field Engineering - Regulated Industries",Director,US_CANADA_NEARSHORE,GLOBAL_TECH,82.0,,NEVER_CONTACTED_CONFIRMED,2026-02-06,https://www.linkedin.com/in/ady189,current
-Sandra Bouzon,Snowflake,District Manager Acquisition | Sales Director Acq Brazil,Director,US_CANADA_NEARSHORE,GLOBAL_TECH,53.0,,NEVER_CONTACTED_CONFIRMED,2026-01-25,https://www.linkedin.com/in/sandrabouzon,current
-Atilla Akdere,Accenture,Managing Director at Accenture | Industry X,Director,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,45.0,,NEVER_CONTACTED_CONFIRMED,2026-01-07,https://www.linkedin.com/in/atilla-akdere-97012860,current
-Cristiano Soares,Accenture,Managing Director,Director,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,45.0,,NEVER_CONTACTED_CONFIRMED,2026-01-05,https://www.linkedin.com/in/crsoares,current
-Marcio Arbex,Databricks,"Director, LATAM Field Engineering",Director,US_CANADA_NEARSHORE,GLOBAL_TECH,80.0,Ghosted,,2026-01-01,https://www.linkedin.com/in/marcioarbex,current
+Denny Lee,Databricks,"Product Management Director, Startups & Ecosystem",Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,82.0,,NEVER_CONTACTED_CONFIRMED,2026-03-16,https://www.linkedin.com/in/dennyglee,current
+Gustavo Amici,Databricks,Director - Digital Natives / Startups,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,82.0,,NEVER_CONTACTED_CONFIRMED,2026-03-12,https://www.linkedin.com/in/gustavoamici,current
+Luiz Antunes,Databricks,Field Engineering Director for Financial Services Brazil,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,64.0,,NEVER_CONTACTED_CONFIRMED,2026-03-04,https://www.linkedin.com/in/luizcantunes,current
+Leandro Ruiz,Google,Director Analytics & AI - Google Cloud,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,72.0,,NEVER_CONTACTED_CONFIRMED,2026-02-13,https://www.linkedin.com/in/ruizleandro,current
+Adrian Roberts,Databricks,"Director, Field Engineering - Regulated Industries",Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,82.0,,NEVER_CONTACTED_CONFIRMED,2026-02-06,https://www.linkedin.com/in/ady189,current
+Sandra Bouzon,Snowflake,District Manager Acquisition | Sales Director Acq Brazil,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,53.0,,NEVER_CONTACTED_CONFIRMED,2026-01-25,https://www.linkedin.com/in/sandrabouzon,current
+Atilla Akdere,Accenture,Managing Director at Accenture | Industry X,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,45.0,,NEVER_CONTACTED_CONFIRMED,2026-01-07,https://www.linkedin.com/in/atilla-akdere-97012860,current
+Cristiano Soares,Accenture,Managing Director,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,45.0,,NEVER_CONTACTED_CONFIRMED,2026-01-05,https://www.linkedin.com/in/crsoares,current
+Marcio Arbex,Databricks,"Director, LATAM Field Engineering",Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,80.0,Ghosted,,2026-01-01,https://www.linkedin.com/in/marcioarbex,current
 Cristina Ricaurte Castilla ☁,SAP,"Regional VP | Head of Solution Advisory – SCM | Americas (US, Canada, Latin America)",Director,US_CANADA_NEARSHORE,GLOBAL_TECH,70.0,,NEVER_CONTACTED_CONFIRMED,2025-12-29,https://www.linkedin.com/in/cristinaricaurte-%E2%98%81,current
-Roberto Souza,Databricks,Enterprise and Global account Sales Director,Director,US_CANADA_NEARSHORE,GLOBAL_TECH,82.0,,NEVER_CONTACTED_CONFIRMED,2025-12-09,https://www.linkedin.com/in/roberto-souza-832230,current
-Rafael Souza,Databricks,"Director, Technical Solutions Engineering (Brazil)",Director,US_CANADA_NEARSHORE,GLOBAL_TECH,64.0,Ghosted,,2025-10-10,https://www.linkedin.com/in/rafaelsouza,current
-Hugo Portela,Accenture,Associate Director,Director,US_CANADA_NEARSHORE,GLOBAL_CONSULTING,45.0,,NEVER_CONTACTED_CONFIRMED,2025-09-13,https://www.linkedin.com/in/hugoportela,current
-Rodrigo Barbaresco,Microsoft,Azure Specialist Sales Director,Director,US_CANADA_NEARSHORE,GLOBAL_TECH,60.0,,NEVER_CONTACTED_CONFIRMED,2025-07-31,https://www.linkedin.com/in/rodbar,current
-"Diego Nogare, Ph.D.",Microsoft,Director Account Technology Strategist,Director,US_CANADA_NEARSHORE,GLOBAL_TECH,68.0,,NEVER_CONTACTED_CONFIRMED,2025-07-14,https://www.linkedin.com/in/diegonogare,current
+Roberto Souza,Databricks,Enterprise and Global account Sales Director,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,82.0,,NEVER_CONTACTED_CONFIRMED,2025-12-09,https://www.linkedin.com/in/roberto-souza-832230,current
+Rafael Souza,Databricks,"Director, Technical Solutions Engineering (Brazil)",Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,64.0,Ghosted,,2025-10-10,https://www.linkedin.com/in/rafaelsouza,current
+Hugo Portela,Accenture,Associate Director,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,45.0,,NEVER_CONTACTED_CONFIRMED,2025-09-13,https://www.linkedin.com/in/hugoportela,current
+Rodrigo Barbaresco,Microsoft,Azure Specialist Sales Director,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,60.0,,NEVER_CONTACTED_CONFIRMED,2025-07-31,https://www.linkedin.com/in/rodbar,current
+"Diego Nogare, Ph.D.",Microsoft,Director Account Technology Strategist,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,68.0,,NEVER_CONTACTED_CONFIRMED,2025-07-14,https://www.linkedin.com/in/diegonogare,current
 Mario Reichert -Net Zero-ESG-EHS,ReichertConsulting,Director Ejecutivo y Consultor Principal en Sostenibilidad y Seguridad en alianza con Personaz USA,Director,US_CANADA_NEARSHORE,US_CANADA_CONFIRMED,75.0,,NEVER_CONTACTED_CONFIRMED,2025-05-27,https://www.linkedin.com/in/mario-reichert-netzero-esg-gri-sas-niifs1-s2sbti-waterstewardship-ehs-safety-sustainability-sbti-wcm,current
 Briz Mohan Giri,Wipro,Talent Acquisition Leader - LATAM,Talent Acquisition,LATAM_USD,GLOBAL_CONSULTING,73.0,Pending Reply,,2026-08-03,https://www.linkedin.com/in/brijgiri,current
 Talita Barbosa Mendes,Wipro,Senior Talent Acquisition Specialist LATAM,Talent Acquisition,LATAM_USD,GLOBAL_CONSULTING,76.0,Pending Reply,,2026-08-02,https://www.linkedin.com/in/talita-barbosa-mendes-2a7696181,current
@@ -184,7 +184,7 @@ Maricruz Carmona Díaz,EX Squared LATAM,Senior Talent Acquisition Specialist,Tal
 Fernanda Melgoza,Thermo Fisher Scientific,Manager Talent Acquisition - LATAM,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,80.0,Ghosted,,2026-07-02,https://www.linkedin.com/in/fernanda-melgoza-1bb87921,current
 Pablo de la Peña González,UST España & Latam,Talent Acquisition Specialist,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,73.0,Ghosted,,2026-07-01,https://www.linkedin.com/in/pablodelapenagonzalez,current
 Ivonne Aylén Catauro Nardella,Infracommerce Latam,Talent Acquisition Lead - LATAM,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,78.0,,,2026-06-29,https://www.linkedin.com/in/ivonne-ayl%C3%A9n-catauro-nardella,current
-Valentina Rodríguez Peláez,Wizeline,Senior Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD_LIKELY,60.0,Ghosted,,2026-06-22,https://www.linkedin.com/in/valenntinar99,current
+Valentina Rodríguez Peláez,Wizeline,Senior Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,60.0,Ghosted,,2026-06-22,https://www.linkedin.com/in/valenntinar99,current
 Mateus Souza de Azevedo,Athyna,Talent Acquisition Specialist,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,48.0,Warm Lead,,2026-06-22,https://www.linkedin.com/in/mateus-sazv,current
 Camila Martínez Cattaneo,Golabs,Talent Acquisition Manager,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,55.0,Ghosted,,2026-06-22,https://www.linkedin.com/in/camila-martinez-cattaneo,current
 Daniela Reyes Calderon,Blue People,Talent Acquisition Lead,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,78.0,Ghosted,,2026-06-18,https://www.linkedin.com/in/fernanda-daniela-reyes-calderon,current
@@ -194,9 +194,9 @@ Selene Lara Beguerisse,Haleon,"Talent Acquisition Manager - Mexico, Costa Rica, 
 Nicolas Ruiz,TIVIT LATAM,Talent Acquisition Specialist,Talent Acquisition,LATAM_USD,GLOBAL_CONSULTING,83.0,Ghosted,,2026-06-11,https://www.linkedin.com/in/nicolasruiz98,current
 Daniel Bonfim,Athyna,Talent Acquisition Analyst,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,48.0,Pending Reply,,2026-06-11,https://www.linkedin.com/in/d4nbonfim,current
 Thayna Sena,NTT DATA Europe & LATAM,Talent Acquisition,Talent Acquisition,LATAM_USD,GLOBAL_CONSULTING,80.0,Warm Lead,,2026-06-10,https://www.linkedin.com/in/thayna-sena-064697139,current
-Juan Burbano,Wizeline,Staff Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD_LIKELY,78.0,Ghosted,,2026-06-09,https://www.linkedin.com/in/juanpabloburbanobravo,current
+Juan Burbano,Wizeline,Staff Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,78.0,Ghosted,,2026-06-09,https://www.linkedin.com/in/juanpabloburbanobravo,current
 Maynor Estrada,Tribal Worldwide Guatemala,Talent Acquisition Lead LATAM,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,78.0,Ghosted,,2026-06-09,https://www.linkedin.com/in/maynorestrada93,current
-Os Payares,Wizeline,Staff Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD_LIKELY,78.0,No Contact,,2026-06-09,https://www.linkedin.com/in/osnaider-payares,current
+Os Payares,Wizeline,Staff Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,78.0,No Contact,,2026-06-09,https://www.linkedin.com/in/osnaider-payares,current
 Felipe Millán Henao,Perficient,Sr Talent Acquisition Lead - AI ML | Data | Analytics,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,53.0,Ghosted,,2026-06-08,https://www.linkedin.com/in/felipemillanhenao,current
 Cristian Ferreira,Infogain - LATAM,Talent Acquisition Specialist,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,73.0,Ghosted,,2026-06-03,https://www.linkedin.com/in/cristian-ferreira-perdomo,current
 Mara Luz Ruiz Bessola,Equifax,Talent Acquisition Manager Latinoamerica & University Relations,Talent Acquisition,LATAM_USD,GLOBAL_TECH,80.0,Ghosted,,2026-05-28,https://www.linkedin.com/in/maraluzruizbessola,current
@@ -222,10 +222,10 @@ Daniela Morales,Golabs,Talent Acquisition Specialist,Talent Acquisition,LATAM_US
 Federico Mascheroni,GlobalLogic Latinoamérica,Mid Talent Acquisition Specialist - Argentina - Mexico,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,70.0,Ghosted,,2025-11-14,https://www.linkedin.com/in/federico-mascheroni-2037b218b,current
 Maria de la Paz Florez Bazterrechea,Athyna,Lead Talent Acquisition Manager,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,50.0,Ghosted,,2025-11-07,https://www.linkedin.com/in/mariadelapazfb,current
 María Fernanda Gaytán Rosas,Perficient,Sr IT Talent Acquisition Specialist,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,45.0,,NEVER_CONTACTED_CONFIRMED,2025-11-05,https://www.linkedin.com/in/mar%C3%ADa-fernanda-gayt%C3%A1n-rosas,current
-Alejandra Restrepo,Globant,Senior IT Talent Acquisition Specialist Technical Recruiting | Strategic Hiring,Talent Acquisition,LATAM_USD,LATAM_USD_LIKELY,45.0,,NEVER_CONTACTED_CONFIRMED,2025-09-01,https://www.linkedin.com/in/alejarestrepob,current
+Alejandra Restrepo,Globant,Senior IT Talent Acquisition Specialist Technical Recruiting | Strategic Hiring,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,45.0,,NEVER_CONTACTED_CONFIRMED,2025-09-01,https://www.linkedin.com/in/alejarestrepob,current
 Georgia Tsalgini,NTT DATA Europe & Latam,Senior Talent Acquisition Specialist,Talent Acquisition,LATAM_USD,GLOBAL_CONSULTING,76.0,,NEVER_CONTACTED_CONFIRMED,2025-07-28,https://www.linkedin.com/in/georgia-tsalgini-a7b9171b2,current
 Fabian Arizona,VALCE Talent Solutions,Talent Acquisition Manager LATAM,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,73.0,Ghosted,,2025-07-27,https://www.linkedin.com/in/fabian-arizona-0641b11bb,current
-Liriana Fravoline,BairesDev,Talent Acquisition - Hiring X - Job Offers Specialist,Talent Acquisition,LATAM_USD,LATAM_USD_LIKELY,41.0,Needs Reply,,2025-06-19,https://www.linkedin.com/in/lfravoline,current
+Liriana Fravoline,BairesDev,Talent Acquisition - Hiring X - Job Offers Specialist,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,41.0,Needs Reply,,2025-06-19,https://www.linkedin.com/in/lfravoline,current
 Lucas Henrique,Unico ID,LatAm Senior Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,69.0,,NEVER_CONTACTED_CONFIRMED,2025-06-16,https://www.linkedin.com/in/lucas-henrique-53805441,current
 Athira K V,Tata Consultancy Services,Specialist - Talent Acquisition (Global Sourcing - LATAM),Talent Acquisition,LATAM_USD,GLOBAL_CONSULTING,66.0,,NEVER_CONTACTED_CONFIRMED,2025-06-09,https://www.linkedin.com/in/athira-k-v-a848a1228,current
 Thauana Valdrez,ESSS,Analista de Talent Acquisition LATAM,Talent Acquisition,LATAM_USD,LATAM_USD_CONFIRMED,66.0,,NEVER_CONTACTED_CONFIRMED,2025-05-19,https://www.linkedin.com/in/thauana-valdrez-169877228,current
