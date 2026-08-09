@@ -2047,7 +2047,159 @@ function renderContactPagination() {
 window.goPage = function(n) { contactsPage = n; renderContactsTable(); };
 
 // ── PAGE 6: Company Intelligence ──────────────────────────────────────────────
-function renderCompanies() { renderCompanyChart('co-all'); }
+function renderCompanies() {
+  renderCompanyChart('co-all');
+  renderCompanyFollowIntel();
+}
+
+// ── Company Follow Intelligence (Part: Company Follow Signal) ────────────────
+// Uses Company Follows.csv (companies the user proactively follows) as an
+// additional company-relevance/opportunity-market signal. Every card here
+// filters the SAME table below it — no separate matching logic to keep in
+// sync, same principle as the Opportunity Market segment cards.
+let activeCompanyFollowKpi = 'total';
+let filteredCompanyFollow = [];
+
+const COMPANY_FOLLOW_KPI_FILTERS = {
+  total: {
+    label: 'All Followed Companies', source: 'companies', match: () => true,
+  },
+  matched: {
+    label: 'Matched to Network', source: 'companies',
+    match: c => (parseInt(c.matched_connection_count) || 0) > 0,
+  },
+  recruiter: {
+    label: 'Recruiter/TA Companies', source: 'companies',
+    match: c => (parseInt(c.matched_recruiters) || 0) + (parseInt(c.matched_talent_acquisition) || 0) > 0,
+  },
+  opportunity: {
+    label: 'With Opportunity History', source: 'companies',
+    match: c => (parseInt(c.matched_opportunity_history_events) || 0) + (parseInt(c.matched_inbound_opportunities) || 0) > 0,
+  },
+  recent: {
+    label: 'Recently Followed (Last 30 Days)', source: 'companies',
+    match: c => c.days_since_followed != null && c.days_since_followed >= 0 && c.days_since_followed <= 30,
+  },
+  // These two cards show a CONTACT-level count (computed during Needs-Mapping
+  // resolution) but the only per-row data available to filter is the
+  // COMPANY-level table — same "historical count, current backlog shown"
+  // honesty pattern as the Opportunity Market V6 resolution-method cards.
+  resolved: {
+    label: 'Companies Contributing a Resolved Bucket — historical; see the Contacts Resolved count above',
+    source: 'companies', match: c => !!c.likely_opportunity_bucket,
+  },
+  review: {
+    label: 'Companies Needing Manual Review — see the Contacts Still Needing Review count above',
+    source: 'needs_review', match: () => true,
+  },
+  mapping: {
+    label: 'Top Mapping Candidates — Sunday manual-mapping list', source: 'mapping_candidates', match: () => true,
+  },
+};
+
+function _updateActiveCompanyFollowCards() {
+  document.querySelectorAll('#cf-metrics .kpi-card').forEach(el => {
+    const isActive = el.getAttribute('data-kpi') === activeCompanyFollowKpi;
+    el.classList.toggle('active', isActive);
+    el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+}
+
+window.applyCompanyFollowKpiFilter = function(key) {
+  const def = COMPANY_FOLLOW_KPI_FILTERS[key];
+  if (!def) return;
+  const cf = D.company_follow_intelligence || {};
+  const source = cf[def.source] || [];
+  filteredCompanyFollow = source.filter(def.match);
+  activeCompanyFollowKpi = key;
+  _updateActiveCompanyFollowCards();
+  renderCompanyFollowTable(def.label);
+  const table = document.getElementById('cf-table');
+  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+window.resetCompanyFollowFilter = function() { applyCompanyFollowKpiFilter('total'); };
+
+function renderCompanyFollowTable(label) {
+  const cf = D.company_follow_intelligence || {};
+  const totalCompanies = (cf.companies || []).length;
+  const st = document.getElementById('cf-stats');
+  if (st) {
+    st.textContent = 'Showing ' + filteredCompanyFollow.length + ' of ' + totalCompanies + ' followed companies'
+      + (label ? ' — ' + label : '');
+  }
+  const tbody = document.getElementById('cf-tbody');
+  if (!tbody) return;
+  if (!filteredCompanyFollow.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">No followed companies match the current filter.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filteredCompanyFollow.slice(0, 200).map(c => {
+    const recruiterTa = (parseInt(c.matched_recruiters) || 0) + (parseInt(c.matched_talent_acquisition) || 0);
+    const oppHistory = (parseInt(c.matched_opportunity_history_events) || 0) + (parseInt(c.matched_inbound_opportunities) || 0);
+    const bucket = c.likely_opportunity_bucket
+      ? marketBadge(c.likely_opportunity_bucket)
+      : '<span style="color:var(--text-muted)">Needs review</span>';
+    const conf = c.follow_signal_confidence ? (parseFloat(c.follow_signal_confidence) * 100).toFixed(0) + '%' : '—';
+    const daysLabel = (c.days_since_followed != null && c.days_since_followed >= 0) ? c.days_since_followed + 'd ago' : 'unknown';
+    const signals = (c.signals || '').split(';').map(s => s.trim()).filter(Boolean);
+    const signalsHtml = signals.length
+      ? signals.map(s => '<span class="signal-chip">' + s.replace(/_/g, ' ') + '</span>').join('')
+      : '—';
+    return '<tr>'
+      + '<td style="white-space:nowrap">' + (c.company_name || '—') + '</td>'
+      + '<td style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap">' + (c.followed_on || '—') + ' (' + daysLabel + ')</td>'
+      + '<td>' + (c.matched_connection_count || 0) + '</td>'
+      + '<td>' + recruiterTa + '</td>'
+      + '<td>' + oppHistory + '</td>'
+      + '<td>' + bucket + '</td>'
+      + '<td>' + conf + '</td>'
+      + '<td style="max-width:260px">' + signalsHtml + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
+function renderCompanyFollowIntel() {
+  const cf = D.company_follow_intelligence || {};
+  const noteEl = document.getElementById('cf-geo-note');
+  if (noteEl) noteEl.textContent = cf.geography_note ||
+    'Company Follows improves company relevance and opportunity-market inference, but LinkedIn export ' +
+    'still does not provide exact company location. Follow signals are not exact geography.';
+
+  const metEl = document.getElementById('cf-metrics');
+  if (!cf.available) {
+    if (metEl) metEl.innerHTML = '<div class="card"><div class="card-title">Company Follow Intelligence</div>'
+      + '<div class="card-value" style="font-size:1rem;color:var(--text-muted)">Unavailable this run</div>'
+      + '<div class="card-sub">' + (cf.reason || 'Company Follows.csv not present in this snapshot.') + '</div></div>';
+    const tbody = document.getElementById('cf-tbody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted)">Company Follows.csv not available this run.</td></tr>';
+    const st = document.getElementById('cf-stats');
+    if (st) st.textContent = 'No data — Company Follows.csv not available this run.';
+    return;
+  }
+
+  const s = cf.summary || {};
+  if (metEl) metEl.innerHTML = [
+    makeKpiCard('total', 'Followed Companies', s.total_followed_companies || 0,
+      'click to view all', '', 'applyCompanyFollowKpiFilter'),
+    makeKpiCard('matched', 'Matched to Network', s.matched_followed_companies || 0,
+      "name matches a connection's company", '', 'applyCompanyFollowKpiFilter'),
+    makeKpiCard('recruiter', 'Recruiter/TA Companies', s.companies_with_recruiters_or_ta || 0,
+      'has recruiter or TA contacts', '', 'applyCompanyFollowKpiFilter'),
+    makeKpiCard('opportunity', 'With Opportunity History', s.companies_with_opportunity_history || 0,
+      'message/opportunity signal present', '', 'applyCompanyFollowKpiFilter'),
+    makeKpiCard('recent', 'Recently Followed', s.recently_followed_companies || 0,
+      'followed in the last 30 days', '', 'applyCompanyFollowKpiFilter'),
+    makeKpiCard('resolved', 'Contacts Resolved', s.contacts_resolved_via_company_follow || 0,
+      'Needs Mapping contacts resolved this pass', 'good', 'applyCompanyFollowKpiFilter'),
+    makeKpiCard('review', 'Contacts Still Needing Review', s.contacts_still_needing_review || 0,
+      'matched a followed company but no other signal yet', 'warn', 'applyCompanyFollowKpiFilter'),
+    makeKpiCard('mapping', 'Top Mapping Candidates', (cf.mapping_candidates || []).length,
+      'ranked Sunday manual-mapping list', '', 'applyCompanyFollowKpiFilter'),
+  ].join('');
+
+  applyCompanyFollowKpiFilter(activeCompanyFollowKpi);
+}
 
 function renderCompanyChart(tabId) {
   const intel = D.company_intel || {};
@@ -2982,6 +3134,35 @@ function renderQuality() {
           + '<td>' + pct + '%' + scoreBar(count, grand, '#22c55e') + '</td>'
           + '</tr>';
       }).join('');
+    }
+  }
+
+  // Company Follow Signal contribution — Company Follows.csv used as an
+  // additional resolution method for the Needs Mapping backlog. Optional
+  // input; shows an honest "unavailable" state rather than fabricated zeros
+  // when Company Follows.csv wasn't present this run.
+  const cfEl = document.getElementById('quality-company-follow-metrics');
+  const cfNoteEl = document.getElementById('quality-company-follow-note');
+  if (cfEl) {
+    const cf = D.company_follow_intelligence_summary || D.company_follow_intelligence || {};
+    if (!cf.available) {
+      cfEl.innerHTML = '<div class="card"><div class="card-title">Company Follow Signal</div>'
+        + '<div class="card-value" style="font-size:1rem;color:var(--text-muted)">Unavailable this run</div>'
+        + '<div class="card-sub">' + (cf.reason || 'Company Follows.csv not present in this snapshot.') + '</div></div>';
+      if (cfNoteEl) cfNoteEl.textContent = '';
+    } else {
+      const cs = cf.summary || {};
+      cfEl.innerHTML = [
+        makeCard('Followed Companies Matched', (cs.matched_followed_companies || 0) + ' / ' + (cs.total_followed_companies || 0), 'name matches a connection\'s company'),
+        makeCard('Followed Companies Needing Review', cs.companies_still_needing_review || 0, 'no market/category signal yet', 'warn'),
+        makeCard('Contacts Resolved via Company Follow', cs.contacts_resolved_via_company_follow || 0, 'Needs Mapping contacts resolved this pass', 'good'),
+        makeCard('Needs Mapping Before -> After (Company Follow pass)',
+          (cs.needs_mapping_before_company_follow_pass || 0).toLocaleString() + ' -> ' + (cs.needs_mapping_after_company_follow_pass || 0).toLocaleString(),
+          'this resolution pass only — see Section A for the full V5/V6/V7/Company-Follow total'),
+      ].join('');
+      if (cfNoteEl) cfNoteEl.textContent = cf.geography_note ||
+        'Company Follows improves company relevance and opportunity-market inference, but LinkedIn export ' +
+        'still does not provide exact company location. Follow signals are not exact geography.';
     }
   }
 

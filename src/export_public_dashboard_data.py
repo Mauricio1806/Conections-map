@@ -813,6 +813,53 @@ def build_needs_mapping_public(backlog: dict) -> dict:
     }
 
 
+# ── Company Follow Intelligence — explicit allowlist, defense in depth on
+# top of what src/company_follow_intelligence.py already produces (company-
+# level aggregates only — organization names the user follows plus counts
+# already sanitized upstream, no raw messages/email/phone/notes ever touch
+# this dict).
+SAFE_COMPANY_FOLLOW_SUMMARY_KEYS = {
+    "total_followed_companies", "matched_followed_companies",
+    "companies_with_recruiters_or_ta", "companies_with_opportunity_history",
+    "recently_followed_companies", "contacts_resolved_via_company_follow",
+    "contacts_still_needing_review", "companies_still_needing_review",
+    "needs_mapping_before_company_follow_pass",
+    "needs_mapping_after_company_follow_pass",
+}
+SAFE_COMPANY_FOLLOW_ROW_COLS = {
+    "company_name", "company_follow_key", "followed_on", "days_since_followed",
+    "matched_connection_count", "matched_recruiters", "matched_talent_acquisition",
+    "matched_hiring_managers", "matched_data_leaders", "matched_top_contacts",
+    "matched_untapped_contacts", "matched_lead_reactivation_contacts",
+    "matched_opportunity_history_events", "matched_inbound_opportunities",
+    "matched_soft_closed_leads", "matched_usd_crm_leads",
+    "likely_company_category", "likely_opportunity_bucket",
+    "follow_signal_confidence", "company_follow_reason", "signals",
+}
+
+
+def _sanitize_company_follow_rows(rows: list) -> list:
+    return [{k: v for k, v in r.items() if k in SAFE_COMPANY_FOLLOW_ROW_COLS} for r in (rows or [])]
+
+
+def build_company_follow_public(data: dict) -> dict:
+    if not data or not data.get("available"):
+        return {
+            "available": False,
+            "reason": (data or {}).get("reason", "Company Follows.csv not available"),
+            "geography_note": (data or {}).get("geography_note", ""),
+        }
+    summary = data.get("summary", {}) or {}
+    return {
+        "available": True,
+        "summary": {k: v for k, v in summary.items() if k in SAFE_COMPANY_FOLLOW_SUMMARY_KEYS},
+        "companies": _sanitize_company_follow_rows(data.get("companies", [])),
+        "needs_review": _sanitize_company_follow_rows(data.get("needs_review", [])),
+        "mapping_candidates": _sanitize_company_follow_rows(data.get("mapping_candidates", [])),
+        "geography_note": data.get("geography_note", ""),
+    }
+
+
 # ── USD Contract CRM (hybrid: manual + auto-suggested) — explicit allowlist,
 # defense in depth on top of what src/usd_contract_crm.py already sanitizes
 # (drops notes_private/raw content before it ever reaches this dict). Never
@@ -1015,7 +1062,7 @@ PAGE_DATA_MAP = {
     "plan": ["action_plan_30", "action_plan_60", "action_plan_90", "action_plan_progress"],
     "contacts": ["top_contacts"],
     "weekly": ["weekly_evolution", "weekly_history", "weekly_people_delta_segments"],
-    "companies": ["company_intel"],
+    "companies": ["company_intel", "company_follow_intelligence"],
     "unknown": [
         "opportunity_market_v5", "opportunity_market_v5_summary",
         "opportunity_market_people_segments", "needs_mapping_backlog",
@@ -1029,6 +1076,7 @@ PAGE_DATA_MAP = {
         "opportunity_market_v5", "opportunity_market_v5_summary",
         "company_resolution_v6", "company_resolution_v7",
         "untapped_network_summary", "outreach_summary",
+        "company_follow_intelligence_summary",
     ],
 }
 
@@ -1089,6 +1137,20 @@ def _build_untapped_network_summary(untapped_network: dict) -> dict:
     }
 
 
+def _build_company_follow_summary(company_follow_intelligence: dict) -> dict:
+    """Tiny extract (summary counts only, no per-company arrays) for the Data
+    Quality page — avoids Quality needing the full company_follow_intelligence
+    array just to show the company-follow contribution numbers."""
+    cf = company_follow_intelligence or {}
+    if not cf.get("available"):
+        return {"available": False, "reason": cf.get("reason", "")}
+    return {
+        "available": True,
+        "summary": cf.get("summary", {}),
+        "geography_note": cf.get("geography_note", ""),
+    }
+
+
 def split_payload_into_pages(payload: dict) -> tuple[dict, dict]:
     """
     Splits a full sanitized dashboard payload into:
@@ -1103,6 +1165,7 @@ def split_payload_into_pages(payload: dict) -> tuple[dict, dict]:
     payload = dict(payload)  # shallow copy — never mutate the caller's dict
     payload["lead_reactivation_summary"] = _build_lead_reactivation_summary(payload.get("lead_reactivation"))
     payload["untapped_network_summary"]  = _build_untapped_network_summary(payload.get("untapped_network"))
+    payload["company_follow_intelligence_summary"] = _build_company_follow_summary(payload.get("company_follow_intelligence"))
 
     pages = {
         page_id: {k: payload[k] for k in keys if k in payload}
@@ -1178,6 +1241,7 @@ def export_public_dashboard_data(
     needs_mapping_backlog_data: dict = None,
     needs_mapping_action_plan_data: dict = None,
     usd_crm_data: dict = None,
+    company_follow_data: dict = None,
 ) -> None:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -1293,6 +1357,10 @@ def export_public_dashboard_data(
         # Opportunity Market — Needs Mapping person/company drill-down (Parts 2-4)
         "needs_mapping_backlog":       build_needs_mapping_public(needs_mapping_backlog_data),
         "needs_mapping_action_plan":   build_needs_mapping_action_plan_public(needs_mapping_action_plan_data),
+        # Company Follow Intelligence — Company Follows.csv used as an
+        # additional company-relevance/opportunity-market signal. Never
+        # fabricates exact geography (see geography_note in the payload).
+        "company_follow_intelligence": build_company_follow_public(company_follow_data),
         # USD Contract CRM — real USD job opportunities, recruiter outreach,
         # applications, interviews, follow-ups, contingency risk. Local/manual
         # CSV inputs only (data/manual/*.csv, gitignored). Sanitized: no

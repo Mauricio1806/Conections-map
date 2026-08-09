@@ -189,19 +189,19 @@
     },
     "weekly": {
       "file": "data/weekly_evolution.json",
-      "size_kb": 461,
+      "size_kb": 463,
       "available": true,
       "dependencies": []
     },
     "companies": {
       "file": "data/company_intel.json",
-      "size_kb": 14,
+      "size_kb": 245,
       "available": true,
       "dependencies": []
     },
     "unknown": {
       "file": "data/opportunity_market.json",
-      "size_kb": 6722,
+      "size_kb": 6720,
       "available": true,
       "dependencies": []
     },
@@ -225,13 +225,13 @@
     },
     "quality": {
       "file": "data/data_quality.json",
-      "size_kb": 17,
+      "size_kb": 18,
       "available": true,
       "dependencies": []
     }
   },
   "build": {
-    "generated_at": "2026-08-09T11:36:10",
+    "generated_at": "2026-08-09T12:31:36",
     "schema": "split-v1"
   }
 }

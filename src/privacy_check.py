@@ -193,6 +193,18 @@ ALLOWED_CONTACT_FIELDS = {
     # unified queue-row schema only (see QUEUE_ROW_FIELDS there and
     # build_monthly_executive_queue_public() in export_public_dashboard_data.py).
     "queue_name", "rank", "last_contact_date",
+    # Company Follow Intelligence (src/company_follow_intelligence.py) —
+    # company-level aggregates only (organization name the user follows +
+    # counts/classification), no person-level PII, see
+    # build_company_follow_public() in export_public_dashboard_data.py.
+    "company_name", "company_follow_key", "followed_on", "days_since_followed",
+    "matched_connection_count", "matched_recruiters", "matched_talent_acquisition",
+    "matched_hiring_managers", "matched_data_leaders", "matched_top_contacts",
+    "matched_untapped_contacts", "matched_lead_reactivation_contacts",
+    "matched_opportunity_history_events", "matched_inbound_opportunities",
+    "matched_soft_closed_leads", "matched_usd_crm_leads",
+    "likely_company_category", "likely_opportunity_bucket",
+    "follow_signal_confidence", "company_follow_reason", "signals",
 }
 
 
@@ -254,6 +266,12 @@ def check_json(path: Path) -> list[str]:
         list(meq.get("monthly_backlog_top50", []) or []) +
         list(meq.get("all_monthly_queue_records", []) or [])
     )
+    cf = data.get("company_follow_intelligence", {}) or {}
+    company_follow_records = (
+        list(cf.get("companies", []) or []) +
+        list(cf.get("needs_review", []) or []) +
+        list(cf.get("mapping_candidates", []) or [])
+    )
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \
                   [(i, c, "untapped") for i, c in enumerate(untapped)] + \
@@ -263,7 +281,8 @@ def check_json(path: Path) -> list[str]:
                   [(i, c, "opp_segment") for i, c in enumerate(opp_segments)] + \
                   [(i, c, "usd_crm") for i, c in enumerate(usd_crm_records)] + \
                   [(i, c, "opportunity_history") for i, c in enumerate(opportunity_history_records)] + \
-                  [(i, c, "monthly_queue") for i, c in enumerate(monthly_queue_records)]
+                  [(i, c, "monthly_queue") for i, c in enumerate(monthly_queue_records)] + \
+                  [(i, c, "company_follow") for i, c in enumerate(company_follow_records)]
 
     for i, record, record_type in all_records:
         for field in record:
@@ -320,6 +339,47 @@ def check_manifest_structure(manifest_path: Path) -> list[str]:
     return violations
 
 
+# Company Follow Intelligence — these five CSVs get committed to the public
+# repo (see the weekly "safe commit" file list), so scan their raw text too,
+# not just the JSON payload built from them.
+COMPANY_FOLLOW_CSV_OUTPUTS = [
+    ROOT / "outputs" / "company_follow_intelligence.csv",
+    ROOT / "outputs" / "company_follow_company_matches.csv",
+    ROOT / "outputs" / "company_follow_mapping_candidates.csv",
+    ROOT / "outputs" / "followed_companies_needing_review.csv",
+    ROOT / "outputs" / "company_follow_resolution_summary.csv",
+]
+
+
+def check_csv_text(path: Path) -> list[str]:
+    """Raw-text scan of a committed CSV output for the same forbidden
+    patterns/fields checked in the JSON payload — defense in depth for
+    outputs that ship straight to the public repo without going through
+    export_public_dashboard_data.py's allowlisting."""
+    if not path.exists():
+        return []
+    try:
+        text = path.read_text(encoding="utf-8-sig", errors="replace")
+    except Exception as e:
+        return [f"Could not read {path.name}: {e}"]
+
+    violations = []
+    for pattern, description in FORBIDDEN_PATTERNS:
+        matches = re.findall(pattern, text, re.IGNORECASE)
+        filtered = [m for m in matches if "linkedin.com" not in m.lower()]
+        if filtered:
+            violations.append(
+                f"Pattern violation ({description}): found {len(filtered)} matches in {path.name}"
+            )
+
+    header = text.splitlines()[0].lower().replace('"', '') if text.splitlines() else ""
+    header_fields = {f.strip() for f in header.split(",")}
+    for forbidden in (FORBIDDEN_RAW_FIELDS | FORBIDDEN_FIELDS):
+        if forbidden in header_fields:
+            violations.append(f"Forbidden field '{forbidden}' found in header of {path.name}")
+    return violations
+
+
 def _collect_target_files() -> list[Path]:
     files = [JSON_PATH]
     if DATA_DIR.exists():
@@ -350,6 +410,17 @@ def main():
             file_stats[path] = {"size_kb": path.stat().st_size // 1024}
 
     all_violations += [f"[manifest] {v}" for v in check_manifest_structure(JSON_PATH)]
+
+    csv_targets = [p for p in COMPANY_FOLLOW_CSV_OUTPUTS if p.exists()]
+    if csv_targets:
+        print(f"  Scanning {len(csv_targets)} committed CSV output(s):")
+        for p in csv_targets:
+            print(f"    - {p.relative_to(ROOT)}")
+        print()
+    for path in csv_targets:
+        violations = check_csv_text(path)
+        if violations:
+            all_violations += [f"[{path.relative_to(ROOT)}] {v}" for v in violations]
 
     snapshot_violations = check_no_tracked_raw_snapshots()
     if snapshot_violations:

@@ -1,7 +1,7 @@
 {
   "opportunity_market_v5": {
-    "GLOBAL_OPPORTUNITY": 2685,
-    "NEEDS_COMPANY_MAPPING": 2351,
+    "GLOBAL_OPPORTUNITY": 2687,
+    "NEEDS_COMPANY_MAPPING": 2349,
     "BRAZIL_CONFIRMED": 1956,
     "LANGUAGE_PORTUGUESE_MARKET": 1163,
     "GLOBAL_TECH": 979,
@@ -25,15 +25,15 @@
     "v5_confirmed_pct": 26.3,
     "v5_global_buckets": 2382,
     "v5_language_inferred": 1173,
-    "v5_global_opportunity": 2685,
-    "v5_needs_company_mapping": 2351,
+    "v5_global_opportunity": 2687,
+    "v5_needs_company_mapping": 2349,
     "v5_low_value_unresolved": 111,
     "v5_actionable_total": 11692,
     "v5_actionable_pct": 99.1,
     "v5_low_value_pct": 0.9,
     "v5_distribution": {
-      "GLOBAL_OPPORTUNITY": 2685,
-      "NEEDS_COMPANY_MAPPING": 2351,
+      "GLOBAL_OPPORTUNITY": 2687,
+      "NEEDS_COMPANY_MAPPING": 2349,
       "BRAZIL_CONFIRMED": 1956,
       "LANGUAGE_PORTUGUESE_MARKET": 1163,
       "GLOBAL_TECH": 979,
@@ -494,5 +494,21 @@
     "ghosted_count": 2975,
     "replied_count": 1217,
     "interview_pipeline_count": 16
+  },
+  "company_follow_intelligence_summary": {
+    "available": true,
+    "summary": {
+      "total_followed_companies": 99,
+      "matched_followed_companies": 41,
+      "companies_with_recruiters_or_ta": 18,
+      "companies_with_opportunity_history": 38,
+      "recently_followed_companies": 28,
+      "contacts_resolved_via_company_follow": 2,
+      "contacts_still_needing_review": 7,
+      "companies_still_needing_review": 92,
+      "needs_mapping_before_company_follow_pass": 2351,
+      "needs_mapping_after_company_follow_pass": 2349
+    },
+    "geography_note": "Company Follows improves company relevance and opportunity-market inference, but LinkedIn export still does not provide exact company location. Follow signals are not exact geography."
   }
 }

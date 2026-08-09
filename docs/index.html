@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1786286169">
+  <link rel="stylesheet" href="./assets/style.css?v=1786289495">
 </head>
 <body>
 
@@ -600,6 +600,28 @@ python src/validate_static_dashboard_runtime.py</pre>
         <div class="tab-panel" id="co-consulting">     <div class="chart-box"><h4>Global Consulting Companies</h4><canvas id="chart-co-cons" style="max-height:400px"></canvas></div></div>
         <div class="tab-panel" id="co-latam">          <div class="chart-box"><h4>LATAM/USD Companies</h4><canvas id="chart-co-latam" style="max-height:400px"></canvas></div></div>
         <div class="tab-panel" id="co-spain">          <div class="chart-box"><h4>Spain/EU Companies</h4><canvas id="chart-co-spain" style="max-height:400px"></canvas></div></div>
+      </div>
+
+      <div class="section-label" style="margin-top:2rem">Company Follow Intelligence</div>
+      <div class="alert alert-info" style="margin-bottom:1rem">
+        <span class="alert-icon">&#9432;</span>
+        <span id="cf-geo-note">Company Follows improves company relevance and opportunity-market inference, but LinkedIn export still does not provide exact company location. Follow signals are not exact geography.</span>
+      </div>
+      <div class="metrics-grid metrics-grid-wide" id="cf-metrics"></div>
+
+      <div class="table-stats" id="cf-stats"></div>
+      <div class="filters-bar" style="margin-bottom:0.5rem">
+        <button class="btn-ghost" onclick="resetCompanyFollowFilter()">Reset / Clear Filter</button>
+      </div>
+      <div class="table-wrap">
+        <table id="cf-table">
+          <thead><tr>
+            <th>Followed Company</th><th>Followed On</th><th>Matched Contacts</th>
+            <th>Recruiter/TA</th><th>Opportunity History</th><th>Likely Bucket</th>
+            <th>Confidence</th><th>Signals</th>
+          </tr></thead>
+          <tbody id="cf-tbody"></tbody>
+        </table>
       </div>
     </div>
 
@@ -1596,6 +1618,10 @@ python src/validate_static_dashboard_runtime.py</pre>
         <canvas id="chart-mkt-type"></canvas>
       </div>
 
+      <div class="section-label">Company Follow Signal Contribution</div>
+      <div class="metrics-grid metrics-grid-wide" id="quality-company-follow-metrics"></div>
+      <div id="quality-company-follow-note" style="font-size:0.85rem;color:var(--text-muted);margin:0.75rem 0 1rem"></div>
+
       <div class="section-label">Section B — Geographic Data Limitation (Technical)</div>
       <div class="alert alert-info" style="margin-bottom:1rem">
         <span class="alert-icon">&#9432;</span>
@@ -1762,6 +1788,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1786286169"></script>
+<script src="./assets/app.js?v=1786289495"></script>
 </body>
 </html>

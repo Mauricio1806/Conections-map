@@ -1195,13 +1195,13 @@
       "top_contacts": {
         "top_priority_contacts_current": 235,
         "top_priority_contacts_previous": 227,
-        "outreach_adjusted_score_avg_current": 50.0,
+        "outreach_adjusted_score_avg_current": 50.3,
         "outreach_adjusted_score_avg_previous": 50.3
       },
       "data_quality": {
-        "needs_company_mapping_current": 2351,
+        "needs_company_mapping_current": 2349,
         "needs_company_mapping_previous": 2310,
-        "needs_company_mapping_delta": 41,
+        "needs_company_mapping_delta": 39,
         "business_classification_coverage_current": 99.1,
         "confirmed_geographic_signals_current": 3101
       },
@@ -1283,8 +1283,8 @@
       },
       {
         "title": "Needs Company Mapping",
-        "value": 2351,
-        "delta": 41
+        "value": 2349,
+        "delta": 39
       }
     ],
     "charts": {
@@ -1445,7 +1445,7 @@
           "new_recruiters": 40,
           "needs_my_response_current": 69,
           "untapped_activated_this_week": 64,
-          "needs_company_mapping_delta": 41
+          "needs_company_mapping_delta": 39
         }
       ]
     },
@@ -1689,7 +1689,7 @@
         "hot_reactivation_delta": 11,
         "warm_reactivation_delta": 205,
         "untapped_activated_this_week": 64,
-        "needs_company_mapping_delta": 41,
+        "needs_company_mapping_delta": 39,
         "actual_primary_share": 0.9583,
         "actual_europe_share": 0.0417,
         "strategy_mix_status": "TOO_LITTLE_EU",
@@ -1703,7 +1703,7 @@
         "latam_usd_delta": "1",
         "us_canada_delta": "3",
         "spain_eu_delta": "3",
-        "global_opportunity_delta": "66"
+        "global_opportunity_delta": "68"
       }
     ],
     "by_week": {

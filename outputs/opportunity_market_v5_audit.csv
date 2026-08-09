@@ -1454,7 +1454,7 @@ Aline Figuerêdo,Unimed Maringá,Analista de RH,HR,UNKNOWN,NEEDS_COMPANY_MAPPING
 INGRID HERNANDEZ,NYXN,Talent Acquisition Specialist,Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,48
 Thayna Sena,NTT DATA Europe & LATAM,Talent Acquisition,Talent Acquisition,LATAM_USD,LATAM_USD,GLOBAL_CONSULTING,0.9,exact company dict: ntt data,True,True,False,80
 Alfonso Teran Ortega,Ranco Cherries,Analista de reclutamiento y desarrollo de personas,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,18
-Justin Stollery,NJF Global Holdings Ltd,Technology & Quant Finance Associate,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,15
+Justin Stollery,NJF Global Holdings Ltd,Technology & Quant Finance Associate,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,GLOBAL_OPPORTUNITY,0.7,Company Follow Signal: followed company 'NJF Global Holdings Ltd' matches contact's company — international/remote keyword in company name,True,False,False,15
 Brenda Braglia,ARAXÁ SOLAR,Analista de DHO Sênior,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,LANGUAGE_PORTUGUESE_MARKET,0.65,Portuguese title/language signal,True,False,False,18
 Miranda Wilsnagh AIPSC CIPC,Avatar Recruitment Consultancy Limited,Chief Executive Officer,Executive,GLOBAL_CONSULTING,GLOBAL_CONSULTING,GLOBAL_CONSULTING,0.9,v4 inference: GLOBAL_CONSULTING,True,True,False,47
 Meital Dozortsev,PTC,"Senior Global Talent Acquisition Specialist, Israel & EMEA R&D",Talent Acquisition,UNKNOWN,EUROPE,EUROPE_CONFIRMED,0.85,v4 inference: EUROPE,True,True,False,48
@@ -9324,7 +9324,7 @@ Wasi Abbas,Fresh Basket,Data Analyst - Inventory Manager,Data Analyst,UNKNOWN,NE
 Judi Canavan,Philip Morris International,Sr. Talent Acquisition Lead (Sub-Saharan Africa),Talent Acquisition,UNKNOWN,GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,GLOBAL_OPPORTUNITY,0.55,v4 inference: GLOBAL_OPPORTUNITY_UNRESOLVED_REGION,True,False,False,54
 Frank Batten,Thornley Groves Estate Agents,Lettings Negotiator,Other,UNKNOWN,GLOBAL_CONSULTING,GLOBAL_CONSULTING,0.9,v4 inference: GLOBAL_CONSULTING,True,True,False,8
 Rita Inácio,Mootiva,Talent Acquisition Manager | Governação e Gestão de Processos,Talent Acquisition,UNKNOWN,BRAZIL,BRAZIL_CONFIRMED,0.85,v4 inference: BRAZIL,True,True,False,48
-Gulshan Kaleel,George Bernard,Recruitment Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,15
+Gulshan Kaleel,George Bernard,Recruitment Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,GLOBAL_OPPORTUNITY,0.75,Company Follow Signal: followed company 'George Bernard Consulting | Jobs' matches contact's company — consulting/advisory keyword in company name,True,False,False,15
 Patrick Siwy,ambass GmbH,Talent Relationship Manager,Other,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,18
 Aubrey Lantican,Troocoo,Healthcare Recruitment Consultant,Consultant,UNKNOWN,NEEDS_COMPANY_MAPPING,NEEDS_COMPANY_MAPPING,0.4,company exists but unresolved,True,False,True,15
 Camila Meller Da Silva,Bryant Park Consulting,Talent Acquisition Manager,Talent Acquisition,GLOBAL_CONSULTING,GLOBAL_CONSULTING,GLOBAL_CONSULTING,0.9,v4 inference: GLOBAL_CONSULTING,True,True,False,58

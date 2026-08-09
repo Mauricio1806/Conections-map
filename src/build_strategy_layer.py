@@ -613,6 +613,40 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Company Resolution V7 failed (non-fatal): {exc}")
 
+    # 2f. Company Follow Intelligence — Stage A. Uses "Company Follows.csv"
+    # (companies the user proactively follows — a relevance signal, since
+    # they typically follow a company after connecting with/messaging
+    # someone there) as one more honest resolution method for whatever V5/
+    # V6/V7 left at NEEDS_COMPANY_MAPPING. Only resolves a contact when their
+    # company matches a followed company AND at least one other signal
+    # (persona, keyword, or existing company category) is present — never on
+    # a bare name match alone, and never fabricates exact geography (Company
+    # Follows.csv carries no location data). Company Follows.csv is optional;
+    # if absent this step is a no-op.
+    logger.info("Step 2f/8: Applying Company Follow Intelligence (resolution pass) …")
+    company_follows_df = None
+    company_follow_matches_df = pd.DataFrame()
+    company_follow_resolution_summary = {}
+    try:
+        from src.company_follow_intelligence import (
+            load_and_prepare_company_follows, apply_company_follow_resolution,
+        )
+        company_follows_df = load_and_prepare_company_follows()
+        df, company_follow_resolution_summary, company_follow_matches_df = apply_company_follow_resolution(
+            df, company_follows_df
+        )
+        if company_follow_resolution_summary.get("available"):
+            logger.info(
+                f"  Company Follow Signal: Needs Mapping "
+                f"{company_follow_resolution_summary.get('needs_mapping_before', 0):,} -> "
+                f"{company_follow_resolution_summary.get('needs_mapping_after', 0):,} "
+                f"(resolved={company_follow_resolution_summary.get('resolved_by_company_follow_signal', 0)})"
+            )
+        else:
+            logger.info(f"  Company Follow Signal: {company_follow_resolution_summary.get('reason', 'unavailable')}")
+    except Exception as exc:
+        logger.warning(f"  Company Follow Intelligence resolution failed (non-fatal): {exc}")
+
     # Recompute the V5 summary + audit AFTER V6+V7 so every dashboard card
     # (Overview, Opportunity Market, Data Quality) reflects the honest final
     # state instead of the stale pre-resolution "Needs Company Mapping" count.
@@ -775,6 +809,34 @@ def run_strategy_layer() -> None:
     except Exception as exc:
         logger.warning(f"  Monthly Executive Queue failed (non-fatal): {exc}")
 
+    # 7b7. Company Follow Intelligence — Stage B. Runs now that Lead
+    # Reactivation / Opportunity History / USD Contract CRM have all written
+    # their sanitized CSVs this pass, so per-followed-company counts
+    # (matched_lead_reactivation_contacts, matched_opportunity_history_events,
+    # matched_inbound_opportunities, matched_soft_closed_leads,
+    # matched_usd_crm_leads) can be computed by joining against them. Builds
+    # the five company_follow_*.csv outputs. Does not re-open Stage A's
+    # resolution decisions — it only reports intelligence.
+    company_follow_data = {}
+    try:
+        from src.company_follow_intelligence import build_company_follow_intelligence
+        company_follow_data = build_company_follow_intelligence(
+            df, company_follows_df, company_follow_matches_df,
+            resolution_summary=company_follow_resolution_summary,
+        )
+        if company_follow_data.get("available"):
+            s = company_follow_data.get("summary", {})
+            logger.info(
+                f"  Company Follow Intelligence: {s.get('total_followed_companies', 0)} followed | "
+                f"matched={s.get('matched_followed_companies', 0)} "
+                f"recruiter/TA={s.get('companies_with_recruiters_or_ta', 0)} "
+                f"opportunity_history={s.get('companies_with_opportunity_history', 0)} "
+                f"resolved_contacts={s.get('contacts_resolved_via_company_follow', 0)} "
+                f"still_review={s.get('contacts_still_needing_review', 0)}"
+            )
+    except Exception as exc:
+        logger.warning(f"  Company Follow Intelligence (Stage B) failed (non-fatal): {exc}")
+
     # 7c. Export public dashboard JSON (for static GitHub Pages dashboard)
     logger.info("  Exporting public dashboard JSON ...")
     try:
@@ -788,6 +850,7 @@ def run_strategy_layer() -> None:
             needs_mapping_backlog_data=needs_mapping_backlog,
             needs_mapping_action_plan_data=needs_mapping_action_plan,
             usd_crm_data=usd_crm_data,
+            company_follow_data=company_follow_data,
         )
         logger.info("  Public JSON exported.")
     except Exception as exc:

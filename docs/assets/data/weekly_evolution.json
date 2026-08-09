@@ -18,8 +18,8 @@
       "latam_usd_delta": "1",
       "us_canada_nearshore_delta": "3",
       "spain_eu_delta": "3",
-      "global_opportunity_delta": "66",
-      "needs_mapping_delta": "41"
+      "global_opportunity_delta": "68",
+      "needs_mapping_delta": "39"
     },
     "lead_pipeline_movement": {
       "needs_my_response_delta": "0",
@@ -351,7 +351,7 @@
       "hot_reactivation_delta": 11,
       "warm_reactivation_delta": 205,
       "untapped_activated_this_week": 64,
-      "needs_company_mapping_delta": 41,
+      "needs_company_mapping_delta": 39,
       "actual_primary_share": 0.9583,
       "actual_europe_share": 0.0417,
       "strategy_mix_status": "TOO_LITTLE_EU",
@@ -365,7 +365,7 @@
       "latam_usd_delta": "1",
       "us_canada_delta": "3",
       "spain_eu_delta": "3",
-      "global_opportunity_delta": "66"
+      "global_opportunity_delta": "68"
     }
   ],
   "weekly_people_delta_segments": [
@@ -3450,6 +3450,28 @@
       "bucket_group": "us_canada"
     },
     {
+      "full_name": "Justin Stollery",
+      "company_clean": "NJF Global Holdings Ltd",
+      "persona": "Other",
+      "priority_score": 15.0,
+      "url": "https://www.linkedin.com/in/justinstollery",
+      "match_method": "profile_url",
+      "opportunity_bucket": "NEEDS_COMPANY_MAPPING",
+      "segment": "bucket_change_out",
+      "bucket_group": "needs_mapping"
+    },
+    {
+      "full_name": "Justin Stollery",
+      "company_clean": "NJF Global Holdings Ltd",
+      "persona": "Other",
+      "priority_score": 15.0,
+      "url": "https://www.linkedin.com/in/justinstollery",
+      "match_method": "profile_url",
+      "opportunity_bucket": "GLOBAL_OPPORTUNITY",
+      "segment": "bucket_change_in",
+      "bucket_group": "global_opportunity"
+    },
+    {
       "full_name": "Santiago Barceló",
       "company_clean": "Clip",
       "persona": "Other",
@@ -5424,6 +5446,28 @@
       "persona": "Executive",
       "priority_score": 40.0,
       "url": "https://www.linkedin.com/in/tonifarias",
+      "match_method": "profile_url",
+      "opportunity_bucket": "GLOBAL_OPPORTUNITY",
+      "segment": "bucket_change_in",
+      "bucket_group": "global_opportunity"
+    },
+    {
+      "full_name": "Gulshan Kaleel",
+      "company_clean": "George Bernard",
+      "persona": "Consultant",
+      "priority_score": 15.0,
+      "url": "https://www.linkedin.com/in/gulshan-kaleel",
+      "match_method": "profile_url",
+      "opportunity_bucket": "NEEDS_COMPANY_MAPPING",
+      "segment": "bucket_change_out",
+      "bucket_group": "needs_mapping"
+    },
+    {
+      "full_name": "Gulshan Kaleel",
+      "company_clean": "George Bernard",
+      "persona": "Consultant",
+      "priority_score": 15.0,
+      "url": "https://www.linkedin.com/in/gulshan-kaleel",
       "match_method": "profile_url",
       "opportunity_bucket": "GLOBAL_OPPORTUNITY",
       "segment": "bucket_change_in",
