@@ -4,10 +4,10 @@
       "plan": "30-Day Plan",
       "market": "US_CANADA_NEARSHORE",
       "persona": "Recruiter",
-      "current_count": 22,
+      "current_count": 23,
       "target_count": 80,
-      "gap_count": 58,
-      "gap_percentage": 72,
+      "gap_count": 57,
+      "gap_percentage": 71,
       "urgency_level": "High",
       "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
       "timeframe": "30d",
@@ -18,7 +18,7 @@
         "company_query": "recruiter Nearsure",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
         "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
-        "search_rationale": "Uses real title and region terms for Recruiter in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 58 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 57 contacts in this segment.",
         "fallback_queries": [
           "remote recruiter Latin America data",
           "technical recruiter nearshore",
@@ -34,12 +34,12 @@
       "plan": "30-Day Plan",
       "market": "US_CANADA_NEARSHORE",
       "persona": "Talent Acquisition",
-      "current_count": 24,
+      "current_count": 25,
       "target_count": 60,
-      "gap_count": 36,
-      "gap_percentage": 60,
-      "urgency_level": "High",
-      "recommended_action": "HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "gap_count": 35,
+      "gap_percentage": 58,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Talent Acquisition in US_CANADA_NEARSHORE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
       "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies",
       "search_pack": {
@@ -48,7 +48,7 @@
         "company_query": "talent acquisition Nearsure",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
         "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 36 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 35 contacts in this segment.",
         "fallback_queries": [
           "remote recruiter Latin America data",
           "technical recruiter nearshore",
@@ -63,22 +63,22 @@
     {
       "plan": "30-Day Plan",
       "market": "LATAM_USD",
-      "persona": "Talent Acquisition",
-      "current_count": 54,
-      "target_count": 60,
-      "gap_count": 6,
-      "gap_percentage": 10,
-      "urgency_level": "Low",
-      "recommended_action": "LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",
+      "persona": "Recruiter",
+      "current_count": 44,
+      "target_count": 80,
+      "gap_count": 36,
+      "gap_percentage": 45,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
-      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors",
+      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms",
       "search_pack": {
         "primary_query": "data engineer recruiter LATAM",
         "secondary_query": "talent acquisition LATAM data",
-        "company_query": "talent acquisition Hays",
+        "company_query": "recruiter Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 6 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 36 contacts in this segment.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -94,22 +94,22 @@
     {
       "plan": "30-Day Plan",
       "market": "LATAM_USD",
-      "persona": "Recruiter",
-      "current_count": 41,
-      "target_count": 80,
-      "gap_count": 39,
-      "gap_percentage": 49,
-      "urgency_level": "Medium",
-      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "persona": "Talent Acquisition",
+      "current_count": 61,
+      "target_count": 60,
+      "gap_count": 0,
+      "gap_percentage": 0,
+      "urgency_level": "Saturated",
+      "recommended_action": "Maintain existing Talent Acquisition connections in LATAM_USD. No new outreach needed.",
       "timeframe": "30d",
-      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms",
+      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors",
       "search_pack": {
         "primary_query": "data engineer recruiter LATAM",
         "secondary_query": "talent acquisition LATAM data",
-        "company_query": "recruiter Hays",
+        "company_query": "talent acquisition Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 39 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -276,42 +276,12 @@
     },
     {
       "plan": "60-Day Plan",
-      "market": "US_CANADA_NEARSHORE",
-      "persona": "Recruiter",
-      "current_count": 22,
-      "target_count": 80,
-      "gap_count": 58,
-      "gap_percentage": 72,
-      "urgency_level": "High",
-      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
-      "timeframe": "30d",
-      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles",
-      "search_pack": {
-        "primary_query": "nearshore recruiter data engineer",
-        "secondary_query": "LATAM recruiter US data engineer",
-        "company_query": "recruiter Nearsure",
-        "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
-        "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
-        "search_rationale": "Uses real title and region terms for Recruiter in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 58 contacts in this segment.",
-        "fallback_queries": [
-          "remote recruiter Latin America data",
-          "technical recruiter nearshore",
-          "talent acquisition nearshore LATAM"
-        ],
-        "bad_terms_excluded": [
-          "US_CANADA_NEARSHORE"
-        ],
-        "search_quality": "Broad discovery"
-      }
-    },
-    {
-      "plan": "60-Day Plan",
       "market": "SPAIN_EU",
       "persona": "Talent Acquisition",
-      "current_count": 17,
+      "current_count": 16,
       "target_count": 60,
-      "gap_count": 43,
-      "gap_percentage": 72,
+      "gap_count": 44,
+      "gap_percentage": 73,
       "urgency_level": "High",
       "recommended_action": "HIGH: Prioritize Talent Acquisition in SPAIN_EU. Send 3-5 connection requests daily. Engage with their posts before connecting.",
       "timeframe": "60d",
@@ -322,7 +292,7 @@
         "company_query": "talent acquisition Stratesys",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20Spain",
         "recommended_filters": "People · 2nd degree first · Locations: Spain, Portugal, Germany, Netherlands, Ireland (Madrid, Barcelona for Spain specifically) · Keywords to try manually: Spain, España, Portugal, Europe, remote, data platform",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 43 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 44 contacts in this segment.",
         "fallback_queries": [
           "talent acquisition Spain data",
           "IT recruiter Portugal",
@@ -337,13 +307,43 @@
     {
       "plan": "60-Day Plan",
       "market": "US_CANADA_NEARSHORE",
-      "persona": "Talent Acquisition",
-      "current_count": 24,
-      "target_count": 60,
-      "gap_count": 36,
-      "gap_percentage": 60,
+      "persona": "Recruiter",
+      "current_count": 23,
+      "target_count": 80,
+      "gap_count": 57,
+      "gap_percentage": 71,
       "urgency_level": "High",
-      "recommended_action": "HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "timeframe": "30d",
+      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles",
+      "search_pack": {
+        "primary_query": "nearshore recruiter data engineer",
+        "secondary_query": "LATAM recruiter US data engineer",
+        "company_query": "recruiter Nearsure",
+        "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
+        "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
+        "search_rationale": "Uses real title and region terms for Recruiter in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 57 contacts in this segment.",
+        "fallback_queries": [
+          "remote recruiter Latin America data",
+          "technical recruiter nearshore",
+          "talent acquisition nearshore LATAM"
+        ],
+        "bad_terms_excluded": [
+          "US_CANADA_NEARSHORE"
+        ],
+        "search_quality": "Broad discovery"
+      }
+    },
+    {
+      "plan": "60-Day Plan",
+      "market": "US_CANADA_NEARSHORE",
+      "persona": "Talent Acquisition",
+      "current_count": 25,
+      "target_count": 60,
+      "gap_count": 35,
+      "gap_percentage": 58,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Talent Acquisition in US_CANADA_NEARSHORE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
       "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies",
       "search_pack": {
@@ -352,7 +352,7 @@
         "company_query": "talent acquisition Nearsure",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
         "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 36 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 35 contacts in this segment.",
         "fallback_queries": [
           "remote recruiter Latin America data",
           "technical recruiter nearshore",
@@ -367,22 +367,22 @@
     {
       "plan": "60-Day Plan",
       "market": "LATAM_USD",
-      "persona": "Talent Acquisition",
-      "current_count": 54,
-      "target_count": 60,
-      "gap_count": 6,
-      "gap_percentage": 10,
-      "urgency_level": "Low",
-      "recommended_action": "LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",
+      "persona": "Recruiter",
+      "current_count": 44,
+      "target_count": 80,
+      "gap_count": 36,
+      "gap_percentage": 45,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
-      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors",
+      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms",
       "search_pack": {
         "primary_query": "data engineer recruiter LATAM",
         "secondary_query": "talent acquisition LATAM data",
-        "company_query": "talent acquisition Hays",
+        "company_query": "recruiter Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 6 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 36 contacts in this segment.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -398,22 +398,22 @@
     {
       "plan": "60-Day Plan",
       "market": "LATAM_USD",
-      "persona": "Recruiter",
-      "current_count": 41,
-      "target_count": 80,
-      "gap_count": 39,
-      "gap_percentage": 49,
-      "urgency_level": "Medium",
-      "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
+      "persona": "Talent Acquisition",
+      "current_count": 61,
+      "target_count": 60,
+      "gap_count": 0,
+      "gap_percentage": 0,
+      "urgency_level": "Saturated",
+      "recommended_action": "Maintain existing Talent Acquisition connections in LATAM_USD. No new outreach needed.",
       "timeframe": "30d",
-      "strategic_reason": "Direct pipeline for USD remote jobs from Brazil via LATAM staffing firms",
+      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors",
       "search_pack": {
         "primary_query": "data engineer recruiter LATAM",
         "secondary_query": "talent acquisition LATAM data",
-        "company_query": "recruiter Hays",
+        "company_query": "talent acquisition Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 39 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -839,42 +839,12 @@
     },
     {
       "plan": "90-Day Plan",
-      "market": "US_CANADA_NEARSHORE",
-      "persona": "Recruiter",
-      "current_count": 22,
-      "target_count": 80,
-      "gap_count": 58,
-      "gap_percentage": 72,
-      "urgency_level": "High",
-      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
-      "timeframe": "30d",
-      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles",
-      "search_pack": {
-        "primary_query": "nearshore recruiter data engineer",
-        "secondary_query": "LATAM recruiter US data engineer",
-        "company_query": "recruiter Nearsure",
-        "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
-        "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
-        "search_rationale": "Uses real title and region terms for Recruiter in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 58 contacts in this segment.",
-        "fallback_queries": [
-          "remote recruiter Latin America data",
-          "technical recruiter nearshore",
-          "talent acquisition nearshore LATAM"
-        ],
-        "bad_terms_excluded": [
-          "US_CANADA_NEARSHORE"
-        ],
-        "search_quality": "Broad discovery"
-      }
-    },
-    {
-      "plan": "90-Day Plan",
       "market": "SPAIN_EU",
       "persona": "Talent Acquisition",
-      "current_count": 17,
+      "current_count": 16,
       "target_count": 60,
-      "gap_count": 43,
-      "gap_percentage": 72,
+      "gap_count": 44,
+      "gap_percentage": 73,
       "urgency_level": "High",
       "recommended_action": "HIGH: Prioritize Talent Acquisition in SPAIN_EU. Send 3-5 connection requests daily. Engage with their posts before connecting.",
       "timeframe": "60d",
@@ -885,7 +855,7 @@
         "company_query": "talent acquisition Stratesys",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20Spain",
         "recommended_filters": "People · 2nd degree first · Locations: Spain, Portugal, Germany, Netherlands, Ireland (Madrid, Barcelona for Spain specifically) · Keywords to try manually: Spain, España, Portugal, Europe, remote, data platform",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 43 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 44 contacts in this segment.",
         "fallback_queries": [
           "talent acquisition Spain data",
           "IT recruiter Portugal",
@@ -900,22 +870,22 @@
     {
       "plan": "90-Day Plan",
       "market": "US_CANADA_NEARSHORE",
-      "persona": "Talent Acquisition",
-      "current_count": 24,
-      "target_count": 60,
-      "gap_count": 36,
-      "gap_percentage": 60,
+      "persona": "Recruiter",
+      "current_count": 23,
+      "target_count": 80,
+      "gap_count": 57,
+      "gap_percentage": 71,
       "urgency_level": "High",
-      "recommended_action": "HIGH: Prioritize Talent Acquisition in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
+      "recommended_action": "HIGH: Prioritize Recruiter in US_CANADA_NEARSHORE. Send 3-5 connection requests daily. Engage with their posts before connecting.",
       "timeframe": "30d",
-      "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies",
+      "strategic_reason": "US/Canada recruiters who place LATAM contractors in USD-paying roles",
       "search_pack": {
         "primary_query": "nearshore recruiter data engineer",
         "secondary_query": "LATAM recruiter US data engineer",
-        "company_query": "talent acquisition Nearsure",
+        "company_query": "recruiter Nearsure",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
         "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 36 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 57 contacts in this segment.",
         "fallback_queries": [
           "remote recruiter Latin America data",
           "technical recruiter nearshore",
@@ -929,31 +899,30 @@
     },
     {
       "plan": "90-Day Plan",
-      "market": "LATAM_USD",
+      "market": "US_CANADA_NEARSHORE",
       "persona": "Talent Acquisition",
-      "current_count": 54,
+      "current_count": 25,
       "target_count": 60,
-      "gap_count": 6,
-      "gap_percentage": 10,
-      "urgency_level": "Low",
-      "recommended_action": "LOW: Continue organic growth for Talent Acquisition in LATAM_USD. Accept inbound connections, no proactive push needed.",
+      "gap_count": 35,
+      "gap_percentage": 58,
+      "urgency_level": "Medium",
+      "recommended_action": "MEDIUM: Add Talent Acquisition in US_CANADA_NEARSHORE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
-      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors",
+      "strategic_reason": "TA teams at nearshore-friendly US/Canada tech companies",
       "search_pack": {
-        "primary_query": "data engineer recruiter LATAM",
-        "secondary_query": "talent acquisition LATAM data",
-        "company_query": "talent acquisition Hays",
-        "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
-        "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 6 contacts in this segment.",
+        "primary_query": "nearshore recruiter data engineer",
+        "secondary_query": "LATAM recruiter US data engineer",
+        "company_query": "talent acquisition Nearsure",
+        "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=nearshore%20recruiter%20data%20engineer",
+        "recommended_filters": "People · 2nd degree first · Locations: United States, Canada · Keywords to try manually: nearshore, LATAM, remote, contractor, Latin America",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in US/Canada Nearshore instead of the internal bucket label 'US_CANADA_NEARSHORE', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 35 contacts in this segment.",
         "fallback_queries": [
-          "tech recruiter LATAM",
-          "IT recruiter LATAM",
-          "recruiter Brazil remote data engineer",
-          "recruiter Latin America data engineer"
+          "remote recruiter Latin America data",
+          "technical recruiter nearshore",
+          "talent acquisition nearshore LATAM"
         ],
         "bad_terms_excluded": [
-          "LATAM_USD"
+          "US_CANADA_NEARSHORE"
         ],
         "search_quality": "Broad discovery"
       }
@@ -962,10 +931,10 @@
       "plan": "90-Day Plan",
       "market": "EUROPE",
       "persona": "Talent Acquisition",
-      "current_count": 23,
+      "current_count": 24,
       "target_count": 50,
-      "gap_count": 27,
-      "gap_percentage": 54,
+      "gap_count": 26,
+      "gap_percentage": 52,
       "urgency_level": "Medium",
       "recommended_action": "MEDIUM: Add Talent Acquisition in EUROPE to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "75d",
@@ -976,7 +945,7 @@
         "company_query": "talent acquisition Capgemini",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20Europe",
         "recommended_filters": "People · 2nd degree first · Locations: Germany, Netherlands, Ireland, Portugal, Spain · Keywords to try manually: Europe, remote, data platform, data engineer",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in Europe using a region LinkedIn actually indexes. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 27 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in Europe using a region LinkedIn actually indexes. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 26 contacts in this segment.",
         "fallback_queries": [
           "talent acquisition Europe data",
           "recruiter Germany data engineer",
@@ -990,10 +959,10 @@
       "plan": "90-Day Plan",
       "market": "LATAM_USD",
       "persona": "Recruiter",
-      "current_count": 41,
+      "current_count": 44,
       "target_count": 80,
-      "gap_count": 39,
-      "gap_percentage": 49,
+      "gap_count": 36,
+      "gap_percentage": 45,
       "urgency_level": "Medium",
       "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
@@ -1004,7 +973,7 @@
         "company_query": "recruiter Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 39 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 36 contacts in this segment.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -1049,8 +1018,39 @@
     {
       "plan": "90-Day Plan",
       "market": "LATAM_USD",
+      "persona": "Talent Acquisition",
+      "current_count": 61,
+      "target_count": 60,
+      "gap_count": 0,
+      "gap_percentage": 0,
+      "urgency_level": "Saturated",
+      "recommended_action": "Maintain existing Talent Acquisition connections in LATAM_USD. No new outreach needed.",
+      "timeframe": "30d",
+      "strategic_reason": "TA specialists at LATAM companies that hire remote contractors",
+      "search_pack": {
+        "primary_query": "data engineer recruiter LATAM",
+        "secondary_query": "talent acquisition LATAM data",
+        "company_query": "talent acquisition Hays",
+        "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
+        "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box.",
+        "fallback_queries": [
+          "tech recruiter LATAM",
+          "IT recruiter LATAM",
+          "recruiter Brazil remote data engineer",
+          "recruiter Latin America data engineer"
+        ],
+        "bad_terms_excluded": [
+          "LATAM_USD"
+        ],
+        "search_quality": "Broad discovery"
+      }
+    },
+    {
+      "plan": "90-Day Plan",
+      "market": "LATAM_USD",
       "persona": "Director",
-      "current_count": 32,
+      "current_count": 33,
       "target_count": 20,
       "gap_count": 0,
       "gap_percentage": 0,
@@ -1081,14 +1081,14 @@
     "summary": {
       "week_key": "week_4",
       "week_index": 4,
-      "snapshot_count": 6,
+      "snapshot_count": 7,
       "baseline_available": true,
       "primary_focus": "Follow-up + conversion + cleanup",
-      "plan_status": "REBALANCE_NEEDED",
+      "plan_status": "ON_TRACK",
       "period": {
         "baseline_available": true,
-        "current_snapshot_date": "2026-08-09",
-        "previous_snapshot_date": "2026-08-02",
+        "current_snapshot_date": "2026-08-16",
+        "previous_snapshot_date": "2026-08-09",
         "period_days": 7,
         "period_weeks": 1.0,
         "is_multi_week": false,
@@ -1098,167 +1098,167 @@
     },
     "weekly_metrics": {
       "network_growth": {
-        "total_connections_current": 11803,
-        "total_connections_previous": 11613,
-        "new_connections_count": 217,
-        "new_connections_delta": 190,
+        "total_connections_current": 11939,
+        "total_connections_previous": 11803,
+        "new_connections_count": 164,
+        "new_connections_delta": 136,
         "new_connections_target_min": 20,
         "new_connections_target_max": 40,
-        "new_connections_progress_pct": 542.5,
+        "new_connections_progress_pct": 410.0,
         "new_connections_status": "AHEAD",
-        "new_connections_period_actual": 217,
-        "new_connections_weekly_pace": 217.0,
+        "new_connections_period_actual": 164,
+        "new_connections_weekly_pace": 164.0,
         "new_connections_period_target_min": 20.0,
         "new_connections_period_target_max": 40.0,
-        "gross_new_connections": 217,
-        "net_connection_growth": 190,
-        "connection_churn_or_removed_estimate": 27,
+        "gross_new_connections": 164,
+        "net_connection_growth": 136,
+        "connection_churn_or_removed_estimate": 28,
         "gross_vs_net_note": "Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
       },
       "strategic_growth": {
-        "new_latam_usd_connections": 9,
-        "new_us_nearshore_connections": 3,
-        "new_spain_eu_connections": 1,
-        "new_global_staffing_connections": 11,
-        "new_global_opportunity_connections": 66,
-        "primary_focus_new_connections": 69,
-        "primary_focus_weekly_pace": 69.0,
-        "europe_exploratory_new_connections": 3,
-        "europe_exploratory_period_actual": 3,
-        "europe_exploratory_weekly_pace": 3.0,
+        "new_latam_usd_connections": 20,
+        "new_us_nearshore_connections": 4,
+        "new_spain_eu_connections": 3,
+        "new_global_staffing_connections": 6,
+        "new_global_opportunity_connections": 60,
+        "primary_focus_new_connections": 50,
+        "primary_focus_weekly_pace": 50.0,
+        "europe_exploratory_new_connections": 5,
+        "europe_exploratory_period_actual": 5,
+        "europe_exploratory_weekly_pace": 5.0,
         "europe_exploratory_weekly_target_min": 5,
         "europe_exploratory_weekly_target_max": 10,
         "europe_exploratory_period_target_min": 5.0,
         "europe_exploratory_period_target_max": 10.0,
-        "europe_exploratory_pace_status": "BELOW_TARGET",
-        "unclassified_new_connections": 145,
-        "unclassified_share": 0.6682,
-        "actual_primary_share": 0.9583,
-        "actual_europe_share": 0.0417,
+        "europe_exploratory_pace_status": "ON_TRACK",
+        "unclassified_new_connections": 109,
+        "unclassified_share": 0.6646,
+        "actual_primary_share": 0.9091,
+        "actual_europe_share": 0.0909,
         "target_primary_share": 0.9,
         "target_europe_share": 0.1,
-        "strategy_mix_status": "TOO_LITTLE_EU",
+        "strategy_mix_status": "ON_STRATEGY",
         "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED"
       },
       "persona_growth": {
-        "new_recruiters": 40,
-        "new_recruiters_weekly_pace": 40.0,
-        "new_talent_acquisition": 73,
-        "new_talent_acquisition_weekly_pace": 73.0,
-        "new_hiring_managers": 2,
-        "new_hiring_managers_weekly_pace": 2.0,
-        "new_data_leaders": 5,
-        "new_data_leaders_weekly_pace": 5.0,
-        "new_data_peers": 9,
-        "new_data_peers_weekly_pace": 9.0,
-        "new_executives": 5,
-        "new_executives_weekly_pace": 5.0
+        "new_recruiters": 39,
+        "new_recruiters_weekly_pace": 39.0,
+        "new_talent_acquisition": 65,
+        "new_talent_acquisition_weekly_pace": 65.0,
+        "new_hiring_managers": 0,
+        "new_hiring_managers_weekly_pace": 0.0,
+        "new_data_leaders": 1,
+        "new_data_leaders_weekly_pace": 1.0,
+        "new_data_peers": 6,
+        "new_data_peers_weekly_pace": 6.0,
+        "new_executives": 2,
+        "new_executives_weekly_pace": 2.0
       },
       "lead_reactivation": {
-        "conversations_current": 4487,
-        "conversations_previous": 4233,
-        "new_conversations_started": 254,
-        "new_conversations_weekly_pace": 254.0,
+        "conversations_current": 4662,
+        "conversations_previous": 4487,
+        "new_conversations_started": 175,
+        "new_conversations_weekly_pace": 175.0,
         "reactivation_weekly_target_min": 15,
         "reactivation_weekly_target_max": 25,
         "reactivation_period_target_min": 15.0,
         "reactivation_period_target_max": 25.0,
         "reactivation_pace_status": "AHEAD",
-        "followups_due_current": 1022,
-        "needs_my_response_current": 69,
+        "followups_due_current": 1128,
+        "needs_my_response_current": 72,
         "needs_my_response_previous": 69,
-        "needs_my_response_delta": 0,
-        "hot_reactivation_current": 135,
-        "hot_reactivation_previous": 124,
-        "hot_reactivation_delta": 11,
-        "warm_reactivation_current": 2737,
-        "warm_reactivation_previous": 2532,
-        "warm_reactivation_delta": 205,
+        "needs_my_response_delta": 3,
+        "hot_reactivation_current": 141,
+        "hot_reactivation_previous": 135,
+        "hot_reactivation_delta": 6,
+        "warm_reactivation_current": 2882,
+        "warm_reactivation_previous": 2737,
+        "warm_reactivation_delta": 145,
         "dormant_warm_current": 117,
-        "rejected_closed_current": 46
+        "rejected_closed_current": 52
       },
       "untapped_network": {
-        "never_contacted_current": 7337,
-        "never_contacted_previous": 7401,
-        "high_value_untapped_current": 65,
-        "high_value_untapped_previous": 110,
-        "untapped_activated_this_week": 64,
-        "untapped_activated_weekly_pace": 64.0,
+        "never_contacted_current": 7297,
+        "never_contacted_previous": 7337,
+        "high_value_untapped_current": 28,
+        "high_value_untapped_previous": 65,
+        "untapped_activated_this_week": 40,
+        "untapped_activated_weekly_pace": 40.0,
         "untapped_outreach_weekly_target_min": 10,
         "untapped_outreach_weekly_target_max": 20,
         "untapped_activated_pace_status": "AHEAD",
-        "new_connections_not_contacted_yet": 63,
+        "new_connections_not_contacted_yet": 60,
         "untapped_queue_completed_estimate": 20,
-        "untapped_backlog_change": -45,
+        "untapped_backlog_change": -37,
         "available": true
       },
       "top_contacts": {
-        "top_priority_contacts_current": 235,
-        "top_priority_contacts_previous": 227,
-        "outreach_adjusted_score_avg_current": 50.2,
-        "outreach_adjusted_score_avg_previous": 50.3
+        "top_priority_contacts_current": 246,
+        "top_priority_contacts_previous": 235,
+        "outreach_adjusted_score_avg_current": 49.4,
+        "outreach_adjusted_score_avg_previous": 50.2
       },
       "data_quality": {
-        "needs_company_mapping_current": 2349,
-        "needs_company_mapping_previous": 2310,
-        "needs_company_mapping_delta": 39,
+        "needs_company_mapping_current": 2341,
+        "needs_company_mapping_previous": 2349,
+        "needs_company_mapping_delta": -8,
         "business_classification_coverage_current": 99.1,
-        "confirmed_geographic_signals_current": 3253
+        "confirmed_geographic_signals_current": 3305
       },
       "manual_activity": {
         "manual_activity_available": false
       }
     },
     "strategy_mix": {
-      "new_latam_usd_connections": 9,
-      "new_us_nearshore_connections": 3,
-      "new_spain_eu_connections": 1,
-      "new_global_staffing_connections": 11,
-      "new_global_opportunity_connections": 66,
-      "primary_focus_new_connections": 69,
-      "primary_focus_weekly_pace": 69.0,
-      "europe_exploratory_new_connections": 3,
-      "europe_exploratory_period_actual": 3,
-      "europe_exploratory_weekly_pace": 3.0,
+      "new_latam_usd_connections": 20,
+      "new_us_nearshore_connections": 4,
+      "new_spain_eu_connections": 3,
+      "new_global_staffing_connections": 6,
+      "new_global_opportunity_connections": 60,
+      "primary_focus_new_connections": 50,
+      "primary_focus_weekly_pace": 50.0,
+      "europe_exploratory_new_connections": 5,
+      "europe_exploratory_period_actual": 5,
+      "europe_exploratory_weekly_pace": 5.0,
       "europe_exploratory_weekly_target_min": 5,
       "europe_exploratory_weekly_target_max": 10,
       "europe_exploratory_period_target_min": 5.0,
       "europe_exploratory_period_target_max": 10.0,
-      "europe_exploratory_pace_status": "BELOW_TARGET",
-      "unclassified_new_connections": 145,
-      "unclassified_share": 0.6682,
-      "actual_primary_share": 0.9583,
-      "actual_europe_share": 0.0417,
+      "europe_exploratory_pace_status": "ON_TRACK",
+      "unclassified_new_connections": 109,
+      "unclassified_share": 0.6646,
+      "actual_primary_share": 0.9091,
+      "actual_europe_share": 0.0909,
       "target_primary_share": 0.9,
       "target_europe_share": 0.1,
-      "strategy_mix_status": "TOO_LITTLE_EU",
+      "strategy_mix_status": "ON_STRATEGY",
       "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED"
     },
     "progress_cards": [
       {
         "title": "Plan Status",
-        "value": "REBALANCE_NEEDED"
+        "value": "ON_TRACK"
       },
       {
         "title": "New Connections",
-        "period_actual": 217,
-        "weekly_pace_actual": 217.0,
+        "period_actual": 164,
+        "weekly_pace_actual": 164.0,
         "weekly_target_min": 20,
         "weekly_target_max": 40,
-        "value": "217.0/wk (period total 217)",
+        "value": "164.0/wk (period total 164)",
         "sub": "target 20-40/wk",
         "status": "AHEAD"
       },
       {
         "title": "Gross New vs Net Growth",
-        "value": "gross 217 / net +190",
-        "sub": "Removed/lost/changed estimate: 27. Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
+        "value": "gross 164 / net +136",
+        "sub": "Removed/lost/changed estimate: 28. Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
       },
       {
         "title": "Strategy Mix Status",
-        "value": "TOO_LITTLE_EU",
-        "sub": "Primary LATAM/USD 96% / Europe 4% (target 90/10)",
-        "status": "TOO_LITTLE_EU"
+        "value": "ON_STRATEGY",
+        "sub": "Primary LATAM/USD 91% / Europe 9% (target 90/10)",
+        "status": "ON_STRATEGY"
       },
       {
         "title": "Classification Risk",
@@ -1268,45 +1268,45 @@
       },
       {
         "title": "Reactivation Movement",
-        "value": 254,
+        "value": 175,
         "sub": "new conversations this period",
         "status": "AHEAD"
       },
       {
         "title": "Untapped Activated",
-        "value": 64,
+        "value": 40,
         "status": "AHEAD"
       },
       {
         "title": "Needs My Response",
-        "value": 69
+        "value": 72
       },
       {
         "title": "Needs Company Mapping",
-        "value": 2349,
-        "delta": 39
+        "value": 2341,
+        "delta": -8
       }
     ],
     "charts": {
       "weekly_target_vs_actual": [
         {
           "label": "New Connections",
-          "actual": 217.0,
-          "period_actual": 217,
+          "actual": 164.0,
+          "period_actual": 164,
           "target_min": 20,
           "target_max": 40
         },
         {
           "label": "Reactivation",
-          "actual": 254.0,
-          "period_actual": 254,
+          "actual": 175.0,
+          "period_actual": 175,
           "target_min": 15,
           "target_max": 25
         },
         {
           "label": "Europe Exploratory",
-          "actual": 3.0,
-          "period_actual": 3,
+          "actual": 5.0,
+          "period_actual": 5,
           "target_min": 5,
           "target_max": 10
         }
@@ -1314,7 +1314,7 @@
       "strategy_mix": [
         {
           "label": "Primary LATAM/USD (actual)",
-          "value": 0.9583
+          "value": 0.9091
         },
         {
           "label": "Primary LATAM/USD (target)",
@@ -1322,7 +1322,7 @@
         },
         {
           "label": "Europe Exploratory (actual)",
-          "value": 0.0417
+          "value": 0.0909
         },
         {
           "label": "Europe Exploratory (target)",
@@ -1332,51 +1332,51 @@
       "persona_growth": [
         {
           "label": "Recruiters",
-          "value": 40.0,
-          "period_actual": 40
+          "value": 39.0,
+          "period_actual": 39
         },
         {
           "label": "Talent Acquisition",
-          "value": 73.0,
-          "period_actual": 73
+          "value": 65.0,
+          "period_actual": 65
         },
         {
           "label": "Hiring Managers",
-          "value": 2.0,
-          "period_actual": 2
+          "value": 0.0,
+          "period_actual": 0
         },
         {
           "label": "Data Leaders",
-          "value": 5.0,
-          "period_actual": 5
+          "value": 1.0,
+          "period_actual": 1
         },
         {
           "label": "Data Peers",
-          "value": 9.0,
-          "period_actual": 9
+          "value": 6.0,
+          "period_actual": 6
         },
         {
           "label": "Executives",
-          "value": 5.0,
-          "period_actual": 5
+          "value": 2.0,
+          "period_actual": 2
         }
       ],
       "lead_pipeline_movement": [
         {
           "label": "Needs My Response",
-          "value": 69
+          "value": 72
         },
         {
           "label": "Hot Reactivation",
-          "value": 135
+          "value": 141
         },
         {
           "label": "Warm Reactivation",
-          "value": 2737
+          "value": 2882
         },
         {
           "label": "Follow-ups Due",
-          "value": 1022
+          "value": 1128
         },
         {
           "label": "Dormant Warm",
@@ -1386,19 +1386,19 @@
       "untapped_movement": [
         {
           "label": "High-Value Untapped",
-          "value": 65
+          "value": 28
         },
         {
           "label": "Activated This Week",
-          "value": 64
+          "value": 40
         },
         {
           "label": "New Not Contacted Yet",
-          "value": 63
+          "value": 60
         },
         {
           "label": "Never Contacted Backlog",
-          "value": 7337
+          "value": 7297
         }
       ],
       "weekly_comparison": [
@@ -1446,6 +1446,15 @@
           "needs_my_response_current": 69,
           "untapped_activated_this_week": 64,
           "needs_company_mapping_delta": 39
+        },
+        {
+          "week_label": "Week 7",
+          "gross_new_connections": 164,
+          "net_connection_growth": 136,
+          "new_recruiters": 39,
+          "needs_my_response_current": 72,
+          "untapped_activated_this_week": 40,
+          "needs_company_mapping_delta": -8
         }
       ]
     },
@@ -1455,16 +1464,8 @@
         "message": "Connection growth is above weekly pace. Keep quality control."
       },
       {
-        "rule": "europe_share_below_5",
-        "message": "Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus."
-      },
-      {
         "rule": "needs_my_response_high",
         "message": "Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts."
-      },
-      {
-        "rule": "high_value_untapped_high",
-        "message": "Use existing 1st-degree network before adding more cold connections."
       },
       {
         "rule": "classification_backlog_increased",
@@ -1472,7 +1473,7 @@
       }
     ],
     "next_week_recommendations": [
-      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 69 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 65 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
+      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 72 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 28 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
     ],
     "weekly_history": [
       {
@@ -1697,13 +1698,59 @@
         "overall_status": "REBALANCE_NEEDED",
         "diagnosis_summary": "Connection growth is above weekly pace. Keep quality control. | Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus. | Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts. | Use existing 1st-degree network before adding more cold connections. | Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.",
         "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 69 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 65 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
-        "total_connections_previous": "11613",
-        "total_connections_current": "11803",
+        "total_connections_previous": 11613.0,
+        "total_connections_current": 11803.0,
         "new_data_leaders": 5.0,
-        "latam_usd_delta": "4",
-        "us_canada_delta": "151",
-        "spain_eu_delta": "-11",
-        "global_opportunity_delta": "68"
+        "latam_usd_delta": 4.0,
+        "us_canada_delta": 151.0,
+        "spain_eu_delta": -11.0,
+        "global_opportunity_delta": 68.0
+      },
+      {
+        "available": true,
+        "snapshot_number": 7,
+        "week_key": "week_4",
+        "primary_focus": "Follow-up + conversion + cleanup",
+        "current_snapshot_date": "2026-08-16",
+        "previous_snapshot_date": "2026-08-09",
+        "period_days": 7,
+        "period_weeks": 1.0,
+        "baseline_available": true,
+        "new_connections_target_min": 20,
+        "new_connections_target_max": 40,
+        "reactivation_target_min": 15,
+        "reactivation_target_max": 25,
+        "untapped_outreach_target_min": 10,
+        "untapped_outreach_target_max": 20,
+        "europe_exploratory_target_min": 5,
+        "europe_exploratory_target_max": 10,
+        "gross_new_connections": 164,
+        "net_connection_growth": 136,
+        "connection_churn_or_removed_estimate": 28,
+        "new_recruiters": 39,
+        "new_talent_acquisition": 65,
+        "new_hiring_managers": 0,
+        "new_conversations_started": 175,
+        "needs_my_response_current": 72,
+        "needs_my_response_delta": 3,
+        "hot_reactivation_delta": 6,
+        "warm_reactivation_delta": 145,
+        "untapped_activated_this_week": 40,
+        "needs_company_mapping_delta": -8,
+        "actual_primary_share": 0.9091,
+        "actual_europe_share": 0.0909,
+        "strategy_mix_status": "ON_STRATEGY",
+        "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED",
+        "overall_status": "ON_TRACK",
+        "diagnosis_summary": "Connection growth is above weekly pace. Keep quality control. | Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts. | Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.",
+        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 72 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 28 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
+        "total_connections_previous": "11803",
+        "total_connections_current": "11939",
+        "new_data_leaders": 1.0,
+        "latam_usd_delta": "29",
+        "us_canada_delta": "5",
+        "spain_eu_delta": "4",
+        "global_opportunity_delta": "57"
       }
     ],
     "by_week": {

@@ -41,7 +41,6 @@
 500 Designs,NEEDS_COMPANY_MAPPING,0.4,500 designs
 50Hertz Transmission GmbH,GLOBAL_OPPORTUNITY,0.55,50hertz transmission
 7-Eleven,NEEDS_COMPANY_MAPPING,0.4,7-eleven
-7COMm - People and tech to transform,GLOBAL_OPPORTUNITY,0.55,7comm - people and to transform
 7IM,LOW_VALUE_UNRESOLVED,0.1,7im
 80 20 Marketing,LANGUAGE_PORTUGUESE_MARKET,0.65,80 20 marketing
 8R,GLOBAL_OPPORTUNITY,0.55,8r
@@ -108,8 +107,8 @@ AIESEC in Hungary,GLOBAL_TECH,0.75,aiesec in hungary
 AIIAHubLearning,GLOBAL_OPPORTUNITY,0.55,aiiahublearning
 AILY LABS,GLOBAL_OPPORTUNITY,0.55,aily labs
 AIMZ,GLOBAL_TECH,0.75,aimz
+AION IT - Inteligência Tecnológica,GLOBAL_TECH,0.75,aion it - inteligência tecnológica
 AIPERIA,GLOBAL_TECH,0.75,aiperia
-AJ FLX,GLOBAL_OPPORTUNITY,0.55,aj flx
 AJOB TALENTS,BRAZIL_CONFIRMED,0.85,ajob talents
 AK Business Intelligence LLC,NEEDS_COMPANY_MAPPING,0.4,ak business intelligence
 AL Consultoria Tech | Recrutamento Estratégico Tech,GLOBAL_OPPORTUNITY,0.55,al | recrutamento estratégico
@@ -204,6 +203,7 @@ AUTOPASS S/A,BRAZIL_CONFIRMED,0.85,autopass
 AVA Bioenergia,NEEDS_COMPANY_MAPPING,0.4,ava bioenergia
 AVANT Gestão Financeira,LANGUAGE_PORTUGUESE_MARKET,0.65,avant gestão financeira
 AVANTTi,GLOBAL_OPPORTUNITY,0.55,avantti
+AVirtual,GLOBAL_OPPORTUNITY,0.55,avirtual
 AWS User Group Passo Fundo,GLOBAL_TECH,0.9,aws user passo fundo
 AXA Global Business Services (AXA GBS),NEEDS_COMPANY_MAPPING,0.4,axa business (axa gbs)
 AXA Konzern AG,GLOBAL_OPPORTUNITY,0.55,axa konzern
@@ -277,11 +277,10 @@ Addi,GLOBAL_OPPORTUNITY,0.55,addi
 Addvisor Group,GLOBAL_OPPORTUNITY,0.55,addvisor
 Adecco,GLOBAL_STAFFING,0.9,adecco
 Adecco Permanent Recruitment,GLOBAL_STAFFING,0.9,adecco permanent recruitment
-Adecoagro,LANGUAGE_PORTUGUESE_MARKET,0.65,adecoagro
 Ademicon,LANGUAGE_PORTUGUESE_MARKET,0.65,ademicon
 Aden,NEEDS_COMPANY_MAPPING,0.4,aden
 Adentis Portugal,SPAIN_EU_CONFIRMED,0.85,adentis portugal
-Adistec,LATAM_USD_LIKELY,0.66,adistec
+Adistec,LATAM_USD_LIKELY,0.69,adistec
 Aditelsa,GLOBAL_OPPORTUNITY,0.55,aditelsa
 Aditi Consulting,GLOBAL_CONSULTING,0.9,aditi
 Adium,LATAM_USD_LIKELY,0.66,adium
@@ -374,7 +373,7 @@ Algar Telecom,LANGUAGE_PORTUGUESE_MARKET,0.65,algar telecom
 Algo,NEEDS_COMPANY_MAPPING,0.4,algo
 Algo-Hunt,GLOBAL_OPPORTUNITY,0.55,algo-hunt
 Algoworks,NEEDS_COMPANY_MAPPING,0.4,algoworks
-Alianzo,LANGUAGE_PORTUGUESE_MARKET,0.65,alianzo
+Alianzo,BRAZIL_CONFIRMED,0.85,alianzo
 Aliança Metalurgica S/A,GLOBAL_TECH,0.9,aliança metalurgica
 Aliare,LANGUAGE_PORTUGUESE_MARKET,0.65,aliare
 Alicorp,LATAM_USD_LIKELY,0.66,alicorp
@@ -383,7 +382,6 @@ Alimentos Bloxom,NEEDS_COMPANY_MAPPING,0.4,alimentos bloxom
 Alimentos Trendy,LATAM_USD_CONFIRMED,0.85,alimentos trendy
 Alium,NEEDS_COMPANY_MAPPING,0.4,alium
 AlixPartners,GLOBAL_OPPORTUNITY,0.55,alixpartners
-All2Data.ai,GLOBAL_TECH,0.75,all2data.ai
 All4Labels Brasil,BRAZIL_CONFIRMED,0.85,all4labels
 AllCloud,GLOBAL_OPPORTUNITY,0.55,allcloud
 AllPeople,GLOBAL_OPPORTUNITY,0.55,allpeople
@@ -413,6 +411,7 @@ Alpargatas S.A,BRAZIL_CONFIRMED,0.85,alpargatas
 Alpha Color | Pintura Eletrostática Ltda,BRAZIL_CONFIRMED,0.85,alpha color | pintura eletrostática
 Alpha Lion,GLOBAL_OPPORTUNITY,0.55,alpha lion
 Alpha Only KLG,NEEDS_COMPANY_MAPPING,0.4,alpha only klg
+Alpha Secure,LATAM_USD_CONFIRMED,0.85,alpha secure
 Alpha Silicon,GLOBAL_OPPORTUNITY,0.55,alpha silicon
 AlphaLit,NEEDS_COMPANY_MAPPING,0.4,alphalit
 AlphaSkill,NEEDS_COMPANY_MAPPING,0.4,alphaskill
@@ -450,7 +449,6 @@ Amcor,LANGUAGE_PORTUGUESE_MARKET,0.65,amcor
 Amdocs,NEEDS_COMPANY_MAPPING,0.4,amdocs
 Amefruits,NEEDS_COMPANY_MAPPING,0.4,amefruits
 Amenitiz,GLOBAL_OPPORTUNITY,0.55,amenitiz
-American Association of Exporters and Importers (AAEI),NEEDS_COMPANY_MAPPING,0.4,american association of exporters and importers (aaei)
 American IT Systems,GLOBAL_OPPORTUNITY,0.55,american it systems
 American Red Cross,NEEDS_COMPANY_MAPPING,0.4,american red cross
 American Tower do Brasil,BRAZIL_CONFIRMED,0.85,american tower do
@@ -499,3 +497,5 @@ Anyeluz,LANGUAGE_PORTUGUESE_MARKET,0.65,anyeluz
 Anyone AI,GLOBAL_TECH,0.75,anyone ai
 Aon,LOW_VALUE_UNRESOLVED,0.1,aon
 Aoop - an NTT DATA Company,GLOBAL_CONSULTING,0.9,aoop - an ntt data company
+Apdata,GLOBAL_OPPORTUNITY,0.55,apdata
+Apetan Consulting LLC,GLOBAL_CONSULTING,0.9,apetan

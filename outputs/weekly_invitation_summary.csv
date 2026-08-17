@@ -1,2 +1,2 @@
-﻿previous_total,current_total,total_delta,previous_outgoing,current_outgoing,previous_incoming,current_incoming,available,note
-,,,,,,,False,"Invitations.csv not present in the 2026-08-09 snapshot — invitation metrics unavailable for this week. Not fabricated, not carried over from a prior week."
+﻿previous_total,current_total,total_delta,previous_outgoing,current_outgoing,previous_incoming,current_incoming,note
+0,5481,5481,,5241,,240,Accepted/pending status not inferred — LinkedIn's Invitations export does not reliably indicate acceptance.
