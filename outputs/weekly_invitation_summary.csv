@@ -1,2 +1,2 @@
 ﻿previous_total,current_total,total_delta,previous_outgoing,current_outgoing,previous_incoming,current_incoming,note
-0,5481,5481,,5241,,240,Accepted/pending status not inferred — LinkedIn's Invitations export does not reliably indicate acceptance.
+5481,5475,-6,5241,5254,240,221,Accepted/pending status not inferred — LinkedIn's Invitations export does not reliably indicate acceptance.

@@ -1,12 +1,12 @@
 ﻿persona,strategic_market,count
 Analytics Engineer,UNKNOWN,5
 Analytics Engineer,US_CANADA_NEARSHORE,1
-BI Analyst,UNKNOWN,13
+BI Analyst,UNKNOWN,12
 BI Analyst,US_CANADA_NEARSHORE,2
 BI Analyst,BRAZIL,1
-Consultant,UNKNOWN,548
-Consultant,EUROPE,45
-Consultant,BRAZIL,25
+Consultant,UNKNOWN,565
+Consultant,EUROPE,44
+Consultant,BRAZIL,27
 Consultant,LATAM_USD,16
 Consultant,US_CANADA_NEARSHORE,15
 Consultant,SPAIN_EU,10
@@ -16,72 +16,72 @@ Data Analyst,US_CANADA_NEARSHORE,7
 Data Analyst,LATAM_USD,2
 Data Analyst,SPAIN_EU,2
 Data Analyst,EUROPE,1
-Data Engineer,UNKNOWN,451
+Data Engineer,UNKNOWN,453
 Data Engineer,BRAZIL,101
 Data Engineer,LATAM_USD,12
 Data Engineer,US_CANADA_NEARSHORE,10
 Data Engineer,EUROPE,5
 Data Engineer,SPAIN_EU,3
-Data Engineering Manager,UNKNOWN,14
+Data Engineering Manager,UNKNOWN,16
 Data Engineering Manager,BRAZIL,3
 Data Engineering Manager,EUROPE,1
 Data Scientist,UNKNOWN,104
-Data Scientist,BRAZIL,20
+Data Scientist,BRAZIL,19
 Data Scientist,LATAM_USD,3
 Data Scientist,US_CANADA_NEARSHORE,2
 Data Scientist,EUROPE,1
 Data Scientist,SPAIN_EU,1
-Director,UNKNOWN,355
-Director,BRAZIL,44
+Director,UNKNOWN,358
+Director,BRAZIL,47
 Director,LATAM_USD,36
 Director,EUROPE,30
 Director,US_CANADA_NEARSHORE,8
 Director,SPAIN_EU,6
 Engineering Manager,UNKNOWN,1
-Executive,UNKNOWN,313
-Executive,BRAZIL,18
+Executive,UNKNOWN,319
+Executive,BRAZIL,17
 Executive,EUROPE,9
 Executive,LATAM_USD,7
 Executive,US_CANADA_NEARSHORE,4
 Executive,SPAIN_EU,2
-Founder,UNKNOWN,170
+Founder,UNKNOWN,172
 Founder,EUROPE,4
 Founder,BRAZIL,3
-HR,UNKNOWN,1078
+HR,UNKNOWN,1084
 HR,BRAZIL,63
-HR,LATAM_USD,38
+HR,LATAM_USD,39
 HR,US_CANADA_NEARSHORE,14
 HR,EUROPE,13
 HR,SPAIN_EU,12
-Head of Data,UNKNOWN,59
+Head of Data,UNKNOWN,60
 Head of Data,BRAZIL,11
 Head of Data,EUROPE,4
 Head of Data,US_CANADA_NEARSHORE,2
 Head of Data,LATAM_USD,1
-Hiring Manager,UNKNOWN,45
+Hiring Manager,UNKNOWN,44
 Hiring Manager,BRAZIL,25
 Hiring Manager,EUROPE,7
 Hiring Manager,US_CANADA_NEARSHORE,4
 Machine Learning / AI,UNKNOWN,10
-Machine Learning / AI,BRAZIL,6
+Machine Learning / AI,BRAZIL,5
 Machine Learning / AI,EUROPE,3
 Machine Learning / AI,US_CANADA_NEARSHORE,2
 Machine Learning / AI,LATAM_USD,1
-Operations,UNKNOWN,60
+Operations,UNKNOWN,62
 Operations,US_CANADA_NEARSHORE,7
 Operations,BRAZIL,5
 Operations,LATAM_USD,5
 Operations,EUROPE,4
-Other,UNKNOWN,3907
+Other,UNKNOWN,3930
 Other,BRAZIL,474
-Other,LATAM_USD,169
-Other,EUROPE,151
-Other,US_CANADA_NEARSHORE,144
-Other,SPAIN_EU,59
-Partner,UNKNOWN,19
+Other,LATAM_USD,172
+Other,EUROPE,152
+Other,US_CANADA_NEARSHORE,146
+Other,SPAIN_EU,62
+Partner,UNKNOWN,20
 Partner,LATAM_USD,1
 Partner,SPAIN_EU,1
-Product,UNKNOWN,69
+Product,UNKNOWN,67
 Product,BRAZIL,16
 Product,US_CANADA_NEARSHORE,3
 Product,EUROPE,2
@@ -90,28 +90,28 @@ Project / Program Manager,UNKNOWN,85
 Project / Program Manager,BRAZIL,16
 Project / Program Manager,US_CANADA_NEARSHORE,6
 Project / Program Manager,EUROPE,5
-Project / Program Manager,LATAM_USD,3
+Project / Program Manager,LATAM_USD,5
 Project / Program Manager,SPAIN_EU,1
-Recruiter,UNKNOWN,1130
-Recruiter,LATAM_USD,48
-Recruiter,BRAZIL,40
+Recruiter,UNKNOWN,1143
+Recruiter,LATAM_USD,50
+Recruiter,BRAZIL,41
 Recruiter,EUROPE,33
-Recruiter,US_CANADA_NEARSHORE,26
-Recruiter,SPAIN_EU,10
-Software Engineer,UNKNOWN,105
-Software Engineer,BRAZIL,21
-Software Engineer,US_CANADA_NEARSHORE,7
+Recruiter,US_CANADA_NEARSHORE,29
+Recruiter,SPAIN_EU,11
+Software Engineer,UNKNOWN,107
+Software Engineer,BRAZIL,20
+Software Engineer,US_CANADA_NEARSHORE,6
 Software Engineer,EUROPE,4
 Software Engineer,LATAM_USD,3
 Software Engineer,SPAIN_EU,2
 Sourcer,UNKNOWN,69
-Sourcer,EUROPE,5
+Sourcer,EUROPE,6
 Sourcer,BRAZIL,2
 Sourcer,SPAIN_EU,1
 Sourcer,US_CANADA_NEARSHORE,1
-Talent Acquisition,UNKNOWN,955
-Talent Acquisition,LATAM_USD,68
-Talent Acquisition,BRAZIL,40
-Talent Acquisition,EUROPE,36
-Talent Acquisition,SPAIN_EU,30
+Talent Acquisition,UNKNOWN,992
+Talent Acquisition,LATAM_USD,69
+Talent Acquisition,BRAZIL,41
+Talent Acquisition,EUROPE,37
+Talent Acquisition,SPAIN_EU,31
 Talent Acquisition,US_CANADA_NEARSHORE,19

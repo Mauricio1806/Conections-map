@@ -14,6 +14,7 @@
 1GLOBAL,GLOBAL_OPPORTUNITY,0.55,1global
 1st solution consulting gmbh,GLOBAL_CONSULTING,0.9,1st solution
 200DEV,NEEDS_COMPANY_MAPPING,0.4,200dev
+29 Talents,GLOBAL_OPPORTUNITY,0.55,29 talents
 2C Capital | Search Fund,GLOBAL_OPPORTUNITY,0.55,2c capital | search fund
 2CLOUD,BRAZIL_CONFIRMED,0.85,2cloud
 2U,GLOBAL_OPPORTUNITY,0.55,2u
@@ -28,6 +29,7 @@
 3M,GLOBAL_OPPORTUNITY,0.55,3m
 3P Energia,BRAZIL_CONFIRMED,0.85,3p energia
 3Pillar,LATAM_USD_CONFIRMED,0.85,3pillar
+3Pillar Global,LATAM_USD_CONFIRMED,0.95,3pillar
 3S Tecnologia,LANGUAGE_PORTUGUESE_MARKET,0.65,3s tecnologia
 4 Elos Distribuidora LTDA,LANGUAGE_PORTUGUESE_MARKET,0.65,4 elos distribuidora
 4Data Driven,GLOBAL_TECH,0.75,4data driven
@@ -41,6 +43,7 @@
 500 Designs,NEEDS_COMPANY_MAPPING,0.4,500 designs
 50Hertz Transmission GmbH,GLOBAL_OPPORTUNITY,0.55,50hertz transmission
 7-Eleven,NEEDS_COMPANY_MAPPING,0.4,7-eleven
+7COMm - People and tech to transform,GLOBAL_OPPORTUNITY,0.55,7comm - people and to transform
 7IM,LOW_VALUE_UNRESOLVED,0.1,7im
 80 20 Marketing,LANGUAGE_PORTUGUESE_MARKET,0.65,80 20 marketing
 8R,GLOBAL_OPPORTUNITY,0.55,8r
@@ -86,6 +89,7 @@ ADP Brazil Labs,BRAZIL_CONFIRMED,0.85,adp labs
 ADVANCED SCHEMA,NEEDS_COMPANY_MAPPING,0.4,advanced schema
 AE Talents Group Inc,NEEDS_COMPANY_MAPPING,0.4,ae talents
 AEP Talento,NEEDS_COMPANY_MAPPING,0.4,aep talento
+AESC - Associação Educadora São Carlos,LANGUAGE_PORTUGUESE_MARKET,0.65,aesc - associação educadora são carlos
 AEVO,BRAZIL_CONFIRMED,0.85,aevo
 AFAP Itaú,BRAZIL_CONFIRMED,0.85,afap itaú
 AFFINITY,GLOBAL_OPPORTUNITY,0.55,affinity
@@ -97,11 +101,13 @@ AGL Solutions,NEEDS_COMPANY_MAPPING,0.4,agl
 AGLH consultores,BRAZIL_CONFIRMED,0.85,aglh consultores
 AGRIPAC BOLIVIANA AGROINDUSTRIAL S.A,LANGUAGE_PORTUGUESE_MARKET,0.65,agripac boliviana agroindustrial
 AHU Technologies Pvt Ltd,GLOBAL_OPPORTUNITY,0.55,ahu pvt
+AI CONSULT,GLOBAL_TECH,0.75,ai consult
 AI Futures,GLOBAL_TECH,0.75,ai futures
 AI Safety Brazil,BRAZIL_CONFIRMED,0.85,ai safety
 AI Spaces LLC,GLOBAL_OPPORTUNITY,0.55,ai spaces
 AI/R,GLOBAL_OPPORTUNITY,0.55,ai/r
 AI/R Everymind,GLOBAL_TECH,0.75,ai/r everymind
+AI/R Invillia,GLOBAL_TECH,0.75,ai/r invillia
 AI71,GLOBAL_TECH,0.75,ai71
 AIESEC in Hungary,GLOBAL_TECH,0.75,aiesec in hungary
 AIIAHubLearning,GLOBAL_OPPORTUNITY,0.55,aiiahublearning
@@ -109,6 +115,7 @@ AILY LABS,GLOBAL_OPPORTUNITY,0.55,aily labs
 AIMZ,GLOBAL_TECH,0.75,aimz
 AION IT - Inteligência Tecnológica,GLOBAL_TECH,0.75,aion it - inteligência tecnológica
 AIPERIA,GLOBAL_TECH,0.75,aiperia
+AISphere,GLOBAL_TECH,0.75,aisphere
 AJOB TALENTS,BRAZIL_CONFIRMED,0.85,ajob talents
 AK Business Intelligence LLC,NEEDS_COMPANY_MAPPING,0.4,ak business intelligence
 AL Consultoria Tech | Recrutamento Estratégico Tech,GLOBAL_OPPORTUNITY,0.55,al | recrutamento estratégico
@@ -124,6 +131,7 @@ ALLOS,LANGUAGE_PORTUGUESE_MARKET,0.65,allos
 ALLPS,NEEDS_COMPANY_MAPPING,0.4,allps
 ALMA Negócios,GLOBAL_OPPORTUNITY,0.55,alma negócios
 ALOIA AEROSPACE INC,NEEDS_COMPANY_MAPPING,0.4,aloia aerospace
+ALOIS Solutions,GLOBAL_OPPORTUNITY,0.55,alois
 ALTAVE,NEEDS_COMPANY_MAPPING,0.4,altave
 ALTEN,GLOBAL_OPPORTUNITY,0.55,alten
 ALTO TOSTADO COFFEE ROASTERS,LATAM_USD_CONFIRMED,0.85,alto tostado coffee roasters
@@ -159,7 +167,7 @@ APRIORI - business solutions AG,GLOBAL_OPPORTUNITY,0.55,apriori - business
 APSCo,NEEDS_COMPANY_MAPPING,0.4,apsco
 "AQUA Information Systems, Inc",NEEDS_COMPANY_MAPPING,0.4,aqua information systems
 AR Consultores,GLOBAL_OPPORTUNITY,0.55,ar consultores
-AR Consultoria,GLOBAL_CONSULTING,0.75,ar
+AR Consultoria,BRAZIL_CONFIRMED,0.85,ar
 ARAXÁ SOLAR,LANGUAGE_PORTUGUESE_MARKET,0.65,araxá solar
 ARC2Digital,GLOBAL_TECH,0.75,arc2digital
 ARCA Mobility as a Service,NEEDS_COMPANY_MAPPING,0.4,arca mobility as a
@@ -168,6 +176,7 @@ ARGENTA,LANGUAGE_PORTUGUESE_MARKET,0.65,argenta
 ARIMANY Selecció de Talent,NEEDS_COMPANY_MAPPING,0.4,arimany selecció de talent
 ARLA Processos Inteligentes,LANGUAGE_PORTUGUESE_MARKET,0.65,arla processos inteligentes
 AROBS Software,GLOBAL_OPPORTUNITY,0.55,arobs software
+ARRISE,LANGUAGE_PORTUGUESE_MARKET,0.65,arrise
 ART IT Intelligent Technology,GLOBAL_OPPORTUNITY,0.55,art it intelligent
 "ARTE - Agência para a Reforma Tecnológica do Estado, IP",NEEDS_COMPANY_MAPPING,0.4,"arte - agência para a reforma tecnológica do estado, ip"
 ARTEMIS Augenkliniken und med. Versorgungszentren,NEEDS_COMPANY_MAPPING,0.4,artemis augenkliniken und med. versorgungszentren
@@ -193,6 +202,7 @@ ATCA - Associação Amigos do Teatro Castro Alves,BRAZIL_CONFIRMED,0.85,atca - a
 ATE OUTSOURCING,GLOBAL_STAFFING,0.9,ate outsourcing
 ATIVU Tecnologia | Gestão de Custos e Ativos de TI e Telecom,NEEDS_COMPANY_MAPPING,0.4,ativu tecnologia | gestão de custos e ativos de ti e telecom
 ATLANTYX,GLOBAL_OPPORTUNITY,0.55,atlantyx
+ATOMS,NEEDS_COMPANY_MAPPING,0.4,atoms
 ATON IT,GLOBAL_OPPORTUNITY,0.55,aton it
 ATOSS Software SE,GLOBAL_CONSULTING,0.9,atoss software se
 ATRA,BRAZIL_CONFIRMED,0.85,atra
@@ -277,6 +287,7 @@ Addi,GLOBAL_OPPORTUNITY,0.55,addi
 Addvisor Group,GLOBAL_OPPORTUNITY,0.55,addvisor
 Adecco,GLOBAL_STAFFING,0.9,adecco
 Adecco Permanent Recruitment,GLOBAL_STAFFING,0.9,adecco permanent recruitment
+Adelanta,GLOBAL_OPPORTUNITY,0.55,adelanta
 Ademicon,LANGUAGE_PORTUGUESE_MARKET,0.65,ademicon
 Aden,NEEDS_COMPANY_MAPPING,0.4,aden
 Adentis Portugal,SPAIN_EU_CONFIRMED,0.85,adentis portugal
@@ -292,8 +303,6 @@ Admita Recursos Humanos,BRAZIL_CONFIRMED,0.85,admita recursos humanos
 Adobe,GLOBAL_TECH,0.9,adobe
 Advance Auto Parts,NEEDS_COMPANY_MAPPING,0.4,advance auto parts
 Advance Auto Parts India (India Innovation Center),GLOBAL_OPPORTUNITY,0.55,advance auto parts india (india innovation center)
-Advance do Brasil,BRAZIL_CONFIRMED,0.85,advance do
-Advanced Marketers,GLOBAL_OPPORTUNITY,0.55,advanced marketers
 Advice Consulting,GLOBAL_CONSULTING,0.9,advice
 AdviceHealth,LANGUAGE_PORTUGUESE_MARKET,0.65,advicehealth
 Advise,LANGUAGE_PORTUGUESE_MARKET,0.65,advise
@@ -309,7 +318,7 @@ Afriam International,NEEDS_COMPANY_MAPPING,0.4,afriam international
 Africa,LANGUAGE_PORTUGUESE_MARKET,0.65,africa
 Afya,BRAZIL_CONFIRMED,0.85,afya
 AgSUS,BRAZIL_CONFIRMED,0.85,agsus
-Agape Group,NEEDS_COMPANY_MAPPING,0.4,agape
+Agape Group,LANGUAGE_PORTUGUESE_MARKET,0.65,agape
 Agencia Ontrade,BRAZIL_CONFIRMED,0.85,agencia ontrade
 Agibank,NEEDS_COMPANY_MAPPING,0.4,agibank
 Agile Inc,NEEDS_COMPANY_MAPPING,0.4,agile
@@ -344,6 +353,7 @@ Airticles.ai,GLOBAL_OPPORTUNITY,0.55,airticles.ai
 Airzone Control,GLOBAL_TECH,0.75,airzone control
 Ajuntament de Palma,NEEDS_COMPANY_MAPPING,0.4,ajuntament de palma
 Akad Seguros,NEEDS_COMPANY_MAPPING,0.4,akad seguros
+Akamai Technologies,GLOBAL_OPPORTUNITY,0.55,akamai
 Akemy Doku - Consultoría en Desarrollo Humano,LATAM_USD_CONFIRMED,0.85,akemy doku - consultoría en desarrollo humano
 Akkodis,EUROPE_CONFIRMED,0.95,akkodis
 Akurey,GLOBAL_CONSULTING,0.9,akurey
@@ -367,7 +377,7 @@ Alexander Thamm [at],NEEDS_COMPANY_MAPPING,0.4,alexander thamm [at]
 Alfa Center Imóveis,LANGUAGE_PORTUGUESE_MARKET,0.65,alfa center imóveis
 AlfaPeople,NEEDS_COMPANY_MAPPING,0.4,alfapeople
 Alfafam Management Consulting,GLOBAL_CONSULTING,0.9,alfafam management
-Alga,NEEDS_COMPANY_MAPPING,0.4,alga
+Alga,GLOBAL_OPPORTUNITY,0.55,alga
 Algar,BRAZIL_CONFIRMED,0.85,algar
 Algar Telecom,LANGUAGE_PORTUGUESE_MARKET,0.65,algar telecom
 Algo,NEEDS_COMPANY_MAPPING,0.4,algo
@@ -397,6 +407,7 @@ Allied Global,GLOBAL_OPPORTUNITY,0.55,allied
 Allied Global Technology Services,GLOBAL_OPPORTUNITY,0.55,allied
 Allo Bank,NEEDS_COMPANY_MAPPING,0.4,allo bank
 Allshore Talent,LATAM_USD_LIKELY,0.68,allshore talent
+Allstate,NEEDS_COMPANY_MAPPING,0.4,allstate
 Alltech,BRAZIL_CONFIRMED,0.85,alltech
 "Alltech Consulting Services, Inc",GLOBAL_CONSULTING,0.9,alltech
 AlmapBBDO,NEEDS_COMPANY_MAPPING,0.4,almapbbdo
@@ -433,6 +444,7 @@ Amadeus FiRe,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amadeus Fire,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amadeus Fire Group,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amaggi,LANGUAGE_PORTUGUESE_MARKET,0.65,amaggi
+Amanda Figueira Ramos - Psicóloga CRP 08/39236,NEEDS_COMPANY_MAPPING,0.4,amanda figueira ramos - psicóloga crp 08/39236
 Amara NZero Brasil,BRAZIL_CONFIRMED,0.85,amara nzero
 Amaris Consulting,GLOBAL_CONSULTING,0.9,amaris
 Amazon,US_CANADA_CONFIRMED,0.95,amazon
@@ -478,6 +490,7 @@ Analisia,BRAZIL_CONFIRMED,0.85,analisia
 Analítica Soluções Inovadoras,NEEDS_COMPANY_MAPPING,0.4,analítica soluções inovadoras
 Ananda Trabajo Temporal,LANGUAGE_PORTUGUESE_MARKET,0.65,ananda trabajo temporal
 Ancar,NEEDS_COMPANY_MAPPING,0.4,ancar
+Anchor Allied,GLOBAL_OPPORTUNITY,0.55,anchor allied
 Ancient - The Wisdom of Technology,GLOBAL_OPPORTUNITY,0.55,ancient - the wisdom of
 Andela,LATAM_USD_CONFIRMED,0.95,andela
 Andersen Lab,GLOBAL_OPPORTUNITY,0.55,andersen lab
@@ -486,16 +499,3 @@ Angeloni,LANGUAGE_PORTUGUESE_MARKET,0.65,angeloni
 Angelus Odonto,LANGUAGE_PORTUGUESE_MARKET,0.65,angelus odonto
 Anhanguera Educacional,NEEDS_COMPANY_MAPPING,0.4,anhanguera educacional
 Animum Creativity Advanced School,GLOBAL_OPPORTUNITY,0.55,animum creativity advanced school
-Animália Park,LANGUAGE_PORTUGUESE_MARKET,0.65,animália park
-"Anitec - Associação Nacional de Inovação, Trabalho e Educação Corporativa",NEEDS_COMPANY_MAPPING,0.4,"anitec - associação nacional de inovação, trabalho e educação corporativa"
-Anjo Tintas e Solventes,GLOBAL_OPPORTUNITY,0.55,anjo tintas e solventes
-Anjun,LANGUAGE_PORTUGUESE_MARKET,0.65,anjun
-Anticipa Real Estate,GLOBAL_OPPORTUNITY,0.55,anticipa real estate
-Anton Paar Germany,EUROPE_CONFIRMED,0.85,anton paar germany
-AnyVan,GLOBAL_OPPORTUNITY,0.55,anyvan
-Anyeluz,LANGUAGE_PORTUGUESE_MARKET,0.65,anyeluz
-Anyone AI,GLOBAL_TECH,0.75,anyone ai
-Aon,LOW_VALUE_UNRESOLVED,0.1,aon
-Aoop - an NTT DATA Company,GLOBAL_CONSULTING,0.9,aoop - an ntt data company
-Apdata,GLOBAL_OPPORTUNITY,0.55,apdata
-Apetan Consulting LLC,GLOBAL_CONSULTING,0.9,apetan

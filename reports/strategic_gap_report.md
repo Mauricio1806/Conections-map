@@ -1,5 +1,5 @@
 # 🎯 Strategic Gap Report
-> Generated: **August 17, 2026**
+> Generated: **August 23, 2026**
 
 This report compares your current LinkedIn network against your strategic targets.
 
@@ -24,20 +24,20 @@ This report compares your current LinkedIn network against your strategic target
 | US_CANADA_NEARSHORE | Hiring Manager | 4 | 50 | **46** | 70 | 66 | **CRITICAL** |
 | BRAZIL | Data Engineering Manager | 3 | 20 | **17** | 20 | 17 | **CRITICAL** |
 | EUROPE | Data Engineering Manager | 1 | 5 | **4** | 30 | 29 | **CRITICAL** |
-| US_CANADA_NEARSHORE | Recruiter | 26 | 80 | **54** | 100 | 74 | **HIGH** |
 | US_CANADA_NEARSHORE | Talent Acquisition | 19 | 60 | **41** | 80 | 61 | **HIGH** |
 | US_CANADA_NEARSHORE | Director | 8 | 25 | **17** | 40 | 32 | **HIGH** |
+| US_CANADA_NEARSHORE | Recruiter | 29 | 80 | **51** | 100 | 71 | **HIGH** |
 | BRAZIL | Head of Data | 11 | 30 | **19** | 30 | 19 | **HIGH** |
-| SPAIN_EU | Recruiter | 10 | 20 | **10** | 80 | 70 | **HIGH** |
-| LATAM_USD | Recruiter | 48 | 80 | **32** | 100 | 52 | **MEDIUM** |
+| SPAIN_EU | Recruiter | 11 | 20 | **9** | 80 | 69 | **MEDIUM** |
 | SPAIN_EU | Director | 6 | 10 | **4** | 40 | 34 | **MEDIUM** |
-| BRAZIL | Recruiter | 40 | 50 | **10** | 50 | 10 | **MEDIUM** |
+| LATAM_USD | Recruiter | 50 | 80 | **30** | 100 | 50 | **MEDIUM** |
 | EUROPE | Head of Data | 4 | 5 | **1** | 40 | 36 | **MEDIUM** |
-| LATAM_USD | Talent Acquisition | 68 | 60 | **0** | 80 | 12 | **LOW** |
+| BRAZIL | Recruiter | 41 | 50 | **9** | 50 | 9 | **LOW** |
+| LATAM_USD | Talent Acquisition | 69 | 60 | **0** | 80 | 11 | **LOW** |
 | LATAM_USD | Director | 36 | 20 | **0** | 40 | 4 | **LOW** |
-| SPAIN_EU | Talent Acquisition | 30 | 15 | **0** | 60 | 30 | **LOW** |
+| SPAIN_EU | Talent Acquisition | 31 | 15 | **0** | 60 | 29 | **LOW** |
 | EUROPE | Recruiter | 33 | 10 | **0** | 60 | 27 | **LOW** |
-| EUROPE | Talent Acquisition | 36 | 10 | **0** | 50 | 14 | **LOW** |
+| EUROPE | Talent Acquisition | 37 | 10 | **0** | 50 | 13 | **LOW** |
 | EUROPE | Director | 30 | 5 | **0** | 30 | 0 | **LOW** |
 | BRAZIL | Data Engineer | 101 | 30 | **0** | 30 | 0 | **LOW** |
 
