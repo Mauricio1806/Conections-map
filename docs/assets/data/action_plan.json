@@ -64,10 +64,10 @@
       "plan": "30-Day Plan",
       "market": "LATAM_USD",
       "persona": "Recruiter",
-      "current_count": 45,
+      "current_count": 47,
       "target_count": 80,
-      "gap_count": 35,
-      "gap_percentage": 44,
+      "gap_count": 33,
+      "gap_percentage": 41,
       "urgency_level": "Medium",
       "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
@@ -78,7 +78,7 @@
         "company_query": "recruiter Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 35 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 33 contacts in this segment.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -95,7 +95,7 @@
       "plan": "30-Day Plan",
       "market": "LATAM_USD",
       "persona": "Talent Acquisition",
-      "current_count": 63,
+      "current_count": 70,
       "target_count": 60,
       "gap_count": 0,
       "gap_percentage": 0,
@@ -278,10 +278,10 @@
       "plan": "60-Day Plan",
       "market": "SPAIN_EU",
       "persona": "Talent Acquisition",
-      "current_count": 18,
+      "current_count": 17,
       "target_count": 60,
-      "gap_count": 42,
-      "gap_percentage": 70,
+      "gap_count": 43,
+      "gap_percentage": 72,
       "urgency_level": "High",
       "recommended_action": "HIGH: Prioritize Talent Acquisition in SPAIN_EU. Send 3-5 connection requests daily. Engage with their posts before connecting.",
       "timeframe": "60d",
@@ -292,7 +292,7 @@
         "company_query": "talent acquisition Stratesys",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20Spain",
         "recommended_filters": "People · 2nd degree first · Locations: Spain, Portugal, Germany, Netherlands, Ireland (Madrid, Barcelona for Spain specifically) · Keywords to try manually: Spain, España, Portugal, Europe, remote, data platform",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 42 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 43 contacts in this segment.",
         "fallback_queries": [
           "talent acquisition Spain data",
           "IT recruiter Portugal",
@@ -368,10 +368,10 @@
       "plan": "60-Day Plan",
       "market": "LATAM_USD",
       "persona": "Recruiter",
-      "current_count": 45,
+      "current_count": 47,
       "target_count": 80,
-      "gap_count": 35,
-      "gap_percentage": 44,
+      "gap_count": 33,
+      "gap_percentage": 41,
       "urgency_level": "Medium",
       "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
@@ -382,7 +382,7 @@
         "company_query": "recruiter Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 35 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 33 contacts in this segment.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -399,7 +399,7 @@
       "plan": "60-Day Plan",
       "market": "LATAM_USD",
       "persona": "Talent Acquisition",
-      "current_count": 63,
+      "current_count": 70,
       "target_count": 60,
       "gap_count": 0,
       "gap_percentage": 0,
@@ -841,10 +841,10 @@
       "plan": "90-Day Plan",
       "market": "SPAIN_EU",
       "persona": "Talent Acquisition",
-      "current_count": 18,
+      "current_count": 17,
       "target_count": 60,
-      "gap_count": 42,
-      "gap_percentage": 70,
+      "gap_count": 43,
+      "gap_percentage": 72,
       "urgency_level": "High",
       "recommended_action": "HIGH: Prioritize Talent Acquisition in SPAIN_EU. Send 3-5 connection requests daily. Engage with their posts before connecting.",
       "timeframe": "60d",
@@ -855,7 +855,7 @@
         "company_query": "talent acquisition Stratesys",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20Spain",
         "recommended_filters": "People · 2nd degree first · Locations: Spain, Portugal, Germany, Netherlands, Ireland (Madrid, Barcelona for Spain specifically) · Keywords to try manually: Spain, España, Portugal, Europe, remote, data platform",
-        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 42 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Talent Acquisition in Spain/EU instead of the internal bucket label 'SPAIN_EU', which LinkedIn does not index as a keyword. Medium precision query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 43 contacts in this segment.",
         "fallback_queries": [
           "talent acquisition Spain data",
           "IT recruiter Portugal",
@@ -959,10 +959,10 @@
       "plan": "90-Day Plan",
       "market": "LATAM_USD",
       "persona": "Recruiter",
-      "current_count": 45,
+      "current_count": 47,
       "target_count": 80,
-      "gap_count": 35,
-      "gap_percentage": 44,
+      "gap_count": 33,
+      "gap_percentage": 41,
       "urgency_level": "Medium",
       "recommended_action": "MEDIUM: Add Recruiter in LATAM_USD to your weekly outreach rotation. 2-3 connections per week is sufficient.",
       "timeframe": "30d",
@@ -973,7 +973,7 @@
         "company_query": "recruiter Hays",
         "people_search_url": "https://www.linkedin.com/search/results/people/?keywords=data%20engineer%20recruiter%20LATAM",
         "recommended_filters": "People · 2nd degree first · Locations: Brazil, Argentina, Colombia, Chile, Mexico, Uruguay, Peru · Keywords to try manually: LATAM, Latin America, Remote, Data Engineer, Azure, AWS, Databricks, Snowflake",
-        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 35 contacts in this segment.",
+        "search_rationale": "Uses real title and region terms for Recruiter in LATAM/USD instead of the internal bucket label 'LATAM_USD', which LinkedIn does not index as a keyword. Broad discovery query — refine further with the Location/Company filters above, not by adding more words to the search box. Target: roughly 33 contacts in this segment.",
         "fallback_queries": [
           "tech recruiter LATAM",
           "IT recruiter LATAM",
@@ -1019,7 +1019,7 @@
       "plan": "90-Day Plan",
       "market": "LATAM_USD",
       "persona": "Talent Acquisition",
-      "current_count": 63,
+      "current_count": 70,
       "target_count": 60,
       "gap_count": 0,
       "gap_percentage": 0,
@@ -1081,14 +1081,14 @@
     "summary": {
       "week_key": "week_4",
       "week_index": 4,
-      "snapshot_count": 8,
+      "snapshot_count": 9,
       "baseline_available": true,
       "primary_focus": "Follow-up + conversion + cleanup",
-      "plan_status": "ON_TRACK",
+      "plan_status": "REBALANCE_NEEDED",
       "period": {
         "baseline_available": true,
-        "current_snapshot_date": "2026-08-23",
-        "previous_snapshot_date": "2026-08-16",
+        "current_snapshot_date": "2026-08-30",
+        "previous_snapshot_date": "2026-08-23",
         "period_days": 7,
         "period_weeks": 1.0,
         "is_multi_week": false,
@@ -1098,167 +1098,167 @@
     },
     "weekly_metrics": {
       "network_growth": {
-        "total_connections_current": 12075,
-        "total_connections_previous": 11939,
-        "new_connections_count": 162,
-        "new_connections_delta": 136,
+        "total_connections_current": 12263,
+        "total_connections_previous": 12075,
+        "new_connections_count": 211,
+        "new_connections_delta": 188,
         "new_connections_target_min": 20,
         "new_connections_target_max": 40,
-        "new_connections_progress_pct": 405.0,
+        "new_connections_progress_pct": 527.5,
         "new_connections_status": "AHEAD",
-        "new_connections_period_actual": 162,
-        "new_connections_weekly_pace": 162.0,
+        "new_connections_period_actual": 211,
+        "new_connections_weekly_pace": 211.0,
         "new_connections_period_target_min": 20.0,
         "new_connections_period_target_max": 40.0,
-        "gross_new_connections": 162,
-        "net_connection_growth": 136,
-        "connection_churn_or_removed_estimate": 26,
+        "gross_new_connections": 211,
+        "net_connection_growth": 188,
+        "connection_churn_or_removed_estimate": 23,
         "gross_vs_net_note": "Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
       },
       "strategic_growth": {
-        "new_latam_usd_connections": 11,
-        "new_us_nearshore_connections": 6,
-        "new_spain_eu_connections": 6,
-        "new_global_staffing_connections": 10,
-        "new_global_opportunity_connections": 49,
-        "primary_focus_new_connections": 50,
-        "primary_focus_weekly_pace": 50.0,
-        "europe_exploratory_new_connections": 7,
-        "europe_exploratory_period_actual": 7,
-        "europe_exploratory_weekly_pace": 7.0,
+        "new_latam_usd_connections": 21,
+        "new_us_nearshore_connections": 1,
+        "new_spain_eu_connections": 1,
+        "new_global_staffing_connections": 28,
+        "new_global_opportunity_connections": 70,
+        "primary_focus_new_connections": 44,
+        "primary_focus_weekly_pace": 44.0,
+        "europe_exploratory_new_connections": 2,
+        "europe_exploratory_period_actual": 2,
+        "europe_exploratory_weekly_pace": 2.0,
         "europe_exploratory_weekly_target_min": 5,
         "europe_exploratory_weekly_target_max": 10,
         "europe_exploratory_period_target_min": 5.0,
         "europe_exploratory_period_target_max": 10.0,
-        "europe_exploratory_pace_status": "ON_TRACK",
-        "unclassified_new_connections": 105,
-        "unclassified_share": 0.6481,
-        "actual_primary_share": 0.8772,
-        "actual_europe_share": 0.1228,
+        "europe_exploratory_pace_status": "BELOW_TARGET",
+        "unclassified_new_connections": 165,
+        "unclassified_share": 0.782,
+        "actual_primary_share": 0.9565,
+        "actual_europe_share": 0.0435,
         "target_primary_share": 0.9,
         "target_europe_share": 0.1,
-        "strategy_mix_status": "ON_STRATEGY",
+        "strategy_mix_status": "TOO_LITTLE_EU",
         "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED"
       },
       "persona_growth": {
-        "new_recruiters": 26,
-        "new_recruiters_weekly_pace": 26.0,
-        "new_talent_acquisition": 57,
-        "new_talent_acquisition_weekly_pace": 57.0,
-        "new_hiring_managers": 0,
-        "new_hiring_managers_weekly_pace": 0.0,
-        "new_data_leaders": 2,
-        "new_data_leaders_weekly_pace": 2.0,
-        "new_data_peers": 2,
-        "new_data_peers_weekly_pace": 2.0,
-        "new_executives": 6,
-        "new_executives_weekly_pace": 6.0
+        "new_recruiters": 38,
+        "new_recruiters_weekly_pace": 38.0,
+        "new_talent_acquisition": 76,
+        "new_talent_acquisition_weekly_pace": 76.0,
+        "new_hiring_managers": 1,
+        "new_hiring_managers_weekly_pace": 1.0,
+        "new_data_leaders": 5,
+        "new_data_leaders_weekly_pace": 5.0,
+        "new_data_peers": 3,
+        "new_data_peers_weekly_pace": 3.0,
+        "new_executives": 2,
+        "new_executives_weekly_pace": 2.0
       },
       "lead_reactivation": {
         "conversations_current": 4784,
-        "conversations_previous": 4662,
-        "new_conversations_started": 122,
-        "new_conversations_weekly_pace": 122.0,
+        "conversations_previous": 4784,
+        "new_conversations_started": 0,
+        "new_conversations_weekly_pace": 0.0,
         "reactivation_weekly_target_min": 15,
         "reactivation_weekly_target_max": 25,
         "reactivation_period_target_min": 15.0,
         "reactivation_period_target_max": 25.0,
-        "reactivation_pace_status": "AHEAD",
-        "followups_due_current": 1106,
-        "needs_my_response_current": 73,
-        "needs_my_response_previous": 72,
+        "reactivation_pace_status": "BELOW_TARGET",
+        "followups_due_current": 1100,
+        "needs_my_response_current": 74,
+        "needs_my_response_previous": 73,
         "needs_my_response_delta": 1,
         "hot_reactivation_current": 143,
-        "hot_reactivation_previous": 141,
-        "hot_reactivation_delta": 2,
-        "warm_reactivation_current": 2989,
-        "warm_reactivation_previous": 2882,
-        "warm_reactivation_delta": 107,
-        "dormant_warm_current": 120,
-        "rejected_closed_current": 52
+        "hot_reactivation_previous": 143,
+        "hot_reactivation_delta": 0,
+        "warm_reactivation_current": 2986,
+        "warm_reactivation_previous": 2989,
+        "warm_reactivation_delta": -3,
+        "dormant_warm_current": 121,
+        "rejected_closed_current": 49
       },
       "untapped_network": {
-        "never_contacted_current": 7311,
-        "never_contacted_previous": 7297,
-        "high_value_untapped_current": 30,
-        "high_value_untapped_previous": 28,
+        "never_contacted_current": 7502,
+        "never_contacted_previous": 7311,
+        "high_value_untapped_current": 34,
+        "high_value_untapped_previous": 30,
         "untapped_activated_this_week": 0,
         "untapped_activated_weekly_pace": 0.0,
         "untapped_outreach_weekly_target_min": 10,
         "untapped_outreach_weekly_target_max": 20,
         "untapped_activated_pace_status": "BELOW_TARGET",
-        "new_connections_not_contacted_yet": 68,
+        "new_connections_not_contacted_yet": 211,
         "untapped_queue_completed_estimate": 20,
-        "untapped_backlog_change": 2,
+        "untapped_backlog_change": 4,
         "available": true
       },
       "top_contacts": {
-        "top_priority_contacts_current": 252,
-        "top_priority_contacts_previous": 246,
-        "outreach_adjusted_score_avg_current": 49.1,
-        "outreach_adjusted_score_avg_previous": 49.4
+        "top_priority_contacts_current": 256,
+        "top_priority_contacts_previous": 252,
+        "outreach_adjusted_score_avg_current": 52.8,
+        "outreach_adjusted_score_avg_previous": 49.1
       },
       "data_quality": {
-        "needs_company_mapping_current": 2359,
-        "needs_company_mapping_previous": 2341,
-        "needs_company_mapping_delta": 18,
+        "needs_company_mapping_current": 2396,
+        "needs_company_mapping_previous": 2359,
+        "needs_company_mapping_delta": 37,
         "business_classification_coverage_current": 99.1,
-        "confirmed_geographic_signals_current": 3338
+        "confirmed_geographic_signals_current": 3355
       },
       "manual_activity": {
         "manual_activity_available": false
       }
     },
     "strategy_mix": {
-      "new_latam_usd_connections": 11,
-      "new_us_nearshore_connections": 6,
-      "new_spain_eu_connections": 6,
-      "new_global_staffing_connections": 10,
-      "new_global_opportunity_connections": 49,
-      "primary_focus_new_connections": 50,
-      "primary_focus_weekly_pace": 50.0,
-      "europe_exploratory_new_connections": 7,
-      "europe_exploratory_period_actual": 7,
-      "europe_exploratory_weekly_pace": 7.0,
+      "new_latam_usd_connections": 21,
+      "new_us_nearshore_connections": 1,
+      "new_spain_eu_connections": 1,
+      "new_global_staffing_connections": 28,
+      "new_global_opportunity_connections": 70,
+      "primary_focus_new_connections": 44,
+      "primary_focus_weekly_pace": 44.0,
+      "europe_exploratory_new_connections": 2,
+      "europe_exploratory_period_actual": 2,
+      "europe_exploratory_weekly_pace": 2.0,
       "europe_exploratory_weekly_target_min": 5,
       "europe_exploratory_weekly_target_max": 10,
       "europe_exploratory_period_target_min": 5.0,
       "europe_exploratory_period_target_max": 10.0,
-      "europe_exploratory_pace_status": "ON_TRACK",
-      "unclassified_new_connections": 105,
-      "unclassified_share": 0.6481,
-      "actual_primary_share": 0.8772,
-      "actual_europe_share": 0.1228,
+      "europe_exploratory_pace_status": "BELOW_TARGET",
+      "unclassified_new_connections": 165,
+      "unclassified_share": 0.782,
+      "actual_primary_share": 0.9565,
+      "actual_europe_share": 0.0435,
       "target_primary_share": 0.9,
       "target_europe_share": 0.1,
-      "strategy_mix_status": "ON_STRATEGY",
+      "strategy_mix_status": "TOO_LITTLE_EU",
       "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED"
     },
     "progress_cards": [
       {
         "title": "Plan Status",
-        "value": "ON_TRACK"
+        "value": "REBALANCE_NEEDED"
       },
       {
         "title": "New Connections",
-        "period_actual": 162,
-        "weekly_pace_actual": 162.0,
+        "period_actual": 211,
+        "weekly_pace_actual": 211.0,
         "weekly_target_min": 20,
         "weekly_target_max": 40,
-        "value": "162.0/wk (period total 162)",
+        "value": "211.0/wk (period total 211)",
         "sub": "target 20-40/wk",
         "status": "AHEAD"
       },
       {
         "title": "Gross New vs Net Growth",
-        "value": "gross 162 / net +136",
-        "sub": "Removed/lost/changed estimate: 26. Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
+        "value": "gross 211 / net +188",
+        "sub": "Removed/lost/changed estimate: 23. Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
       },
       {
         "title": "Strategy Mix Status",
-        "value": "ON_STRATEGY",
-        "sub": "Primary LATAM/USD 88% / Europe 12% (target 90/10)",
-        "status": "ON_STRATEGY"
+        "value": "TOO_LITTLE_EU",
+        "sub": "Primary LATAM/USD 96% / Europe 4% (target 90/10)",
+        "status": "TOO_LITTLE_EU"
       },
       {
         "title": "Classification Risk",
@@ -1268,9 +1268,9 @@
       },
       {
         "title": "Reactivation Movement",
-        "value": 122,
+        "value": 0,
         "sub": "new conversations this period",
-        "status": "AHEAD"
+        "status": "BELOW_TARGET"
       },
       {
         "title": "Untapped Activated",
@@ -1279,34 +1279,34 @@
       },
       {
         "title": "Needs My Response",
-        "value": 73
+        "value": 74
       },
       {
         "title": "Needs Company Mapping",
-        "value": 2359,
-        "delta": 18
+        "value": 2396,
+        "delta": 37
       }
     ],
     "charts": {
       "weekly_target_vs_actual": [
         {
           "label": "New Connections",
-          "actual": 162.0,
-          "period_actual": 162,
+          "actual": 211.0,
+          "period_actual": 211,
           "target_min": 20,
           "target_max": 40
         },
         {
           "label": "Reactivation",
-          "actual": 122.0,
-          "period_actual": 122,
+          "actual": 0.0,
+          "period_actual": 0,
           "target_min": 15,
           "target_max": 25
         },
         {
           "label": "Europe Exploratory",
-          "actual": 7.0,
-          "period_actual": 7,
+          "actual": 2.0,
+          "period_actual": 2,
           "target_min": 5,
           "target_max": 10
         }
@@ -1314,7 +1314,7 @@
       "strategy_mix": [
         {
           "label": "Primary LATAM/USD (actual)",
-          "value": 0.8772
+          "value": 0.9565
         },
         {
           "label": "Primary LATAM/USD (target)",
@@ -1322,7 +1322,7 @@
         },
         {
           "label": "Europe Exploratory (actual)",
-          "value": 0.1228
+          "value": 0.0435
         },
         {
           "label": "Europe Exploratory (target)",
@@ -1332,39 +1332,39 @@
       "persona_growth": [
         {
           "label": "Recruiters",
-          "value": 26.0,
-          "period_actual": 26
+          "value": 38.0,
+          "period_actual": 38
         },
         {
           "label": "Talent Acquisition",
-          "value": 57.0,
-          "period_actual": 57
+          "value": 76.0,
+          "period_actual": 76
         },
         {
           "label": "Hiring Managers",
-          "value": 0.0,
-          "period_actual": 0
+          "value": 1.0,
+          "period_actual": 1
         },
         {
           "label": "Data Leaders",
-          "value": 2.0,
-          "period_actual": 2
+          "value": 5.0,
+          "period_actual": 5
         },
         {
           "label": "Data Peers",
-          "value": 2.0,
-          "period_actual": 2
+          "value": 3.0,
+          "period_actual": 3
         },
         {
           "label": "Executives",
-          "value": 6.0,
-          "period_actual": 6
+          "value": 2.0,
+          "period_actual": 2
         }
       ],
       "lead_pipeline_movement": [
         {
           "label": "Needs My Response",
-          "value": 73
+          "value": 74
         },
         {
           "label": "Hot Reactivation",
@@ -1372,21 +1372,21 @@
         },
         {
           "label": "Warm Reactivation",
-          "value": 2989
+          "value": 2986
         },
         {
           "label": "Follow-ups Due",
-          "value": 1106
+          "value": 1100
         },
         {
           "label": "Dormant Warm",
-          "value": 120
+          "value": 121
         }
       ],
       "untapped_movement": [
         {
           "label": "High-Value Untapped",
-          "value": 30
+          "value": 34
         },
         {
           "label": "Activated This Week",
@@ -1394,11 +1394,11 @@
         },
         {
           "label": "New Not Contacted Yet",
-          "value": 68
+          "value": 211
         },
         {
           "label": "Never Contacted Backlog",
-          "value": 7311
+          "value": 7502
         }
       ],
       "weekly_comparison": [
@@ -1464,6 +1464,15 @@
           "needs_my_response_current": 73,
           "untapped_activated_this_week": 0,
           "needs_company_mapping_delta": 18
+        },
+        {
+          "week_label": "Week 9",
+          "gross_new_connections": 211,
+          "net_connection_growth": 188,
+          "new_recruiters": 38,
+          "needs_my_response_current": 74,
+          "untapped_activated_this_week": 0,
+          "needs_company_mapping_delta": 37
         }
       ]
     },
@@ -1471,6 +1480,10 @@
       {
         "rule": "new_connections_above_target",
         "message": "Connection growth is above weekly pace. Keep quality control."
+      },
+      {
+        "rule": "europe_share_below_5",
+        "message": "Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus."
       },
       {
         "rule": "needs_my_response_high",
@@ -1482,7 +1495,7 @@
       }
     ],
     "next_week_recommendations": [
-      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 73 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 30 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
+      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 74 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 34 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
     ],
     "weekly_history": [
       {
@@ -1799,13 +1812,59 @@
         "overall_status": "ON_TRACK",
         "diagnosis_summary": "Connection growth is above weekly pace. Keep quality control. | Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts. | Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.",
         "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 73 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 30 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
-        "total_connections_previous": "11939",
-        "total_connections_current": "12075",
+        "total_connections_previous": 11939.0,
+        "total_connections_current": 12075.0,
         "new_data_leaders": 2.0,
-        "latam_usd_delta": "10",
-        "us_canada_delta": "6",
-        "spain_eu_delta": "4",
-        "global_opportunity_delta": "53"
+        "latam_usd_delta": 10.0,
+        "us_canada_delta": 6.0,
+        "spain_eu_delta": 4.0,
+        "global_opportunity_delta": 53.0
+      },
+      {
+        "available": true,
+        "snapshot_number": 9,
+        "week_key": "week_4",
+        "primary_focus": "Follow-up + conversion + cleanup",
+        "current_snapshot_date": "2026-08-30",
+        "previous_snapshot_date": "2026-08-23",
+        "period_days": 7,
+        "period_weeks": 1.0,
+        "baseline_available": true,
+        "new_connections_target_min": 20,
+        "new_connections_target_max": 40,
+        "reactivation_target_min": 15,
+        "reactivation_target_max": 25,
+        "untapped_outreach_target_min": 10,
+        "untapped_outreach_target_max": 20,
+        "europe_exploratory_target_min": 5,
+        "europe_exploratory_target_max": 10,
+        "gross_new_connections": 211,
+        "net_connection_growth": 188,
+        "connection_churn_or_removed_estimate": 23,
+        "new_recruiters": 38,
+        "new_talent_acquisition": 76,
+        "new_hiring_managers": 1,
+        "new_conversations_started": 0,
+        "needs_my_response_current": 74,
+        "needs_my_response_delta": 1,
+        "hot_reactivation_delta": 0,
+        "warm_reactivation_delta": -3,
+        "untapped_activated_this_week": 0,
+        "needs_company_mapping_delta": 37,
+        "actual_primary_share": 0.9565,
+        "actual_europe_share": 0.0435,
+        "strategy_mix_status": "TOO_LITTLE_EU",
+        "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED",
+        "overall_status": "REBALANCE_NEEDED",
+        "diagnosis_summary": "Connection growth is above weekly pace. Keep quality control. | Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus. | Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts. | Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.",
+        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 74 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 34 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
+        "total_connections_previous": "12075",
+        "total_connections_current": "12263",
+        "new_data_leaders": 5.0,
+        "latam_usd_delta": "18",
+        "us_canada_delta": "1",
+        "spain_eu_delta": "-2",
+        "global_opportunity_delta": "62"
       }
     ],
     "by_week": {

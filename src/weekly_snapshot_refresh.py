@@ -56,6 +56,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import ROOT_DIR, DATA_RAW_DIR, OUTPUTS_DIR
 from src.load_data import _read_csv_flexible
 from src.company_normalizer import normalize as normalize_company
+from src.message_freshness import write_message_freshness
 
 DATA_PROCESSED_DIR = ROOT_DIR / "data" / "processed"
 PREVIOUS_BASELINE_JSON = DATA_PROCESSED_DIR / "_previous_snapshot_baseline.json"
@@ -87,7 +88,25 @@ LOGICAL_DATASETS = {
 # only generates it on demand. Treat it as optional everywhere: the refresh
 # must proceed without it, never fabricate invitation numbers, and never
 # silently reuse a stale prior-week Invitations.csv as if it were current.
-OPTIONAL_DATASETS = {"invitations"}
+#
+# messages.csv can also legitimately be missing from a given week's export
+# (e.g. exported in a second batch later). It is optional for the SAME
+# reason — the refresh must not fail — but it is handled differently at
+# activation time (see PRESERVE_STALE_ON_ABSENCE below): unlike Invitations,
+# many downstream engines (Lead Reactivation, USD Contract CRM, Opportunity
+# History, Monthly Executive Queue) depend on the previously-activated
+# messages.csv staying in place so those sections can keep showing the last
+# available message intelligence, explicitly flagged stale, instead of
+# going blank.
+OPTIONAL_DATASETS = {"invitations", "messages"}
+
+# Datasets where, if absent this week, the previously-activated file must be
+# KEPT (never deleted) so message-dependent sections stay populated —
+# flagged stale by src/export_public_dashboard_data.py via
+# src/message_freshness.py — rather than silently losing all message
+# intelligence for the week. Invitations.csv has no such cross-week
+# dependents, so it keeps the original "remove stale copy" behavior.
+PRESERVE_STALE_ON_ABSENCE = {"messages"}
 
 ACTIVE_TARGET = {
     "connections":     DATA_RAW_DIR / "Connections.csv",
@@ -252,7 +271,8 @@ def find_previous_snapshot_folder(current_folder_name: str, ref_year: int) -> Pa
 # ══════════════════════════════════════════════════════════════════════════
 
 def update_manifest(snapshot_id: str, snapshot_date: str, folder: str, row_counts: dict,
-                     schema_hashes: dict, file_hashes: dict, previous_snapshot_id: str | None) -> None:
+                     schema_hashes: dict, file_hashes: dict, previous_snapshot_id: str | None,
+                     messages_available: bool) -> None:
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     manifest = {"snapshots": []}
     if MANIFEST_PATH.exists():
@@ -270,6 +290,7 @@ def update_manifest(snapshot_id: str, snapshot_date: str, folder: str, row_count
         "connections_rows": row_counts.get("connections", 0),
         "invitations_rows": row_counts.get("invitations"),
         "messages_rows": row_counts.get("messages", 0),
+        "messages_available": messages_available,
         "company_follows_rows": row_counts.get("company_follows", 0),
         "schema_hashes": schema_hashes,
         "file_hashes": file_hashes,
@@ -278,6 +299,33 @@ def update_manifest(snapshot_id: str, snapshot_date: str, folder: str, row_count
     manifest["snapshots"].sort(key=lambda s: s["snapshot_date"])
     MANIFEST_PATH.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
     logger.info(f"  Manifest updated: {MANIFEST_PATH.relative_to(ROOT_DIR)} ({len(manifest['snapshots'])} snapshot(s) on record)")
+
+
+def _entry_has_messages(entry: dict) -> bool:
+    """Back-compat: older manifest entries (before this field existed) are
+    treated as having messages available whenever messages_rows was
+    recorded and non-zero."""
+    if "messages_available" in entry:
+        return bool(entry["messages_available"])
+    rows = entry.get("messages_rows")
+    return bool(rows) and rows > 0
+
+
+def find_last_available_messages_date(current_snapshot_date: str) -> str | None:
+    """Scan the manifest (as it stood BEFORE this run's entry is added, i.e.
+    call this before update_manifest) for the most recent snapshot date
+    (strictly before current_snapshot_date) that had real messages data."""
+    if not MANIFEST_PATH.exists():
+        return None
+    try:
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    candidates = [
+        s["snapshot_date"] for s in manifest.get("snapshots", [])
+        if _entry_has_messages(s) and s.get("snapshot_date") and s["snapshot_date"] < current_snapshot_date
+    ]
+    return max(candidates) if candidates else None
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -290,6 +338,24 @@ def activate_snapshot(resolved: dict[str, Path]) -> None:
         if logical not in resolved:
             if logical not in OPTIONAL_DATASETS:
                 raise FileNotFoundError(f"Required dataset '{logical}' missing from resolved snapshot files.")
+            if logical in PRESERVE_STALE_ON_ABSENCE:
+                # KEEP the previously-activated file in place — downstream
+                # engines (Lead Reactivation, USD Contract CRM, Opportunity
+                # History, Monthly Executive Queue) read it directly and must
+                # keep showing last-available message intelligence, flagged
+                # stale, rather than going blank. Never treated as current —
+                # src/message_freshness.py records that this week's snapshot
+                # had no messages.csv of its own.
+                if target.exists():
+                    logger.warning(
+                        f"  {logical}: absent this week — KEEPING previously-activated {target.name} in "
+                        f"place (stale; last available export) so message-dependent sections stay "
+                        f"populated but flagged stale."
+                    )
+                else:
+                    logger.warning(f"  {logical}: absent this week and no previous {target.name} available — "
+                                    f"message-dependent sections will show no data.")
+                continue
             # Optional dataset absent this week — remove any stale copy left
             # over from a previous week so downstream code can't mistake it
             # for current data.
@@ -487,6 +553,40 @@ def build_message_delta(current_path: Path, previous_path: Path | None) -> dict:
     }
 
 
+def build_message_delta_missing(previous_path: Path | None, snapshot_date: str) -> dict:
+    """messages.csv absent from this week's snapshot folder. Never fabricate
+    a current-week message count/delta — report the previous count for
+    context only, and mark the week's message metrics unavailable."""
+    from src.message_intelligence import load_messages
+
+    prev_count, prev_convs = 0, 0
+    if previous_path is not None and previous_path.exists():
+        prev = load_messages(previous_path)
+        prev = prev if prev is not None else pd.DataFrame()
+        prev_count = len(prev)
+        prev_convs = len(set(prev["conversation_id"])) if "conversation_id" in prev.columns else 0
+
+    logger.warning(
+        f"  messages.csv not found for {snapshot_date}; message-derived metrics unavailable for this week. "
+        f"Message-dependent dashboard sections will keep showing the last available messages export, flagged stale."
+    )
+    row = {
+        "previous_message_count": prev_count, "current_message_count": None,
+        "new_message_count": None,
+        "previous_conversation_count": prev_convs, "current_conversation_count": None,
+        "new_conversation_count": None,
+        "available": False,
+        "note": f"messages.csv not present in the {snapshot_date} snapshot — message metrics unavailable "
+                f"for this week. Not fabricated, not treated as current. Message-dependent dashboard "
+                f"sections keep showing the last available messages export, flagged stale.",
+    }
+    pd.DataFrame([row]).to_csv(OUTPUTS_DIR / "weekly_new_message_count_summary.csv", index=False, encoding="utf-8-sig")
+    pd.DataFrame(columns=["conversation_id_hash", "previous_message_count", "current_message_count", "delta"]).to_csv(
+        OUTPUTS_DIR / "weekly_conversation_changes.csv", index=False, encoding="utf-8-sig"
+    )
+    return row
+
+
 # ══════════════════════════════════════════════════════════════════════════
 # PART 8 — Invitations delta
 # ══════════════════════════════════════════════════════════════════════════
@@ -578,6 +678,13 @@ def main():
     ap.add_argument("--snapshot-date", required=True, help="YYYY-MM-DD")
     ap.add_argument("--previous-folder", default=None)
     ap.add_argument("--previous-date", default=None, help="YYYY-MM-DD")
+    ap.add_argument(
+        "--refresh-messages", action="store_true",
+        help="No-op marker flag — messages.csv is auto-detected every run whenever it's present in the "
+             "snapshot folder, so this flag has no separate effect. It exists purely so a later re-run "
+             "specifically intended to pick up a newly-added messages.csv can say so explicitly; the "
+             "base command below already refreshes messages.csv the moment it's added to the folder.",
+    )
     args = ap.parse_args()
 
     current_folder = ROOT_DIR / args.snapshot_folder
@@ -639,8 +746,20 @@ def main():
         previous_snapshot_id = f"snap-{resolved_prev_date.isoformat()}" if resolved_prev_date else f"snap-{previous_folder.name}"
     else:
         previous_snapshot_id = None
+    messages_available_now = "messages" in current_resolved
+    last_available_messages_date = (
+        args.snapshot_date if messages_available_now
+        else find_last_available_messages_date(args.snapshot_date)
+    )
+
     update_manifest(snapshot_id, args.snapshot_date, args.snapshot_folder, row_counts,
-                     schema_hashes, file_hashes, previous_snapshot_id)
+                     schema_hashes, file_hashes, previous_snapshot_id, messages_available_now)
+
+    freshness = write_message_freshness(
+        messages_available_for_current_snapshot=messages_available_now,
+        current_snapshot_date=args.snapshot_date,
+        messages_last_available_snapshot_date=last_available_messages_date,
+    )
 
     # ── Part 5: activate as pipeline input ────────────────────────────────────
     logger.info("Step 4: Activating snapshot as active pipeline input (copy only) ...")
@@ -652,9 +771,12 @@ def main():
     conn_delta = build_connection_delta(
         current_resolved["connections"], previous_resolved.get("connections")
     )
-    msg_delta = build_message_delta(
-        current_resolved["messages"], previous_resolved.get("messages")
-    )
+    if messages_available_now:
+        msg_delta = build_message_delta(
+            current_resolved["messages"], previous_resolved.get("messages")
+        )
+    else:
+        msg_delta = build_message_delta_missing(previous_resolved.get("messages"), args.snapshot_date)
     inv_delta = build_invitation_delta(
         current_resolved.get("invitations"), previous_resolved.get("invitations"), args.snapshot_date
     )
@@ -668,12 +790,37 @@ def main():
     logger.info(f"  Messages:    {msg_delta}")
     logger.info(f"  Invitations: {inv_delta}")
     logger.info(f"  Company Follows: {cf_delta}")
+    logger.info("-" * 70)
+    logger.info("  Message freshness:")
+    logger.info(f"    messages_available_for_current_snapshot = {freshness['messages_available_for_current_snapshot']}")
+    logger.info(f"    messages_current_snapshot_date          = {freshness['messages_current_snapshot_date']}")
+    logger.info(f"    messages_last_available_snapshot_date   = {freshness['messages_last_available_snapshot_date']}")
+    logger.info(f"    message_dependent_sections_status       = {freshness['message_dependent_sections_status']}")
+    if not messages_available_now:
+        logger.info(
+            f"    NOTE: messages.csv was not included in the {args.snapshot_date} export. This is a "
+            f"PARTIAL weekly refresh — connections/invitations/company-follows are fully current, but "
+            f"Lead Reactivation, USD Contract CRM, Opportunity History & Monthly Pipeline, Monthly "
+            f"Executive Queue, and the Reactivation Calendar will keep showing the "
+            f"{freshness['messages_last_available_snapshot_date']} message export, flagged stale, until "
+            f"messages.csv is added and the refresh is re-run."
+        )
     logger.info("=" * 70)
     logger.info("  Next: run the full pipeline —")
     logger.info("    python src/build_network_heatmap.py")
     logger.info("    python src/build_strategy_layer.py")
     logger.info("    python src/weekly_kpi_delta.py")
+    logger.info("    python src/action_plan_progress.py")
     logger.info("    python src/generate_static_dashboard.py")
+    logger.info("    python src/privacy_check.py")
+    if not messages_available_now:
+        logger.info("")
+        logger.info(f"  Once messages.csv is added to the '{args.snapshot_folder}' folder, re-run:")
+        logger.info(
+            f"    python src/weekly_snapshot_refresh.py --snapshot-folder \"{args.snapshot_folder}\" "
+            f"--snapshot-date \"{args.snapshot_date}\" --refresh-messages"
+        )
+        logger.info("    (then re-run the full pipeline above again)")
 
 
 if __name__ == "__main__":

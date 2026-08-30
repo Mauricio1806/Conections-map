@@ -654,6 +654,24 @@ function groupedBarChart(canvasId, labels, datasets, opts) {
 
 // ── PAGE 1: Executive Overview ────────────────────────────────────────────────
 function renderOverview() {
+  // Message freshness banner — shown whenever messages.csv wasn't part of
+  // the current snapshot export, so message-driven sections (Lead
+  // Reactivation, USD Contract CRM, Opportunity History & Monthly Pipeline,
+  // Monthly Executive Queue) are known to be showing a previous export.
+  const mf = (D.meta || {}).messages_freshness;
+  const mfBannerEl = document.getElementById('messages-freshness-banner');
+  if (mfBannerEl) {
+    if (mf && mf.messages_available_for_current_snapshot === false) {
+      mfBannerEl.innerHTML = '<div class="alert alert-warn">'
+        + '<span class="alert-icon">&#9888;</span>'
+        + '<strong>Message data is stale.</strong> '
+        + (mf.note || 'Messages.csv was not included in this export. Message-driven sections reflect the last available messages export.')
+        + '</div>';
+    } else {
+      mfBannerEl.innerHTML = '';
+    }
+  }
+
   // V5 coverage banner (replaces old UNKNOWN warning)
   const v5S      = D.opportunity_market_v5_summary || {};
   const actPct   = v5S.v5_actionable_pct || (100 - (v5S.v5_low_value_pct || 0));
@@ -2839,10 +2857,29 @@ function tempBadge(t) {
   return '<span class="urgency-badge" style="background:' + c + '20;color:' + c + ';border:1px solid ' + c + '">' + (t||'—') + '</span>';
 }
 
+// Shared stale/as-of banner for any message-derived section (Lead
+// Reactivation, USD Contract CRM, Opportunity History, Monthly Executive
+// Queue). `stale` + `asOfDate` come from the section's own
+// message_data_stale / message_data_as_of_date fields (set by
+// src/export_public_dashboard_data.py) — sections show it individually so a
+// section that HAS real (if stale) data still says so precisely.
+function renderStaleBanner(elementId, stale, asOfDate, sectionLabel) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  if (!stale) { el.innerHTML = ''; return; }
+  el.innerHTML = '<div class="alert alert-warn" style="margin-bottom:0.6rem">'
+    + '<span class="alert-icon">&#9888;</span>'
+    + '<span><strong>' + (sectionLabel || 'This section') + ' is showing stale message data</strong>'
+    + (asOfDate ? ' (as of ' + asOfDate + ')' : '')
+    + ' — messages.csv was not part of the current export. It will refresh automatically once messages.csv is added and the pipeline is re-run.</span>'
+    + '</div>';
+}
+
 function renderLeads() {
   const lr = D.lead_reactivation || {};
   const noData = document.getElementById('leads-no-data');
   const mainContent = document.getElementById('leads-main-content');
+  renderStaleBanner('leads-freshness-banner', lr.message_data_stale, lr.message_data_as_of_date, 'Lead Reactivation');
 
   // Only show no-data banner if there truly is no data (check contacts too,
   // to avoid hiding data that was preserved from a previous local build)
@@ -4861,6 +4898,14 @@ function renderUsdCrm() {
   const crm = D.usd_contract_crm || {};
   const noData = document.getElementById('usdcrm-no-data');
   const mainContent = document.getElementById('usdcrm-main-content');
+
+  // USD CRM's manual/auto-suggested pipeline stays fresh regardless of
+  // messages.csv (it's not message-derived) — only note staleness here when
+  // its message-derived nested sections (Opportunity History, Monthly
+  // Executive Queue) are the ones showing a previous export.
+  renderStaleBanner('usdcrm-freshness-banner', crm.message_data_partial_stale,
+    (crm.opportunity_history || {}).message_data_as_of_date || (crm.monthly_executive_queue || {}).message_data_as_of_date,
+    'Opportunity History & Monthly Executive Queue');
 
   if (!crm.available) {
     if (noData) noData.style.display = '';

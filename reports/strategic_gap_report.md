@@ -1,5 +1,5 @@
 # 🎯 Strategic Gap Report
-> Generated: **August 23, 2026**
+> Generated: **August 30, 2026**
 
 This report compares your current LinkedIn network against your strategic targets.
 
@@ -25,21 +25,21 @@ This report compares your current LinkedIn network against your strategic target
 | BRAZIL | Data Engineering Manager | 3 | 20 | **17** | 20 | 17 | **CRITICAL** |
 | EUROPE | Data Engineering Manager | 1 | 5 | **4** | 30 | 29 | **CRITICAL** |
 | US_CANADA_NEARSHORE | Talent Acquisition | 19 | 60 | **41** | 80 | 61 | **HIGH** |
-| US_CANADA_NEARSHORE | Director | 8 | 25 | **17** | 40 | 32 | **HIGH** |
 | US_CANADA_NEARSHORE | Recruiter | 29 | 80 | **51** | 100 | 71 | **HIGH** |
-| BRAZIL | Head of Data | 11 | 30 | **19** | 30 | 19 | **HIGH** |
+| US_CANADA_NEARSHORE | Director | 9 | 25 | **16** | 40 | 31 | **HIGH** |
+| BRAZIL | Head of Data | 12 | 30 | **18** | 30 | 18 | **HIGH** |
 | SPAIN_EU | Recruiter | 11 | 20 | **9** | 80 | 69 | **MEDIUM** |
 | SPAIN_EU | Director | 6 | 10 | **4** | 40 | 34 | **MEDIUM** |
-| LATAM_USD | Recruiter | 50 | 80 | **30** | 100 | 50 | **MEDIUM** |
+| LATAM_USD | Recruiter | 52 | 80 | **28** | 100 | 48 | **MEDIUM** |
 | EUROPE | Head of Data | 4 | 5 | **1** | 40 | 36 | **MEDIUM** |
-| BRAZIL | Recruiter | 41 | 50 | **9** | 50 | 9 | **LOW** |
-| LATAM_USD | Talent Acquisition | 69 | 60 | **0** | 80 | 11 | **LOW** |
-| LATAM_USD | Director | 36 | 20 | **0** | 40 | 4 | **LOW** |
+| BRAZIL | Recruiter | 42 | 50 | **8** | 50 | 8 | **LOW** |
+| LATAM_USD | Talent Acquisition | 76 | 60 | **0** | 80 | 4 | **LOW** |
+| LATAM_USD | Director | 35 | 20 | **0** | 40 | 5 | **LOW** |
 | SPAIN_EU | Talent Acquisition | 31 | 15 | **0** | 60 | 29 | **LOW** |
 | EUROPE | Recruiter | 33 | 10 | **0** | 60 | 27 | **LOW** |
-| EUROPE | Talent Acquisition | 37 | 10 | **0** | 50 | 13 | **LOW** |
+| EUROPE | Talent Acquisition | 36 | 10 | **0** | 50 | 14 | **LOW** |
 | EUROPE | Director | 30 | 5 | **0** | 30 | 0 | **LOW** |
-| BRAZIL | Data Engineer | 101 | 30 | **0** | 30 | 0 | **LOW** |
+| BRAZIL | Data Engineer | 99 | 30 | **0** | 30 | 0 | **LOW** |
 
 ---
 

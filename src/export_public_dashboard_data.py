@@ -18,6 +18,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.message_freshness import read_message_freshness
+
 logger = logging.getLogger(__name__)
 
 ROOT        = Path(__file__).resolve().parent.parent
@@ -659,6 +661,23 @@ def _sanitize_lead_contacts(contacts: list) -> list:
     ]
 
 
+def _load_existing_full_payload() -> dict | None:
+    """Load the last-committed FULL dashboard payload (before this run
+    overwrites it) — used to preserve message-derived sections
+    (lead_reactivation, usd_contract_crm.opportunity_history,
+    usd_contract_crm.monthly_executive_queue) as explicitly-stale fallbacks
+    when messages.csv is absent this run. Never fabricates data — only
+    reuses what was already computed and sanitized in a previous run."""
+    for path in [PUBLIC_JSON_OUTPUTS, PUBLIC_JSON_DOCS]:
+        if path.exists():
+            try:
+                with open(path, encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
+    return None
+
+
 def _load_existing_lead_data() -> dict | None:
     """
     Load lead_reactivation section from the committed JSON if it has real data.
@@ -1291,19 +1310,64 @@ def export_public_dashboard_data(
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
+    # ── Message freshness (Part: partial weekly refresh without messages.csv) ──
+    # Single source of truth for whether THIS run's messages.csv reflects the
+    # current snapshot. Falls back to the observed lead_data flag when no
+    # freshness record exists yet (e.g. an ad hoc run outside the weekly
+    # refresh script) — see src/message_freshness.py.
+    freshness = read_message_freshness()
+    messages_available = bool(lead_data and lead_data.get("messages_csv_available", False))
+    if freshness.get("messages_available_for_current_snapshot") is False:
+        messages_available = False
+    today_str = str(date.today())
+
+    previous_payload = None
+    last_available_date = freshness.get("messages_last_available_snapshot_date")
+    if not messages_available:
+        previous_payload = _load_existing_full_payload()
+        if not last_available_date:
+            last_available_date = ((previous_payload or {}).get("meta") or {}).get("report_date")
+
     # Determine lead_reactivation section:
-    # If messages.csv was present this run → build fresh
-    # If not (messages_csv_available == False) → preserve existing committed data
-    messages_available = lead_data and lead_data.get("messages_csv_available", False)
+    # If this week's own messages.csv was present → build fresh, stamped current.
+    # If not, but a PREVIOUSLY-activated messages.csv is still on disk (the
+    # weekly refresh intentionally keeps it in place rather than deleting it
+    # — see src/weekly_snapshot_refresh.py PRESERVE_STALE_ON_ABSENCE) →
+    # lead_reactivation_engine.py will have recomputed real numbers against
+    # THIS week's connections using last week's messages — richer/more
+    # accurate than reusing old JSON, but still not this week's own message
+    # export, so it's stamped stale/as-of the last available export.
+    # Only if neither is available do we fall back to the last committed
+    # public JSON (full previous payload, else the legacy
+    # _load_existing_lead_data() helper) — never silently presented as
+    # current-week data either way.
     if messages_available:
         lead_section = build_lead_reactivation_public(lead_data)
+        lead_section["messages_current_snapshot"] = True
+        lead_section["message_data_stale"] = False
+        lead_section["message_data_as_of_date"] = today_str
     else:
-        existing = _load_existing_lead_data()
-        if existing:
-            logger.info("  Preserving existing lead_reactivation data (messages.csv not present this run)")
-            lead_section = existing
+        if lead_data and lead_data.get("messages_csv_available") and lead_data.get("total_conversations", 0) > 0:
+            lead_section = build_lead_reactivation_public(lead_data)
+            logger.info(
+                f"  lead_reactivation recomputed from the last available (preserved) messages.csv "
+                f"(as of {last_available_date}); flagged stale — not this week's own export."
+            )
         else:
-            lead_section = {"messages_csv_available": False}
+            prev_lead = ((previous_payload or {}).get("lead_reactivation")) or {}
+            if prev_lead.get("messages_csv_available") and prev_lead.get("total_conversations", 0) > 0:
+                lead_section = dict(prev_lead)
+            else:
+                existing = _load_existing_lead_data()
+                lead_section = dict(existing) if existing else {"messages_csv_available": False}
+            if lead_section.get("messages_csv_available"):
+                logger.info(
+                    f"  Preserving lead_reactivation from the last committed dashboard JSON "
+                    f"(as of {last_available_date}); flagged stale — messages.csv not present this run."
+                )
+        lead_section["messages_current_snapshot"] = False
+        lead_section["message_data_stale"] = bool(lead_section.get("messages_csv_available"))
+        lead_section["message_data_as_of_date"] = last_available_date if lead_section.get("messages_csv_available") else None
 
     # Untapped Outreach Scoring V9 — index by normalized profile URL so Top
     # Contacts can merge in untapped_outreach_score/untapped_reason/etc.
@@ -1341,11 +1405,95 @@ def export_public_dashboard_data(
             OUTPUTS_DIR / "opportunity_market_people_segments.csv", index=False,
         )
 
+    # ── USD Contract CRM — partial-stale overlay for the purely message-
+    # derived nested sections (Opportunity History & Monthly Pipeline,
+    # Monthly Executive Queue) when messages.csv is absent this run. The
+    # manual-CSV-driven parts of USD CRM (data/manual/*.csv) are unaffected
+    # by messages.csv and stay fresh; only these two nested blocks, which
+    # opportunity_history_engine.py legitimately returns as {"available":
+    # False} when messages.csv is missing, get replaced with the last
+    # available real data, stamped stale. See src/message_freshness.py.
+    usd_section = build_usd_contract_crm_public(usd_crm_data)
+    if usd_section.get("available"):
+        prev_usd = ((previous_payload or {}).get("usd_contract_crm")) or {}
+        partial_stale = False
+
+        def _stamp_message_section(section: dict, prev_section: dict, label: str) -> tuple[dict, bool]:
+            """section is this run's freshly-BUILT dict for a purely
+            message-derived nested block (Opportunity History / Monthly
+            Executive Queue). messages_available is the authoritative
+            snapshot-level flag (from src/message_freshness.py) — NOT the
+            same thing as section.get('available'), which can be True even
+            when the underlying messages.csv is a preserved prior-week file
+            (see weekly_snapshot_refresh.py PRESERVE_STALE_ON_ABSENCE): in
+            that case the numbers are real (recomputed against this week's
+            connections) but still must not be presented as this week's own
+            message export."""
+            if messages_available:
+                section["message_data_stale"] = False
+                section["message_data_as_of_date"] = today_str
+                return section, False
+            if section.get("available"):
+                # Real data, but recomputed from a preserved (not this
+                # week's) messages.csv — keep the richer recomputed numbers,
+                # just stamp them stale/as-of.
+                section["message_data_stale"] = True
+                section["message_data_as_of_date"] = last_available_date
+                logger.info(f"  usd_contract_crm.{label} recomputed from the last available (preserved) "
+                            f"messages.csv (as of {last_available_date}); flagged stale.")
+                return section, True
+            if prev_section.get("available"):
+                # Nothing usable this run at all — fall back to the last
+                # committed dashboard JSON's real data for this block.
+                section = dict(prev_section)
+                section["message_data_stale"] = True
+                section["message_data_as_of_date"] = last_available_date
+                logger.info(f"  Preserving usd_contract_crm.{label} from the last committed dashboard "
+                            f"JSON (as of {last_available_date}); flagged stale.")
+                return section, True
+            section["message_data_stale"] = False
+            section["message_data_as_of_date"] = None
+            return section, False
+
+        oh, oh_stale = _stamp_message_section(
+            usd_section.get("opportunity_history") or {"available": False},
+            prev_usd.get("opportunity_history") or {},
+            "opportunity_history",
+        )
+        usd_section["opportunity_history"] = oh
+        partial_stale = partial_stale or oh_stale
+
+        meq, meq_stale = _stamp_message_section(
+            usd_section.get("monthly_executive_queue") or {"available": False},
+            prev_usd.get("monthly_executive_queue") or {},
+            "monthly_executive_queue",
+        )
+        usd_section["monthly_executive_queue"] = meq
+        partial_stale = partial_stale or meq_stale
+
+        usd_section["message_data_partial_stale"] = partial_stale
+
     payload = {
         "meta": {
             "report_date":      str(date.today()),
             "total_connections": kpis.get("total_connections", len(df)),
             "production_url":   "https://mauricio1806.github.io/Conections-map/",
+            # Partial weekly refresh support (messages.csv can arrive in a
+            # second batch) — never claim message-driven sections were
+            # refreshed from a snapshot's messages when they weren't.
+            "messages_freshness": {
+                "messages_available_for_current_snapshot": messages_available,
+                "messages_current_snapshot_date": today_str if messages_available else None,
+                "messages_last_available_snapshot_date": today_str if messages_available else last_available_date,
+                "message_dependent_sections_status": (
+                    "refreshed" if messages_available else "stale_until_messages_export_arrives"
+                ),
+                "note": None if messages_available else (
+                    f"Messages.csv was not included in the {freshness.get('current_snapshot_date') or today_str} "
+                    f"export. Message-driven sections reflect the last available messages export "
+                    f"(as of {last_available_date or 'unknown'}) and will refresh when messages.csv is added."
+                ),
+            },
             "note": (
                 "Market classification is inferred from company/title keywords. "
                 "LinkedIn exports do not include location data. "
@@ -1414,7 +1562,7 @@ def export_public_dashboard_data(
         # applications, interviews, follow-ups, contingency risk. Local/manual
         # CSV inputs only (data/manual/*.csv, gitignored). Sanitized: no
         # notes_private, no raw message content, no email, no phone.
-        "usd_contract_crm":            build_usd_contract_crm_public(usd_crm_data),
+        "usd_contract_crm":            usd_section,
         # Action Plan Progress — measurement layer for the Action Plan page.
         # Placeholder here (this function runs before the weekly delta layer
         # exists); src/action_plan_progress.py merges the real sanitized

@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1787507321">
+  <link rel="stylesheet" href="./assets/style.css?v=1788099163">
 </head>
 <body>
 
@@ -100,6 +100,7 @@
         <p>Opportunity buckets are inferred from company, title, persona, language, message history, and manual enrichment — not exact geography. This is an action backlog, not a data failure.</p>
       </div>
 
+      <div id="messages-freshness-banner"></div>
       <div id="confidence-banner"></div>
 
       <div class="section-label">Strategic Scores</div>
@@ -785,6 +786,8 @@ python src/validate_static_dashboard_runtime.py</pre>
         <p>Based on your LinkedIn message history. Raw messages stay private — only sanitized summaries appear here.</p>
       </div>
 
+      <div id="leads-freshness-banner"></div>
+
       <div id="leads-no-data" style="display:none">
         <div class="alert alert-info">
           <span class="alert-icon">&#128233;</span>
@@ -1196,6 +1199,8 @@ python src/validate_static_dashboard_runtime.py</pre>
         <span class="alert-icon">&#8505;&#65039;</span>
         <span>Manual application data is optional. This CRM also uses existing Lead Reactivation, Untapped Network, Top Contacts, and Opportunity Market intelligence to recommend USD pipeline actions. Manual CSVs confirm real applications/processes; auto-suggested leads are recommended actions, not confirmed applications.</span>
       </div>
+
+      <div id="usdcrm-freshness-banner"></div>
 
       <div id="usdcrm-no-data" style="display:none">
         <div class="alert alert-info">
@@ -1826,6 +1831,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1787507321"></script>
+<script src="./assets/app.js?v=1788099163"></script>
 </body>
 </html>
