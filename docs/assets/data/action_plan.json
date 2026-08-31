@@ -1116,13 +1116,13 @@
         "gross_vs_net_note": "Gross new connections can be higher than net growth when some prior connections disappear, are removed, or exports change."
       },
       "strategic_growth": {
-        "new_latam_usd_connections": 21,
-        "new_us_nearshore_connections": 1,
+        "new_latam_usd_connections": 28,
+        "new_us_nearshore_connections": 2,
         "new_spain_eu_connections": 1,
         "new_global_staffing_connections": 28,
         "new_global_opportunity_connections": 70,
-        "primary_focus_new_connections": 44,
-        "primary_focus_weekly_pace": 44.0,
+        "primary_focus_new_connections": 52,
+        "primary_focus_weekly_pace": 52.0,
         "europe_exploratory_new_connections": 2,
         "europe_exploratory_period_actual": 2,
         "europe_exploratory_weekly_pace": 2.0,
@@ -1131,10 +1131,10 @@
         "europe_exploratory_period_target_min": 5.0,
         "europe_exploratory_period_target_max": 10.0,
         "europe_exploratory_pace_status": "BELOW_TARGET",
-        "unclassified_new_connections": 165,
-        "unclassified_share": 0.782,
-        "actual_primary_share": 0.9565,
-        "actual_europe_share": 0.0435,
+        "unclassified_new_connections": 157,
+        "unclassified_share": 0.7441,
+        "actual_primary_share": 0.963,
+        "actual_europe_share": 0.037,
         "target_primary_share": 0.9,
         "target_europe_share": 0.1,
         "strategy_mix_status": "TOO_LITTLE_EU",
@@ -1155,68 +1155,68 @@
         "new_executives_weekly_pace": 2.0
       },
       "lead_reactivation": {
-        "conversations_current": 4784,
+        "conversations_current": 4965,
         "conversations_previous": 4784,
-        "new_conversations_started": 0,
-        "new_conversations_weekly_pace": 0.0,
+        "new_conversations_started": 181,
+        "new_conversations_weekly_pace": 181.0,
         "reactivation_weekly_target_min": 15,
         "reactivation_weekly_target_max": 25,
         "reactivation_period_target_min": 15.0,
         "reactivation_period_target_max": 25.0,
-        "reactivation_pace_status": "BELOW_TARGET",
-        "followups_due_current": 1100,
-        "needs_my_response_current": 74,
+        "reactivation_pace_status": "AHEAD",
+        "followups_due_current": 1112,
+        "needs_my_response_current": 75,
         "needs_my_response_previous": 73,
-        "needs_my_response_delta": 1,
-        "hot_reactivation_current": 143,
+        "needs_my_response_delta": 2,
+        "hot_reactivation_current": 145,
         "hot_reactivation_previous": 143,
-        "hot_reactivation_delta": 0,
-        "warm_reactivation_current": 2986,
+        "hot_reactivation_delta": 2,
+        "warm_reactivation_current": 3148,
         "warm_reactivation_previous": 2989,
-        "warm_reactivation_delta": -3,
+        "warm_reactivation_delta": 159,
         "dormant_warm_current": 121,
-        "rejected_closed_current": 49
+        "rejected_closed_current": 53
       },
       "untapped_network": {
-        "never_contacted_current": 7502,
+        "never_contacted_current": 7320,
         "never_contacted_previous": 7311,
-        "high_value_untapped_current": 34,
+        "high_value_untapped_current": 31,
         "high_value_untapped_previous": 30,
         "untapped_activated_this_week": 0,
         "untapped_activated_weekly_pace": 0.0,
         "untapped_outreach_weekly_target_min": 10,
         "untapped_outreach_weekly_target_max": 20,
         "untapped_activated_pace_status": "BELOW_TARGET",
-        "new_connections_not_contacted_yet": 211,
+        "new_connections_not_contacted_yet": 82,
         "untapped_queue_completed_estimate": 20,
-        "untapped_backlog_change": 4,
+        "untapped_backlog_change": 1,
         "available": true
       },
       "top_contacts": {
-        "top_priority_contacts_current": 256,
+        "top_priority_contacts_current": 253,
         "top_priority_contacts_previous": 252,
-        "outreach_adjusted_score_avg_current": 52.8,
+        "outreach_adjusted_score_avg_current": 49.7,
         "outreach_adjusted_score_avg_previous": 49.1
       },
       "data_quality": {
-        "needs_company_mapping_current": 2396,
+        "needs_company_mapping_current": 2379,
         "needs_company_mapping_previous": 2359,
-        "needs_company_mapping_delta": 37,
+        "needs_company_mapping_delta": 20,
         "business_classification_coverage_current": 99.1,
-        "confirmed_geographic_signals_current": 3355
+        "confirmed_geographic_signals_current": 3372
       },
       "manual_activity": {
         "manual_activity_available": false
       }
     },
     "strategy_mix": {
-      "new_latam_usd_connections": 21,
-      "new_us_nearshore_connections": 1,
+      "new_latam_usd_connections": 28,
+      "new_us_nearshore_connections": 2,
       "new_spain_eu_connections": 1,
       "new_global_staffing_connections": 28,
       "new_global_opportunity_connections": 70,
-      "primary_focus_new_connections": 44,
-      "primary_focus_weekly_pace": 44.0,
+      "primary_focus_new_connections": 52,
+      "primary_focus_weekly_pace": 52.0,
       "europe_exploratory_new_connections": 2,
       "europe_exploratory_period_actual": 2,
       "europe_exploratory_weekly_pace": 2.0,
@@ -1225,10 +1225,10 @@
       "europe_exploratory_period_target_min": 5.0,
       "europe_exploratory_period_target_max": 10.0,
       "europe_exploratory_pace_status": "BELOW_TARGET",
-      "unclassified_new_connections": 165,
-      "unclassified_share": 0.782,
-      "actual_primary_share": 0.9565,
-      "actual_europe_share": 0.0435,
+      "unclassified_new_connections": 157,
+      "unclassified_share": 0.7441,
+      "actual_primary_share": 0.963,
+      "actual_europe_share": 0.037,
       "target_primary_share": 0.9,
       "target_europe_share": 0.1,
       "strategy_mix_status": "TOO_LITTLE_EU",
@@ -1268,9 +1268,9 @@
       },
       {
         "title": "Reactivation Movement",
-        "value": 0,
+        "value": 181,
         "sub": "new conversations this period",
-        "status": "BELOW_TARGET"
+        "status": "AHEAD"
       },
       {
         "title": "Untapped Activated",
@@ -1279,12 +1279,12 @@
       },
       {
         "title": "Needs My Response",
-        "value": 74
+        "value": 75
       },
       {
         "title": "Needs Company Mapping",
-        "value": 2396,
-        "delta": 37
+        "value": 2379,
+        "delta": 20
       }
     ],
     "charts": {
@@ -1298,8 +1298,8 @@
         },
         {
           "label": "Reactivation",
-          "actual": 0.0,
-          "period_actual": 0,
+          "actual": 181.0,
+          "period_actual": 181,
           "target_min": 15,
           "target_max": 25
         },
@@ -1314,7 +1314,7 @@
       "strategy_mix": [
         {
           "label": "Primary LATAM/USD (actual)",
-          "value": 0.9565
+          "value": 0.963
         },
         {
           "label": "Primary LATAM/USD (target)",
@@ -1322,7 +1322,7 @@
         },
         {
           "label": "Europe Exploratory (actual)",
-          "value": 0.0435
+          "value": 0.037
         },
         {
           "label": "Europe Exploratory (target)",
@@ -1364,19 +1364,19 @@
       "lead_pipeline_movement": [
         {
           "label": "Needs My Response",
-          "value": 74
+          "value": 75
         },
         {
           "label": "Hot Reactivation",
-          "value": 143
+          "value": 145
         },
         {
           "label": "Warm Reactivation",
-          "value": 2986
+          "value": 3148
         },
         {
           "label": "Follow-ups Due",
-          "value": 1100
+          "value": 1112
         },
         {
           "label": "Dormant Warm",
@@ -1386,7 +1386,7 @@
       "untapped_movement": [
         {
           "label": "High-Value Untapped",
-          "value": 34
+          "value": 31
         },
         {
           "label": "Activated This Week",
@@ -1394,11 +1394,11 @@
         },
         {
           "label": "New Not Contacted Yet",
-          "value": 211
+          "value": 82
         },
         {
           "label": "Never Contacted Backlog",
-          "value": 7502
+          "value": 7320
         }
       ],
       "weekly_comparison": [
@@ -1470,9 +1470,9 @@
           "gross_new_connections": 211,
           "net_connection_growth": 188,
           "new_recruiters": 38,
-          "needs_my_response_current": 74,
+          "needs_my_response_current": 75,
           "untapped_activated_this_week": 0,
-          "needs_company_mapping_delta": 37
+          "needs_company_mapping_delta": 20
         }
       ]
     },
@@ -1495,7 +1495,7 @@
       }
     ],
     "next_week_recommendations": [
-      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 74 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 34 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
+      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 75 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 31 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
     ],
     "weekly_history": [
       {
@@ -1844,25 +1844,25 @@
         "new_recruiters": 38,
         "new_talent_acquisition": 76,
         "new_hiring_managers": 1,
-        "new_conversations_started": 0,
-        "needs_my_response_current": 74,
-        "needs_my_response_delta": 1,
-        "hot_reactivation_delta": 0,
-        "warm_reactivation_delta": -3,
+        "new_conversations_started": 181,
+        "needs_my_response_current": 75,
+        "needs_my_response_delta": 2,
+        "hot_reactivation_delta": 2,
+        "warm_reactivation_delta": 159,
         "untapped_activated_this_week": 0,
-        "needs_company_mapping_delta": 37,
-        "actual_primary_share": 0.9565,
-        "actual_europe_share": 0.0435,
+        "needs_company_mapping_delta": 20,
+        "actual_primary_share": 0.963,
+        "actual_europe_share": 0.037,
         "strategy_mix_status": "TOO_LITTLE_EU",
         "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED",
         "overall_status": "REBALANCE_NEEDED",
         "diagnosis_summary": "Connection growth is above weekly pace. Keep quality control. | Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus. | Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts. | Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.",
-        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 74 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 34 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
+        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 75 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 31 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
         "total_connections_previous": "12075",
         "total_connections_current": "12263",
         "new_data_leaders": 5.0,
-        "latam_usd_delta": "18",
-        "us_canada_delta": "1",
+        "latam_usd_delta": "34",
+        "us_canada_delta": "2",
         "spain_eu_delta": "-2",
         "global_opportunity_delta": "62"
       }

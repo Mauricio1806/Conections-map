@@ -1320,6 +1320,12 @@ def export_public_dashboard_data(
     if freshness.get("messages_available_for_current_snapshot") is False:
         messages_available = False
     today_str = str(date.today())
+    # The SNAPSHOT's date (e.g. "2026-08-30"), not necessarily today's
+    # wall-clock date — the pipeline can run a day or more after the
+    # snapshot was taken. src/weekly_snapshot_refresh.py records the real
+    # --snapshot-date here; only fall back to today_str when no freshness
+    # record exists yet (ad hoc run outside the weekly refresh script).
+    snapshot_date_str = freshness.get("current_snapshot_date") or today_str
 
     previous_payload = None
     last_available_date = freshness.get("messages_last_available_snapshot_date")
@@ -1345,7 +1351,7 @@ def export_public_dashboard_data(
         lead_section = build_lead_reactivation_public(lead_data)
         lead_section["messages_current_snapshot"] = True
         lead_section["message_data_stale"] = False
-        lead_section["message_data_as_of_date"] = today_str
+        lead_section["message_data_as_of_date"] = snapshot_date_str
     else:
         if lead_data and lead_data.get("messages_csv_available") and lead_data.get("total_conversations", 0) > 0:
             lead_section = build_lead_reactivation_public(lead_data)
@@ -1431,7 +1437,7 @@ def export_public_dashboard_data(
             message export."""
             if messages_available:
                 section["message_data_stale"] = False
-                section["message_data_as_of_date"] = today_str
+                section["message_data_as_of_date"] = snapshot_date_str
                 return section, False
             if section.get("available"):
                 # Real data, but recomputed from a preserved (not this
@@ -1483,8 +1489,8 @@ def export_public_dashboard_data(
             # refreshed from a snapshot's messages when they weren't.
             "messages_freshness": {
                 "messages_available_for_current_snapshot": messages_available,
-                "messages_current_snapshot_date": today_str if messages_available else None,
-                "messages_last_available_snapshot_date": today_str if messages_available else last_available_date,
+                "messages_current_snapshot_date": snapshot_date_str if messages_available else None,
+                "messages_last_available_snapshot_date": snapshot_date_str if messages_available else last_available_date,
                 "message_dependent_sections_status": (
                     "refreshed" if messages_available else "stale_until_messages_export_arrives"
                 ),

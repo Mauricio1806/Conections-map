@@ -1,5 +1,5 @@
 ﻿metric,previous_value,current_value,absolute_delta
 total_connections,12075.0,12263,188.0
-needs_my_response,,74,
-needs_company_mapping,2359.0,2396,37.0
-top_priority_contacts,252.0,256,4.0
+needs_my_response,,75,
+needs_company_mapping,2359.0,2379,20.0
+top_priority_contacts,252.0,253,1.0

@@ -38,7 +38,7 @@ EUROPE,Software Engineer,3,42.7,0
 EUROPE,Sourcer,1,66.0,0
 EUROPE,Talent Acquisition,25,62.4,8
 GLOBAL_CONSULTING,BI Analyst,1,15.0,0
-GLOBAL_CONSULTING,Consultant,101,33.5,0
+GLOBAL_CONSULTING,Consultant,101,33.4,0
 GLOBAL_CONSULTING,Data Analyst,8,25.8,0
 GLOBAL_CONSULTING,Data Engineer,25,35.0,0
 GLOBAL_CONSULTING,Data Scientist,3,47.0,0
@@ -70,7 +70,7 @@ GLOBAL_TECH,Recruiter,1,50.0,0
 GLOBAL_TECH,Talent Acquisition,1,51.0,0
 LATAM_USD,Consultant,9,43.8,0
 LATAM_USD,Data Analyst,1,49.0,0
-LATAM_USD,Data Engineer,11,60.5,1
+LATAM_USD,Data Engineer,11,60.3,0
 LATAM_USD,Data Scientist,2,62.0,0
 LATAM_USD,Director,33,72.1,24
 LATAM_USD,Executive,7,64.4,1
@@ -91,11 +91,11 @@ SPAIN_EU,Data Engineer,2,53.0,0
 SPAIN_EU,Data Scientist,1,57.0,0
 SPAIN_EU,Director,5,64.4,0
 SPAIN_EU,HR,5,48.0,0
-SPAIN_EU,Other,23,40.2,0
+SPAIN_EU,Other,23,40.0,0
 SPAIN_EU,Partner,1,56.0,0
 SPAIN_EU,Project / Program Manager,1,53.0,0
 SPAIN_EU,Recruiter,3,64.7,2
-SPAIN_EU,Talent Acquisition,17,67.4,8
+SPAIN_EU,Talent Acquisition,17,67.2,8
 UNKNOWN,Analytics Engineer,5,26.6,0
 UNKNOWN,BI Analyst,13,27.2,0
 UNKNOWN,Consultant,527,23.6,0
@@ -103,27 +103,27 @@ UNKNOWN,Data Analyst,204,24.0,0
 UNKNOWN,Data Engineer,437,30.6,0
 UNKNOWN,Data Engineering Manager,15,46.1,0
 UNKNOWN,Data Scientist,101,27.3,0
-UNKNOWN,Director,354,46.3,5
+UNKNOWN,Director,354,46.2,4
 UNKNOWN,Engineering Manager,1,42.0,0
 UNKNOWN,Executive,322,44.8,1
 UNKNOWN,Founder,159,42.0,0
 UNKNOWN,HR,1148,26.8,0
 UNKNOWN,Head of Data,61,48.0,1
 UNKNOWN,Hiring Manager,50,50.2,0
-UNKNOWN,Machine Learning / AI,12,32.5,0
-UNKNOWN,Operations,67,23.1,0
-UNKNOWN,Other,4151,17.7,0
+UNKNOWN,Machine Learning / AI,12,32.2,0
+UNKNOWN,Operations,67,23.0,0
+UNKNOWN,Other,4151,17.6,0
 UNKNOWN,Partner,19,38.2,0
 UNKNOWN,Product,66,25.6,0
 UNKNOWN,Project / Program Manager,80,25.4,0
-UNKNOWN,Recruiter,1107,49.3,31
+UNKNOWN,Recruiter,1107,49.3,30
 UNKNOWN,Software Engineer,108,23.8,0
 UNKNOWN,Sourcer,70,43.2,1
 UNKNOWN,Talent Acquisition,1026,49.5,37
 US_CANADA_NEARSHORE,Analytics Engineer,1,57.0,0
 US_CANADA_NEARSHORE,BI Analyst,1,15.0,0
 US_CANADA_NEARSHORE,Consultant,7,37.3,0
-US_CANADA_NEARSHORE,Data Analyst,4,31.2,0
+US_CANADA_NEARSHORE,Data Analyst,4,30.5,0
 US_CANADA_NEARSHORE,Data Engineer,6,42.0,0
 US_CANADA_NEARSHORE,Data Scientist,5,35.2,0
 US_CANADA_NEARSHORE,Director,16,66.8,8

@@ -28,10 +28,10 @@ Lucia Garcia Morquecho,Kings League,HR Director Mexico & Brazil,Director,LATAM_U
 Samuel Pavanati,Boas Novas Gestão de Saúde,Assistente de Recursos Humanos,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,28.0,True,https://www.linkedin.com/in/samuel-pavanati-9b23561a4
 Bruno Ramos,BASF,LATAM Talent Attraction Sr,Other,LATAM_USD_CONFIRMED,confirmed_geographic,43.0,True,https://www.linkedin.com/in/bruno-ramos-uy
 Héctor Sánchez Bernardo,LHH,IT Recruitment Manager,Other,GLOBAL_STAFFING,global_buckets,28.0,True,https://www.linkedin.com/in/hectorsanchezbernardo
-Sebastian Pancini,Trafigura,Senior HR Generalist,HR,NEEDS_COMPANY_MAPPING,needs_mapping,33.0,True,https://www.linkedin.com/in/sebastian-pancini-3a574a69
+Sebastian Pancini,Trafigura,Senior HR Generalist,HR,LATAM_USD_LIKELY,confirmed_geographic,33.0,True,https://www.linkedin.com/in/sebastian-pancini-3a574a69
 Jonathan Gonzalez,Hyatt,Corporate Talent Manager | LAC (Latin America & Caribbean),Talent Acquisition,LATAM_USD_CONFIRMED,confirmed_geographic,83.0,True,https://www.linkedin.com/in/jon-gonzalez-
 Natalia Reyna,AUREN Uruguay,Encargada de RR. HH.,Other,NEEDS_COMPANY_MAPPING,needs_mapping,43.0,True,https://www.linkedin.com/in/natalia-reyna-90428688
-Carla Alonso,Constellium,HRBP,HR,NEEDS_COMPANY_MAPPING,needs_mapping,27.0,True,https://www.linkedin.com/in/carla-alonso-765673165
+Carla Alonso,Constellium,HRBP,HR,LATAM_USD_LIKELY,confirmed_geographic,27.0,True,https://www.linkedin.com/in/carla-alonso-765673165
 paulo william de faria,Inga segurança,Vigilante | Estudante de Desenvolvimento Python em Transição de Carreira,Other,NEEDS_COMPANY_MAPPING,needs_mapping,18.0,True,https://www.linkedin.com/in/paulowilliamdefaria
 Fernanda Ferrari,Kake,Senior Technical Recruiter & Sourcer,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,56.0,True,https://www.linkedin.com/in/fernandaferrari2
 Cristina Jorge Alvarado,Hutchinson,HR Manager,HR,NEEDS_COMPANY_MAPPING,needs_mapping,37.0,True,https://www.linkedin.com/in/cristina-j-0b7123b9
@@ -41,7 +41,7 @@ Hayley Sanchez,Integon Service Co,Senior Recruiter,Recruiter,GLOBAL_OPPORTUNITY,
 Cinthya Arroyo Delgado,Teknei,Directora general,Other,NEEDS_COMPANY_MAPPING,needs_mapping,18.0,True,https://www.linkedin.com/in/cinthya-arroyo-delgado-2b2b2a21
 Karla Hazime Bitencourt,SGF Global,Business Development Manager,Other,LATAM_USD_LIKELY,confirmed_geographic,28.0,True,https://www.linkedin.com/in/karla-bitencourt
 David Carmona,Mphasis,Talent Acquisition Manager - LATAM,Talent Acquisition,LATAM_USD_CONFIRMED,confirmed_geographic,83.0,True,https://www.linkedin.com/in/david-carmona-61805926
-Thyago Santos,The Chemours Company,HRBP,HR,NEEDS_COMPANY_MAPPING,needs_mapping,27.0,True,https://www.linkedin.com/in/thyagodosantos
+Thyago Santos,The Chemours Company,HRBP,HR,LATAM_USD_LIKELY,confirmed_geographic,27.0,True,https://www.linkedin.com/in/thyagodosantos
 Ronaldo Lopes,AI/R,Data Enginner,Other,GLOBAL_TECH,global_buckets,18.0,True,https://www.linkedin.com/in/ronaldolopesalves
 Diego Calvo,Roche,Sr. Regional Talent Acquisition Partner,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,54.0,True,https://www.linkedin.com/in/diego-calvo-chavarria
 Jessika Rezende Carvalho,Kings League,HR Specialist,HR,NEEDS_COMPANY_MAPPING,needs_mapping,30.0,True,https://www.linkedin.com/in/jessika-de-rezende-carvalho
@@ -96,7 +96,7 @@ Anahí González Cázares,Tecnológico de Monterrey,Global Faculty Recruitment,O
 Raquel Chanto Valverde,Citi,Executive Talent Acquisition Execution Lead,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,56.0,True,https://www.linkedin.com/in/quela26
 Clara Berisso,UP.Labs,Technical Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,50.0,True,https://www.linkedin.com/in/claraberisso
 Jocelynne Lowe,A.P. Moller - Maersk,Talent Acquisition & Attraction Delivery Specialist,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,51.0,True,https://www.linkedin.com/in/jocelynnelowe
-Kamal Singh,Axpo Solutions AG,Expert IT Architect,Other,NEEDS_COMPANY_MAPPING,needs_mapping,18.0,True,https://www.linkedin.com/in/kamaldsingh
+Kamal Singh,Axpo Solutions AG,Expert IT Architect,Other,LATAM_USD_LIKELY,confirmed_geographic,18.0,True,https://www.linkedin.com/in/kamaldsingh
 Carina Silva,Avery Dennison,Talent Acquisition and Culture & Engagement Manager Latin America,Talent Acquisition,LATAM_USD_CONFIRMED,confirmed_geographic,83.0,True,https://www.linkedin.com/in/carinadecsilva
 Fiorella La Gamma,The Hackett Group Inc,IT Talent Acquisition & Recruiting Analyst,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,51.0,True,https://www.linkedin.com/in/fiorella-la-gamma
 Oscar Orlando Rodriguez Galarza,Sygno IT Services,Information Technology Recruiter Sr,Recruiter,GLOBAL_CONSULTING,global_buckets,60.0,True,https://www.linkedin.com/in/oscar-orlando-rodriguez-galarza-204937185
@@ -137,14 +137,14 @@ Luis Hernando Meneses M,BibloRed - Red Distrital de Bibliotecas Públicas de Bog
 Yessica Ramirez,Global Business IT Corp,Analista de Capital Humano,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,31.0,True,https://www.linkedin.com/in/yramirezb19
 Darlyn Vargas Solorzano,ManpowerGroup,Talent Acquisition Executive,Talent Acquisition,GLOBAL_STAFFING,global_buckets,61.0,True,https://www.linkedin.com/in/darlyn3b2b98163
 Julio César Umaña González,Workday,Talent Acquisition Partner,Talent Acquisition,GLOBAL_TECH,global_buckets,48.0,True,https://www.linkedin.com/in/julio-umana
-Camila Ornellas,Matera,HRBP Coordinator,HR,NEEDS_COMPANY_MAPPING,needs_mapping,37.0,True,https://www.linkedin.com/in/camila-ornellas
+Camila Ornellas,Matera,HRBP Coordinator,HR,LATAM_USD_LIKELY,confirmed_geographic,37.0,True,https://www.linkedin.com/in/camila-ornellas
 Mariana Reyes Cedeño,Acid Labs,Senior IT Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,56.0,True,https://www.linkedin.com/in/ellen-mariana-reyesabb134bb
 Jorge Arturo Rivera Dozal,Koch,Recruiting Supervisor,Other,GLOBAL_OPPORTUNITY,global_opportunity,28.0,True,https://www.linkedin.com/in/jorge-arturo-rivera-dozal-69aa0717a
 Guy Bevington,TrueNorth®,Managing Director,Director,GLOBAL_OPPORTUNITY,global_opportunity,51.0,True,https://www.linkedin.com/in/guybevington
 Angela Pérez Gómez,Manpower España,Consultant,Consultant,GLOBAL_STAFFING,global_buckets,48.0,True,https://www.linkedin.com/in/angela-p%C3%A9rez-g%C3%B3mez-928965239
 Susheel Mukkera,Yochana,Account Manager,Other,NEEDS_COMPANY_MAPPING,needs_mapping,47.0,True,https://www.linkedin.com/in/susheel-mukkera
-Meridiz Pineda,Lupa Hire,Senior Recruiting Consultant,Consultant,NEEDS_COMPANY_MAPPING,needs_mapping,31.0,True,https://www.linkedin.com/in/meridizpineda
-Aaron Hawthorne,TrueNorth®,Principal Consultant,Consultant,NEEDS_COMPANY_MAPPING,needs_mapping,33.0,True,https://www.linkedin.com/in/aaronhawthornesdatabricks
+Meridiz Pineda,Lupa Hire,Senior Recruiting Consultant,Consultant,US_CANADA_LIKELY,confirmed_geographic,31.0,True,https://www.linkedin.com/in/meridizpineda
+Aaron Hawthorne,TrueNorth®,Principal Consultant,Consultant,LATAM_USD_LIKELY,confirmed_geographic,33.0,True,https://www.linkedin.com/in/aaronhawthornesdatabricks
 JuanJesus Moyano,SOAINT,Tech Talent Acquisition Expert,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/juanjesus-moyano-745a5726a
 Victor Orantes (He/Him),ManpowerGroup,IT Recruiter,Recruiter,GLOBAL_STAFFING,global_buckets,50.0,True,https://www.linkedin.com/in/victor-orantes-he-him-b4a643219
 Laura Díaz Laguardia,Michael Page,Senior Consultant- Sales & Marketing division,Consultant,GLOBAL_STAFFING,global_buckets,31.0,True,https://www.linkedin.com/in/lauradiazlaguardiapagegroup
@@ -161,7 +161,7 @@ Camilo Muñoz Bermudez,Kodland Latinoamérica,Latam Teaching team Leader,Other,L
 Tania Domingues Kuhl Breit,Artycs.ai,Tech Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,50.0,True,https://www.linkedin.com/in/tania-domingues-kuhl-breit-96106952
 Weronyca Nobre Andrade,i9 PROCESS Transformação Digital,Assistente de RH,Other,BRAZIL_CONFIRMED,confirmed_geographic,19.0,True,https://www.linkedin.com/in/weronyca-nobre-andrade-731161213
 Nathalia C.,Motiva,Analista Atração e Seleção Pleno,Other,BRAZIL_CONFIRMED,confirmed_geographic,21.0,True,https://www.linkedin.com/in/nathalia-cadorini
-Irene Rubio Alamán,TalentHackers by Catenon Group,Senior Business Manager,Other,NEEDS_COMPANY_MAPPING,needs_mapping,24.0,True,https://www.linkedin.com/in/irenerubioalaman
+Irene Rubio Alamán,TalentHackers by Catenon Group,Senior Business Manager,Other,LATAM_USD_LIKELY,confirmed_geographic,24.0,True,https://www.linkedin.com/in/irenerubioalaman
 Angel Luis Laguna Fernandez,Michael Page,Especialista Senior en Adquisición de Talento,Other,GLOBAL_STAFFING,global_buckets,21.0,True,https://www.linkedin.com/in/angelluislagunafernandez
 Brezo Arnedo González de Castejón,LHH,IT Executive Associate,Other,GLOBAL_STAFFING,global_buckets,31.0,True,https://www.linkedin.com/in/brezo-arnedo-gonz%C3%A1lez-de-castej%C3%B3n-0b472697
 Rafael Sáenz de la Joya,Akkodis,Talent Acquisition Specialist - Industria / Energía / Automoción / IT,Talent Acquisition,EUROPE_CONFIRMED,confirmed_geographic,51.0,True,https://www.linkedin.com/in/rafael-s%C3%A1enz-de-la-joya-351a42328
@@ -197,11 +197,11 @@ Aramel Reis,Russell Tobin,Lead Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opp
 Maryssol Martins,LinkedIn,Customer Success Manager I LATAM,Other,LATAM_USD_CONFIRMED,confirmed_geographic,53.0,True,https://www.linkedin.com/in/maryssolmartins
 Alexandra Escalante,United States Home Services,Recruiter,Recruiter,US_CANADA_CONFIRMED,confirmed_geographic,77.0,True,https://www.linkedin.com/in/alexandra-escalante-942560209
 Marta Castrillo Sardón,Michael Page,Senior IT Talent Acquistion I,Other,GLOBAL_STAFFING,global_buckets,24.0,True,https://www.linkedin.com/in/marta-castrillo-sard%C3%B3n-2b2075182
-Andre Droghetti,Matera,People Strategy Manager (Sr Manager),Other,NEEDS_COMPANY_MAPPING,needs_mapping,28.0,True,https://www.linkedin.com/in/andre-droghetti-a02b689
+Andre Droghetti,Matera,People Strategy Manager (Sr Manager),Other,LATAM_USD_LIKELY,confirmed_geographic,28.0,True,https://www.linkedin.com/in/andre-droghetti-a02b689
 Jeruska Campos,ExxonMobil,Staff Development Manager,Other,GLOBAL_OPPORTUNITY,global_opportunity,26.0,True,https://www.linkedin.com/in/jeruska-campos-61488345
 Andrea Morales,Kavren Technologies,Human Resources Director,HR,GLOBAL_TECH,global_buckets,48.0,True,https://www.linkedin.com/in/andreamorales66922043
 Olivier Gleijm,Visser & Van Baars,Senior Team Manager | Business Intelligence & Data Management,Other,NEEDS_COMPANY_MAPPING,needs_mapping,24.0,True,https://www.linkedin.com/in/oliviergleijm
-Javier Fullana Baragaño,TalentHackers by Catenon Group,Senior Business Manager - Digital & Technology,Other,NEEDS_COMPANY_MAPPING,needs_mapping,24.0,True,https://www.linkedin.com/in/javierfullana
+Javier Fullana Baragaño,TalentHackers by Catenon Group,Senior Business Manager - Digital & Technology,Other,LATAM_USD_LIKELY,confirmed_geographic,24.0,True,https://www.linkedin.com/in/javierfullana
 Diego Andres Coca,SEIDOR,Analista de Selección y Desarrollo IT,Other,SPAIN_EU_CONFIRMED,confirmed_geographic,44.0,True,https://www.linkedin.com/in/diego-andres-coca-681336169
 Michelaine Silva,remopt,Recrutadora,Other,BRAZIL_CONFIRMED,confirmed_geographic,18.0,True,https://www.linkedin.com/in/michelaine-s-30b985a3
 Niall Okakpu,techstaff-in,Senior Recruitment Consultant | Data Engineering & Data Platforms,Consultant,GLOBAL_TECH,global_buckets,41.0,True,https://www.linkedin.com/in/niall-okakpu-02013410b
@@ -436,7 +436,7 @@ Betania Santos,Spassu,Analista de RH,HR,LANGUAGE_PORTUGUESE_MARKET,language_sign
 Tarishi Swarnkar,GlobeAIra Tech Private Limited,HR Head | Head of People & Culture,HR,GLOBAL_TECH,global_buckets,48.0,True,https://www.linkedin.com/in/tarishi-swarnkar
 David Carballo Iglesias,Tenth Revolution Group,IT Talent Acquisition & Business Development Consultant,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/david-carballo-iglesias-716601175
 Diego Porras,Foxconn,Gerente de Recursos Humanos,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,37.0,True,https://www.linkedin.com/in/diego-porras-ab10a07b
-Ana Luiza Viriato,Matera,HRBP,HR,NEEDS_COMPANY_MAPPING,needs_mapping,27.0,True,https://www.linkedin.com/in/ana-luiza-viriato-b64a87127
+Ana Luiza Viriato,Matera,HRBP,HR,LATAM_USD_LIKELY,confirmed_geographic,27.0,True,https://www.linkedin.com/in/ana-luiza-viriato-b64a87127
 Jose Jimenez,Confiz,Technical Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,50.0,True,https://www.linkedin.com/in/jimenez-jose-s
 Paula Baldão Hahn,ST-One,Coordenadora de Recursos Humanos,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,27.0,True,https://www.linkedin.com/in/paulabaldaohahn
 Liriã Alves Oliveira Rosa,Banco BBC Digital,Analista de Gente e Cultura Pl,Other,GLOBAL_TECH,global_buckets,21.0,True,https://www.linkedin.com/in/liria-alves-oliveira
@@ -572,7 +572,7 @@ Sourabh Chaudhary,Innovise IT,Resource Manager- US,Other,NEEDS_COMPANY_MAPPING,n
 Isabella Martins,EVT,Auxiliar de recrutamento e seleção,Other,BRAZIL_CONFIRMED,confirmed_geographic,19.0,True,https://www.linkedin.com/in/isabella-martins-25830b2b2
 Juan Manuel Montiel Uribe,Hudson RPO,Junior Recruiter,Recruiter,GLOBAL_STAFFING,global_buckets,51.0,True,https://www.linkedin.com/in/juan-manuel-montiel-uribe-70b292328
 Mauricio Leon Vazquez,Cielo Talent,Recruiter at Cielo Talent on Behalf of Weatherford,Recruiter,BRAZIL_CONFIRMED,confirmed_geographic,50.0,True,https://www.linkedin.com/in/mauricio-l-66871867
-Oscar Barcenas,Molex,Human Resources Business Partner at MOLEX,HR,NEEDS_COMPANY_MAPPING,needs_mapping,27.0,True,https://www.linkedin.com/in/oscar-barcenas-7193a134
+Oscar Barcenas,Molex,Human Resources Business Partner at MOLEX,HR,LATAM_USD_LIKELY,confirmed_geographic,27.0,True,https://www.linkedin.com/in/oscar-barcenas-7193a134
 Karen Alexia Jiménez Barreras,Flex,Talent Acquisition Business Partner,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/karen-alexia-jim%C3%A9nez-barreras-091572203
 Liliane Félix Carneiro,Leve Saúde,Analista de Gente e Gestão Sênior,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,30.0,True,https://www.linkedin.com/in/lilianefelixcarneiro
 María de los Angeles Dalmasso,Techunting,Senior IT Talent Acquisition,Talent Acquisition,GLOBAL_STAFFING,global_buckets,91.0,True,https://www.linkedin.com/in/marydalmasso
@@ -674,28 +674,28 @@ Victor Lobo,Supermercados Mambo,Gerente de RH,HR,LANGUAGE_PORTUGUESE_MARKET,lang
 Mariia Pulavska 🌻,DevKit,Talent Sourcer,Sourcer,GLOBAL_OPPORTUNITY,global_opportunity,43.0,True,https://www.linkedin.com/in/mariia-pulavska-%F0%9F%8C%BB-372734219
 Susan Joana Sanchez Diaz,Apuesta Total,Asistente de reclutamiento y selección,Other,LATAM_USD_CONFIRMED,confirmed_geographic,46.0,True,https://www.linkedin.com/in/susan-joana-sanchez-diaz
 Juliana Candido,Engenovar Consultoria,Diretora,Director,GLOBAL_OPPORTUNITY,global_opportunity,51.0,True,https://www.linkedin.com/in/julianacandidorh
-María Inés Calderón,TELUS Digital,Lead Project Coordinator - Generative AI & Robotics,Machine Learning / AI,GLOBAL_TECH,global_buckets,38.0,True,https://www.linkedin.com/in/mar%C3%ADa-in%C3%A9s-calder%C3%B3n-240343b5
-Vinícius Zamperlini,Amazon Web Services (AWS),Sr. Enterprise Account Executive | Client Partner,Other,GLOBAL_TECH,global_buckets,51.0,True,https://www.linkedin.com/in/viniciuszamperlini
-Gisele Queiroz,Biosphera.ntwk,Analista de recrutamento e seleção,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,21.0,True,https://www.linkedin.com/in/gisele-queiroz-917089b5
-Andry Manrique,Accenture,Recruiting Senior Analyst,Data Analyst,US_CANADA_CONFIRMED,confirmed_geographic,30.0,True,https://www.linkedin.com/in/andry-manrique-hernandez
-Aline Silva,ECLIN GESTÃO E MANUTENÇÃO DE EQUIPAMENTOS MÉDICOS HOSPITALARES,Analista de RH Pleno,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,30.0,True,https://www.linkedin.com/in/aline-csilva
-Alina Volovik,Jaxel,Technical Recruiting Manager,Other,NEEDS_COMPANY_MAPPING,needs_mapping,28.0,True,https://www.linkedin.com/in/alina-volovik-281099240
-Michael Collins,iO Associates - UK/EU,Director - Manchester,Director,EUROPE_CONFIRMED,confirmed_geographic,70.0,True,https://www.linkedin.com/in/michaelcollinsio
-Santiago Cepeda Alférez,Corbeta Distribuciones,Analista de Seleccion,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,30.0,True,https://www.linkedin.com/in/santiago-cepeda-alf%C3%A9rez-b37809176
-Marcela Paredes,SuperTalent,Director of Operations and Recruiting,Director,GLOBAL_OPPORTUNITY,global_opportunity,51.0,True,https://www.linkedin.com/in/marcela-paredes-peopleoperations
-Railena Campolina,Infotree Global Solutions,Senior Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,56.0,True,https://www.linkedin.com/in/railena-campolina-9b8754235
-Jéssica Araújo,Grupo Supero,Tech Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,50.0,True,https://www.linkedin.com/in/jessaraujo
-Elena Hernández Torres,HACK A BOSS,Especialista en selección de perfiles IT 💻,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,21.0,True,https://www.linkedin.com/in/elenahdeztorres
-Mayara Sardeli,Psicóloga Mayara Carvalho,Psicóloga clínica,Other,NEEDS_COMPANY_MAPPING,needs_mapping,18.0,True,https://www.linkedin.com/in/mayara-italianodecarvalho
-Flavia Mieiro,Xtedder,Business Manager,Other,NEEDS_COMPANY_MAPPING,needs_mapping,28.0,True,https://www.linkedin.com/in/flaviamieiro
-Victoria Tolón Martínez,Embention,"HR & Talent Management | Spain, UAE & USA",Other,SPAIN_EU_CONFIRMED,confirmed_geographic,45.0,True,https://www.linkedin.com/in/victoriatolonmartinez
-Alicia T.Amez,MTP Métodos y Tecnología,"HR Specialist. Talent Acquisition, Employee Experience Specialist & Work Environment.",Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,51.0,True,https://www.linkedin.com/in/urlaliciaurlaicila
-Marta Lopes,iU Talent,Talent Advisor | Engineering & Industry | Sales & Office | IT at iU Talent Recruitment,Consultant,SPAIN_EU_LIKELY,confirmed_geographic,25.0,True,https://www.linkedin.com/in/marta-lopes-334099193
-Carolina Barber Caso,GMV,People Journey Partner,Other,LOW_VALUE_UNRESOLVED,low_value,18.0,False,https://www.linkedin.com/in/carolina-barber-caso-0641b71bb
-María del Mar Rodríguez Givaudant,Jungheinrich Digital Solutions Spain,Seniot HR Talent Manager,Talent Acquisition,SPAIN_EU_CONFIRMED,confirmed_geographic,81.0,True,https://www.linkedin.com/in/mariadelmarrodriguez
-Kantha M (Ashwin),Naveera Technology LLC,Senior Talent Acquisition Specialist,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,61.0,True,https://www.linkedin.com/in/kantha-m-ashwin-186ba3244
-Cristian Bueno,Unimed Fesp,Gerente de dados,Other,BRAZIL_CONFIRMED,confirmed_geographic,28.0,True,https://www.linkedin.com/in/cristianbueno
-Elaine Secato,NAVA - Technology for Business,HR Business Partner,HR,GLOBAL_TECH,global_buckets,37.0,True,https://www.linkedin.com/in/elaine-secato-1392a664
+María Inés Calderón,TELUS Digital,Lead Project Coordinator - Generative AI & Robotics,Machine Learning / AI,GLOBAL_TECH,global_buckets,35.0,True,https://www.linkedin.com/in/mar%C3%ADa-in%C3%A9s-calder%C3%B3n-240343b5
+Vinícius Zamperlini,Amazon Web Services (AWS),Sr. Enterprise Account Executive | Client Partner,Other,GLOBAL_TECH,global_buckets,48.0,True,https://www.linkedin.com/in/viniciuszamperlini
+Gisele Queiroz,Biosphera.ntwk,Analista de recrutamento e seleção,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,18.0,True,https://www.linkedin.com/in/gisele-queiroz-917089b5
+Andry Manrique,Accenture,Recruiting Senior Analyst,Data Analyst,US_CANADA_CONFIRMED,confirmed_geographic,27.0,True,https://www.linkedin.com/in/andry-manrique-hernandez
+Aline Silva,ECLIN GESTÃO E MANUTENÇÃO DE EQUIPAMENTOS MÉDICOS HOSPITALARES,Analista de RH Pleno,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,27.0,True,https://www.linkedin.com/in/aline-csilva
+Alina Volovik,Jaxel,Technical Recruiting Manager,Other,NEEDS_COMPANY_MAPPING,needs_mapping,25.0,True,https://www.linkedin.com/in/alina-volovik-281099240
+Michael Collins,iO Associates - UK/EU,Director - Manchester,Director,EUROPE_CONFIRMED,confirmed_geographic,67.0,True,https://www.linkedin.com/in/michaelcollinsio
+Santiago Cepeda Alférez,Corbeta Distribuciones,Analista de Seleccion,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,27.0,True,https://www.linkedin.com/in/santiago-cepeda-alf%C3%A9rez-b37809176
+Marcela Paredes,SuperTalent,Director of Operations and Recruiting,Director,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/marcela-paredes-peopleoperations
+Railena Campolina,Infotree Global Solutions,Senior Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,53.0,True,https://www.linkedin.com/in/railena-campolina-9b8754235
+Jéssica Araújo,Grupo Supero,Tech Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,47.0,True,https://www.linkedin.com/in/jessaraujo
+Elena Hernández Torres,HACK A BOSS,Especialista en selección de perfiles IT 💻,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,18.0,True,https://www.linkedin.com/in/elenahdeztorres
+Mayara Sardeli,Psicóloga Mayara Carvalho,Psicóloga clínica,Other,NEEDS_COMPANY_MAPPING,needs_mapping,15.0,True,https://www.linkedin.com/in/mayara-italianodecarvalho
+Flavia Mieiro,Xtedder,Business Manager,Other,NEEDS_COMPANY_MAPPING,needs_mapping,25.0,True,https://www.linkedin.com/in/flaviamieiro
+Victoria Tolón Martínez,Embention,"HR & Talent Management | Spain, UAE & USA",Other,SPAIN_EU_CONFIRMED,confirmed_geographic,42.0,True,https://www.linkedin.com/in/victoriatolonmartinez
+Alicia T.Amez,MTP Métodos y Tecnología,"HR Specialist. Talent Acquisition, Employee Experience Specialist & Work Environment.",Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/urlaliciaurlaicila
+Marta Lopes,iU Talent,Talent Advisor | Engineering & Industry | Sales & Office | IT at iU Talent Recruitment,Consultant,SPAIN_EU_LIKELY,confirmed_geographic,22.0,True,https://www.linkedin.com/in/marta-lopes-334099193
+Carolina Barber Caso,GMV,People Journey Partner,Other,LOW_VALUE_UNRESOLVED,low_value,15.0,False,https://www.linkedin.com/in/carolina-barber-caso-0641b71bb
+María del Mar Rodríguez Givaudant,Jungheinrich Digital Solutions Spain,Seniot HR Talent Manager,Talent Acquisition,SPAIN_EU_CONFIRMED,confirmed_geographic,78.0,True,https://www.linkedin.com/in/mariadelmarrodriguez
+Kantha M (Ashwin),Naveera Technology LLC,Senior Talent Acquisition Specialist,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,58.0,True,https://www.linkedin.com/in/kantha-m-ashwin-186ba3244
+Cristian Bueno,Unimed Fesp,Gerente de dados,Other,BRAZIL_CONFIRMED,confirmed_geographic,25.0,True,https://www.linkedin.com/in/cristianbueno
+Elaine Secato,NAVA - Technology for Business,HR Business Partner,HR,GLOBAL_TECH,global_buckets,34.0,True,https://www.linkedin.com/in/elaine-secato-1392a664
 Saskia Fernández,Aire,"HR Business Partner IT, Legal & Compliance",HR,GLOBAL_TECH,global_buckets,24.0,True,https://www.linkedin.com/in/saskia-fernandez
 Marcos Aureliano,Johnson & Johnson,Business Intelligence Expecialist,Other,LATAM_USD_LIKELY,confirmed_geographic,15.0,True,https://www.linkedin.com/in/marcos-aureliano
 kaio Jeso,CFO Company,Analista de Dados,Data Analyst,LANGUAGE_PORTUGUESE_MARKET,language_signal,27.0,True,https://www.linkedin.com/in/kaio-jeso-978826186
@@ -1102,7 +1102,7 @@ Bárbara Cianni,"pml, we know how",HR Coordinator,Other,NEEDS_COMPANY_MAPPING,ne
 Maíra Souto,Clan,"HR Consultant | Engineering, IT, Logistics & Manufacturing",Operations,GLOBAL_OPPORTUNITY,global_opportunity,42.0,True,https://www.linkedin.com/in/ma%C3%ADra-souto
 Daniel Perez Colomer,Cecotec,Técnico de selección de personal,Other,BRAZIL_CONFIRMED,confirmed_geographic,15.0,True,https://www.linkedin.com/in/daniel-perez-colomer-626446223
 Carolina Souto Diéguez,Manpower España,Talent Consultant Professional,Consultant,GLOBAL_STAFFING,global_buckets,45.0,True,https://www.linkedin.com/in/carolina-souto-di%C3%A9guez-040abb3b
-Gorka Hermo Uruñuela,Constellium,HR Manager,HR,NEEDS_COMPANY_MAPPING,needs_mapping,34.0,True,https://www.linkedin.com/in/gorkahermo
+Gorka Hermo Uruñuela,Constellium,HR Manager,HR,LATAM_USD_LIKELY,confirmed_geographic,34.0,True,https://www.linkedin.com/in/gorkahermo
 Teresa Berlanga Porras,Administrativando Abogados,Directora de Recursos Humanos y Gestión Corporativa,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,24.0,True,https://www.linkedin.com/in/teresa-berlanga
 Aida C. Cantillo G.,People A&M,Consulting Specialist,Consultant,NEEDS_COMPANY_MAPPING,needs_mapping,25.0,True,https://www.linkedin.com/in/aidacantillo
 Vanderleia Mac Donald,BIZAY,Recursos humanos,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,24.0,True,https://www.linkedin.com/in/vanderleia-mac-donald-a053b8197
@@ -1329,7 +1329,7 @@ Valentina Ocampo Gómez,Team 360 Staffing,Team Lead Recruitment,Recruiter,GLOBAL
 Lucas Ezequiel Keller,Accenture,Recruiting Analyst,Other,US_CANADA_CONFIRMED,confirmed_geographic,18.0,True,https://www.linkedin.com/in/lucas-ezequiel-keller1994
 Michelle Cefariello,Deutsche WertpapierService Bank AG,HR Business Partner,HR,NEEDS_COMPANY_MAPPING,needs_mapping,24.0,True,https://www.linkedin.com/in/michelle-cefariello-66a34914a
 Laura Barros Nucci,Ascend BPO,TALENT ACQUISITION & HR SPECIALIST,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/laura-barros-nucci-043b4b168
-Rahine Rodriguez,Axpo Group,Squad Lead Channel Management,Other,NEEDS_COMPANY_MAPPING,needs_mapping,23.0,True,https://www.linkedin.com/in/rahirodriguez
+Rahine Rodriguez,Axpo Group,Squad Lead Channel Management,Other,LATAM_USD_LIKELY,confirmed_geographic,23.0,True,https://www.linkedin.com/in/rahirodriguez
 Felipe O. Rubini,Radix,Senior Business Analyst,Data Analyst,BRAZIL_CONFIRMED,confirmed_geographic,27.0,True,https://www.linkedin.com/in/feliperubini
 Carlos Souza,Pixida do Brasil,CEO,Executive,BRAZIL_CONFIRMED,confirmed_geographic,56.0,True,https://www.linkedin.com/in/carlossrobert
 Anusha Raj,OptimHire,Hiring Manager,Hiring Manager,GLOBAL_OPPORTUNITY,global_opportunity,52.0,True,https://www.linkedin.com/in/anusha-raj-a327a4244
@@ -2103,50 +2103,50 @@ Mohammad Imroz Khan,"LanceSoft, Inc",Assistant Team Lead - Talent Acquisition,Ta
 Lorena García Romano,Sancor Seguros Uruguay,Lider de Capital Humano,Other,LATAM_USD_CONFIRMED,confirmed_geographic,48.0,True,https://www.linkedin.com/in/lorenagarciaromano
 Silvana Medeiros,White Cube Tecnologia da Informação,Gerente de RH,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,34.0,True,https://www.linkedin.com/in/silvana-medeiros-4aab1b15b
 María Pía Lazzarini,Ocean Network Express,Human Resources Analyst,HR,NEEDS_COMPANY_MAPPING,needs_mapping,27.0,True,https://www.linkedin.com/in/mar%C3%ADa-p%C3%ADa-lazzarini-b13348193
-Léamara Fiorini,Nutrata,Supervisor de RH,Other,NEEDS_COMPANY_MAPPING,needs_mapping,25.0,True,https://www.linkedin.com/in/l%C3%A9amara-fiorini-899035287
-Dahiana Fleitas,Quantik,Talent Development Leader,Other,LATAM_USD_LIKELY,confirmed_geographic,15.0,True,https://www.linkedin.com/in/dahiana-fleitas-23598b14a
-Gabriel Luppi,Nuevo Manantial SA,Auxiliar de RR. HH.,Other,BRAZIL_CONFIRMED,confirmed_geographic,16.0,True,https://www.linkedin.com/in/gabriel-luppi-2908
-Juan Martín Helguera Suzuki,Randstad Uruguay,Especialista de Cuentas,Other,GLOBAL_STAFFING,global_buckets,43.0,True,https://www.linkedin.com/in/juanmartinhelguerasuzuki
-Andrea Arbelo Chijane,Latechco,Head of HR,Other,GLOBAL_TECH,global_buckets,36.0,True,https://www.linkedin.com/in/andrea-arbelo-chijane-38129b36
-Walter Ferreira dos Santos,WFS Data Solutions,Especialista em Dados TI,Other,GLOBAL_TECH,global_buckets,28.0,True,https://www.linkedin.com/in/walterferreirasantos
-Juan Ignacio Piccoli,1950Labs,Operations Manager,Operations,LATAM_USD_LIKELY,confirmed_geographic,27.0,True,https://www.linkedin.com/in/ignacio-piccoli-talent-tech-latam
-Rosina Varela,Streaver,People & Talent Manager,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,55.0,True,https://www.linkedin.com/in/rosina-varela
-Agustina Giménez D´Anatro,Glic Solutions,Head of People,Other,NEEDS_COMPANY_MAPPING,needs_mapping,26.0,True,https://www.linkedin.com/in/agustina-gim%C3%A9nez-d%C2%B4anatro-9691b466
-Martin Schultheis,Randstad Uruguay,Senior Talent Acquisition,Talent Acquisition,GLOBAL_STAFFING,global_buckets,76.0,True,https://www.linkedin.com/in/martin-schultheis
-Carlos Fournier,BASF Services Americas,"Head, Global Technology Unit",Other,LATAM_USD_LIKELY,confirmed_geographic,15.0,True,https://www.linkedin.com/in/carlosfournier
-Walter Alvarado Cabanillas,NTT DATA Europe & Latam,Senior Data Engineer,Data Engineer,GLOBAL_CONSULTING,global_buckets,71.0,True,https://www.linkedin.com/in/walter-ac
-Denébola Arruda,Ruby Labs,Billing Delivery Manager,Project / Program Manager,NEEDS_COMPANY_MAPPING,needs_mapping,30.0,True,https://www.linkedin.com/in/den%C3%A9bola-arruda-0556a3147
-Ludmila Valverde,Proyectos Engineering,HR,Other,NEEDS_COMPANY_MAPPING,needs_mapping,25.0,True,https://www.linkedin.com/in/ludmila-valverde
-Zeynep Birtürk,INFINIA,Sr. People & Culture Specialist,HR,NEEDS_COMPANY_MAPPING,needs_mapping,27.0,True,https://www.linkedin.com/in/zeynepbirturk
-Fernando Zambrano,Practia Uruguay,IT Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,72.0,True,https://www.linkedin.com/in/fernando-zambrano-8aa61220a
-Lic. Karina Casavieja,Urudata,Head of HR,Other,GLOBAL_TECH,global_buckets,36.0,True,https://www.linkedin.com/in/karina-casavieja
-Tania Berjis,Thaloz,Chief Recruitment Officer | Talent Acquisition,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,58.0,True,https://www.linkedin.com/in/tania-berjis
-Lucía Mattos Fiorito,ALGORTA S.A,Responsable de Capital Humano,Other,NEEDS_COMPANY_MAPPING,needs_mapping,25.0,True,https://www.linkedin.com/in/luc%C3%ADa-mattos-fiorito-269aa23b
-Alberto Basile,Sertrading,IT Director | CIO | CTO | DPO | Partner,Director,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/alberto-basile-828864131
-Micaela Echeveste Castillo,Randstad Uruguay,Especialista de cuentas,Other,GLOBAL_STAFFING,global_buckets,43.0,True,https://www.linkedin.com/in/micaela-echeveste-castillo-15575a165
-Karina Lujan Olivera,Kingspan Uruguay,Gerente de RR. HH.,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,50.0,True,https://www.linkedin.com/in/karina-lujan-olivera-67212288
-Jessica Fernández,Colegio y Liceo Hans Christian Andersen,"Responsable de Gestión Humana, Seguridad y Salud en el Trabajo",Other,NEEDS_COMPANY_MAPPING,needs_mapping,25.0,True,https://www.linkedin.com/in/jessicafern%C3%A1ndez
-Micaela Ferrari Vechtas,CASH,Analista de Atracción y Desarrollo de Talento,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,18.0,True,https://www.linkedin.com/in/mferrarivechtas
-Lisandra Sapanhós,Sertrading,Coordenador de garantia de qualidade,Other,BRAZIL_CONFIRMED,confirmed_geographic,44.0,True,https://www.linkedin.com/in/lisandra-sapanh%C3%B3s-7a1561197
-Ingrid Vasques,Ultragaz,Analista de Governança de TI,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,18.0,True,https://www.linkedin.com/in/ingrid-vasques-4203527a
-Florencia Urioste Esquivel,PKF Uruguay,Licenciada en Relaciones Laborales,Other,NEEDS_COMPANY_MAPPING,needs_mapping,40.0,True,https://www.linkedin.com/in/florencia-urioste-esquivel-6245201a8
-Jose Ignacio Correa Damacena,CASH,Supervisor Zonal,Other,LATAM_USD_LIKELY,confirmed_geographic,25.0,True,https://www.linkedin.com/in/jose-ignacio-correa-damacena
-Bruna Ziviani,ONR • Registro de Imóveis Eletrônico,Gerente de governança em TI,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,25.0,True,https://www.linkedin.com/in/bruna-ziviani-gover
-Romina Guerrero,Quantik,Talent Acquisition Analyst,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/romina-guerrero-ab8883146
-Victoria González,Master Sales Group,Asistente de Personas y Cultura,Other,LATAM_USD_CONFIRMED,confirmed_geographic,16.0,True,https://www.linkedin.com/in/victoria-gonz%C3%A1lez-36b970264
-Javiera Garrido Mellado,Encuadrado,Head of People,Other,NEEDS_COMPANY_MAPPING,needs_mapping,26.0,True,https://www.linkedin.com/in/javigarridomellado
-Andréa Gosenheimer Hattge,Axia.RH,Diretora,Director,GLOBAL_OPPORTUNITY,global_opportunity,48.0,True,https://www.linkedin.com/in/andreagosenheimerhattge
-Federico Obiague,UPM,HR Manager,HR,LOW_VALUE_UNRESOLVED,low_value,34.0,False,https://www.linkedin.com/in/federico-obiague-4989b651
-"Muhammad Abdul-Rehman,MBA(HR), CSSR (AIRS), CHRMP",mobileLIVE Inc,Talent Acquisition Manager,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,55.0,True,https://www.linkedin.com/in/muhammad-abdul-rehman-mba-hr-cssr-airs-chrmp-90906640
-Eduardo Chuaste Junior,Datum,Executivo Comercial,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,16.0,True,https://www.linkedin.com/in/chuastejr
-Natalia De Almeida,BASF,Business Enablement Manager | Technology Unit,Other,LATAM_USD_LIKELY,confirmed_geographic,25.0,True,https://www.linkedin.com/in/natalia-de-almeida-1b5b02114
-Mariana Malta Cruz,Deloitte,Senior Consultant | Human Capital FS,Consultant,GLOBAL_CONSULTING,global_buckets,28.0,True,https://www.linkedin.com/in/mariana-malta-cruz-59a10a368
-António Pereira da Silva,Lusitania,HR Partner | Talent & Development,Other,NEEDS_COMPANY_MAPPING,needs_mapping,15.0,True,https://www.linkedin.com/in/antonio-coelho-pereira-da-silva-rh
-Ana Belén Franco,Advice Consulting,Analista de Outsourcing,Consultant,GLOBAL_CONSULTING,global_buckets,35.0,True,https://www.linkedin.com/in/ana-bel%C3%A9n-franco-ramos
-María Inés Ramos,MSL Corporate,Human Resources Coordinator,HR,NEEDS_COMPANY_MAPPING,needs_mapping,34.0,True,https://www.linkedin.com/in/mar%C3%ADa-in%C3%A9s-ramos-1319025a
-Adrian Giannantonio Masci,Randstad Uruguay,Commercial Manager,Other,GLOBAL_STAFFING,global_buckets,50.0,True,https://www.linkedin.com/in/adrian-giannantonio-masci-7a914b97
-Lucía Mansilla Ortíz,OrangeLoops,People Specialist,Other,NEEDS_COMPANY_MAPPING,needs_mapping,18.0,True,https://www.linkedin.com/in/luciamansillaortiz
-James Lowe,7IM,Partner,Other,LOW_VALUE_UNRESOLVED,low_value,15.0,False,https://www.linkedin.com/in/jamesrlowe
+Léamara Fiorini,Nutrata,Supervisor de RH,Other,NEEDS_COMPANY_MAPPING,needs_mapping,22.0,True,https://www.linkedin.com/in/l%C3%A9amara-fiorini-899035287
+Dahiana Fleitas,Quantik,Talent Development Leader,Other,LATAM_USD_LIKELY,confirmed_geographic,12.0,True,https://www.linkedin.com/in/dahiana-fleitas-23598b14a
+Gabriel Luppi,Nuevo Manantial SA,Auxiliar de RR. HH.,Other,BRAZIL_CONFIRMED,confirmed_geographic,13.0,True,https://www.linkedin.com/in/gabriel-luppi-2908
+Juan Martín Helguera Suzuki,Randstad Uruguay,Especialista de Cuentas,Other,GLOBAL_STAFFING,global_buckets,40.0,True,https://www.linkedin.com/in/juanmartinhelguerasuzuki
+Andrea Arbelo Chijane,Latechco,Head of HR,Other,GLOBAL_TECH,global_buckets,33.0,True,https://www.linkedin.com/in/andrea-arbelo-chijane-38129b36
+Walter Ferreira dos Santos,WFS Data Solutions,Especialista em Dados TI,Other,GLOBAL_TECH,global_buckets,25.0,True,https://www.linkedin.com/in/walterferreirasantos
+Juan Ignacio Piccoli,1950Labs,Operations Manager,Operations,LATAM_USD_LIKELY,confirmed_geographic,24.0,True,https://www.linkedin.com/in/ignacio-piccoli-talent-tech-latam
+Rosina Varela,Streaver,People & Talent Manager,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,52.0,True,https://www.linkedin.com/in/rosina-varela
+Agustina Giménez D´Anatro,Glic Solutions,Head of People,Other,NEEDS_COMPANY_MAPPING,needs_mapping,23.0,True,https://www.linkedin.com/in/agustina-gim%C3%A9nez-d%C2%B4anatro-9691b466
+Martin Schultheis,Randstad Uruguay,Senior Talent Acquisition,Talent Acquisition,GLOBAL_STAFFING,global_buckets,73.0,True,https://www.linkedin.com/in/martin-schultheis
+Carlos Fournier,BASF Services Americas,"Head, Global Technology Unit",Other,LATAM_USD_LIKELY,confirmed_geographic,12.0,True,https://www.linkedin.com/in/carlosfournier
+Walter Alvarado Cabanillas,NTT DATA Europe & Latam,Senior Data Engineer,Data Engineer,GLOBAL_CONSULTING,global_buckets,68.0,True,https://www.linkedin.com/in/walter-ac
+Denébola Arruda,Ruby Labs,Billing Delivery Manager,Project / Program Manager,NEEDS_COMPANY_MAPPING,needs_mapping,27.0,True,https://www.linkedin.com/in/den%C3%A9bola-arruda-0556a3147
+Ludmila Valverde,Proyectos Engineering,HR,Other,NEEDS_COMPANY_MAPPING,needs_mapping,22.0,True,https://www.linkedin.com/in/ludmila-valverde
+Zeynep Birtürk,INFINIA,Sr. People & Culture Specialist,HR,NEEDS_COMPANY_MAPPING,needs_mapping,24.0,True,https://www.linkedin.com/in/zeynepbirturk
+Fernando Zambrano,Practia Uruguay,IT Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,69.0,True,https://www.linkedin.com/in/fernando-zambrano-8aa61220a
+Lic. Karina Casavieja,Urudata,Head of HR,Other,GLOBAL_TECH,global_buckets,33.0,True,https://www.linkedin.com/in/karina-casavieja
+Tania Berjis,Thaloz,Chief Recruitment Officer | Talent Acquisition,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,55.0,True,https://www.linkedin.com/in/tania-berjis
+Lucía Mattos Fiorito,ALGORTA S.A,Responsable de Capital Humano,Other,NEEDS_COMPANY_MAPPING,needs_mapping,22.0,True,https://www.linkedin.com/in/luc%C3%ADa-mattos-fiorito-269aa23b
+Alberto Basile,Sertrading,IT Director | CIO | CTO | DPO | Partner,Director,GLOBAL_OPPORTUNITY,global_opportunity,45.0,True,https://www.linkedin.com/in/alberto-basile-828864131
+Micaela Echeveste Castillo,Randstad Uruguay,Especialista de cuentas,Other,GLOBAL_STAFFING,global_buckets,40.0,True,https://www.linkedin.com/in/micaela-echeveste-castillo-15575a165
+Karina Lujan Olivera,Kingspan Uruguay,Gerente de RR. HH.,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,47.0,True,https://www.linkedin.com/in/karina-lujan-olivera-67212288
+Jessica Fernández,Colegio y Liceo Hans Christian Andersen,"Responsable de Gestión Humana, Seguridad y Salud en el Trabajo",Other,NEEDS_COMPANY_MAPPING,needs_mapping,22.0,True,https://www.linkedin.com/in/jessicafern%C3%A1ndez
+Micaela Ferrari Vechtas,CASH,Analista de Atracción y Desarrollo de Talento,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,15.0,True,https://www.linkedin.com/in/mferrarivechtas
+Lisandra Sapanhós,Sertrading,Coordenador de garantia de qualidade,Other,BRAZIL_CONFIRMED,confirmed_geographic,41.0,True,https://www.linkedin.com/in/lisandra-sapanh%C3%B3s-7a1561197
+Ingrid Vasques,Ultragaz,Analista de Governança de TI,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,15.0,True,https://www.linkedin.com/in/ingrid-vasques-4203527a
+Florencia Urioste Esquivel,PKF Uruguay,Licenciada en Relaciones Laborales,Other,NEEDS_COMPANY_MAPPING,needs_mapping,37.0,True,https://www.linkedin.com/in/florencia-urioste-esquivel-6245201a8
+Jose Ignacio Correa Damacena,CASH,Supervisor Zonal,Other,LATAM_USD_LIKELY,confirmed_geographic,22.0,True,https://www.linkedin.com/in/jose-ignacio-correa-damacena
+Bruna Ziviani,ONR • Registro de Imóveis Eletrônico,Gerente de governança em TI,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,22.0,True,https://www.linkedin.com/in/bruna-ziviani-gover
+Romina Guerrero,Quantik,Talent Acquisition Analyst,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,45.0,True,https://www.linkedin.com/in/romina-guerrero-ab8883146
+Victoria González,Master Sales Group,Asistente de Personas y Cultura,Other,LATAM_USD_CONFIRMED,confirmed_geographic,13.0,True,https://www.linkedin.com/in/victoria-gonz%C3%A1lez-36b970264
+Javiera Garrido Mellado,Encuadrado,Head of People,Other,NEEDS_COMPANY_MAPPING,needs_mapping,23.0,True,https://www.linkedin.com/in/javigarridomellado
+Andréa Gosenheimer Hattge,Axia.RH,Diretora,Director,GLOBAL_OPPORTUNITY,global_opportunity,45.0,True,https://www.linkedin.com/in/andreagosenheimerhattge
+Federico Obiague,UPM,HR Manager,HR,LOW_VALUE_UNRESOLVED,low_value,31.0,False,https://www.linkedin.com/in/federico-obiague-4989b651
+"Muhammad Abdul-Rehman,MBA(HR), CSSR (AIRS), CHRMP",mobileLIVE Inc,Talent Acquisition Manager,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,52.0,True,https://www.linkedin.com/in/muhammad-abdul-rehman-mba-hr-cssr-airs-chrmp-90906640
+Eduardo Chuaste Junior,Datum,Executivo Comercial,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,13.0,True,https://www.linkedin.com/in/chuastejr
+Natalia De Almeida,BASF,Business Enablement Manager | Technology Unit,Other,LATAM_USD_LIKELY,confirmed_geographic,22.0,True,https://www.linkedin.com/in/natalia-de-almeida-1b5b02114
+Mariana Malta Cruz,Deloitte,Senior Consultant | Human Capital FS,Consultant,GLOBAL_CONSULTING,global_buckets,25.0,True,https://www.linkedin.com/in/mariana-malta-cruz-59a10a368
+António Pereira da Silva,Lusitania,HR Partner | Talent & Development,Other,NEEDS_COMPANY_MAPPING,needs_mapping,12.0,True,https://www.linkedin.com/in/antonio-coelho-pereira-da-silva-rh
+Ana Belén Franco,Advice Consulting,Analista de Outsourcing,Consultant,GLOBAL_CONSULTING,global_buckets,32.0,True,https://www.linkedin.com/in/ana-bel%C3%A9n-franco-ramos
+María Inés Ramos,MSL Corporate,Human Resources Coordinator,HR,NEEDS_COMPANY_MAPPING,needs_mapping,31.0,True,https://www.linkedin.com/in/mar%C3%ADa-in%C3%A9s-ramos-1319025a
+Adrian Giannantonio Masci,Randstad Uruguay,Commercial Manager,Other,GLOBAL_STAFFING,global_buckets,47.0,True,https://www.linkedin.com/in/adrian-giannantonio-masci-7a914b97
+Lucía Mansilla Ortíz,OrangeLoops,People Specialist,Other,NEEDS_COMPANY_MAPPING,needs_mapping,15.0,True,https://www.linkedin.com/in/luciamansillaortiz
+James Lowe,7IM,Partner,Other,LOW_VALUE_UNRESOLVED,low_value,12.0,False,https://www.linkedin.com/in/jamesrlowe
 André Luiz Oliveira,Airbus,HRBP and Talent Management,HR,EUROPE_CONFIRMED,confirmed_geographic,21.0,True,https://www.linkedin.com/in/andr%C3%A9-luiz-oliveira-b826a6158
 Sıla Yerden,Duhan,Talent Acquisition Specialist,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,45.0,True,https://www.linkedin.com/in/s%C4%B1la-yerden-105711168
 Romain Vernoux,Zenika,"Head of delivery, associate",Other,LATAM_USD_LIKELY,confirmed_geographic,23.0,True,https://www.linkedin.com/in/romain-vernoux
@@ -2262,7 +2262,7 @@ Maria Fernanda Bidegain,Alsea,Jefe de People Experience Domino`s Pizza Sudameric
 Johana Iglesias,AmSpec Group,Global HR - Environmental Business Line,Other,NEEDS_COMPANY_MAPPING,needs_mapping,12.0,True,https://www.linkedin.com/in/johanaiglesias
 María Eugenia Boquete López,Sofitel Montevideo Casino Carrasco & Spa,Gerente de Personas & Cultura (RRHH),HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,31.0,True,https://www.linkedin.com/in/mar%C3%ADaeugeniaboquete
 Eliana Marques,Consultorio Psicológico Privado - TCC,Licenciada en Psicología - Especialista en Análisis de la Conducta,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,15.0,True,https://www.linkedin.com/in/eliana-marquess
-Javier Carrau,Trafigura,Human Resources Manager,HR,NEEDS_COMPANY_MAPPING,needs_mapping,31.0,True,https://www.linkedin.com/in/javier-carrau
+Javier Carrau,Trafigura,Human Resources Manager,HR,LATAM_USD_LIKELY,confirmed_geographic,31.0,True,https://www.linkedin.com/in/javier-carrau
 Antonieta Arancibia,Municipalidad de Lo Barnechea,Analista de Gestión de Personas,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,15.0,True,https://www.linkedin.com/in/antonieta-arancibia-607b30213
 Andrea Pérsico,Claro Uruguay,Gerente de RRHH y Servicios al Cliente,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,56.0,True,https://www.linkedin.com/in/andrea-p%C3%A9rsico-015b483a
 Macarena Cusicanqui Rodríguez,Explora,Talent Management Analyst,Other,NEEDS_COMPANY_MAPPING,needs_mapping,15.0,True,https://www.linkedin.com/in/macarena-cusicanqui
@@ -4575,7 +4575,7 @@ Molly Rosneck Golembiewski,"Engineering Technology Associates, Inc",Technical Re
 Benaiah David Raj Pilli,Enterprise Business Data,US IT RECRUITER,Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,54.0,True,https://www.linkedin.com/in/benaiah-david-raj-pilli-2b7619211
 Arpit Gaikwad,Empower Professionals Inc,Talent Acquisition Manager,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,52.0,True,https://www.linkedin.com/in/arpit-gaikwad-6086b433
 SACHIN SADHYA,VYZE INC,Talent Acquisition Specialist,Talent Acquisition,GLOBAL_OPPORTUNITY,global_opportunity,45.0,True,https://www.linkedin.com/in/sachin-sadhya-3361a9282
-Clément Bénamara,Roche,Principal AI Engineer,Data Scientist,NEEDS_COMPANY_MAPPING,needs_mapping,32.0,True,https://www.linkedin.com/in/clement-benamara-data-engineer
+Clément Bénamara,Roche,Principal AI Engineer,Data Scientist,LATAM_USD_LIKELY,confirmed_geographic,32.0,True,https://www.linkedin.com/in/clement-benamara-data-engineer
 Nikhil Kadu,DPP Tech,Senior Human Resources Recruiter (Senior IT Recruiter),Recruiter,GLOBAL_OPPORTUNITY,global_opportunity,60.0,True,https://www.linkedin.com/in/nikhil-kadu-81b2a8206
 Isabelle Eler,Janea Systems,Team Lead Sourcing (interim),Sourcer,GLOBAL_OPPORTUNITY,global_opportunity,45.0,True,https://www.linkedin.com/in/isabelle-eler
 Wilson Kadam,Satguru Technosoft Consulting Group Inc. (STCG),Sr. Technical Lead Recruiter,Recruiter,GLOBAL_CONSULTING,global_buckets,60.0,True,https://www.linkedin.com/in/wiphilip
@@ -5039,7 +5039,7 @@ Gaganpreet Singh,The Citco Group Limited,Data and AI Manager,Other,NEEDS_COMPANY
 Julien Laszlo,Aquila Data Enabler,Business Manager,Other,GLOBAL_TECH,global_buckets,32.0,True,https://www.linkedin.com/in/julien-laszlo-7a082876
 Edson Paixão,Secretaria de Educação do Estado da Bahia,Psicólogo,Other,BRAZIL_CONFIRMED,confirmed_geographic,12.0,True,https://www.linkedin.com/in/edsonpaixaorh
 Jalpesh Vyas,Capgemini,Talent Acquisition Lead - Financial Services and Insight & Data,Talent Acquisition,GLOBAL_CONSULTING,global_buckets,50.0,True,https://www.linkedin.com/in/jalpesh-vyas-6112716
-Anke Schwerdt,Roche,Head Clinical Master Data,Other,NEEDS_COMPANY_MAPPING,needs_mapping,12.0,True,https://www.linkedin.com/in/anke-schwerdt-708582a2
+Anke Schwerdt,Roche,Head Clinical Master Data,Other,LATAM_USD_LIKELY,confirmed_geographic,12.0,True,https://www.linkedin.com/in/anke-schwerdt-708582a2
 "Cindy Camacho, MBA, CPM, CSPO, PMMC",Cisco,"Leader, Product Lifecycle Excellence",Other,NEEDS_COMPANY_MAPPING,needs_mapping,12.0,True,https://www.linkedin.com/in/cindycamacho
 Alessandro Alfano,Accelya Group,"Senior Vice President, Product and Technology",Director,GLOBAL_OPPORTUNITY,global_opportunity,40.0,True,https://www.linkedin.com/in/alessandro-alfano
 Fabiana Sousa Santos,Capitani Group,Coordenador de novos negócios,Other,BRAZIL_CONFIRMED,confirmed_geographic,49.0,True,https://www.linkedin.com/in/fabiana-sousa-santos-46a729302
@@ -8926,14 +8926,14 @@ Juliana Silva,STABL Energy,Recruiter,Recruiter,GLOBAL_OPPORTUNITY,global_opportu
 "Vikas Singh , MBA",Boston Scientific,"Sr Manager, Business Transformation - Warehouse to Deliver",Other,US_CANADA_CONFIRMED,confirmed_geographic,49.0,True,https://www.linkedin.com/in/vikassingh26
 Belén Bandrés Pascual,Robert Walters,Senior Consultant - Engineering Division,Consultant,LATAM_USD_LIKELY,confirmed_geographic,25.0,True,https://www.linkedin.com/in/bel%C3%A9n-bandr%C3%A9s-pascual-396307218
 Filipe R. Colombo,Anjo Tintas e Solventes,CEO,Executive,GLOBAL_OPPORTUNITY,global_opportunity,44.0,True,https://www.linkedin.com/in/filipercolombo
-Sumara Dornelas,PaulOOctavio,Analista de Recursos Humanos Pleno,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,24.0,True,https://www.linkedin.com/in/sumara-dornelas-060256138
-"Carlos Borges - PMP, PMI-ACP",Linuxell Informática,Senior Project and Product Manager,Product,NEEDS_COMPANY_MAPPING,needs_mapping,23.0,True,https://www.linkedin.com/in/borges2carlos
-Weverton do Vale Marcelino,Aviva,Analista de Processos SR,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,24.0,True,https://www.linkedin.com/in/weverton-do-vale-marcelino
-Júnior Dias,Senac DF,Supervisor de Recrutamento e Seleção,Other,BRAZIL_CONFIRMED,confirmed_geographic,13.0,True,https://www.linkedin.com/in/j%C3%BAnior-dias-061159254
-Jéssica Leite,Talent Replacement | Carreira Internacional,Gerente de Operações,Operations,GLOBAL_STAFFING,global_buckets,24.0,True,https://www.linkedin.com/in/j%C3%A9ssica-leite-rh
-Silas Leite,BCG X,People and Development | HRBP Manager,HR,GLOBAL_CONSULTING,global_buckets,31.0,True,https://www.linkedin.com/in/silasramosleite
-Marcella Romani,30e,Marketing & Communication Manager,Other,LOW_VALUE_UNRESOLVED,low_value,22.0,False,https://www.linkedin.com/in/marcellaromani
-Izabelle Ayme,Sami,"Analista Sênior de Comunicação, Employer Branding, Cultura e Engajamento",Other,BRAZIL_CONFIRMED,confirmed_geographic,15.0,True,https://www.linkedin.com/in/izabelle-ayme-68ba85197
+Sumara Dornelas,PaulOOctavio,Analista de Recursos Humanos Pleno,HR,LANGUAGE_PORTUGUESE_MARKET,language_signal,20.0,True,https://www.linkedin.com/in/sumara-dornelas-060256138
+"Carlos Borges - PMP, PMI-ACP",Linuxell Informática,Senior Project and Product Manager,Product,NEEDS_COMPANY_MAPPING,needs_mapping,19.0,True,https://www.linkedin.com/in/borges2carlos
+Weverton do Vale Marcelino,Aviva,Analista de Processos SR,Other,LANGUAGE_PORTUGUESE_MARKET,language_signal,20.0,True,https://www.linkedin.com/in/weverton-do-vale-marcelino
+Júnior Dias,Senac DF,Supervisor de Recrutamento e Seleção,Other,BRAZIL_CONFIRMED,confirmed_geographic,9.0,True,https://www.linkedin.com/in/j%C3%BAnior-dias-061159254
+Jéssica Leite,Talent Replacement | Carreira Internacional,Gerente de Operações,Operations,GLOBAL_STAFFING,global_buckets,20.0,True,https://www.linkedin.com/in/j%C3%A9ssica-leite-rh
+Silas Leite,BCG X,People and Development | HRBP Manager,HR,GLOBAL_CONSULTING,global_buckets,27.0,True,https://www.linkedin.com/in/silasramosleite
+Marcella Romani,30e,Marketing & Communication Manager,Other,LOW_VALUE_UNRESOLVED,low_value,18.0,False,https://www.linkedin.com/in/marcellaromani
+Izabelle Ayme,Sami,"Analista Sênior de Comunicação, Employer Branding, Cultura e Engajamento",Other,BRAZIL_CONFIRMED,confirmed_geographic,11.0,True,https://www.linkedin.com/in/izabelle-ayme-68ba85197
 Samuel Tavares,Rede Marajó,Assistente De DP,Other,BRAZIL_CONFIRMED,confirmed_geographic,9.0,True,https://www.linkedin.com/in/samuel-tavares-822583222
 Raquel Valdambrini Laurindo,Arena,Head of Customer Success,Other,NEEDS_COMPANY_MAPPING,needs_mapping,19.0,True,https://www.linkedin.com/in/raquel-valdambrini-laurindo
 Renan Paiva,Valloo,Coordenador de RH,Other,BRAZIL_CONFIRMED,confirmed_geographic,18.0,True,https://www.linkedin.com/in/renanoapaiva

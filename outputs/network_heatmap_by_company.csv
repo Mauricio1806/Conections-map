@@ -5,7 +5,7 @@ Michael Page,57,28.2,Other,UNKNOWN
 GE Vernova,56,21.3,Other,UNKNOWN
 SENAI CIMATEC,54,14.3,Other,UNKNOWN
 Deloitte,53,29.7,Other,UNKNOWN
-NTT DATA Europe & Latam,51,63.8,Other,LATAM_USD
+NTT DATA Europe & Latam,51,63.7,Other,LATAM_USD
 Databricks,49,60.3,Other,US_CANADA_NEARSHORE
 Grupo Boticário,47,22.8,Other,UNKNOWN
 Capgemini,45,31.5,Other,UNKNOWN
@@ -18,7 +18,7 @@ CI&T,34,24.1,Other,UNKNOWN
 EY,32,32.7,Other,UNKNOWN
 IBM,32,26.6,Other,UNKNOWN
 GE Renewable Energy,31,15.0,Other,UNKNOWN
-Accenture,28,26.0,Other,UNKNOWN
+Accenture,28,25.9,Other,UNKNOWN
 LM Soluções de Mobilidade,28,14.1,Other,UNKNOWN
 Zup Innovation,27,42.0,Other,BRAZIL
 act digital,27,30.1,Other,UNKNOWN
@@ -28,10 +28,10 @@ TOTVS,26,30.9,Other,BRAZIL
 Nubank,25,36.9,Data Engineer,BRAZIL
 Ford Motor Company,23,12.3,Other,UNKNOWN
 Indicium AI,22,35.6,Other,BRAZIL
-TELUS Digital,22,30.7,Other,UNKNOWN
+TELUS Digital,22,30.5,Other,UNKNOWN
 SAP,22,46.0,Other,EUROPE
 Mercado Livre,20,26.1,Other,UNKNOWN
-Amazon Web Services (AWS),20,46.2,Other,US_CANADA_NEARSHORE
+Amazon Web Services (AWS),20,46.0,Other,US_CANADA_NEARSHORE
 Serasa Experian,20,27.5,Other,UNKNOWN
 Delivery Hero,19,54.8,Other,EUROPE
 Globo,19,20.3,Other,UNKNOWN
@@ -93,13 +93,13 @@ DBC Company,10,21.3,Other,UNKNOWN
 Leidos,10,39.0,Talent Acquisition,UNKNOWN
 Lojas Renner S.A,10,27.0,Other,UNKNOWN
 Minsait,10,47.7,Other,SPAIN_EU
-Datum,10,21.0,Other,UNKNOWN
+Datum,10,20.7,Other,UNKNOWN
 Zallpy Digital,10,27.7,HR,UNKNOWN
 Self-employed,10,23.1,Other,UNKNOWN
 Indra,10,55.6,Other,SPAIN_EU
 Praxis,10,45.3,Recruiter,UNKNOWN
 DIS AG,10,20.5,Other,UNKNOWN
-NAVA - Technology for Business,10,44.3,HR,UNKNOWN
+NAVA - Technology for Business,10,44.0,HR,UNKNOWN
 Keyrus,10,34.7,Talent Acquisition,UNKNOWN
 Vale,10,34.2,Other,BRAZIL
 Cadastra,9,28.2,Data Engineer,UNKNOWN
@@ -117,7 +117,7 @@ Snowflake,9,50.8,Other,US_CANADA_NEARSHORE
 Aliare,9,23.4,Other,UNKNOWN
 Cognizant,8,44.6,Other,UNKNOWN
 Mercado Libre,8,31.2,Other,UNKNOWN
-Randstad Uruguay,8,48.9,Other,LATAM_USD
+Randstad Uruguay,8,47.4,Other,LATAM_USD
 TIVIT,8,28.1,Other,UNKNOWN
 Citi,8,34.1,Talent Acquisition,UNKNOWN
 Babbel,8,35.5,Hiring Manager,UNKNOWN
@@ -134,7 +134,7 @@ Neoenergia,8,15.1,Other,UNKNOWN
 Gi Group,8,26.6,Other,UNKNOWN
 SulAmérica,8,22.8,Other,UNKNOWN
 Decision,8,38.4,Recruiter,UNKNOWN
-BASF,8,40.0,Other,UNKNOWN
+BASF,8,39.6,Other,UNKNOWN
 TP,8,30.5,Other,UNKNOWN
 Cielo,8,25.4,Data Engineer,UNKNOWN
 AI/R,7,36.4,Other,UNKNOWN
@@ -171,11 +171,11 @@ Nava | Tech for Business,6,48.0,Recruiter,UNKNOWN
 Petrobras,6,28.8,Other,BRAZIL
 Hire With Near,6,35.0,Sourcer,UNKNOWN
 Inetum,6,37.3,Talent Acquisition,UNKNOWN
-Infotree Global Solutions,6,49.2,Recruiter,UNKNOWN
+Infotree Global Solutions,6,48.7,Recruiter,UNKNOWN
 Gi Group Holding,6,29.2,HR,UNKNOWN
 Jump,6,26.3,Data Engineer,UNKNOWN
 Multiplica Talent,6,47.3,Talent Acquisition,UNKNOWN
-BCG X,6,36.0,Data Engineer,UNKNOWN
+BCG X,6,35.3,Data Engineer,UNKNOWN
 Ipiranga,6,22.5,Other,UNKNOWN
 GFT Technologies Brasil,6,43.7,Other,BRAZIL
 Basis Tecnologia da Informação S.A,6,32.2,Recruiter,UNKNOWN

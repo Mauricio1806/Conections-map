@@ -1,9 +1,9 @@
 ﻿kpi,value
-report_date,2026-08-30
+report_date,2026-08-31
 total_connections,12263
-high_priority,256
-medium_priority,4204
-low_priority,7803
+high_priority,253
+medium_priority,4206
+low_priority,7804
 high_priority_pct,2.1
 medium_priority_pct,34.3
 brazil_count,891
@@ -21,8 +21,8 @@ talent_hr_total,2481
 hiring_managers_total,84
 data_leaders_total,947
 data_peers_total,1005
-connected_last_30_days,697
-connected_last_90_days,2148
+connected_last_30_days,675
+connected_last_90_days,2104
 strategic_network_score,97.6
 strategic_network_level,Strong
 strategic_network_desc,"Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders."
@@ -31,7 +31,7 @@ sns_talent_acquisition,1232
 sns_hiring_managers,84
 sns_data_leaders,947
 sns_data_peers,1005
-sns_high_priority,256
+sns_high_priority,253
 usd_readiness_score,82.4
 usd_readiness_level,Ready
 usd_readiness_desc,Strong USD network. Active outreach should yield job conversations quickly.
@@ -46,7 +46,7 @@ usd_us_ca_hiring_mgrs,5
 usd_global_recruiters_partial,99
 usd_global_ta_partial,43
 usd_global_hm_partial,0
-usd_unknown_high_value_partial,69
+usd_unknown_high_value_partial,68
 spain_eu_readiness_score,65.0
 spain_eu_readiness_level,Ready
 spain_eu_readiness_desc,Strong Spain/EU foundation. Good positioning for relocation.
@@ -67,8 +67,8 @@ global_recruiters,142
 global_hiring_mgrs,0
 global_data_leaders,33
 actionable_contacts_score,100.0
-actionable_contacts,625
-very_high_priority,256
+actionable_contacts,624
+very_high_priority,253
 unknown_resolution_score,7.3
 unknown_resolution_potential,7.3
 top25_company_coverage,735
@@ -78,8 +78,8 @@ data_quality_risk_score,90.6
 data_quality_risk_level,High Risk
 data_quality_risk_desc,Most market inferences are unresolved. Readiness scores are conservative estimates.
 market_readiness_composite,75.4
-unknown_recruiters_highvalue,206
+unknown_recruiters_highvalue,205
 unknown_hiring_mgrs_highvalue,10
-unknown_data_leaders_highvalue,126
+unknown_data_leaders_highvalue,125
 unknown_peers,772
 technical_geo_limitation_note,"Exact geography is unavailable from LinkedIn export; opportunity buckets are inferred from company, title, persona, language, message history, and manual enrichment. This is an action backlog, not a data failure."

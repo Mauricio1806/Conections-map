@@ -186,20 +186,22 @@
       "snapshot_id": "snap-2026-08-30",
       "snapshot_date": "2026-08-30",
       "folder": "30-08",
-      "ingested_at": "2026-08-30T11:06:32",
+      "ingested_at": "2026-08-31T11:06:47",
       "connections_rows": 12318,
       "invitations_rows": 5462,
-      "messages_rows": 0,
-      "messages_available": false,
+      "messages_rows": 9451,
+      "messages_available": true,
       "company_follows_rows": 99,
       "schema_hashes": {
         "connections": "21a0ae310c07",
         "invitations": "df23d51f73dd",
+        "messages": "d196d0cc912f",
         "company_follows": "cf462610629b"
       },
       "file_hashes": {
         "connections": "253e82817a8c67f6",
         "invitations": "3d22ccba8219b1ee",
+        "messages": "51daa54ac3f617f7",
         "company_follows": "1ea2c0b1aa97c515"
       },
       "previous_snapshot_id": "snap-2026-08-23"

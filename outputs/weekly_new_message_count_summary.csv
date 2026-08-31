@@ -1,2 +1,2 @@
-﻿previous_message_count,current_message_count,new_message_count,previous_conversation_count,current_conversation_count,new_conversation_count,available,note
-8984,,,4784,,,False,"messages.csv not present in the 2026-08-30 snapshot — message metrics unavailable for this week. Not fabricated, not treated as current. Message-dependent dashboard sections keep showing the last available messages export, flagged stale."
+﻿previous_message_count,current_message_count,new_message_count,previous_conversation_count,current_conversation_count,new_conversation_count
+8984,9290,316,4784,4965,183

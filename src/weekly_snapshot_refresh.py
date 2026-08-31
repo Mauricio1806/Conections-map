@@ -381,10 +381,34 @@ def activate_snapshot(resolved: dict[str, Path]) -> None:
 # against an old snapshot instead of last week's — this is the ONE point in
 # the weekly routine where the pre-refresh JSON is still the correct "last
 # week" state, so it must happen here, before any pipeline step runs.
+#
+# EXCEPT when this run is completing/re-refreshing the SAME snapshot date
+# that's already on record (e.g. a partial refresh without messages.csv,
+# followed later by a second pass once messages.csv arrives) — in that case
+# outputs/public_dashboard_data.json already holds THIS week's own (partial)
+# numbers, not last week's, and stashing it now would clobber the correct
+# prior-week baseline that was already captured during the first pass.
 # ══════════════════════════════════════════════════════════════════════════
 
-def stash_previous_baseline() -> None:
+def stash_previous_baseline(new_snapshot_date: str) -> None:
     DATA_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+
+    if MANIFEST_PATH.exists():
+        try:
+            manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+            existing_dates = {s.get("snapshot_date") for s in manifest.get("snapshots", [])}
+            if new_snapshot_date in existing_dates:
+                logger.info(
+                    f"  Snapshot {new_snapshot_date} was already ingested before this run — treating this "
+                    f"as a same-week re-refresh (e.g. messages.csv arriving in a second batch), not a new "
+                    f"week. Keeping the existing {PREVIOUS_BASELINE_JSON.name} (the real prior week) "
+                    f"instead of re-stashing this week's own numbers over it."
+                )
+                return
+        except Exception:
+            logger.warning("  Could not read manifest to check for a same-week re-refresh — proceeding "
+                            "with the normal stash (safe default for a genuinely new week).")
+
     current_json = OUTPUTS_DIR / "public_dashboard_data.json"
     if not current_json.exists():
         logger.info("  No existing outputs/public_dashboard_data.json yet — nothing to stash as baseline (first-ever run).")
@@ -697,7 +721,7 @@ def main():
     # ── Part 5b: stash pre-refresh JSON as next week's baseline (must run
     # before anything below touches outputs/public_dashboard_data.json) ──────
     logger.info("Step 0: Stashing current dashboard state as next diff's baseline ...")
-    stash_previous_baseline()
+    stash_previous_baseline(args.snapshot_date)
 
     # ── Part 1: discover + validate current snapshot ────────────────────────
     logger.info("Step 1: Discovering and validating current snapshot files ...")
