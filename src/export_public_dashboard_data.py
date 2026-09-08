@@ -299,6 +299,15 @@ def build_public_contacts(
         .head(n)[safe_cols]
         .reset_index(drop=True)
     )
+    # A blank source cell (e.g. missing company_clean) reads back as
+    # float('nan'), which json.dump emits as a literal NaN token — invalid
+    # JSON that fails JSON.parse() in every browser. fillna() only touches
+    # actual NaN entries, so real strings/bools/numbers pass through untouched.
+    for col in top.columns:
+        if pd.api.types.is_numeric_dtype(top[col]):
+            top[col] = top[col].fillna(0)
+        else:
+            top[col] = top[col].fillna("").infer_objects(copy=False)
     return top.to_dict(orient="records")
 
 
