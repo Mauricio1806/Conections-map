@@ -190,13 +190,13 @@
     },
     "contacts": {
       "file": "data/top_contacts.json",
-      "size_kb": 609,
+      "size_kb": 613,
       "available": true,
       "dependencies": []
     },
     "weekly": {
       "file": "data/weekly_evolution.json",
-      "size_kb": 543,
+      "size_kb": 1601,
       "available": true,
       "dependencies": []
     },
@@ -214,7 +214,7 @@
     },
     "leads": {
       "file": "data/lead_reactivation.json",
-      "size_kb": 11366,
+      "size_kb": 14923,
       "available": true,
       "dependencies": []
     },
@@ -226,7 +226,7 @@
     },
     "usdcrm": {
       "file": "data/usd_contract_crm.json",
-      "size_kb": 28278,
+      "size_kb": 28429,
       "available": true,
       "dependencies": []
     },
@@ -238,7 +238,7 @@
     }
   },
   "build": {
-    "generated_at": "2026-09-08T08:35:46",
+    "generated_at": "2026-09-08T14:33:44",
     "schema": "split-v1"
   }
 }

@@ -249156,7 +249156,7 @@
       "long_connected_contacted_all_time": 270,
       "long_connected_contacted_this_week": 41,
       "long_connected_replied": 85,
-      "long_connected_became_warm": 220,
+      "long_connected_became_warm": 122,
       "long_connected_cv_or_interview_requested": 43,
       "conversion_rate_overall_pct": 31.5,
       "by_persona": [
@@ -249164,28 +249164,28 @@
           "persona": "Recruiter",
           "contacted": 177,
           "replied": 31,
-          "became_warm": 166,
+          "became_warm": 84,
           "conversion_rate_pct": 17.5
         },
         {
           "persona": "Talent Acquisition",
           "contacted": 29,
           "replied": 8,
-          "became_warm": 22,
+          "became_warm": 12,
           "conversion_rate_pct": 27.6
         },
         {
           "persona": "Other",
           "contacted": 28,
           "replied": 20,
-          "became_warm": 11,
+          "became_warm": 7,
           "conversion_rate_pct": 71.4
         },
         {
           "persona": "Director",
           "contacted": 13,
           "replied": 7,
-          "became_warm": 9,
+          "became_warm": 6,
           "conversion_rate_pct": 53.8
         },
         {
@@ -249213,14 +249213,14 @@
           "persona": "Consultant",
           "contacted": 3,
           "replied": 3,
-          "became_warm": 1,
+          "became_warm": 2,
           "conversion_rate_pct": 100.0
         },
         {
           "persona": "HR",
           "contacted": 3,
           "replied": 3,
-          "became_warm": 1,
+          "became_warm": 0,
           "conversion_rate_pct": 100.0
         },
         {
@@ -249255,7 +249255,7 @@
           "persona": "Executive",
           "contacted": 1,
           "replied": 1,
-          "became_warm": 0,
+          "became_warm": 1,
           "conversion_rate_pct": 100.0
         },
         {
@@ -249271,21 +249271,21 @@
           "connected_age_bucket": "181-365 days",
           "contacted": 99,
           "replied": 30,
-          "became_warm": 79,
+          "became_warm": 54,
           "conversion_rate_pct": 30.3
         },
         {
           "connected_age_bucket": "91-180 days",
           "contacted": 92,
           "replied": 30,
-          "became_warm": 75,
+          "became_warm": 19,
           "conversion_rate_pct": 32.6
         },
         {
           "connected_age_bucket": "365+ days",
           "contacted": 79,
           "replied": 25,
-          "became_warm": 66,
+          "became_warm": 49,
           "conversion_rate_pct": 31.6
         }
       ],
@@ -249294,35 +249294,35 @@
           "opportunity_bucket": "GLOBAL_OPPORTUNITY",
           "contacted": 147,
           "replied": 34,
-          "became_warm": 130,
+          "became_warm": 75,
           "conversion_rate_pct": 23.1
         },
         {
           "opportunity_bucket": "LATAM_USD_CONFIRMED",
           "contacted": 33,
           "replied": 10,
-          "became_warm": 27,
+          "became_warm": 15,
           "conversion_rate_pct": 30.3
         },
         {
           "opportunity_bucket": "GLOBAL_STAFFING",
           "contacted": 30,
           "replied": 5,
-          "became_warm": 26,
+          "became_warm": 11,
           "conversion_rate_pct": 16.7
         },
         {
           "opportunity_bucket": "BRAZIL_CONFIRMED",
           "contacted": 17,
           "replied": 10,
-          "became_warm": 8,
+          "became_warm": 6,
           "conversion_rate_pct": 58.8
         },
         {
           "opportunity_bucket": "US_CANADA_CONFIRMED",
           "contacted": 14,
           "replied": 4,
-          "became_warm": 13,
+          "became_warm": 4,
           "conversion_rate_pct": 28.6
         },
         {
@@ -249336,14 +249336,14 @@
           "opportunity_bucket": "GLOBAL_CONSULTING",
           "contacted": 6,
           "replied": 2,
-          "became_warm": 5,
+          "became_warm": 1,
           "conversion_rate_pct": 33.3
         },
         {
           "opportunity_bucket": "LANGUAGE_PORTUGUESE_MARKET",
           "contacted": 5,
           "replied": 5,
-          "became_warm": 4,
+          "became_warm": 3,
           "conversion_rate_pct": 100.0
         },
         {
@@ -249357,14 +249357,14 @@
           "opportunity_bucket": "SPAIN_EU_LIKELY",
           "contacted": 3,
           "replied": 3,
-          "became_warm": 1,
+          "became_warm": 2,
           "conversion_rate_pct": 100.0
         },
         {
           "opportunity_bucket": "LOW_VALUE_UNRESOLVED",
           "contacted": 3,
           "replied": 1,
-          "became_warm": 2,
+          "became_warm": 1,
           "conversion_rate_pct": 33.3
         },
         {

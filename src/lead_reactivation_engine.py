@@ -115,6 +115,22 @@ SAFE_DASHBOARD_COLS = [
     "terminal_state_flag",
     "stale_conversation_flag",
     "recruiter_priority_flag",
+    # Response Priority & Lead Quality (Part 21) — separates "do I owe a
+    # reply" from "is this a good lead" from "does this deserve action now".
+    "reply_obligation_flag",
+    "lead_quality_score",
+    "response_priority_score",
+    "response_queue_segment",
+    "low_value_reply_flag",
+    "courtesy_only_flag",
+    "ghost_or_vacuum_flag",
+    "terminal_low_action_flag",
+    "hard_rejection_flag",
+    "talent_pool_only_flag",
+    "recommended_response_timing",
+    "response_reason_short",
+    "active_process_signal_flag",
+    "usd_latam_signal_flag",
 ]
 
 # Ambiguous manual-review queue fields (Part 8) — sanitized, no raw content
@@ -144,63 +160,80 @@ def _safe_records(df: pd.DataFrame) -> list:
     return df[cols].to_dict(orient="records")
 
 
+# Response Priority & Lead Quality (Part 21) — the This Week Queue is built
+# strictly in this order. The three LOW_TIER segments only fill remaining
+# slots if the higher tiers didn't already use up WEEKLY_QUEUE_LIMIT — a
+# courtesy reply, a ghosted outreach, or a closed/blocked conversation must
+# never outrank a real opportunity just to pad the queue.
+RESPONSE_SEGMENT_ORDER = [
+    "ACTIVE_PROCESS_NEEDS_REPLY",
+    "INBOUND_OPPORTUNITY_NEEDS_REPLY",
+    "SALARY_CV_CALL_REQUESTED",
+    "HIGH_VALUE_RECRUITER_REPLY",
+    "REACTIVATION_DUE_HIGH_VALUE",
+    "SOFT_CLOSED_KEEP_WARM",
+    "TALENT_POOL_LOW_ACTION",
+    "LOW_PRIORITY_COURTESY",
+    "NO_RESPONSE_BACKLOG",
+    "CLOSED_NO_ACTION",
+]
+LOW_TIER_SEGMENTS = {"LOW_PRIORITY_COURTESY", "NO_RESPONSE_BACKLOG", "CLOSED_NO_ACTION"}
+WEEKLY_QUEUE_LIMIT = sum(WEEKLY_LIMITS.values())  # 55 — matches the existing weekly action limit
+
+
 def _build_this_week_queue(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Build the weekly action queue with limits.
-    Priority order: Needs my response (Confirmed → Likely) → Hot/Warm → Career site → Dormant.
+    Build the weekly action queue ranked by response_queue_segment (Part 21),
+    highest-value segment first, response_priority_score breaking ties within
+    a segment. LOW_PRIORITY_COURTESY / NO_RESPONSE_BACKLOG / CLOSED_NO_ACTION
+    only fill remaining slots when no better candidates are left.
     """
-    frames = []
-
-    # 1. Needs my response — Confirmed + Likely (up to limit)
-    needs = df[df["lead_category"].isin(
-        ["Needs my response — Confirmed", "Needs my response — Likely"]
-    )].sort_values(
-        ["lead_category", "reactivation_priority_score"], ascending=[True, False]
-    ).head(WEEKLY_LIMITS["needs_reply"])
-    frames.append(needs)
-
-    # 2. Active Interview Pipeline + Warm reactivation leads (up to limit, excluding already added)
-    added_ids = set(needs["conversation_id"]) if "conversation_id" in needs.columns else set()
-    hot_warm_mask = df["lead_category"].isin(["Active Interview Pipeline", "Warm reactivation"])
-    if "conversation_id" in df.columns:
-        hot_warm_mask = hot_warm_mask & ~df["conversation_id"].isin(added_ids)
-    hot_warm = df[hot_warm_mask].sort_values(
-        "reactivation_priority_score", ascending=False
-    ).head(WEEKLY_LIMITS["hot_warm"])
-    frames.append(hot_warm)
-    if "conversation_id" in hot_warm.columns:
-        added_ids.update(hot_warm["conversation_id"])
-
-    # 3. Talent pool / career site follow-ups (up to limit)
-    career_mask = df["lead_category"] == "Talent Pool / Career Site"
-    if "conversation_id" in df.columns:
-        career_mask = career_mask & ~df["conversation_id"].isin(added_ids)
-    career = df[career_mask].sort_values(
-        "reactivation_priority_score", ascending=False
-    ).head(WEEKLY_LIMITS["career_site"])
-    frames.append(career)
-    if "conversation_id" in career.columns:
-        added_ids.update(career["conversation_id"])
-
-    # 4. Dormant warm leads / Reactivate This Month (up to limit) — Part 16
-    # cooldown logic means a freshly-rejected contact never lands here; only
-    # contacts whose cooldown has actually cleared do.
-    dormant_mask = df["lead_category"].isin(["Dormant warm", "Reactivate This Month"])
-    if "conversation_id" in df.columns:
-        dormant_mask = dormant_mask & ~df["conversation_id"].isin(added_ids)
-    dormant = df[dormant_mask].sort_values(
-        "reactivation_priority_score", ascending=False
-    ).head(WEEKLY_LIMITS["dormant"])
-    frames.append(dormant)
-
-    if not any(len(f) > 0 for f in frames):
+    if "response_queue_segment" not in df.columns or "response_priority_score" not in df.columns:
         return pd.DataFrame()
 
-    result = pd.concat([f for f in frames if len(f) > 0], ignore_index=True)
-    result = result.drop_duplicates(
-        subset=["conversation_id"] if "conversation_id" in result.columns else None
-    )
-    return result.sort_values("reactivation_priority_score", ascending=False).reset_index(drop=True)
+    id_col = "conversation_id" if "conversation_id" in df.columns else None
+    added_ids: set = set()
+    frames = []
+
+    def _take(seg: str, remaining: int):
+        mask = df["response_queue_segment"] == seg
+        if id_col:
+            mask = mask & ~df[id_col].isin(added_ids)
+        chunk = df[mask].sort_values("response_priority_score", ascending=False).head(remaining)
+        if len(chunk):
+            frames.append(chunk)
+            if id_col:
+                added_ids.update(chunk[id_col])
+        return len(chunk)
+
+    for seg in RESPONSE_SEGMENT_ORDER:
+        if seg in LOW_TIER_SEGMENTS:
+            continue
+        remaining = WEEKLY_QUEUE_LIMIT - sum(len(f) for f in frames)
+        if remaining <= 0:
+            break
+        _take(seg, remaining)
+
+    # Only dip into the low-value tiers if better candidates ran out.
+    remaining = WEEKLY_QUEUE_LIMIT - sum(len(f) for f in frames)
+    for seg in RESPONSE_SEGMENT_ORDER:
+        if seg not in LOW_TIER_SEGMENTS or remaining <= 0:
+            continue
+        taken = _take(seg, remaining)
+        remaining -= taken
+
+    if not frames:
+        return pd.DataFrame()
+
+    result = pd.concat(frames, ignore_index=True)
+    if id_col:
+        result = result.drop_duplicates(subset=[id_col])
+    rank_map = {s: i for i, s in enumerate(RESPONSE_SEGMENT_ORDER)}
+    result["_segment_rank"] = result["response_queue_segment"].map(rank_map).fillna(99)
+    result = result.sort_values(
+        ["_segment_rank", "response_priority_score"], ascending=[True, False]
+    ).drop(columns=["_segment_rank"])
+    return result.reset_index(drop=True)
 
 
 def build_company_warm_signal_map(df: pd.DataFrame) -> dict:
@@ -379,7 +412,25 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     stale_but_valuable_count       = int(stale_but_valuable_mask.sum())
     closed_low_action_count        = int(closed_low_action_mask.sum())
     recruiter_priority_count       = int(df["recruiter_priority_flag"].sum())
-    high_confidence_reply_count    = int((df["reply_obligation_confidence"] >= 0.7).sum())
+    high_confidence_reply_count    = int((df["reply_obligation_confidence"] >= 70).sum())
+
+    # ── Response Priority & Lead Quality (Part 21) — segment-based KPI cards ──
+    # Separates "needs my response" into a real high-priority tier (active
+    # process / inbound opportunity / salary-CV-call ask) vs. a medium tier
+    # (valuable recruiter relationship, no urgent ask), and gives courtesy
+    # replies, ghosted outreach, soft closes, and closed/blocked conversations
+    # their own honest counts instead of hiding inside the raw taxonomy.
+    seg_counts = df["response_queue_segment"].value_counts().to_dict() if "response_queue_segment" in df.columns else {}
+    needs_response_high_priority = sum(seg_counts.get(s, 0) for s in (
+        "ACTIVE_PROCESS_NEEDS_REPLY", "INBOUND_OPPORTUNITY_NEEDS_REPLY", "SALARY_CV_CALL_REQUESTED",
+    ))
+    needs_response_medium = sum(seg_counts.get(s, 0) for s in (
+        "HIGH_VALUE_RECRUITER_REPLY", "REACTIVATION_DUE_HIGH_VALUE",
+    ))
+    courtesy_low_priority_count      = sum(seg_counts.get(s, 0) for s in ("LOW_PRIORITY_COURTESY", "TALENT_POOL_LOW_ACTION"))
+    no_response_ghost_backlog_count  = int(seg_counts.get("NO_RESPONSE_BACKLOG", 0))
+    soft_closed_keep_warm_count      = int(seg_counts.get("SOFT_CLOSED_KEEP_WARM", 0))
+    closed_no_action_v2_count        = int(seg_counts.get("CLOSED_NO_ACTION", 0))
 
     # False-urgent check (Part 19): terminal/blocking states whose
     # immediate_action_score is still above the "urgent" threshold would be a
@@ -399,28 +450,43 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     # within the top 50 by score. Exporting the FULL non-Ignore backlog (still
     # sanitized/no raw content) is what makes every KPI card and filter
     # combination return a result set that matches its displayed count.
-    top50_records = _safe_records(
-        df[df["lead_category"] != "Ignore"]
-        .sort_values("reactivation_priority_score", ascending=False)
-        .reset_index(drop=True)
-    )
+    # Default sort is now response_queue_segment rank (Part 21) then
+    # response_priority_score, so the backlog's own default order also puts
+    # real actionable opportunities first instead of raw "they sent last".
+    backlog_df = df[df["lead_category"] != "Ignore"].copy()
+    if "response_queue_segment" in backlog_df.columns:
+        rank_map = {s: i for i, s in enumerate(RESPONSE_SEGMENT_ORDER)}
+        backlog_df["_segment_rank"] = backlog_df["response_queue_segment"].map(rank_map).fillna(99)
+        backlog_df = backlog_df.sort_values(
+            ["_segment_rank", "response_priority_score"], ascending=[True, False]
+        ).drop(columns=["_segment_rank"])
+    else:
+        backlog_df = backlog_df.sort_values("reactivation_priority_score", ascending=False)
+    top50_records = _safe_records(backlog_df.reset_index(drop=True))
 
     # ── This week queue (safe fields) ─────────────────────────────────────────
     this_week_records = _safe_records(this_week)
 
-    # ── Needs reply (top 15, safe fields; Confirmed first, then Likely) ──────
-    needs_reply_records = _safe_records(
-        df[df["lead_category"].isin(["Needs my response — Confirmed", "Needs my response — Likely"])]
-        .sort_values(["lead_category", "reactivation_priority_score"], ascending=[True, False])
-        .head(15)
-        .reset_index(drop=True)
-    )
+    # ── Needs reply (top 15, safe fields) — Part 21: ranked by
+    # response_priority_score within the real high-priority segments (active
+    # process / inbound opportunity / salary-CV-call ask), NOT by raw
+    # "they sent last" reactivation_priority_score, so a generic recruiter
+    # reply can no longer outrank an actual actionable opportunity. ─────────
+    if "response_queue_segment" in df.columns:
+        needs_reply_pool = df[df["response_queue_segment"].isin([
+            "ACTIVE_PROCESS_NEEDS_REPLY", "INBOUND_OPPORTUNITY_NEEDS_REPLY", "SALARY_CV_CALL_REQUESTED",
+        ])].sort_values("response_priority_score", ascending=False)
+    else:
+        needs_reply_pool = df[df["lead_category"].isin(
+            ["Needs my response — Confirmed", "Needs my response — Likely"]
+        )].sort_values(["lead_category", "reactivation_priority_score"], ascending=[True, False])
+    needs_reply_records = _safe_records(needs_reply_pool.head(15).reset_index(drop=True))
 
     weekly_plan = {
-        "Monday":    "Reply to 'Needs my response — Confirmed' contacts first (check leads-reply queue)",
-        "Tuesday":   "Reply to 'Needs my response — Likely' + follow up with Hot reactivation leads",
-        "Wednesday": "Submit CV to career site leads (up to 10)",
-        "Thursday":  "Recontact Warm reactivation leads and dormant warm leads",
+        "Monday":    "Reply to 'Needs My Response — High Priority' first (active process / inbound opportunity / salary-CV-call ask)",
+        "Tuesday":   "Reply to 'Needs My Response — Medium' (valuable recruiter relationship, no urgent ask) + Hot reactivation leads",
+        "Wednesday": "Submit CV to career site / talent-pool leads (up to 10) — low action, not urgent",
+        "Thursday":  "Recontact Soft Closed — Keep Warm and Dormant warm leads whose cooldown cleared",
         "Friday":    "Clear the small Ambiguous — Review queue (outputs/message_review_queue.csv)",
     }
 
@@ -432,6 +498,12 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
         f"TalentPool={career_site} ReactivateThisMonth={reactivate_this_month} "
         f"FollowDue={follow_due} ThisWeek={this_week_count} ReviewQueue={review_queue_count} "
         f"FalseUrgent={false_urgent_count}"
+    )
+    logger.info(
+        f"  Response Priority (Part 21): HighPriority={needs_response_high_priority} "
+        f"Medium={needs_response_medium} CourtesyLowPriority={courtesy_low_priority_count} "
+        f"NoResponseGhost={no_response_ghost_backlog_count} SoftClosedKeepWarm={soft_closed_keep_warm_count} "
+        f"ClosedNoAction={closed_no_action_v2_count}"
     )
 
     return {
@@ -476,6 +548,14 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
         "closed_low_action_count":        closed_low_action_count,
         "recruiter_priority_count":       recruiter_priority_count,
         "high_confidence_reply_count":    high_confidence_reply_count,
+        # Response Priority & Lead Quality (Part 21) — honest KPI cards that
+        # separate reply obligation from lead quality from final priority.
+        "needs_response_high_priority_count": int(needs_response_high_priority),
+        "needs_response_medium_count":         int(needs_response_medium),
+        "courtesy_low_priority_count":         int(courtesy_low_priority_count),
+        "no_response_ghost_backlog_count":     no_response_ghost_backlog_count,
+        "soft_closed_keep_warm_count":         soft_closed_keep_warm_count,
+        "closed_no_action_v2_count":           closed_no_action_v2_count,
         # Internal-only (Untapped Outreach Scoring V9) — never published to the
         # public dashboard JSON, see export_public_dashboard_data.py.
         "company_signal_map": build_company_warm_signal_map(df),

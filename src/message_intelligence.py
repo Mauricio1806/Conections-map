@@ -508,6 +508,73 @@ CAREER_SITE_KW = [
     "site de carreiras", "portal de vagas", "portal de carreras",
 ]
 
+# ── Part 20 — Response Priority & Lead Quality triage (courtesy vs. real ask) ─
+# HARD_REJECTION_KW is deliberately STRICTER than the legacy REJECTION_KW
+# above, which includes generic weak words like bare "unfortunately" /
+# "infelizmente" — those false-positive on soft-close messages that use the
+# same polite negative framing without ever having entered a real process
+# (e.g. "we don't have open positions right now... but I'll keep you on my
+# radar" must classify as a soft close, never a hard rejection). Only phrases
+# naming a SPECIFIC concluded process/candidacy outcome count as a hard
+# rejection for process_state purposes. Mirrors the same distinction already
+# proven in src/opportunity_history_engine.py's STRONG_REJECTION_KW /
+# SOFT_CLOSE_KW — kept as separate lists here to avoid a circular import.
+HARD_REJECTION_KW = [
+    "not selected", "decided to move forward", "move forward with another candidate",
+    "moving forward with another candidate", "another candidate", "rejected",
+    "role has been filled", "position has been filled", "process closed",
+    "role closed", "position closed", "client chose another candidate",
+    "client selected another candidate", "decided not to proceed",
+    "moved forward with other",
+    "não avançamos", "nao avancamos", "não seguiremos", "nao seguiremos",
+    "encerramos o processo", "outra pessoa foi selecionada", "outro candidato",
+    "posição fechada", "posicao fechada", "seguimos com outro candidato",
+    "avançamos com outro candidato", "avancamos com outro candidato",
+    "optamos por outro candidato", "não avançaremos", "nao avancaremos",
+    "posição foi preenchida", "posicao foi preenchida", "vaga foi encerrada",
+    "processo encerrado", "posición cerrada", "posicion cerrada", "otra persona",
+    "otro candidato", "avanzamos con otro candidato",
+]
+
+SOFT_CLOSE_KW = [
+    "don't have open positions", "do not have open positions",
+    "no open positions", "no current openings", "no current opening",
+    "no role right now", "no roles right now", "keep you on my radar",
+    "keep your profile on file", "for future opportunities",
+    "will keep your profile", "keep you in mind for future",
+    "let's stay in touch", "lets stay in touch", "stay in touch", "keep in touch",
+    "não temos vagas abertas no momento", "nao temos vagas abertas no momento",
+    "não temos posições abertas", "nao temos posicoes abertas",
+    "vou te manter no radar", "manter seu perfil", "manter seu perfil em nosso radar",
+    "para futuras oportunidades",
+    "vamos ficar em contato", "fico no aguardo de futuras oportunidades",
+    "no tenemos vacantes abiertas", "no tenemos posiciones abiertas",
+    "te mantendré en mi radar", "te mantendre en mi radar",
+    "mantengamos el contacto", "sigamos en contacto",
+]
+
+# Opportunity-quality signals (Part 21) — independent of reply obligation.
+DATA_ROLE_KW = [
+    "data engineer", "data engineering", "data scientist", "data science",
+    "data analyst", "analytics engineer", "data platform", "data pipeline",
+    "etl", "elt", "machine learning engineer", "mlops", "data architect",
+    "big data", "spark", "databricks", "airflow", "snowflake",
+    "engenheiro de dados", "cientista de dados", "analista de dados",
+    "ingeniero de datos", "científico de datos", "cientifico de datos",
+]
+
+SALARY_KW = [
+    "salary expectation", "salary range", "compensation", "rate expectation",
+    "day rate", "contract rate", "expected salary", "expected rate",
+    "pretensão salarial", "pretensao salarial", "faixa salarial",
+    "pretensión salarial", "pretension salarial", "rango salarial",
+]
+
+USD_LATAM_SIGNAL_KW = [
+    "usd", "remote", "nearshore", "latam", "contractor",
+    "united states", "us-based", "dólar", "dolar", "remoto",
+]
+
 # ── Part 13 — awaiting-update / active-interview detection ───────────────────
 AWAITING_UPDATE_KW = [
     "will get back to you", "get back to you", "let you know next week",
@@ -528,7 +595,7 @@ TERMINAL_STATES = {
     "REJECTED_CLOSED", "LOCATION_ELIGIBILITY_BLOCKED",
     "GEOGRAPHIC_HIRING_RESTRICTION", "WORK_AUTHORIZATION_BLOCKED",
     "TALENT_POOL_REDIRECT", "CAREER_SITE_REDIRECT", "AUTO_REPLY_ONLY",
-    "GENERIC_ACKNOWLEDGEMENT",
+    "GENERIC_ACKNOWLEDGEMENT", "SOFT_CLOSED_KEEP_WARM",
 }
 
 # process_state -> external_action_type (Part 11)
@@ -545,6 +612,7 @@ _REACTIVATION_WINDOW_DAYS = {
     "WORK_AUTHORIZATION_BLOCKED":      120,
     "TALENT_POOL_REDIRECT":             75,   # 60-90
     "CAREER_SITE_REDIRECT":             75,
+    "SOFT_CLOSED_KEEP_WARM":            75,   # 60-90 — "no role now, keep on radar"
     "DORMANT_WARM":                      0,   # eligible now if cooldown passed
     "WARM_RELATIONSHIP_NO_ACTIVE_ROLE": 30,
 }
@@ -635,7 +703,7 @@ def _analyze_conversation_state(
     triggering_text = ""
     for t in reversed(meaningful):
         text = t["text"]
-        if _kw_match(text, TERMINAL_REJECTION_KW):
+        if _kw_match(text, HARD_REJECTION_KW):
             process_state = "REJECTED_CLOSED"
             closure_reason = "OTHER_CANDIDATE_SELECTED" if _kw_match(text, _OTHER_CANDIDATE_KW) else "PROCESS_CLOSED"
             evidence.append("REJECTION_KW"); triggering_text = text; break
@@ -666,7 +734,18 @@ def _analyze_conversation_state(
         if _kw_match(text, AWAITING_UPDATE_KW):
             process_state = "AWAITING_RECRUITER_UPDATE"
             evidence.append("AWAITING_UPDATE_KW"); triggering_text = text; break
-        if t["sender"] == "other" and _kw_match_wb(t["text"], GENERIC_ACK_KW):
+        # SOFT_CLOSE_KW is checked LAST among the structural/process states —
+        # deliberately generic phrasing ("keep you on my radar", "keep in
+        # touch") so any more specific blocker/redirect/active-process signal
+        # above must win first (Part 21).
+        if _kw_match(text, SOFT_CLOSE_KW):
+            process_state = "SOFT_CLOSED_KEEP_WARM"
+            evidence.append("SOFT_CLOSE_KW"); triggering_text = text; break
+        # Length-gated exactly like _is_meaningful_message()'s own ack filter —
+        # without this, a long substantive message containing an incidental
+        # common word ("This is a great Data Engineer role...") would be
+        # misclassified as a bare acknowledgement (Part 21 regression fix).
+        if t["sender"] == "other" and len(text) <= 60 and _kw_match_wb(t["text"], GENERIC_ACK_KW):
             process_state = "GENERIC_ACKNOWLEDGEMENT"
             evidence.append("GENERIC_ACK_KW"); triggering_text = text; break
 
@@ -827,8 +906,11 @@ def _analyze_conversation_state(
 
 
 def _cooldown_state(process_state: str, days_since_last: int) -> str:
-    """Part 16 — process-closed cooldown. Only applies to REJECTED_CLOSED."""
-    if process_state != "REJECTED_CLOSED":
+    """Part 16 — process-closed cooldown. Applies to REJECTED_CLOSED and, per
+    Part 21, SOFT_CLOSED_KEEP_WARM (same 60-90 day reactivation window — a
+    soft close is not urgent today, but does become a reactivation candidate
+    once the cooldown clears)."""
+    if process_state not in ("REJECTED_CLOSED", "SOFT_CLOSED_KEEP_WARM"):
         return ""
     d = days_since_last if isinstance(days_since_last, int) else 9999
     if d <= 30:
@@ -860,6 +942,8 @@ def _lead_category_v8(process_state: str, reply_obligation: str, cooldown: str) 
         return "Warm reactivation"
     if process_state == "REJECTED_CLOSED":
         return "Reactivate This Month" if cooldown == "REACTIVATION_ELIGIBLE" else "Rejected / Closed"
+    if process_state == "SOFT_CLOSED_KEEP_WARM":
+        return "Reactivate This Month" if cooldown == "REACTIVATION_ELIGIBLE" else "Soft Closed - Keep Warm"
     if process_state in ("LOCATION_ELIGIBILITY_BLOCKED", "GEOGRAPHIC_HIRING_RESTRICTION", "WORK_AUTHORIZATION_BLOCKED"):
         return "Location / Eligibility Blocked"
     if process_state in ("TALENT_POOL_REDIRECT", "CAREER_SITE_REDIRECT"):
@@ -884,7 +968,7 @@ def _lead_category_v8(process_state: str, reply_obligation: str, cooldown: str) 
 # operationally. Never reads or exposes raw message text.
 # ══════════════════════════════════════════════════════════════════════════
 
-_REPLY_OBLIGATION_CONFIDENCE_NUM = {"HIGH": 0.9, "MEDIUM": 0.6, "LOW": 0.3, "NONE": 0.05}
+_REPLY_OBLIGATION_CONFIDENCE_NUM = {"HIGH": 90, "MEDIUM": 60, "LOW": 30, "NONE": 5}
 
 _STALE_EXEMPT_STATES = {"INTERVIEW_PIPELINE", "CV_REQUESTED", "AWAITING_RECRUITER_UPDATE"}
 
@@ -911,15 +995,17 @@ def _recruiter_priority_flag(persona: str, reply_obligation: str, process_state:
     return reply_obligation in ("CONFIRMED", "LIKELY") or process_state in _STALE_EXEMPT_STATES
 
 
-def _reply_obligation_confidence(conversation_state_confidence: str, reply_obligation: str, stale: bool) -> float:
-    """0-1 confidence that the computed reply_obligation is correct. Tightens
+def _reply_obligation_confidence(conversation_state_confidence: str, reply_obligation: str, stale: bool) -> int:
+    """0-100 confidence that the computed reply_obligation is correct — i.e.
+    only measures whether there is something to answer, NOT lead quality
+    (see lead_quality_score / response_priority_score, Part 21). Tightens
     trust (Part 1.4): a LIKELY/AMBIGUOUS obligation on a conversation that has
     gone stale and low-value is explicitly downgraded rather than left at
     face value, even though it isn't reclassified as CONFIRMED/NONE."""
-    conf = _REPLY_OBLIGATION_CONFIDENCE_NUM.get(conversation_state_confidence, 0.5)
+    conf = _REPLY_OBLIGATION_CONFIDENCE_NUM.get(conversation_state_confidence, 50)
     if stale and reply_obligation in ("LIKELY", "AMBIGUOUS"):
-        conf = min(conf, 0.35)
-    return round(conf, 2)
+        conf = min(conf, 35)
+    return int(conf)
 
 
 _REPLY_REASON_BY_STATE = {
@@ -939,6 +1025,7 @@ _REPLY_REASON_BY_STATE = {
     "DORMANT_WARM":                   "Was a real opportunity before, now dormant — good reactivation candidate.",
     "NO_RESPONSE":                    "You reached out and there has been no reply yet.",
     "LOW_VALUE":                      "Generic conversation with no actionable request.",
+    "SOFT_CLOSED_KEEP_WARM":          "No open role right now, but they said they'd keep you in mind — not urgent.",
 }
 
 
@@ -963,6 +1050,245 @@ def _action_priority_reason(action_urgency: str, terminal: bool, recruiter_flag:
     return "No action needed right now."
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# Part 21 — Response Priority & Lead Quality scoring
+#
+# Separates three previously-conflated concepts on the Lead Reactivation
+# queue:
+#   reply_obligation_flag / reply_obligation_confidence — do I technically
+#     owe a reply? (derived above from the V8 engine's reply_obligation)
+#   lead_quality_score       — is this actually a good opportunity/contact,
+#     independent of whether a reply is owed right now?
+#   response_priority_score  — the final ranking number: does this deserve
+#     my attention this week? Combines the two above with recency and an
+#     active-process/opportunity-strength signal, then hard-caps the score
+#     for known low-value shapes (courtesy-only, ghosted, terminal/blocked,
+#     hard rejection, talent-pool-only, soft-closed, no-current-role) so a
+#     generic "thanks, we'll keep you in mind" can never outrank a recruiter
+#     asking for salary expectations and a call.
+# ══════════════════════════════════════════════════════════════════════════
+
+_RESPONSE_SEGMENT_RANK = {
+    "ACTIVE_PROCESS_NEEDS_REPLY":       1,
+    "INBOUND_OPPORTUNITY_NEEDS_REPLY":  2,
+    "SALARY_CV_CALL_REQUESTED":         3,
+    "HIGH_VALUE_RECRUITER_REPLY":       4,
+    "REACTIVATION_DUE_HIGH_VALUE":      5,
+    "SOFT_CLOSED_KEEP_WARM":            6,
+    "TALENT_POOL_LOW_ACTION":           7,
+    "LOW_PRIORITY_COURTESY":            7,
+    "NO_RESPONSE_BACKLOG":              8,
+    "CLOSED_NO_ACTION":                 9,
+}
+
+_RESPONSE_TIMING_BY_SEGMENT = {
+    "ACTIVE_PROCESS_NEEDS_REPLY":      "TODAY",
+    "INBOUND_OPPORTUNITY_NEEDS_REPLY": "TODAY",
+    "SALARY_CV_CALL_REQUESTED":        "TODAY",
+    "HIGH_VALUE_RECRUITER_REPLY":      "THIS_WEEK",
+    "REACTIVATION_DUE_HIGH_VALUE":     "THIS_WEEK",
+    "SOFT_CLOSED_KEEP_WARM":           "WHEN_CONVENIENT",
+    "TALENT_POOL_LOW_ACTION":          "WHEN_CONVENIENT",
+    "LOW_PRIORITY_COURTESY":           "NO_ACTION_NEEDED",
+    "NO_RESPONSE_BACKLOG":             "NO_ACTION_NEEDED",
+    "CLOSED_NO_ACTION":                "NO_ACTION_NEEDED",
+}
+
+_RESPONSE_REASON_BY_SEGMENT = {
+    "ACTIVE_PROCESS_NEEDS_REPLY":      "Active interview/CV step with an open question — reply today.",
+    "INBOUND_OPPORTUNITY_NEEDS_REPLY": "They shared a real opportunity and are waiting on you.",
+    "SALARY_CV_CALL_REQUESTED":        "They asked for salary expectations, CV, or a call — reply today.",
+    "HIGH_VALUE_RECRUITER_REPLY":      "Valuable recruiter/TA conversation still open — reply this week.",
+    "REACTIVATION_DUE_HIGH_VALUE":     "High-value relationship, cooldown cleared — safe to reach out.",
+    "SOFT_CLOSED_KEEP_WARM":           "No open role right now, but they said they'd keep you in mind.",
+    "TALENT_POOL_LOW_ACTION":          "Talent pool / registration redirect only — no role, call, salary, or CV signal.",
+    "LOW_PRIORITY_COURTESY":           "Generic courtesy reply — no real question or request to answer.",
+    "NO_RESPONSE_BACKLOG":             "You reached out and they never replied.",
+    "CLOSED_NO_ACTION":                "Process closed / rejected / blocked — no action needed.",
+}
+
+
+def _has_data_role_signal(text: str) -> bool:
+    return _kw_match(text, DATA_ROLE_KW)
+
+
+def _has_salary_signal(text: str) -> bool:
+    return _kw_match(text, SALARY_KW)
+
+
+def _has_usd_latam_content_signal(text: str) -> bool:
+    return _kw_match_wb(text, USD_LATAM_SIGNAL_KW)
+
+
+def _lead_quality_score(
+    is_valuable_persona: bool,
+    market_value: bool,
+    has_data_role_signal: bool,
+    has_usd_latam_signal: bool,
+    has_active_process_signal: bool,
+    is_known_staffing_company: bool,
+    is_recent: bool,
+    process_state: str,
+) -> int:
+    """0-100 — is this actually a good opportunity/contact, independent of
+    whether a reply is owed right now (Part 21)."""
+    score = 0
+    if has_data_role_signal:                   score += 30
+    if has_usd_latam_signal or market_value:   score += 25
+    if is_valuable_persona:                    score += 20
+    if has_active_process_signal:              score += 20
+    if is_known_staffing_company:              score += 15
+    if is_recent:                              score += 10
+
+    no_signal_at_all = not (
+        is_valuable_persona or has_data_role_signal or has_usd_latam_signal
+        or market_value or has_active_process_signal
+    )
+    if process_state == "LOW_VALUE" or no_signal_at_all:
+        score -= 30
+    if process_state == "REJECTED_CLOSED":         score -= 25
+    if process_state == "TALENT_POOL_REDIRECT":    score -= 20
+    if process_state == "CAREER_SITE_REDIRECT":    score -= 20
+    if process_state == "GENERIC_ACKNOWLEDGEMENT": score -= 15
+    if process_state == "NO_RESPONSE":             score -= 15
+
+    return int(max(0, min(100, score)))
+
+
+def _response_queue_segment(
+    process_state: str,
+    reply_obligation: str,
+    is_valuable_persona: bool,
+    has_salary_signal: bool,
+    courtesy_only: bool,
+    ghost_or_vacuum: bool,
+    hard_rejection: bool,
+    terminal_low_action: bool,
+    talent_pool_only: bool,
+    cooldown_state: str,
+    relationship_value_score: int,
+) -> str:
+    """Priority-ordered classification (Part 21) — never lets a courtesy
+    reply, a ghosted outreach, or a closed/blocked conversation outrank a
+    real opportunity. Checked most-specific/highest-priority first, mirroring
+    the requested This Week Queue ordering 1-9."""
+    reply_owed = reply_obligation in ("CONFIRMED", "LIKELY")
+
+    if reply_owed and process_state in ("CV_REQUESTED", "INTERVIEW_PIPELINE"):
+        return "ACTIVE_PROCESS_NEEDS_REPLY"
+    if reply_owed and process_state == "ACTIVE_OPPORTUNITY":
+        return "INBOUND_OPPORTUNITY_NEEDS_REPLY"
+    if reply_owed and has_salary_signal:
+        return "SALARY_CV_CALL_REQUESTED"
+    if hard_rejection:
+        return "CLOSED_NO_ACTION"
+    if terminal_low_action:
+        return "CLOSED_NO_ACTION"
+    if ghost_or_vacuum:
+        return "NO_RESPONSE_BACKLOG"
+    if process_state == "SOFT_CLOSED_KEEP_WARM":
+        return "REACTIVATION_DUE_HIGH_VALUE" if cooldown_state == "REACTIVATION_ELIGIBLE" else "SOFT_CLOSED_KEEP_WARM"
+    if talent_pool_only:
+        return "TALENT_POOL_LOW_ACTION"
+    if courtesy_only:
+        return "LOW_PRIORITY_COURTESY"
+    if reply_owed and is_valuable_persona:
+        return "HIGH_VALUE_RECRUITER_REPLY"
+    if process_state == "DORMANT_WARM" and cooldown_state == "REACTIVATION_ELIGIBLE" and relationship_value_score >= 40:
+        return "REACTIVATION_DUE_HIGH_VALUE"
+    if is_valuable_persona and process_state in (
+        "WARM_RELATIONSHIP_NO_ACTIVE_ROLE", "DORMANT_WARM", "AWAITING_RECRUITER_UPDATE",
+    ):
+        return "HIGH_VALUE_RECRUITER_REPLY"
+    # A resolved active process (I already sent the CV / answered the
+    # interview ask / replied to the opportunity — reply_obligation is NONE
+    # because the request is resolved, not because the conversation is
+    # low-value) is a valuable, still-live process to monitor — never a
+    # courtesy reply. Without this check these fell through to
+    # LOW_PRIORITY_COURTESY despite lead_quality_score often being 70-100.
+    if process_state in ("CV_REQUESTED", "INTERVIEW_PIPELINE", "ACTIVE_OPPORTUNITY"):
+        return "HIGH_VALUE_RECRUITER_REPLY"
+    return "LOW_PRIORITY_COURTESY"
+
+
+def _response_priority_layer(
+    process_state: str,
+    reply_obligation: str,
+    reply_obligation_confidence_100: int,
+    lead_quality_score: int,
+    days_since,
+    has_active_process_signal: bool,
+    has_data_role_signal: bool,
+    has_usd_latam_signal: bool,
+    is_valuable_persona: bool,
+    has_salary_signal: bool,
+    courtesy_only: bool,
+    ghost_or_vacuum: bool,
+    hard_rejection: bool,
+    terminal_low_action: bool,
+    talent_pool_only: bool,
+    cooldown_state: str,
+    relationship_value_score: int,
+) -> dict:
+    """Combines reply_obligation_confidence + lead_quality_score + recency +
+    opportunity strength + active-process signal into the final ranking
+    number, then applies the requested hard caps (Part 21) so a low-value
+    reply shape can never outrank a real opportunity regardless of the raw
+    weighted sum."""
+    reply_owed = reply_obligation in ("CONFIRMED", "LIKELY")
+
+    segment = _response_queue_segment(
+        process_state=process_state, reply_obligation=reply_obligation,
+        is_valuable_persona=is_valuable_persona, has_salary_signal=has_salary_signal,
+        courtesy_only=courtesy_only, ghost_or_vacuum=ghost_or_vacuum,
+        hard_rejection=hard_rejection, terminal_low_action=terminal_low_action,
+        talent_pool_only=talent_pool_only, cooldown_state=cooldown_state,
+        relationship_value_score=relationship_value_score,
+    )
+
+    d = days_since if isinstance(days_since, int) else 9999
+    recency_bonus = 15 if d <= 7 else 10 if d <= 30 else 5 if d <= 90 else 0
+    opportunity_strength_bonus = 5 if (has_data_role_signal or has_usd_latam_signal) else 0
+    active_process_bonus = 10 if has_active_process_signal else 0
+
+    raw = (
+        reply_obligation_confidence_100 * 0.35
+        + lead_quality_score * 0.35
+        + recency_bonus
+        + active_process_bonus
+        + opportunity_strength_bonus
+    )
+    score = max(0.0, min(100.0, raw))
+
+    useful_recruiter_no_role = is_valuable_persona and process_state in (
+        "WARM_RELATIONSHIP_NO_ACTIVE_ROLE", "DORMANT_WARM", "AWAITING_RECRUITER_UPDATE",
+    )
+
+    # Caps are keyed on the RESOLVED segment (not the separate booleans that
+    # fed the classifier) so a case that reaches a low-value segment via the
+    # classifier's own fallback logic — rather than via courtesy_only/
+    # ghost_or_vacuum/etc. being True — still gets the matching cap. Using
+    # the flags directly here previously let some fallback-classified rows
+    # (e.g. a resolved CV request with no separate courtesy signal) slip
+    # through with an uncapped score despite landing in a low-value segment.
+    if segment == "LOW_PRIORITY_COURTESY":  score = min(score, 25)
+    if segment == "NO_RESPONSE_BACKLOG":    score = min(score, 20)
+    if segment == "TALENT_POOL_LOW_ACTION": score = min(score, 35)
+    if segment == "CLOSED_NO_ACTION":       score = min(score, 10 if hard_rejection else 15)
+    if segment == "SOFT_CLOSED_KEEP_WARM":  score = min(score, 55)
+    if useful_recruiter_no_role and not reply_owed:
+        score = min(score, 50)
+
+    score = int(round(max(0.0, min(100.0, score))))
+
+    return {
+        "response_queue_segment":      segment,
+        "response_priority_score":     score,
+        "recommended_response_timing": _RESPONSE_TIMING_BY_SEGMENT.get(segment, "WHEN_CONVENIENT"),
+        "response_reason_short":       _RESPONSE_REASON_BY_SEGMENT.get(segment, "Review manually — no clear signal."),
+    }
+
+
 _INTENT_LABEL_BY_STATE = {
     "REJECTED_CLOSED": "Process closed",
     "LOCATION_ELIGIBILITY_BLOCKED": "Location/residency constraint",
@@ -972,6 +1298,7 @@ _INTENT_LABEL_BY_STATE = {
     "CAREER_SITE_REDIRECT": "Auto reply",
     "AUTO_REPLY_ONLY": "Auto reply",
     "AWAITING_RECRUITER_UPDATE": "Awaiting recruiter update",
+    "SOFT_CLOSED_KEEP_WARM": "Soft close / keep warm",
 }
 
 
@@ -1424,6 +1751,71 @@ def build_conversation_intelligence(
             conv_state["action_urgency"], terminal_flag, recruiter_flag,
         )
 
+        # Part 21 — Response Priority & Lead Quality (separate reply
+        # obligation from lead quality from final ranking; see module docstring).
+        has_data_role      = _has_data_role_signal(all_content)
+        has_salary         = _has_salary_signal(all_content)
+        has_usd_latam_content = _has_usd_latam_content_signal(all_content)
+        has_active_process_signal = bool(signals["interview"] or signals["cv_request"] or has_salary)
+        has_usd_latam_signal      = bool(market_value or has_usd_latam_content)
+        raw_company_category = "" if match_row is None else str(
+            match_row.get("company_category", match_row.get("company_category_v4", "")) or ""
+        )
+        is_known_staffing_company = raw_company_category.upper() in {
+            "GLOBAL_STAFFING", "GLOBAL_CONSULTING", "GLOBAL_TECH",
+        }
+        _d_for_recency = days_since if isinstance(days_since, int) else 9999
+        is_recent = _d_for_recency <= 30
+
+        ghost_or_vacuum_flag     = conv_state["process_state"] == "NO_RESPONSE"
+        hard_rejection_flag      = conv_state["process_state"] == "REJECTED_CLOSED"
+        talent_pool_only_flag    = conv_state["process_state"] == "TALENT_POOL_REDIRECT"
+        terminal_low_action_flag = conv_state["process_state"] in (
+            "LOCATION_ELIGIBILITY_BLOCKED", "GEOGRAPHIC_HIRING_RESTRICTION",
+            "WORK_AUTHORIZATION_BLOCKED", "AUTO_REPLY_ONLY",
+        )
+        courtesy_only_flag = (
+            (resp_intel["last_message_is_generic_ack"]
+             and not resp_intel["last_message_is_substantive"]
+             and resp_intel["last_sender_type"] == "other")
+            or conv_state["process_state"] in ("GENERIC_ACKNOWLEDGEMENT", "LOW_VALUE", "CAREER_SITE_REDIRECT")
+        )
+
+        lead_quality_score = _lead_quality_score(
+            is_valuable_persona=is_valuable,
+            market_value=market_value,
+            has_data_role_signal=has_data_role,
+            has_usd_latam_signal=has_usd_latam_signal,
+            has_active_process_signal=has_active_process_signal,
+            is_known_staffing_company=is_known_staffing_company,
+            is_recent=is_recent,
+            process_state=conv_state["process_state"],
+        )
+
+        response_layer = _response_priority_layer(
+            process_state=conv_state["process_state"],
+            reply_obligation=conv_state["reply_obligation"],
+            reply_obligation_confidence_100=reply_obligation_confidence,
+            lead_quality_score=lead_quality_score,
+            days_since=_d_for_recency,
+            has_active_process_signal=has_active_process_signal,
+            has_data_role_signal=has_data_role,
+            has_usd_latam_signal=has_usd_latam_signal,
+            is_valuable_persona=is_valuable,
+            has_salary_signal=has_salary,
+            courtesy_only=courtesy_only_flag,
+            ghost_or_vacuum=ghost_or_vacuum_flag,
+            hard_rejection=hard_rejection_flag,
+            terminal_low_action=terminal_low_action_flag,
+            talent_pool_only=talent_pool_only_flag,
+            cooldown_state=cooldown,
+            relationship_value_score=conv_state["relationship_value_score"],
+        )
+        reply_obligation_flag = conv_state["reply_obligation"] in ("CONFIRMED", "LIKELY")
+        low_value_reply_flag = response_layer["response_queue_segment"] in (
+            "LOW_PRIORITY_COURTESY", "TALENT_POOL_LOW_ACTION",
+        )
+
         follow_up_date = ""
         if status == "Follow-up due" and last_date:
             import datetime as _dt
@@ -1513,6 +1905,22 @@ def build_conversation_intelligence(
             "terminal_state_flag":            terminal_flag,
             "stale_conversation_flag":        stale_flag,
             "recruiter_priority_flag":        recruiter_flag,
+            # Part 21 — Response Priority & Lead Quality (reply obligation vs.
+            # lead quality vs. final ranking — see module docstring).
+            "reply_obligation_flag":          reply_obligation_flag,
+            "lead_quality_score":             lead_quality_score,
+            "response_priority_score":        response_layer["response_priority_score"],
+            "response_queue_segment":         response_layer["response_queue_segment"],
+            "low_value_reply_flag":           low_value_reply_flag,
+            "courtesy_only_flag":             courtesy_only_flag,
+            "ghost_or_vacuum_flag":           ghost_or_vacuum_flag,
+            "terminal_low_action_flag":       terminal_low_action_flag,
+            "hard_rejection_flag":            hard_rejection_flag,
+            "talent_pool_only_flag":          talent_pool_only_flag,
+            "recommended_response_timing":    response_layer["recommended_response_timing"],
+            "response_reason_short":          response_layer["response_reason_short"],
+            "active_process_signal_flag":     has_active_process_signal,
+            "usd_latam_signal_flag":          has_usd_latam_signal,
         })
 
     if not rows:

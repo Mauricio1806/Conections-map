@@ -148,6 +148,11 @@ FOLLOWUP_LEAD_CATEGORIES = {
     "Needs my response — Confirmed", "Needs my response — Likely",
     "Warm reactivation", "Dormant warm", "Active Interview Pipeline",
     "Awaiting Recruiter Update", "Reactivate This Month",
+    # Response Priority & Lead Quality (Part 21) — a soft close ("no open
+    # role now, keep you on radar") is a genuine future-follow-up candidate,
+    # never a hard rejection — see message_intelligence.py's
+    # SOFT_CLOSED_KEEP_WARM process_state / _lead_category_v8().
+    "Soft Closed - Keep Warm",
 }
 ACTIVE_PROCESS_LEAD_CATEGORIES = {"Active Interview Pipeline", "Awaiting Recruiter Update"}
 BLOCKED_LEAD_CATEGORIES = {"Location / Eligibility Blocked"}

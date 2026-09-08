@@ -2904,6 +2904,17 @@ function renderLeads() {
     makeKpiCard('this_week',       'This Week Queue',         lr.this_week_count             || 0, 'weekly action limit — click to filter', 'warn'),
   ].join('');
 
+  // ── Response Priority & Lead Quality (Part 21) — honest KPI cards ──────────
+  const rpEl = document.getElementById('leads-response-priority');
+  if (rpEl) rpEl.innerHTML = [
+    makeKpiCard('resp_high',    'Needs My Response — High Priority', lr.needs_response_high_priority_count || 0, 'active process / inbound opportunity / salary-CV-call ask — click to filter', 'bad'),
+    makeKpiCard('resp_medium',  'Needs My Response — Medium',        lr.needs_response_medium_count         || 0, 'valuable recruiter relationship, no urgent ask — click to filter', 'warn'),
+    makeKpiCard('resp_courtesy','Courtesy / Low Priority',           lr.courtesy_low_priority_count         || 0, 'generic reply or talent-pool redirect only — click to filter'),
+    makeKpiCard('resp_ghost',   'No Response / Ghost Backlog',       lr.no_response_ghost_backlog_count     || 0, 'you reached out, no reply ever came — click to filter'),
+    makeKpiCard('resp_soft',    'Soft Closed — Keep Warm',           lr.soft_closed_keep_warm_count         || 0, 'no role now, not a rejection — click to filter'),
+    makeKpiCard('resp_closed',  'Closed / No Action',                lr.closed_no_action_v2_count           || 0, 'rejected, blocked, or auto-reply — click to filter'),
+  ].join('');
+
   const pipeEl = document.getElementById('leads-pipeline');
   if (pipeEl) pipeEl.innerHTML = [
     makeKpiCard('active_interview',   'Active Interview Pipeline', lr.active_interview_pipeline || 0, 'CV requested / interview step', 'good'),
@@ -2947,6 +2958,8 @@ function renderLeads() {
           + '<td style="font-size:0.78rem">' + (r.lead_category||'—') + '</td>'
           + '<td>' + tempBadge(r.lead_temperature||'—') + '</td>'
           + '<td style="font-size:0.75rem">' + icon + ' ' + (r.conversation_status||'—') + '</td>'
+          + '<td>' + segmentBadge(r.response_queue_segment) + '</td>'
+          + '<td style="font-size:0.7rem;white-space:nowrap" title="' + (r.response_reason_short||'') + '">' + (r.recommended_response_timing||'—') + '</td>'
           + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
           + '<td style="font-size:0.72rem;max-width:200px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
           + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
@@ -2960,7 +2973,7 @@ function renderLeads() {
   if (replyTbody) {
     const replies = lr.needs_reply_contacts || [];
     if (!replies.length) {
-      replyTbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">No contacts waiting for your reply.</td></tr>';
+      replyTbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-muted)">No contacts waiting for your reply.</td></tr>';
     } else {
       replyTbody.innerHTML = replies.map((r, i) => {
         const url = r.other_person_profile_url || '';
@@ -2969,6 +2982,8 @@ function renderLeads() {
           + '<td style="white-space:nowrap">' + (r.other_person_name||'—') + '</td>'
           + '<td>' + (r.company_clean||'—') + '</td>'
           + '<td style="white-space:nowrap">' + (r.persona||'—') + '</td>'
+          + '<td>' + segmentBadge(r.response_queue_segment) + '</td>'
+          + '<td>' + responsePriorityBadge(r.response_priority_score) + '</td>'
           + '<td><span class="score-badge score-high">' + (r.reactivation_priority_score||0) + '</span></td>'
           + '<td style="font-size:0.72rem;max-width:260px">' + String(r.message_angle||'').substring(0,120) + '</td>'
           + '<td>' + (url ? '<a href="' + url + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>'
@@ -3034,6 +3049,14 @@ window.applyLeadFilters = function() {
   const terminalOnly    = document.getElementById('lead-terminal-only')?.checked || false;
   const warmOnly        = document.getElementById('lead-warm-only')?.checked || false;
   const interviewRelatedOnly = document.getElementById('lead-interview-related-only')?.checked || false;
+  // Response Priority & Lead Quality (Part 21) filters
+  const segment      = document.getElementById('lead-segment-filter')?.value || '';
+  const qualityMin    = parseFloat(document.getElementById('lead-quality-min')?.value) || 0;
+  const respPriorityMin = parseFloat(document.getElementById('lead-response-priority-min')?.value) || 0;
+  const hideLowValue  = document.getElementById('lead-hide-low-value')?.checked || false;
+  const hideGhost     = document.getElementById('lead-hide-ghost')?.checked || false;
+  const activeProcessOnly = document.getElementById('lead-active-process-only')?.checked || false;
+  const usdLatamOnly  = document.getElementById('lead-usd-latam-only')?.checked || false;
 
   const lr = D.lead_reactivation || {};
   const thisWeekIds = new Set((lr.this_week_contacts || []).map(c => c.other_person_profile_url || c.other_person_name));
@@ -3075,11 +3098,18 @@ window.applyLeadFilters = function() {
     if ((parseFloat(c.reactivation_priority_score) || 0) < minScore) return false;
     if (thisWeekOnly && !thisWeekIds.has(c.other_person_profile_url || c.other_person_name)) return false;
     if (recOnly && !['Recruiter','Talent Acquisition','Sourcer','Hiring Manager','Engineering Manager'].includes(c.persona)) return false;
-    if (highConfOnly && !((parseFloat(c.reply_obligation_confidence) || 0) >= 0.7)) return false;
+    if (highConfOnly && !((parseFloat(c.reply_obligation_confidence) || 0) >= 70)) return false;
     if (staleOnly && !c.stale_conversation_flag) return false;
     if (terminalOnly && !c.terminal_state_flag) return false;
     if (warmOnly && c.lead_category !== 'Warm reactivation') return false;
     if (interviewRelatedOnly && !(c.has_interview_signal || c.process_state === 'INTERVIEW_PIPELINE')) return false;
+    if (segment && c.response_queue_segment !== segment) return false;
+    if ((parseFloat(c.lead_quality_score) || 0) < qualityMin) return false;
+    if ((parseFloat(c.response_priority_score) || 0) < respPriorityMin) return false;
+    if (hideLowValue && c.low_value_reply_flag) return false;
+    if (hideGhost && c.ghost_or_vacuum_flag) return false;
+    if (activeProcessOnly && !c.active_process_signal_flag) return false;
+    if (usdLatamOnly && !c.usd_latam_signal_flag) return false;
     return true;
   });
   activeLeadKpi = null;
@@ -3092,12 +3122,15 @@ window.resetLeadFilters = function() {
   ['lead-status-filter','lead-category-filter','lead-temp-filter','lead-persona-filter',
    'lead-market-filter','lead-sender-filter','lead-needs-response-filter','lead-replied-filter',
    'lead-ghosted-filter','lead-autoreply-filter','lead-positive-filter','lead-interview-filter',
-   'lead-recency-filter'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+   'lead-recency-filter','lead-segment-filter'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   const ms = document.getElementById('lead-min-score'); if (ms) ms.value = '0';
+  const qm = document.getElementById('lead-quality-min'); if (qm) qm.value = '0';
+  const rpm = document.getElementById('lead-response-priority-min'); if (rpm) rpm.value = '0';
   const tw = document.getElementById('lead-this-week-only'); if (tw) tw.checked = false;
   const r  = document.getElementById('lead-recruiter-only'); if (r) r.checked = false;
   ['lead-high-confidence-only', 'lead-stale-only', 'lead-terminal-only', 'lead-warm-only',
-   'lead-interview-related-only'].forEach(id => { const el = document.getElementById(id); if (el) el.checked = false; });
+   'lead-interview-related-only', 'lead-hide-low-value', 'lead-hide-ghost',
+   'lead-active-process-only', 'lead-usd-latam-only'].forEach(id => { const el = document.getElementById(id); if (el) el.checked = false; });
   filteredLeads = (D.lead_reactivation || {}).top_reactivation_contacts || [];
   activeLeadKpi = null;
   _updateActiveKpiCards();
@@ -3135,6 +3168,15 @@ const LEAD_KPI_FILTERS = {
   hot_reactivation:    { label: 'Hot Reactivation',            match: c => c.lead_category === 'Active Interview Pipeline' || c.lead_category === 'Needs my response — Confirmed' },
   warm_reactivation:   { label: 'Warm Reactivation',           match: c => c.lead_category === 'Warm reactivation' },
   follow_up_due_status:{ label: 'Follow-ups Due',              match: c => c.conversation_status === 'Follow-up due' },
+  // Response Priority & Lead Quality (Part 21) — mirrors the exact segment
+  // groupings used server-side in src/lead_reactivation_engine.py's summary
+  // counts, so "Showing N" always matches the card it was clicked from.
+  resp_high:     { label: 'Needs My Response — High Priority', match: c => ['ACTIVE_PROCESS_NEEDS_REPLY','INBOUND_OPPORTUNITY_NEEDS_REPLY','SALARY_CV_CALL_REQUESTED'].includes(c.response_queue_segment) },
+  resp_medium:   { label: 'Needs My Response — Medium',        match: c => ['HIGH_VALUE_RECRUITER_REPLY','REACTIVATION_DUE_HIGH_VALUE'].includes(c.response_queue_segment) },
+  resp_courtesy: { label: 'Courtesy / Low Priority',           match: c => ['LOW_PRIORITY_COURTESY','TALENT_POOL_LOW_ACTION'].includes(c.response_queue_segment) },
+  resp_ghost:    { label: 'No Response / Ghost Backlog',       match: c => c.response_queue_segment === 'NO_RESPONSE_BACKLOG' },
+  resp_soft:     { label: 'Soft Closed — Keep Warm',           match: c => c.response_queue_segment === 'SOFT_CLOSED_KEEP_WARM' },
+  resp_closed:   { label: 'Closed / No Action',                match: c => c.response_queue_segment === 'CLOSED_NO_ACTION' },
 };
 
 function _updateActiveKpiCards() {
@@ -3166,6 +3208,46 @@ window.applyLeadKpiFilter = function(key) {
   if (table) table.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
+// Response Priority & Lead Quality (Part 21) — segment badge colors mirror
+// the requested This Week Queue priority order (1-9): green for real
+// opportunities needing a reply, amber for medium/warm, gray for low-value/
+// terminal buckets that must never outrank them.
+const RESPONSE_SEGMENT_STYLE = {
+  ACTIVE_PROCESS_NEEDS_REPLY:       'background:#16a34a;color:#fff',
+  INBOUND_OPPORTUNITY_NEEDS_REPLY:  'background:#16a34a;color:#fff',
+  SALARY_CV_CALL_REQUESTED:         'background:#16a34a;color:#fff',
+  HIGH_VALUE_RECRUITER_REPLY:       'background:#f59e0b;color:#111',
+  REACTIVATION_DUE_HIGH_VALUE:      'background:#f59e0b;color:#111',
+  SOFT_CLOSED_KEEP_WARM:            'background:#9ca3af;color:#111',
+  TALENT_POOL_LOW_ACTION:           'background:#9ca3af;color:#111',
+  LOW_PRIORITY_COURTESY:            'background:#6b7280;color:#eee',
+  NO_RESPONSE_BACKLOG:              'background:#4b5563;color:#eee',
+  CLOSED_NO_ACTION:                 'background:#374151;color:#aaa',
+};
+const RESPONSE_SEGMENT_LABEL = {
+  ACTIVE_PROCESS_NEEDS_REPLY:      'Active Process — Needs Reply',
+  INBOUND_OPPORTUNITY_NEEDS_REPLY: 'Inbound Opportunity — Needs Reply',
+  SALARY_CV_CALL_REQUESTED:        'Salary/CV/Call Requested',
+  HIGH_VALUE_RECRUITER_REPLY:      'High-Value Recruiter Reply',
+  REACTIVATION_DUE_HIGH_VALUE:     'Reactivation Due — High Value',
+  SOFT_CLOSED_KEEP_WARM:           'Soft Closed — Keep Warm',
+  TALENT_POOL_LOW_ACTION:          'Talent Pool — Low Action',
+  LOW_PRIORITY_COURTESY:           'Low Priority — Courtesy',
+  NO_RESPONSE_BACKLOG:             'No Response / Ghost',
+  CLOSED_NO_ACTION:                'Closed / No Action',
+};
+function segmentBadge(seg) {
+  if (!seg) return '—';
+  const style = RESPONSE_SEGMENT_STYLE[seg] || 'background:#374151;color:#aaa';
+  const label = RESPONSE_SEGMENT_LABEL[seg] || seg;
+  return '<span style="' + style + ';padding:2px 6px;border-radius:4px;font-size:0.68rem;white-space:nowrap">' + label + '</span>';
+}
+function responsePriorityBadge(score) {
+  const s = parseInt(score) || 0;
+  const cls = s >= 70 ? 'score-high' : s >= 40 ? 'score-med' : 'score-low';
+  return '<span class="score-badge ' + cls + '">' + s + '</span>';
+}
+
 const NEEDS_RESPONSE_CONF_STYLE = {
   HIGH:   'background:#ef4444;color:#fff',
   MEDIUM: 'background:#f59e0b;color:#111',
@@ -3190,7 +3272,7 @@ function renderLeadsTable(kpiLabel) {
   const tbody = document.getElementById('leads-tbody');
   if (!tbody) return;
   if (!filteredLeads.length) {
-    tbody.innerHTML = '<tr><td colspan="17" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="20" style="text-align:center;color:var(--text-muted)">No contacts match the current filters.</td></tr>';
     return;
   }
   tbody.innerHTML = filteredLeads.map((r, i) => {
@@ -3213,6 +3295,9 @@ function renderLeadsTable(kpiLabel) {
       + '<td style="text-align:center">' + (r.days_since_last_message ?? '—') + '</td>'
       + '<td>' + needsResponseBadge(r.needs_response_confidence, r.reply_obligation_confidence) + '</td>'
       + '<td><span class="score-badge ' + sCls + '">' + score + '</span></td>'
+      + '<td>' + segmentBadge(r.response_queue_segment) + '</td>'
+      + '<td style="text-align:center">' + (r.lead_quality_score ?? '—') + '</td>'
+      + '<td>' + responsePriorityBadge(r.response_priority_score) + '</td>'
       + '<td style="font-size:0.72rem;max-width:170px">' + String(r.recommended_next_action||'').substring(0,80) + '</td>'
       + '<td style="font-size:0.7rem;max-width:170px;color:var(--text-muted);cursor:help" '
         + 'title="Intent: ' + (r.sanitized_intent_label||'—') + ' | Confidence: ' + (r.reply_obligation_confidence ?? '—')

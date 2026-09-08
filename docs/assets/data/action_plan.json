@@ -1165,17 +1165,17 @@
         "reactivation_period_target_max": 28.5,
         "reactivation_pace_status": "AHEAD",
         "followups_due_current": 1174,
-        "needs_my_response_current": 77,
+        "needs_my_response_current": 101,
         "needs_my_response_previous": 75,
-        "needs_my_response_delta": 2,
-        "hot_reactivation_current": 149,
+        "needs_my_response_delta": 26,
+        "hot_reactivation_current": 169,
         "hot_reactivation_previous": 145,
-        "hot_reactivation_delta": 4,
-        "warm_reactivation_current": 3380,
+        "hot_reactivation_delta": 24,
+        "warm_reactivation_current": 950,
         "warm_reactivation_previous": 3148,
-        "warm_reactivation_delta": 232,
-        "dormant_warm_current": 121,
-        "rejected_closed_current": 50
+        "warm_reactivation_delta": -2198,
+        "dormant_warm_current": 156,
+        "rejected_closed_current": 2
       },
       "untapped_network": {
         "never_contacted_current": 7247,
@@ -1195,7 +1195,7 @@
       "top_contacts": {
         "top_priority_contacts_current": 264,
         "top_priority_contacts_previous": 253,
-        "outreach_adjusted_score_avg_current": 46.4,
+        "outreach_adjusted_score_avg_current": 48.9,
         "outreach_adjusted_score_avg_previous": 49.7
       },
       "data_quality": {
@@ -1279,7 +1279,7 @@
       },
       {
         "title": "Needs My Response",
-        "value": 77
+        "value": 101
       },
       {
         "title": "Needs Company Mapping",
@@ -1364,15 +1364,15 @@
       "lead_pipeline_movement": [
         {
           "label": "Needs My Response",
-          "value": 77
+          "value": 101
         },
         {
           "label": "Hot Reactivation",
-          "value": 149
+          "value": 169
         },
         {
           "label": "Warm Reactivation",
-          "value": 3380
+          "value": 950
         },
         {
           "label": "Follow-ups Due",
@@ -1380,7 +1380,7 @@
         },
         {
           "label": "Dormant Warm",
-          "value": 121
+          "value": 156
         }
       ],
       "untapped_movement": [
@@ -1479,7 +1479,7 @@
           "gross_new_connections": 209,
           "net_connection_growth": 185,
           "new_recruiters": 47,
-          "needs_my_response_current": 77,
+          "needs_my_response_current": 101,
           "untapped_activated_this_week": 73,
           "needs_company_mapping_delta": 39
         }
@@ -1500,7 +1500,7 @@
       }
     ],
     "next_week_recommendations": [
-      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 77 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 11 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
+      "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 101 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 11 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts."
     ],
     "weekly_history": [
       {
@@ -1896,10 +1896,10 @@
         "new_talent_acquisition": 70,
         "new_hiring_managers": 0,
         "new_conversations_started": 256,
-        "needs_my_response_current": 77,
-        "needs_my_response_delta": 2,
-        "hot_reactivation_delta": 4,
-        "warm_reactivation_delta": 232,
+        "needs_my_response_current": 101,
+        "needs_my_response_delta": 26,
+        "hot_reactivation_delta": 24,
+        "warm_reactivation_delta": -2198,
         "untapped_activated_this_week": 73,
         "needs_company_mapping_delta": 39,
         "actual_primary_share": 0.9322,
@@ -1908,7 +1908,7 @@
         "classification_risk_status": "CLASSIFICATION_BACKLOG_INCREASED",
         "overall_status": "ON_TRACK",
         "diagnosis_summary": "Connection growth is above weekly pace. Keep quality control. | Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts. | Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.",
-        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 77 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 11 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
+        "recommendation": "Next week: keep 80-90% effort on LATAM/USD. Prioritize 15-25 Lead Reactivation contacts (currently 101 awaiting your response), 10-20 Untapped LATAM recruiters/TA (currently 11 high-value untapped), and 20-40 new recruiter/TA connections. Keep Spain/EU to 5-10 exploratory contacts.",
         "total_connections_previous": "12263",
         "total_connections_current": "12448",
         "new_data_leaders": 4.0,

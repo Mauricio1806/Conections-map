@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1788867344">
+  <link rel="stylesheet" href="./assets/style.css?v=1788888823">
 </head>
 <body>
 
@@ -796,8 +796,16 @@ python src/validate_static_dashboard_runtime.py</pre>
       </div>
 
       <div id="leads-main-content">
+        <div class="alert alert-info" style="margin-bottom:1rem">
+          <span class="alert-icon">&#8505;&#65039;</span>
+          <span><strong>Needs My Response is not the same as lead quality.</strong> This queue is now ranked by response priority and opportunity quality — not just by who sent the last message.</span>
+        </div>
+
         <div class="section-label">Message Intelligence Summary</div>
         <div class="metrics-grid" id="leads-summary"></div>
+
+        <div class="section-label">Response Priority &amp; Lead Quality</div>
+        <div class="metrics-grid" id="leads-response-priority"></div>
 
         <div class="section-label">Lead Pipeline</div>
         <div class="metrics-grid" id="leads-pipeline"></div>
@@ -812,6 +820,7 @@ python src/validate_static_dashboard_runtime.py</pre>
               <thead><tr>
                 <th>#</th><th>Name</th><th>Company</th><th>Persona</th>
                 <th>Category</th><th>Temp</th><th>Status</th>
+                <th>Response Queue Segment</th><th>Priority</th>
                 <th>Score</th><th>Recommended Action</th><th>LinkedIn</th>
               </tr></thead>
               <tbody id="leads-this-week-tbody"></tbody>
@@ -824,6 +833,7 @@ python src/validate_static_dashboard_runtime.py</pre>
           <table id="leads-reply-table">
             <thead><tr>
               <th>#</th><th>Name</th><th>Company</th><th>Persona</th>
+              <th>Response Queue Segment</th><th>Priority</th>
               <th>Score</th><th>Message Angle</th><th>LinkedIn</th>
             </tr></thead>
             <tbody id="leads-reply-tbody"></tbody>
@@ -947,6 +957,27 @@ python src/validate_static_dashboard_runtime.py</pre>
           <div class="filter-group"><label>Min reactivation score</label>
             <input type="number" id="lead-min-score" value="0" min="0" max="100" style="width:70px">
           </div>
+          <div class="filter-group"><label>Response Queue Segment</label>
+            <select id="lead-segment-filter">
+              <option value="">All</option>
+              <option value="ACTIVE_PROCESS_NEEDS_REPLY">Active Process — Needs Reply</option>
+              <option value="INBOUND_OPPORTUNITY_NEEDS_REPLY">Inbound Opportunity — Needs Reply</option>
+              <option value="SALARY_CV_CALL_REQUESTED">Salary/CV/Call Requested</option>
+              <option value="HIGH_VALUE_RECRUITER_REPLY">High-Value Recruiter Reply</option>
+              <option value="REACTIVATION_DUE_HIGH_VALUE">Reactivation Due — High Value</option>
+              <option value="SOFT_CLOSED_KEEP_WARM">Soft Closed — Keep Warm</option>
+              <option value="TALENT_POOL_LOW_ACTION">Talent Pool — Low Action</option>
+              <option value="LOW_PRIORITY_COURTESY">Low Priority — Courtesy</option>
+              <option value="NO_RESPONSE_BACKLOG">No Response / Ghost Backlog</option>
+              <option value="CLOSED_NO_ACTION">Closed / No Action</option>
+            </select>
+          </div>
+          <div class="filter-group"><label>Lead quality minimum</label>
+            <input type="number" id="lead-quality-min" value="0" min="0" max="100" style="width:70px">
+          </div>
+          <div class="filter-group"><label>Response priority minimum</label>
+            <input type="number" id="lead-response-priority-min" value="0" min="0" max="100" style="width:70px">
+          </div>
           <div class="filter-group"><label>This Week Queue only</label>
             <input type="checkbox" id="lead-this-week-only">
           </div>
@@ -968,6 +999,18 @@ python src/validate_static_dashboard_runtime.py</pre>
           <div class="filter-group"><label>Interview-related only</label>
             <input type="checkbox" id="lead-interview-related-only">
           </div>
+          <div class="filter-group"><label>Hide low-value replies</label>
+            <input type="checkbox" id="lead-hide-low-value">
+          </div>
+          <div class="filter-group"><label>Hide ghost / no response</label>
+            <input type="checkbox" id="lead-hide-ghost">
+          </div>
+          <div class="filter-group"><label>Active process only</label>
+            <input type="checkbox" id="lead-active-process-only">
+          </div>
+          <div class="filter-group"><label>USD/LATAM signal only</label>
+            <input type="checkbox" id="lead-usd-latam-only">
+          </div>
           <button class="btn-primary" onclick="applyLeadFilters()">Apply</button>
           <button class="btn-ghost" onclick="resetLeadFilters()">Reset</button>
         </div>
@@ -981,6 +1024,7 @@ python src/validate_static_dashboard_runtime.py</pre>
               <th>Opportunity bucket</th><th>Category</th><th>Temp</th><th>Status</th>
               <th>Last sender</th><th>Last msg date</th><th>Days</th>
               <th>Needs response conf.</th><th>Score</th>
+              <th>Response Queue Segment</th><th>Lead Quality</th><th>Response Priority</th>
               <th>Recommended Action</th><th>Why</th><th>Intent</th><th>LinkedIn</th>
             </tr></thead>
             <tbody id="leads-tbody"></tbody>
@@ -1831,6 +1875,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1788867344"></script>
+<script src="./assets/app.js?v=1788888823"></script>
 </body>
 </html>

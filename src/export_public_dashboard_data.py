@@ -634,6 +634,13 @@ SAFE_LEAD_COLS = {
     # Lead Reactivation trust layer (Part 1) — sanitized explain fields
     "reply_obligation_confidence", "reply_reason_short", "action_priority_reason",
     "terminal_state_flag", "stale_conversation_flag", "recruiter_priority_flag",
+    # Response Priority & Lead Quality (Part 21) — sanitized booleans/scores/
+    # short controlled-vocabulary labels only, no raw message content.
+    "reply_obligation_flag", "lead_quality_score", "response_priority_score",
+    "response_queue_segment", "low_value_reply_flag", "courtesy_only_flag",
+    "ghost_or_vacuum_flag", "terminal_low_action_flag", "hard_rejection_flag",
+    "talent_pool_only_flag", "recommended_response_timing", "response_reason_short",
+    "active_process_signal_flag", "usd_latam_signal_flag",
 }
 
 SAFE_LEAD_SUMMARY_KEYS = {
@@ -660,6 +667,10 @@ SAFE_LEAD_SUMMARY_KEYS = {
     "most_urgent_confirmed_count", "warm_recruiter_followups_count",
     "stale_but_valuable_count", "closed_low_action_count",
     "recruiter_priority_count", "high_confidence_reply_count",
+    # Response Priority & Lead Quality (Part 21) — honest KPI cards
+    "needs_response_high_priority_count", "needs_response_medium_count",
+    "courtesy_low_priority_count", "no_response_ghost_backlog_count",
+    "soft_closed_keep_warm_count", "closed_no_action_v2_count",
 }
 
 
