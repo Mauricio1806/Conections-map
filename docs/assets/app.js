@@ -672,6 +672,24 @@ function renderOverview() {
     }
   }
 
+  // Connection freshness banner — shown whenever Connections.csv wasn't part
+  // of the current snapshot export (e.g. exported in a second batch, or a
+  // week skipped entirely), so network-growth/connection-dependent sections
+  // are known to be showing a previous export.
+  const cf = (D.meta || {}).connections_freshness;
+  const cfBannerEl = document.getElementById('connections-freshness-banner');
+  if (cfBannerEl) {
+    if (cf && cf.connections_available_for_current_snapshot === false) {
+      cfBannerEl.innerHTML = '<div class="alert alert-warn">'
+        + '<span class="alert-icon">&#9888;</span>'
+        + '<strong>Connection data is stale.</strong> '
+        + (cf.note || 'Connections.csv was not included in this export. Network-growth and connection-dependent sections reflect the last available Connections export.')
+        + '</div>';
+    } else {
+      cfBannerEl.innerHTML = '';
+    }
+  }
+
   // V5 coverage banner (replaces old UNKNOWN warning)
   const v5S      = D.opportunity_market_v5_summary || {};
   const actPct   = v5S.v5_actionable_pct || (100 - (v5S.v5_low_value_pct || 0));

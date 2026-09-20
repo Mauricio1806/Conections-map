@@ -31,9 +31,13 @@ from __future__ import annotations
 
 import json
 import logging
+import sys
 from pathlib import Path
 
 import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from src.connection_freshness import read_connection_freshness
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
 logger = logging.getLogger(__name__)
@@ -490,14 +494,29 @@ def build_weekly_evolution(previous: dict, current: dict, snapshot_meta: dict) -
         r = sub.iloc[0]
         return {"previous_value": r["previous_value"], "current_value": r["current_value"], "absolute_delta": r["absolute_delta"]}
 
+    # Part 22 (partial refresh) — never present a "measured" connection
+    # growth number for a snapshot whose Connections.csv wasn't actually
+    # refreshed this run (see src/connection_freshness.py). The underlying
+    # Connections.csv is unchanged in that case anyway (weekly_snapshot_refresh.py
+    # preserves the last real export), so the delta would show 0 either way —
+    # this makes explicit that 0 means "not measured this week", not "no growth".
+    conn_freshness = read_connection_freshness()
+    connections_measured_this_week = conn_freshness.get("connections_available_for_current_snapshot", True)
+
     evolution = {
         "current_snapshot_label": snapshot_meta["current_label"],
         "previous_snapshot_label": snapshot_meta["previous_label"],
         "network_growth": {
+            "measured_this_week": connections_measured_this_week,
             "previous_connections": _row("total_connections")["previous_value"],
             "current_connections": _row("total_connections")["current_value"],
-            "net_growth": _row("total_connections")["absolute_delta"],
-            "new_connections": snapshot_meta.get("new_connections_count", 0),
+            "net_growth": _row("total_connections")["absolute_delta"] if connections_measured_this_week else None,
+            "new_connections": snapshot_meta.get("new_connections_count", 0) if connections_measured_this_week else None,
+            "note": None if connections_measured_this_week else (
+                f"Connections.csv was not part of the {snapshot_meta['current_label']} export — network "
+                f"growth is not measured for this week and still reflects "
+                f"{conn_freshness.get('connections_last_available_snapshot_date') or 'the last available'} data."
+            ),
         },
         "strategic_growth": {
             "new_recruiters": _row("recruiters")["absolute_delta"],

@@ -1079,6 +1079,10 @@ _RESPONSE_SEGMENT_RANK = {
     "LOW_PRIORITY_COURTESY":            7,
     "NO_RESPONSE_BACKLOG":              8,
     "CLOSED_NO_ACTION":                 9,
+    # Part 22 — USD Remote / Location Fit: local-only/onsite/presencial-only
+    # opportunities are auditable but never outrank a real opportunity.
+    "LOW_FIT_LOCATION_BLOCKED":        10,
+    "LOW_PRIORITY_LOCAL_ONLY":         10,
 }
 
 _RESPONSE_TIMING_BY_SEGMENT = {
@@ -1092,6 +1096,8 @@ _RESPONSE_TIMING_BY_SEGMENT = {
     "LOW_PRIORITY_COURTESY":           "NO_ACTION_NEEDED",
     "NO_RESPONSE_BACKLOG":             "NO_ACTION_NEEDED",
     "CLOSED_NO_ACTION":                "NO_ACTION_NEEDED",
+    "LOW_FIT_LOCATION_BLOCKED":        "NO_ACTION_NEEDED",
+    "LOW_PRIORITY_LOCAL_ONLY":         "NO_ACTION_NEEDED",
 }
 
 _RESPONSE_REASON_BY_SEGMENT = {
@@ -1105,6 +1111,8 @@ _RESPONSE_REASON_BY_SEGMENT = {
     "LOW_PRIORITY_COURTESY":           "Generic courtesy reply — no real question or request to answer.",
     "NO_RESPONSE_BACKLOG":             "You reached out and they never replied.",
     "CLOSED_NO_ACTION":                "Process closed / rejected / blocked — no action needed.",
+    "LOW_FIT_LOCATION_BLOCKED":        "Downgraded: Mexico-local / onsite-only signal; not aligned with remote USD/LATAM target.",
+    "LOW_PRIORITY_LOCAL_ONLY":         "Downgraded: Mexico-local / onsite-only signal; not aligned with remote USD/LATAM target.",
 }
 
 
@@ -1287,6 +1295,133 @@ def _response_priority_layer(
         "recommended_response_timing": _RESPONSE_TIMING_BY_SEGMENT.get(segment, "WHEN_CONVENIENT"),
         "response_reason_short":       _RESPONSE_REASON_BY_SEGMENT.get(segment, "Review manually — no clear signal."),
     }
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Part 22 — USD Remote / Location Fit scoring
+#
+# Business driver: the last two weeks brought too many low-quality Mexico
+# recruiter leads that only hire onsite/hybrid/local — useless for a USD
+# remote / LATAM contractor target. This is a SEPARATE axis from process
+# state (rejection/talent-pool/etc. above) — it scores whether the
+# OPPORTUNITY ITSELF is remote-USD/LATAM-compatible, independent of where
+# the conversation stands. A Mexican recruiter/company is never
+# auto-penalized; only local-only/onsite/presencial-only signals with no
+# offsetting remote/LATAM/USD/international signal are downgraded.
+# ══════════════════════════════════════════════════════════════════════════
+
+LOCATION_DOWNGRADE_KW = [
+    "presencial", "híbrido", "hibrido", "onsite", "on-site", "on site",
+    "local only", "local-only", "must be in mexico", "must be in méxico",
+    "mexico residents only", "méxico residentes", "residentes de méxico",
+    "cdmx only", "monterrey only", "guadalajara only",
+    "requires relocation to mexico", "requiere reubicación a méxico",
+    "requiere reubicacion a mexico",
+    "must already live in mexico", "debe vivir actualmente en méxico",
+    "debe vivir actualmente en mexico",
+    "local payroll only", "nómina local únicamente", "nomina local unicamente",
+    "not remote", "no es remoto", "no remote option", "sin opción remota",
+    "sin opcion remota",
+    "presencial / híbrido en méxico", "presencial/hibrido en mexico",
+    "esquema presencial", "modalidad presencial",
+    "solo méxico", "solo mexico", "only mexico", "mexico-based only",
+    "méxico-based only", "based only in mexico",
+]
+
+LOCATION_UPGRADE_KW = [
+    "remote", "remoto", "contractor", "latam", "latin america",
+    "south america", "us client", "u.s. client", "nearshore", "usd",
+    "dollar", "dólares", "dolares", "international contractor",
+    "global remote", "work from anywhere", "brazil allowed",
+    "timezone overlap", "b2b", " pj ", "deel", "remote payroll",
+    "international payroll",
+]
+
+_MEXICO_MENTION_KW = ["mexico", "méxico", "cdmx", "monterrey", "guadalajara"]
+
+_PRESENCIAL_ONLY_KW = [
+    "presencial", "on-site", "onsite", "on site",
+    "modalidad presencial", "esquema presencial",
+]
+
+_COUNTRY_RESTRICTION_KW = [
+    "must be in mexico", "must be in méxico", "mexico residents only",
+    "méxico residentes", "residentes de méxico", "cdmx only",
+    "monterrey only", "guadalajara only", "requires relocation to mexico",
+    "requiere reubicación a méxico", "requiere reubicacion a mexico",
+    "must already live in mexico", "debe vivir actualmente en méxico",
+    "debe vivir actualmente en mexico", "solo méxico", "solo mexico",
+    "only mexico", "mexico-based only", "méxico-based only",
+    "based only in mexico",
+]
+
+GOOD_USD_FIT_REASON = "Good fit: remote LATAM contractor / US client signal."
+LOCAL_ONLY_DISQUALIFICATION_REASON = (
+    "Downgraded: Mexico-local / onsite-only signal; not aligned with remote USD/LATAM target."
+)
+
+
+def _usd_location_fit(text: str, company: str = "", position: str = "") -> dict:
+    """Scores USD-remote / LATAM-contractor location fit for a conversation's
+    combined content. Independent of process/reply state — this is about
+    whether the OPPORTUNITY is worth pursuing for a remote-USD/LATAM target,
+    not about whether a reply is owed. Never exposes raw text — only
+    booleans/labels/scores."""
+    plain = strip_html(text or "")
+    combined = f"{plain} {company or ''} {position or ''}"
+    tl = combined.lower()
+
+    has_downgrade = _kw_match(tl, LOCATION_DOWNGRADE_KW)
+    has_upgrade   = _kw_match(tl, LOCATION_UPGRADE_KW)
+    mentions_mexico = _kw_match(tl, _MEXICO_MENTION_KW)
+
+    presencial_only_flag     = _kw_match(tl, _PRESENCIAL_ONLY_KW)
+    hybrid_local_only_flag   = _kw_match(tl, ["híbrido", "hibrido"]) and not has_upgrade
+    onsite_or_local_only_flag = has_downgrade and not has_upgrade
+    mexico_local_only_flag   = mentions_mexico and onsite_or_local_only_flag
+    country_restriction_flag = _kw_match(tl, _COUNTRY_RESTRICTION_KW)
+    useless_for_usd_remote_flag = onsite_or_local_only_flag
+
+    if has_upgrade:
+        location_fit_score = 70 if has_downgrade else 90
+    elif has_downgrade:
+        location_fit_score = 5
+    else:
+        location_fit_score = 50
+
+    if useless_for_usd_remote_flag:
+        usd_remote_priority_score = 10
+        lead_disqualification_reason = LOCAL_ONLY_DISQUALIFICATION_REASON
+        sourcing_quality_segment = "LOW_QUALITY_LOCAL_ONLY"
+    elif has_upgrade:
+        usd_remote_priority_score = 78 if has_downgrade else 88
+        lead_disqualification_reason = ""
+        sourcing_quality_segment = "HIGH_FIT_USD_REMOTE"
+    else:
+        usd_remote_priority_score = 45
+        lead_disqualification_reason = ""
+        sourcing_quality_segment = "UNKNOWN_FIT_NO_SIGNAL"
+
+    return {
+        "remote_usd_fit_score":         location_fit_score,
+        "location_fit_score":           location_fit_score,
+        "onsite_or_local_only_flag":    onsite_or_local_only_flag,
+        "mexico_local_only_flag":       mexico_local_only_flag,
+        "presencial_only_flag":         presencial_only_flag,
+        "hybrid_local_only_flag":       hybrid_local_only_flag,
+        "country_restriction_flag":     country_restriction_flag,
+        "useless_for_usd_remote_flag":  useless_for_usd_remote_flag,
+        "usd_remote_priority_score":    usd_remote_priority_score,
+        "lead_disqualification_reason": lead_disqualification_reason,
+        "sourcing_quality_segment":     sourcing_quality_segment,
+    }
+
+
+# Public alias for cross-module use (opportunity_history_engine.py,
+# monthly_executive_queue.py) — same function, no leading underscore so it
+# reads as a supported shared utility rather than a private implementation
+# detail of this module.
+usd_location_fit = _usd_location_fit
 
 
 _INTENT_LABEL_BY_STATE = {
@@ -1792,6 +1927,15 @@ def build_conversation_intelligence(
             process_state=conv_state["process_state"],
         )
 
+        # Part 22 — USD Remote / Location Fit (separate axis: is the
+        # OPPORTUNITY itself remote-USD/LATAM-compatible, independent of
+        # process/reply state). Local-only/onsite/presencial-only leads with
+        # no offsetting remote/LATAM/USD signal are capped, never blocked by
+        # persona/company alone — a Mexican recruiter is not auto-penalized.
+        location_fit = _usd_location_fit(all_content, company_clean, position_clean)
+        if location_fit["useless_for_usd_remote_flag"]:
+            lead_quality_score = min(lead_quality_score, 35)
+
         response_layer = _response_priority_layer(
             process_state=conv_state["process_state"],
             reply_obligation=conv_state["reply_obligation"],
@@ -1811,9 +1955,21 @@ def build_conversation_intelligence(
             cooldown_state=cooldown,
             relationship_value_score=conv_state["relationship_value_score"],
         )
+        # Local-only/onsite/presencial-only opportunities never rank as a
+        # top action item, even when a reply is technically owed — they stay
+        # auditable in the backlog, capped, with an explicit sanitized reason.
+        if location_fit["useless_for_usd_remote_flag"]:
+            response_layer["response_queue_segment"] = (
+                "LOW_FIT_LOCATION_BLOCKED" if is_valuable else "LOW_PRIORITY_LOCAL_ONLY"
+            )
+            response_layer["response_priority_score"] = min(response_layer["response_priority_score"], 25)
+            response_layer["recommended_response_timing"] = "NO_ACTION_NEEDED"
+            response_layer["response_reason_short"] = location_fit["lead_disqualification_reason"]
+
         reply_obligation_flag = conv_state["reply_obligation"] in ("CONFIRMED", "LIKELY")
         low_value_reply_flag = response_layer["response_queue_segment"] in (
             "LOW_PRIORITY_COURTESY", "TALENT_POOL_LOW_ACTION",
+            "LOW_FIT_LOCATION_BLOCKED", "LOW_PRIORITY_LOCAL_ONLY",
         )
 
         follow_up_date = ""
@@ -1921,6 +2077,18 @@ def build_conversation_intelligence(
             "response_reason_short":          response_layer["response_reason_short"],
             "active_process_signal_flag":     has_active_process_signal,
             "usd_latam_signal_flag":          has_usd_latam_signal,
+            # Part 22 — USD Remote / Location Fit
+            "remote_usd_fit_score":           location_fit["remote_usd_fit_score"],
+            "location_fit_score":             location_fit["location_fit_score"],
+            "onsite_or_local_only_flag":      location_fit["onsite_or_local_only_flag"],
+            "mexico_local_only_flag":         location_fit["mexico_local_only_flag"],
+            "presencial_only_flag":           location_fit["presencial_only_flag"],
+            "hybrid_local_only_flag":         location_fit["hybrid_local_only_flag"],
+            "country_restriction_flag":       location_fit["country_restriction_flag"],
+            "useless_for_usd_remote_flag":    location_fit["useless_for_usd_remote_flag"],
+            "usd_remote_priority_score":      location_fit["usd_remote_priority_score"],
+            "lead_disqualification_reason":   location_fit["lead_disqualification_reason"],
+            "sourcing_quality_segment":       location_fit["sourcing_quality_segment"],
         })
 
     if not rows:

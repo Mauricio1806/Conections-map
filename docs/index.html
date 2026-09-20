@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1788888823">
+  <link rel="stylesheet" href="./assets/style.css?v=1789930933">
 </head>
 <body>
 
@@ -101,6 +101,7 @@
       </div>
 
       <div id="messages-freshness-banner"></div>
+      <div id="connections-freshness-banner"></div>
       <div id="confidence-banner"></div>
 
       <div class="section-label">Strategic Scores</div>
@@ -1472,6 +1473,22 @@ python src/validate_static_dashboard_runtime.py</pre>
           <div class="filter-group"><label>Auto-suggested only</label>
             <input type="checkbox" id="usdcrm-auto-only">
           </div>
+          <!-- Part 22 — USD Remote / Location Fit filters -->
+          <div class="filter-group"><label>Remote/USD fit</label>
+            <input type="checkbox" id="usdcrm-remote-usd-fit-only">
+          </div>
+          <div class="filter-group"><label>Hide local-only / onsite</label>
+            <input type="checkbox" id="usdcrm-hide-local-only" checked>
+          </div>
+          <div class="filter-group"><label>Show disqualified local-only</label>
+            <input type="checkbox" id="usdcrm-show-disqualified">
+          </div>
+          <div class="filter-group"><label>USD/LATAM target only</label>
+            <input type="checkbox" id="usdcrm-usd-latam-only">
+          </div>
+          <div class="filter-group"><label>Contractor/remoto only</label>
+            <input type="checkbox" id="usdcrm-contractor-remote-only">
+          </div>
           <button class="btn-primary" onclick="applyUsdCrmFilters()">Apply</button>
           <button class="btn-ghost" onclick="resetUsdCrmFilters()">Reset</button>
         </div>
@@ -1875,6 +1892,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1788888823"></script>
+<script src="./assets/app.js?v=1789930933"></script>
 </body>
 </html>

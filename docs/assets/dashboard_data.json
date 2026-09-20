@@ -1,26 +1,33 @@
 {
   "meta": {
-    "report_date": "2026-09-08",
+    "report_date": "2026-09-20",
     "total_connections": 12448,
     "production_url": "https://mauricio1806.github.io/Conections-map/",
     "messages_freshness": {
       "messages_available_for_current_snapshot": true,
-      "messages_current_snapshot_date": "2026-09-07",
-      "messages_last_available_snapshot_date": "2026-09-07",
+      "messages_current_snapshot_date": "2026-09-20",
+      "messages_last_available_snapshot_date": "2026-09-20",
       "message_dependent_sections_status": "refreshed",
       "note": null
+    },
+    "connections_freshness": {
+      "connections_available_for_current_snapshot": false,
+      "connections_current_snapshot_date": null,
+      "connections_last_available_snapshot_date": "2026-09-07",
+      "connection_dependent_sections_status": "stale_until_connections_export_arrives",
+      "note": "Connections.csv was not included in the 2026-09-20 export. Network-growth and connection-dependent sections still reflect the last complete Connections export from 2026-09-07. Message, invitation, and company-follow intelligence were refreshed from 2026-09-20."
     },
     "note": "Market classification is inferred from company/title keywords. LinkedIn exports do not include location data. UNKNOWN market does not mean the connection has no strategic value.",
     "untapped_scoring_note": "LinkedIn export does not include location, but opportunity market can still be inferred from company, title, persona, language, manual enrichment, and message history. These are opportunity signals, not exact geography."
   },
   "kpis": {
-    "report_date": "2026-09-08",
+    "report_date": "2026-09-20",
     "total_connections": 12448,
-    "high_priority": 264,
-    "medium_priority": 4277,
-    "low_priority": 7907,
+    "high_priority": 257,
+    "medium_priority": 4259,
+    "low_priority": 7932,
     "high_priority_pct": 2.1,
-    "medium_priority_pct": 34.4,
+    "medium_priority_pct": 34.2,
     "brazil_count": 894,
     "latam_usd_count": 349,
     "us_nearshore_count": 237,
@@ -36,8 +43,8 @@
     "hiring_managers_total": 85,
     "data_leaders_total": 950,
     "data_peers_total": 999,
-    "connected_last_30_days": 653,
-    "connected_last_90_days": 2120,
+    "connected_last_30_days": 412,
+    "connected_last_90_days": 1854,
     "strategic_network_score": 97.8,
     "strategic_network_level": "Strong",
     "strategic_network_desc": "Your professional network is genuinely strong. Large pool of recruiters, hiring managers, and data leaders.",
@@ -46,8 +53,8 @@
     "sns_hiring_managers": 85,
     "sns_data_leaders": 950,
     "sns_data_peers": 999,
-    "sns_high_priority": 264,
-    "usd_readiness_score": 82.6,
+    "sns_high_priority": 257,
+    "usd_readiness_score": 82.4,
     "usd_readiness_level": "Ready",
     "usd_readiness_desc": "Strong USD network. Active outreach should yield job conversations quickly.",
     "usd_readiness_next": "You have 80 confirmed USD recruiters. Target: 60. Add 0 more to grow this score.",
@@ -61,7 +68,7 @@
     "usd_global_recruiters_partial": 105,
     "usd_global_ta_partial": 45,
     "usd_global_hm_partial": 0,
-    "usd_unknown_high_value_partial": 71,
+    "usd_unknown_high_value_partial": 69,
     "spain_eu_readiness_score": 65.0,
     "spain_eu_readiness_level": "Ready",
     "spain_eu_readiness_desc": "Strong Spain/EU foundation. Good positioning for relocation.",
@@ -87,8 +94,8 @@
       "GLOBAL_TECH": 7
     },
     "actionable_contacts_score": 100.0,
-    "actionable_contacts": 644,
-    "very_high_priority": 264,
+    "actionable_contacts": 636,
+    "very_high_priority": 257,
     "unknown_resolution_score": 7.3,
     "unknown_resolution_potential": 7.3,
     "top25_company_coverage": 745,
@@ -97,10 +104,10 @@
     "data_quality_risk_score": 90.6,
     "data_quality_risk_level": "High Risk",
     "data_quality_risk_desc": "Most market inferences are unresolved. Readiness scores are conservative estimates.",
-    "market_readiness_composite": 75.6,
-    "unknown_recruiters_highvalue": 214,
+    "market_readiness_composite": 75.4,
+    "unknown_recruiters_highvalue": 213,
     "unknown_hiring_mgrs_highvalue": 10,
-    "unknown_data_leaders_highvalue": 122,
+    "unknown_data_leaders_highvalue": 118,
     "unknown_peers": 768,
     "concentration_flags": [
       "No critical concentration flags."
@@ -176,7 +183,7 @@
     },
     "gap": {
       "file": "data/strategic_gap.json",
-      "size_kb": 193,
+      "size_kb": 202,
       "available": true,
       "dependencies": [
         "untapped"
@@ -184,49 +191,49 @@
     },
     "plan": {
       "file": "data/action_plan.json",
-      "size_kb": 104,
+      "size_kb": 107,
       "available": true,
       "dependencies": []
     },
     "contacts": {
       "file": "data/top_contacts.json",
-      "size_kb": 613,
+      "size_kb": 608,
       "available": true,
       "dependencies": []
     },
     "weekly": {
       "file": "data/weekly_evolution.json",
-      "size_kb": 1601,
+      "size_kb": 538,
       "available": true,
       "dependencies": []
     },
     "companies": {
       "file": "data/company_intel.json",
-      "size_kb": 249,
+      "size_kb": 246,
       "available": true,
       "dependencies": []
     },
     "unknown": {
       "file": "data/opportunity_market.json",
-      "size_kb": 7747,
+      "size_kb": 7748,
       "available": true,
       "dependencies": []
     },
     "leads": {
       "file": "data/lead_reactivation.json",
-      "size_kb": 14923,
+      "size_kb": 18326,
       "available": true,
       "dependencies": []
     },
     "untapped": {
       "file": "data/untapped_network.json",
-      "size_kb": 15181,
+      "size_kb": 15201,
       "available": true,
       "dependencies": []
     },
     "usdcrm": {
       "file": "data/usd_contract_crm.json",
-      "size_kb": 28429,
+      "size_kb": 33636,
       "available": true,
       "dependencies": []
     },
@@ -238,7 +245,7 @@
     }
   },
   "build": {
-    "generated_at": "2026-09-08T14:33:44",
+    "generated_at": "2026-09-20T16:02:15",
     "schema": "split-v1"
   }
 }

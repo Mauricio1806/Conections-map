@@ -434,7 +434,15 @@ def compute_usd_crm_score(rec: dict) -> int:
     if not has_any_usd_signal:
         score -= 15
 
-    return int(max(0, min(100, score)))
+    score = int(max(0, min(100, score)))
+
+    # Part 22 — USD Remote / Location Fit: local-only/onsite/presencial-only
+    # opportunities never score as a high-quality USD lead, regardless of
+    # persona/bucket signals — see message_intelligence._usd_location_fit().
+    if rec.get("useless_for_usd_remote_flag"):
+        score = min(score, 35)
+
+    return score
 
 
 def _priority_from_score(score: int) -> str:
@@ -508,12 +516,19 @@ PUBLIC_ROW_FIELDS = [
     "reason", "next_action", "next_action_date", "profile_url", "role_url",
     "currency", "rate_range", "remote_policy", "timezone_required",
     "timezone_risk", "payment_risk", "contract_risk",
+    # Part 22 — USD Remote / Location Fit
+    "usd_remote_priority_score", "useless_for_usd_remote_flag",
+    "mexico_local_only_flag", "sourcing_quality_segment",
+    "lead_disqualification_reason",
 ]
 
 
 def _empty_public_row() -> dict:
     row = {k: "" for k in PUBLIC_ROW_FIELDS}
     row["score"] = 0
+    row["useless_for_usd_remote_flag"] = False
+    row["mexico_local_only_flag"] = False
+    row["usd_remote_priority_score"] = None
     return row
 
 
@@ -536,6 +551,12 @@ def _auto_row_to_public(rec: dict, record_type: str, source: str) -> dict:
         "next_action":        rec.get("recommended_next_action") or rec.get("recommended_first_action") or "",
         "next_action_date":   _resolve_next_action_date(rec),
         "profile_url":        rec.get("profile_url", "") or "",
+        # Part 22 — USD Remote / Location Fit
+        "usd_remote_priority_score":    rec.get("usd_remote_priority_score"),
+        "useless_for_usd_remote_flag":  bool(rec.get("useless_for_usd_remote_flag", False)),
+        "mexico_local_only_flag":       bool(rec.get("mexico_local_only_flag", False)),
+        "sourcing_quality_segment":     rec.get("sourcing_quality_segment", "") or "",
+        "lead_disqualification_reason": rec.get("lead_disqualification_reason", "") or "",
     })
     return row
 
@@ -684,6 +705,12 @@ def _build_auto_candidate_pool(
         e["has_interview_signal"]        = _truthy(c.get("has_interview_signal"))
         e["has_positive_signal"]         = _truthy(c.get("has_positive_signal"))
         e["strategic_market"]            = c.get("strategic_market")
+        # Part 22 — USD Remote / Location Fit
+        e["usd_remote_priority_score"]    = c.get("usd_remote_priority_score")
+        e["useless_for_usd_remote_flag"]  = _truthy(c.get("useless_for_usd_remote_flag"))
+        e["mexico_local_only_flag"]       = _truthy(c.get("mexico_local_only_flag"))
+        e["sourcing_quality_segment"]     = c.get("sourcing_quality_segment")
+        e["lead_disqualification_reason"] = c.get("lead_disqualification_reason")
         e.setdefault("full_name", _norm(c.get("other_person_name")))
         e.setdefault("company", _norm(c.get("company_clean")))
         e.setdefault("role", _norm(c.get("position_clean")))
@@ -767,13 +794,23 @@ def _auto_source_label(rec: dict) -> str:
 def _build_auto_suggested_sections(pool: dict) -> dict:
     auto_leads, recruiter_pipeline = [], []
     follow_up_auto, first_outreach, active_process_auto = [], [], []
+    # Part 22 — USD Remote / Location Fit: local-only/onsite/presencial-only
+    # leads are tracked separately, auditable, but excluded from the default
+    # recommended queues unless explicitly filtered in — a Mexico-local
+    # recruiter reply should never appear as a "recommended" USD action item.
+    disqualified_local_only = []
 
     for rec in pool.values():
+        is_local_only_disqualified = bool(rec.get("useless_for_usd_remote_flag"))
         if _match_section_b_lead(rec):
             source = _auto_source_label(rec)
-            auto_leads.append(_auto_row_to_public(rec, "auto_suggested_lead", source))
-            if rec.get("persona") in CRM_TARGET_PERSONAS:
-                recruiter_pipeline.append(_auto_row_to_public(rec, "recruiter_pipeline", source))
+            row = _auto_row_to_public(rec, "auto_suggested_lead", source)
+            if is_local_only_disqualified:
+                disqualified_local_only.append(row)
+            else:
+                auto_leads.append(row)
+                if rec.get("persona") in CRM_TARGET_PERSONAS:
+                    recruiter_pipeline.append(_auto_row_to_public(rec, "recruiter_pipeline", source))
         if _match_section_c_followup(rec):
             source = "lead_reactivation" if rec.get("lead_category") else "top_contacts"
             follow_up_auto.append(_auto_row_to_public(rec, "auto_followup", source))
@@ -782,10 +819,22 @@ def _build_auto_suggested_sections(pool: dict) -> dict:
         if _match_section_e_active_process(rec):
             active_process_auto.append(_auto_row_to_public(rec, "active_process", "lead_reactivation"))
 
-    for lst in (auto_leads, recruiter_pipeline, follow_up_auto, first_outreach, active_process_auto):
+    for lst in (auto_leads, recruiter_pipeline, follow_up_auto, first_outreach,
+                active_process_auto, disqualified_local_only):
         lst.sort(key=lambda r: r["score"], reverse=True)
 
     cv_signal_count = sum(1 for rec in pool.values() if rec.get("has_cv_signal"))
+    high_fit_usd_remote_count = sum(
+        1 for rec in pool.values() if rec.get("sourcing_quality_segment") == "HIGH_FIT_USD_REMOTE"
+    )
+    mexico_local_only_count = sum(1 for rec in pool.values() if rec.get("mexico_local_only_flag"))
+    # Same underlying segment as high_fit_usd_remote_count — kept as its own
+    # named KPI card per the "Remote LATAM Contractor Signals" spec.
+    remote_latam_contractor_signal_count = high_fit_usd_remote_count
+    recruiters_with_usd_remote_fit_count = sum(
+        1 for rec in pool.values()
+        if rec.get("persona") in CRM_TARGET_PERSONAS and rec.get("sourcing_quality_segment") == "HIGH_FIT_USD_REMOTE"
+    )
 
     return {
         "auto_suggested_usd_leads": auto_leads,
@@ -794,6 +843,13 @@ def _build_auto_suggested_sections(pool: dict) -> dict:
         "first_outreach_queue":     first_outreach,
         "active_process_auto":      active_process_auto,
         "auto_cv_signal_count":     cv_signal_count,
+        # Part 22 — USD Remote / Location Fit KPI cards
+        "disqualified_local_only":              disqualified_local_only,
+        "high_fit_usd_remote_count":             high_fit_usd_remote_count,
+        "local_only_onsite_disqualified_count":  len(disqualified_local_only),
+        "mexico_local_only_count":               mexico_local_only_count,
+        "remote_latam_contractor_signal_count":  remote_latam_contractor_signal_count,
+        "recruiters_with_usd_remote_fit_count":  recruiters_with_usd_remote_fit_count,
     }
 
 
@@ -912,6 +968,12 @@ def _build_summary(manual_opportunities: list[dict], manual_applications: list[d
         "followups_due":                  _count_due_or_overdue(follow_up_queue),
         "high_risk_manual_opportunities": len(contingency_risk["high_risk"]),
         "backup_manual_opportunities":    len(contingency_risk["backup"]),
+        # Part 22 — USD Remote / Location Fit KPI cards
+        "high_fit_usd_remote_leads":            auto_sections.get("high_fit_usd_remote_count", 0),
+        "local_only_onsite_disqualified":       auto_sections.get("local_only_onsite_disqualified_count", 0),
+        "mexico_local_only_leads":              auto_sections.get("mexico_local_only_count", 0),
+        "remote_latam_contractor_signals":      auto_sections.get("remote_latam_contractor_signal_count", 0),
+        "recruiters_with_usd_remote_fit":       auto_sections.get("recruiters_with_usd_remote_fit_count", 0),
     }
 
 
@@ -1043,6 +1105,9 @@ def run_usd_contract_crm(
         "manual_applications":    manual_applications,
         "contingency_risk":       contingency_risk,
         "outreach_summary":       outreach_summary,
+        # Part 22 — USD Remote / Location Fit — auditable but excluded from
+        # the default recommended queues above (see _build_auto_suggested_sections).
+        "disqualified_local_only": auto_sections.get("disqualified_local_only", []),
         # C/D/E — Opportunity History (src/opportunity_history_engine.py).
         # Passed through as its own section: never merged into manual/auto
         # counts above, so soft-closed or inbound-only events can never be

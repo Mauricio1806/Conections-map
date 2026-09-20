@@ -131,6 +131,18 @@ SAFE_DASHBOARD_COLS = [
     "response_reason_short",
     "active_process_signal_flag",
     "usd_latam_signal_flag",
+    # Part 22 — USD Remote / Location Fit — sanitized fields only, no raw content
+    "remote_usd_fit_score",
+    "location_fit_score",
+    "onsite_or_local_only_flag",
+    "mexico_local_only_flag",
+    "presencial_only_flag",
+    "hybrid_local_only_flag",
+    "country_restriction_flag",
+    "useless_for_usd_remote_flag",
+    "usd_remote_priority_score",
+    "lead_disqualification_reason",
+    "sourcing_quality_segment",
 ]
 
 # Ambiguous manual-review queue fields (Part 8) — sanitized, no raw content
@@ -176,8 +188,15 @@ RESPONSE_SEGMENT_ORDER = [
     "LOW_PRIORITY_COURTESY",
     "NO_RESPONSE_BACKLOG",
     "CLOSED_NO_ACTION",
+    # Part 22 — USD Remote / Location Fit: local-only/onsite/presencial-only
+    # opportunities. Last-resort fill only — never a top action item.
+    "LOW_FIT_LOCATION_BLOCKED",
+    "LOW_PRIORITY_LOCAL_ONLY",
 ]
-LOW_TIER_SEGMENTS = {"LOW_PRIORITY_COURTESY", "NO_RESPONSE_BACKLOG", "CLOSED_NO_ACTION"}
+LOW_TIER_SEGMENTS = {
+    "LOW_PRIORITY_COURTESY", "NO_RESPONSE_BACKLOG", "CLOSED_NO_ACTION",
+    "LOW_FIT_LOCATION_BLOCKED", "LOW_PRIORITY_LOCAL_ONLY",
+}
 WEEKLY_QUEUE_LIMIT = sum(WEEKLY_LIMITS.values())  # 55 — matches the existing weekly action limit
 
 
@@ -421,6 +440,15 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
     # replies, ghosted outreach, soft closes, and closed/blocked conversations
     # their own honest counts instead of hiding inside the raw taxonomy.
     seg_counts = df["response_queue_segment"].value_counts().to_dict() if "response_queue_segment" in df.columns else {}
+
+    # ── Part 22 — USD Remote / Location Fit — honest sourcing-quality KPIs ────
+    useless_for_usd_remote_count = int(df["useless_for_usd_remote_flag"].sum()) if "useless_for_usd_remote_flag" in df.columns else 0
+    mexico_local_only_count      = int(df["mexico_local_only_flag"].sum()) if "mexico_local_only_flag" in df.columns else 0
+    presencial_only_count        = int(df["presencial_only_flag"].sum()) if "presencial_only_flag" in df.columns else 0
+    high_fit_usd_remote_count    = int((df["sourcing_quality_segment"] == "HIGH_FIT_USD_REMOTE").sum()) if "sourcing_quality_segment" in df.columns else 0
+    low_fit_location_blocked_count = sum(seg_counts.get(s, 0) for s in (
+        "LOW_FIT_LOCATION_BLOCKED", "LOW_PRIORITY_LOCAL_ONLY",
+    ))
     needs_response_high_priority = sum(seg_counts.get(s, 0) for s in (
         "ACTIVE_PROCESS_NEEDS_REPLY", "INBOUND_OPPORTUNITY_NEEDS_REPLY", "SALARY_CV_CALL_REQUESTED",
     ))
@@ -556,6 +584,13 @@ def run_lead_reactivation_engine(classified_df: pd.DataFrame | None = None) -> d
         "no_response_ghost_backlog_count":     no_response_ghost_backlog_count,
         "soft_closed_keep_warm_count":         soft_closed_keep_warm_count,
         "closed_no_action_v2_count":           closed_no_action_v2_count,
+        # Part 22 — USD Remote / Location Fit — sourcing-quality KPIs (business
+        # driver: too many useless Mexico-local/onsite-only recruiter leads).
+        "useless_for_usd_remote_count":        useless_for_usd_remote_count,
+        "mexico_local_only_count":             mexico_local_only_count,
+        "presencial_only_count":               presencial_only_count,
+        "high_fit_usd_remote_count":           high_fit_usd_remote_count,
+        "low_fit_location_blocked_count":      low_fit_location_blocked_count,
         # Internal-only (Untapped Outreach Scoring V9) — never published to the
         # public dashboard JSON, see export_public_dashboard_data.py.
         "company_signal_map": build_company_warm_signal_map(df),

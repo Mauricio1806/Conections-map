@@ -57,6 +57,7 @@ from src.config import ROOT_DIR, DATA_RAW_DIR, OUTPUTS_DIR
 from src.load_data import _read_csv_flexible
 from src.company_normalizer import normalize as normalize_company
 from src.message_freshness import write_message_freshness
+from src.connection_freshness import write_connection_freshness
 
 DATA_PROCESSED_DIR = ROOT_DIR / "data" / "processed"
 PREVIOUS_BASELINE_JSON = DATA_PROCESSED_DIR / "_previous_snapshot_baseline.json"
@@ -98,15 +99,23 @@ LOGICAL_DATASETS = {
 # messages.csv staying in place so those sections can keep showing the last
 # available message intelligence, explicitly flagged stale, instead of
 # going blank.
-OPTIONAL_DATASETS = {"invitations", "messages"}
+#
+# Connections.csv can likewise legitimately be missing from a given week's
+# export (e.g. exported in a second batch, or a week skipped entirely). It is
+# optional for a PARTIAL refresh (messages/invitations/company-follows can
+# still refresh normally) but remains REQUIRED for a FULL network refresh —
+# callers that need a true network refresh should verify
+# connections_available_for_current_snapshot via
+# src/connection_freshness.py before trusting network-growth numbers.
+OPTIONAL_DATASETS = {"invitations", "messages", "connections"}
 
 # Datasets where, if absent this week, the previously-activated file must be
-# KEPT (never deleted) so message-dependent sections stay populated —
-# flagged stale by src/export_public_dashboard_data.py via
-# src/message_freshness.py — rather than silently losing all message
-# intelligence for the week. Invitations.csv has no such cross-week
-# dependents, so it keeps the original "remove stale copy" behavior.
-PRESERVE_STALE_ON_ABSENCE = {"messages"}
+# KEPT (never deleted) so connection/message-dependent sections stay
+# populated — flagged stale by src/export_public_dashboard_data.py via
+# src/message_freshness.py / src/connection_freshness.py — rather than
+# silently losing all intelligence for the week. Invitations.csv has no such
+# cross-week dependents, so it keeps the original "remove stale copy" behavior.
+PRESERVE_STALE_ON_ABSENCE = {"messages", "connections"}
 
 ACTIVE_TARGET = {
     "connections":     DATA_RAW_DIR / "Connections.csv",
@@ -272,7 +281,7 @@ def find_previous_snapshot_folder(current_folder_name: str, ref_year: int) -> Pa
 
 def update_manifest(snapshot_id: str, snapshot_date: str, folder: str, row_counts: dict,
                      schema_hashes: dict, file_hashes: dict, previous_snapshot_id: str | None,
-                     messages_available: bool) -> None:
+                     messages_available: bool, connections_available: bool = True) -> None:
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     manifest = {"snapshots": []}
     if MANIFEST_PATH.exists():
@@ -291,6 +300,7 @@ def update_manifest(snapshot_id: str, snapshot_date: str, folder: str, row_count
         "invitations_rows": row_counts.get("invitations"),
         "messages_rows": row_counts.get("messages", 0),
         "messages_available": messages_available,
+        "connections_available": connections_available,
         "company_follows_rows": row_counts.get("company_follows", 0),
         "schema_hashes": schema_hashes,
         "file_hashes": file_hashes,
@@ -324,6 +334,33 @@ def find_last_available_messages_date(current_snapshot_date: str) -> str | None:
     candidates = [
         s["snapshot_date"] for s in manifest.get("snapshots", [])
         if _entry_has_messages(s) and s.get("snapshot_date") and s["snapshot_date"] < current_snapshot_date
+    ]
+    return max(candidates) if candidates else None
+
+
+def _entry_has_connections(entry: dict) -> bool:
+    """Back-compat: older manifest entries (before this field existed) are
+    treated as having connections available whenever connections_rows was
+    recorded and non-zero."""
+    if "connections_available" in entry:
+        return bool(entry["connections_available"])
+    rows = entry.get("connections_rows")
+    return bool(rows) and rows > 0
+
+
+def find_last_available_connections_date(current_snapshot_date: str) -> str | None:
+    """Scan the manifest (as it stood BEFORE this run's entry is added, i.e.
+    call this before update_manifest) for the most recent snapshot date
+    (strictly before current_snapshot_date) that had a real Connections.csv."""
+    if not MANIFEST_PATH.exists():
+        return None
+    try:
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    candidates = [
+        s["snapshot_date"] for s in manifest.get("snapshots", [])
+        if _entry_has_connections(s) and s.get("snapshot_date") and s["snapshot_date"] < current_snapshot_date
     ]
     return max(candidates) if candidates else None
 
@@ -518,6 +555,34 @@ def build_connection_delta(current_path: Path, previous_path: Path | None) -> di
     return {
         "previous_total": len(prev), "current_total": len(cur),
         "new_count": len(new_keys), "missing_count": len(missing_keys), "changed_count": len(changes),
+    }
+
+
+def build_connection_delta_missing(previous_path: Path | None, snapshot_date: str) -> dict:
+    """Connections.csv absent from this week's snapshot folder. Never
+    fabricate a current-week connection count/delta, and never touch/
+    overwrite weekly_new_connections.csv / weekly_missing_connections.csv /
+    weekly_connection_changes.csv — they are left exactly as last written by
+    the most recent FULL refresh, so network-growth sections keep showing
+    real, non-fabricated last-available data, honestly flagged stale."""
+    prev_count = 0
+    if previous_path is not None and previous_path.exists():
+        prev_count = len(_load_connections_raw(previous_path))
+
+    logger.warning(
+        f"  Connections.csv not found for {snapshot_date}; connection-derived metrics unavailable for "
+        f"this week. Network-growth and connection-dependent dashboard sections keep showing the last "
+        f"available Connections export, flagged stale — weekly_new_connections.csv / "
+        f"weekly_missing_connections.csv / weekly_connection_changes.csv are left untouched."
+    )
+    return {
+        "available": False,
+        "previous_total": prev_count, "current_total": None,
+        "new_count": None, "missing_count": None, "changed_count": None,
+        "note": f"Connections.csv not present in the {snapshot_date} snapshot — connection metrics "
+                f"unavailable for this week. Not fabricated, not recomputed. Network-growth and "
+                f"connection-dependent dashboard sections keep showing the last available Connections "
+                f"export, flagged stale.",
     }
 
 
@@ -775,14 +840,25 @@ def main():
         args.snapshot_date if messages_available_now
         else find_last_available_messages_date(args.snapshot_date)
     )
+    connections_available_now = "connections" in current_resolved
+    last_available_connections_date = (
+        args.snapshot_date if connections_available_now
+        else find_last_available_connections_date(args.snapshot_date)
+    )
 
     update_manifest(snapshot_id, args.snapshot_date, args.snapshot_folder, row_counts,
-                     schema_hashes, file_hashes, previous_snapshot_id, messages_available_now)
+                     schema_hashes, file_hashes, previous_snapshot_id, messages_available_now,
+                     connections_available_now)
 
     freshness = write_message_freshness(
         messages_available_for_current_snapshot=messages_available_now,
         current_snapshot_date=args.snapshot_date,
         messages_last_available_snapshot_date=last_available_messages_date,
+    )
+    connection_freshness = write_connection_freshness(
+        connections_available_for_current_snapshot=connections_available_now,
+        current_snapshot_date=args.snapshot_date,
+        connections_last_available_snapshot_date=last_available_connections_date,
     )
 
     # ── Part 5: activate as pipeline input ────────────────────────────────────
@@ -792,9 +868,12 @@ def main():
     # ── Parts 6-9: raw snapshot deltas ────────────────────────────────────────
     logger.info("Step 5: Computing week-over-week deltas ...")
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    conn_delta = build_connection_delta(
-        current_resolved["connections"], previous_resolved.get("connections")
-    )
+    if connections_available_now:
+        conn_delta = build_connection_delta(
+            current_resolved["connections"], previous_resolved.get("connections")
+        )
+    else:
+        conn_delta = build_connection_delta_missing(previous_resolved.get("connections"), args.snapshot_date)
     if messages_available_now:
         msg_delta = build_message_delta(
             current_resolved["messages"], previous_resolved.get("messages")
@@ -829,6 +908,23 @@ def main():
             f"{freshness['messages_last_available_snapshot_date']} message export, flagged stale, until "
             f"messages.csv is added and the refresh is re-run."
         )
+    logger.info("-" * 70)
+    logger.info("  Connection freshness:")
+    logger.info(f"    connections_available_for_current_snapshot = {connection_freshness['connections_available_for_current_snapshot']}")
+    logger.info(f"    connections_current_snapshot_date          = {connection_freshness['connections_current_snapshot_date']}")
+    logger.info(f"    connections_last_available_snapshot_date   = {connection_freshness['connections_last_available_snapshot_date']}")
+    logger.info(f"    connection_dependent_sections_status       = {connection_freshness['connection_dependent_sections_status']}")
+    if not connections_available_now:
+        logger.info(
+            f"    NOTE: Connections.csv was not included in the {args.snapshot_date} export. This is a "
+            f"PARTIAL weekly refresh — messages/invitations/company-follows can still refresh normally, "
+            f"but network-growth, new-connections, Weekly Evolution, Action Plan connection growth, and "
+            f"Strategic Gap current network counts will keep showing the "
+            f"{connection_freshness['connections_last_available_snapshot_date']} Connections export, "
+            f"flagged stale, until Connections.csv is added and the refresh is re-run. "
+            f"Connections.csv remains REQUIRED for a full network refresh — it is only optional for "
+            f"this partial (message/invitation/company-follow) refresh."
+        )
     logger.info("=" * 70)
     logger.info("  Next: run the full pipeline —")
     logger.info("    python src/build_network_heatmap.py")
@@ -845,6 +941,14 @@ def main():
             f"--snapshot-date \"{args.snapshot_date}\" --refresh-messages"
         )
         logger.info("    (then re-run the full pipeline above again)")
+    if not connections_available_now:
+        logger.info("")
+        logger.info(f"  Once Connections.csv is added to the '{args.snapshot_folder}' folder, re-run:")
+        logger.info(
+            f"    python src/weekly_snapshot_refresh.py --snapshot-folder \"{args.snapshot_folder}\" "
+            f"--snapshot-date \"{args.snapshot_date}\""
+        )
+        logger.info("    (then re-run the full pipeline above again for a full network refresh)")
 
 
 if __name__ == "__main__":

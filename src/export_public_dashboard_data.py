@@ -19,6 +19,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.message_freshness import read_message_freshness
+from src.connection_freshness import read_connection_freshness
 
 logger = logging.getLogger(__name__)
 
@@ -641,6 +642,13 @@ SAFE_LEAD_COLS = {
     "ghost_or_vacuum_flag", "terminal_low_action_flag", "hard_rejection_flag",
     "talent_pool_only_flag", "recommended_response_timing", "response_reason_short",
     "active_process_signal_flag", "usd_latam_signal_flag",
+    # Part 22 — USD Remote / Location Fit — sanitized booleans/scores/short
+    # controlled-vocabulary labels only, no raw message content.
+    "remote_usd_fit_score", "location_fit_score", "onsite_or_local_only_flag",
+    "mexico_local_only_flag", "presencial_only_flag", "hybrid_local_only_flag",
+    "country_restriction_flag", "useless_for_usd_remote_flag",
+    "usd_remote_priority_score", "lead_disqualification_reason",
+    "sourcing_quality_segment",
 }
 
 SAFE_LEAD_SUMMARY_KEYS = {
@@ -671,6 +679,10 @@ SAFE_LEAD_SUMMARY_KEYS = {
     "needs_response_high_priority_count", "needs_response_medium_count",
     "courtesy_low_priority_count", "no_response_ghost_backlog_count",
     "soft_closed_keep_warm_count", "closed_no_action_v2_count",
+    # Part 22 — USD Remote / Location Fit — sourcing-quality KPIs
+    "useless_for_usd_remote_count", "mexico_local_only_count",
+    "presencial_only_count", "high_fit_usd_remote_count",
+    "low_fit_location_blocked_count",
 }
 
 
@@ -956,6 +968,10 @@ SAFE_USD_CRM_SUMMARY_KEYS = {
     "manual_applications_sent", "cv_requested_or_sent_signals",
     "recruiters_replied", "followups_due",
     "high_risk_manual_opportunities", "backup_manual_opportunities",
+    # Part 22 — USD Remote / Location Fit KPI cards
+    "high_fit_usd_remote_leads", "local_only_onsite_disqualified",
+    "mexico_local_only_leads", "remote_latam_contractor_signals",
+    "recruiters_with_usd_remote_fit",
 }
 SAFE_USD_CRM_ROW_COLS = {
     "name", "company", "role", "persona", "opportunity_bucket", "source",
@@ -963,6 +979,10 @@ SAFE_USD_CRM_ROW_COLS = {
     "reason", "next_action", "next_action_date", "profile_url", "role_url",
     "currency", "rate_range", "remote_policy", "timezone_required",
     "timezone_risk", "payment_risk", "contract_risk",
+    # Part 22 — USD Remote / Location Fit
+    "usd_remote_priority_score", "useless_for_usd_remote_flag",
+    "mexico_local_only_flag", "sourcing_quality_segment",
+    "lead_disqualification_reason",
 }
 
 
@@ -1028,6 +1048,8 @@ SAFE_MONTHLY_QUEUE_SUMMARY_KEYS = {
     "soft_closed_keep_warm", "usd_recruiter_followups", "monthly_backlog",
     "high_priority_this_month", "overdue_reactivations",
     "active_opportunity_signals",
+    # Part 22 — USD Remote / Location Fit
+    "low_fit_local_only_count",
 }
 SAFE_MONTHLY_QUEUE_ROW_COLS = {
     "queue_name", "rank", "contact_name", "company", "role", "persona",
@@ -1036,6 +1058,9 @@ SAFE_MONTHLY_QUEUE_ROW_COLS = {
     "opportunity_bucket", "usd_signal", "latam_signal", "remote_signal",
     "score", "priority", "recommended_action", "next_action_date",
     "reason_short", "message_angle",
+    # Part 22 — USD Remote / Location Fit
+    "usd_remote_priority_score", "useless_for_usd_remote_flag",
+    "mexico_local_only_flag", "lead_disqualification_reason",
 }
 SAFE_MONTHLY_CHART_COLS = {
     "month", "inbound_opportunities", "reactivation_due", "soft_closed", "usd_followups",
@@ -1056,6 +1081,8 @@ def build_monthly_executive_queue_public(meq_data: dict) -> dict:
         "monthly_backlog_top50":     _sanitize_records(meq_data.get("monthly_backlog_top50"), SAFE_MONTHLY_QUEUE_ROW_COLS),
         "all_monthly_queue_records": _sanitize_records(meq_data.get("all_monthly_queue_records"), SAFE_MONTHLY_QUEUE_ROW_COLS),
         "monthly_chart":             _sanitize_records(meq_data.get("monthly_chart"), SAFE_MONTHLY_CHART_COLS),
+        # Part 22 — USD Remote / Location Fit: auditable, never a top action item.
+        "low_fit_local_only":        _sanitize_records(meq_data.get("low_fit_local_only"), SAFE_MONTHLY_QUEUE_ROW_COLS),
     }
 
 
@@ -1074,6 +1101,9 @@ def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
         "follow_up_queue":          _sanitize_records(usd_crm_data.get("follow_up_queue"), SAFE_USD_CRM_ROW_COLS),
         "active_process_pipeline":  _sanitize_records(usd_crm_data.get("active_process_pipeline"), SAFE_USD_CRM_ROW_COLS),
         "manual_applications":      _sanitize_records(usd_crm_data.get("manual_applications"), SAFE_USD_CRM_ROW_COLS),
+        # Part 22 — USD Remote / Location Fit: auditable, excluded from the
+        # default recommended queues above unless explicitly filtered in.
+        "disqualified_local_only":  _sanitize_records(usd_crm_data.get("disqualified_local_only"), SAFE_USD_CRM_ROW_COLS),
         "contingency_risk": {
             "high_risk": _sanitize_records(risk.get("high_risk"), SAFE_USD_CRM_ROW_COLS),
             "backup":    _sanitize_records(risk.get("backup"), SAFE_USD_CRM_ROW_COLS),
@@ -1520,6 +1550,24 @@ def export_public_dashboard_data(
                     f"(as of {last_available_date or 'unknown'}) and will refresh when messages.csv is added."
                 ),
             },
+            # Partial weekly refresh support (Connections.csv can arrive in a
+            # second batch, or a week can be skipped entirely) — never claim
+            # network-growth/connection-dependent sections were refreshed
+            # from a snapshot's Connections.csv when they weren't. See
+            # src/connection_freshness.py.
+            "connections_freshness": (lambda cf: {
+                "connections_available_for_current_snapshot": cf["connections_available_for_current_snapshot"],
+                "connections_current_snapshot_date": cf["connections_current_snapshot_date"],
+                "connections_last_available_snapshot_date": cf["connections_last_available_snapshot_date"],
+                "connection_dependent_sections_status": cf["connection_dependent_sections_status"],
+                "note": None if cf["connections_available_for_current_snapshot"] else (
+                    f"Connections.csv was not included in the {cf.get('current_snapshot_date') or today_str} "
+                    f"export. Network-growth and connection-dependent sections still reflect the last "
+                    f"complete Connections export from {cf['connections_last_available_snapshot_date']}. "
+                    f"Message, invitation, and company-follow intelligence were refreshed from "
+                    f"{cf.get('current_snapshot_date') or today_str}."
+                ),
+            })(read_connection_freshness()),
             "note": (
                 "Market classification is inferred from company/title keywords. "
                 "LinkedIn exports do not include location data. "

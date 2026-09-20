@@ -404,6 +404,16 @@ def score_untapped_contact(
         score -= 15
         negatives.append("only a vague global/bilingual signal, no recruiting/data/market signal")
 
+    # ── Part 22 — USD Remote / Location Fit (title-level signal only; this
+    # scorer never sees message content). A Mexican recruiter/company is NOT
+    # auto-penalized here — only local-only/onsite/presencial-only title
+    # signals with no offsetting remote/LATAM/USD/international signal are.
+    from src.message_intelligence import usd_location_fit
+    title_fit = usd_location_fit("", company_clean or "", title)
+    if title_fit["useless_for_usd_remote_flag"]:
+        score -= 25
+        negatives.append("title/company shows local-only Mexico hiring signal, no remote/LATAM/USD signal")
+
     final_score = int(max(0, min(100, round(score))))
 
     # ── Market fields (Part 10) ────────────────────────────────────────────

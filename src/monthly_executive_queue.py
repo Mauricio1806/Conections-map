@@ -43,6 +43,7 @@ from src.usd_contract_crm import (
     CRM_RECRUITING_PERSONAS, CRM_HIRING_DATA_LEADER_PERSONAS,
     USD_TARGET_BUCKET_SUBSTRINGS, CONFIRMED_HIGH_VALUE_BUCKETS,
 )
+from src.message_intelligence import usd_location_fit
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +74,9 @@ QUEUE_ROW_FIELDS = [
     "opportunity_bucket", "usd_signal", "latam_signal", "remote_signal",
     "score", "priority", "recommended_action", "next_action_date",
     "reason_short", "message_angle",
+    # Part 22 — USD Remote / Location Fit
+    "usd_remote_priority_score", "useless_for_usd_remote_flag",
+    "mexico_local_only_flag", "lead_disqualification_reason",
 ]
 
 # ── Recommended message-angle templates (exact spec wording, [Name] filled) ─
@@ -208,7 +212,7 @@ def _build_contact_profiles(events: list[dict]) -> dict:
 
 def _base_row(profile_url: str, latest: dict) -> dict:
     latest = latest or {}
-    return {
+    row = {
         "contact_name": _norm(latest.get("contact_name")),
         "company": _norm(latest.get("company")),
         "role": _norm(latest.get("role")),
@@ -227,6 +231,16 @@ def _base_row(profile_url: str, latest: dict) -> dict:
         "next_action_date": _norm(latest.get("reactivation_date")),
         "reason_short": _norm(latest.get("reason_short")),
     }
+    # Part 22 — USD Remote / Location Fit — role/company text is the only
+    # signal available at this layer (no raw message content); a Mexico
+    # mention alone never triggers this, only local-only/onsite/presencial
+    # signals with no offsetting remote/LATAM/USD signal.
+    fit = usd_location_fit("", row["company"], row["role"])
+    row["useless_for_usd_remote_flag"] = fit["useless_for_usd_remote_flag"]
+    row["mexico_local_only_flag"] = fit["mexico_local_only_flag"]
+    row["usd_remote_priority_score"] = fit["usd_remote_priority_score"]
+    row["lead_disqualification_reason"] = fit["lead_disqualification_reason"]
+    return row
 
 
 def _finalize_rows(rows: list[dict], queue_name: str, angle_key: str, limit: int | None) -> list[dict]:
@@ -249,8 +263,14 @@ def _finalize_rows(rows: list[dict], queue_name: str, angle_key: str, limit: int
 
 # ── Queue 1 — Top 20 Inbound Opportunities This Month ───────────────────────
 
-def _build_inbound_queue(profiles: dict, current_month: str, limit: int = 20) -> list[dict]:
+def _build_inbound_queue(profiles: dict, current_month: str, limit: int = 20) -> tuple[list[dict], list[dict]]:
+    """Returns (candidates, low_fit_local_only_candidates). Part 22 — USD
+    Remote / Location Fit: local-only/onsite/presencial-only Mexico leads are
+    never placed in the Top 20 Inbound Opportunities queue (unless no better
+    options exist — handled by the caller falling back to low_fit only when
+    candidates is empty); they stay auditable in their own queue instead."""
     candidates = []
+    low_fit_candidates = []
     for url, p in profiles.items():
         latest = p["latest"] or {}
         if _norm(latest.get("event_month")) != current_month:
@@ -283,9 +303,14 @@ def _build_inbound_queue(profiles: dict, current_month: str, limit: int = 20) ->
             score -= 20
         if _truthy(latest.get("rejected_or_closed")):
             score -= 25
+        if row["useless_for_usd_remote_flag"]:
+            score = min(score, 25)
         row["_score"] = score
-        candidates.append(row)
-    return candidates
+        if row["useless_for_usd_remote_flag"]:
+            low_fit_candidates.append(row)
+        else:
+            candidates.append(row)
+    return candidates, low_fit_candidates
 
 
 # ── Queue 2 — Top 20 Reactivation Due This Month ────────────────────────────
@@ -524,7 +549,7 @@ def run_monthly_executive_queue(opportunity_history_data: dict | None = None,
     current_month = _current_month()
     end_of_month = _end_of_current_month()
 
-    inbound_candidates      = _build_inbound_queue(profiles, current_month)
+    inbound_candidates, low_fit_local_only_candidates = _build_inbound_queue(profiles, current_month)
     reactivation_candidates = _build_reactivation_queue(profiles, end_of_month)
     soft_closed_candidates  = _build_soft_closed_queue(profiles)
     usd_followup_candidates = _build_usd_followup_queue(profiles, usd_crm_data)
@@ -533,6 +558,15 @@ def run_monthly_executive_queue(opportunity_history_data: dict | None = None,
     reactivation_top20  = _finalize_rows(reactivation_candidates, "reactivation",  "reactivation", 20)
     soft_closed_top20   = _finalize_rows(soft_closed_candidates,  "soft_closed",   "soft_closed",  20)
     usd_followups_top20 = _finalize_rows(usd_followup_candidates, "usd_followup",  "usd_followup", 20)
+    # Part 22 — USD Remote / Location Fit: local-only/onsite/presencial-only
+    # Mexico leads never fill the Top 20 Inbound list — auditable here only.
+    # If Top 20 Inbound has empty slots (fewer than 20 real candidates), a
+    # capped number of low-fit leads fill in ("unless no better options
+    # exist"), but they always rank below every real candidate.
+    if len(inbound_top20) < 20:
+        fill_candidates = inbound_candidates + low_fit_local_only_candidates[: 20 - len(inbound_top20)]
+        inbound_top20 = _finalize_rows(fill_candidates, "inbound", "inbound", 20)
+    low_fit_local_only_top20 = _finalize_rows(low_fit_local_only_candidates, "low_fit_local_only", "inbound", 20)
 
     # Backlog top 50 — strong leads that did NOT make a Top 20 list, drawn
     # from the union of all 4 candidate pools before truncation.
@@ -592,6 +626,8 @@ def run_monthly_executive_queue(opportunity_history_data: dict | None = None,
         "high_priority_this_month":         high_priority_this_month,
         "overdue_reactivations":            overdue_reactivations,
         "active_opportunity_signals":       active_opportunity_signals,
+        # Part 22 — USD Remote / Location Fit
+        "low_fit_local_only_count":         len(low_fit_local_only_top20),
     }
 
     monthly_chart = _build_monthly_chart(events)
@@ -601,6 +637,7 @@ def run_monthly_executive_queue(opportunity_history_data: dict | None = None,
     _save_csv([{**{k: v for k, v in r.items() if k != "_score"}} for r in soft_closed_top20], "monthly_executive_queue_soft_closed_top20.csv")
     _save_csv([{**{k: v for k, v in r.items() if k != "_score"}} for r in usd_followups_top20], "monthly_executive_queue_usd_followups_top20.csv")
     _save_csv([{**{k: v for k, v in r.items() if k != "_score"}} for r in monthly_backlog_top50], "monthly_opportunity_backlog_top50.csv")
+    _save_csv([{**{k: v for k, v in r.items() if k != "_score"}} for r in low_fit_local_only_top20], "monthly_executive_queue_low_fit_local_only.csv")
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     pd.DataFrame([{"metric": k, "value": v} for k, v in summary.items()]).to_csv(
         OUTPUTS_DIR / "monthly_executive_queue_summary.csv", index=False, encoding="utf-8-sig",
@@ -627,6 +664,8 @@ def run_monthly_executive_queue(opportunity_history_data: dict | None = None,
         "monthly_backlog_top50": monthly_backlog_top50,
         "all_monthly_queue_records": [{k: v for k, v in r.items() if k != "_score"} for r in all_records],
         "monthly_chart": monthly_chart,
+        # Part 22 — USD Remote / Location Fit: auditable, never a top action item.
+        "low_fit_local_only": [{k: v for k, v in r.items() if k != "_score"} for r in low_fit_local_only_top20],
     }
 
 

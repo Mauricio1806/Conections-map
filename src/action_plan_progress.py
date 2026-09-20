@@ -42,10 +42,14 @@ from __future__ import annotations
 
 import json
 import logging
+import sys
 from pathlib import Path
 
 import pandas as pd
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from src.connection_freshness import read_connection_freshness
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s %(message)s", datefmt="%H:%M:%S")
 logger = logging.getLogger(__name__)
@@ -345,19 +349,30 @@ def _persona_set(df: pd.DataFrame, personas: set) -> int:
 
 
 def build_network_growth(kpi_lookup: dict, week_cfg: dict, new_conn_df: pd.DataFrame,
-                          period: dict) -> dict:
+                          period: dict, connections_measured_this_week: bool = True) -> dict:
     prev_total = _kpi(kpi_lookup, "NETWORK", "total_connections", "previous_value", 0)
     cur_total  = _kpi(kpi_lookup, "NETWORK", "total_connections", "current_value", 0)
     delta      = _kpi(kpi_lookup, "NETWORK", "total_connections", "absolute_delta", 0)
-    new_count  = len(new_conn_df)
+    # Part 22 (partial refresh) — Connections.csv was NOT part of this
+    # snapshot: outputs/weekly_new_connections.csv still holds the last real
+    # week's rows (weekly_snapshot_refresh.py never touches it in this case)
+    # so it must not be counted as THIS period's new-connection pace. Never
+    # fabricate a "measured" number for a week that wasn't actually measured.
+    new_count  = len(new_conn_df) if connections_measured_this_week else 0
 
     tmin = week_cfg.get("new_connections_target_min", 0)
     tmax = week_cfg.get("new_connections_target_max", 0)
 
-    pace = _pace_metrics(new_count, tmin, tmax, period)
-    status = pace["status"]
-    progress_pct = (round(pace["weekly_pace_actual"] / tmax * 100, 1)
-                    if tmax and pace["weekly_pace_actual"] is not None else None)
+    if connections_measured_this_week:
+        pace = _pace_metrics(new_count, tmin, tmax, period)
+        status = pace["status"]
+        progress_pct = (round(pace["weekly_pace_actual"] / tmax * 100, 1)
+                        if tmax and pace["weekly_pace_actual"] is not None else None)
+    else:
+        pace = {"period_actual": None, "weekly_pace_actual": None,
+                "period_target_min": None, "period_target_max": None}
+        status = "NOT_MEASURED_THIS_WEEK"
+        progress_pct = None
 
     net_growth = int(delta) if delta == delta else 0
     gross_new = new_count
@@ -368,6 +383,7 @@ def build_network_growth(kpi_lookup: dict, week_cfg: dict, new_conn_df: pd.DataF
     churn_estimate = max(0, gross_new - net_growth)
 
     return {
+        "connections_measured_this_week": connections_measured_this_week,
         "total_connections_current": int(cur_total) if cur_total else 0,
         "total_connections_previous": int(prev_total) if prev_total else 0,
         "new_connections_count": new_count,
@@ -1060,9 +1076,18 @@ def main():
     kpi_lookup = load_kpi_delta_lookup()
     new_conn_df = load_new_connections()
 
-    network = build_network_growth(kpi_lookup, week_cfg, new_conn_df, period)
-    strategic = build_strategic_growth(new_conn_df, targets, week_cfg, period)
-    persona = build_persona_growth(new_conn_df, period)
+    # Part 22 (partial refresh) — see build_network_growth docstring: when
+    # Connections.csv wasn't part of this snapshot, weekly_new_connections.csv
+    # is stale (last real week's rows), so it must never be counted as this
+    # period's strategic/persona growth either.
+    connections_measured_this_week = read_connection_freshness().get(
+        "connections_available_for_current_snapshot", True
+    )
+    effective_new_conn_df = new_conn_df if connections_measured_this_week else new_conn_df.iloc[0:0]
+
+    network = build_network_growth(kpi_lookup, week_cfg, new_conn_df, period, connections_measured_this_week)
+    strategic = build_strategic_growth(effective_new_conn_df, targets, week_cfg, period)
+    persona = build_persona_growth(effective_new_conn_df, period)
     leads = build_lead_reactivation(current_json, kpi_lookup, week_cfg, period)
     untapped = build_untapped_movement(current_json, week_cfg, period)
     top_contacts = build_top_contacts(current_json, previous_json, kpi_lookup)
