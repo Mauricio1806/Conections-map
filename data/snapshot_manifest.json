@@ -234,19 +234,21 @@
       "snapshot_id": "snap-2026-09-20",
       "snapshot_date": "2026-09-20",
       "folder": "20-09",
-      "ingested_at": "2026-09-20T15:55:53",
-      "connections_rows": 0,
+      "ingested_at": "2026-09-21T13:38:26",
+      "connections_rows": 12831,
       "invitations_rows": 5487,
       "messages_rows": 10429,
       "messages_available": true,
-      "connections_available": false,
+      "connections_available": true,
       "company_follows_rows": 99,
       "schema_hashes": {
+        "connections": "21a0ae310c07",
         "invitations": "df23d51f73dd",
         "messages": "d196d0cc912f",
         "company_follows": "cf462610629b"
       },
       "file_hashes": {
+        "connections": "af3cc530ca140130",
         "invitations": "e73a80e92e8febe1",
         "messages": "5f82e70fa9f1b5d3",
         "company_follows": "75a80a01c024d41b"

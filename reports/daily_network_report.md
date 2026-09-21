@@ -1,5 +1,5 @@
 # 📊 Daily LinkedIn Network Report
-> Generated: **August 31, 2026**
+> Generated: **September 21, 2026**
 
 ---
 
@@ -7,10 +7,10 @@
 
 | Metric | Value |
 |--------|-------|
-| Total Connections Analyzed | **12,263** |
-| High Priority (score ≥ 70) | **253** (2.1%) |
-| Medium Priority (40–69) | **4,206** (34.3%) |
-| Report Date | August 31, 2026 |
+| Total Connections Analyzed | **12,767** |
+| High Priority (score ≥ 70) | **276** (2.2%) |
+| Medium Priority (40–69) | **4,444** (34.8%) |
+| Report Date | September 21, 2026 |
 
 ---
 
@@ -18,16 +18,16 @@
 
 | Persona | Count | % of Network |
 |---------|-------|--------------|
-| Other | 5,001 | 40.8% |
-| Recruiter | 1,339 | 10.9% |
-| HR | 1,249 | 10.2% |
-| Talent Acquisition | 1,232 | 10.0% |
-| Consultant | 687 | 5.6% |
-| Data Engineer | 582 | 4.7% |
-| Director | 489 | 4.0% |
-| Executive | 360 | 2.9% |
-| Data Analyst | 248 | 2.0% |
-| Founder | 177 | 1.4% |
+| Other | 5,135 | 40.2% |
+| Recruiter | 1,438 | 11.3% |
+| Talent Acquisition | 1,352 | 10.6% |
+| HR | 1,318 | 10.3% |
+| Consultant | 723 | 5.7% |
+| Data Engineer | 583 | 4.6% |
+| Director | 500 | 3.9% |
+| Executive | 371 | 2.9% |
+| Data Analyst | 245 | 1.9% |
+| Founder | 190 | 1.5% |
 
 ---
 
@@ -35,14 +35,14 @@
 
 | Area | Count | % of Network |
 |------|-------|--------------|
-| Other | 3,423 | 27.9% |
-| Management | 2,639 | 21.5% |
-| Recruiting | 2,598 | 21.2% |
-| HR | 1,203 | 9.8% |
-| Consulting | 663 | 5.4% |
-| Data Engineering | 600 | 4.9% |
-| Analytics | 490 | 4.0% |
-| Data Science / AI | 163 | 1.3% |
+| Other | 3,518 | 27.6% |
+| Recruiting | 2,820 | 22.1% |
+| Management | 2,734 | 21.4% |
+| HR | 1,254 | 9.8% |
+| Consulting | 704 | 5.5% |
+| Data Engineering | 599 | 4.7% |
+| Analytics | 484 | 3.8% |
+| Data Science / AI | 166 | 1.3% |
 
 ---
 
@@ -50,14 +50,14 @@
 
 | Seniority | Count |
 |-----------|-------|
-| Unknown | 4,028 |
-| Mid | 2,492 |
-| Manager | 1,772 |
-| Senior | 1,381 |
-| Director | 814 |
-| Lead | 679 |
-| Executive | 476 |
-| Junior | 337 |
+| Unknown | 4,202 |
+| Mid | 2,590 |
+| Manager | 1,844 |
+| Senior | 1,451 |
+| Director | 833 |
+| Lead | 724 |
+| Executive | 490 |
+| Junior | 340 |
 
 ---
 
@@ -65,16 +65,16 @@
 
 | Company | Connections |
 |---------|-------------|
-| Hays | 80 |
-| Itaú Unibanco | 77 |
-| Michael Page | 57 |
+| Itaú Unibanco | 80 |
+| Hays | 79 |
+| Michael Page | 62 |
+| Deloitte | 58 |
 | GE Vernova | 56 |
-| SENAI CIMATEC | 54 |
-| Deloitte | 53 |
-| NTT DATA Europe & Latam | 51 |
+| NTT DATA Europe & Latam | 53 |
+| SENAI CIMATEC | 53 |
+| Capgemini | 50 |
 | Databricks | 49 |
-| Grupo Boticário | 47 |
-| Capgemini | 45 |
+| Tata Consultancy Services | 47 |
 
 ---
 
@@ -82,29 +82,29 @@
 
 | Market | Count | % | Avg Priority Score |
 |--------|-------|---|--------------------|
-| UNKNOWN | 10,055 | 82.0% | 28.7 |
-| BRAZIL | 970 | 7.9% | 34.2 |
-| LATAM_USD | 436 | 3.6% | 58.1 |
-| EUROPE | 365 | 3.0% | 48.9 |
-| US_CANADA_NEARSHORE | 291 | 2.4% | 54.9 |
-| SPAIN_EU | 146 | 1.2% | 52.9 |
+| UNKNOWN | 10,473 | 82.0% | 28.9 |
+| BRAZIL | 983 | 7.7% | 34.0 |
+| LATAM_USD | 481 | 3.8% | 58.4 |
+| EUROPE | 367 | 2.9% | 48.4 |
+| US_CANADA_NEARSHORE | 306 | 2.4% | 55.0 |
+| SPAIN_EU | 157 | 1.2% | 52.7 |
 
 ---
 
 ## 💪 Network Strengths
 
-- **Strong persona coverage:** Other, Recruiter, HR, Talent Acquisition, Consultant, Data Engineer, Director, Executive, Data Analyst, Founder
+- **Strong persona coverage:** Other, Recruiter, Talent Acquisition, HR, Consultant, Data Engineer, Director, Executive, Data Analyst, Founder
 - **Good market presence:** BRAZIL, LATAM_USD, US_CANADA_NEARSHORE, SPAIN_EU, EUROPE, UNKNOWN
-- **Brazil base:** 970 connections — solid local foundation.
-- **Recruiter/TA network:** 2,571 contacts — key pipeline for job leads.
+- **Brazil base:** 983 connections — solid local foundation.
+- **Recruiter/TA network:** 2,790 contacts — key pipeline for job leads.
 
 ---
 
 ## ⚠️ Network Weaknesses & Gaps
 
-- **US/Canada Nearshore:** Only 291 connections — needs aggressive growth.
-- **LATAM USD:** 436 connections — key for remote USD work from Brazil.
-- **Spain/EU:** 146 connections — low for medium-term Europe strategy.
+- **US/Canada Nearshore:** Only 306 connections — needs aggressive growth.
+- **LATAM USD:** 481 connections — key for remote USD work from Brazil.
+- **Spain/EU:** 157 connections — low for medium-term Europe strategy.
 - **Data Engineering Managers & Heads of Data** outside Brazil are underrepresented.
 
 ---
@@ -149,56 +149,56 @@
 
 | # | Name | Company | Position | Persona | Market | Score | Action |
 |---|------|---------|----------|---------|--------|-------|--------|
-| 1 | Mónica S. | MinData | Regional Talent Acquisition Partner for ... | Talent Acquisition | LATAM_USD | **96** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 2 | María de los Angeles Dalmasso | Techunting | Senior IT Talent Acquisition... | Talent Acquisition | US_CANADA_NEARSHORE | **91** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 3 | María de los Angeles Cusicanqui Rivero | XML International | Senior IT Recruiter/Administrator... | Recruiter | US_CANADA_NEARSHORE | **90** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 4 | Luz Alejandra Maura Arias | Periferia IT Group | Senior Talent Acquisition Regional LATAM... | Talent Acquisition | LATAM_USD | **89** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 1 | Mónica S. | MinData | Regional Talent Acquisition Partner for ... | Talent Acquisition | LATAM_USD | **93** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 2 | Evelyn Arvizu | HandCloud Latam | Talent Acquisition Coordinator... | Talent Acquisition | LATAM_USD | **93** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 3 | Tania María Cuecuecha Montiel | Chronos Consulting | Latam Senior Technical Recruiter / Headh... | Recruiter | LATAM_USD | **91** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 4 | María de los Angeles Cusicanqui Rivero | XML International | Senior IT Recruiter/Administrator... | Recruiter | US_CANADA_NEARSHORE | **90** | PRIORITY: Send personalized outreach – share your profile & ... |
 | 5 | María José Gómez G. | GFT Technologies LATAM | Regional Sr. Technical Talent Acquisitio... | Talent Acquisition | LATAM_USD | **89** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 6 | Jeimy Blanco Alvarado 🇨🇷 | OTSI - Object Technology Solutions Inc | IT Talent Acquisition Specialist II... | Talent Acquisition | US_CANADA_NEARSHORE | **88** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 7 | Rida Yousaf | HRDisruptive | Talent Acquisition Executive... | Talent Acquisition | US_CANADA_NEARSHORE | **88** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 8 | Evelyn Castillo Blas | NTT DATA Europe & LATAM | IT Talent Acquisition Coordinator... | Talent Acquisition | LATAM_USD | **87** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 9 | Mukesh Dayama | Avance Consulting | Senior Technical Recruiter ( Canada & US... | Recruiter | US_CANADA_NEARSHORE | **87** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 10 | Clecio Silva | Databricks | Field Engineering Manager... | Hiring Manager | US_CANADA_NEARSHORE | **86** | PRIORITY: Engage content, comment strategically, and conside... |
-| 11 | Gina Bonilla | NTT DATA Europe & Latam | IT Talent Acquisition Specialist Recruti... | Talent Acquisition | LATAM_USD | **86** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 12 | Marco Alves | Quantum World Technologies Inc | Senior Technical Recruiter / ATL (Latam/... | Recruiter | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 13 | Isis Isambertt | I2B Tech | Lead IT Talent Acquisition Latam... | Talent Acquisition | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 14 | Ximena Quiroga | Yara International | Talent Acquisition Lead Latam... | Talent Acquisition | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 15 | Maria Fernanda Vega | Databricks | Talent Acquisition Specialist... | Talent Acquisition | US_CANADA_NEARSHORE | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 16 | Natanael Carvalho | Ubiminds: You, International | Senior Tech Recruiter LATAM... | Recruiter | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 17 | Ravindra Chauhan | Onward Technologies Limited | Manager - Talent Acquisition... | Talent Acquisition | SPAIN_EU | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 18 | Ragesh M | Infoplus Technologies UK Limited | Lead Recruiter... | Recruiter | EUROPE | **84** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 19 | Mohammed Rizwan | ConfigUSA | Executive US IT Recruiter... | Recruiter | US_CANADA_NEARSHORE | **84** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 20 | Lucio Losada | NTT DATA Europe & Latam | IT Talent Acquisition... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 21 | Jade Mello | BD | Talent Acquisition Manager LATAM - CSM p... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 22 | Antuaned Miranda Torres | Praxis | Senior IT Recruiter - USA... | Recruiter | US_CANADA_NEARSHORE | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 23 | Nicolas Ruiz | TIVIT LATAM | Talent Acquisition Specialist... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 24 | Georgina Desentis | EPAM Systems | Lead IT Recruiter / LATAM... | Recruiter | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 25 | Natalia Bances | Praxis USA | Senior Technical Recruiter... | Recruiter | US_CANADA_NEARSHORE | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 26 | Jonathan Gonzalez | Hyatt | Corporate Talent Manager | LAC (Latin Am... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 27 | David Carmona | Mphasis | Talent Acquisition Manager - LATAM... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 28 | Ana Paula Sousa Sampaio | Talent Four Consulting | Tech Recruiter Senior | Talent Acquisiti... | Recruiter | US_CANADA_NEARSHORE | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 29 | Carina Silva | Avery Dennison | Talent Acquisition and Culture & Engagem... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 30 | Adnan Yousaf | HERE Technologies | Lead Talent Acquisition Specialist -EMEA... | Talent Acquisition | US_CANADA_NEARSHORE | **82** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 31 | Denny Lee | Databricks | Product Management Director, Startups & ... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
-| 32 | Alberto López Fernández | NTT Data Europe & Latam | IT Recruiter... | Recruiter | LATAM_USD | **82** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 33 | Gustavo Amici | Databricks | Director - Digital Natives / Startups... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
-| 34 | Roberto Souza | Databricks | Enterprise and Global account Sales Dire... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
-| 35 | Adrian Roberts | Databricks | Director, Field Engineering - Regulated ... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
-| 36 | Eugenia Moreno | Databricks | Sr. Field Engineering Manager... | Hiring Manager | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
-| 37 | Daniel Pacheco | Koch Industries | Senior Recruiter Partner Latin America... | Recruiter | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 38 | Nathalia Rocha | Cloudster | Tech Recruiter | AWS Recruiter... | Recruiter | US_CANADA_NEARSHORE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 39 | Leandro Antunes Rodrigues | GFT Technologies | Chief Operating Officer (USA) & Global D... | Executive | US_CANADA_NEARSHORE | **81** | PRIORITY: Nurture this connection – engage with their posts ... |
+| 6 | María de los Angeles Dalmasso | Techunting | Senior IT Talent Acquisition... | Talent Acquisition | US_CANADA_NEARSHORE | **88** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 7 | Jeimy Blanco Alvarado 🇨🇷 | OTSI - Object Technology Solutions Inc | IT Talent Acquisition Specialist II... | Talent Acquisition | US_CANADA_NEARSHORE | **88** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 8 | Mukesh Dayama | Avance Consulting | Senior Technical Recruiter ( Canada & US... | Recruiter | US_CANADA_NEARSHORE | **87** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 9 | Alline de Sousa Moreno | Nava | Tech for Business | Analista de Recrutamento e Seleção Pleno... | Recruiter | US_CANADA_NEARSHORE | **87** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 10 | Evelyn Castillo Blas | NTT DATA Europe & LATAM | IT Talent Acquisition Coordinator... | Talent Acquisition | LATAM_USD | **87** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 11 | Brenda Manjarrez | iKraft Solutions LATAM | Chief Talent Acquisition Officer and Man... | Talent Acquisition | LATAM_USD | **86** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 12 | Mariel Cabrera Santos | GFT Technologies LATAM | Talent Acquisition Analyst... | Talent Acquisition | LATAM_USD | **86** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 13 | Clecio Silva | Databricks | Field Engineering Manager... | Hiring Manager | US_CANADA_NEARSHORE | **86** | PRIORITY: Engage content, comment strategically, and conside... |
+| 14 | Luz Alejandra Maura Arias | Periferia IT Group | Senior Talent Acquisition Regional LATAM... | Talent Acquisition | LATAM_USD | **86** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 15 | Isis Isambertt | I2B Tech | Lead IT Talent Acquisition Latam... | Talent Acquisition | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 16 | Ravindra Chauhan | Onward Technologies Limited | Manager - Talent Acquisition... | Talent Acquisition | SPAIN_EU | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 17 | Natanael Carvalho | Ubiminds: You, International | Senior Tech Recruiter LATAM... | Recruiter | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 18 | Ximena Quiroga | Yara International | Talent Acquisition Lead Latam... | Talent Acquisition | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 19 | Rida Yousaf | HRDisruptive | Talent Acquisition Executive... | Talent Acquisition | US_CANADA_NEARSHORE | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 20 | Marco Alves | Quantum World Technologies Inc | Senior Technical Recruiter / ATL (Latam/... | Recruiter | LATAM_USD | **85** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 21 | Mohammed Rizwan | ConfigUSA | Executive US IT Recruiter... | Recruiter | US_CANADA_NEARSHORE | **84** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 22 | Anayeli Rodriguez Villalobos | DigitalOnUs by Tech Mahindra | Senior Talent Acquisition Specialist & V... | Talent Acquisition | SPAIN_EU | **84** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 23 | Ana Paula Sousa Sampaio | Talent Four Consulting | Tech Recruiter Senior | Talent Acquisiti... | Recruiter | US_CANADA_NEARSHORE | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 24 | Gina Bonilla | NTT DATA Europe & Latam | IT Talent Acquisition Specialist Recruti... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 25 | Eloiza Silva | Lesaffre | Regional Talent Manager LATAM... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 26 | Carolina Barraza Elizalde | Walmart | Senior Recruiter U.S.... | Recruiter | US_CANADA_NEARSHORE | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 27 | Fabiola Navarro Martinez | Nissan Motor Corporation | Sr Manager LATAM Talent Acquisition for ... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 28 | David Carmona | Mphasis | Talent Acquisition Manager - LATAM... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 29 | Diego Quinones | GFT Technologies LATAM | Senior Talent Acquisition Partner... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 30 | Jonathan Gonzalez | Hyatt | Corporate Talent Manager | LAC (Latin Am... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 31 | Carina Silva | Avery Dennison | Talent Acquisition and Culture & Engagem... | Talent Acquisition | LATAM_USD | **83** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 32 | Eugenia Moreno | Databricks | Sr. Field Engineering Manager... | Hiring Manager | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
+| 33 | Maria Fernanda Vega | Databricks | Talent Acquisition Specialist... | Talent Acquisition | US_CANADA_NEARSHORE | **82** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 34 | Denny Lee | Databricks | Product Management Director, Startups & ... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
+| 35 | Roberto Souza | Databricks | Enterprise and Global account Sales Dire... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
+| 36 | Adrian Roberts | Databricks | Director, Field Engineering - Regulated ... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
+| 37 | Gustavo Amici | Databricks | Director - Digital Natives / Startups... | Director | US_CANADA_NEARSHORE | **82** | PRIORITY: Engage content, comment strategically, and conside... |
+| 38 | Manohar Suriboyina | Yochana | Senior LATAM Recruiter... | Recruiter | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 39 | Srinivas Bikkavolu | Spruce InfoTech Inc | Technical Recruiter - Canada Staffing... | Recruiter | US_CANADA_NEARSHORE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
 | 40 | Diulliany Rosa | Kidde Global Solutions | Sr Business Partner | Talent Acquisition... | Talent Acquisition | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 41 | ✈ Kartheek Guntuku✅ | SoftPath Technologies LLC | Manager – Talent Acquisition, HR Operati... | Talent Acquisition | EUROPE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 42 | Benhur Mente ☆⧗🕷️ | Atlantis IT Group | IT Recruiter (USA/Canada) (SVK Informati... | Recruiter | US_CANADA_NEARSHORE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 43 | Rebeca Pareja Hecímovich | LatamCent | Senior talent partner... | Recruiter | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 44 | Srinivas Bikkavolu | Spruce InfoTech Inc | Technical Recruiter - Canada Staffing... | Recruiter | US_CANADA_NEARSHORE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 45 | Maria Perez | Epsilon LATAM | Senior Technical Recruiter... | Recruiter | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 46 | Bruno Oliveira Silva | NTT DATA Europe & Latam | Director Digital Technology... | Director | LATAM_USD | **80** | PRIORITY: Engage content, comment strategically, and conside... |
-| 47 | Selene Lara Beguerisse | Haleon | Talent Acquisition Manager - Mexico, Cos... | Talent Acquisition | LATAM_USD | **80** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 48 | Iara Torres | Inclusion. The Cloud Company | LATAM ⇄ USA Tech Talent Acquisition Spec... | Talent Acquisition | LATAM_USD | **80** | PRIORITY: Send personalized outreach – share your profile & ... |
-| 49 | Wescley Trajano | Ambev Tech | Diretor de Data & Analytics - LATAM... | Director | LATAM_USD | **80** | PRIORITY: Engage content, comment strategically, and conside... |
-| 50 | Thayna Sena | NTT DATA Europe & LATAM | Talent Acquisition... | Talent Acquisition | LATAM_USD | **80** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 41 | Nathalia Rocha | Cloudster | Tech Recruiter | AWS Recruiter... | Recruiter | US_CANADA_NEARSHORE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 42 | ✈ Kartheek Guntuku✅ | SoftPath Technologies LLC | Manager – Talent Acquisition, HR Operati... | Talent Acquisition | EUROPE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 43 | Leandro Antunes Rodrigues | GFT Technologies | Chief Operating Officer (USA) & Global D... | Executive | US_CANADA_NEARSHORE | **81** | PRIORITY: Nurture this connection – engage with their posts ... |
+| 44 | Ragesh M | Infoplus Technologies UK Limited | Lead Recruiter... | Recruiter | EUROPE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 45 | Benhur Mente ☆⧗🕷️ | Atlantis IT Group | IT Recruiter (USA/Canada) (SVK Informati... | Recruiter | US_CANADA_NEARSHORE | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 46 | Andrea Albarracin Angel | SoftwareONE Colombia | Talent Sourcing Specialist... | Sourcer | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 47 | Moheswaran Lakshmanan | GeorgiaTEK Systems Inc | Talent Acquisition Lead (LATAM)... | Talent Acquisition | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 48 | Alberto Islas | Infor | Senior Recruiter LATAM... | Recruiter | LATAM_USD | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 49 | Natalia Murguía | Indra | IT Talent Acquisition Manager... | Talent Acquisition | SPAIN_EU | **81** | PRIORITY: Send personalized outreach – share your profile & ... |
+| 50 | Lorena Marín Agudelo | TEAM International | Strategic Talent Management LATAM Direct... | Director | LATAM_USD | **80** | PRIORITY: Engage content, comment strategically, and conside... |
 
 ---
 
