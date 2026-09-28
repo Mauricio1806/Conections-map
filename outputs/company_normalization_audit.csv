@@ -4,7 +4,6 @@
 &V Recruitment,NEEDS_COMPANY_MAPPING,0.4,&v recruitment
 (GSH) Grupo Soluciones Horizonte,LATAM_USD_LIKELY,0.6,(gsh) grupo soluciones horizonte
 ++hellohello,NEEDS_COMPANY_MAPPING,0.4,++hellohello
-+A Educação,NEEDS_COMPANY_MAPPING,0.4,+a educação
 +Talent,LATAM_USD_CONFIRMED,0.85,+talent
 -,LOW_VALUE_UNRESOLVED,0.1,
 10Folders,GLOBAL_OPPORTUNITY,0.55,10folders
@@ -45,6 +44,7 @@
 4zOOm - Business Solution,NEEDS_COMPANY_MAPPING,0.4,4zoom - business solution
 500 Designs,NEEDS_COMPANY_MAPPING,0.4,500 designs
 50Hertz Transmission GmbH,GLOBAL_OPPORTUNITY,0.55,50hertz transmission
+5411 Hub - Tech Talent Acquisition Partner,GLOBAL_STAFFING,0.9,5411 hub - talent acquisition partner
 6 Puntos,GLOBAL_OPPORTUNITY,0.55,6 puntos
 7-Eleven,NEEDS_COMPANY_MAPPING,0.4,7-eleven
 7COMm - People and tech to transform,GLOBAL_OPPORTUNITY,0.55,7comm - people and to transform
@@ -77,13 +77,12 @@ ABA - WORK in AUSTRIA (Austrian Business Agency),SPAIN_EU_CONFIRMED,0.85,aba - w
 ABANCA Portugal,SPAIN_EU_CONFIRMED,0.85,abanca portugal
 ABB,LOW_VALUE_UNRESOLVED,0.1,abb
 ABN Paletes,LANGUAGE_PORTUGUESE_MARKET,0.65,abn paletes
-ABPMP Brasil,BRAZIL_CONFIRMED,0.85,abpmp
 ABTEC Associação Brasileira de Educação e Tecnologia (FIAP),BRAZIL_CONFIRMED,0.85,abtec associação brasileira de educação e tecnologia (fiap)
 ACE Money Transfer,GLOBAL_CONSULTING,0.9,ace money transfer
 ACHS,LATAM_USD_LIKELY,0.7,achs
 ACL,LANGUAGE_PORTUGUESE_MARKET,0.65,acl
 ACR Safety on Lifting & Handling,LANGUAGE_PORTUGUESE_MARKET,0.65,acr safety on lifting & handling
-ACS Professional Staffing,GLOBAL_STAFFING,0.9,acs professional staffing
+ACS PRO STAFFING,GLOBAL_STAFFING,0.9,acs pro staffing
 ACTIEF Personalmanagement GmbH,NEEDS_COMPANY_MAPPING,0.4,actief personalmanagement
 ACV Auctions,GLOBAL_OPPORTUNITY,0.55,acv auctions
 AD'ORO S/A,LANGUAGE_PORTUGUESE_MARKET,0.65,ad'oro
@@ -104,7 +103,6 @@ AFIP-Associação Fundo de Incentivo à Pesquisa,LANGUAGE_PORTUGUESE_MARKET,0.65
 AFPESP,LANGUAGE_PORTUGUESE_MARKET,0.65,afpesp
 AG.labs,LANGUAGE_PORTUGUESE_MARKET,0.65,.labs
 AGCO Corporation,NEEDS_COMPANY_MAPPING,0.4,agco
-AGL Solutions,NEEDS_COMPANY_MAPPING,0.4,agl
 AGLH consultores,BRAZIL_CONFIRMED,0.85,aglh consultores
 AGRIPAC BOLIVIANA AGROINDUSTRIAL S.A,LANGUAGE_PORTUGUESE_MARKET,0.65,agripac boliviana agroindustrial
 AGROSearch | Recrutamento para o Agronegócio,GLOBAL_OPPORTUNITY,0.55,agrosearch | recrutamento para o agronegócio
@@ -127,10 +125,8 @@ AK Business Intelligence LLC,NEEDS_COMPANY_MAPPING,0.4,ak business intelligence
 AL Consultoria Tech | Recrutamento Estratégico Tech,GLOBAL_OPPORTUNITY,0.55,al | recrutamento estratégico
 ALB Representações,LANGUAGE_PORTUGUESE_MARKET,0.65,alb representações
 "ALFA - Consultoria SAP, ERP, BPM e IA",GLOBAL_TECH,0.9,"alfa - sap, erp, bpm e ia"
-ALFA - Sistemas de Gestão SAP Business One (ERP),GLOBAL_TECH,0.9,alfa - de gestão sap business one (erp)
 ALFA Consultoria - SAP Gold Partner,GLOBAL_TECH,0.9,alfa - sap gold partner
 ALFA Educação,LANGUAGE_PORTUGUESE_MARKET,0.65,alfa educação
-ALFAVET,LANGUAGE_PORTUGUESE_MARKET,0.65,alfavet
 ALGORTA S.A,LATAM_USD_CONFIRMED,0.85,algorta
 ALIS Software LLC,GLOBAL_OPPORTUNITY,0.55,alis software
 ALLOS,LANGUAGE_PORTUGUESE_MARKET,0.65,allos
@@ -172,6 +168,7 @@ APRIORI - business solutions AG,GLOBAL_OPPORTUNITY,0.55,apriori - business
 APSCo,NEEDS_COMPANY_MAPPING,0.4,apsco
 "AQUA Information Systems, Inc",NEEDS_COMPANY_MAPPING,0.4,aqua information systems
 AR Consultores,GLOBAL_OPPORTUNITY,0.55,ar consultores
+AR Consultoria,BRAZIL_CONFIRMED,0.85,ar
 ARAXÁ SOLAR,LANGUAGE_PORTUGUESE_MARKET,0.65,araxá solar
 ARC2Digital,GLOBAL_TECH,0.75,arc2digital
 ARCA Mobility as a Service,NEEDS_COMPANY_MAPPING,0.4,arca mobility as a
@@ -207,7 +204,7 @@ ATE OUTSOURCING,GLOBAL_STAFFING,0.9,ate outsourcing
 ATIVU Tecnologia | Gestão de Custos e Ativos de TI e Telecom,NEEDS_COMPANY_MAPPING,0.4,ativu tecnologia | gestão de custos e ativos de ti e telecom
 ATL Technology,GLOBAL_TECH,0.75,atl
 ATLANTYX,GLOBAL_OPPORTUNITY,0.55,atlantyx
-ATOMS,NEEDS_COMPANY_MAPPING,0.4,atoms
+ATOMS,LATAM_USD_CONFIRMED,0.85,atoms
 ATON IT,GLOBAL_OPPORTUNITY,0.55,aton it
 ATOSS Software SE,GLOBAL_CONSULTING,0.9,atoss software se
 ATRA,BRAZIL_CONFIRMED,0.85,atra
@@ -221,8 +218,8 @@ AUTOPASS S/A,BRAZIL_CONFIRMED,0.85,autopass
 AVA Bioenergia,NEEDS_COMPANY_MAPPING,0.4,ava bioenergia
 AVANT Gestão Financeira,LANGUAGE_PORTUGUESE_MARKET,0.65,avant gestão financeira
 AVANTTi,GLOBAL_OPPORTUNITY,0.55,avantti
+AVEDIAN,NEEDS_COMPANY_MAPPING,0.4,avedian
 AVirtual,GLOBAL_OPPORTUNITY,0.55,avirtual
-AWS Student Builder Group Universidade SENAI CIMATEC,GLOBAL_TECH,0.9,aws student builder universidade senai cimatec
 AWS User Group Passo Fundo,GLOBAL_TECH,0.9,aws user passo fundo
 AXA Global Business Services (AXA GBS),NEEDS_COMPANY_MAPPING,0.4,axa business (axa gbs)
 AXA Konzern AG,GLOBAL_OPPORTUNITY,0.55,axa konzern
@@ -244,7 +241,7 @@ Abesse Informatikai Tanácsadó Zrt,GLOBAL_OPPORTUNITY,0.55,abesse informatikai 
 Abitab S.A,BRAZIL_CONFIRMED,0.85,abitab
 Abradi,NEEDS_COMPANY_MAPPING,0.4,abradi
 Absa Group,EUROPE_CONFIRMED,0.85,absa
-Absolute Composites,NEEDS_COMPANY_MAPPING,0.4,absolute composites
+Absolute Composites,LATAM_USD_LIKELY,0.6,absolute composites
 AbsoluteLabs,GLOBAL_OPPORTUNITY,0.55,absolutelabs
 Academia RH+,SPAIN_EU_LIKELY,0.6,academia rh+
 Academia do Dev,NEEDS_COMPANY_MAPPING,0.4,academia do dev
@@ -286,6 +283,7 @@ Acolad Group,GLOBAL_OPPORTUNITY,0.55,acolad
 Acolad group,GLOBAL_OPPORTUNITY,0.55,acolad
 Acrisure Brasil,BRAZIL_CONFIRMED,0.85,acrisure
 Acronotics Limited,GLOBAL_OPPORTUNITY,0.55,acronotics
+Acsys,GLOBAL_OPPORTUNITY,0.55,acsys
 Actinver,LATAM_USD_CONFIRMED,0.85,actinver
 Actionline,GLOBAL_OPPORTUNITY,0.55,actionline
 Activ8 Recruitment & Solutions,GLOBAL_OPPORTUNITY,0.55,activ8 recruitment
@@ -336,6 +334,7 @@ Afya,LANGUAGE_PORTUGUESE_MARKET,0.72,afya
 AgSUS,BRAZIL_CONFIRMED,0.85,agsus
 Agape Group,LANGUAGE_PORTUGUESE_MARKET,0.65,agape
 Agencia Ontrade,BRAZIL_CONFIRMED,0.85,agencia ontrade
+Ageplan Engenharia e Construções,BRAZIL_CONFIRMED,0.85,ageplan engenharia e construções
 Aggreko,NEEDS_COMPANY_MAPPING,0.4,aggreko
 Agibank,NEEDS_COMPANY_MAPPING,0.4,agibank
 Agile Inc,NEEDS_COMPANY_MAPPING,0.4,agile
@@ -360,7 +359,6 @@ AiVA,GLOBAL_OPPORTUNITY,0.55,aiva
 Aiden,GLOBAL_TECH,0.75,aiden
 Ailytics,GLOBAL_OPPORTUNITY,0.55,ailytics
 Aim Business,GLOBAL_OPPORTUNITY,0.55,aim business
-Aipioneer,GLOBAL_OPPORTUNITY,0.55,aipioneer
 Air Liquide,GLOBAL_OPPORTUNITY,0.55,air liquide
 Airbnb,US_CANADA_CONFIRMED,0.9,airbnb
 Airbus,EUROPE_CONFIRMED,0.9,airbus
@@ -456,7 +454,6 @@ AltoQi Tecnologia,GLOBAL_OPPORTUNITY,0.55,altoqi tecnologia
 Altus Engineering,NEEDS_COMPANY_MAPPING,0.4,altus engineering
 AlugaMais,GLOBAL_TECH,0.75,alugamais
 Alume,NEEDS_COMPANY_MAPPING,0.4,alume
-Alura Para Empresas,NEEDS_COMPANY_MAPPING,0.4,alura para empresas
 Alvarez & Marsal,GLOBAL_OPPORTUNITY,0.55,alvarez & marsal
 Alvea Soluciones Tecnológicas,GLOBAL_OPPORTUNITY,0.55,alvea soluciones tecnológicas
 Alvoar Lácteos,NEEDS_COMPANY_MAPPING,0.4,alvoar lácteos
@@ -467,11 +464,12 @@ Amadeus FiRe,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amadeus Fire,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amadeus Fire Group,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amaggi,LANGUAGE_PORTUGUESE_MARKET,0.65,amaggi
-Amalga Group,NEEDS_COMPANY_MAPPING,0.4,amalga
+Amalga Group,LATAM_USD_LIKELY,0.7,amalga
 Amanco Wavin,LANGUAGE_PORTUGUESE_MARKET,0.65,amanco wavin
 Amanda Figueira Ramos - Psicóloga CRP 08/39236,NEEDS_COMPANY_MAPPING,0.4,amanda figueira ramos - psicóloga crp 08/39236
 Amara NZero Brasil,BRAZIL_CONFIRMED,0.85,amara nzero
 Amaris Consulting,GLOBAL_CONSULTING,0.9,amaris
+Amaris Consulting | Part of Mantu,GLOBAL_CONSULTING,0.9,amaris | part of mantu
 Amazon,US_CANADA_CONFIRMED,0.95,amazon
 Amazon Seller (EUA),GLOBAL_TECH,0.9,amazon seller (eua)
 Amazon Web Services (AWS),GLOBAL_TECH,0.9,amazon web services
@@ -499,3 +497,5 @@ Amicar,NEEDS_COMPANY_MAPPING,0.4,amicar
 Amicci,LANGUAGE_PORTUGUESE_MARKET,0.65,amicci
 Amigo Cuida,NEEDS_COMPANY_MAPPING,0.4,amigo cuida
 Amil,NEEDS_COMPANY_MAPPING,0.4,amil
+Amoedo Distribuidora,LANGUAGE_PORTUGUESE_MARKET,0.65,amoedo distribuidora
+AmorSaúde Brasil,BRAZIL_CONFIRMED,0.85,amorsaúde

@@ -1,5 +1,5 @@
 # KPI Dashboard Report
-> Generated: **September 21, 2026**
+> Generated: **September 28, 2026**
 
 ## Key Scores
 
