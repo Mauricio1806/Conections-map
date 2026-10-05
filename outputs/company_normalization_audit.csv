@@ -50,10 +50,12 @@
 7COMm - People and tech to transform,GLOBAL_OPPORTUNITY,0.55,7comm - people and to transform
 7IM,LOW_VALUE_UNRESOLVED,0.1,7im
 80 20 Marketing,LANGUAGE_PORTUGUESE_MARKET,0.65,80 20 marketing
+8020REI,NEEDS_COMPANY_MAPPING,0.4,8020rei
 8R,GLOBAL_OPPORTUNITY,0.55,8r
 99,BRAZIL_CONFIRMED,0.9,99
 99Freelas,BRAZIL_CONFIRMED,0.85,99freelas
 99Hunters,GLOBAL_STAFFING,0.9,99hunters
+99ads,GLOBAL_OPPORTUNITY,0.55,99ads
 99minutos.com,LATAM_USD_CONFIRMED,0.85,99minutos.com
 9Solutions AI,GLOBAL_OPPORTUNITY,0.55,9solutions ai
 <codara />,GLOBAL_OPPORTUNITY,0.55,<codara />
@@ -172,6 +174,7 @@ AR Consultoria,BRAZIL_CONFIRMED,0.85,ar
 ARAXÁ SOLAR,LANGUAGE_PORTUGUESE_MARKET,0.65,araxá solar
 ARC2Digital,GLOBAL_TECH,0.75,arc2digital
 ARCA Mobility as a Service,NEEDS_COMPANY_MAPPING,0.4,arca mobility as a
+ARCH LATAM,LATAM_USD_CONFIRMED,0.85,arch
 ARCLYTICS,GLOBAL_OPPORTUNITY,0.55,arclytics
 ARGENTA,LANGUAGE_PORTUGUESE_MARKET,0.65,argenta
 ARIMANY Selecció de Talent,NEEDS_COMPANY_MAPPING,0.4,arimany selecció de talent
@@ -197,7 +200,9 @@ ASSERTIZE,NEEDS_COMPANY_MAPPING,0.4,assertize
 ASSOCIAÇÃO DE CONSELHEIROS DO BRASIL,BRAZIL_CONFIRMED,0.85,associação de conselheiros do
 ASSURANCE IT,GLOBAL_OPPORTUNITY,0.55,assurance it
 ASUG Brasil,BRAZIL_CONFIRMED,0.85,asug
+ASURIS,BRAZIL_CONFIRMED,0.85,asuris
 ASYMA.AI,GLOBAL_OPPORTUNITY,0.55,asyma.ai
+AT&T,LANGUAGE_PORTUGUESE_MARKET,0.65,at&t
 ATALIAN,NEEDS_COMPANY_MAPPING,0.4,atalian
 ATCA - Associação Amigos do Teatro Castro Alves,BRAZIL_CONFIRMED,0.85,atca - associação amigos do teatro castro alves
 ATE OUTSOURCING,GLOBAL_STAFFING,0.9,ate outsourcing
@@ -220,6 +225,7 @@ AVANT Gestão Financeira,LANGUAGE_PORTUGUESE_MARKET,0.65,avant gestão financeir
 AVANTTi,GLOBAL_OPPORTUNITY,0.55,avantti
 AVEDIAN,NEEDS_COMPANY_MAPPING,0.4,avedian
 AVirtual,GLOBAL_OPPORTUNITY,0.55,avirtual
+AWA Advogados,GLOBAL_OPPORTUNITY,0.55,awa advogados
 AWS User Group Passo Fundo,GLOBAL_TECH,0.9,aws user passo fundo
 AXA Global Business Services (AXA GBS),NEEDS_COMPANY_MAPPING,0.4,axa business (axa gbs)
 AXA Konzern AG,GLOBAL_OPPORTUNITY,0.55,axa konzern
@@ -231,7 +237,6 @@ AYESA BRASIL,BRAZIL_CONFIRMED,0.85,ayesa
 AYNITECH GROUP,GLOBAL_TECH,0.75,aynitech
 Aafje,GLOBAL_OPPORTUNITY,0.55,aafje
 Aarin,NEEDS_COMPANY_MAPPING,0.4,aarin
-Aarohaan Sales and Services,NEEDS_COMPANY_MAPPING,0.4,aarohaan sales and
 Aays,NEEDS_COMPANY_MAPPING,0.4,aays
 Abalia,GLOBAL_OPPORTUNITY,0.55,abalia
 Abbott,NEEDS_COMPANY_MAPPING,0.4,abbott
@@ -251,12 +256,14 @@ Accelya,GLOBAL_OPPORTUNITY,0.55,accelya
 Accelya Group,GLOBAL_OPPORTUNITY,0.55,accelya
 Accendra Health,GLOBAL_OPPORTUNITY,0.55,accendra health
 Accenture,US_CANADA_CONFIRMED,0.95,accenture
+Accenture Argentina,GLOBAL_CONSULTING,0.9,accenture argentina
 Accenture Baltics,GLOBAL_CONSULTING,0.9,accenture baltics
 Accenture Brasil,GLOBAL_CONSULTING,0.9,accenture
 Accenture Chile,GLOBAL_CONSULTING,0.9,accenture chile
 Accenture Colombia,GLOBAL_CONSULTING,0.9,accenture colombia
 Accenture DACH,GLOBAL_CONSULTING,0.9,accenture dach
 Accenture España,GLOBAL_CONSULTING,0.9,accenture españa
+Accenture México,GLOBAL_CONSULTING,0.9,accenture méxico
 Accenture Song,GLOBAL_CONSULTING,0.9,accenture song
 Accenture do Brasil,GLOBAL_CONSULTING,0.85,accenture do
 Accerth Serviços e Tecnologia Ltda,LANGUAGE_PORTUGUESE_MARKET,0.65,accerth serviços e tecnologia
@@ -417,6 +424,7 @@ Allen Control Systems,GLOBAL_OPPORTUNITY,0.55,allen control systems
 Allgemeine Rentenanstalt Pensionskasse,NEEDS_COMPANY_MAPPING,0.4,allgemeine rentenanstalt pensionskasse
 Alliance Instalaciones y Mantenimientos,NEEDS_COMPANY_MAPPING,0.4,alliance instalaciones y mantenimientos
 Alliance Recruitment Agency,GLOBAL_STAFFING,0.9,alliance recruitment agency
+AllianceIT Inc,LATAM_USD_LIKELY,0.66,allianceit
 Alliant Insurance Services,NEEDS_COMPANY_MAPPING,0.4,alliant insurance
 Allianz Partners,BRAZIL_CONFIRMED,0.85,allianz partners
 Allianz Technology,EUROPE_CONFIRMED,0.9,allianz
@@ -460,7 +468,6 @@ Alvoar Lácteos,NEEDS_COMPANY_MAPPING,0.4,alvoar lácteos
 Always Fit Suplementos,NEEDS_COMPANY_MAPPING,0.4,always fit suplementos
 AmRest,GLOBAL_OPPORTUNITY,0.55,amrest
 AmSpec Group,NEEDS_COMPANY_MAPPING,0.4,amspec
-Amadeus FiRe,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amadeus Fire,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amadeus Fire Group,SPAIN_EU_CONFIRMED,0.85,amadeus fire
 Amaggi,LANGUAGE_PORTUGUESE_MARKET,0.65,amaggi
@@ -492,10 +499,3 @@ Americar,GLOBAL_OPPORTUNITY,0.55,americar
 Americas,BRAZIL_CONFIRMED,0.85,americas
 Amey,GLOBAL_CONSULTING,0.9,amey
 Amgen,NEEDS_COMPANY_MAPPING,0.4,amgen
-Amherst,NEEDS_COMPANY_MAPPING,0.4,amherst
-Amicar,NEEDS_COMPANY_MAPPING,0.4,amicar
-Amicci,LANGUAGE_PORTUGUESE_MARKET,0.65,amicci
-Amigo Cuida,NEEDS_COMPANY_MAPPING,0.4,amigo cuida
-Amil,NEEDS_COMPANY_MAPPING,0.4,amil
-Amoedo Distribuidora,LANGUAGE_PORTUGUESE_MARKET,0.65,amoedo distribuidora
-AmorSaúde Brasil,BRAZIL_CONFIRMED,0.85,amorsaúde

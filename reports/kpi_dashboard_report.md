@@ -1,5 +1,5 @@
 # KPI Dashboard Report
-> Generated: **September 28, 2026**
+> Generated: **October 05, 2026**
 
 ## Key Scores
 
@@ -41,7 +41,7 @@ They simply have no geographic keyword in company or title.
 | Talent Acquisition | 0 |
 | Hiring Managers | 0 |
 | Data Leaders | 0 |
-| Data Peers | 769 |
+| Data Peers | 766 |
 
 To reduce UNKNOWN: fill `outputs/company_market_mapping_template.csv`.
 
