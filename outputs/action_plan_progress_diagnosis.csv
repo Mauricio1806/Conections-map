@@ -1,4 +1,5 @@
 ﻿rule,message
 new_connections_above_target,Connection growth is above weekly pace. Keep quality control.
+europe_share_below_5,"Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus."
 needs_my_response_high,Reply queue is becoming a bottleneck. Clear Needs My Response before adding more new contacts.
 classification_backlog_increased,Keep the 90/10 outreach strategy. Spend Sunday mapping the top new unresolved companies before planning next week.
