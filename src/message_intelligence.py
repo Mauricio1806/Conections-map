@@ -1034,7 +1034,18 @@ def _reply_reason_short(process_state: str, reply_obligation: str, stale: bool, 
     isn't) in the queue — never quotes raw message text."""
     if stale and reply_obligation in ("NONE", "AMBIGUOUS") and last_sender_type == "other":
         return "Last sender was them, but conversation appears stale and low-value."
+    # The state-keyed text below assumes they spoke last (e.g. "no reply was
+    # sent after that") — wrong when I already answered and nothing is owed.
+    if last_sender_type == "me" and reply_obligation == "NONE" and process_state in _REPLIED_LAST_REASON_BY_STATE:
+        return _REPLIED_LAST_REASON_BY_STATE[process_state]
     return _REPLY_REASON_BY_STATE.get(process_state, "No clear actionable signal found.")
+
+
+_REPLIED_LAST_REASON_BY_STATE = {
+    "CV_REQUESTED":       "Recruiter asked for CV and you replied last — awaiting their next step.",
+    "INTERVIEW_PIPELINE": "Interview process signal found and you replied last — follow up if they go quiet.",
+    "ACTIVE_OPPORTUNITY": "Recent opportunity signal and you replied last — follow up if they go quiet.",
+}
 
 
 def _action_priority_reason(action_urgency: str, terminal: bool, recruiter_flag: bool) -> str:

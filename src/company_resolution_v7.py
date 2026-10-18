@@ -454,6 +454,42 @@ def _apply_persona_role_cohort_fallback(df: pd.DataFrame, needs_mask: pd.Series,
     return resolved_count
 
 
+# Bare "recruitment"/"recruiting" in a company NAME marks a recruitment agency
+# (category only — no geography/USD claim). Guarded against recruitment-
+# marketing agencies and recruiting-software vendors.
+RECRUITMENT_NAME_KW = ("recruitment", "recruiting")
+RECRUITMENT_NAME_EXCLUDE = ("marketing", "software", "e-recruit", "platform")
+
+
+def _is_recruitment_agency_name(company: str) -> bool:
+    cl = (company or "").lower()
+    return any(kw in cl for kw in RECRUITMENT_NAME_KW) and not any(ex in cl for ex in RECRUITMENT_NAME_EXCLUDE)
+
+
+def _apply_recruitment_name_fallback(df: pd.DataFrame, needs_mask: pd.Series) -> int:
+    """FINAL PASS — runs only on the residual left after propagation, message-
+    aggregate and cohort passes, so it never overrides market evidence."""
+    resolved_count = 0
+    for idx in df.index[needs_mask]:
+        if not _is_recruitment_agency_name(str(df.at[idx, "company_clean"] or "")):
+            continue
+        reason = "company category: GLOBAL_STAFFING (recruitment agency name)"
+        df.at[idx, "opportunity_market_v5"]        = GLOBAL_STAFFING
+        df.at[idx, "opportunity_bucket"]            = GLOBAL_STAFFING
+        df.at[idx, "opportunity_confidence"]         = 0.55
+        df.at[idx, "opportunity_reason"]             = reason
+        df.at[idx, "needs_manual_company_mapping"]   = False
+        df.at[idx, "company_resolution_source"]      = "recruitment_name_keyword"
+        df.at[idx, "company_resolution_confidence"]  = 0.55
+        df.at[idx, "manual_review_required"]         = True
+        df.at[idx, "resolution_pass"]                = "pass9_recruitment_name_keyword"
+        df.at[idx, "resolution_source"]              = "recruitment_name_keyword"
+        df.at[idx, "resolution_confidence"]          = 0.55
+        df.at[idx, "resolution_reason"]              = reason
+        resolved_count += 1
+    return resolved_count
+
+
 def _resolution_bucket_v7(reason: str, source: str) -> str:
     r = (reason or "").lower()
     s = (source or "").lower()
@@ -541,7 +577,10 @@ def apply_company_resolution_v7(df: pd.DataFrame, v6_summary: dict | None = None
         if delta == 0:
             break
 
-    needs_after = int((df["opportunity_market_v5"] == NEEDS_MAPPING).sum())
+    n_recruitment = _apply_recruitment_name_fallback(df, df["opportunity_market_v5"] == NEEDS_MAPPING)
+    logger.info(f"  V7 final pass: {n_recruitment} residual contact(s) at recruitment-agency-named companies -> GLOBAL_STAFFING")
+
+    needs_after =int((df["opportunity_market_v5"] == NEEDS_MAPPING).sum())
     resolved_total = needs_before - needs_after
     pct_before = round(needs_before / total * 100, 1) if total else 0.0
     pct_after  = round(needs_after  / total * 100, 1) if total else 0.0

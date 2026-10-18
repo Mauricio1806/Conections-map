@@ -4,11 +4,11 @@ Analytics Engineer,US_CANADA_NEARSHORE,1
 BI Analyst,UNKNOWN,11
 BI Analyst,BRAZIL,1
 BI Analyst,US_CANADA_NEARSHORE,1
-Consultant,UNKNOWN,619
+Consultant,UNKNOWN,629
 Consultant,EUROPE,41
 Consultant,BRAZIL,30
-Consultant,LATAM_USD,18
-Consultant,US_CANADA_NEARSHORE,18
+Consultant,LATAM_USD,22
+Consultant,US_CANADA_NEARSHORE,19
 Consultant,SPAIN_EU,13
 Data Analyst,UNKNOWN,208
 Data Analyst,BRAZIL,23
@@ -16,72 +16,72 @@ Data Analyst,US_CANADA_NEARSHORE,6
 Data Analyst,LATAM_USD,2
 Data Analyst,SPAIN_EU,2
 Data Analyst,EUROPE,1
-Data Engineer,UNKNOWN,451
+Data Engineer,UNKNOWN,449
 Data Engineer,BRAZIL,101
 Data Engineer,LATAM_USD,11
 Data Engineer,US_CANADA_NEARSHORE,10
 Data Engineer,EUROPE,7
 Data Engineer,SPAIN_EU,3
-Data Engineering Manager,UNKNOWN,15
+Data Engineering Manager,UNKNOWN,14
 Data Engineering Manager,BRAZIL,3
 Data Engineering Manager,EUROPE,1
 Data Scientist,UNKNOWN,113
-Data Scientist,BRAZIL,18
+Data Scientist,BRAZIL,17
 Data Scientist,LATAM_USD,3
 Data Scientist,US_CANADA_NEARSHORE,3
 Data Scientist,EUROPE,2
 Data Scientist,SPAIN_EU,1
-Director,UNKNOWN,382
+Director,UNKNOWN,381
 Director,BRAZIL,48
-Director,LATAM_USD,37
+Director,LATAM_USD,38
 Director,EUROPE,29
 Director,US_CANADA_NEARSHORE,9
-Director,SPAIN_EU,7
+Director,SPAIN_EU,6
 Engineering Manager,UNKNOWN,1
-Executive,UNKNOWN,330
-Executive,BRAZIL,18
+Executive,UNKNOWN,331
+Executive,BRAZIL,17
 Executive,EUROPE,7
 Executive,LATAM_USD,7
 Executive,US_CANADA_NEARSHORE,4
 Executive,SPAIN_EU,2
-Founder,UNKNOWN,188
-Founder,EUROPE,4
+Founder,UNKNOWN,190
+Founder,EUROPE,5
 Founder,BRAZIL,2
 Founder,US_CANADA_NEARSHORE,1
-HR,UNKNOWN,1184
-HR,BRAZIL,71
+HR,UNKNOWN,1196
+HR,BRAZIL,73
 HR,LATAM_USD,47
-HR,US_CANADA_NEARSHORE,17
-HR,SPAIN_EU,13
-HR,EUROPE,12
-Head of Data,UNKNOWN,64
+HR,US_CANADA_NEARSHORE,16
+HR,SPAIN_EU,14
+HR,EUROPE,11
+Head of Data,UNKNOWN,65
 Head of Data,BRAZIL,11
 Head of Data,EUROPE,4
 Head of Data,US_CANADA_NEARSHORE,2
 Head of Data,LATAM_USD,1
-Hiring Manager,UNKNOWN,47
-Hiring Manager,BRAZIL,24
+Hiring Manager,UNKNOWN,46
+Hiring Manager,BRAZIL,23
 Hiring Manager,EUROPE,7
 Hiring Manager,US_CANADA_NEARSHORE,4
 Machine Learning / AI,UNKNOWN,9
 Machine Learning / AI,BRAZIL,3
 Machine Learning / AI,EUROPE,3
 Machine Learning / AI,LATAM_USD,1
-Operations,UNKNOWN,69
-Operations,US_CANADA_NEARSHORE,7
+Operations,UNKNOWN,70
+Operations,US_CANADA_NEARSHORE,8
 Operations,BRAZIL,6
 Operations,LATAM_USD,6
 Operations,EUROPE,4
-Other,UNKNOWN,4254
+Other,UNKNOWN,4308
 Other,BRAZIL,489
-Other,LATAM_USD,204
-Other,EUROPE,160
-Other,US_CANADA_NEARSHORE,149
-Other,SPAIN_EU,70
+Other,LATAM_USD,207
+Other,EUROPE,159
+Other,US_CANADA_NEARSHORE,150
+Other,SPAIN_EU,71
 Partner,UNKNOWN,20
 Partner,LATAM_USD,1
 Partner,SPAIN_EU,1
-Product,UNKNOWN,63
+Product,UNKNOWN,62
 Product,BRAZIL,17
 Product,US_CANADA_NEARSHORE,3
 Product,EUROPE,2
@@ -92,27 +92,27 @@ Project / Program Manager,US_CANADA_NEARSHORE,7
 Project / Program Manager,EUROPE,6
 Project / Program Manager,LATAM_USD,4
 Project / Program Manager,SPAIN_EU,2
-Recruiter,UNKNOWN,1390
-Recruiter,LATAM_USD,59
-Recruiter,BRAZIL,46
-Recruiter,US_CANADA_NEARSHORE,34
-Recruiter,EUROPE,33
+Recruiter,UNKNOWN,1418
+Recruiter,LATAM_USD,64
+Recruiter,BRAZIL,48
+Recruiter,US_CANADA_NEARSHORE,36
+Recruiter,EUROPE,35
 Recruiter,SPAIN_EU,12
-Software Engineer,UNKNOWN,107
-Software Engineer,BRAZIL,20
+Software Engineer,UNKNOWN,106
+Software Engineer,BRAZIL,22
 Software Engineer,US_CANADA_NEARSHORE,6
 Software Engineer,EUROPE,4
 Software Engineer,LATAM_USD,3
 Software Engineer,SPAIN_EU,2
-Sourcer,UNKNOWN,74
+Sourcer,UNKNOWN,76
 Sourcer,EUROPE,5
 Sourcer,US_CANADA_NEARSHORE,4
 Sourcer,LATAM_USD,3
 Sourcer,BRAZIL,2
 Sourcer,SPAIN_EU,1
-Talent Acquisition,UNKNOWN,1247
-Talent Acquisition,LATAM_USD,113
-Talent Acquisition,BRAZIL,46
+Talent Acquisition,UNKNOWN,1287
+Talent Acquisition,LATAM_USD,117
+Talent Acquisition,BRAZIL,49
 Talent Acquisition,SPAIN_EU,37
 Talent Acquisition,EUROPE,35
-Talent Acquisition,US_CANADA_NEARSHORE,24
+Talent Acquisition,US_CANADA_NEARSHORE,23

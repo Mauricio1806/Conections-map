@@ -192,3 +192,18 @@ def test_segment_rank_matches_requested_priority_order():
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))
+
+
+def test_reply_reason_does_not_claim_unanswered_when_i_replied_last():
+    """A CV-request / interview thread where I sent the last message owes no
+    reply — its reason text must not say 'no reply was sent after that'."""
+    from src.message_intelligence import _reply_reason_short
+
+    replied = _reply_reason_short("CV_REQUESTED", "NONE", False, "me")
+    assert "no reply was sent" not in replied
+    assert "you replied last" in replied
+    assert "you replied last" in _reply_reason_short("INTERVIEW_PIPELINE", "NONE", False, "me")
+
+    # Unchanged when they spoke last and a reply is genuinely owed.
+    owed = _reply_reason_short("CV_REQUESTED", "LIKELY", False, "other")
+    assert owed == "Recruiter asked for CV and no reply was sent after that."

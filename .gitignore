@@ -140,3 +140,10 @@ logs/
 *.bak
 *.orig
 ~$*
+
+# ─── Generated compatibility artifact — local only ───────────────────────────
+# ~80 MB full JSON consumed only by local pipeline stages (weekly_kpi_delta.py,
+# action_plan_progress.py, generate_static_dashboard.py, weekly baseline stash).
+# GitHub Pages serves the split files under docs/assets/ instead. Untracking it
+# does NOT remove it from historical commits.
+outputs/public_dashboard_data.json
