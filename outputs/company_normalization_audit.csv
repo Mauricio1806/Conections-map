@@ -2,7 +2,7 @@
 """Uzbek Industrial and Construction Bank"" JSCB",NEEDS_COMPANY_MAPPING,0.4,"""uzbek industrial and construction bank"" jscb"
 #ONO (Open to New Opportunities),NEEDS_COMPANY_MAPPING,0.4,#ono (open to new opportunities)
 &V Recruitment,GLOBAL_STAFFING,0.55,&v recruitment
-(GSH) Grupo Soluciones Horizonte,LATAM_USD_LIKELY,0.6,(gsh) grupo soluciones horizonte
+(GSH) Grupo Soluciones Horizonte,BRAZIL_CONFIRMED,0.85,(gsh) grupo soluciones horizonte
 ++hellohello,NEEDS_COMPANY_MAPPING,0.4,++hellohello
 +Talent,LATAM_USD_CONFIRMED,0.85,+talent
 -,LOW_VALUE_UNRESOLVED,0.1,
@@ -59,7 +59,6 @@
 99ads,GLOBAL_OPPORTUNITY,0.55,99ads
 99minutos.com,LATAM_USD_CONFIRMED,0.85,99minutos.com
 9Solutions AI,GLOBAL_OPPORTUNITY,0.55,9solutions ai
-<codara />,GLOBAL_OPPORTUNITY,0.55,<codara />
 @Hyatt Ziva Madeira Resort Spa & Marina,NEEDS_COMPANY_MAPPING,0.4,@hyatt ziva madeira resort & marina
 A GERADORA,LANGUAGE_PORTUGUESE_MARKET,0.65,a geradora
 A Humtech agora é Humgroup,GLOBAL_TECH,0.75,a humtech agora é humgroup
@@ -124,9 +123,9 @@ AILY LABS,GLOBAL_OPPORTUNITY,0.55,aily labs
 AIMZ,GLOBAL_TECH,0.75,aimz
 AION IT - Inteligência Tecnológica,GLOBAL_TECH,0.75,aion it - inteligência tecnológica
 AIPERIA,GLOBAL_TECH,0.75,aiperia
+AIT Vanguardia Tecnológica,GLOBAL_OPPORTUNITY,0.55,ait vanguardia tecnológica
 AK Business Intelligence LLC,NEEDS_COMPANY_MAPPING,0.4,ak business intelligence
 AL Consultoria Tech | Recrutamento Estratégico Tech,GLOBAL_OPPORTUNITY,0.55,al | recrutamento estratégico
-ALB Representações,LANGUAGE_PORTUGUESE_MARKET,0.65,alb representações
 ALFA Consultoria - SAP Gold Partner,GLOBAL_TECH,0.9,alfa - sap gold partner
 ALFA Educação,LANGUAGE_PORTUGUESE_MARKET,0.65,alfa educação
 ALGORTA S.A,LATAM_USD_CONFIRMED,0.85,algorta
@@ -153,8 +152,8 @@ AMM Enterprise GmbH,GLOBAL_OPPORTUNITY,0.55,amm enterprise
 AMM Group,GLOBAL_OPPORTUNITY,0.55,amm
 AMP Digital Performance,GLOBAL_TECH,0.75,amp performance
 AMS,LOW_VALUE_UNRESOLVED,0.1,ams
+AMX CONTENIDO / CMI,NEEDS_COMPANY_MAPPING,0.4,amx contenido / cmi
 ANBIMA,BRAZIL_CONFIRMED,0.85,anbima
-"AND, ALL",LANGUAGE_PORTUGUESE_MARKET,0.65,"and, all"
 "ANP - Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",NEEDS_COMPANY_MAPPING,0.4,"anp - agência nacional do petróleo, gás natural e biocombustíveis"
 ANTTECHS,GLOBAL_OPPORTUNITY,0.55,anttechs
 ANWB,NEEDS_COMPANY_MAPPING,0.4,anwb
@@ -210,7 +209,7 @@ ATCA - Associação Amigos do Teatro Castro Alves,BRAZIL_CONFIRMED,0.85,atca - a
 ATE OUTSOURCING,GLOBAL_STAFFING,0.9,ate outsourcing
 ATL Technology,GLOBAL_TECH,0.75,atl
 ATLANTYX,GLOBAL_OPPORTUNITY,0.55,atlantyx
-ATOMS,LATAM_USD_CONFIRMED,0.85,atoms
+ATOMS,GLOBAL_OPPORTUNITY,0.55,atoms
 ATON IT,GLOBAL_OPPORTUNITY,0.55,aton it
 ATOSS Software SE,GLOBAL_CONSULTING,0.9,atoss software se
 ATRA,BRAZIL_CONFIRMED,0.85,atra
@@ -354,18 +353,19 @@ AgileEngine,LATAM_USD_CONFIRMED,0.95,agileengine
 AgileOne,GLOBAL_OPPORTUNITY,0.55,agileone
 Agir,NEEDS_COMPANY_MAPPING,0.4,agir
 Agriness,LANGUAGE_PORTUGUESE_MARKET,0.65,agriness
-Agro Pitangueira,NEEDS_COMPANY_MAPPING,0.4,agro pitangueira
 AgroHunters Latam,LATAM_USD_CONFIRMED,0.85,agrohunters
 Agrobens,GLOBAL_OPPORTUNITY,0.55,agrobens
 Agrofel,NEEDS_COMPANY_MAPPING,0.4,agrofel
 Agromai,GLOBAL_OPPORTUNITY,0.55,agromai
 Agrosuper,BRAZIL_CONFIRMED,0.85,agrosuper
 Agroveterinaria La Pradera,LATAM_USD_CONFIRMED,0.85,agroveterinaria la pradera
+"Agência EST-POLSKA, localizada na Polônia! 🇵🇱",BRAZIL_CONFIRMED,0.85,"agência est-polska, localizada na polônia! 🇵🇱"
 Agência FG,LANGUAGE_PORTUGUESE_MARKET,0.65,agência fg
 Agência Ginga,GLOBAL_OPPORTUNITY,0.55,agência ginga
 Agência LK,NEEDS_COMPANY_MAPPING,0.4,agência lk
 Agência liveSEO,LANGUAGE_PORTUGUESE_MARKET,0.65,agência liveseo
 Ahmedia,NEEDS_COMPANY_MAPPING,0.4,ahmedia
+AiQO,GLOBAL_OPPORTUNITY,0.55,aiqo
 AiVA,GLOBAL_OPPORTUNITY,0.55,aiva
 Aiden,GLOBAL_TECH,0.75,aiden
 Ailytics,GLOBAL_OPPORTUNITY,0.55,ailytics
@@ -395,7 +395,7 @@ Alabama Solutions,GLOBAL_OPPORTUNITY,0.55,alabama
 Alapai Global Holdings LLC,US_CANADA_CONFIRMED,0.85,alapai
 Albano Cozzuol S.A,LANGUAGE_PORTUGUESE_MARKET,0.65,albano cozzuol
 Albert Heijn,NEEDS_COMPANY_MAPPING,0.4,albert heijn
-Alcor,GLOBAL_OPPORTUNITY,0.55,alcor
+Alcor,GLOBAL_OPPORTUNITY,0.72,alcor
 Aldak Tecnologia,BRAZIL_CONFIRMED,0.85,aldak tecnologia
 Aldeas Infantiles SOS Bolivia,BRAZIL_CONFIRMED,0.85,aldeas infantiles sos bolivia
 Alegra,GLOBAL_OPPORTUNITY,0.55,alegra
@@ -427,8 +427,8 @@ AllCloud,GLOBAL_OPPORTUNITY,0.55,allcloud
 AllPeople,GLOBAL_OPPORTUNITY,0.55,allpeople
 Allen Control Systems,GLOBAL_OPPORTUNITY,0.55,allen control systems
 Allgemeine Rentenanstalt Pensionskasse,NEEDS_COMPANY_MAPPING,0.4,allgemeine rentenanstalt pensionskasse
+AlliTY,LANGUAGE_PORTUGUESE_MARKET,0.65,allity
 Alliance Instalaciones y Mantenimientos,NEEDS_COMPANY_MAPPING,0.4,alliance instalaciones y mantenimientos
-Alliance Recruitment Agency,GLOBAL_STAFFING,0.9,alliance recruitment agency
 AllianceIT Inc,LATAM_USD_LIKELY,0.66,allianceit
 Alliant Insurance Services,NEEDS_COMPANY_MAPPING,0.4,alliant insurance
 Allianz Partners,BRAZIL_CONFIRMED,0.85,allianz partners
@@ -492,10 +492,10 @@ Ambev Global Tech,BRAZIL_CONFIRMED,0.9,ambev
 Ambev Tech,BRAZIL_CONFIRMED,0.9,ambev
 Ambientare - Soluções em Meio Ambiente,LANGUAGE_PORTUGUESE_MARKET,0.65,ambientare - soluções em meio ambiente
 Ambipar,SPAIN_EU_LIKELY,0.6,ambipar
-Amcham-Brasil,BRAZIL_CONFIRMED,0.85,amcham
 Amco,GLOBAL_OPPORTUNITY,0.55,amco
 Amcor,NEEDS_COMPANY_MAPPING,0.4,amcor
-Amdocs,NEEDS_COMPANY_MAPPING,0.4,amdocs
+Amdocs,GLOBAL_OPPORTUNITY,0.55,amdocs
 Amefruits,NEEDS_COMPANY_MAPPING,0.4,amefruits
 Amenitiz,NEEDS_COMPANY_MAPPING,0.4,amenitiz
 American Express Global Business Travel,GLOBAL_OPPORTUNITY,0.55,american express business travel
+American IT Systems,GLOBAL_OPPORTUNITY,0.55,american it systems

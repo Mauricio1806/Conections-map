@@ -919,7 +919,7 @@ SAFE_MAPPING_WORKBENCH_SUMMARY_KEYS = {
     "candidate_count", "needs_mapping_total", "workbench_candidates",
     "with_suggested_bucket", "followed_needing_review", "recruiter_ta_candidates",
     "usd_latam_suggested", "staffing_suggested", "global_opportunity_suggested",
-    "top50_impact",
+    "top50_impact", "placeholder_employer_contacts",
 }
 SAFE_MAPPING_WORKBENCH_ROW_COLS = {
     "company_name", "normalized_company", "current_bucket", "suggested_bucket",

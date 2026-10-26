@@ -45,6 +45,10 @@ PRIVATE_OUTPUT_NAMES = {
     "outputs/untapped_outreach_backlog.csv",
     "outputs/untapped_weekly_queue.csv",
     "outputs/untapped_high_value.csv",
+    # Message-derived person-level review queues (conversation states per
+    # named contact) — local-only, see .gitignore.
+    "outputs/conversation_state_review_queue.csv",
+    "outputs/message_review_queue.csv",
 }
 
 

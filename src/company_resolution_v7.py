@@ -62,7 +62,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.company_normalizer import normalize, canonical_display, tokens, COMPANY_ALIASES
+from src.company_normalizer import normalize, canonical_display, tokens, COMPANY_ALIASES, pooling_key
 from src.company_dictionary_enrichment import (
     LATAM_USD_LIKELY, US_CANADA_LIKELY, SPAIN_EU_LIKELY,
     GLOBAL_STAFFING, GLOBAL_CONSULTING, GLOBAL_TECH, GLOBAL_OPPORTUNITY,
@@ -184,7 +184,7 @@ def _build_fuzzy_clusters(df: pd.DataFrame) -> tuple[dict, list]:
 
 
 def _effective_key(company: str, fuzzy_map: dict) -> str:
-    key = normalize(company)
+    key = pooling_key(company)
     return fuzzy_map.get(key, key)
 
 
@@ -290,7 +290,7 @@ def _build_company_message_aggregate(df: pd.DataFrame) -> dict:
     for _, row in df.iterrows():
         url = str(row.get("url", "") or "").strip().rstrip("/").lower()
         if url:
-            url_to_key[url] = normalize(str(row.get("company_clean", "") or ""))
+            url_to_key[url] = pooling_key(str(row.get("company_clean", "") or ""))
 
     agg: dict[str, dict] = {}
     for conv_id, group in msgs.groupby("conversation_id"):
@@ -365,7 +365,7 @@ def _apply_company_message_aggregate_evidence(df: pd.DataFrame, needs_mask: pd.S
     resolved_count = 0
     remaining = df[needs_mask]
     for idx, row in remaining.iterrows():
-        key = normalize(str(row.get("company_clean", "") or ""))
+        key = pooling_key(str(row.get("company_clean", "") or ""))
         if not key or key not in company_agg:
             continue
         b = company_agg[key]
@@ -409,7 +409,7 @@ def _apply_persona_role_cohort_fallback(df: pd.DataFrame, needs_mask: pd.Series,
     if remaining.empty:
         return 0
 
-    company_key_all = df["company_clean"].fillna("").apply(normalize)
+    company_key_all = df["company_clean"].fillna("").apply(pooling_key)
     persona_all = df.get("persona", pd.Series(index=df.index, dtype=object)).fillna("")
 
     for idx, row in remaining.iterrows():

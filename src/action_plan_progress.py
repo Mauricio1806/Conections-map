@@ -668,7 +668,8 @@ def build_diagnosis(network: dict, strategic: dict, leads: dict, untapped: dict,
                                   "Keep Europe as positioning, not main income funnel."})
     if europe_share is not None and europe_share < 0.05:
         rules.append({"rule": "europe_share_below_5",
-                       "message": "Add a small Spain/EU exploratory block, but do not reduce LATAM/USD focus."})
+                       "message": "Advisory: LATAM/USD allocation is healthy. Optionally add a small Spain/EU "
+                                  "exploratory block for 2027 positioning — do not reduce LATAM/USD focus."})
 
     if leads["needs_my_response_current"] > NEEDS_RESPONSE_HIGH_THRESHOLD:
         rules.append({"rule": "needs_my_response_high",
@@ -695,7 +696,10 @@ def build_diagnosis(network: dict, strategic: dict, leads: dict, untapped: dict,
 def overall_diagnosis_status(diagnosis_rules: list, network: dict, baseline_available: bool) -> str:
     if not baseline_available:
         return "BASELINE_ONLY"
-    rebalance_rules = {"primary_share_below_80", "europe_share_above_20", "europe_share_below_5"}
+    # europe_share_below_5 is advisory only: the two shares sum to 1, so a
+    # low Spain/EU share means LATAM/USD (the primary objective) is >95% —
+    # never a reason to rebalance away from it.
+    rebalance_rules = {"primary_share_below_80", "europe_share_above_20"}
     if any(r["rule"] in rebalance_rules for r in diagnosis_rules):
         return "REBALANCE_NEEDED"
     if network["new_connections_status"] == "BELOW_TARGET":

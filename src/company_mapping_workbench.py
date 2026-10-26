@@ -34,7 +34,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from src.company_normalizer import normalize as normalize_company
+from src.company_normalizer import normalize as normalize_company, is_placeholder_company
 from src.company_dictionary_enrichment import NEEDS_MAPPING
 
 logger = logging.getLogger(__name__)
@@ -342,7 +342,12 @@ def run_company_mapping_workbench(df: pd.DataFrame) -> dict:
     msgs_key = _norm_key_col(msgs, "company_clean")
 
     # ── Aggregate per candidate company ───────────────────────────────────────
-    grouped = needs_df.groupby("company_norm")
+    # Self-employment / undisclosed-employer placeholders ("Autónomo",
+    # "Freelance", "Confidential") are not mappable companies — one override
+    # would assign every unrelated freelancer the same market. Counted, not ranked.
+    placeholder_mask = needs_df["company_clean"].fillna("").apply(is_placeholder_company)
+    placeholder_contacts = int(placeholder_mask.sum())
+    grouped = needs_df[~placeholder_mask].groupby("company_norm")
     rows = []
     existing_overrides = _existing_overrides()
 
@@ -475,6 +480,7 @@ def run_company_mapping_workbench(df: pd.DataFrame) -> dict:
         "staffing_suggested": int((workbench_df["suggested_bucket"] == "GLOBAL_STAFFING").sum()) if not workbench_df.empty else 0,
         "global_opportunity_suggested": int((workbench_df["suggested_bucket"] == "GLOBAL_OPPORTUNITY").sum()) if not workbench_df.empty else 0,
         "top50_impact": int(workbench_df.head(50)["impact_if_mapped"].sum()) if not workbench_df.empty else 0,
+        "placeholder_employer_contacts": placeholder_contacts,
     }
 
     logger.info(

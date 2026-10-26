@@ -44,3 +44,32 @@ def test_fallback_only_touches_residual_needs_mapping():
     assert df.loc[0, "opportunity_market_v5"] == "GLOBAL_STAFFING"
     assert df.loc[1, "opportunity_market_v5"] == "LATAM_USD_LIKELY"   # message evidence kept
     assert df.loc[2, "opportunity_market_v5"] == NEEDS_MAPPING
+
+
+def test_self_employment_placeholders_are_never_pooled_as_one_company():
+    """Unrelated freelancers all listing "Autónomo" / "Self-employed" are not
+    colleagues — they must not share company-level message or cohort evidence."""
+    from src.company_normalizer import is_placeholder_company, pooling_key
+
+    for name in ("Autónomo", "autonomo", "Autônoma", "Self-employed", "Self Employed",
+                 "Freelance", "Confidential", "Stealth Startup", "Independiente"):
+        assert is_placeholder_company(name), name
+        assert pooling_key(name) == "", name
+    for name in ("Stealth IT Consulting", "Freelance Platform Inc", "Progressive Recruitment"):
+        assert not is_placeholder_company(name), name
+        assert pooling_key(name) != "", name
+
+
+def test_placeholder_company_gets_no_cohort_evidence():
+    from src.company_resolution_v7 import _apply_persona_role_cohort_fallback
+
+    df = pd.DataFrame({
+        "company_clean": ["Autónomo"] * 4,
+        "persona": ["Recruiter", "Recruiter", "Recruiter", "Data Engineer"],
+        "opportunity_market_v5": ["GLOBAL_STAFFING"] * 3 + [NEEDS_MAPPING],
+    })
+    df["opportunity_bucket"] = df["opportunity_market_v5"]
+    df["company_category_v4"] = "OTHER"
+    n = _apply_persona_role_cohort_fallback(df, df["opportunity_market_v5"] == NEEDS_MAPPING, 1)
+    assert n == 0
+    assert df.loc[3, "opportunity_market_v5"] == NEEDS_MAPPING

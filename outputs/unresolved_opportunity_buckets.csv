@@ -1,111 +1,116 @@
 ﻿company_clean,connection_count,avg_priority_score,top_persona
 Global Group,10,10.3,Other
+Autônomo,9,12.0,Other
 DIS AG,8,16.4,Other
+Freelance,7,15.4,Consultant
 Shopee,6,17.5,Other
 KWS Group,5,9.8,Other
+Confidential,5,20.0,Data Engineer
 NUMEN,5,21.0,Other
 Natura,5,21.0,Other
-Talent Match,4,18.2,Consultant
-The HEINEKEN Company,4,21.8,Other
-Wellhub,4,24.8,Data Engineer
-banco BV,4,25.0,Product
+banco BV,5,23.6,Product
 Compass UOL,4,22.2,Data Analyst
-Grupo MAG,4,12.0,Other
 Neon,4,21.8,HR
 Kienbaum,4,18.2,Other
 Taylor Hopkinson | Powered by Brunel,4,23.0,Consultant
+Grupo MAG,4,12.0,Other
 SOUTH SYSTEM,4,20.2,HR
 Selbstständig,4,9.0,Other
-Hitachi Energy,3,17.3,Operations
-Equifax I BoaVista,3,20.3,Data Engineer
-Benner,3,19.0,HR
-Kenvue,3,19.3,Other
-Aliare,3,22.3,Other
-El Corte Inglés,3,10.3,Other
-GEP Worldwide,3,17.7,Other
+Self Employed,4,16.8,Other
+Self-employed,4,9.0,Other
+Talent Match,4,18.2,Consultant
+The HEINEKEN Company,4,21.8,Other
+Wellhub,4,24.8,Data Engineer
+AltoQi,3,26.3,Other
 Caterpillar Inc,3,18.0,Other
-K&K Talents,3,14.3,Other
-AXS Logistiek,3,17.7,Other
-Advance Auto Parts,3,27.3,Data Scientist
-Autônoma,3,14.0,Consultant
-Gupy,3,9.3,Other
-Elevation Group,3,16.3,Other
-Novartis,3,25.0,Data Engineer
+Benner,3,19.0,HR
+Brunel,3,19.3,Other
+BEES,3,25.0,Other
+Kenvue,3,19.3,Other
+Falconi,3,21.7,Data Engineer
+El Corte Inglés,3,10.3,Other
+Landeshauptstadt München,3,27.0,Other
+Leega,3,24.7,Data Engineer
+Mondelēz International,3,32.3,Data Analyst
+Datum,3,15.0,Other
+Intellias,3,23.0,HR
+Aliare,3,22.3,Other
 Power Tuning,3,23.3,Other
 Projective Talent | Part of Projective Group,3,11.7,Other
 Ratbacher GmbH,3,17.3,Other
-SAUTER,3,24.7,HR
-Brunel,3,19.3,Other
-Landeshauptstadt München,3,27.0,Other
+SAUTER,3,23.7,HR
+AXS Logistiek,3,17.7,Other
+Hitachi Energy,3,17.3,Operations
+FERCHAU,3,20.0,Other
+GEP Worldwide,3,17.7,Other
 Sem Parar Corpay,3,20.0,Product
-BEES,3,25.0,Other
+Elevation Group,3,16.3,Other
 Stadtwerke München GmbH,3,27.0,Other
 Straumann Group,3,29.3,Other
-Leega,3,24.7,Data Engineer
-Falconi,3,21.7,Data Engineer
-AltoQi,3,26.3,Other
+Gupy,3,9.3,Other
+Advance Auto Parts,3,27.3,Data Scientist
+Equifax I BoaVista,3,20.3,Data Engineer
+Uncover,3,27.3,Data Engineer
 Visagio,3,16.3,Consultant
-FERCHAU,3,20.0,Other
+K&K Talents,3,14.3,Other
 artevie group,3,19.3,Other
-Intellias,3,23.0,HR
+Deel,3,19.7,Operations
 change,3,28.3,Consultant
-Grupo Sabin,2,24.5,HR
-Heidrick & Struggles,2,20.5,Other
-HRA Solutions,2,8.0,Other
-KIS Solutions,2,22.0,Data Engineer
-Elevation Partners,2,22.0,Consultant
-IBGE,2,19.0,Machine Learning / AI
-Amoria Bond,2,25.0,Consultant
-Ana Gaming,2,19.5,HR
-Imperial Brands PLC,2,16.5,HR
-John Deere,2,15.5,HR
-Empacar S.A,2,16.0,HR
-F1RST Tecnologia,2,20.0,Data Engineer
-FALKEN Group Personalberatung GmbH,2,16.0,Other
-FALKENHERZ Group,2,20.0,HR
-Horatio,2,20.0,Other
-Grupo Vorp,2,10.0,Other
-Halliburton,2,28.5,Data Engineer
-Ball Corporation,2,27.0,Data Analyst
+Fiverr,2,21.0,HR
 Bullla,2,11.5,Other
+Bundesagentur für Arbeit,2,13.5,Consultant
+Ball Corporation,2,27.0,Data Analyst
+EBANX,2,32.5,Data Engineer
+JPMorganChase,2,8.0,Other
 Banco BS2,2,17.5,Data Scientist
 Banco Bmg,2,31.0,Data Engineer
 Banco Carrefour,2,21.5,Data Engineer
-Bundesagentur für Arbeit,2,13.5,Consultant
+IKONS Ibérica,2,24.5,Other
 Banco Mercantil,2,11.5,Consultant
-Computer Futures,2,29.0,Consultant
-Caveo,2,26.0,Other
-Aegea Saneamento,2,15.5,HR
 CACEIS,2,16.5,HR
-Horizontal Talent,2,20.0,Other
-Genesys,2,17.5,Data Analyst
-CAST,2,15.0,Other
-Agibank,2,20.5,Data Engineer
-E-IT,2,16.0,Other
-Justos,2,26.0,Data Engineer
-Kuehne+Nagel,2,12.0,Other
-EBANX,2,32.5,Data Engineer
-Fiverr,2,21.0,HR
-CESAR,2,17.5,Data Engineer
-Constructor,2,22.0,Data Analyst
-CGS Consultores Reclutamiento de Personal,2,20.5,Consultant
-Flash,2,21.5,Data Engineer
-GM Financial,2,28.5,Consultant
 Banco Promerica Guatemala,2,13.0,Other
-Deel,2,19.0,Operations
-Fadel Transportes e Logística,2,20.0,Other
+Constructor,2,22.0,Data Analyst
+KIS Solutions,2,22.0,Data Engineer
+CAST,2,15.0,Other
+Flash,2,21.5,Data Engineer
+CESAR,2,17.5,Data Engineer
+Ademicon,2,18.5,Consultant
+GM Financial,2,28.5,Consultant
+CGS Consultores Reclutamiento de Personal,2,20.5,Consultant
+Grupo 3corações,2,27.0,Data Engineer
+Aegea Saneamento,2,15.5,HR
 Equinix,2,15.5,Consultant
-Magnit Global,2,30.5,Other
-Maxxi,2,22.5,Consultant
-Mondelēz International,2,30.0,Data Analyst
-Mycon,2,16.5,HR
-Infinite Computer Solutions,2,23.0,Consultant
+Fadel Transportes e Logística,2,20.0,Other
+John Deere,2,15.5,HR
+Agibank,2,18.5,Data Engineer
 Fami Capital,2,19.0,Other
-Nelson Wilians Advogados,2,24.0,HR
+Forward,2,20.5,HR
+Escola da Nuvem,2,13.5,Other
 GP JOULE Gruppe,2,12.5,HR
+Descomplica,2,16.0,Consultant
+Justos,2,26.0,Data Engineer
+CPQD,2,14.0,Data Analyst
+Kuehne+Nagel,2,12.0,Other
+ClickHouse,2,12.0,Other
+Heidrick & Struggles,2,20.5,Other
+HR Path,2,30.5,Consultant
+Auren Energia,2,9.5,Other
+IBGE,2,19.0,Machine Learning / AI
+Bio-Rad Laboratories,2,11.5,Operations
+Grupo Sabin,2,23.0,HR
+Autônoma,2,13.5,Consultant
+HRA Solutions,2,8.0,Other
+Imperial Brands PLC,2,16.5,HR
+Magnit Global,2,30.5,Other
+AlmapBBDO,2,19.0,Other
+Mycon,2,16.5,HR
+Keeta,2,16.5,Other
+Bluer Tecnologia,2,16.5,Consultant
+Nelson Wilians Advogados,2,24.0,HR
+Elevation Partners,2,22.0,Consultant
 Nexer Enterprise Applications,2,19.0,Other
 Nordex Group,2,19.0,Other
-Auren Energia,2,9.5,Other
+Novartis,2,25.0,Data Engineer
 PPRO,2,34.0,Data Engineer
 PROPOSITO Human Capital Solutions,2,18.5,Consultant
 Palantec GmbH,2,23.0,Consultant
@@ -113,79 +118,79 @@ Parser,2,20.0,Other
 Paytrack,2,24.5,HR
 Peak One GmbH,2,30.0,Other
 Persistent Systems,2,24.5,Other
-Petlove,2,20.5,Data Engineer
+Petlove,2,24.0,Data Engineer
 PetroReconcavo,2,13.0,Other
 Petrobahia S.A,2,7.5,Other
 Philip Morris International,2,25.0,Other
 Phiture,2,21.0,HR
 Positivo Tecnologia,2,23.0,Other
-CPQD,2,14.0,Data Analyst
+JLink connecting experts GmbH,2,16.0,Other
 Prefeitura Municipal de Gaspar,2,12.0,Other
 Prefeitura de Cubatão,2,12.0,Other
-Grupo 3corações,2,27.0,Data Engineer
+Horatio,2,20.0,Other
 QSOFT,2,24.0,Data Engineer
 Quantik,2,21.0,HR
 Quartile,2,28.5,Data Analyst
 RED Global,2,33.0,Consultant
-AlmapBBDO,2,19.0,Other
+Horizontal Talent,2,20.0,Other
 Red Bull,2,17.5,Machine Learning / AI
 Rox Partner,2,22.0,Data Engineer
-Escola da Nuvem,2,13.5,Other
-Forward,2,20.5,HR
-SUBSCRIBE,2,15.0,Other
 Investigo,2,20.5,Consultant
-Bio-Rad Laboratories,2,11.5,Operations
+Halliburton,2,28.5,Data Engineer
+SUBSCRIBE,2,15.0,Other
+Grupo Vorp,2,10.0,Other
+Empacar S.A,2,16.0,HR
+Kanastra,2,27.5,Data Engineer
+F1RST Tecnologia,2,20.0,Data Engineer
 Sensedia,2,24.0,Consultant
 Share People Hub,2,16.0,HR
-IKONS Ibérica,2,26.0,Other
+Amcor,2,18.0,HR
 Sofist,2,21.0,HR
 Softplan,2,19.0,HR
 Softys,2,23.5,Data Engineer
 Sparkassen-Personalberatung GmbH,2,12.0,Other
 Splash,2,27.0,BI Analyst
 Staan,2,18.0,Consultant
-ClickHouse,2,12.0,Other
+FALKEN Group Personalberatung GmbH,2,16.0,Other
 Starian,2,25.0,Data Scientist
-Descomplica,2,16.0,Consultant
+FALKENHERZ Group,2,20.0,HR
 Swap,2,23.0,Data Engineer
 SweatWorks,2,17.0,Other
 SysManager,2,15.5,Data Engineer
 TECNOMEC ENGINEERING SRL,2,18.0,Other
-Infleet - Gestão de Frotas,2,17.5,Other
+Infinite Computer Solutions,2,23.0,Consultant
 Talentia,2,20.5,Consultant
 Talention,2,18.0,Other
-Bluer Tecnologia,2,16.5,Consultant
+Computer Futures,2,29.0,Consultant
 Tergos,2,18.0,Other
-JLink connecting experts GmbH,2,16.0,Other
+Infleet - Gestão de Frotas,2,17.5,Other
 TikTok,2,11.5,Other
-TimePartner Personalmanagement GmbH,2,15.5,Consultant
+TimePartner Personalmanagement GmbH,2,13.5,Consultant
 Trillia,2,20.5,Data Engineer
-Uncover,2,23.5,Data Scientist
+"ANP - Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",2,8.0,Other
 Universidade CIMATEC,2,8.0,Other
 ValueNet Group,2,17.0,Other
 Vericode,2,25.0,Other
 Verisure,2,24.0,HR
 Vestas,2,8.0,Other
-Vetta,2,24.0,HR
-Keeta,2,16.5,Other
+Amoria Bond,2,25.0,Consultant
 Volvo Group,2,34.0,Data Engineer
-Amcor,2,19.5,HR
+Ana Gaming,2,19.5,HR
 Wilson Sons,2,8.0,Other
-Xepelin,2,21.5,Other
+Xepelin,2,20.0,Other
 YDUQS,2,25.5,Data Engineer
 Zensy,2,26.5,Other
 amaxo GmbH,2,18.0,Other
-Kanastra,2,27.5,Data Engineer
-"ANP - Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",2,8.0,Other
+BONbLOC,2,31.0,HR
+E-IT,2,16.0,Other
 bet365,2,14.0,Other
-HR Path,2,32.5,Consultant
+Caveo,2,26.0,Other
 delaware International,2,26.0,Other
-empiriecom,2,30.0,Consultant
+empiriecom,2,28.0,Consultant
+hub xp,2,28.0,Data Engineer
 A-Players,2,28.0,HR
 ACTIEF Personalmanagement GmbH,2,10.0,Other
 AGCO Corporation,2,17.5,HR
-Algoworks,1,12.0,Other
-Alianzo,1,17.0,HR
 Alimentos Bloxom,1,28.0,HR
 Alium,1,19.0,Consultant
 Allgemeine Rentenanstalt Pensionskasse,1,8.0,Other
@@ -208,7 +213,6 @@ Always Fit Suplementos,1,25.0,Software Engineer
 AmSpec Group,1,12.0,Other
 Amanda Figueira Ramos - Psicóloga CRP 08/39236,1,12.0,Other
 Amara NZero,1,11.0,Other
-Amdocs,1,18.0,Other
 Amefruits,1,31.0,HR
 Amenitiz,1,24.0,Product
 American Red Cross,1,23.0,Product
@@ -245,13 +249,12 @@ ArkValue,1,12.0,Other
 Armenian Code Academy,1,8.0,Other
 Arochi & Lindner,1,24.0,HR
 Arquitetos da Saúde,1,29.0,Data Engineer
-Arrow Electronics,1,8.0,Other
 Arrows,1,25.0,Consultant
 Arvato,1,18.0,Other
 Arvenda LLC,1,20.0,Other
 Arvo,1,12.0,Other
 Asana,1,22.0,Other
-Ascentt,1,25.0,Other
+Ascentt,1,22.0,Other
 "Aseguradora General, S.A",1,8.0,Other
 Aspiria,1,21.0,Other
 Asset Locale,1,16.0,Other
@@ -273,9 +276,10 @@ Attach Group,1,23.0,Other
 AudioCodes,1,18.0,Other
 Aulas particulares,1,8.0,Other
 Aurean Blue,1,22.0,Other
-Auria,1,27.0,Data Scientist
+Auria,1,24.0,Data Scientist
 Auten Energy - Energia Compartilhada,1,12.0,Other
 Autoliv,1,18.0,Other
+Autónomo,1,12.0,Other
 Avant Business Services,1,11.0,Other
 Avanza,1,18.0,Other
 Aventa Solutions,1,15.0,Consultant
@@ -290,7 +294,6 @@ Axians,1,23.0,Other
 Azion,1,22.0,Other
 Azuris Company,1,27.0,Data Engineer
 B&M Personalvermittlung,1,12.0,Other
-BAC Credomatic,1,22.0,Other
 BAE Systems,1,11.0,Other
 BARMER,1,22.0,Other
 BBC Carreira & RH,1,15.0,Consultant
@@ -303,9 +306,8 @@ BIG school,1,27.0,HR
 BIGZON,1,22.0,Consultant
 BLUST | Consultora Boutique de Personas y Talento,1,19.0,Consultant
 BMN Nederland,1,8.0,Other
-BMNS,1,31.0,HR
 BOMIX INDÚSTRIA DE EMBALAGENS LTDA,1,18.0,Other
-BONbLOC,1,27.0,HR
+BPO Labs Solutions,1,28.0,Other
 BR Angels,1,12.0,Other
 BRINK Group,1,27.0,Consultant
 BROSETA,1,8.0,Other
@@ -314,6 +316,7 @@ Bachpan Save The Innocence,1,8.0,Other
 Baker Hughes,1,20.0,HR
 Baku Heritage Tours - DMC,1,8.0,Other
 Balanz Uruguay,1,37.0,Other
+Bammbuu,1,20.0,Other
 BanBajío,1,12.0,Other
 Banco Internacional,1,31.0,Other
 Banco PAN,1,23.0,Data Engineer
@@ -321,18 +324,17 @@ Banco Rendimento,1,13.0,Project / Program Manager
 Banco Sofisa S/A,1,8.0,Other
 Banco de Seguros del Estado,1,12.0,Other
 Banco del Sol,1,14.0,Other
-Banff Lodging Company,1,25.0,Other
+Banff Lodging Company,1,22.0,Other
 Banistmo,1,18.0,Other
 Bankaool,1,21.0,HR
-Bankhaus Metzler,1,12.0,Other
 Bark.com,1,23.0,Other
 Basecone,1,32.0,Data Engineer
 Baterias Pioneiro,1,22.0,Other
 Bathildisheim e.V,1,12.0,Other
+Baufest,1,27.0,HR
 Baugesellschaft Hanau GmbH,1,12.0,Other
 Baxter International Inc,1,23.0,Operations
 BayWa r.e. Solar Distribution / ES,1,27.0,HR
-Bayes Esports,1,25.0,Software Engineer
 Be Intelligence,1,12.0,Other
 BeNEX Akademie GmbH & Co. KG,1,12.0,Other
 BeSmart Corp,1,25.0,Other
@@ -343,24 +345,25 @@ Bemobi,1,12.0,Other
 Bending Spoons,1,22.0,Other
 Berger Bau- und Industriebedarf GmbH,1,12.0,Other
 Bernoulli Educação,1,8.0,Other
-Better Collective,1,27.0,Data Engineer
+Better Collective,1,23.0,Data Engineer
 Bettermile,1,17.0,HR
 Bi Smart,1,35.0,Data Engineer
 "BiDATiA, el poder del dato",1,23.0,Other
 Bildungsreif,1,8.0,Other
 Billie,1,25.0,Software Engineer
 Binaria Talent Group,1,30.0,HR
-Bind México,1,34.0,HR
+Bind México,1,31.0,HR
 Birdie,1,18.0,Other
 Birdman,1,25.0,Other
 Bits&Cream,1,31.0,HR
 Black Cat Services,1,12.0,Other
+BlackSip,1,21.0,Other
 Blackstraw,1,19.0,Software Engineer
 BlueCross & BlueShield de Uruguay,1,37.0,Other
 "Bluetab América, an IBM Company",1,34.0,HR
 "Bluetab, an IBM Company",1,21.0,Other
 Bluhm Systeme GmbH,1,18.0,Other
-Boen Groen,1,12.0,Other
+Boen Groen,1,8.0,Other
 Bold Metrics Inc,1,20.0,Data Scientist
 Bold Smart Ventures,1,12.0,Other
 Bold.co,1,25.0,Other
@@ -392,7 +395,6 @@ CARNES RIKATAS,1,12.0,Other
 CEERT Equidade Racial e de Gênero,1,8.0,Other
 CEMA Construções e Tecnologia,1,18.0,Other
 CEMPRE Uruguay,1,52.0,Project / Program Manager
-CENTURY 21 Nações,1,19.0,Consultant
 CERN,1,7.0,Other
 CEVA Logistics,1,24.0,Operations
 CEVA SAUDE ANIMAL,1,19.0,Other
@@ -404,7 +406,6 @@ CIVIR,1,18.0,Other
 CLIDAL,1,8.0,Other
 CLIMB,1,19.0,Consultant
 CMO Vendas,1,8.0,Other
-COCUS,1,23.0,Other
 CONAPROLE,1,22.0,Other
 CONTALENTO Strategy For People,1,27.0,HR
 CORVUS UTV,1,31.0,HR
@@ -413,7 +414,7 @@ COSEM IAMPP,1,12.0,Other
 CRESCIMENTO4U Mentoria de negócios,1,12.0,Other
 CRS Hospital Provincia Cordillera,1,12.0,Other
 CSN - Companhia Siderúrgica Nacional,1,8.0,Other
-CTS EVENTIM AG & Co. KGaA,1,20.0,Other
+CTS EVENTIM AG & Co. KGaA,1,16.0,Other
 CUBE,1,29.0,HR
 CVS Health,1,30.0,Data Scientist
 Cactus,1,21.0,HR
@@ -423,9 +424,10 @@ Cambium Assessment,1,23.0,Project / Program Manager
 Cambridge Family Enterprise Group (CFEG),1,8.0,Other
 Camil Alimentos S/A,1,15.0,Other
 Camino laboral - CV con alma,1,12.0,Other
-Canadian Solar Inc,1,12.0,Other
+Canadian Solar Inc,1,8.0,Other
 CandyCo LLC,1,24.0,HR
 Cantinho da Hora Mini Mercado,1,15.0,Consultant
+Capim,1,29.0,Data Engineer
 Capital Vision,1,11.0,Other
 Capri Partners,1,15.0,Consultant
 Capriole Coffee Service | B Corp™,1,8.0,Other
@@ -435,7 +437,7 @@ Care&Co Uy,1,12.0,Other
 Career Rebels,1,8.0,Other
 Career Wizards,1,23.0,Other
 Cargo Expreso,1,18.0,Other
-CargoSprint,1,24.0,Other
+CargoSprint,1,21.0,Other
 Cargoo,1,27.0,HR
 Caritasverband für den Landkreis Weilheim-Schongau e.V,1,8.0,Other
 Caru Moràlles | Gestão de Pessoas e Carreiras,1,21.0,HR
@@ -456,15 +458,14 @@ Cegeka,1,31.0,HR
 Celara,1,26.0,Other
 Cella,1,29.0,Software Engineer
 Centience,1,12.0,Other
-Centro Médico Militar rimac,1,15.0,Other
-Centro Universitário FMU | FIAM-FAAM,1,12.0,Other
+Centro Médico Militar rimac,1,12.0,Other
 Ceramica Santana De Alagoinhas,1,8.0,Other
 Cere Network,1,21.0,Software Engineer
 CerradinhoBio,1,17.0,HR
 Certivity,1,27.0,HR
 Certta,1,23.0,Product
 Chassé Theater,1,8.0,Other
-Checkmob,1,17.0,Operations
+Checkmob,1,13.0,Operations
 Checkpoint System EDV GmbH,1,12.0,Other
 Cheil Worldwide,1,27.0,HR
 Churchill Group,1,21.0,Other
@@ -480,31 +481,29 @@ Clicksign,1,23.0,Data Engineer
 Clikalia,1,24.0,HR
 Clube BoraFazer,1,8.0,Other
 Clubio FST,1,18.0,Other
-ClyntonBoss,1,24.0,Data Analyst
+ClyntonBoss,1,20.0,Data Analyst
 Clínica Athos,1,12.0,Other
 Clínica Imaginare,1,8.0,Other
 Clínica Odonto Saúde & Estética Dental Clinic,1,12.0,Other
 Clínica Psicológica,1,12.0,Other
 Clínica de Psicoterapia - Ame Rio Verde-GO,1,8.0,Other
 Clínica particular Niños y adolescentes. Clinica del Niño Harwood Care,1,12.0,Other
+Co-op,1,26.0,Other
 CoE | Centro de Excelência Votorantim,1,27.0,HR
 CodeSmash,1,25.0,Software Engineer
 Coders Hire Private Limited,1,34.0,HR
-CodersLink,1,33.0,Project / Program Manager
+CodersLink,1,30.0,Project / Program Manager
 CodingBand,1,40.0,HR
 CoinDCX,1,23.0,Data Engineer
 Colectta,1,12.0,Other
-Colegio William,1,19.0,Consultant
 Colegio integral minas,1,12.0,Other
 Colegio y Liceo Hans Christian Andersen,1,22.0,Other
-Colsanitas,1,20.0,Other
 Colégio Apoio,1,8.0,Other
 Comax smart E.R.P,1,27.0,Product
 Comercial 10x,1,8.0,Other
 Compagas,1,21.0,HR
 Compass.uol,1,15.0,Consultant
 Complexity Science Hub Vienna,1,12.0,Other
-CompuGroup Medical SE & Co. KGaA,1,24.0,HR
 Comunidad Delosi,1,12.0,Other
 ComunidadFeliz.com,1,21.0,HR
 Cona Consultores,1,12.0,Other
@@ -513,13 +512,14 @@ Conexão Talento,1,19.0,Consultant
 Conexões Psi,1,8.0,Other
 Confeitaria Moriê,1,8.0,Other
 Conquest One,1,16.0,Other
+Conrad Electronic Group,1,48.0,Data Engineer
 Consiss,1,18.0,Other
 Consultant / Self-Employed,1,27.0,Data Engineer
 Consultora Citrino,1,19.0,Consultant
 Consultório Particular,1,8.0,Other
 Consultório de Psicoterapia,1,12.0,Other
 Consultório particular,1,8.0,Other
-Convene,1,14.0,Other
+Contratec Engenharia Ltda,1,24.0,Data Analyst
 Convert,1,18.0,Other
 Convixion,1,31.0,HR
 Coopeuch,1,21.0,HR
@@ -544,7 +544,7 @@ Cury Construtora,1,12.0,Other
 CyberHULL,1,18.0,Other
 Cygnus Professionals Inc,1,14.0,Other
 Cynergy2,1,20.0,Other
-Círculo CRM,1,12.0,Other
+Círculo CRM,1,8.0,Other
 D&R Distribuidora de Bebidas,1,34.0,HR
 DAC Beachcroft,1,19.0,Consultant
 DAMEDIC GmbH,1,23.0,Other
@@ -586,7 +586,7 @@ Dental Media Corp,1,15.0,Other
 Department of Culture and Tourism – Abu Dhabi (DCT Abu Dhabi),1,8.0,Other
 "Department of Posts, India",1,12.0,Other
 Derma MX,1,19.0,Other
-Descartes Systems Group,1,30.0,Data Scientist
+Descartes Systems Group,1,26.0,Data Scientist
 Descasio,1,31.0,HR
 Despegar,1,24.0,Other
 Deutsche Angestellten Akademie (DAA),1,8.0,Other
@@ -596,7 +596,9 @@ Develative,1,23.0,Other
 Diamond National Investments,1,32.0,HR
 Digisystem,1,14.0,Other
 Digitanity,1,12.0,Other
+Dikter SA (Macowens y Devré),1,26.0,Other
 Diligent,1,21.0,Other
+DirMOD,1,28.0,Other
 Dirección de Servicio de Salud Metropolitano Oriente,1,12.0,Other
 Diretório Acadêmico de Engenharia de Produção - DAEP,1,8.0,Other
 Direzione Servizi Srl,1,8.0,Other
@@ -611,6 +613,7 @@ Dorko,1,31.0,HR
 DoubleTree by Hilton,1,16.0,Other
 "Douro Acima-Transportes Turismo e Restauração, Lda",1,12.0,Other
 Doutor Finanças,1,12.0,Other
+Drata,1,18.0,Other
 Dreamwave Innovation,1,20.0,Other
 Driva,1,18.0,Other
 Dualis,1,27.0,Project / Program Manager
@@ -626,7 +629,7 @@ EGPA Design,1,8.0,Other
 ELIS,1,8.0,Other
 ELOS CAPITAL HUMANO,1,12.0,Other
 EMSERH - Empresa Maranhense de Serviços Hospitalares,1,25.0,Software Engineer
-EMSUR,1,34.0,HR
+EMSUR,1,31.0,HR
 ENABL A/S,1,8.0,Other
 ENTRERRIOS AUTOMATIZACION S.A,1,8.0,Other
 EP Carreira e Recolocação,1,8.0,Other
@@ -640,6 +643,7 @@ Eagle Executive,1,31.0,Other
 Easy Carros,1,50.0,Product
 Eaze,1,18.0,Other
 EcoVidaPlast,1,15.0,Consultant
+Econosoft Inc,1,15.0,Other
 Eden,1,19.0,Other
 Edmunds,1,18.0,Other
 Efí Bank,1,20.0,Data Analyst
@@ -690,10 +694,12 @@ EssilorLuxottica,1,20.0,HR
 Estratég.IA Financeira e Analítica,1,19.0,Consultant
 Estuary,1,12.0,Other
 Etengo,1,22.0,Other
+Etex,1,27.0,HR
 Etteplan,1,15.0,Consultant
 Eureka - Consultores,1,12.0,Other
 European Investment Bank (EIB),1,16.0,Other
 European Society of Radiology,1,32.0,HR
+European Union Agency for Asylum – EUAA,1,17.0,HR
 Evaria XXI S.L,1,31.0,HR
 Evercam,1,18.0,Other
 Evers GmbH,1,8.0,Other
@@ -702,7 +708,7 @@ Exadel,1,33.0,Data Engineer
 ExitLag,1,27.0,Data Engineer
 Explora,1,15.0,Other
 Explortal Logistics,1,10.0,Operations
-FAMAR,1,34.0,HR
+FAMAR,1,31.0,HR
 FAPESB,1,8.0,Other
 FAPESQ - Fundação de Apoio à Pesquisa do Estado da Paraíba,1,11.0,Other
 FIEMG,1,12.0,Other
@@ -715,7 +721,7 @@ FS Partners,1,8.0,Other
 FUNDACENTRO - Fundação Jorge Duprat Figueiredo de Segurança e Medicina do Trabalho,1,8.0,Other
 FYGI,1,8.0,Other
 Faculdade Cesusc,1,12.0,Other
-Faculdade UNIGUAÇU,1,15.0,Other
+Faculdade UNIGUAÇU,1,12.0,Other
 Faculdade de Tecnologia de Americana,1,8.0,Other
 Falabella Financiero,1,12.0,Other
 Familhão,1,25.0,Product
@@ -723,7 +729,6 @@ Familia en Equilibrio,1,15.0,Consultant
 Farmacias Ahumada,1,18.0,Other
 Farmacie Lombardi Group,1,8.0,Other
 Farmacorp,1,12.0,Other
-Farmers Insurance,1,25.0,Other
 Farod Estatísticas,1,24.0,Data Scientist
 Fast Dolphin,1,11.0,Other
 Fatec São Bernardo do Campo Adib Moises Dib,1,12.0,Other
@@ -740,7 +745,7 @@ Fibrafort Boats,1,15.0,Other
 Finalyse,1,8.0,Other
 Finch | Simplificando o mundo jurídico,1,31.0,HR
 Findtec,1,18.0,Other
-Fine & Country Algarve,1,18.0,Other
+Fine & Country Algarve,1,33.0,Data Engineer
 Finep - Financiadora de Estudos e Projetos,1,8.0,Other
 Finik,1,19.0,Other
 Fiquem Sabendo,1,23.0,Data Engineer
@@ -755,7 +760,7 @@ Flow,1,12.0,Other
 Flywheel,1,18.0,BI Analyst
 Foco Aluguel de Carros,1,21.0,HR
 Fondazione Policlinico Universitario Agostino Gemelli IRCCS,1,11.0,Other
-Fortive,1,21.0,Other
+Fortive,1,18.0,Other
 Foundrs Mafia,1,12.0,Other
 Foxsoft Ltd,1,15.0,Software Engineer
 Francal,1,20.0,HR
@@ -769,13 +774,15 @@ Friedman,1,22.0,Other
 Friisberg & Partners International,1,35.0,Other
 FrontlineIQ,1,29.0,Data Engineer
 Full Stack Club,1,19.0,Software Engineer
+Fundación Buen Vivir Bogotá,1,18.0,Other
 Fundación Génesis Empresarial,1,8.0,Other
+Fundamento RH,1,22.0,Consultant
 Fundação Estudar,1,12.0,Other
 Fundação Getulio Vargas,1,16.0,Other
 Fundação para Inovações Tecnológicas - FITec,1,33.0,Data Engineer
 Futura Labs,1,27.0,HR
 Future Law,1,12.0,Other
-FábricaDS Soluções em Tecnologia,1,31.0,Consultant
+FábricaDS Soluções em Tecnologia,1,28.0,Consultant
 GABAME HUMAN HEALTH,1,28.0,Other
 GASCADE Gastransport GmbH,1,11.0,Other
 GCB Investimentos,1,19.0,Other
@@ -790,7 +797,6 @@ GOL Linhas Aéreas,1,11.0,Other
 GRNBK Talent,1,21.0,Consultant
 GROWMAX GROUP,1,27.0,HR
 GRUPO AUNAR S.A.S,1,19.0,Consultant
-GRUPO EDUCACIONAL DRUMMOND,1,12.0,Other
 GRUPO SARRALLE,1,17.0,HR
 GSD Associates,1,26.0,Other
 GSM - Green SM,1,34.0,Other
@@ -806,18 +812,19 @@ Gazin,1,18.0,Other
 Gebomsa,1,12.0,Other
 Gedanken - GCertifica,1,25.0,Other
 Geeky Bugs,1,31.0,HR
-Gelatina,1,51.0,Other
+Gelatina,1,48.0,Other
 Gemeente Voorne aan Zee,1,8.0,Other
-Genei,1,25.0,Other
+Genei,1,22.0,Other
 General Motors South America,1,8.0,Other
 Generali,1,20.0,Other
+Genesys,1,20.0,Data Analyst
+Geonosis,1,37.0,HR
 Geovanna Mendes,1,8.0,Other
 Gesta Soluciones en Recursos Humanos,1,21.0,HR
 Gesthion Organizacional,1,19.0,Consultant
 Gestión Global,1,12.0,Other
 Getrak,1,27.0,Product
 Giggso,1,32.0,HR
-Gijos,1,23.0,Other
 Glance,1,12.0,Other
 Glic Solutions,1,23.0,Other
 Global Automotive,1,11.0,Other
@@ -846,11 +853,10 @@ Ground Game,1,29.0,Other
 Grow Global,1,30.0,Product
 Growdev,1,32.0,HR
 Growe,1,21.0,HR
-Growth Hackerz,1,27.0,Data Engineer
 Growth Machine,1,8.0,Other
 Grupo AG,1,17.0,HR
 Grupo AG Capital,1,12.0,Other
-Grupo Alto Potencial,1,25.0,Consultant
+Grupo Alto Potencial,1,22.0,Consultant
 Grupo Aposta Ganha,1,19.0,Product
 Grupo BOIS | Blank space| Freelan| 9db| Nuvalia,1,30.0,HR
 Grupo Barigui,1,12.0,Other
@@ -869,6 +875,7 @@ Grupo IMESE,1,32.0,HR
 Grupo Ideal Trends,1,18.0,Other
 Grupo Incalexa,1,15.0,Other
 Grupo JCA,1,18.0,Other
+Grupo KELSOFT,1,27.0,HR
 Grupo Lamucca,1,17.0,HR
 Grupo Leveros,1,21.0,HR
 Grupo Líder,1,16.0,Other
@@ -906,13 +913,13 @@ HEI Civil,1,27.0,HR
 HEMES,1,22.0,Other
 HIF Global,1,12.0,Other
 HIPRA,1,12.0,Other
-HR Business Partners Perú,1,22.0,Consultant
+HR Business Partners Perú,1,19.0,Consultant
 HR Consultant,1,35.0,Consultant
 HR-Werkstatt GmbH,1,12.0,Other
 HRin,1,18.0,Operations
 HR® Employment Bureau,1,25.0,Consultant
 HSystem,1,28.0,Product
-HTD Health,1,21.0,Other
+HTD Health,1,18.0,Other
 HUMAN is HR,1,27.0,Consultant
 HUMANA 11®,1,15.0,Other
 HVAR,1,21.0,HR
@@ -934,7 +941,7 @@ Helios HR Talent,1,15.0,Consultant
 Helios Kliniken GmbH,1,20.0,Other
 HelpMed Saúde,1,15.0,Other
 Helplearte,1,19.0,Consultant
-Hero,1,18.0,Other
+Hero,1,15.0,Other
 Hewlett Packard Enterprise,1,28.0,Other
 HexClad Cookware,1,12.0,Other
 Hexagon Geosystems,1,15.0,Other
@@ -949,7 +956,7 @@ Hire International,1,25.0,Other
 Hired Remoteli,1,26.0,Other
 "Hired by Matrix, Inc",1,21.0,HR
 Hireline.io,1,22.0,Other
-Hirelytics Inc,1,21.0,Other
+Hirelytics Inc,1,18.0,Other
 Hirevue,1,23.0,Product
 Hirsch Personalberatung,1,21.0,HR
 Hit Ocean,1,27.0,HR
@@ -957,7 +964,8 @@ HitOcean,1,21.0,Other
 Holder Partners LLC,1,25.0,Consultant
 Holding Incosec,1,12.0,Other
 HomeBuddy,1,23.0,Data Engineer
-Hospital das Clínicas da Faculdade de Medicina da USP,1,22.0,Consultant
+Horsefly,1,15.0,Consultant
+Hospital das Clínicas da Faculdade de Medicina da USP,1,19.0,Consultant
 Houlak,1,34.0,HR
 House of Scale GmbH,1,8.0,Other
 How to Change the World,1,15.0,Software Engineer
@@ -979,7 +987,7 @@ IEEE,1,14.0,Other
 IFSP - Campus Salto,1,8.0,Other
 IKEA,1,21.0,HR
 IKO International,1,21.0,Other
-IKONS Iberica,1,21.0,Other
+IKONS Iberica,1,18.0,Other
 ILERWORK,1,15.0,Consultant
 IMPS The Smurfs,1,25.0,Other
 IMS People Possible,1,19.0,Consultant
@@ -999,14 +1007,14 @@ Ici - Instituto das Cidades Inteligentes,1,8.0,Other
 Idealizadora,1,8.0,Other
 Ideasense,1,22.0,Consultant
 Ikatec,1,24.0,HR
-Images Group,1,12.0,Other
+Images Group,1,8.0,Other
 Immobilien Robert Ellinghoven,1,8.0,Other
 Impact School,1,11.0,Other
 Impala Search,1,19.0,Consultant
 Impel Talent,1,18.0,Other
 InBetta,1,13.0,Other
 InSync Jobs,1,18.0,Other
-Incusol Inc,1,32.0,Consultant
+Incusol Inc,1,29.0,Consultant
 Independiente (freelance),1,15.0,Consultant
 Inditex,1,13.0,Other
 Infinite Lambda,1,23.0,Consultant
@@ -1034,13 +1042,14 @@ Instituto Nacional de Colonización,1,12.0,Other
 Instituto Nacional de Telecomunicações - Inatel,1,27.0,Project / Program Manager
 Instituto Profesional IPP,1,12.0,Other
 Instituto Semear,1,27.0,Data Engineer
+Inteli - Instituto de Tecnologia e Liderança,1,8.0,Other
 Inteliteam,1,12.0,Other
 IntelliPro,1,27.0,Project / Program Manager
 Intendencia de Durazno,1,18.0,Other
 InterEx Group,1,24.0,Data Analyst
 Intermedia,1,25.0,Other
 "International Talent Leader, Advisor & Business Coach",1,25.0,Consultant
-Interseguro Compañía de Seguros,1,18.0,Other
+Interseguro Compañía de Seguros,1,15.0,Other
 Intertec International,1,28.0,Other
 Intone Networks Inc,1,12.0,Other
 Intralog,1,18.0,Other
@@ -1048,7 +1057,7 @@ Inttegra,1,19.0,Other
 InvGate,1,22.0,Other
 Invenergy,1,11.0,Other
 Involves,1,27.0,Data Engineer
-Ion Interactive,1,15.0,Other
+Ion Interactive,1,22.0,Other
 Ipiranga,1,8.0,Other
 Ipsos,1,22.0,Other
 Istituto Comprensivo,1,8.0,Other
@@ -1057,9 +1066,8 @@ J.P. Morgan,1,22.0,Other
 JD Casa & Construção,1,8.0,Other
 JDE Peet's,1,18.0,Other
 JEM Systems,1,20.0,Data Analyst
-JFL.inc,1,30.0,HR
+JFL.inc,1,27.0,HR
 JMAN Group,1,12.0,Other
-JPMorganChase,1,7.0,Other
 Jambo Education Ltd,1,25.0,Consultant
 Janina Ott - systemische Beratung/Coaching,1,12.0,Other
 Jaxel,1,25.0,Other
@@ -1075,7 +1083,7 @@ Jobwal,1,14.0,Other
 John Bryce,1,25.0,Other
 Johnson & Johnson,1,15.0,Other
 Jornada de Dados,1,12.0,Other
-Juan Motilla S.L,1,15.0,Other
+Juan Motilla S.L,1,12.0,Other
 Jude's,1,12.0,Other
 Jumbo Supermarkten,1,23.0,Data Engineer
 Jumpstart Immigration,1,12.0,Other
@@ -1111,11 +1119,12 @@ Kliente 360,1,31.0,Data Engineer
 Koc Electro,1,8.0,Other
 Koda Staff,1,27.0,Consultant
 Kodros | Financials voor gemeenten,1,15.0,Consultant
+Konecta,1,28.0,Project / Program Manager
 KooKoo Strategy,1,12.0,Other
 Kora Saúde,1,7.0,Other
 Kordsa,1,18.0,Other
 Kozijnmakers B.V,1,8.0,Other
-Kromberg & Schubert,1,24.0,HR
+Kromberg & Schubert,1,21.0,HR
 Krones,1,18.0,Other
 Kunumi,1,12.0,Other
 Kyndryl,1,18.0,Other
@@ -1131,16 +1140,16 @@ LIDE Pernambuco,1,17.0,Project / Program Manager
 LKS NEXT,1,15.0,Consultant
 LOCATES,1,8.0,Other
 LOCUMPRO GmbH,1,12.0,Other
+LPVA | IPMA Lithuania,1,12.0,Other
 LUÁ Centro de Orientación Integral,1,12.0,Other
 LYNK Human Capital,1,12.0,Other
 La Caja de Ahorro y Seguro,1,15.0,Other
-La Salle BCN,1,12.0,Other
 La Tribu,1,26.0,Other
 LaGuardia Community College,1,19.0,Other
 LabPro,1,8.0,Other
 Laghetto,1,21.0,HR
 LanceSoft UAE,1,14.0,Other
-tilli,1,15.0,Other
+🇬🇹 IntegRHa Talento,1,17.0,HR
 Lapônia - Concessionário de Caminhões e Chassis de Ônibus Volvo,1,32.0,HR
 Larissa Sanford,1,19.0,Consultant
 Lavanda,1,35.0,Data Scientist
@@ -1149,17 +1158,17 @@ LeadHRM,1,20.0,Operations
 Leaders Lifestyle,1,12.0,Other
 Leads2b,1,24.0,Operations
 Lee Hecht Harrison,1,18.0,Other
-tecmentor,1,46.0,Consultant
+"""Uzbek Industrial and Construction Bank"" JSCB",1,21.0,Other
 Left Lane - Recruitment Marketing,1,8.0,Other
 Lenovo PCCW Solutions,1,25.0,Other
 Leroy Merlin,1,17.0,HR
 Lesaffre,1,20.0,Other
 Level.works,1,15.0,Consultant
-LevelUp Leads,1,18.0,Other
+LevelUp Leads,1,15.0,Other
 Leão estratégia e Gestão,1,27.0,Product
-License & Scale,1,19.0,Consultant
 Life Line Screening,1,27.0,Data Engineer
 Lifemate Furniture,1,18.0,HR
+"Lifespace Communities, Inc",1,21.0,Other
 Lighthouse,1,33.0,Data Engineer
 Lightsound Group,1,24.0,HR
 Link School,1,12.0,Other
@@ -1192,9 +1201,9 @@ MG Manutenção,1,8.0,Other
 MHP – A Porsche Company,1,20.0,Other
 MIT Sloan School of Management,1,18.0,Other
 MODIFI,1,18.0,BI Analyst
-MOONTON GAMES,1,12.0,Other
+MOONTON GAMES,1,8.0,Other
 MOZAYDO,1,20.0,Other
-MPS Partners,1,19.0,Consultant
+MPS Partners,1,25.0,Consultant
 MSC Mediterranean Shipping Company,1,24.0,Data Analyst
 MSL Corporate,1,31.0,HR
 MStar,1,15.0,Other
@@ -1205,10 +1214,11 @@ MadeiraMadeira,1,28.0,Product
 Madison Wells,1,8.0,Other
 Madres que lideran,1,12.0,Other
 Magneto,1,25.0,Other
-@Hyatt Ziva Madeira Resort Spa & Marina,1,12.0,Other
+#ONO (Open to New Opportunities),1,25.0,Other
 MakeValue,1,8.0,Other
 Mandomedio Perú,1,19.0,Consultant
-Manfred,1,15.0,Other
+Manfred,1,12.0,Other
+Manole,1,12.0,Other
 Manserv,1,8.0,Other
 Maplink,1,12.0,Other
 Maraca Hub,1,12.0,Other
@@ -1225,7 +1235,7 @@ Masterplan.com,1,17.0,HR
 Masterschool,1,20.0,Other
 Matria,1,29.0,Data Engineer
 Mattos Engelberg Echenique Advogados,1,8.0,Other
-🇬🇹 IntegRHa Talento,1,17.0,HR
+Maxxi,1,19.0,Consultant
 Mayo Clinic,1,14.0,Other
 Mayoral Moda Infantil,1,15.0,Other
 Measurelab,1,35.0,Data Engineer
@@ -1251,13 +1261,13 @@ Mignow,1,28.0,Product
 MindBase,1,12.0,Other
 Mindbody,1,19.0,Product
 Mineradores,1,9.0,Other
-Mineral Resources,1,33.0,Data Engineer
+Mineral Resources,1,24.0,Data Analyst
 Minerva Foods,1,22.0,Other
 Ministerie van Defensie,1,18.0,Other
 Ministério Público do Estado do Paraná,1,12.0,Other
 Ministério da Cultura,1,27.0,Data Engineer
 MintMe.com,1,11.0,Other
-Miro,1,22.0,Other
+Miro,1,18.0,Other
 Mitsubishi Electric Automotive de México,1,18.0,Other
 Mixam,1,20.0,Data Analyst
 MoMa Labs,1,25.0,Other
@@ -1265,7 +1275,7 @@ Modern Animal,1,9.0,Other
 Modern Health,1,23.0,Other
 Modus Create,1,24.0,HR
 Molecular Search,1,12.0,Other
-"""Uzbek Industrial and Construction Bank"" JSCB",1,21.0,Other
+++hellohello,1,22.0,Other
 Monee,1,13.0,Other
 Monest,1,27.0,Product
 Monks,1,20.0,HR
@@ -1277,58 +1287,56 @@ Motoca - Aluguel de Moto,1,12.0,Other
 Mottu,1,7.0,Other
 Movement Fitness,1,15.0,Other
 Movizzon,1,22.0,Other
-Mowi,1,28.0,Other
+Mowi,1,25.0,Other
 Mulheres de Growth,1,12.0,Other
 MurryConsult LLC,1,17.0,HR
 Mushtari Capital,1,12.0,Other
-#ONO (Open to New Opportunities),1,25.0,Other
+200DEV,1,8.0,Other
 Mêntore,1,18.0,Other
 MİTAS GROUP,1,25.0,Machine Learning / AI
 N-iX,1,33.0,Data Engineer
 NACHO Sales,1,12.0,Other
 NAVA · Executive Support & Growth,1,15.0,Other
 NEBIRU,1,25.0,Other
-NEORIS,1,17.0,HR
 NETZET,1,23.0,Other
 NETZSCH Group,1,18.0,Other
 NEX Energy,1,12.0,Other
 NEXA,1,12.0,Other
 NJF Global Holdings Ltd,1,12.0,Other
 NTT Ltd,1,23.0,HR
-++hellohello,1,22.0,Other
+2a Vara civil do Foro da Comarca de Canela,1,12.0,Other
 NXO Experts,1,12.0,Other
 Nasa Space Apps,1,20.0,Other
 Nasir Float Glass Industries Ltd,1,8.0,Other
 National Service Scheme,1,12.0,Other
 Nationale-Nederlanden,1,27.0,Data Engineer
-200DEV,1,8.0,Other
-Nature's Care Manufacture Pty Limited,1,8.0,Other
-NavVis,1,12.0,Other
+2innovate,1,24.0,HR
+Nature's Care Manufacture Pty Limited,1,9.0,Other
+NavVis,1,8.0,Other
 Naviera Integral,1,21.0,HR
 Navistar Inc,1,30.0,Data Engineer
+Nações,1,12.0,Other
 Nebius Academy,1,18.0,Other
 Nebula Partners LLC,1,41.0,Other
 NeenOpal Inc,1,27.0,Data Analyst
-2a Vara civil do Foro da Comarca de Canela,1,12.0,Other
+3 Sixty Padel,1,34.0,HR
 Neodent,1,21.0,HR
 Neoenergia,1,23.0,Data Engineer
-2innovate,1,24.0,HR
+4sight Metrics,1,16.0,Other
 Nessentis,1,17.0,HR
 Net Temps Limited,1,12.0,Other
 NetExpat,1,19.0,Consultant
-NetForemost,1,34.0,HR
+NetForemost,1,31.0,HR
 Netex Group,1,15.0,Other
-Netfive,1,25.0,Other
 Netrin,1,31.0,HR
 Neue Narrative,1,12.0,Other
 Neumüller Elektronik GmbH,1,8.0,Other
 NeuronUP,1,15.0,Other
-NewCombin,1,21.0,Other
 Newnew | Educação Corporativa,1,12.0,Other
 Newsela,1,29.0,Data Engineer
 NewtonX,1,18.0,Other
 NexCen Global Inc,1,22.0,Other
-3 Sixty Padel,1,34.0,HR
+4zOOm - Business Solution,1,16.0,Other
 Next Dot,1,21.0,Consultant
 Nexton,1,21.0,Other
 Nibo,1,18.0,Other
@@ -1342,11 +1350,11 @@ Nomad,1,27.0,Data Engineer
 Nomad Career,1,18.0,Other
 Norah,1,12.0,Other
 Nord Group,1,12.0,Other
-4sight Metrics,1,16.0,Other
-Nortempo,1,31.0,Consultant
+500 Designs,1,8.0,Other
+Nortempo,1,28.0,Consultant
 Nortrez,1,23.0,Other
 Nouvel Talent,1,25.0,Consultant
-nexwave,1,27.0,Consultant
+7-Eleven,1,23.0,Data Engineer
 "Novus International, Inc",1,34.0,HR
 NuageIT,1,54.0,Data Engineer
 Nurtur,1,22.0,Other
@@ -1375,17 +1383,19 @@ Odebrecht Angola,1,8.0,Other
 Oderço,1,12.0,Other
 Odido Nederland,1,8.0,Other
 OdontoCompany,1,12.0,Other
-Oktana Corporation,1,15.0,Other
+Odontoprev,1,15.0,Consultant
+Oktana Corporation,1,12.0,Other
 OllyGarden,1,19.0,Software Engineer
-Omie,1,18.0,Other
+Omie,1,14.0,Other
 OmniChat,1,23.0,Data Engineer
 Omnicom Global Solutions,1,19.0,Other
 Omnidocs,1,28.0,HR
-OnHires,1,23.0,Other
+OnHires,1,20.0,Other
 One Life Legacy,1,25.0,Other
 OneCareer GmbH,1,22.0,Other
 OneSource,1,18.0,Other
 Onix,1,44.0,Other
+OnlyPay,1,18.0,Other
 Oolooroo.io,1,12.0,Other
 Open (YC W24),1,25.0,HR
 OpenCON,1,8.0,Other
@@ -1410,31 +1420,33 @@ PBCN GmbH,1,18.0,Other
 PD on Demand GmbH,1,44.0,Other
 PKF Attest,1,17.0,HR
 PKF Uruguay,1,37.0,Other
-notro,1,19.0,Other
-openEuler,1,8.0,Other
+8020REI,1,18.0,Other
+@Hyatt Ziva Madeira Resort Spa & Marina,1,12.0,Other
 PROTA,1,24.0,HR
 "PSA Sines, S.A",1,32.0,HR
 PSL Investments,1,35.0,Other
 PT Global,1,28.0,Other
 PT. Tumbuh Bersama Nano (Nanovest — a Sinarmas Group Company),1,24.0,Data Analyst
 Pacífico Seguros,1,12.0,Other
-over99,1,35.0,Data Engineer
+A S PSICOLOGIA E TREINAMENTOS LTDA,1,15.0,Consultant
+Panduit,1,18.0,Other
 Paperlike,1,19.0,Other
 Papp Logistics,1,22.0,HR
 "Paragon Films, Inc. México",1,27.0,HR
 Paraná Banco S/A,1,18.0,Other
 Parcelhero,1,18.0,Other
 Parlamento del Uruguay,1,50.0,Consultant
-peoplepath.io,1,29.0,Other
+teceo,1,27.0,Data Engineer
 Pasquali Solution,1,8.0,Other
 PassCard,1,22.0,Other
 Patton Labs Inc,1,27.0,Project / Program Manager
 Paul Marlex,1,25.0,Other
 Pax8,1,19.0,Consultant
 Payoneer,1,20.0,Data Analyst
-"pml, we know how",1,22.0,Other
+nexwave,1,27.0,Consultant
 PdH | Partei der Humanisten,1,12.0,Other
-praktischArzt & Medi-Karriere – pA Medien GmbH,1,12.0,Other
+notro,1,19.0,Other
+PearlHire,1,12.0,Other
 Pecege,1,8.0,Other
 Pedersen & Partners,1,22.0,Consultant
 Pensecom - Inteligência em Recursos Humanos,1,21.0,HR
@@ -1445,22 +1457,21 @@ Peoplematters,1,19.0,Consultant
 Peoples Republic,1,15.0,Consultant
 Performa_IT,1,25.0,Project / Program Manager
 Peritus Partners,1,8.0,Other
-prismat GmbH,1,25.0,Consultant
-PersonalGlobal,1,21.0,HR
+openEuler,1,8.0,Other
 Personalhaus Gruppe,1,12.0,Other
 Perspective Dragon,1,16.0,Other
 Pertemps Network Group,1,15.0,Consultant
 Pessoa Jurídica,1,15.0,Consultant
 Peter Park,1,20.0,Other
-remoti,1,25.0,Consultant
-richter & heß VERPACKUNGEN,1,13.0,Other
-siimpl,1,26.0,Other
+over99,1,35.0,Data Engineer
+peoplepath.io,1,29.0,Other
+"pml, we know how",1,22.0,Other
 Petz,1,21.0,HR
 Pharmacity,1,12.0,Other
 Pharmbills,1,15.0,Other
 Phenom,1,21.0,Other
-softgarden e-recruiting GmbH,1,18.0,Other
-talentsconnect Group,1,16.0,Other
+praktischArzt & Medi-Karriere – pA Medien GmbH,1,12.0,Other
+prismat GmbH,1,25.0,Consultant
 PiSA Farmacéutica,1,21.0,Other
 PinkRoccade Local Government,1,8.0,Other
 Pipol | Recrutamento Industrial,1,12.0,Other
@@ -1480,26 +1491,27 @@ Pontifícia Universidade Católica do Rio Grande do Sul,1,12.0,Other
 PortX,1,52.0,Consultant
 Posedio GmbH,1,23.0,Other
 Positivo S+,1,8.0,Other
-tapi,1,15.0,Other
+remoti,1,25.0,Consultant
 Postbeamtenkrankenkasse,1,8.0,Other
 Potencializando Talentos,1,8.0,Other
-teceo,1,27.0,Data Engineer
+richter & heß VERPACKUNGEN,1,13.0,Other
 PragetX,1,30.0,HR
 PreVanta,1,12.0,Other
 Prefeitura Municipal de Aporé,1,8.0,Other
 Prefeitura Municipal de Entre Rios,1,8.0,Other
-500 Designs,1,8.0,Other
+siimpl,1,26.0,Other
 Prefeitura Municipal de Guarujá,1,8.0,Other
 Prefeitura Municipal de Lauro de Freitas,1,9.0,Other
 Prefeitura Municipal de Poços de Caldas,1,19.0,Consultant
 Prefeitura Municipal de Simão Pereira,1,8.0,Other
-AMBAAR LOUNGE,1,15.0,Other
+softgarden e-recruiting GmbH,1,18.0,Other
 Presence Tecnologia,1,11.0,Other
 Prevemt Medicina Do Trabalho,1,8.0,Other
+PrideNow,1,28.0,Other
 PrimeHire,1,27.0,Machine Learning / AI
 Priner,1,7.0,Other
 Prisma People Strategy & Intelligence,1,12.0,Other
-Privacy,1,19.0,Product
+Privacy,1,16.0,Product
 Privado,1,12.0,Other
 Privat,1,8.0,Other
 Private Practice,1,15.0,Other
@@ -1509,7 +1521,7 @@ Procuradoria Geral do Município de Niterói,1,12.0,Other
 Productized,1,12.0,Other
 Professor Particular,1,12.0,Other
 Profile,1,8.0,Other
-AMEWAS,1,16.0,Other
+talentsconnect Group,1,16.0,Other
 Projeto Coragem Singular,1,8.0,Other
 Projjetta Tecnologia em Dados,1,27.0,Data Engineer
 PropelPeople,1,34.0,HR
@@ -1526,11 +1538,11 @@ Psicóloga Maria Eduarda D' Errico,1,8.0,Other
 Psicóloga Mayara Carvalho,1,15.0,Other
 Publicis Groupe,1,18.0,Other
 Pythian,1,35.0,Data Engineer
-Pyyne,1,25.0,Consultant
+Pyyne,1,22.0,Consultant
 Pão da praça,1,8.0,Other
 Q-logic,1,8.0,Other
 QPC Engenharia,1,8.0,Other
-AMKmotion GmbH + Co KG,1,23.0,Other
+tapi,1,15.0,Other
 QUALIFICAR TI,1,12.0,Other
 Qive,1,27.0,Data Engineer
 "Qorvo, Inc",1,24.0,HR
@@ -1538,47 +1550,46 @@ Quala,1,15.0,Other
 Qualitas Electronics Ltd,1,27.0,Other
 Qualitti Sviluppo Srl,1,12.0,Other
 Quality Temporal (ETT),1,12.0,Other
-ANWB,1,18.0,Other
+nectar,1,30.0,Data Scientist
 Quantum,1,21.0,HR
 Quantum Rise,1,12.0,Other
 QuantumVoice,1,24.0,Data Scientist
-APARC - Atharva Planning And Research Centre Pvt. Ltd,1,27.0,HR
+AMX CONTENIDO / CMI,1,18.0,Other
 Questrade Financial Group,1,23.0,Other
-R Systems,1,31.0,Other
+R Systems,1,27.0,Other
 R+V Versicherung,1,8.0,Other
 R2D Top Talent,1,12.0,Other
 RB SOLUÇÕES EM CAPITAL HUMANO,1,19.0,Consultant
-APSCo,1,22.0,Other
+ANWB,1,14.0,Other
 RED Innovations,1,18.0,BI Analyst
 REF Uruguay,1,50.0,Other
 REP Seguros Corporativos,1,21.0,HR
 RGM Tecnologia Inteligência e Processos,1,12.0,Other
-RH Modo Atleta I VIK,1,18.0,Other
+RH Modo Atleta I VIK,1,15.0,Other
 RHGestor By Sólides,1,15.0,Other
 RL JOB SERVICES SRL,1,17.0,HR
 RL Pacheco,1,12.0,Other
 RM Gente e Gestão,1,30.0,HR
 RMT Labs SA,1,12.0,Other
-ROCA Solidez en Recursos Humanos,1,27.0,HR
+ROCA Solidez en Recursos Humanos,1,24.0,HR
 ROCKSOLID Personalvermittlung GmbH,1,19.0,Consultant
 RSA Serviços Inteligentes,1,15.0,Consultant
 RSC Comunicativa,1,12.0,Other
 RSM UY,1,31.0,HR
 RankMyApp,1,24.0,HR
 RapidCanvas,1,26.0,Data Scientist
-"AQUA Information Systems, Inc",1,15.0,Other
+APARC - Atharva Planning And Research Centre Pvt. Ltd,1,27.0,HR
 ReSus Consult GmbH,1,32.0,Consultant
 Rebel Talent,1,28.0,Consultant
-Rebels,1,28.0,Consultant
 RecargaPay,1,30.0,Data Engineer
 Reclame AQUI,1,17.0,HR
-ARCA Mobility as a Service,1,32.0,HR
+APSCo,1,22.0,Other
 Red Hat,1,23.0,Machine Learning / AI
 Red Sea Global,1,11.0,Other
 RedCLARA - Cooperación Latino Americana de Redes Avanzadas,1,46.0,HR
 RedScreen (Pty) Ltd,1,12.0,Other
 Rede D'Or São Luiz,1,25.0,Other
-Rede de Farmácias São João,1,24.0,Other
+Rede de Farmácias São João,1,21.0,Other
 Redux,1,24.0,HR
 Reed in Partnership,1,27.0,HR
 Reflex Aerospace,1,18.0,Other
@@ -1594,6 +1605,7 @@ Ressignifique Núcleo de Psicologia,1,8.0,Other
 Revelo,1,16.0,Other
 Revent Labs,1,27.0,HR
 Revenus,1,25.0,Other
+Revert,1,20.0,Data Scientist
 Revive Inmuebles,1,12.0,Other
 Reward Gateway,1,15.0,Other
 Rh Ribeirão,1,12.0,Other
@@ -1608,44 +1620,45 @@ Roland Berger Strategy Consultants,1,18.0,Other
 Romeu,1,8.0,Other
 Rooftop.dev,1,15.0,Other
 Rove,1,12.0,Other
-ARIMANY Selecció de Talent,1,15.0,Consultant
+"AQUA Information Systems, Inc",1,15.0,Other
 Roylo Partners,1,22.0,Other
 Ruby Labs,1,27.0,Project / Program Manager
 RulesIQ,1,12.0,Other
 S-Communication Services GmbH,1,8.0,Other
 SAFR from RealNetworks,1,28.0,Data Scientist
-SANDRO,1,12.0,Other
+SANDRO,1,8.0,Other
 SARIA Group,1,20.0,Other
-ARRQ,1,8.0,Other
+ARCA Mobility as a Service,1,32.0,HR
 SBB CFF FFS,1,12.0,Other
 SBH Nordost GmbH,1,8.0,Other
 SCOH,1,8.0,Other
 SCP SINTERSA,1,12.0,Other
 SCUBE,1,15.0,Other
 SD Consultora de Empresas Familiares,1,19.0,Consultant
-SD Worx,1,24.0,HR
+SD Worx,1,21.0,HR
 SE Mentor Solutions,1,27.0,HR
 SEK Security Ecosystem Knowledge,1,37.0,Other
 SEO International Conference Karachi,1,29.0,Other
 SET University,1,20.0,Other
+SIC Sanatorio Integrado de la Ciudad,1,18.0,Other
 "SIMaP, Grenoble",1,8.0,Other
 SKF Group,1,17.0,HR
 SLC Agrícola S/A,1,29.0,Data Engineer
 SOFTGAMES,1,29.0,HR
 SOLCOM GmbH,1,23.0,Other
 SOLVACE,1,21.0,HR
-"ARTE - Agência para a Reforma Tecnológica do Estado, IP",1,23.0,Other
+ARIMANY Selecció de Talent,1,15.0,Consultant
 SP+ Escolas,1,12.0,Other
 SPRO,1,34.0,Consultant
 SQUARE CITY,1,15.0,Consultant
-SQUARERA,1,24.0,HR
+SQUARERA,1,21.0,HR
 SRCon GmbH,1,19.0,Consultant
 SRI Negocios & Tecnologia,1,19.0,Consultant
 SSR Mining Inc,1,18.0,Other
 ST Consultores,1,12.0,Other
 STRONG Conveniada FGV,1,8.0,Other
 STX Next,1,20.0,Other
-ARTEMIS Augenkliniken und med. Versorgungszentren,1,12.0,Other
+ARRQ,1,8.0,Other
 SUSONITY,1,8.0,Other
 SVPM | Mineração Serra Verde,1,15.0,Consultant
 Safra,1,8.0,Other
@@ -1677,9 +1690,11 @@ Search Latinoamérica,1,40.0,Other
 Searchtalent GmbH,1,12.0,Other
 Seatrium,1,8.0,Other
 "Seguros, tendencias y riesgos SURA",1,13.0,Other
-ASSA ABLOY Group,1,12.0,Other
+"ARTE - Agência para a Reforma Tecnológica do Estado, IP",1,23.0,Other
 Selbständig,1,12.0,Other
-Self-Employed / Independent Project,1,25.0,Software Engineer
+ARTEMIS Augenkliniken und med. Versorgungszentren,1,12.0,Other
+Self-Employed / Independent Project,1,22.0,Software Engineer
+ASSA ABLOY Group,1,12.0,Other
 SellCord,1,31.0,HR
 Selpe Gente e Gestão,1,24.0,HR
 ASSERTIZE,1,8.0,Other
@@ -1711,20 +1726,20 @@ Simpress,1,24.0,HR
 Singit,1,34.0,HR
 Sistema FIERGS,1,12.0,Other
 Sitel Panamá,1,12.0,Other
-Sixtema,1,30.0,Data Engineer
+Sixtema,1,27.0,Data Engineer
 Skalbach GmbH,1,8.0,Other
 Skyone,1,27.0,Data Engineer
 Skyway Equities,1,25.0,Other
-Smarkets Inteligência de Negócios,1,29.0,Other
+Smarkets Inteligência de Negócios,1,26.0,Other
 Smart Fit,1,22.0,Other
 SmartChoice International Limited,1,31.0,Consultant
 SmartSites 💡,1,18.0,Other
 Smartsheet,1,12.0,Other
 "SnapDragon Associates, LLC",1,13.0,Other
-SoEnergy International,1,28.0,Other
+SoEnergy International,1,25.0,Other
 Social Bloom,1,22.0,Other
 Sociedade Beneficência e Caridade Lajeado - Hospital Bruno Born (HBB),1,8.0,Other
-AVEDIAN,1,18.0,Other
+AVEDIAN,1,15.0,Other
 SoftProject,1,22.0,Other
 SoftSystem IT,1,24.0,Data Analyst
 Softonic,1,12.0,Other
@@ -1732,6 +1747,7 @@ AXA Global Business Services (AXA GBS),1,12.0,Other
 AXIA Energia,1,12.0,Other
 Sokobox,1,12.0,Other
 Solar Coca-Cola,1,18.0,Other
+Solu,1,37.0,HR
 SolvePlan,1,23.0,Other
 Solventum,1,18.0,Other
 Solvex Solutions,1,30.0,HR
@@ -1739,6 +1755,7 @@ Somos 360 SAS,1,23.0,Other
 Sonae,1,31.0,HR
 Sonde3,1,31.0,HR
 Sopra Steria,1,21.0,HR
+Sopra Steria Next,1,24.0,Data Scientist
 Sorenson Communications,1,33.0,Data Engineer
 Sotreq S/A,1,15.0,Consultant
 Source Resources Pvt. Limited,1,15.0,Other
@@ -1773,7 +1790,7 @@ Storware,1,20.0,Other
 Strata Community Insurance,1,27.0,Product
 Strategio,1,21.0,Other
 Strategy Institute,1,27.0,Project / Program Manager
-Stratis | Strategic Impact Solutions,1,18.0,Other
+Stratis | Strategic Impact Solutions,1,15.0,Other
 Stratum Group,1,25.0,Consultant
 Academia do Dev,1,8.0,Other
 Studio Lyra,1,15.0,Other
@@ -1804,7 +1821,7 @@ Synca,1,25.0,Software Engineer
 Syneos Health via AMS,1,20.0,Other
 Synergie Executive,1,27.0,Operations
 Syone,1,18.0,Other
-Access Bank Plc,1,27.0,Data Engineer
+Access Bank Plc,1,23.0,Data Engineer
 SysPay,1,22.0,Other
 Síclo,1,18.0,Other
 TAKING,1,30.0,HR
@@ -1817,8 +1834,6 @@ Accion Labs,1,27.0,HR
 TEILOR,1,32.0,HR
 TEMAK S.A,1,31.0,HR
 TEN - Torres Eólicas do Nordeste,1,18.0,Other
-TEN Information Management GmbH,1,8.0,Other
-THACO Group,1,21.0,Other
 THRYVE,1,18.0,Other
 TI Automotive,1,12.0,Other
 TIMIA,1,27.0,Data Analyst
@@ -1880,10 +1895,11 @@ Addi,1,18.0,Other
 Terra,1,31.0,HR
 Texas Psychiatry Group,1,27.0,Machine Learning / AI
 Texfyt | Nonwoven,1,31.0,HR
+The Best EOR,1,12.0,Other
 The Champions Burger,1,31.0,HR
 The Citco Group Limited,1,22.0,Other
 The Electric Factory,1,34.0,HR
-Ademicon,1,22.0,Other
+Aden,1,12.0,Other
 The Lubrizol Corporation,1,20.0,Data Analyst
 The Maxol Group,1,24.0,Data Analyst
 The Squadron Israel - Hatayeset,1,15.0,Other
@@ -1897,10 +1913,11 @@ Thrivea,1,12.0,Other
 Tibber,1,19.0,Other
 Tiendamia,1,22.0,Other
 Tiger Resourcing Group,1,15.0,Consultant
-Aden,1,12.0,Other
+Adm Moveis E Design,1,12.0,Other
 Tikiwe® - Taschen aus Kork,1,8.0,Other
 Tilburg University,1,12.0,Other
-Adm Moveis E Design,1,12.0,Other
+Timbi,1,31.0,Consultant
+Advantest,1,21.0,Consultant
 Timing,1,8.0,Other
 Tintschl Unternehmensgruppe,1,21.0,Consultant
 Tismart,1,21.0,HR
@@ -1919,7 +1936,6 @@ Total Atacado,1,8.0,Other
 Toteat,1,25.0,Other
 Trade Republic,1,20.0,Operations
 Trading 212,1,14.0,Other
-TraffHub,1,16.0,Other
 Transbacini,1,8.0,Other
 Transcodezy IT Solutions Pvt. Ltd,1,28.0,Other
 Transportes Cavalinho,1,8.0,Other
@@ -1931,13 +1947,14 @@ Trend People,1,8.0,Other
 Trendyol Group,1,23.0,Other
 Tres Pi | Full-service Agency,1,25.0,Other
 Tribanco,1,20.0,Data Analyst
-TribuESK,1,18.0,Other
+TribuESK,1,15.0,Other
+Tribus,1,25.0,Consultant
 Tricura Insurance Group,1,23.0,Other
-Advantest,1,21.0,Consultant
+Adylog S.A.S,1,12.0,Other
 Trillion Health and Hormone,1,28.0,HR
 Trimble Inc,1,19.0,Consultant
 Troocoo,1,15.0,Consultant
-TruelyCrack,1,30.0,HR
+TruelyCrack,1,27.0,HR
 Trupropel,1,31.0,HR
 TrustYou,1,16.0,Other
 Truviq Systems,1,18.0,Other
@@ -1949,18 +1966,18 @@ Turivius,1,23.0,Other
 Turn2C Consórcio Inteligente,1,11.0,Other
 Turner & Townsend,1,21.0,Consultant
 Türkerler Holding,1,12.0,Other
+UADE,1,18.0,Other
 "UNESP - Universidade Estadual Paulista ""Júlio de Mesquita Filho""",1,8.0,Other
 UNI7 - Centro Universitário 7 de Setembro,1,12.0,Other
 UNICA SEGURANÇA PATRIMONIAL,1,18.0,Other
 UNITED MACHINING,1,28.0,HR
-UPA 24H - Unidade de Pronto Atendimento,1,8.0,Other
 UPS,1,42.0,Other
 UPS Capital®,1,12.0,Other
 UPTURNco,1,25.0,Consultant
 Ufes - Universidade Federal do Espírito Santo,1,8.0,Other
 Ultra,1,22.0,Other
 Umbilical Advanced,1,22.0,Consultant
-Adylog S.A.S,1,12.0,Other
+Adão Imóveis,1,17.0,HR
 Under Labz,1,19.0,Other
 Understanding Solutions,1,27.0,Consultant
 UniFirst Corporation,1,24.0,HR
@@ -1978,7 +1995,7 @@ Universidad San Sebastián,1,12.0,Other
 Universidad de 'San Andrés',1,17.0,Data Analyst
 Universidad de los Andes (CL),1,21.0,HR
 Universidad del Alba,1,12.0,Other
-Adão Imóveis,1,17.0,HR
+Aegro,1,20.0,Product
 Universidade Presbiteriana Mackenzie,1,8.0,Other
 Universitas Negeri Makassar,1,8.0,Other
 Universitat Carlemany,1,8.0,Other
@@ -1992,13 +2009,12 @@ V.tal,1,20.0,Data Analyst
 VARTEQ Inc,1,33.0,Data Engineer
 VBSO Advogados,1,27.0,HR
 VENTURIA LEGAL,1,18.0,Other
-VExpenses,1,15.0,Other
+VExpenses,1,11.0,Other
 VF Tecnologia e Inovação,1,20.0,Consultant
 VFS Global,1,27.0,HR
 VFX Financial,1,20.0,Other
 VINCI Energies,1,31.0,Other
 VMK Holding,1,12.0,Other
-VORA,1,12.0,Other
 VR Bank Schleswig-Holstein Mitte,1,12.0,Other
 Valcon,1,21.0,HR
 Valense,1,21.0,Other
@@ -2008,7 +2024,7 @@ Vallora Benefícios,1,12.0,Other
 Valor Real Empreendimentos,1,8.0,Other
 Valora,1,12.0,Other
 Value2Biz,1,31.0,Other
-Aegro,1,20.0,Product
+Aerospace,1,8.0,Other
 Van Hyde International,1,27.0,Operations
 Van den Oudenrijn B.V,1,8.0,Other
 VanesaRinaudo.HR,1,19.0,Consultant
@@ -2018,37 +2034,39 @@ Various Companies,1,12.0,Other
 "Vasquez Law Firm, PLLC",1,27.0,HR
 Vehicle Certification Agency (VCA),1,24.0,HR
 Veho,1,12.0,Other
-Veloe,1,27.0,Data Engineer
+Veloe,1,23.0,Data Engineer
 Venfilter,1,27.0,HR
 Ventura TRAVEL,1,27.0,Data Engineer
 Venture People,1,21.0,Consultant
 VentureLink,1,25.0,Consultant
 Verena Laumayer,1,12.0,Other
-Aerospace,1,8.0,Other
+Affinity,1,12.0,Other
 VeriiPro,1,22.0,Other
-Affinity,1,15.0,Other
+Aggreko,1,23.0,Project / Program Manager
 Verizon,1,23.0,Data Engineer
 Vernalha Pereira,1,12.0,Other
 Vertex Agility Ltd,1,19.0,Consultant
 Vertical Falls LLC,1,23.0,Other
-Aggreko,1,23.0,Project / Program Manager
 Agile Inc,1,12.0,Other
 Vialaser Depilação,1,12.0,Other
 Viamafia Fitness,1,18.0,Other
 VinDynamics,1,31.0,HR
 Vintelix,1,34.0,HR
+Virbac,1,27.0,HR
 Viridien,1,12.0,Other
 Virtu GNL,1,12.0,Other
 Virtual Internships,1,15.0,Other
 Agile Lab,1,23.0,Data Engineer
-Visible,1,15.0,Other
+Visible,1,11.0,Other
+Vision & Marketing,1,18.0,Other
 Vision Cybersecurity,1,12.0,Other
+Visma,1,31.0,Consultant
 Visser & Van Baars,1,21.0,Other
 Visure Solutions,1,31.0,HR
 Vitoria - Recursos Humanos,1,30.0,HR
 Viva Republica (Toss),1,12.0,Other
 Viventium,1,31.0,HR
-Vocalis S.A.S,1,56.0,HR
+Vocalis S.A.S,1,53.0,HR
 Volis,1,28.0,Product
 Voltic Inc,1,23.0,HR
 Voluble Systems LLC,1,41.0,Other
@@ -2071,6 +2089,7 @@ WTime Business Intelligence,1,17.0,HR
 WV Eventos LTDA,1,12.0,Other
 Wallpaper & Carpets Distributors (M) Sdn Bhd,1,27.0,HR
 Wand,1,32.0,HR
+Warbel S.A,1,29.0,Other
 Warren Investimentos,1,26.0,Data Engineer
 Wazo International,1,18.0,Other
 We Are Fiber,1,23.0,Other
@@ -2078,7 +2097,7 @@ We Are Pipol,1,21.0,HR
 WeCogno,1,18.0,Other
 Weatherford,1,8.0,Other
 Webmotors,1,21.0,HR
-Agro Pitangueira,1,15.0,Other
+Agrofel,1,20.0,Other
 Wellz by Wellhub,1,12.0,Other
 Wenger & Watson Inc,1,15.0,Consultant
 Werving op Maat,1,21.0,Consultant
@@ -2086,32 +2105,32 @@ West Monroe,1,15.0,Other
 Westcoaching,1,8.0,Other
 Wheel the World,1,32.0,HR
 WhyBrilliant,1,19.0,Consultant
-Agrofel,1,20.0,Other
+Agência FG,1,8.0,Other
 Wird,1,12.0,Other
 WirtschaftsTreuhand GmbH,1,31.0,HR
 Wizards of the Coast,1,25.0,Consultant
 Wizdaa,1,18.0,Other
 Wonga,1,12.0,Other
-Woodside Energy India,1,25.0,Other
+Woodside Energy India,1,22.0,Other
 WorkIT,1,22.0,Other
-Workstream,1,15.0,Other
+Workstream,1,12.0,Other
 Woxer,1,20.0,Other
 WuXi Biologics,1,32.0,HR
-Wylinka,1,21.0,Other
-Wyndham Garden,1,34.0,HR
+Wylinka,1,18.0,Other
+Wyndham Garden,1,31.0,HR
 Württembergische Versicherung,1,12.0,Other
-XERIDIA,1,27.0,HR
+XERIDIA,1,24.0,HR
 XRAYS TRADING,1,12.0,Other
 XSITE Segurança da Informação,1,18.0,Other
 Xcellent Talents,1,8.0,Other
 Xebia,1,33.0,Data Engineer
 XentraView,1,15.0,Other
-Agência FG,1,8.0,Other
+Agência LK,1,20.0,Data Analyst
 Xpantion,1,21.0,HR
 Xperiun,1,34.0,BI Analyst
 XpertScout GmbH,1,25.0,Consultant
 Xtedder,1,25.0,Other
-Agência LK,1,20.0,Data Analyst
+Ahmedia,1,22.0,Other
 YHA Australia,1,22.0,Other
 Yahoo,1,12.0,Other
 Yalla Car - Aluguel de Carros,1,12.0,Other
@@ -2129,13 +2148,14 @@ ZF Group,1,11.0,Other
 ZTRIC India Pvt Ltd,1,23.0,Other
 Zaelot,1,26.0,Other
 ZapSign,1,21.0,Other
-Ahmedia,1,22.0,Other
+Ajuntament de Palma,1,8.0,Other
 Zeta Dados,1,25.0,Other
 ZeuZ,1,31.0,HR
-Zillow,1,28.0,Other
+Zillow,1,25.0,Other
 Zinier,1,25.0,Consultant
+Zipher,1,12.0,Other
 Zixbe,1,19.0,Other
-Zocius Integración y Servicios,1,27.0,HR
+Zocius Integración y Servicios,1,24.0,HR
 Zortify,1,25.0,Other
 Zubale,1,13.0,Other
 abtis,1,25.0,Consultant
@@ -2143,25 +2163,24 @@ acaso,1,16.0,Other
 adaption,1,8.0,Other
 addendum Pro,1,24.0,Operations
 adorsys,1,20.0,Other
-Ajuntament de Palma,1,8.0,Other
-ambass GmbH,1,18.0,Other
+Akad Seguros,1,8.0,Other
 apoprojekt,1,22.0,Other
 area51,1,22.0,Other
 artax,1,23.0,Other
-Akad Seguros,1,8.0,Other
+Aktios,1,31.0,Consultant
 astara,1,20.0,Other
 atelier TILIJA,1,19.0,Other
 axity,1,37.0,Consultant
 bSide,1,12.0,Other
 backlgrs,1,12.0,Other
-Aktios,1,31.0,Consultant
+"Akvelon, Inc",1,34.0,HR
 barrahache,1,19.0,Consultant
 beecrowd,1,19.0,Other
-"Akvelon, Inc",1,34.0,HR
+AkzoNobel,1,18.0,Other
 bindan.group GmbH & Co. KG,1,12.0,Other
 capacura,1,9.0,Other
 centrovital Hotel * Spa & Sportclub,1,18.0,Other
-AkzoNobel,1,18.0,Other
+Albert Heijn,1,8.0,Other
 chreative,1,19.0,Consultant
 comblack,1,22.0,Other
 connexta,1,12.0,Other
@@ -2170,8 +2189,8 @@ contagi,1,14.0,Other
 coretress GmbH,1,8.0,Other
 cuBec,1,12.0,Other
 dbm contact center,1,15.0,Other
-deRecruiters.com,1,24.0,Other
-Albert Heijn,1,8.0,Other
+deRecruiters.com,1,21.0,Other
+Alerta Médica,1,21.0,HR
 descargo.es,1,18.0,Other
 develop,1,19.0,Consultant
 dhauz,1,35.0,Data Engineer
@@ -2179,8 +2198,8 @@ dnata,1,20.0,HR
 dr. Fuchs Personalberatung,1,31.0,Other
 e-Safer,1,12.0,Other
 eleQtron GmbH,1,18.0,HR
-emnify,1,35.0,Data Engineer
-Alerta Médica,1,24.0,HR
+emnify,1,31.0,Data Engineer
+Alexander Thamm [at],1,8.0,Other
 epostbox,1,19.0,Consultant
 finbyte,1,17.0,HR
 five degrees,1,8.0,Other
@@ -2192,7 +2211,7 @@ gente seguradora,1,18.0,Other
 go2Win,1,17.0,HR
 hamrah mobin maham arvand,1,24.0,Data Scientist
 harpix,1,24.0,HR
-hub xp,1,29.0,Data Engineer
+Algar Telecom,1,33.0,Data Engineer
 hyrUP GmbH,1,19.0,Consultant
 i-Link Solutions,1,29.0,Data Engineer
 i9edu,1,30.0,Data Engineer
@@ -2200,6 +2219,7 @@ iBASIS,1,27.0,HR
 iBoost Talent Raleigh South,1,22.0,Other
 iCube - Direction informatique Castel,1,18.0,Other
 iO Associates,1,30.0,Consultant
+iU Corp,1,24.0,HR
 iUNGO,1,17.0,HR
 ieTeam Consultores,1,15.0,Consultant
 ilegra,1,17.0,HR
@@ -2218,36 +2238,35 @@ marco,1,21.0,HR
 mattilda,1,24.0,HR
 micro1,1,12.0,Other
 moOngy,1,27.0,Project / Program Manager
-nectar,1,30.0,Data Scientist
-4zOOm - Business Solution,1,16.0,Other
+Algo,1,21.0,HR
 toom Baumarkt,1,8.0,Other
 tweeaconnect,1,11.0,Other
 univativ GmbH,1,25.0,Consultant
 valantic,1,25.0,Other
 voize,1,12.0,Other
-wehandle,1,26.0,Data Scientist
-yampa - Gestão Financeira,1,8.0,Other
+yampa - Gestão Financeira,1,17.0,HR
 yellow.rec,1,25.0,Other
 ®CS Global IT ☁,1,43.0,Data Engineer
-Árbore Engenharia,1,20.0,HR
+ÁUREA MANAGEMENT,1,18.0,Other
+É Nóis,1,8.0,Other
 Самозайнятий,1,11.0,Other
-نشریه سامانه نو | New Samaneh Magazine,1,15.0,Other
+نشریه سامانه نو | New Samaneh Magazine,1,12.0,Other
 金风科技,1,8.0,Other
 카카오픽코마 (kakaopiccoma),1,31.0,HR
-8020REI,1,18.0,Other
-7-Eleven,1,23.0,Data Engineer
-A S PSICOLOGIA E TREINAMENTOS LTDA,1,15.0,Consultant
-Alexander Thamm [at],1,8.0,Other
-AA Euro Group,1,15.0,Consultant
+tilli,1,15.0,Other
+AMKmotion GmbH + Co KG,1,23.0,Other
 AB Mauri Uruguay (Fleischmann - Terry),1,56.0,HR
-Algar Telecom,1,33.0,Data Engineer
+Algoworks,1,12.0,Other
 ADEPARA,1,12.0,Other
 ADMIRAL Group,1,21.0,HR
 ADVANCED SCHEMA,1,20.0,Other
 AE Talents Group Inc,1,27.0,HR
 AEP Talento,1,12.0,Other
-Algo,1,21.0,HR
+Alianzo,1,17.0,HR
 AK Business Intelligence LLC,1,15.0,Consultant
 ALLPS,1,25.0,Other
 ALOIA AEROSPACE INC,1,8.0,Other
 ALTAVE,1,17.0,HR
+AMBAAR LOUNGE,1,15.0,Other
+AMEWAS,1,16.0,Other
+AA Euro Group,1,15.0,Consultant

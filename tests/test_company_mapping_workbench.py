@@ -202,3 +202,22 @@ def test_workbench_handles_empty_needs_mapping_backlog(tmp_path, monkeypatch):
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))
+
+
+def test_workbench_counts_but_never_ranks_placeholder_employers(tmp_path, monkeypatch):
+    import src.company_mapping_workbench as w
+    monkeypatch.setattr(w, "OUTPUTS_DIR", tmp_path)
+    monkeypatch.setattr(w, "PRIVATE_DIR", tmp_path / "private")
+    monkeypatch.setattr(w, "OVERRIDES_YML", tmp_path / "does_not_exist.yml")
+
+    base = _synthetic_df()
+    extra = base.head(2).copy()
+    extra["company_clean"] = ["Autónomo", "Self-employed"]
+    extra["full_name"] = ["Fake Freelancer One", "Fake Freelancer Two"]
+    df = pd.concat([base, extra], ignore_index=True)
+
+    result = run_company_mapping_workbench(df)
+    names = {c["company_name"] for c in result["companies"]}
+    assert "Autónomo" not in names and "Self-employed" not in names
+    assert result["summary"]["placeholder_employer_contacts"] == 2
+    assert result["summary"]["needs_mapping_total"] == len(df)

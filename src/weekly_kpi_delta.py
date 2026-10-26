@@ -192,10 +192,14 @@ def _weekly_diagnosis(kpi_df: pd.DataFrame, current: dict) -> dict:
     allocation_note = "insufficient movement this week to assess 90/10 allocation"
     if (latam_us_total + spain_delta) > 0:
         latam_us_share = round(latam_us_total / (latam_us_total + spain_delta) * 100, 1) if (latam_us_total + spain_delta) else 0
-        on_track = latam_us_share >= 80
+        # Net bucket deltas mix new connections with reclassified existing
+        # contacts, so they cannot judge the 90/10 OUTREACH split — that is
+        # measured on new connections only (Action Plan Progress strategy mix).
+        # (This stage runs before action_plan_progress.py, so it only points there.)
         allocation_note = (
-            f"this week's new LATAM/USD+US-nearshore growth is {latam_us_share}% of combined "
-            f"LATAM/US/Spain-EU growth ({'on track' if on_track else 'below'} the 90/10 target)"
+            f"net LATAM/USD+US-nearshore bucket change is {latam_us_share}% of combined "
+            f"LATAM/US/Spain-EU net change (includes reclassified existing contacts); the 90/10 "
+            f"outreach split is measured on new connections in Action Plan Progress (Strategy Mix)"
         )
 
     lr = current.get("lead_reactivation", {}) or {}
@@ -586,6 +590,26 @@ def _build_untapped_movement(previous: dict, current: dict) -> dict:
     }
 
 
+def _reconcile_untapped_activation(evolution: dict, weekly_segments: list) -> None:
+    """The "Activated This Week" card drills into the identity-level
+    activated_this_week segment, so its count must come from that same list.
+    The aggregate -Δ never_contacted estimate is net of new uncontacted
+    connections (it reads 0 whenever gross inflow exceeds activations) — kept
+    under its own name, never shown as the activation count."""
+    um = evolution.get("untapped_network_movement") or {}
+    if not um.get("tracked_since_last_snapshot"):
+        return
+    n = sum(1 for r in weekly_segments if r.get("segment") == "activated_this_week")
+    um["never_contacted_net_change_estimate"] = um.get("untapped_contacts_activated_this_week_estimate", 0)
+    um["untapped_contacts_activated_this_week"] = n
+    um["untapped_contacts_activated_this_week_estimate"] = n
+    um["activation_definition"] = (
+        "Identity-level: contacts in last snapshot's untapped pool who now have message history. "
+        "Differs from Activation Pattern Learning, which counts only contacts connected 90+ days "
+        "before their first message."
+    )
+
+
 def main():
     if not PUBLIC_JSON_OUTPUTS.exists():
         logger.error("  outputs/public_dashboard_data.json not found — run build_strategy_layer.py first.")
@@ -634,6 +658,7 @@ def main():
             OUTPUTS_DIR / "weekly_people_delta_segments.csv", index=False, encoding="utf-8-sig",
         )
     logger.info(f"  Built weekly_people_delta_segments: {len(weekly_segments)} rows")
+    _reconcile_untapped_activation(evolution, weekly_segments)
 
     # Strategic Gap drill-down Tab B — "New This Week Matching This Gap"
     _append_gap_drilldown_new_this_week(current, weekly_segments)

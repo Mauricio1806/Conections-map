@@ -52,7 +52,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.company_normalizer import normalize, canonical_display
+from src.company_normalizer import normalize, canonical_display, pooling_key
 from src.company_dictionary_enrichment import (
     LATAM_USD_LIKELY, US_CANADA_LIKELY, SPAIN_EU_LIKELY,
     GLOBAL_STAFFING, GLOBAL_CONSULTING, GLOBAL_TECH, GLOBAL_OPPORTUNITY,
@@ -174,7 +174,7 @@ def _build_message_signal_index() -> dict:
 
 def _apply_same_company_propagation(df: pd.DataFrame, needs_mask: pd.Series) -> list:
     """Mutates df in place for rows that qualify. Returns per-company audit rows."""
-    company_key = df["company_clean"].fillna("").apply(normalize)
+    company_key = df["company_clean"].fillna("").apply(pooling_key)
     resolved_mask = (
         (~df["opportunity_market_v5"].isin([NEEDS_MAPPING, LOW_VALUE])) &
         (company_key != "")

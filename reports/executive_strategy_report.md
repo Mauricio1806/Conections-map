@@ -1,26 +1,26 @@
 # Executive Strategy Report
-> Generated: **October 18, 2026**  
+> Generated: **October 26, 2026**  
 > ⚠️ *LinkedIn exports do not include location data. Market classification is inferred from company/title keywords only.*
 
 ---
 
 ## 1. Network Summary
 
-- **Total connections:** 13,474
+- **Total connections:** 13,644
 - **High-confidence inferred:** 0 (0%)
-- **Unknown market:** 11,094 (82.3%)
+- **Unknown market:** 11,238 (82.4%)
 
 | Market (V2) | Count |
 |-------------|-------|
-| Brazil | 909 |
-| LATAM USD | 433 |
-| US/Canada Nearshore | 262 |
-| Spain/EU | 69 |
-| Europe | 184 |
-| Global Staffing | 62 |
+| Brazil | 905 |
+| LATAM USD | 443 |
+| US/Canada Nearshore | 265 |
+| Spain/EU | 68 |
+| Europe | 187 |
+| Global Staffing | 63 |
 | Global Tech | 7 |
-| Global Consulting | 454 |
-| Unknown | 11,094 (82.3%) |
+| Global Consulting | 468 |
+| Unknown | 11,238 (82.4%) |
 
 ---
 
@@ -55,7 +55,7 @@
 
 ## 4. Data Quality Warning
 
-- **82.3% of your network has no market signal.**
+- **82.4% of your network has no market signal.**
 - This is normal for LinkedIn exports — location is NOT included.
 - Fix this by filling in `outputs/company_market_mapping_template.csv`.
 - Each company you map reduces UNKNOWN and improves score accuracy.

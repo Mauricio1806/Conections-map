@@ -13,7 +13,6 @@ Bravos Energía,BRAVA ENERGIA,81.5,below conservative threshold — not merged,F
 CEVA Logistics,DC LOGISTICS,84.6,below conservative threshold — not merged,False,
 CJ Recruitment,CSV RECRUITMENT,89.7,below conservative threshold — not merged,False,
 Capital Vision,CAPITAL ONE,80.0,below conservative threshold — not merged,False,
-Change Recruitment,ANT- RECRUITMENT,82.4,below conservative threshold — not merged,False,
 Cona Consultores,AR CONSULTORES,86.7,below conservative threshold — not merged,False,
 Consultant / Self-Employed,SELF-EMPLOYED CONTRACTOR,80.0,below conservative threshold — not merged,False,
 Cruzeiro do Sul Educadional S/A,CRUZEIRO DO SUL EDUCACIONAL,96.3,token_set_ratio>=90 + shared meaningful token,True,0.68
@@ -31,7 +30,6 @@ Fadel Transportes e Logística,LVA LOGÍSTICA E TRANSPORTES,89.3,below conservat
 Foco Aluguel de Carros,MOVIDA ALUGUEL DE CARROS,82.6,below conservative threshold — not merged,False,
 "Freelance, self-employed",FREELANCE | SELF-EMPLOYED,93.9,token_set_ratio>=90 + shared meaningful token,True,0.68
 FábricaDS Soluções em Tecnologia,PDG IT SOLUÇÕES EM TECNOLOGIA,82.0,below conservative threshold — not merged,False,
-GRUPO EDUCACIONAL DRUMMOND,GRUPO EDUCACIONAL PRIMUM,84.0,below conservative threshold — not merged,False,
 Gesta Soluciones en Recursos Humanos,ASCIENDE SOLUCIONES EN RECURSOS HUMANOS,85.3,below conservative threshold — not merged,False,
 Go Talent MX,OX TALENT,85.7,below conservative threshold — not merged,False,
 Gravitas Recruitment Group (Global) Ltd,GRAVITAS RECRUITMENT (UK),95.8,token_set_ratio>=90 + shared meaningful token,True,0.68
@@ -42,6 +40,7 @@ Hire International,ROSE INTERNATIONAL,88.9,below conservative threshold — not 
 Hirsch Personalberatung,KAISER PERSONALBERATUNG,82.6,below conservative threshold — not merged,False,
 IKO International,INTERNATIONAL SOS,88.2,below conservative threshold — not merged,False,
 IKONS Iberica,IKONS IBÉRICA,92.3,token_set_ratio>=90 + shared meaningful token,True,0.68
+INSTITUTO RAMA,INSTITUTO NTA,81.5,below conservative threshold — not merged,False,
 IP Soluções em RH,PREMIERE SOLUÇÕES EM RH,80.0,below conservative threshold — not merged,False,
 Innata - Soluções em Recursos Humanos,LUANDRE RH - SOLUÇÕES EM RECURSOS HUMANOS,82.1,below conservative threshold — not merged,False,
 Intertec International,INTEGRATION INTERNATIONAL,85.1,below conservative threshold — not merged,False,
@@ -52,6 +51,7 @@ LG Consultores,AGLH CONSULTORES,86.7,below conservative threshold — not merged
 LYNK Human Capital,FOX HUMAN CAPITAL,80.0,below conservative threshold — not merged,False,
 LanceSoft UAE,LANCESOFT,81.8,below conservative threshold — not merged,False,
 Mineral Resources,NEXA RESOURCES,83.9,below conservative threshold — not merged,False,
+Mondelēz International,XML INTERNATIONAL,82.1,below conservative threshold — not merged,False,
 Newnew | Educação Corporativa,SINAPSE EDUCAÇÃO CORPORATIVA,80.7,below conservative threshold — not merged,False,
 "Novus International, Inc",INTERNATIONAL SOS,88.9,below conservative threshold — not merged,False,
 Nômad Recursos Humanos,ADMITA RECURSOS HUMANOS,84.4,below conservative threshold — not merged,False,
@@ -93,8 +93,8 @@ Vitoria - Recursos Humanos,CRITERIA RECURSOS HUMANOS,86.3,below conservative thr
 WK Personalberatung GmbH,KAISER PERSONALBERATUNG,85.7,below conservative threshold — not merged,False,
 Warren Investimentos,ARGENTUM INVESTIMENTOS,85.7,below conservative threshold — not merged,False,
 Wazo International,INTERNATIONAL SOS,85.7,below conservative threshold — not merged,False,
+deRecruiters.com,DERECRUITERS,85.7,below conservative threshold — not merged,False,
 delaware International,SETA INTERNATIONAL,80.0,below conservative threshold — not merged,False,
 gente seguradora,CNP SEGURADORA,80.0,below conservative threshold — not merged,False,
 ieTeam Consultores,IDEA CONSULTORES,88.2,below conservative threshold — not merged,False,
 yampa - Gestão Financeira,AVANT GESTÃO FINANCEIRA,83.3,below conservative threshold — not merged,False,
-Árbore Engenharia,TURBOTECH ENGENHARIA,81.1,below conservative threshold — not merged,False,

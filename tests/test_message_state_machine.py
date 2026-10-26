@@ -213,3 +213,42 @@ def test_lead_category_mapping_never_shows_needs_reply_for_terminal_states():
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))
+
+
+# ── My short acknowledgement as the last message resolves the obligation ────
+def test_my_short_ack_last_resolves_but_keeps_active_process():
+    state = _run([
+        ("other", "Could you send your updated CV for this Data Engineer role?", 6),
+        ("me", "Sure, here it is — happy to discuss next steps.", 6),
+        ("other", "Thanks, I will send the confirmation, please respond ASAP.", 5),
+        ("me", "Ok", 5),
+    ], has_cv=True)
+    assert state["reply_obligation"] == "NONE"
+    assert state["process_state"] not in ("NO_RESPONSE", "LOW_VALUE")
+
+
+def test_my_emoji_only_last_does_not_resolve_open_question():
+    state = _run([
+        ("other", "Can you send your CV and salary expectations?", 3),
+        ("me", "👍", 3),
+    ], has_cv=True)
+    assert state["reply_obligation"] in ("CONFIRMED", "LIKELY")
+
+
+# ── Their courtesy closer after a CV exchange owes no reply ──────────────────
+def test_courtesy_closer_downgrades_weak_likely_to_ambiguous():
+    msgs = [
+        ("other", "Could you share your updated resume?", 4),
+        ("me", "Absolutely, attaching my most recent resume here.", 4),
+        ("other", "Thank you, I shared your CV with our team, they will be in touch?", 3),
+    ]
+    group = _mk_group(msgs)
+    turns = _build_meaningful_turns(group)
+    kwargs = dict(turns=turns, is_valuable_persona=True, has_interview_hist=False, has_cv_hist=True,
+                  priority_score=60, market_value=True, messages_from_other=2, days_since_last=3)
+    base = _analyze_conversation_state(**kwargs)
+    closer = _analyze_conversation_state(**kwargs, latest_is_courtesy_closer=True)
+    assert base["reply_obligation"] == "LIKELY"
+    assert closer["reply_obligation"] == "AMBIGUOUS"
+    assert "COURTESY_CLOSER_LATEST" in closer["state_evidence_codes"]
+    assert closer["process_state"] == base["process_state"]   # active-process signal kept

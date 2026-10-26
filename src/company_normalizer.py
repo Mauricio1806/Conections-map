@@ -177,6 +177,30 @@ def normalize(company: str) -> str:
     return text
 
 
+# Self-employment / undisclosed-employer placeholders. Contacts sharing one of
+# these are NOT colleagues, so company-level evidence pooling (same-company
+# propagation, company message aggregates, persona cohorts) must skip them.
+_PLACEHOLDER_COMPANIES = {
+    "autonomo", "autonoma", "profissional autonomo", "trabajador autonomo",
+    "self employed", "selfemployed", "freelance", "freelancer", "independent",
+    "independiente", "trabajador independiente", "consultor independente",
+    "consultor independiente", "confidential", "confidencial", "stealth",
+    "stealth mode", "stealth startup",
+}
+
+
+def is_placeholder_company(company: str) -> bool:
+    if not company or not isinstance(company, str):
+        return False
+    key = re.sub(r"[^a-z ]+", " ", _remove_accents(company.lower()))
+    return " ".join(key.split()) in _PLACEHOLDER_COMPANIES
+
+
+def pooling_key(company: str) -> str:
+    """normalize() for company-level evidence pooling — "" for placeholders."""
+    return "" if is_placeholder_company(company) else normalize(company)
+
+
 def normalize_for_search(company: str) -> str:
     """Lower-cased, accent-stripped, whitespace-collapsed form for substring search."""
     n = normalize(company)

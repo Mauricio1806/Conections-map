@@ -674,6 +674,7 @@ def _analyze_conversation_state(
     market_value: bool,
     messages_from_other: int,
     days_since_last: int,
+    latest_is_courtesy_closer: bool = False,
 ) -> dict:
     """
     Parts 1-13 — the authoritative conversation-state classifier. Scans
@@ -696,6 +697,15 @@ def _analyze_conversation_state(
         request_resolved = True
     elif latest_mine and latest_other and latest_mine["date"] and latest_other["date"]:
         request_resolved = latest_mine["date"] >= latest_other["date"]
+    # A short acknowledgement FROM ME ("Ok", "Yes") is excluded from
+    # meaningful turns, but as the very last message it still answers them —
+    # nothing is owed. process_state is unaffected, so active-process signals
+    # (CV requested, interview) are preserved.
+    if not request_resolved and turns and turns[-1]["sender"] == "me":
+        last_text = (turns[-1]["text"] or "").strip()
+        if last_text and not _is_emoji_or_reaction_only(last_text):
+            request_resolved = True
+            evidence.append("MY_ACK_IS_LATEST")
 
     # ── Scan meaningful turns in reverse for the most recent classifying signal ──
     process_state = None
@@ -800,6 +810,14 @@ def _analyze_conversation_state(
             reply_obligation = "NONE"; evidence.append("NO_ACTIONABLE_ASK")
     else:
         reply_obligation = "NONE"
+
+    # A weak-ask LIKELY whose latest message is THEIR courtesy closer ("thanks
+    # for your resume, looking forward…", "shared your CV, they'll be in
+    # touch") owes nothing — I'm awaiting them. Downgraded to AMBIGUOUS
+    # (manual review); process_state keeps the active-process signal.
+    if reply_obligation == "LIKELY" and latest_is_courtesy_closer:
+        reply_obligation = "AMBIGUOUS"
+        evidence.append("COURTESY_CLOSER_LATEST")
 
     # Recency decay (mirrors V6 Part 4 band logic) — old unresolved asks are
     # downgraded rather than left urgent forever, matching V6's existing behavior.
@@ -1851,6 +1869,13 @@ def build_conversation_intelligence(
             market_value          = market_value,
             messages_from_other   = messages_from_other,
             days_since_last       = days_since if days_since < 9999 else 9999,
+            latest_is_courtesy_closer = (
+                not last_sender_is_me
+                and resp_intel["last_message_is_generic_ack"]
+                and not resp_intel["last_message_is_substantive"]
+                and not resp_intel["last_message_is_question"]
+                and not resp_intel["last_message_is_request"]
+            ),
         )
         cooldown = _cooldown_state(conv_state["process_state"], days_since if days_since < 9999 else 9999)
 

@@ -596,6 +596,18 @@ def _build_connections_lookup(df: pd.DataFrame) -> dict:
     return lookup
 
 
+def _snapshot_reference_date() -> date:
+    """Current snapshot date (data/processed/connection_freshness.json) so the
+    "this week" window matches the snapshot period, not the day the pipeline
+    happens to run. Falls back to today when no freshness record exists."""
+    import json
+    path = ROOT / "data" / "processed" / "connection_freshness.json"
+    try:
+        return date.fromisoformat(json.loads(path.read_text(encoding="utf-8"))["current_snapshot_date"])
+    except Exception:
+        return date.today()
+
+
 def build_activation_pattern_learning(df: pd.DataFrame, msg_df: pd.DataFrame | None) -> dict:
     """
     Returns a sanitized, aggregate-only dict (no names, no raw messages):
@@ -616,7 +628,7 @@ def build_activation_pattern_learning(df: pd.DataFrame, msg_df: pd.DataFrame | N
         return {"available": False, "reason": "no message history this run"}
 
     lookup = _build_connections_lookup(df)
-    today = date.today()
+    today = _snapshot_reference_date()
 
     matched = 0
     long_connected_all_time = 0
@@ -654,7 +666,7 @@ def build_activation_pattern_learning(df: pd.DataFrame, msg_df: pd.DataFrame | N
             continue  # contacted reasonably promptly — not the "untapped activation" pattern
 
         long_connected_all_time += 1
-        if (today - first_msg).days <= 7:
+        if 0 <= (today - first_msg).days < 7:  # the 7-day snapshot period ending on the snapshot date
             long_connected_this_week += 1
 
         replied_flag = False

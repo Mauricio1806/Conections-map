@@ -11,11 +11,15 @@
       },
       {
         "company": "Deloitte",
-        "count": 62
+        "count": 63
       },
       {
         "company": "Michael Page",
-        "count": 61
+        "count": 62
+      },
+      {
+        "company": "Capgemini",
+        "count": 62
       },
       {
         "company": "GE Vernova",
@@ -26,12 +30,8 @@
         "count": 56
       },
       {
-        "company": "Capgemini",
-        "count": 55
-      },
-      {
         "company": "NTT DATA Europe & Latam",
-        "count": 52
+        "count": 53
       },
       {
         "company": "Databricks",
@@ -54,6 +54,10 @@
         "count": 42
       },
       {
+        "company": "EY",
+        "count": 41
+      },
+      {
         "company": "iFood",
         "count": 39
       },
@@ -62,20 +66,16 @@
         "count": 38
       },
       {
-        "company": "EY",
-        "count": 37
+        "company": "IBM",
+        "count": 36
       },
       {
         "company": "CI&T",
-        "count": 35
-      },
-      {
-        "company": "IBM",
-        "count": 35
+        "count": 34
       },
       {
         "company": "Accenture",
-        "count": 32
+        "count": 34
       },
       {
         "company": "GFT Technologies",
@@ -86,11 +86,11 @@
         "count": 29
       },
       {
-        "company": "act digital",
-        "count": 28
+        "company": "GE Renewable Energy",
+        "count": 27
       },
       {
-        "company": "GE Renewable Energy",
+        "company": "act digital",
         "count": 27
       },
       {
@@ -102,15 +102,15 @@
         "count": 26
       },
       {
-        "company": "TOTVS",
-        "count": 24
-      },
-      {
         "company": "Globant",
-        "count": 24
+        "count": 25
       },
       {
-        "company": "Nubank",
+        "company": "TOTVS",
+        "count": 23
+      },
+      {
+        "company": "TELUS Digital",
         "count": 23
       },
       {
@@ -118,14 +118,14 @@
         "count": 23
       },
       {
-        "company": "TELUS Digital",
-        "count": 23
+        "company": "Nubank",
+        "count": 22
       }
     ],
     "recruiting": [
       {
         "company": "Capgemini",
-        "count": 19
+        "count": 20
       },
       {
         "company": "EPAM Systems",
@@ -133,11 +133,15 @@
       },
       {
         "company": "K2 Partnering Solutions",
-        "count": 11
+        "count": 12
       },
       {
         "company": "Deloitte",
         "count": 11
+      },
+      {
+        "company": "Freelance",
+        "count": 10
       },
       {
         "company": "EY",
@@ -148,15 +152,7 @@
         "count": 10
       },
       {
-        "company": "Michael Page",
-        "count": 9
-      },
-      {
         "company": "Infotree Global Solutions",
-        "count": 9
-      },
-      {
-        "company": "act digital",
         "count": 9
       },
       {
@@ -164,27 +160,31 @@
         "count": 9
       },
       {
-        "company": "Freelance",
+        "company": "Globant",
         "count": 9
       },
       {
-        "company": "Leidos",
-        "count": 8
+        "company": "IBM",
+        "count": 9
       },
       {
-        "company": "E-Solutions",
-        "count": 8
-      },
-      {
-        "company": "Globant",
-        "count": 8
+        "company": "Michael Page",
+        "count": 9
       },
       {
         "company": "GFT Technologies",
         "count": 8
       },
       {
-        "company": "IBM",
+        "company": "LHH",
+        "count": 8
+      },
+      {
+        "company": "Korn Ferry",
+        "count": 8
+      },
+      {
+        "company": "Leidos",
         "count": 8
       },
       {
@@ -192,16 +192,16 @@
         "count": 8
       },
       {
-        "company": "TELUS Digital",
+        "company": "E-Solutions",
         "count": 8
       },
       {
-        "company": "Bradesco",
-        "count": 7
+        "company": "act digital",
+        "count": 8
       },
       {
         "company": "Wipro",
-        "count": 7
+        "count": 8
       }
     ],
     "data_companies": [
@@ -234,15 +234,11 @@
         "count": 12
       },
       {
-        "company": "Nubank",
-        "count": 11
-      },
-      {
         "company": "Factored",
-        "count": 11
+        "count": 12
       },
       {
-        "company": "Artefact",
+        "company": "Tata Consultancy Services",
         "count": 10
       },
       {
@@ -250,8 +246,20 @@
         "count": 10
       },
       {
-        "company": "Tata Consultancy Services",
+        "company": "Artefact",
         "count": 10
+      },
+      {
+        "company": "Nubank",
+        "count": 10
+      },
+      {
+        "company": "EY",
+        "count": 8
+      },
+      {
+        "company": "Ambev Tech",
+        "count": 8
       },
       {
         "company": "Blip",
@@ -262,15 +270,11 @@
         "count": 8
       },
       {
-        "company": "Ambev Tech",
-        "count": 7
-      },
-      {
         "company": "Indicium AI",
         "count": 7
       },
       {
-        "company": "EY",
+        "company": "Serasa Experian",
         "count": 7
       },
       {
@@ -278,22 +282,18 @@
         "count": 7
       },
       {
-        "company": "Cadastra",
-        "count": 6
-      },
-      {
-        "company": "Radix",
+        "company": "Qubika",
         "count": 6
       }
     ],
     "latam_usd": [
       {
         "company": "NTT DATA Europe & Latam",
-        "count": 52
+        "count": 53
       },
       {
         "company": "Globant",
-        "count": 24
+        "count": 25
       },
       {
         "company": "GE Vernova",
@@ -312,15 +312,19 @@
         "count": 6
       },
       {
-        "company": "Epsilon LATAM",
-        "count": 5
-      },
-      {
         "company": "AgileEngine",
         "count": 5
       },
       {
+        "company": "Epsilon LATAM",
+        "count": 5
+      },
+      {
         "company": "Wizeline",
+        "count": 5
+      },
+      {
+        "company": "Genpact",
         "count": 5
       },
       {
@@ -332,6 +336,10 @@
         "count": 4
       },
       {
+        "company": "GFT Technologies LATAM",
+        "count": 4
+      },
+      {
         "company": "Deloitte",
         "count": 4
       },
@@ -340,31 +348,23 @@
         "count": 4
       },
       {
-        "company": "Genpact",
+        "company": "Stefanini LATAM",
         "count": 4
-      },
-      {
-        "company": "GFT Technologies LATAM",
-        "count": 4
-      },
-      {
-        "company": "UST España & Latam",
-        "count": 3
       },
       {
         "company": "Andela",
         "count": 3
       },
       {
-        "company": "Stefanini LATAM",
+        "company": "UST España & Latam",
         "count": 3
       },
       {
-        "company": "E-Solutions",
+        "company": "Perficient",
         "count": 3
       },
       {
-        "company": "Oracle",
+        "company": "TIVIT LATAM",
         "count": 3
       }
     ],
@@ -378,10 +378,6 @@
         "count": 13
       },
       {
-        "company": "Indra",
-        "count": 12
-      },
-      {
         "company": "Minsait",
         "count": 12
       },
@@ -390,8 +386,12 @@
         "count": 12
       },
       {
+        "company": "Indra",
+        "count": 11
+      },
+      {
         "company": "Akkodis",
-        "count": 8
+        "count": 9
       },
       {
         "company": "SEIDOR",
@@ -402,36 +402,20 @@
         "count": 6
       },
       {
-        "company": "Randstad Deutschland",
-        "count": 5
-      },
-      {
         "company": "Bonial Germany",
         "count": 5
       },
       {
-        "company": "Deloitte Deutschland",
-        "count": 4
+        "company": "Randstad Deutschland",
+        "count": 5
       },
       {
         "company": "Deutsche Telekom",
         "count": 4
       },
       {
-        "company": "Pipedrive",
-        "count": 3
-      },
-      {
-        "company": "Randstad Professional Deutschland (vormals GULP)",
-        "count": 3
-      },
-      {
-        "company": "Cobalt Deutschland GmbH",
-        "count": 3
-      },
-      {
-        "company": "KWS Group",
-        "count": 3
+        "company": "Deloitte Deutschland",
+        "count": 4
       },
       {
         "company": "Siemens Healthineers",
@@ -442,33 +426,49 @@
         "count": 3
       },
       {
+        "company": "Randstad Professional Deutschland (vormals GULP)",
+        "count": 3
+      },
+      {
         "company": "Zalando",
         "count": 3
       },
       {
-        "company": "Randstad Digital Germany",
+        "company": "KWS Group",
+        "count": 3
+      },
+      {
+        "company": "Cobalt Deutschland GmbH",
+        "count": 3
+      },
+      {
+        "company": "Pipedrive",
+        "count": 3
+      },
+      {
+        "company": "SEIDOR Brasil",
         "count": 2
       }
     ],
     "global_staffing": [
       {
         "company": "Globant",
-        "count": 24
+        "count": 25
+      },
+      {
+        "company": "Akkodis",
+        "count": 9
       },
       {
         "company": "Athyna",
         "count": 9
       },
       {
-        "company": "Akkodis",
-        "count": 8
-      },
-      {
         "company": "Unosquare",
         "count": 6
       },
       {
-        "company": "AgileEngine",
+        "company": "BairesDev",
         "count": 5
       },
       {
@@ -476,15 +476,19 @@
         "count": 5
       },
       {
+        "company": "AgileEngine",
+        "count": 5
+      },
+      {
         "company": "Wizeline",
         "count": 5
       },
       {
-        "company": "BairesDev",
-        "count": 5
+        "company": "LatamCent",
+        "count": 4
       },
       {
-        "company": "LatamCent",
+        "company": "Turing",
         "count": 4
       },
       {
@@ -496,15 +500,15 @@
         "count": 4
       },
       {
-        "company": "Turing",
-        "count": 4
+        "company": "Andela",
+        "count": 3
       },
       {
         "company": "Proclinical Staffing",
         "count": 3
       },
       {
-        "company": "Andela",
+        "company": "ManpowerGroup Talent Solutions",
         "count": 3
       },
       {
@@ -524,11 +528,7 @@
         "count": 3
       },
       {
-        "company": "ManpowerGroup Talent Solutions",
-        "count": 3
-      },
-      {
-        "company": "Toptal",
+        "company": "Newfire Global Partners",
         "count": 2
       }
     ],
@@ -547,22 +547,22 @@
       },
       {
         "company": "TOTVS",
-        "count": 24
-      },
-      {
-        "company": "Nubank",
         "count": 23
       },
       {
-        "company": "Amazon",
-        "count": 20
+        "company": "Nubank",
+        "count": 22
       },
       {
-        "company": "Microsoft",
-        "count": 18
+        "company": "Amazon",
+        "count": 21
       },
       {
         "company": "Google",
+        "count": 17
+      },
+      {
+        "company": "Microsoft",
         "count": 17
       },
       {
@@ -617,11 +617,11 @@
     "global_consulting": [
       {
         "company": "Deloitte",
-        "count": 62
+        "count": 63
       },
       {
         "company": "Capgemini",
-        "count": 55
+        "count": 62
       },
       {
         "company": "Tata Consultancy Services",
@@ -629,26 +629,26 @@
       },
       {
         "company": "EY",
-        "count": 37
+        "count": 41
       },
       {
         "company": "Accenture",
-        "count": 32
+        "count": 34
       },
       {
         "company": "act digital",
-        "count": 28
+        "count": 27
       },
       {
         "company": "Indicium AI",
         "count": 22
       },
       {
-        "company": "Cognizant",
-        "count": 16
+        "company": "Thoughtworks",
+        "count": 14
       },
       {
-        "company": "Thoughtworks",
+        "company": "Cognizant",
         "count": 14
       },
       {
@@ -660,19 +660,19 @@
         "count": 12
       },
       {
-        "company": "Indra",
-        "count": 12
-      },
-      {
         "company": "Minsait",
         "count": 12
       },
       {
-        "company": "Amaris Consulting",
+        "company": "NTT DATA",
+        "count": 12
+      },
+      {
+        "company": "Indra",
         "count": 11
       },
       {
-        "company": "NTT DATA",
+        "company": "Amaris Consulting",
         "count": 11
       },
       {
@@ -680,16 +680,16 @@
         "count": 11
       },
       {
-        "company": "Infosys",
-        "count": 10
-      },
-      {
         "company": "CWI Software",
         "count": 10
       },
       {
+        "company": "Infosys",
+        "count": 10
+      },
+      {
         "company": "Wipro",
-        "count": 8
+        "count": 9
       },
       {
         "company": "Bull IT Services",
@@ -703,7 +703,7 @@
       },
       {
         "company": "Michael Page",
-        "count": 60
+        "count": 61
       },
       {
         "company": "SENAI CIMATEC",
@@ -723,26 +723,26 @@
       },
       {
         "company": "IBM",
-        "count": 34
+        "count": 35
       },
       {
         "company": "CI&T",
-        "count": 34
-      },
-      {
-        "company": "GFT Technologies",
-        "count": 27
+        "count": 33
       },
       {
         "company": "GE Renewable Energy",
         "count": 27
       },
       {
-        "company": "LM Soluções de Mobilidade",
-        "count": 26
+        "company": "GFT Technologies",
+        "count": 27
       },
       {
         "company": "AB InBev",
+        "count": 26
+      },
+      {
+        "company": "LM Soluções de Mobilidade",
         "count": 26
       },
       {
@@ -758,12 +758,8 @@
         "count": 21
       },
       {
-        "company": "Adecco",
-        "count": 21
-      },
-      {
         "company": "Amazon Web Services (AWS)",
-        "count": 21
+        "count": 20
       },
       {
         "company": "Globo",
@@ -771,22 +767,26 @@
       },
       {
         "company": "LHH",
-        "count": 19
+        "count": 20
       },
       {
         "company": "SAP",
         "count": 19
       },
       {
-        "company": "Mercado Livre",
-        "count": 18
+        "company": "Adecco",
+        "count": 19
       },
       {
         "company": "EPAM Systems",
         "count": 18
       },
       {
-        "company": "Melt Group",
+        "company": "Mercado Livre",
+        "count": 18
+      },
+      {
+        "company": "Freelance",
         "count": 17
       },
       {
@@ -795,14 +795,10 @@
       },
       {
         "company": "Factored",
-        "count": 16
+        "count": 17
       },
       {
-        "company": "Randstad",
-        "count": 16
-      },
-      {
-        "company": "Avanade",
+        "company": "Melt Group",
         "count": 16
       },
       {
@@ -810,12 +806,16 @@
         "count": 16
       },
       {
-        "company": "Freelance",
+        "company": "Avanade",
         "count": 16
       },
       {
-        "company": "Qubika",
-        "count": 15
+        "company": "K2 Partnering Solutions",
+        "count": 16
+      },
+      {
+        "company": "Randstad",
+        "count": 16
       }
     ]
   },
@@ -823,22 +823,68 @@
     "available": true,
     "summary": {
       "total_followed_companies": 99,
-      "matched_followed_companies": 49,
-      "companies_with_recruiters_or_ta": 27,
-      "companies_with_opportunity_history": 41,
-      "recently_followed_companies": 15,
+      "matched_followed_companies": 48,
+      "companies_with_recruiters_or_ta": 26,
+      "companies_with_opportunity_history": 39,
+      "recently_followed_companies": 13,
       "contacts_resolved_via_company_follow": 1,
       "contacts_still_needing_review": 9,
       "companies_still_needing_review": 93,
-      "needs_mapping_before_company_follow_pass": 2520,
-      "needs_mapping_after_company_follow_pass": 2519
+      "needs_mapping_before_company_follow_pass": 2568,
+      "needs_mapping_after_company_follow_pass": 2567
     },
     "companies": [
+      {
+        "company_name": "sfera",
+        "company_follow_key": "sfera",
+        "followed_on": "2026-10-22",
+        "days_since_followed": 4,
+        "matched_connection_count": 1,
+        "matched_recruiters": 0,
+        "matched_talent_acquisition": 0,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 1,
+        "matched_lead_reactivation_contacts": 0,
+        "matched_opportunity_history_events": 0,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 0,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
+      {
+        "company_name": "JD Power Europe",
+        "company_follow_key": "jd power",
+        "followed_on": "2026-10-22",
+        "days_since_followed": 4,
+        "matched_connection_count": 0,
+        "matched_recruiters": 0,
+        "matched_talent_acquisition": 0,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 0,
+        "matched_lead_reactivation_contacts": 0,
+        "matched_opportunity_history_events": 0,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 0,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
       {
         "company_name": "Dev Talenty",
         "company_follow_key": "dev talenty",
         "followed_on": "2026-10-17",
-        "days_since_followed": 1,
+        "days_since_followed": 9,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -861,7 +907,7 @@
         "company_name": "SunnyData",
         "company_follow_key": "sunnydata",
         "followed_on": "2026-10-14",
-        "days_since_followed": 4,
+        "days_since_followed": 12,
         "matched_connection_count": 3,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -884,7 +930,7 @@
         "company_name": "Magellan",
         "company_follow_key": "magellan",
         "followed_on": "2026-10-14",
-        "days_since_followed": 4,
+        "days_since_followed": 12,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -907,7 +953,7 @@
         "company_name": "Honeycomb Software",
         "company_follow_key": "honeycomb software",
         "followed_on": "2026-10-13",
-        "days_since_followed": 5,
+        "days_since_followed": 13,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -930,7 +976,7 @@
         "company_name": "Mentor Talent Acquisition",
         "company_follow_key": "mentor talent acquisition",
         "followed_on": "2026-10-09",
-        "days_since_followed": 9,
+        "days_since_followed": 17,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -953,7 +999,7 @@
         "company_name": "Devsu",
         "company_follow_key": "devsu",
         "followed_on": "2026-10-07",
-        "days_since_followed": 11,
+        "days_since_followed": 19,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -976,7 +1022,7 @@
         "company_name": "Entellux",
         "company_follow_key": "entellux",
         "followed_on": "2026-10-02",
-        "days_since_followed": 16,
+        "days_since_followed": 24,
         "matched_connection_count": 3,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -999,7 +1045,7 @@
         "company_name": "ITMates",
         "company_follow_key": "itmates",
         "followed_on": "2026-10-02",
-        "days_since_followed": 16,
+        "days_since_followed": 24,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1022,7 +1068,7 @@
         "company_name": "F5 Remote Jobs",
         "company_follow_key": "f5 remote jobs",
         "followed_on": "2026-09-29",
-        "days_since_followed": 19,
+        "days_since_followed": 27,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1045,10 +1091,10 @@
         "company_name": "Ravn",
         "company_follow_key": "ravn",
         "followed_on": "2026-09-28",
-        "days_since_followed": 20,
+        "days_since_followed": 28,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
-        "matched_talent_acquisition": 2,
+        "matched_talent_acquisition": 1,
         "matched_hiring_managers": 0,
         "matched_data_leaders": 0,
         "matched_top_contacts": 0,
@@ -1068,7 +1114,7 @@
         "company_name": "AllianceIT Inc",
         "company_follow_key": "allianceit",
         "followed_on": "2026-09-28",
-        "days_since_followed": 20,
+        "days_since_followed": 28,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -1091,7 +1137,7 @@
         "company_name": "TikTok for Business",
         "company_follow_key": "tiktok for business",
         "followed_on": "2026-09-25",
-        "days_since_followed": 23,
+        "days_since_followed": 31,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1108,13 +1154,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Atom",
         "company_follow_key": "atom",
         "followed_on": "2026-09-23",
-        "days_since_followed": 25,
+        "days_since_followed": 33,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -1131,13 +1177,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Oremota",
         "company_follow_key": "oremota",
         "followed_on": "2026-09-20",
-        "days_since_followed": 28,
+        "days_since_followed": 36,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1154,13 +1200,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Suiteify",
         "company_follow_key": "suiteify",
         "followed_on": "2026-09-18",
-        "days_since_followed": 30,
+        "days_since_followed": 38,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1177,13 +1223,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Ellis Group",
         "company_follow_key": "ellis",
         "followed_on": "2026-09-16",
-        "days_since_followed": 32,
+        "days_since_followed": 40,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1206,7 +1252,7 @@
         "company_name": "INSPYR Global Solutions",
         "company_follow_key": "inspyr",
         "followed_on": "2026-09-15",
-        "days_since_followed": 33,
+        "days_since_followed": 41,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -1229,7 +1275,7 @@
         "company_name": "Noblesoft Technologies",
         "company_follow_key": "noblesoft",
         "followed_on": "2026-09-10",
-        "days_since_followed": 38,
+        "days_since_followed": 46,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1252,7 +1298,7 @@
         "company_name": "Lenotis",
         "company_follow_key": "lenotis",
         "followed_on": "2026-09-10",
-        "days_since_followed": 38,
+        "days_since_followed": 46,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1275,7 +1321,7 @@
         "company_name": "American IT Systems",
         "company_follow_key": "american it systems",
         "followed_on": "2026-09-09",
-        "days_since_followed": 39,
+        "days_since_followed": 47,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -1298,7 +1344,7 @@
         "company_name": "Darwoft",
         "company_follow_key": "darwoft",
         "followed_on": "2026-09-09",
-        "days_since_followed": 39,
+        "days_since_followed": 47,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1321,7 +1367,7 @@
         "company_name": "Abstra",
         "company_follow_key": "abstra",
         "followed_on": "2026-09-08",
-        "days_since_followed": 40,
+        "days_since_followed": 48,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1344,7 +1390,7 @@
         "company_name": "Prosper Global",
         "company_follow_key": "prosper",
         "followed_on": "2026-09-08",
-        "days_since_followed": 40,
+        "days_since_followed": 48,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1367,7 +1413,7 @@
         "company_name": "Norlys",
         "company_follow_key": "norlys",
         "followed_on": "2026-09-08",
-        "days_since_followed": 40,
+        "days_since_followed": 48,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1390,7 +1436,7 @@
         "company_name": "GlobalTask",
         "company_follow_key": "globaltask",
         "followed_on": "2026-09-07",
-        "days_since_followed": 41,
+        "days_since_followed": 49,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -1413,7 +1459,7 @@
         "company_name": "Fraxion",
         "company_follow_key": "fraxion",
         "followed_on": "2026-09-04",
-        "days_since_followed": 44,
+        "days_since_followed": 52,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1436,7 +1482,7 @@
         "company_name": "Fiber Glass Systems",
         "company_follow_key": "fiber glass systems",
         "followed_on": "2026-09-04",
-        "days_since_followed": 44,
+        "days_since_followed": 52,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1459,7 +1505,7 @@
         "company_name": "Parser",
         "company_follow_key": "parser",
         "followed_on": "2026-09-03",
-        "days_since_followed": 45,
+        "days_since_followed": 53,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1482,7 +1528,7 @@
         "company_name": "EON TECH",
         "company_follow_key": "eon",
         "followed_on": "2026-09-02",
-        "days_since_followed": 46,
+        "days_since_followed": 54,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1505,7 +1551,7 @@
         "company_name": "Swisspower Renewables",
         "company_follow_key": "swisspower renewables",
         "followed_on": "2026-09-02",
-        "days_since_followed": 46,
+        "days_since_followed": 54,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1528,7 +1574,7 @@
         "company_name": "Sentio Group",
         "company_follow_key": "sentio",
         "followed_on": "2026-09-02",
-        "days_since_followed": 46,
+        "days_since_followed": 54,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1551,7 +1597,7 @@
         "company_name": "Key2 DataSyn",
         "company_follow_key": "key2 datasyn",
         "followed_on": "2026-09-01",
-        "days_since_followed": 47,
+        "days_since_followed": 55,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1574,7 +1620,7 @@
         "company_name": "Henkia",
         "company_follow_key": "henkia",
         "followed_on": "2026-09-01",
-        "days_since_followed": 47,
+        "days_since_followed": 55,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1597,7 +1643,7 @@
         "company_name": "Telnyx",
         "company_follow_key": "telnyx",
         "followed_on": "2026-08-28",
-        "days_since_followed": 51,
+        "days_since_followed": 59,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -1620,7 +1666,7 @@
         "company_name": "Dura Digital",
         "company_follow_key": "dura",
         "followed_on": "2026-08-27",
-        "days_since_followed": 52,
+        "days_since_followed": 60,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1643,7 +1689,7 @@
         "company_name": "Ewents",
         "company_follow_key": "ewents",
         "followed_on": "2026-08-26",
-        "days_since_followed": 53,
+        "days_since_followed": 61,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1666,7 +1712,7 @@
         "company_name": "pulse by solutions",
         "company_follow_key": "pulse by",
         "followed_on": "2026-08-22",
-        "days_since_followed": 57,
+        "days_since_followed": 65,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1689,7 +1735,7 @@
         "company_name": "Celonis",
         "company_follow_key": "celonis",
         "followed_on": "2026-08-22",
-        "days_since_followed": 57,
+        "days_since_followed": 65,
         "matched_connection_count": 4,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -1712,7 +1758,7 @@
         "company_name": "ENEFIT",
         "company_follow_key": "enefit",
         "followed_on": "2026-08-20",
-        "days_since_followed": 59,
+        "days_since_followed": 67,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1735,7 +1781,7 @@
         "company_name": "Epassi Deutschland",
         "company_follow_key": "epassi deutschland",
         "followed_on": "2026-08-19",
-        "days_since_followed": 60,
+        "days_since_followed": 68,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1758,7 +1804,7 @@
         "company_name": "WeCogno",
         "company_follow_key": "wecogno",
         "followed_on": "2026-08-19",
-        "days_since_followed": 60,
+        "days_since_followed": 68,
         "matched_connection_count": 3,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1781,7 +1827,7 @@
         "company_name": "Limpotel Sol",
         "company_follow_key": "limpotel sol",
         "followed_on": "2026-08-17",
-        "days_since_followed": 62,
+        "days_since_followed": 70,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1804,7 +1850,7 @@
         "company_name": "MyControlHR",
         "company_follow_key": "mycontrolhr",
         "followed_on": "2026-08-17",
-        "days_since_followed": 62,
+        "days_since_followed": 70,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1827,7 +1873,7 @@
         "company_name": "Remote Job Hub",
         "company_follow_key": "remote job hub",
         "followed_on": "2026-08-17",
-        "days_since_followed": 62,
+        "days_since_followed": 70,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1850,7 +1896,7 @@
         "company_name": "Rising Capital Humano",
         "company_follow_key": "rising capital humano",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1873,7 +1919,7 @@
         "company_name": "Cloud Employee",
         "company_follow_key": "cloud employee",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 2,
@@ -1896,7 +1942,7 @@
         "company_name": "Recrucial",
         "company_follow_key": "recrucial",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1919,7 +1965,7 @@
         "company_name": "Svitla Systems, Inc.",
         "company_follow_key": "svitla systems",
         "followed_on": "2026-08-13",
-        "days_since_followed": 66,
+        "days_since_followed": 74,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -1942,7 +1988,7 @@
         "company_name": "Tree Immersion Technologies",
         "company_follow_key": "tree immersion",
         "followed_on": "2026-08-12",
-        "days_since_followed": 67,
+        "days_since_followed": 75,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1965,7 +2011,7 @@
         "company_name": "Prodezk",
         "company_follow_key": "prodezk",
         "followed_on": "2026-08-11",
-        "days_since_followed": 68,
+        "days_since_followed": 76,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -1988,7 +2034,7 @@
         "company_name": "SGS",
         "company_follow_key": "sgs",
         "followed_on": "2026-08-11",
-        "days_since_followed": 68,
+        "days_since_followed": 76,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 2,
@@ -2011,7 +2057,7 @@
         "company_name": "Miner",
         "company_follow_key": "miner",
         "followed_on": "2026-08-06",
-        "days_since_followed": 73,
+        "days_since_followed": 81,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2034,7 +2080,7 @@
         "company_name": "Remote Jobs",
         "company_follow_key": "remote jobs",
         "followed_on": "2026-08-05",
-        "days_since_followed": 74,
+        "days_since_followed": 82,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2057,7 +2103,7 @@
         "company_name": "Charterhouse Partnership",
         "company_follow_key": "charterhouse partnership",
         "followed_on": "2026-08-05",
-        "days_since_followed": 74,
+        "days_since_followed": 82,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2080,7 +2126,7 @@
         "company_name": "George Bernard Consulting | Jobs",
         "company_follow_key": "george bernard jobs",
         "followed_on": "2026-08-04",
-        "days_since_followed": 75,
+        "days_since_followed": 83,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2103,7 +2149,7 @@
         "company_name": "Listo",
         "company_follow_key": "listo",
         "followed_on": "2026-08-04",
-        "days_since_followed": 75,
+        "days_since_followed": 83,
         "matched_connection_count": 2,
         "matched_recruiters": 2,
         "matched_talent_acquisition": 0,
@@ -2126,7 +2172,7 @@
         "company_name": "Halian",
         "company_follow_key": "halian",
         "followed_on": "2026-08-04",
-        "days_since_followed": 75,
+        "days_since_followed": 83,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2149,7 +2195,7 @@
         "company_name": "AjaxTI",
         "company_follow_key": "ajaxti",
         "followed_on": "2026-08-03",
-        "days_since_followed": 76,
+        "days_since_followed": 84,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2172,7 +2218,7 @@
         "company_name": "KPMG Middle East",
         "company_follow_key": "kpmg middle east",
         "followed_on": "2026-08-01",
-        "days_since_followed": 78,
+        "days_since_followed": 86,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2195,7 +2241,7 @@
         "company_name": "Vagas GSW Software",
         "company_follow_key": "vagas gsw software",
         "followed_on": "2026-07-31",
-        "days_since_followed": 79,
+        "days_since_followed": 87,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2218,7 +2264,7 @@
         "company_name": "Klube Capital",
         "company_follow_key": "klube capital",
         "followed_on": "2026-07-29",
-        "days_since_followed": 81,
+        "days_since_followed": 89,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2241,7 +2287,7 @@
         "company_name": "Naresh i Technologies",
         "company_follow_key": "naresh i",
         "followed_on": "2026-07-27",
-        "days_since_followed": 83,
+        "days_since_followed": 91,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2264,7 +2310,7 @@
         "company_name": "Entrepreneur Stories",
         "company_follow_key": "entrepreneur stories",
         "followed_on": "2026-07-25",
-        "days_since_followed": 85,
+        "days_since_followed": 93,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2287,7 +2333,7 @@
         "company_name": "Adastra",
         "company_follow_key": "adastra",
         "followed_on": "2026-07-25",
-        "days_since_followed": 85,
+        "days_since_followed": 93,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2310,7 +2356,7 @@
         "company_name": "Mitratech",
         "company_follow_key": "mitratech",
         "followed_on": "2026-07-22",
-        "days_since_followed": 88,
+        "days_since_followed": 96,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2333,7 +2379,7 @@
         "company_name": "The Right Hire Latam",
         "company_follow_key": "the right hire",
         "followed_on": "2026-07-22",
-        "days_since_followed": 88,
+        "days_since_followed": 96,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2356,7 +2402,7 @@
         "company_name": "Ascentt",
         "company_follow_key": "ascentt",
         "followed_on": "2026-07-22",
-        "days_since_followed": 88,
+        "days_since_followed": 96,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2379,7 +2425,7 @@
         "company_name": "Joyit",
         "company_follow_key": "joyit",
         "followed_on": "2026-07-21",
-        "days_since_followed": 89,
+        "days_since_followed": 97,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2402,7 +2448,7 @@
         "company_name": "Knowtrex GmbH",
         "company_follow_key": "knowtrex",
         "followed_on": "2026-07-20",
-        "days_since_followed": 90,
+        "days_since_followed": 98,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2425,7 +2471,7 @@
         "company_name": "Muttdata",
         "company_follow_key": "muttdata",
         "followed_on": "2026-07-17",
-        "days_since_followed": 93,
+        "days_since_followed": 101,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2445,33 +2491,33 @@
         "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
-        "company_name": "TechBridge",
-        "company_follow_key": "techbridge",
+        "company_name": "WorkBridge | Vagas Full-time, Freelance & Contractor",
+        "company_follow_key": "workbridge vagas full time freelance contractor",
         "followed_on": "2026-07-17",
-        "days_since_followed": 93,
-        "matched_connection_count": 2,
-        "matched_recruiters": 2,
+        "days_since_followed": 101,
+        "matched_connection_count": 0,
+        "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
         "matched_hiring_managers": 0,
         "matched_data_leaders": 0,
         "matched_top_contacts": 0,
         "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 2,
-        "matched_opportunity_history_events": 1,
+        "matched_lead_reactivation_contacts": 0,
+        "matched_opportunity_history_events": 0,
         "matched_inbound_opportunities": 0,
         "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 2,
+        "matched_usd_crm_leads": 0,
         "likely_company_category": "",
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "FitNext Co.",
         "company_follow_key": "fitnext",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -2494,7 +2540,7 @@
         "company_name": "CLOOUD",
         "company_follow_key": "clooud",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2517,7 +2563,7 @@
         "company_name": "AIVI",
         "company_follow_key": "aivi",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2540,7 +2586,7 @@
         "company_name": "Kopius",
         "company_follow_key": "kopius",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 2,
         "matched_recruiters": 2,
         "matched_talent_acquisition": 0,
@@ -2563,7 +2609,7 @@
         "company_name": "Instituto Daryus",
         "company_follow_key": "instituto daryus",
         "followed_on": "2026-07-15",
-        "days_since_followed": 95,
+        "days_since_followed": 103,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2586,7 +2632,7 @@
         "company_name": "Mas Insights",
         "company_follow_key": "mas insights",
         "followed_on": "2026-07-14",
-        "days_since_followed": 96,
+        "days_since_followed": 104,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2609,7 +2655,7 @@
         "company_name": "Data Meaning",
         "company_follow_key": "data meaning",
         "followed_on": "2026-07-11",
-        "days_since_followed": 99,
+        "days_since_followed": 107,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -2632,7 +2678,7 @@
         "company_name": "Munich Re Specialty",
         "company_follow_key": "munich re specialty",
         "followed_on": "2026-07-11",
-        "days_since_followed": 99,
+        "days_since_followed": 107,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2655,7 +2701,7 @@
         "company_name": "PiplNow LLC",
         "company_follow_key": "piplnow",
         "followed_on": "2026-07-07",
-        "days_since_followed": 103,
+        "days_since_followed": 111,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -2678,7 +2724,7 @@
         "company_name": "Pixida do Brasil",
         "company_follow_key": "pixida do",
         "followed_on": "2026-07-06",
-        "days_since_followed": 104,
+        "days_since_followed": 112,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2701,7 +2747,7 @@
         "company_name": "Key2 Research",
         "company_follow_key": "key2 research",
         "followed_on": "2026-07-06",
-        "days_since_followed": 104,
+        "days_since_followed": 112,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2724,7 +2770,7 @@
         "company_name": "Talentful",
         "company_follow_key": "talentful",
         "followed_on": "2026-07-04",
-        "days_since_followed": 106,
+        "days_since_followed": 114,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2747,7 +2793,7 @@
         "company_name": "NewPoint Information Technology Consulting",
         "company_follow_key": "newpoint information",
         "followed_on": "2026-07-03",
-        "days_since_followed": 107,
+        "days_since_followed": 115,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2770,7 +2816,7 @@
         "company_name": "Principal Financial Group",
         "company_follow_key": "principal financial",
         "followed_on": "2026-07-03",
-        "days_since_followed": 107,
+        "days_since_followed": 115,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2793,7 +2839,7 @@
         "company_name": "NIR-YU",
         "company_follow_key": "nir yu",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -2816,7 +2862,7 @@
         "company_name": "Prosas",
         "company_follow_key": "prosas",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2839,19 +2885,19 @@
         "company_name": "TeamUp",
         "company_follow_key": "teamup",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
-        "matched_connection_count": 2,
+        "days_since_followed": 116,
+        "matched_connection_count": 1,
         "matched_recruiters": 1,
-        "matched_talent_acquisition": 1,
+        "matched_talent_acquisition": 0,
         "matched_hiring_managers": 0,
         "matched_data_leaders": 0,
         "matched_top_contacts": 0,
         "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 2,
-        "matched_opportunity_history_events": 2,
+        "matched_lead_reactivation_contacts": 1,
+        "matched_opportunity_history_events": 1,
         "matched_inbound_opportunities": 0,
         "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 2,
+        "matched_usd_crm_leads": 1,
         "likely_company_category": "",
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
@@ -2862,7 +2908,7 @@
         "company_name": "INFOMOTION GmbH",
         "company_follow_key": "infomotion",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2885,7 +2931,7 @@
         "company_name": "Grupo Educacional Primum",
         "company_follow_key": "grupo educacional primum",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2908,7 +2954,7 @@
         "company_name": "Exadel People",
         "company_follow_key": "exadel people",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2931,7 +2977,7 @@
         "company_name": "Insi",
         "company_follow_key": "insi",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 10,
         "matched_recruiters": 3,
         "matched_talent_acquisition": 0,
@@ -2954,7 +3000,7 @@
         "company_name": "BIGCORE",
         "company_follow_key": "bigcore",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -2977,7 +3023,7 @@
         "company_name": "ExploreK12",
         "company_follow_key": "explorek12",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3000,7 +3046,7 @@
         "company_name": "Nitka",
         "company_follow_key": "nitka",
         "followed_on": "2026-06-30",
-        "days_since_followed": 110,
+        "days_since_followed": 118,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3023,7 +3069,7 @@
         "company_name": "WPP Enterprise Solutions",
         "company_follow_key": "wpp enterprise",
         "followed_on": "2026-06-30",
-        "days_since_followed": 110,
+        "days_since_followed": 118,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3046,7 +3092,7 @@
         "company_name": "Infracommerce Latam",
         "company_follow_key": "infracommerce",
         "followed_on": "2026-06-29",
-        "days_since_followed": 111,
+        "days_since_followed": 119,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3064,52 +3110,6 @@
         "follow_signal_confidence": 0.85,
         "company_follow_reason": "LATAM/nearshore keyword in company name",
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL"
-      },
-      {
-        "company_name": "Hireincrypto",
-        "company_follow_key": "hireincrypto",
-        "followed_on": "2026-06-26",
-        "days_since_followed": 114,
-        "matched_connection_count": 0,
-        "matched_recruiters": 0,
-        "matched_talent_acquisition": 0,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 0,
-        "matched_opportunity_history_events": 0,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 0,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
-      },
-      {
-        "company_name": "Extractta",
-        "company_follow_key": "extractta",
-        "followed_on": "2026-06-25",
-        "days_since_followed": 115,
-        "matched_connection_count": 1,
-        "matched_recruiters": 0,
-        "matched_talent_acquisition": 0,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 1,
-        "matched_opportunity_history_events": 1,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 1,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       }
     ],
     "needs_review": [
@@ -3117,7 +3117,7 @@
         "company_name": "Insi",
         "company_follow_key": "insi",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 10,
         "matched_recruiters": 3,
         "matched_talent_acquisition": 0,
@@ -3140,7 +3140,7 @@
         "company_name": "Listo",
         "company_follow_key": "listo",
         "followed_on": "2026-08-04",
-        "days_since_followed": 75,
+        "days_since_followed": 83,
         "matched_connection_count": 2,
         "matched_recruiters": 2,
         "matched_talent_acquisition": 0,
@@ -3163,7 +3163,7 @@
         "company_name": "Kopius",
         "company_follow_key": "kopius",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 2,
         "matched_recruiters": 2,
         "matched_talent_acquisition": 0,
@@ -3183,33 +3183,10 @@
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
-        "company_name": "TechBridge",
-        "company_follow_key": "techbridge",
-        "followed_on": "2026-07-17",
-        "days_since_followed": 93,
-        "matched_connection_count": 2,
-        "matched_recruiters": 2,
-        "matched_talent_acquisition": 0,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 2,
-        "matched_opportunity_history_events": 1,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 2,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
-      },
-      {
         "company_name": "SunnyData",
         "company_follow_key": "sunnydata",
         "followed_on": "2026-10-14",
-        "days_since_followed": 4,
+        "days_since_followed": 12,
         "matched_connection_count": 3,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -3232,7 +3209,7 @@
         "company_name": "Devsu",
         "company_follow_key": "devsu",
         "followed_on": "2026-10-07",
-        "days_since_followed": 11,
+        "days_since_followed": 19,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -3252,33 +3229,10 @@
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
-        "company_name": "TeamUp",
-        "company_follow_key": "teamup",
-        "followed_on": "2026-07-02",
-        "days_since_followed": 108,
-        "matched_connection_count": 2,
-        "matched_recruiters": 1,
-        "matched_talent_acquisition": 1,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 2,
-        "matched_opportunity_history_events": 2,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 2,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
-      },
-      {
         "company_name": "Entellux",
         "company_follow_key": "entellux",
         "followed_on": "2026-10-02",
-        "days_since_followed": 16,
+        "days_since_followed": 24,
         "matched_connection_count": 3,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -3301,7 +3255,7 @@
         "company_name": "FitNext Co.",
         "company_follow_key": "fitnext",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3324,7 +3278,7 @@
         "company_name": "Nitka",
         "company_follow_key": "nitka",
         "followed_on": "2026-06-30",
-        "days_since_followed": 110,
+        "days_since_followed": 118,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3347,7 +3301,7 @@
         "company_name": "AllianceIT Inc",
         "company_follow_key": "allianceit",
         "followed_on": "2026-09-28",
-        "days_since_followed": 20,
+        "days_since_followed": 28,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3370,7 +3324,7 @@
         "company_name": "Atom",
         "company_follow_key": "atom",
         "followed_on": "2026-09-23",
-        "days_since_followed": 25,
+        "days_since_followed": 33,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3387,13 +3341,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "GlobalTask",
         "company_follow_key": "globaltask",
         "followed_on": "2026-09-07",
-        "days_since_followed": 41,
+        "days_since_followed": 49,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3416,7 +3370,7 @@
         "company_name": "Telnyx",
         "company_follow_key": "telnyx",
         "followed_on": "2026-08-28",
-        "days_since_followed": 51,
+        "days_since_followed": 59,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3439,7 +3393,7 @@
         "company_name": "Data Meaning",
         "company_follow_key": "data meaning",
         "followed_on": "2026-07-11",
-        "days_since_followed": 99,
+        "days_since_followed": 107,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -3459,33 +3413,33 @@
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
-        "company_name": "Ravn",
-        "company_follow_key": "ravn",
-        "followed_on": "2026-09-28",
-        "days_since_followed": 20,
-        "matched_connection_count": 2,
-        "matched_recruiters": 0,
-        "matched_talent_acquisition": 2,
+        "company_name": "TeamUp",
+        "company_follow_key": "teamup",
+        "followed_on": "2026-07-02",
+        "days_since_followed": 116,
+        "matched_connection_count": 1,
+        "matched_recruiters": 1,
+        "matched_talent_acquisition": 0,
         "matched_hiring_managers": 0,
         "matched_data_leaders": 0,
         "matched_top_contacts": 0,
         "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 2,
-        "matched_opportunity_history_events": 3,
+        "matched_lead_reactivation_contacts": 1,
+        "matched_opportunity_history_events": 1,
         "matched_inbound_opportunities": 0,
         "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 2,
+        "matched_usd_crm_leads": 1,
         "likely_company_category": "",
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Cloud Employee",
         "company_follow_key": "cloud employee",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 2,
@@ -3508,7 +3462,7 @@
         "company_name": "Celonis",
         "company_follow_key": "celonis",
         "followed_on": "2026-08-22",
-        "days_since_followed": 57,
+        "days_since_followed": 65,
         "matched_connection_count": 4,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3528,10 +3482,33 @@
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
+        "company_name": "Ravn",
+        "company_follow_key": "ravn",
+        "followed_on": "2026-09-28",
+        "days_since_followed": 28,
+        "matched_connection_count": 2,
+        "matched_recruiters": 0,
+        "matched_talent_acquisition": 1,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 0,
+        "matched_lead_reactivation_contacts": 2,
+        "matched_opportunity_history_events": 3,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 2,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
+      {
         "company_name": "Svitla Systems, Inc.",
         "company_follow_key": "svitla systems",
         "followed_on": "2026-08-13",
-        "days_since_followed": 66,
+        "days_since_followed": 74,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3554,7 +3531,7 @@
         "company_name": "PiplNow LLC",
         "company_follow_key": "piplnow",
         "followed_on": "2026-07-07",
-        "days_since_followed": 103,
+        "days_since_followed": 111,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3577,7 +3554,7 @@
         "company_name": "NIR-YU",
         "company_follow_key": "nir yu",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3600,7 +3577,7 @@
         "company_name": "American IT Systems",
         "company_follow_key": "american it systems",
         "followed_on": "2026-09-09",
-        "days_since_followed": 39,
+        "days_since_followed": 47,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3623,7 +3600,7 @@
         "company_name": "WPP Enterprise Solutions",
         "company_follow_key": "wpp enterprise",
         "followed_on": "2026-06-30",
-        "days_since_followed": 110,
+        "days_since_followed": 118,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -3646,7 +3623,7 @@
         "company_name": "WeCogno",
         "company_follow_key": "wecogno",
         "followed_on": "2026-08-19",
-        "days_since_followed": 60,
+        "days_since_followed": 68,
         "matched_connection_count": 3,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3669,7 +3646,7 @@
         "company_name": "Parser",
         "company_follow_key": "parser",
         "followed_on": "2026-09-03",
-        "days_since_followed": 45,
+        "days_since_followed": 53,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3692,7 +3669,7 @@
         "company_name": "Grupo Educacional Primum",
         "company_follow_key": "grupo educacional primum",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3715,7 +3692,7 @@
         "company_name": "TikTok for Business",
         "company_follow_key": "tiktok for business",
         "followed_on": "2026-09-25",
-        "days_since_followed": 23,
+        "days_since_followed": 31,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3732,13 +3709,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Miner",
         "company_follow_key": "miner",
         "followed_on": "2026-08-06",
-        "days_since_followed": 73,
+        "days_since_followed": 81,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3761,7 +3738,7 @@
         "company_name": "Pixida do Brasil",
         "company_follow_key": "pixida do",
         "followed_on": "2026-07-06",
-        "days_since_followed": 104,
+        "days_since_followed": 112,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3784,7 +3761,7 @@
         "company_name": "Noblesoft Technologies",
         "company_follow_key": "noblesoft",
         "followed_on": "2026-09-10",
-        "days_since_followed": 38,
+        "days_since_followed": 46,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3807,7 +3784,7 @@
         "company_name": "EON TECH",
         "company_follow_key": "eon",
         "followed_on": "2026-09-02",
-        "days_since_followed": 46,
+        "days_since_followed": 54,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3830,7 +3807,7 @@
         "company_name": "Dura Digital",
         "company_follow_key": "dura",
         "followed_on": "2026-08-27",
-        "days_since_followed": 52,
+        "days_since_followed": 60,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3853,7 +3830,7 @@
         "company_name": "Ewents",
         "company_follow_key": "ewents",
         "followed_on": "2026-08-26",
-        "days_since_followed": 53,
+        "days_since_followed": 61,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3876,7 +3853,7 @@
         "company_name": "Rising Capital Humano",
         "company_follow_key": "rising capital humano",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3899,7 +3876,7 @@
         "company_name": "Recrucial",
         "company_follow_key": "recrucial",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3922,7 +3899,7 @@
         "company_name": "Adastra",
         "company_follow_key": "adastra",
         "followed_on": "2026-07-25",
-        "days_since_followed": 85,
+        "days_since_followed": 93,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3945,7 +3922,7 @@
         "company_name": "Ascentt",
         "company_follow_key": "ascentt",
         "followed_on": "2026-07-22",
-        "days_since_followed": 88,
+        "days_since_followed": 96,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3968,7 +3945,7 @@
         "company_name": "Talentful",
         "company_follow_key": "talentful",
         "followed_on": "2026-07-04",
-        "days_since_followed": 106,
+        "days_since_followed": 114,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -3991,30 +3968,7 @@
         "company_name": "INFOMOTION GmbH",
         "company_follow_key": "infomotion",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
-        "matched_connection_count": 1,
-        "matched_recruiters": 0,
-        "matched_talent_acquisition": 0,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 1,
-        "matched_opportunity_history_events": 1,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 1,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
-      },
-      {
-        "company_name": "Extractta",
-        "company_follow_key": "extractta",
-        "followed_on": "2026-06-25",
-        "days_since_followed": 115,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4037,7 +3991,7 @@
         "company_name": "Honeycomb Software",
         "company_follow_key": "honeycomb software",
         "followed_on": "2026-10-13",
-        "days_since_followed": 5,
+        "days_since_followed": 13,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4057,10 +4011,33 @@
         "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
+        "company_name": "sfera",
+        "company_follow_key": "sfera",
+        "followed_on": "2026-10-22",
+        "days_since_followed": 4,
+        "matched_connection_count": 1,
+        "matched_recruiters": 0,
+        "matched_talent_acquisition": 0,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 1,
+        "matched_lead_reactivation_contacts": 0,
+        "matched_opportunity_history_events": 0,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 0,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
+      {
         "company_name": "Epassi Deutschland",
         "company_follow_key": "epassi deutschland",
         "followed_on": "2026-08-19",
-        "days_since_followed": 60,
+        "days_since_followed": 68,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4083,7 +4060,7 @@
         "company_name": "Exadel People",
         "company_follow_key": "exadel people",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4103,10 +4080,33 @@
         "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
+        "company_name": "JD Power Europe",
+        "company_follow_key": "jd power",
+        "followed_on": "2026-10-22",
+        "days_since_followed": 4,
+        "matched_connection_count": 0,
+        "matched_recruiters": 0,
+        "matched_talent_acquisition": 0,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 0,
+        "matched_lead_reactivation_contacts": 0,
+        "matched_opportunity_history_events": 0,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 0,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
+      {
         "company_name": "Dev Talenty",
         "company_follow_key": "dev talenty",
         "followed_on": "2026-10-17",
-        "days_since_followed": 1,
+        "days_since_followed": 9,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4129,7 +4129,7 @@
         "company_name": "Magellan",
         "company_follow_key": "magellan",
         "followed_on": "2026-10-14",
-        "days_since_followed": 4,
+        "days_since_followed": 12,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4152,7 +4152,7 @@
         "company_name": "ITMates",
         "company_follow_key": "itmates",
         "followed_on": "2026-10-02",
-        "days_since_followed": 16,
+        "days_since_followed": 24,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4175,7 +4175,7 @@
         "company_name": "F5 Remote Jobs",
         "company_follow_key": "f5 remote jobs",
         "followed_on": "2026-09-29",
-        "days_since_followed": 19,
+        "days_since_followed": 27,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4198,7 +4198,7 @@
         "company_name": "Oremota",
         "company_follow_key": "oremota",
         "followed_on": "2026-09-20",
-        "days_since_followed": 28,
+        "days_since_followed": 36,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4215,13 +4215,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Suiteify",
         "company_follow_key": "suiteify",
         "followed_on": "2026-09-18",
-        "days_since_followed": 30,
+        "days_since_followed": 38,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4238,13 +4238,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Ellis Group",
         "company_follow_key": "ellis",
         "followed_on": "2026-09-16",
-        "days_since_followed": 32,
+        "days_since_followed": 40,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4267,7 +4267,7 @@
         "company_name": "Lenotis",
         "company_follow_key": "lenotis",
         "followed_on": "2026-09-10",
-        "days_since_followed": 38,
+        "days_since_followed": 46,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4290,7 +4290,7 @@
         "company_name": "Darwoft",
         "company_follow_key": "darwoft",
         "followed_on": "2026-09-09",
-        "days_since_followed": 39,
+        "days_since_followed": 47,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4313,7 +4313,7 @@
         "company_name": "Abstra",
         "company_follow_key": "abstra",
         "followed_on": "2026-09-08",
-        "days_since_followed": 40,
+        "days_since_followed": 48,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4336,7 +4336,7 @@
         "company_name": "Prosper Global",
         "company_follow_key": "prosper",
         "followed_on": "2026-09-08",
-        "days_since_followed": 40,
+        "days_since_followed": 48,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4359,7 +4359,7 @@
         "company_name": "Norlys",
         "company_follow_key": "norlys",
         "followed_on": "2026-09-08",
-        "days_since_followed": 40,
+        "days_since_followed": 48,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4382,7 +4382,7 @@
         "company_name": "Fraxion",
         "company_follow_key": "fraxion",
         "followed_on": "2026-09-04",
-        "days_since_followed": 44,
+        "days_since_followed": 52,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4405,7 +4405,7 @@
         "company_name": "Fiber Glass Systems",
         "company_follow_key": "fiber glass systems",
         "followed_on": "2026-09-04",
-        "days_since_followed": 44,
+        "days_since_followed": 52,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4428,7 +4428,7 @@
         "company_name": "Swisspower Renewables",
         "company_follow_key": "swisspower renewables",
         "followed_on": "2026-09-02",
-        "days_since_followed": 46,
+        "days_since_followed": 54,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4451,7 +4451,7 @@
         "company_name": "Sentio Group",
         "company_follow_key": "sentio",
         "followed_on": "2026-09-02",
-        "days_since_followed": 46,
+        "days_since_followed": 54,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4474,7 +4474,7 @@
         "company_name": "Key2 DataSyn",
         "company_follow_key": "key2 datasyn",
         "followed_on": "2026-09-01",
-        "days_since_followed": 47,
+        "days_since_followed": 55,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4497,7 +4497,7 @@
         "company_name": "Henkia",
         "company_follow_key": "henkia",
         "followed_on": "2026-09-01",
-        "days_since_followed": 47,
+        "days_since_followed": 55,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4520,7 +4520,7 @@
         "company_name": "pulse by solutions",
         "company_follow_key": "pulse by",
         "followed_on": "2026-08-22",
-        "days_since_followed": 57,
+        "days_since_followed": 65,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4543,7 +4543,7 @@
         "company_name": "ENEFIT",
         "company_follow_key": "enefit",
         "followed_on": "2026-08-20",
-        "days_since_followed": 59,
+        "days_since_followed": 67,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4566,7 +4566,7 @@
         "company_name": "Limpotel Sol",
         "company_follow_key": "limpotel sol",
         "followed_on": "2026-08-17",
-        "days_since_followed": 62,
+        "days_since_followed": 70,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4589,7 +4589,7 @@
         "company_name": "MyControlHR",
         "company_follow_key": "mycontrolhr",
         "followed_on": "2026-08-17",
-        "days_since_followed": 62,
+        "days_since_followed": 70,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4612,7 +4612,7 @@
         "company_name": "Remote Job Hub",
         "company_follow_key": "remote job hub",
         "followed_on": "2026-08-17",
-        "days_since_followed": 62,
+        "days_since_followed": 70,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4635,7 +4635,7 @@
         "company_name": "Tree Immersion Technologies",
         "company_follow_key": "tree immersion",
         "followed_on": "2026-08-12",
-        "days_since_followed": 67,
+        "days_since_followed": 75,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4658,7 +4658,7 @@
         "company_name": "Prodezk",
         "company_follow_key": "prodezk",
         "followed_on": "2026-08-11",
-        "days_since_followed": 68,
+        "days_since_followed": 76,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4681,7 +4681,7 @@
         "company_name": "Remote Jobs",
         "company_follow_key": "remote jobs",
         "followed_on": "2026-08-05",
-        "days_since_followed": 74,
+        "days_since_followed": 82,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4704,7 +4704,7 @@
         "company_name": "Charterhouse Partnership",
         "company_follow_key": "charterhouse partnership",
         "followed_on": "2026-08-05",
-        "days_since_followed": 74,
+        "days_since_followed": 82,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4727,7 +4727,7 @@
         "company_name": "Halian",
         "company_follow_key": "halian",
         "followed_on": "2026-08-04",
-        "days_since_followed": 75,
+        "days_since_followed": 83,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4750,7 +4750,7 @@
         "company_name": "AjaxTI",
         "company_follow_key": "ajaxti",
         "followed_on": "2026-08-03",
-        "days_since_followed": 76,
+        "days_since_followed": 84,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4773,7 +4773,7 @@
         "company_name": "KPMG Middle East",
         "company_follow_key": "kpmg middle east",
         "followed_on": "2026-08-01",
-        "days_since_followed": 78,
+        "days_since_followed": 86,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4796,7 +4796,7 @@
         "company_name": "Vagas GSW Software",
         "company_follow_key": "vagas gsw software",
         "followed_on": "2026-07-31",
-        "days_since_followed": 79,
+        "days_since_followed": 87,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4819,7 +4819,7 @@
         "company_name": "Klube Capital",
         "company_follow_key": "klube capital",
         "followed_on": "2026-07-29",
-        "days_since_followed": 81,
+        "days_since_followed": 89,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4842,7 +4842,7 @@
         "company_name": "Naresh i Technologies",
         "company_follow_key": "naresh i",
         "followed_on": "2026-07-27",
-        "days_since_followed": 83,
+        "days_since_followed": 91,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4865,7 +4865,7 @@
         "company_name": "Entrepreneur Stories",
         "company_follow_key": "entrepreneur stories",
         "followed_on": "2026-07-25",
-        "days_since_followed": 85,
+        "days_since_followed": 93,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4888,7 +4888,7 @@
         "company_name": "Mitratech",
         "company_follow_key": "mitratech",
         "followed_on": "2026-07-22",
-        "days_since_followed": 88,
+        "days_since_followed": 96,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4911,7 +4911,7 @@
         "company_name": "The Right Hire Latam",
         "company_follow_key": "the right hire",
         "followed_on": "2026-07-22",
-        "days_since_followed": 88,
+        "days_since_followed": 96,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4934,7 +4934,7 @@
         "company_name": "Joyit",
         "company_follow_key": "joyit",
         "followed_on": "2026-07-21",
-        "days_since_followed": 89,
+        "days_since_followed": 97,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4957,7 +4957,7 @@
         "company_name": "Knowtrex GmbH",
         "company_follow_key": "knowtrex",
         "followed_on": "2026-07-20",
-        "days_since_followed": 90,
+        "days_since_followed": 98,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -4980,7 +4980,30 @@
         "company_name": "Muttdata",
         "company_follow_key": "muttdata",
         "followed_on": "2026-07-17",
-        "days_since_followed": 93,
+        "days_since_followed": 101,
+        "matched_connection_count": 0,
+        "matched_recruiters": 0,
+        "matched_talent_acquisition": 0,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 0,
+        "matched_lead_reactivation_contacts": 0,
+        "matched_opportunity_history_events": 0,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 0,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
+      {
+        "company_name": "WorkBridge | Vagas Full-time, Freelance & Contractor",
+        "company_follow_key": "workbridge vagas full time freelance contractor",
+        "followed_on": "2026-07-17",
+        "days_since_followed": 101,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5003,7 +5026,7 @@
         "company_name": "CLOOUD",
         "company_follow_key": "clooud",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5026,7 +5049,7 @@
         "company_name": "AIVI",
         "company_follow_key": "aivi",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5049,7 +5072,7 @@
         "company_name": "Instituto Daryus",
         "company_follow_key": "instituto daryus",
         "followed_on": "2026-07-15",
-        "days_since_followed": 95,
+        "days_since_followed": 103,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5072,7 +5095,7 @@
         "company_name": "Mas Insights",
         "company_follow_key": "mas insights",
         "followed_on": "2026-07-14",
-        "days_since_followed": 96,
+        "days_since_followed": 104,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5095,7 +5118,7 @@
         "company_name": "Munich Re Specialty",
         "company_follow_key": "munich re specialty",
         "followed_on": "2026-07-11",
-        "days_since_followed": 99,
+        "days_since_followed": 107,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5118,7 +5141,7 @@
         "company_name": "Key2 Research",
         "company_follow_key": "key2 research",
         "followed_on": "2026-07-06",
-        "days_since_followed": 104,
+        "days_since_followed": 112,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5141,7 +5164,7 @@
         "company_name": "Principal Financial Group",
         "company_follow_key": "principal financial",
         "followed_on": "2026-07-03",
-        "days_since_followed": 107,
+        "days_since_followed": 115,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5164,7 +5187,7 @@
         "company_name": "Prosas",
         "company_follow_key": "prosas",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5187,7 +5210,7 @@
         "company_name": "BIGCORE",
         "company_follow_key": "bigcore",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5210,30 +5233,7 @@
         "company_name": "ExploreK12",
         "company_follow_key": "explorek12",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
-        "matched_connection_count": 0,
-        "matched_recruiters": 0,
-        "matched_talent_acquisition": 0,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 0,
-        "matched_opportunity_history_events": 0,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 0,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_NEEDS_REVIEW"
-      },
-      {
-        "company_name": "Hireincrypto",
-        "company_follow_key": "hireincrypto",
-        "followed_on": "2026-06-26",
-        "days_since_followed": 114,
+        "days_since_followed": 117,
         "matched_connection_count": 0,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5258,7 +5258,7 @@
         "company_name": "Insi",
         "company_follow_key": "insi",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 10,
         "matched_recruiters": 3,
         "matched_talent_acquisition": 0,
@@ -5281,7 +5281,7 @@
         "company_name": "Listo",
         "company_follow_key": "listo",
         "followed_on": "2026-08-04",
-        "days_since_followed": 75,
+        "days_since_followed": 83,
         "matched_connection_count": 2,
         "matched_recruiters": 2,
         "matched_talent_acquisition": 0,
@@ -5301,33 +5301,10 @@
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
-        "company_name": "TechBridge",
-        "company_follow_key": "techbridge",
-        "followed_on": "2026-07-17",
-        "days_since_followed": 93,
-        "matched_connection_count": 2,
-        "matched_recruiters": 2,
-        "matched_talent_acquisition": 0,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 2,
-        "matched_opportunity_history_events": 1,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 2,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
-      },
-      {
         "company_name": "Kopius",
         "company_follow_key": "kopius",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 2,
         "matched_recruiters": 2,
         "matched_talent_acquisition": 0,
@@ -5350,7 +5327,7 @@
         "company_name": "SunnyData",
         "company_follow_key": "sunnydata",
         "followed_on": "2026-10-14",
-        "days_since_followed": 4,
+        "days_since_followed": 12,
         "matched_connection_count": 3,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -5373,7 +5350,7 @@
         "company_name": "Entellux",
         "company_follow_key": "entellux",
         "followed_on": "2026-10-02",
-        "days_since_followed": 16,
+        "days_since_followed": 24,
         "matched_connection_count": 3,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -5396,7 +5373,7 @@
         "company_name": "Devsu",
         "company_follow_key": "devsu",
         "followed_on": "2026-10-07",
-        "days_since_followed": 11,
+        "days_since_followed": 19,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 1,
@@ -5419,7 +5396,7 @@
         "company_name": "AllianceIT Inc",
         "company_follow_key": "allianceit",
         "followed_on": "2026-09-28",
-        "days_since_followed": 20,
+        "days_since_followed": 28,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5442,7 +5419,7 @@
         "company_name": "Atom",
         "company_follow_key": "atom",
         "followed_on": "2026-09-23",
-        "days_since_followed": 25,
+        "days_since_followed": 33,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5459,13 +5436,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "FitNext Co.",
         "company_follow_key": "fitnext",
         "followed_on": "2026-07-16",
-        "days_since_followed": 94,
+        "days_since_followed": 102,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5485,33 +5462,10 @@
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
-        "company_name": "TeamUp",
-        "company_follow_key": "teamup",
-        "followed_on": "2026-07-02",
-        "days_since_followed": 108,
-        "matched_connection_count": 2,
-        "matched_recruiters": 1,
-        "matched_talent_acquisition": 1,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 2,
-        "matched_opportunity_history_events": 2,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 2,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
-      },
-      {
         "company_name": "Nitka",
         "company_follow_key": "nitka",
         "followed_on": "2026-06-30",
-        "days_since_followed": 110,
+        "days_since_followed": 118,
         "matched_connection_count": 2,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5534,7 +5488,7 @@
         "company_name": "Mentor Talent Acquisition",
         "company_follow_key": "mentor talent acquisition",
         "followed_on": "2026-10-09",
-        "days_since_followed": 9,
+        "days_since_followed": 17,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5557,7 +5511,7 @@
         "company_name": "GlobalTask",
         "company_follow_key": "globaltask",
         "followed_on": "2026-09-07",
-        "days_since_followed": 41,
+        "days_since_followed": 49,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5580,7 +5534,7 @@
         "company_name": "Telnyx",
         "company_follow_key": "telnyx",
         "followed_on": "2026-08-28",
-        "days_since_followed": 51,
+        "days_since_followed": 59,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5603,7 +5557,30 @@
         "company_name": "Data Meaning",
         "company_follow_key": "data meaning",
         "followed_on": "2026-07-11",
-        "days_since_followed": 99,
+        "days_since_followed": 107,
+        "matched_connection_count": 1,
+        "matched_recruiters": 1,
+        "matched_talent_acquisition": 0,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 0,
+        "matched_lead_reactivation_contacts": 1,
+        "matched_opportunity_history_events": 1,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 1,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
+      {
+        "company_name": "TeamUp",
+        "company_follow_key": "teamup",
+        "followed_on": "2026-07-02",
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 1,
         "matched_talent_acquisition": 0,
@@ -5626,7 +5603,7 @@
         "company_name": "Celonis",
         "company_follow_key": "celonis",
         "followed_on": "2026-08-22",
-        "days_since_followed": 57,
+        "days_since_followed": 65,
         "matched_connection_count": 4,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -5649,7 +5626,7 @@
         "company_name": "WeCogno",
         "company_follow_key": "wecogno",
         "followed_on": "2026-08-19",
-        "days_since_followed": 60,
+        "days_since_followed": 68,
         "matched_connection_count": 3,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5672,7 +5649,7 @@
         "company_name": "Honeycomb Software",
         "company_follow_key": "honeycomb software",
         "followed_on": "2026-10-13",
-        "days_since_followed": 5,
+        "days_since_followed": 13,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5695,10 +5672,10 @@
         "company_name": "Ravn",
         "company_follow_key": "ravn",
         "followed_on": "2026-09-28",
-        "days_since_followed": 20,
+        "days_since_followed": 28,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
-        "matched_talent_acquisition": 2,
+        "matched_talent_acquisition": 1,
         "matched_hiring_managers": 0,
         "matched_data_leaders": 0,
         "matched_top_contacts": 0,
@@ -5718,7 +5695,7 @@
         "company_name": "TikTok for Business",
         "company_follow_key": "tiktok for business",
         "followed_on": "2026-09-25",
-        "days_since_followed": 23,
+        "days_since_followed": 31,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5735,13 +5712,13 @@
         "likely_opportunity_bucket": "",
         "follow_signal_confidence": 0.0,
         "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
+        "signals": "FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
         "company_name": "Parser",
         "company_follow_key": "parser",
         "followed_on": "2026-09-03",
-        "days_since_followed": 45,
+        "days_since_followed": 53,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5764,7 +5741,7 @@
         "company_name": "Cloud Employee",
         "company_follow_key": "cloud employee",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 2,
@@ -5787,7 +5764,7 @@
         "company_name": "SGS",
         "company_follow_key": "sgs",
         "followed_on": "2026-08-11",
-        "days_since_followed": 68,
+        "days_since_followed": 76,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 2,
@@ -5810,7 +5787,7 @@
         "company_name": "Miner",
         "company_follow_key": "miner",
         "followed_on": "2026-08-06",
-        "days_since_followed": 73,
+        "days_since_followed": 81,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5833,7 +5810,7 @@
         "company_name": "Pixida do Brasil",
         "company_follow_key": "pixida do",
         "followed_on": "2026-07-06",
-        "days_since_followed": 104,
+        "days_since_followed": 112,
         "matched_connection_count": 2,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5853,10 +5830,33 @@
         "signals": "FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       },
       {
+        "company_name": "sfera",
+        "company_follow_key": "sfera",
+        "followed_on": "2026-10-22",
+        "days_since_followed": 4,
+        "matched_connection_count": 1,
+        "matched_recruiters": 0,
+        "matched_talent_acquisition": 0,
+        "matched_hiring_managers": 0,
+        "matched_data_leaders": 0,
+        "matched_top_contacts": 0,
+        "matched_untapped_contacts": 1,
+        "matched_lead_reactivation_contacts": 0,
+        "matched_opportunity_history_events": 0,
+        "matched_inbound_opportunities": 0,
+        "matched_soft_closed_leads": 0,
+        "matched_usd_crm_leads": 0,
+        "likely_company_category": "",
+        "likely_opportunity_bucket": "",
+        "follow_signal_confidence": 0.0,
+        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
+        "signals": "RECENTLY_FOLLOWED_COMPANY; FOLLOWED_COMPANY_NEEDS_REVIEW"
+      },
+      {
         "company_name": "INSPYR Global Solutions",
         "company_follow_key": "inspyr",
         "followed_on": "2026-09-15",
-        "days_since_followed": 33,
+        "days_since_followed": 41,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -5879,7 +5879,7 @@
         "company_name": "Noblesoft Technologies",
         "company_follow_key": "noblesoft",
         "followed_on": "2026-09-10",
-        "days_since_followed": 38,
+        "days_since_followed": 46,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5902,7 +5902,7 @@
         "company_name": "American IT Systems",
         "company_follow_key": "american it systems",
         "followed_on": "2026-09-09",
-        "days_since_followed": 39,
+        "days_since_followed": 47,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -5925,7 +5925,7 @@
         "company_name": "EON TECH",
         "company_follow_key": "eon",
         "followed_on": "2026-09-02",
-        "days_since_followed": 46,
+        "days_since_followed": 54,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5948,7 +5948,7 @@
         "company_name": "Dura Digital",
         "company_follow_key": "dura",
         "followed_on": "2026-08-27",
-        "days_since_followed": 52,
+        "days_since_followed": 60,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5971,7 +5971,7 @@
         "company_name": "Ewents",
         "company_follow_key": "ewents",
         "followed_on": "2026-08-26",
-        "days_since_followed": 53,
+        "days_since_followed": 61,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -5994,7 +5994,7 @@
         "company_name": "Epassi Deutschland",
         "company_follow_key": "epassi deutschland",
         "followed_on": "2026-08-19",
-        "days_since_followed": 60,
+        "days_since_followed": 68,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6017,7 +6017,7 @@
         "company_name": "Rising Capital Humano",
         "company_follow_key": "rising capital humano",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6040,7 +6040,7 @@
         "company_name": "Recrucial",
         "company_follow_key": "recrucial",
         "followed_on": "2026-08-14",
-        "days_since_followed": 65,
+        "days_since_followed": 73,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6063,7 +6063,7 @@
         "company_name": "Svitla Systems, Inc.",
         "company_follow_key": "svitla systems",
         "followed_on": "2026-08-13",
-        "days_since_followed": 66,
+        "days_since_followed": 74,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -6086,7 +6086,7 @@
         "company_name": "George Bernard Consulting | Jobs",
         "company_follow_key": "george bernard jobs",
         "followed_on": "2026-08-04",
-        "days_since_followed": 75,
+        "days_since_followed": 83,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6109,7 +6109,7 @@
         "company_name": "Adastra",
         "company_follow_key": "adastra",
         "followed_on": "2026-07-25",
-        "days_since_followed": 85,
+        "days_since_followed": 93,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6132,7 +6132,7 @@
         "company_name": "Ascentt",
         "company_follow_key": "ascentt",
         "followed_on": "2026-07-22",
-        "days_since_followed": 88,
+        "days_since_followed": 96,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6155,7 +6155,7 @@
         "company_name": "PiplNow LLC",
         "company_follow_key": "piplnow",
         "followed_on": "2026-07-07",
-        "days_since_followed": 103,
+        "days_since_followed": 111,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -6178,7 +6178,7 @@
         "company_name": "Talentful",
         "company_follow_key": "talentful",
         "followed_on": "2026-07-04",
-        "days_since_followed": 106,
+        "days_since_followed": 114,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6201,7 +6201,7 @@
         "company_name": "NewPoint Information Technology Consulting",
         "company_follow_key": "newpoint information",
         "followed_on": "2026-07-03",
-        "days_since_followed": 107,
+        "days_since_followed": 115,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6224,7 +6224,7 @@
         "company_name": "NIR-YU",
         "company_follow_key": "nir yu",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -6247,7 +6247,7 @@
         "company_name": "INFOMOTION GmbH",
         "company_follow_key": "infomotion",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6270,7 +6270,7 @@
         "company_name": "Grupo Educacional Primum",
         "company_follow_key": "grupo educacional primum",
         "followed_on": "2026-07-02",
-        "days_since_followed": 108,
+        "days_since_followed": 116,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6293,7 +6293,7 @@
         "company_name": "Exadel People",
         "company_follow_key": "exadel people",
         "followed_on": "2026-07-01",
-        "days_since_followed": 109,
+        "days_since_followed": 117,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 0,
@@ -6316,7 +6316,7 @@
         "company_name": "WPP Enterprise Solutions",
         "company_follow_key": "wpp enterprise",
         "followed_on": "2026-06-30",
-        "days_since_followed": 110,
+        "days_since_followed": 118,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -6339,7 +6339,7 @@
         "company_name": "Infracommerce Latam",
         "company_follow_key": "infracommerce",
         "followed_on": "2026-06-29",
-        "days_since_followed": 111,
+        "days_since_followed": 119,
         "matched_connection_count": 1,
         "matched_recruiters": 0,
         "matched_talent_acquisition": 1,
@@ -6357,29 +6357,6 @@
         "follow_signal_confidence": 0.85,
         "company_follow_reason": "LATAM/nearshore keyword in company name",
         "signals": "FOLLOWED_COMPANY_RECRUITER_SIGNAL; FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL"
-      },
-      {
-        "company_name": "Extractta",
-        "company_follow_key": "extractta",
-        "followed_on": "2026-06-25",
-        "days_since_followed": 115,
-        "matched_connection_count": 1,
-        "matched_recruiters": 0,
-        "matched_talent_acquisition": 0,
-        "matched_hiring_managers": 0,
-        "matched_data_leaders": 0,
-        "matched_top_contacts": 0,
-        "matched_untapped_contacts": 0,
-        "matched_lead_reactivation_contacts": 1,
-        "matched_opportunity_history_events": 1,
-        "matched_inbound_opportunities": 0,
-        "matched_soft_closed_leads": 0,
-        "matched_usd_crm_leads": 1,
-        "likely_company_category": "",
-        "likely_opportunity_bucket": "",
-        "follow_signal_confidence": 0.0,
-        "company_follow_reason": "no company dictionary, keyword, or market signal found — needs manual review",
-        "signals": "FOLLOWED_COMPANY_WITH_MESSAGE_HISTORY; FOLLOWED_COMPANY_WITH_OPPORTUNITY_SIGNAL; FOLLOWED_COMPANY_NEEDS_REVIEW"
       }
     ],
     "geography_note": "Company Follows improves company relevance and opportunity-market inference, but LinkedIn export still does not provide exact company location. Follow signals are not exact geography."
