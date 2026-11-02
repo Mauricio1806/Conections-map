@@ -210,3 +210,33 @@ def test_unavailable_when_no_messages(isolated_outputs, monkeypatch):
     monkeypatch.setattr(oh, "load_messages", lambda: None)
     result = oh.run_opportunity_history_engine()
     assert result == {"available": False}
+
+
+# ── Promotional pitches are never inbound opportunities ─────────────────────
+
+def test_free_consultation_pitch_is_not_inbound_opportunity():
+    msgs = pd.DataFrame([_msg(
+        "conv-promo", "Coach Seller",
+        "Mauricio, estava olhando seu perfil e vi que você tem características para "
+        "trabalhar como Dev na Gringa. Você já pensou nessa possibilidade? Em 60 "
+        "minutos, podemos fazer uma consultoria gratuita com você.",
+        datetime(2026, 11, 1), False,
+    )])
+    events = oh._build_events_for_conversation("conv-promo", msgs, {}, {})
+    assert len(events) == 1
+    e = events[0]
+    assert e["opportunity_event_type"] == "Unknown / Review Needed"
+    assert e["inbound_recruiter_contact"] is False
+    assert e["interview_or_call_requested"] is False
+
+
+def test_promo_word_does_not_override_concrete_cv_request():
+    msgs = pd.DataFrame([_msg(
+        "conv-mixed", "Real Recruiter",
+        "Hi Mauricio, before Black Friday we need to close this Data Engineer role. "
+        "Could you send your updated CV and salary expectations?",
+        datetime(2026, 11, 1), False,
+    )])
+    e = oh._build_events_for_conversation("conv-mixed", msgs, {}, {})[0]
+    assert e["opportunity_event_type"] != "Unknown / Review Needed"
+    assert e["cv_requested"] is True

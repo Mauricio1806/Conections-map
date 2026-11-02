@@ -196,7 +196,7 @@ ALLOWED_CONTACT_FIELDS = {
     # Monthly Executive Queue (src/monthly_executive_queue.py) — sanitized
     # unified queue-row schema only (see QUEUE_ROW_FIELDS there and
     # build_monthly_executive_queue_public() in export_public_dashboard_data.py).
-    "queue_name", "rank", "last_contact_date",
+    "queue_name", "rank", "last_contact_date", "month_status",
     # Company Follow Intelligence (src/company_follow_intelligence.py) —
     # company-level aggregates only (organization name the user follows +
     # counts/classification), no person-level PII, see

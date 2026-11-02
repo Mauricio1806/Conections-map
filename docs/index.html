@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1793025440">
+  <link rel="stylesheet" href="./assets/style.css?v=1793578180">
 </head>
 <body>
 
@@ -1389,6 +1389,13 @@ python src/validate_static_dashboard_runtime.py</pre>
         <!-- 1. USD Pipeline Summary -->
         <div class="section-label">1. USD Pipeline Summary</div>
         <div class="metrics-grid" id="usdcrm-summary"></div>
+        <div class="table-wrap" id="usdcrm-funnel-wrap" style="display:none">
+          <table id="usdcrm-funnel-table">
+            <thead><tr><th>Stage</th><th>Confirmed (manual log)</th><th>Message-inferred signals</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div id="usdcrm-funnel-note" style="font-size:0.72rem;color:var(--text-muted);margin-top:4px"></div>
+        </div>
 
         <!-- 2. Recommended USD Actions This Week -->
         <div class="section-label">2. Recommended USD Actions This Week</div>
@@ -1892,6 +1899,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1793025440"></script>
+<script src="./assets/app.js?v=1793578180"></script>
 </body>
 </html>

@@ -5046,9 +5046,26 @@ function renderUsdCrm() {
   _usdCrmPopulateSelect('usdcrm-bucket-filter', allRows.map(r => r.opportunity_bucket));
   _usdCrmPopulateSelect('usdcrm-currency-filter', allRows.map(r => r.currency));
 
+  renderUsdCrmFunnel(crm.conversion_funnel || {});
   renderUsdCrmRiskTables();
   renderUsdCrmWeeklyActions();
   applyUsdCrmFilters();
+}
+
+// Confirmed (manual log) vs message-inferred stage counts — side by side,
+// never merged, no conversion percentages. null => "Not Measured".
+function renderUsdCrmFunnel(f) {
+  const wrap = document.getElementById('usdcrm-funnel-wrap');
+  if (!wrap) return;
+  if (!f.available) { wrap.style.display = 'none'; return; }
+  wrap.style.display = '';
+  const cell = v => (v === null || v === undefined) ? '<span style="color:var(--text-muted)">Not Measured</span>' : v;
+  const tbody = document.querySelector('#usdcrm-funnel-table tbody');
+  if (tbody) tbody.innerHTML = (f.stages || []).map(s =>
+    '<tr><td>' + s.stage + '</td><td>' + cell(s.confirmed) + '</td><td>' + cell(s.inferred) + '</td></tr>'
+  ).join('');
+  const note = document.getElementById('usdcrm-funnel-note');
+  if (note) note.textContent = f.note || '';
 }
 
 function renderUsdCrmRiskTables() {
@@ -5506,7 +5523,8 @@ function meqRowHtml(r) {
     + '<td style="white-space:nowrap">' + (r.company || '—') + '</td>'
     + '<td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.role || '—') + '</td>'
     + '<td style="font-size:0.75rem">' + (r.persona || '—') + '</td>'
-    + '<td style="font-size:0.72rem;white-space:nowrap">' + (r.event_month || '—') + '</td>'
+    + '<td style="font-size:0.72rem;white-space:nowrap">' + (r.event_month || '—')
+    + (r.month_status ? '<br><span style="font-size:0.65rem;opacity:0.75">' + r.month_status + '</span>' : '') + '</td>'
     + '<td style="font-size:0.72rem;max-width:140px;white-space:normal">' + (r.opportunity_event_type || '—') + '</td>'
     + '<td style="font-size:0.72rem;max-width:130px;white-space:normal">' + (r.opportunity_stage || '—') + '</td>'
     + '<td>' + opphistStrengthBadge(r.opportunity_signal_strength) + '</td>'

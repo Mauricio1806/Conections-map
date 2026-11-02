@@ -77,6 +77,8 @@ QUEUE_ROW_FIELDS = [
     # Part 22 — USD Remote / Location Fit
     "usd_remote_priority_score", "useless_for_usd_remote_flag",
     "mexico_local_only_flag", "lead_disqualification_reason",
+    # Month rollover — distinguishes new current-month events from carried-over ones
+    "month_status",
 ]
 
 # ── Recommended message-angle templates (exact spec wording, [Name] filled) ─
@@ -169,6 +171,17 @@ def _end_of_current_month() -> date:
     return next_month - timedelta(days=1)
 
 
+def _month_status(event_month: str) -> str:
+    """Label a queue row as a new current-month event or one carried over
+    from an earlier month (e.g. an October lead still open in November)."""
+    event_month = _norm(event_month)
+    if not event_month:
+        return ""
+    if event_month == _current_month():
+        return "New this month"
+    return f"Carried over from {event_month}"
+
+
 def _parse_date(s) -> date | None:
     s = _norm(s)
     if not s:
@@ -184,12 +197,20 @@ def _parse_date(s) -> date | None:
 def _build_contact_profiles(events: list[dict]) -> dict:
     """Keyed by normalized profile_url. `latest` holds the most recent event
     (current state); the `ever_*` flags aggregate across the contact's full
-    history (used for "previous positive signal" style scoring bonuses)."""
+    history (used for "previous positive signal" style scoring bonuses).
+
+    Events with no profile_url (LinkedIn omits SENDER PROFILE URL for InMail
+    from non-connections) fall back to a synthetic "conv:<hash>" key so a real
+    current-month inbound isn't silently dropped; the public profile_url field
+    stays empty (see _base_row)."""
     profiles: dict[str, dict] = {}
     for e in events or []:
         url = _norm_url(e.get("profile_url", ""))
         if not url:
-            continue
+            conv_hash = _norm(e.get("conversation_id_hash"))
+            if not conv_hash:
+                continue
+            url = f"conv:{conv_hash}"
         p = profiles.setdefault(url, {
             "profile_url": e.get("profile_url", ""), "latest": None,
             "event_count": 0, "ever_positive_signal": False,
@@ -212,6 +233,8 @@ def _build_contact_profiles(events: list[dict]) -> dict:
 
 def _base_row(profile_url: str, latest: dict) -> dict:
     latest = latest or {}
+    if profile_url.startswith("conv:"):
+        profile_url = ""
     row = {
         "contact_name": _norm(latest.get("contact_name")),
         "company": _norm(latest.get("company")),
@@ -257,6 +280,7 @@ def _finalize_rows(rows: list[dict], queue_name: str, angle_key: str, limit: int
         row["priority"] = _priority_from_score(score)
         row["recommended_action"] = RECOMMENDED_ACTION_BY_QUEUE.get(angle_key, "Review and respond")
         row["message_angle"] = _fill_angle(angle_key, r.get("contact_name", ""))
+        row["month_status"] = _month_status(r.get("event_month", ""))
         out.append(row)
     return out
 
@@ -409,6 +433,8 @@ def _build_usd_followup_pool(profiles: dict, usd_crm_data: dict) -> dict:
         e["from_usd_crm"] = True
 
     for url, p in profiles.items():
+        if url.startswith("conv:"):
+            continue  # URL-less contacts can't be matched to USD CRM rows
         latest = p["latest"] or {}
         has_followup_signal = any(_truthy(latest.get(k)) for k in (
             "cv_requested", "salary_expectation_requested", "interview_or_call_requested",
@@ -602,6 +628,7 @@ def run_monthly_executive_queue(opportunity_history_data: dict | None = None,
         row["priority"] = _priority_from_score(score)
         row["recommended_action"] = RECOMMENDED_ACTION_BY_QUEUE.get(angle_key, "Review and respond")
         row["message_angle"] = _fill_angle(angle_key, r.get("contact_name", ""))
+        row["month_status"] = _month_status(r.get("event_month", ""))
         monthly_backlog_top50.append(row)
 
     all_records = inbound_top20 + reactivation_top20 + soft_closed_top20 + usd_followups_top20 + monthly_backlog_top50

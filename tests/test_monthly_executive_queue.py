@@ -100,6 +100,55 @@ def test_inbound_queue_excludes_last_month_events(isolated_outputs):
     assert result["inbound_top20"] == []
 
 
+def test_urlless_current_month_inbound_not_dropped(isolated_outputs):
+    # LinkedIn omits SENDER PROFILE URL for InMail from non-connections; the
+    # opportunity-history event still counts in monthly_pipeline, so the
+    # queue must not silently drop it.
+    events = [_event(profile_url="", conversation_id_hash="abc123",
+                     contact_name="Inmail Recruiter")]
+    oh = {"available": True, "events": events}
+    result = meq.run_monthly_executive_queue(opportunity_history_data=oh, usd_crm_data={})
+    assert len(result["inbound_top20"]) == 1
+    row = result["inbound_top20"][0]
+    assert row["contact_name"] == "Inmail Recruiter"
+    assert row["profile_url"] == ""  # synthetic key never exposed
+    assert result["summary"]["inbound_opportunities_this_month"] == 1
+    assert "conv:" not in str(result)
+
+
+def test_urlless_events_with_distinct_conversations_not_merged(isolated_outputs):
+    events = [
+        _event(profile_url="", conversation_id_hash="h1", contact_name="A Recruiter"),
+        _event(profile_url="", conversation_id_hash="h2", contact_name="B Recruiter"),
+        _event(profile_url="", conversation_id_hash="", contact_name="No Key"),
+    ]
+    oh = {"available": True, "events": events}
+    result = meq.run_monthly_executive_queue(opportunity_history_data=oh, usd_crm_data={})
+    names = sorted(r["contact_name"] for r in result["inbound_top20"])
+    assert names == ["A Recruiter", "B Recruiter"]
+
+
+def test_month_status_marks_carried_over_vs_new(isolated_outputs):
+    last_month_date = date.today().replace(day=1) - timedelta(days=1)
+    last_month = last_month_date.strftime("%Y-%m")
+    events = [
+        _event(contact_name="New Inbound"),
+        _event(profile_url="https://linkedin.com/in/old-softclose",
+               contact_name="Old Softclose", event_month=last_month,
+               event_date=str(last_month_date),
+               opportunity_event_type="No Current Role / Keep on Radar",
+               soft_closed=True, future_reactivation_candidate=True,
+               reactivation_date=str(date.today())),
+    ]
+    oh = {"available": True, "events": events}
+    result = meq.run_monthly_executive_queue(opportunity_history_data=oh, usd_crm_data={})
+    assert result["inbound_top20"][0]["month_status"] == "New this month"
+    # The October-style lead is carried over, never relabelled as new inbound.
+    assert all(r["contact_name"] != "Old Softclose" for r in result["inbound_top20"])
+    carried = result["reactivation_top20"][0]
+    assert carried["month_status"] == f"Carried over from {last_month}"
+
+
 def test_career_site_only_event_scores_low_not_hard_excluded(isolated_outputs):
     events = [_event(
         opportunity_event_type="Career Site / Talent Database Redirect",

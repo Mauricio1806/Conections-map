@@ -40,7 +40,7 @@ from src.message_intelligence import (
     load_messages,
     POSITIVE_KW, CV_KW, INTERVIEW_ACTIVE_KW,
     LOCATION_ELIGIBILITY_KW, GEOGRAPHIC_RESTRICTION_KW, WORK_AUTH_KW,
-    CAREER_SITE_KW, AUTO_REPLY_KW, GENERIC_ACK_KW,
+    CAREER_SITE_KW, AUTO_REPLY_KW, GENERIC_ACK_KW, PROMOTIONAL_PITCH_KW,
 )
 
 logger = logging.getLogger(__name__)
@@ -367,9 +367,20 @@ def _classify_bucket(texts: list[str], is_first_bucket: bool, opened_by_other: b
         opened_by_other and _kw_match(joined, POSITIVE_KW)
     )
     interview_or_call_requested = interview_process or call_proposed or technical_interview
+    # A sales pitch (course offer, "free consultation" funnel) is never an
+    # opportunity; a call proposal is part of the pitch, so only concrete
+    # hiring evidence (CV/salary/submission/technical interview) overrides it.
+    promotional_pitch = _kw_match(joined, PROMOTIONAL_PITCH_KW) and not (
+        cv_requested or salary_requested or client_submission or technical_interview
+    )
+    if promotional_pitch:
+        inbound_opening = False
+        interview_or_call_requested = False
 
     # ── Priority order for the single primary event_type ────────────────────
-    if rejected:
+    if promotional_pitch:
+        event_type = "Unknown / Review Needed"
+    elif rejected:
         event_type = "Rejected / Closed"
     elif location_blocked:
         event_type = "Location / Eligibility Blocked"

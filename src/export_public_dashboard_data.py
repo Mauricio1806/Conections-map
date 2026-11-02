@@ -1061,6 +1061,7 @@ SAFE_MONTHLY_QUEUE_ROW_COLS = {
     # Part 22 — USD Remote / Location Fit
     "usd_remote_priority_score", "useless_for_usd_remote_flag",
     "mexico_local_only_flag", "lead_disqualification_reason",
+    "month_status",
 }
 SAFE_MONTHLY_CHART_COLS = {
     "month", "inbound_opportunities", "reactivation_due", "soft_closed", "usd_followups",
@@ -1116,6 +1117,25 @@ def build_usd_contract_crm_public(usd_crm_data: dict) -> dict:
         # execution lists, see src/monthly_executive_queue.py. Execution
         # queues, not confirmed applications; never merged into A/B's counts.
         "monthly_executive_queue": build_monthly_executive_queue_public(usd_crm_data.get("monthly_executive_queue")),
+        "conversion_funnel": build_conversion_funnel_public(usd_crm_data.get("conversion_funnel")),
+    }
+
+
+def build_conversion_funnel_public(funnel: dict | None) -> dict:
+    """Aggregate counts only — stage name + confirmed/inferred integers (or
+    None for Not Measured). No person-level data ever."""
+    if not funnel or not funnel.get("available"):
+        return {"available": False}
+    def _num(v):
+        return int(v) if isinstance(v, (int, float)) and v == v else None
+    return {
+        "available": True,
+        "confirmed_measured": bool(funnel.get("confirmed_measured")),
+        "stages": [
+            {"stage": str(s.get("stage", "")), "confirmed": _num(s.get("confirmed")), "inferred": _num(s.get("inferred"))}
+            for s in (funnel.get("stages") or [])
+        ],
+        "note": str(funnel.get("note", "")),
     }
 
 

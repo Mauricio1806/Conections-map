@@ -589,6 +589,24 @@ INTERVIEW_ACTIVE_KW = [
     "siguiente etapa", "segunda entrevista",
 ]
 
+# Promotional / sales pitches (course offers, "free consultation" career-coaching
+# funnels, webinars) — never a vacancy and never a reply obligation, even when
+# they propose a call or ask a question. Phrase-level only: bare words like
+# "discount" appear in real recruiter benefit lists.
+PROMOTIONAL_PITCH_KW = [
+    "black friday", "cyber monday",
+    "consultoria gratuita", "consultoria gratis", "consultoria grátis",
+    "mentoria gratuita", "mentoria gratis", "mentoria grátis",
+    "asesoría gratuita", "asesoria gratuita", "mentoría gratuita",
+    "free consultation", "free consulting session", "free mentoring session",
+    "free coaching session", "free webinar", "webinar gratuito",
+    "aula gratuita", "aula grátis", "masterclass gratuita",
+    "matrículas abertas", "matriculas abertas",
+    "cupom de desconto", "coupon code", "promo code",
+    "código promocional", "codigo promocional",
+    "programa mais completo", "curso completo",
+]
+
 # Terminal/blocking states — Part 4: these OVERRIDE reply_obligation to NONE
 # unless a separate unresolved actionable request follows.
 TERMINAL_STATES = {
@@ -713,6 +731,9 @@ def _analyze_conversation_state(
     triggering_text = ""
     for t in reversed(meaningful):
         text = t["text"]
+        if t["sender"] == "other" and _kw_match(text, PROMOTIONAL_PITCH_KW):
+            process_state = "LOW_VALUE"
+            evidence.append("PROMOTIONAL_PITCH_KW"); triggering_text = text; break
         if _kw_match(text, HARD_REJECTION_KW):
             process_state = "REJECTED_CLOSED"
             closure_reason = "OTHER_CANDIDATE_SELECTED" if _kw_match(text, _OTHER_CANDIDATE_KW) else "PROCESS_CLOSED"
@@ -809,6 +830,10 @@ def _analyze_conversation_state(
         else:
             reply_obligation = "NONE"; evidence.append("NO_ACTIONABLE_ASK")
     else:
+        reply_obligation = "NONE"
+
+    # A sales pitch as the latest classifying signal owes nothing.
+    if "PROMOTIONAL_PITCH_KW" in evidence:
         reply_obligation = "NONE"
 
     # A weak-ask LIKELY whose latest message is THEIR courtesy closer ("thanks

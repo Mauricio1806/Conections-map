@@ -257,3 +257,53 @@ def test_all_auto_suggested_rows_conform_to_unified_schema(isolated_paths):
                      "active_process_pipeline"):
         for record in result[section]:
             assert set(record.keys()) == set(crm.PUBLIC_ROW_FIELDS)
+
+
+# ── Conversion funnel — confirmed vs inferred, never merged ─────────────────
+
+def _funnel_events():
+    base = {"opportunity_event_type": "No Response", "inbound_recruiter_contact": False,
+            "cv_requested": False, "interview_or_call_requested": False,
+            "technical_interview_signal": False, "client_submission_signal": False}
+    return [
+        {**base, "conversation_id_hash": "c1"},
+        {**base, "conversation_id_hash": "c2", "opportunity_event_type": "Inbound Opportunity",
+         "inbound_recruiter_contact": True},
+        # same conversation, later month — must not double count
+        {**base, "conversation_id_hash": "c2", "opportunity_event_type": "CV Requested", "cv_requested": True},
+        {**base, "conversation_id_hash": "c3", "opportunity_event_type": "CV Requested", "cv_requested": True},
+    ]
+
+
+def test_funnel_confirmed_not_measured_without_manual_rows():
+    from src.usd_contract_crm import build_conversion_funnel
+    f = build_conversion_funnel(pd.DataFrame(), {"available": True, "events": _funnel_events()})
+    stages = {s["stage"]: s for s in f["stages"]}
+    assert f["confirmed_measured"] is False
+    assert all(s["confirmed"] is None for s in f["stages"])
+    assert stages["Contact"]["inferred"] == 3
+    assert stages["Response"]["inferred"] == 2
+    assert stages["Vacancy"]["inferred"] == 1
+    assert stages["CV"]["inferred"] == 2
+    # Offers/contracts are never inferred from messages.
+    assert stages["Offer"]["inferred"] is None
+    assert stages["Contract"]["inferred"] is None
+    assert "pct" not in str(f).lower() and "rate" not in str(f["stages"]).lower()
+
+
+def test_funnel_confirmed_counts_use_manual_stage_ordinals():
+    from src.usd_contract_crm import build_conversion_funnel
+    df = pd.DataFrame({"status": ["CV_SENT", "TECHNICAL_INTERVIEW_DONE", "REJECTED", "CLOSED_WON"]})
+    stages = {s["stage"]: s["confirmed"] for s in build_conversion_funnel(df, None)["stages"]}
+    assert stages["Vacancy"] == 4
+    assert stages["CV"] == 3            # REJECTED row's furthest stage is unknown
+    assert stages["Interview"] == 2
+    assert stages["Contract"] == 1
+
+
+def test_funnel_public_sanitizer_numbers_only():
+    from src.export_public_dashboard_data import build_conversion_funnel_public
+    pub = build_conversion_funnel_public({"available": True, "confirmed_measured": False,
+        "stages": [{"stage": "CV", "confirmed": None, "inferred": 5, "contact_name": "X"}], "note": "n"})
+    assert pub["stages"] == [{"stage": "CV", "confirmed": None, "inferred": 5}]
+    assert build_conversion_funnel_public(None) == {"available": False}

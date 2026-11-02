@@ -1113,6 +1113,69 @@ def run_usd_contract_crm(
         # counts above, so soft-closed or inbound-only events can never be
         # miscounted as confirmed applications or active processes.
         "opportunity_history":    opportunity_history_data or {"available": False},
+        "conversion_funnel":      build_conversion_funnel(pipeline_df, opportunity_history_data),
+    }
+
+
+def build_conversion_funnel(pipeline_df: pd.DataFrame | None, opportunity_history_data: dict | None) -> dict:
+    """Contact → Response → Vacancy → CV → Call → Interview → Client Submission
+    → Offer → Contract, with CONFIRMED (manual usd_pipeline.csv) and INFERRED
+    (message-derived Opportunity History) counts side by side — never merged.
+
+    Confirmed counts are None ("Not Measured") when no manual rows are logged.
+    Inferred counts are distinct conversations; Offer/Contract are never
+    inferred from messages. No conversion percentages are produced."""
+    df = pipeline_df if pipeline_df is not None else pd.DataFrame()
+    confirmed_measured = not df.empty
+    statuses = df["status"].fillna("").str.upper() if confirmed_measured and "status" in df.columns else pd.Series(dtype=str)
+    # Closed/on-hold rows don't record how far they got, so they only count as
+    # a logged vacancy, never toward a later stage.
+    open_ords = [STATUS_ORDER[s] for s in statuses
+                 if s in STATUS_ORDER and s not in CLOSED_NEGATIVE_STATUSES and s != "ON_HOLD"]
+
+    def _confirmed_at_least(stage: str):
+        if not confirmed_measured:
+            return None
+        return sum(1 for o in open_ords if o >= STATUS_ORDER[stage])
+
+    events = (opportunity_history_data or {}).get("events") or [] \
+        if (opportunity_history_data or {}).get("available") else []
+
+    def _inferred(pred):
+        if not events:
+            return None
+        return len({e.get("conversation_id_hash") for e in events
+                    if e.get("conversation_id_hash") and pred(e)})
+
+    t = lambda e, k: str(e.get(k, "")).strip().lower() in ("true", "1", "yes")
+    etype = lambda e: e.get("opportunity_event_type", "")
+    stages = [
+        ("Contact",           _confirmed_at_least("OUTREACH_SENT"),
+         _inferred(lambda e: True)),
+        ("Response",          _confirmed_at_least("RECRUITER_REPLIED"),
+         _inferred(lambda e: etype(e) != "No Response")),
+        ("Vacancy",           (int(len(df)) if confirmed_measured else None),
+         _inferred(lambda e: t(e, "inbound_recruiter_contact")
+                   or etype(e) in ("Inbound Opportunity", "Recruiter Outreach"))),
+        ("CV",                _confirmed_at_least("CV_REQUESTED"),
+         _inferred(lambda e: t(e, "cv_requested"))),
+        ("Call",              _confirmed_at_least("RECRUITER_CALL_SCHEDULED"),
+         _inferred(lambda e: t(e, "interview_or_call_requested"))),
+        ("Interview",         _confirmed_at_least("TECHNICAL_INTERVIEW_SCHEDULED"),
+         _inferred(lambda e: t(e, "technical_interview_signal")
+                   or etype(e) in ("Interview Process", "Technical Interview"))),
+        ("Client Submission", _confirmed_at_least("SUBMITTED_TO_CLIENT"),
+         _inferred(lambda e: t(e, "client_submission_signal"))),
+        ("Offer",             _confirmed_at_least("OFFER"), None),
+        ("Contract",          (int((statuses == "CLOSED_WON").sum()) if confirmed_measured else None), None),
+    ]
+    return {
+        "available": True,
+        "confirmed_measured": confirmed_measured,
+        "stages": [{"stage": s, "confirmed": c, "inferred": i} for s, c, i in stages],
+        "note": ("Confirmed = manually logged in data/manual/usd_pipeline.csv. "
+                 "Inferred = distinct conversations with that signal in messages "
+                 "(not proof of a vacancy or stage). Offers/contracts are never inferred."),
     }
 
 

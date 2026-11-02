@@ -252,3 +252,23 @@ def test_courtesy_closer_downgrades_weak_likely_to_ambiguous():
     assert closer["reply_obligation"] == "AMBIGUOUS"
     assert "COURTESY_CLOSER_LATEST" in closer["state_evidence_codes"]
     assert closer["process_state"] == base["process_state"]   # active-process signal kept
+
+
+# ── Promotional pitch (course offer / "free consultation" funnel) => NONE ───
+def test_promotional_pitch_owes_no_reply():
+    state = _run([
+        ("other", "Mauricio, vi que você tem características para trabalhar como Dev "
+                  "na Gringa. Já pensou nisso? Podemos fazer uma consultoria gratuita "
+                  "de 60 minutos com você, qual o melhor horário?", 0),
+    ])
+    assert state["reply_obligation"] == "NONE"
+    assert state["process_state"] == "LOW_VALUE"
+
+
+def test_real_cv_request_after_old_promo_still_confirmed():
+    state = _run([
+        ("other", "Oferta especial de Black Friday no nosso curso completo!", 40),
+        ("other", "Could you please send your updated CV so I can share it with the client?", 1),
+    ], has_cv=False)
+    assert state["reply_obligation"] == "CONFIRMED"
+    assert state["process_state"] == "CV_REQUESTED"

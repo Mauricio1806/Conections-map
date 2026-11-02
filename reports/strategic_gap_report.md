@@ -1,5 +1,5 @@
 # 🎯 Strategic Gap Report
-> Generated: **October 26, 2026**
+> Generated: **November 01, 2026**
 
 This report compares your current LinkedIn network against your strategic targets.
 
@@ -16,11 +16,11 @@ This report compares your current LinkedIn network against your strategic target
 | US_CANADA_NEARSHORE | Engineering Manager | 0 | 40 | **40** | 60 | 60 | **CRITICAL** |
 | US_CANADA_NEARSHORE | Data Engineering Manager | 0 | 30 | **30** | 50 | 50 | **CRITICAL** |
 | LATAM_USD | Data Engineering Manager | 0 | 30 | **30** | 50 | 50 | **CRITICAL** |
-| SPAIN_EU | Hiring Manager | 0 | 15 | **15** | 60 | 60 | **CRITICAL** |
 | SPAIN_EU | Head of Data | 0 | 10 | **10** | 50 | 50 | **CRITICAL** |
 | SPAIN_EU | Data Engineering Manager | 0 | 10 | **10** | 40 | 40 | **CRITICAL** |
 | LATAM_USD | Head of Data | 1 | 30 | **29** | 50 | 49 | **CRITICAL** |
 | US_CANADA_NEARSHORE | Head of Data | 2 | 30 | **28** | 50 | 48 | **CRITICAL** |
+| SPAIN_EU | Hiring Manager | 1 | 15 | **14** | 60 | 59 | **CRITICAL** |
 | US_CANADA_NEARSHORE | Hiring Manager | 5 | 50 | **45** | 70 | 65 | **CRITICAL** |
 | BRAZIL | Data Engineering Manager | 3 | 20 | **17** | 20 | 17 | **CRITICAL** |
 | EUROPE | Data Engineering Manager | 1 | 5 | **4** | 30 | 29 | **CRITICAL** |
@@ -29,17 +29,17 @@ This report compares your current LinkedIn network against your strategic target
 | BRAZIL | Head of Data | 11 | 30 | **19** | 30 | 19 | **HIGH** |
 | US_CANADA_NEARSHORE | Recruiter | 35 | 80 | **45** | 100 | 65 | **HIGH** |
 | SPAIN_EU | Recruiter | 10 | 20 | **10** | 80 | 70 | **HIGH** |
-| SPAIN_EU | Director | 6 | 10 | **4** | 40 | 34 | **MEDIUM** |
+| SPAIN_EU | Director | 7 | 10 | **3** | 40 | 33 | **MEDIUM** |
 | EUROPE | Head of Data | 4 | 5 | **1** | 40 | 36 | **MEDIUM** |
-| LATAM_USD | Recruiter | 68 | 80 | **12** | 100 | 32 | **LOW** |
-| BRAZIL | Recruiter | 48 | 50 | **2** | 50 | 2 | **LOW** |
-| LATAM_USD | Talent Acquisition | 122 | 60 | **0** | 80 | 0 | **LOW** |
+| LATAM_USD | Recruiter | 71 | 80 | **9** | 100 | 29 | **LOW** |
+| LATAM_USD | Talent Acquisition | 133 | 60 | **0** | 80 | 0 | **LOW** |
 | LATAM_USD | Director | 38 | 20 | **0** | 40 | 2 | **LOW** |
 | SPAIN_EU | Talent Acquisition | 40 | 15 | **0** | 60 | 20 | **LOW** |
-| EUROPE | Recruiter | 34 | 10 | **0** | 60 | 26 | **LOW** |
-| EUROPE | Talent Acquisition | 34 | 10 | **0** | 50 | 16 | **LOW** |
+| EUROPE | Recruiter | 32 | 10 | **0** | 60 | 28 | **LOW** |
+| EUROPE | Talent Acquisition | 35 | 10 | **0** | 50 | 15 | **LOW** |
 | EUROPE | Director | 29 | 5 | **0** | 30 | 1 | **LOW** |
-| BRAZIL | Data Engineer | 101 | 30 | **0** | 30 | 0 | **LOW** |
+| BRAZIL | Recruiter | 50 | 50 | **0** | 50 | 0 | **LOW** |
+| BRAZIL | Data Engineer | 100 | 30 | **0** | 30 | 0 | **LOW** |
 
 ---
 
