@@ -207,3 +207,52 @@ def test_reply_reason_does_not_claim_unanswered_when_i_replied_last():
     # Unchanged when they spoke last and a reply is genuinely owed.
     owed = _reply_reason_short("CV_REQUESTED", "LIKELY", False, "other")
     assert owed == "Recruiter asked for CV and no reply was sent after that."
+
+
+# ── Stale open asks — "reply today" only while the latest message is recent ─
+_URGENT = ("ACTIVE_PROCESS_NEEDS_REPLY", "INBOUND_OPPORTUNITY_NEEDS_REPLY", "SALARY_CV_CALL_REQUESTED")
+_CV_ASK = "Could you please send your updated CV so I can share it with the client?"
+
+
+def _cv_ask_row(days_ago, conv_id):
+    return _mk_conversation(
+        conv_id, "Old Recruiter", f"https://linkedin.com/in/{conv_id}",
+        persona="Recruiter", market="LATAM_USD", company_category="GLOBAL_STAFFING",
+        messages=[("me", "Hi, I'm a Data Engineer open to remote roles.", days_ago + 1),
+                  ("other", _CV_ASK, days_ago)],
+    )
+
+
+def test_recent_cv_request_stays_urgent():
+    row = _cv_ask_row(3, "cv-recent")
+    assert row["response_queue_segment"] in _URGENT
+    assert row["recommended_response_timing"] == "TODAY"
+
+
+def test_cv_request_older_than_30_days_not_reply_today():
+    row = _cv_ask_row(45, "cv-45d")
+    assert row["response_queue_segment"] == "HIGH_VALUE_RECRUITER_REPLY"
+    assert row["recommended_response_timing"] == "THIS_WEEK"
+    assert row["response_priority_score"] <= 60
+    # The obligation itself is still recorded — only priority changes.
+    assert bool(row["reply_obligation_flag"]) is True
+
+
+def test_ancient_cv_request_becomes_reactivation():
+    # Alice Antunes-style: open CV ask from ~500 days ago.
+    row = _cv_ask_row(507, "cv-507d")
+    assert row["response_queue_segment"] == "REACTIVATION_DUE_HIGH_VALUE"
+    assert row["recommended_response_timing"] != "TODAY"
+    assert row["response_priority_score"] <= 50
+    assert "fresh message" in row["response_reason_short"]
+
+
+def test_old_relationship_with_fresh_interview_ask_stays_urgent():
+    # Relationship is old, but the latest ask is recent — never downgraded.
+    row = _mk_conversation(
+        "intv-fresh", "Long Recruiter", "https://linkedin.com/in/intv-fresh",
+        persona="Recruiter", market="LATAM_USD",
+        messages=[("other", "Nice to connect!", 400), ("me", "Likewise, thanks!", 399),
+                  ("other", "When are you available for a technical interview this week?", 2)],
+    )
+    assert row["response_queue_segment"] in _URGENT

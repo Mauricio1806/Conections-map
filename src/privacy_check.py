@@ -352,6 +352,9 @@ def check_manifest_structure(manifest_path: Path) -> list[str]:
             page_path = DATA_DIR / Path(info.get("file", "")).name
             if info.get("available") and not page_path.exists():
                 violations.append(f"page_manifest references missing file for '{page_id}': {info.get('file')}")
+            for part in info.get("parts", []):
+                if not (DATA_DIR / Path(part.get("file", "")).name).exists():
+                    violations.append(f"page_manifest references missing part file for '{page_id}': {part.get('file')}")
     return violations
 
 

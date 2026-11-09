@@ -1135,6 +1135,7 @@ def build_conversion_funnel_public(funnel: dict | None) -> dict:
             {"stage": str(s.get("stage", "")), "confirmed": _num(s.get("confirmed")), "inferred": _num(s.get("inferred"))}
             for s in (funnel.get("stages") or [])
         ],
+        "review_candidates_count": _num(funnel.get("review_candidates_count")),
         "note": str(funnel.get("note", "")),
     }
 
@@ -1237,6 +1238,76 @@ PAGE_DEPENDENCIES = {
     "gap": ["untapped"],
 }
 
+# Sub-split of an oversized page: sub-keys of one top-level payload object
+# moved out of the page's main file into sibling "part" files, so no single
+# served JSON approaches GitHub's 50 MB limit. The frontend fetches the parts
+# with the page and merges each back into D[<parent key>], so render
+# functions still see one usd_contract_crm object. Each sub-key lives in
+# exactly one file — nothing is duplicated.
+PAGE_PARTS = {
+    "usdcrm": {
+        "parent_key": "usd_contract_crm",
+        "parts": {
+            "usd_crm_leads.json":   ["auto_suggested_usd_leads", "recruiter_pipeline"],
+            "usd_crm_queues.json":  ["follow_up_queue", "first_outreach_queue"],
+            "usd_crm_history.json": ["opportunity_history"],
+        },
+    },
+}
+
+
+def split_page_parts(pages: dict) -> tuple[dict, dict]:
+    """Moves PAGE_PARTS sub-keys out of their page into part payloads.
+    Returns (pages, parts) where parts = {pageId: {filename: part_dict}}.
+    A part file holds the moved sub-keys directly ({sub_key: value}); keys
+    absent from the payload are skipped, and an empty part is not emitted."""
+    pages = dict(pages)
+    parts: dict[str, dict] = {}
+    for page_id, cfg in PAGE_PARTS.items():
+        page = pages.get(page_id)
+        parent = (page or {}).get(cfg["parent_key"])
+        if not isinstance(parent, dict):
+            continue
+        core = dict(parent)
+        page_parts = {}
+        for filename, sub_keys in cfg["parts"].items():
+            part = {k: core.pop(k) for k in sub_keys if k in core}
+            if part:
+                page_parts[filename] = part
+        pages[page_id] = {**page, cfg["parent_key"]: core}
+        parts[page_id] = page_parts
+    return pages, parts
+
+
+def merge_page_parts(page_payload: dict, page_id: str, parts: dict) -> dict:
+    """Inverse of split_page_parts for one page (used by local validators)."""
+    cfg = PAGE_PARTS.get(page_id)
+    if not cfg:
+        return page_payload
+    merged_parent = dict(page_payload.get(cfg["parent_key"]) or {})
+    for part in (parts or {}).values():
+        merged_parent.update(part)
+    return {**page_payload, cfg["parent_key"]: merged_parent}
+
+
+def load_page_with_parts(page_id: str, manifest_entry: dict | None = None) -> dict:
+    """Reads a written page file plus its part files from docs/assets/data/."""
+    path = DATA_DIR / PAGE_FILE_NAME[page_id]
+    if not path.exists():
+        return {}
+    with open(path, encoding="utf-8") as f:
+        page = json.load(f)
+    cfg = PAGE_PARTS.get(page_id)
+    if not cfg:
+        return page
+    parts = {}
+    for filename in cfg["parts"]:
+        p = DATA_DIR / filename
+        if p.exists():
+            with open(p, encoding="utf-8") as f:
+                parts[filename] = json.load(f)
+    return merge_page_parts(page, page_id, parts)
+
 # Keys that ALWAYS stay in the lightweight manifest — needed cross-page
 # (the kpi() helper, meta/untapped_scoring_note) and tiny (a few KB).
 MANIFEST_KEYS = ["meta", "kpis"]
@@ -1319,9 +1390,11 @@ def write_split_dashboard_data(payload: dict) -> dict:
     """
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     manifest, pages = split_payload_into_pages(payload)
+    pages, parts = split_page_parts(pages)
 
     page_manifest = {}
     page_sizes = {}
+    part_sizes = {}
     for page_id, page_payload in pages.items():
         filename = PAGE_FILE_NAME[page_id]
         path = DATA_DIR / filename
@@ -1335,6 +1408,21 @@ def write_split_dashboard_data(payload: dict) -> dict:
             "available": bool(page_payload),
             "dependencies": PAGE_DEPENDENCIES.get(page_id, []),
         }
+        if page_id in parts:
+            part_entries = []
+            for part_file, part_payload in parts[page_id].items():
+                part_path = DATA_DIR / part_file
+                with open(part_path, "w", encoding="utf-8") as f:
+                    json.dump(part_payload, f, ensure_ascii=False, default=str, indent=2)
+                part_kb = part_path.stat().st_size // 1024
+                part_sizes[part_file] = part_kb
+                part_entries.append({
+                    "file": "data/" + part_file,
+                    "merge_into": PAGE_PARTS[page_id]["parent_key"],
+                    "keys": list(part_payload.keys()),
+                    "size_kb": part_kb,
+                })
+            page_manifest[page_id]["parts"] = part_entries
 
     manifest["page_manifest"] = page_manifest
     manifest["build"] = {
@@ -1346,12 +1434,13 @@ def write_split_dashboard_data(payload: dict) -> dict:
         json.dump(manifest, f, ensure_ascii=False, default=str, indent=2)
     manifest_kb = PUBLIC_JSON_DOCS.stat().st_size // 1024
 
-    total_data_kb = sum(page_sizes.values())
+    total_data_kb = sum(page_sizes.values()) + sum(part_sizes.values())
     largest = max(page_sizes.items(), key=lambda kv: kv[1]) if page_sizes else (None, 0)
 
     return {
         "manifest_kb": manifest_kb,
         "pages": {pid: {"file": PAGE_FILE_NAME[pid], "kb": kb} for pid, kb in page_sizes.items()},
+        "parts": {fn: {"file": fn, "kb": kb} for fn, kb in part_sizes.items()},
         "total_data_kb": total_data_kb,
         "largest_page": largest,
     }

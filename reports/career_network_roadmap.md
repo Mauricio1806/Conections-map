@@ -1,5 +1,5 @@
 # Career Network Roadmap
-> Generated: **November 01, 2026**
+> Generated: **November 09, 2026**
 
 ---
 
@@ -10,7 +10,7 @@
 | Current location | Brazil |
 | Short-term goal | Remote Data Engineering job paid in USD |
 | Medium-term goal | Relocate to Spain / Europe |
-| Network size | 13,848 connections |
+| Network size | 14,034 connections |
 | High-confidence inferred | 0 |
 | USD Score (adjusted) | 0/100 |
 | Spain Score (adjusted) | 0/100 |

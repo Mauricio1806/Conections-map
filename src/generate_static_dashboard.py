@@ -33,7 +33,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from src.export_public_dashboard_data import (  # noqa: E402
-    write_split_dashboard_data, PAGE_DATA_MAP, PAGE_FILE_NAME,
+    write_split_dashboard_data, PAGE_DATA_MAP, PAGE_FILE_NAME, load_page_with_parts,
 )
 
 OUTPUTS_DIR = ROOT / "outputs"
@@ -99,18 +99,19 @@ def _check_json_sanity(manifest_path: Path, size_report: dict) -> dict:
         with open(contacts_path, encoding="utf-8") as f:
             contacts_count = len(json.load(f).get("top_contacts", []))
 
-    usd_crm = {}
-    usdcrm_path = DATA_DIR / PAGE_FILE_NAME["usdcrm"]
-    if usdcrm_path.exists():
-        with open(usdcrm_path, encoding="utf-8") as f:
-            usd_crm = json.load(f).get("usd_contract_crm", {}) or {}
+    # usdcrm is sub-split into part files — merge them back for validation.
+    usd_crm = load_page_with_parts("usdcrm").get("usd_contract_crm", {}) or {}
+    for page_id, info in page_manifest.items():
+        for part in info.get("parts", []):
+            if not (DATA_DIR.parent / part["file"]).exists():
+                issues.append(f"Missing part file for '{page_id}': {part['file']}")
 
     if size_report["manifest_kb"] / 1024 > MAX_MANIFEST_MB:
         issues.append(
             f"dashboard_data.json is {size_report['manifest_kb']/1024:.2f} MB — above the "
             f"{MAX_MANIFEST_MB} MB manifest target"
         )
-    for page_id, info in size_report["pages"].items():
+    for info in list(size_report["pages"].values()) + list(size_report.get("parts", {}).values()):
         if info["kb"] / 1024 > MAX_SINGLE_JSON_MB:
             issues.append(f"data/{info['file']} is {info['kb']/1024:.2f} MB — above GitHub's {MAX_SINGLE_JSON_MB} MB soft limit")
 

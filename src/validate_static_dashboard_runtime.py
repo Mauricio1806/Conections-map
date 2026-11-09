@@ -140,6 +140,23 @@ def main():
         except Exception as e:
             check(f"  {rel_file} is valid JSON", False, str(e))
             failures += 1
+        for part in info.get("parts", []):
+            part_path = ASSETS_DIR / part.get("file", "")
+            if not check(f"  part '{part.get('file')}' (merged into {part.get('merge_into')}) exists",
+                         bool(part.get("file")) and part_path.exists()):
+                failures += 1
+                continue
+            try:
+                part_data = json.loads(part_path.read_text(encoding="utf-8"), parse_constant=_reject_non_finite)
+                missing = [k for k in part.get("keys", []) if k not in part_data]
+                if not check(f"  {part['file']} is valid JSON with its declared keys "
+                             f"({part_path.stat().st_size // 1024} KB)", not missing, f"missing keys: {missing}"):
+                    failures += 1
+                if not check(f"  {part['file']} below 45 MB", part_path.stat().st_size < 45 * 1024 * 1024):
+                    failures += 1
+            except Exception as e:
+                check(f"  {part['file']} is valid JSON", False, str(e))
+                failures += 1
         for dep in info.get("dependencies", []):
             dep_info = page_manifest.get(dep, {})
             dep_path = ASSETS_DIR / dep_info.get("file", "") if dep_info.get("file") else None

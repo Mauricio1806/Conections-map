@@ -243,6 +243,14 @@ async function ensurePageData(pageId) {
     }
     const json = await _fetchJsonWithFallback(info.file);
     Object.assign(D, json);
+    // Sub-split pages (e.g. usdcrm): fetch part files in parallel and merge
+    // each one's keys back into D[merge_into], so render functions see the
+    // same single object as before the split.
+    const parts = info.parts || [];
+    const partJsons = await Promise.all(parts.map(pt => _fetchJsonWithFallback(pt.file)));
+    parts.forEach((pt, i) => {
+      D[pt.merge_into] = Object.assign(D[pt.merge_into] || {}, partJsons[i]);
+    });
     loadedPages.add(pageId);
   })();
   pageLoadPromises[pageId] = p;
@@ -5065,7 +5073,9 @@ function renderUsdCrmFunnel(f) {
     '<tr><td>' + s.stage + '</td><td>' + cell(s.confirmed) + '</td><td>' + cell(s.inferred) + '</td></tr>'
   ).join('');
   const note = document.getElementById('usdcrm-funnel-note');
-  if (note) note.textContent = f.note || '';
+  if (note) note.textContent = (f.note || '')
+    + (f.review_candidates_count ? ' ' + f.review_candidates_count
+       + ' inferred conversations are listed for manual confirmation in outputs/private/usd_pipeline_review_candidates.csv (local only).' : '');
 }
 
 function renderUsdCrmRiskTables() {

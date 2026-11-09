@@ -1170,6 +1170,13 @@ _RESPONSE_REASON_BY_SEGMENT = {
 }
 
 
+_URGENT_REPLY_SEGMENTS = {
+    "ACTIVE_PROCESS_NEEDS_REPLY", "INBOUND_OPPORTUNITY_NEEDS_REPLY", "SALARY_CV_CALL_REQUESTED",
+}
+STALE_URGENT_REPLY_DAYS = 30
+STALE_REACTIVATE_AFTER_DAYS = 60
+
+
 def _has_data_role_signal(text: str) -> bool:
     return _kw_match(text, DATA_ROLE_KW)
 
@@ -1341,13 +1348,27 @@ def _response_priority_layer(
     if useful_recruiter_no_role and not reply_owed:
         score = min(score, 50)
 
+    # Recency gate on the "reply today" segments: an open ask is only urgent
+    # while the latest message is recent. Keyed on the last message's age, not
+    # the relationship's, so a fresh CV/interview ask is never downgraded.
+    reason = _RESPONSE_REASON_BY_SEGMENT.get(segment, "Review manually — no clear signal.")
+    if segment in _URGENT_REPLY_SEGMENTS and d > STALE_URGENT_REPLY_DAYS:
+        if d <= STALE_REACTIVATE_AFTER_DAYS:
+            segment = "HIGH_VALUE_RECRUITER_REPLY"
+            score = min(score, 60)
+            reason = "Open request is 1-2 months old — still worth answering this week, no longer urgent."
+        else:
+            segment = "REACTIVATION_DUE_HIGH_VALUE"
+            score = min(score, 50)
+            reason = "Open request is over 60 days old — re-engage with a fresh message instead of replying to the old ask."
+
     score = int(round(max(0.0, min(100.0, score))))
 
     return {
         "response_queue_segment":      segment,
         "response_priority_score":     score,
         "recommended_response_timing": _RESPONSE_TIMING_BY_SEGMENT.get(segment, "WHEN_CONVENIENT"),
-        "response_reason_short":       _RESPONSE_REASON_BY_SEGMENT.get(segment, "Review manually — no clear signal."),
+        "response_reason_short":       reason,
     }
 
 

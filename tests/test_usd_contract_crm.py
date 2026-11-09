@@ -307,3 +307,50 @@ def test_funnel_public_sanitizer_numbers_only():
         "stages": [{"stage": "CV", "confirmed": None, "inferred": 5, "contact_name": "X"}], "note": "n"})
     assert pub["stages"] == [{"stage": "CV", "confirmed": None, "inferred": 5}]
     assert build_conversion_funnel_public(None) == {"available": False}
+
+
+# ── Manual-review candidates — inferred, never auto-confirmed ───────────────
+
+def _rc_event(conv, date, etype, url="https://linkedin.com/in/rec-a", company="Acme", **flags):
+    e = {"conversation_id_hash": conv, "event_date": date, "opportunity_event_type": etype,
+         "profile_url": url, "company": company, "contact_name": "Rec A"}
+    e.update({k: True for k, v in flags.items() if v})
+    return e
+
+
+def test_review_candidates_dedupe_by_conversation_and_never_set_status():
+    from src.usd_contract_crm import build_review_candidates
+    oh = {"available": True, "events": [
+        _rc_event("c1", "2026-10-01", "Inbound Opportunity", inbound_recruiter_contact=True),
+        _rc_event("c1", "2026-10-20", "CV Requested", cv_requested=True),
+        _rc_event("c1", "2026-11-03", "Technical Interview", technical_interview_signal=True),
+        _rc_event("c9", "2026-11-04", "No Response"),  # no process signal -> excluded
+    ]}
+    rows = build_review_candidates(oh, pd.DataFrame())
+    assert len(rows) == 1
+    r = rows[0]
+    assert r["status"] == ""  # left for the human to confirm
+    assert r["review_suggested_status"] == "TECHNICAL_INTERVIEW_SCHEDULED"
+    assert r["review_first_signal_date"] == "2026-10-01"
+    assert r["review_stage_timeline"].count(";") == 2
+
+
+def test_review_candidates_keep_distinct_threads_at_same_company():
+    from src.usd_contract_crm import build_review_candidates
+    oh = {"available": True, "events": [
+        _rc_event("c1", "2026-11-01", "CV Requested", url="https://linkedin.com/in/a", cv_requested=True),
+        _rc_event("c2", "2026-11-02", "CV Requested", url="https://linkedin.com/in/b", cv_requested=True),
+    ]}
+    assert len(build_review_candidates(oh, pd.DataFrame())) == 2
+
+
+def test_review_candidates_latest_rejection_wins_and_logged_rows_skipped():
+    from src.usd_contract_crm import build_review_candidates
+    oh = {"available": True, "events": [
+        _rc_event("c1", "2026-09-01", "CV Requested", cv_requested=True),
+        _rc_event("c1", "2026-10-01", "Rejected / Closed", rejected_or_closed=True),
+        _rc_event("c2", "2026-10-05", "CV Requested", url="https://linkedin.com/in/logged/", cv_requested=True),
+    ]}
+    logged = pd.DataFrame({"recruiter_profile_url": ["https://linkedin.com/in/logged"]})
+    rows = build_review_candidates(oh, logged)
+    assert [r["review_suggested_status"] for r in rows] == ["REJECTED"]

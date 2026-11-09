@@ -1078,6 +1078,16 @@ def run_usd_contract_crm(
         OUTPUTS_DIR / "usd_follow_up_queue.csv", index=False, encoding="utf-8-sig",
     )
 
+    # Private manual-review list (person-level) — never part of the public payload;
+    # only its row count reaches the dashboard.
+    review_candidates = build_review_candidates(opportunity_history_data, pipeline_df)
+    (OUTPUTS_DIR / "private").mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(review_candidates, columns=REVIEW_COLUMNS).to_csv(
+        OUTPUTS_DIR / "private" / REVIEW_CANDIDATES_FILENAME, index=False, encoding="utf-8-sig",
+    )
+    conversion_funnel = build_conversion_funnel(pipeline_df, opportunity_history_data)
+    conversion_funnel["review_candidates_count"] = len(review_candidates)
+
     oh_summary = (opportunity_history_data or {}).get("summary", {}) if opportunity_history_available else {}
     logger.info(
         f"  USD Contract CRM: manual_opportunities={summary['manual_usd_opportunities']} "
@@ -1113,8 +1123,97 @@ def run_usd_contract_crm(
         # counts above, so soft-closed or inbound-only events can never be
         # miscounted as confirmed applications or active processes.
         "opportunity_history":    opportunity_history_data or {"available": False},
-        "conversion_funnel":      build_conversion_funnel(pipeline_df, opportunity_history_data),
+        "conversion_funnel":      conversion_funnel,
     }
+
+
+def _truthy_flag(e: dict, k: str) -> bool:
+    return str(e.get(k, "")).strip().lower() in ("true", "1", "yes")
+
+
+REVIEW_CANDIDATES_FILENAME = "usd_pipeline_review_candidates.csv"  # under outputs/private/ (gitignored)
+REVIEW_COLUMNS = PIPELINE_COLUMNS + [
+    "review_suggested_status", "review_first_signal_date", "review_latest_signal_date",
+    "review_stage_timeline", "review_usd_signal", "review_latam_signal",
+    "review_remote_signal", "review_conversation_id_hash",
+]
+
+
+def _suggested_status(e: dict) -> str:
+    """Strongest manual-pipeline stage an inferred event points to ('' = no
+    process signal). Only a SUGGESTION for manual review — never written to
+    the status column."""
+    etype = e.get("opportunity_event_type", "")
+    if _truthy_flag(e, "rejected_or_closed"):
+        return "REJECTED"
+    if _truthy_flag(e, "technical_interview_signal") or etype in ("Interview Process", "Technical Interview"):
+        return "TECHNICAL_INTERVIEW_SCHEDULED"
+    if _truthy_flag(e, "interview_or_call_requested"):
+        return "RECRUITER_CALL_SCHEDULED"
+    if _truthy_flag(e, "client_submission_signal"):
+        return "SUBMITTED_TO_CLIENT"
+    if _truthy_flag(e, "cv_requested"):
+        return "CV_REQUESTED"
+    if (_truthy_flag(e, "inbound_recruiter_contact") or _truthy_flag(e, "salary_expectation_requested")
+            or etype in ("Inbound Opportunity", "Recruiter Outreach", "Application Requested")):
+        return "RECRUITER_REPLIED"
+    return ""
+
+
+def build_review_candidates(opportunity_history_data: dict | None, pipeline_df: pd.DataFrame | None) -> list[dict]:
+    """One row per recruiter conversation with a real process signal, in the
+    usd_pipeline.csv column layout so a confirmed row can be copied straight
+    into the private manual log. `status` is left blank on purpose: inferred
+    events are never promoted to confirmed automatically. Conversations whose
+    recruiter is already logged manually are skipped. Distinct conversations
+    stay separate even at the same company (one thread per opening)."""
+    oh = opportunity_history_data or {}
+    if not oh.get("available"):
+        return []
+    logged_urls = set()
+    if pipeline_df is not None and not pipeline_df.empty and "recruiter_profile_url" in pipeline_df.columns:
+        logged_urls = {str(u).strip().rstrip("/").lower() for u in pipeline_df["recruiter_profile_url"].dropna()}
+
+    by_conv: dict[str, list[dict]] = {}
+    for e in oh.get("events") or []:
+        key = e.get("conversation_id_hash")
+        if key and _suggested_status(e):
+            by_conv.setdefault(key, []).append(e)
+
+    rows = []
+    for key, evs in by_conv.items():
+        evs = sorted(evs, key=lambda e: str(e.get("event_date", "")))
+        latest = evs[-1]
+        url = str(latest.get("profile_url", "") or "")
+        if url and url.strip().rstrip("/").lower() in logged_urls:
+            continue
+        suggested = [_suggested_status(e) for e in evs]
+        # The latest state wins for closures; otherwise the furthest stage reached.
+        if suggested[-1] == "REJECTED":
+            status = "REJECTED"
+        else:
+            status = max((s for s in suggested if s != "REJECTED"), key=lambda s: STATUS_ORDER[s])
+        row = {c: "" for c in REVIEW_COLUMNS}
+        row.update({
+            "date_added": evs[0].get("event_date", ""),
+            "company_name": latest.get("company", ""),
+            "source": "LinkedIn message",
+            "source_type": "inferred_from_messages",
+            "recruiter_name": latest.get("contact_name", ""),
+            "recruiter_profile_url": url,
+            "last_action_date": latest.get("event_date", ""),
+            "review_suggested_status": status,
+            "review_first_signal_date": evs[0].get("event_date", ""),
+            "review_latest_signal_date": latest.get("event_date", ""),
+            "review_stage_timeline": "; ".join(f"{e.get('event_date', '')} {e.get('opportunity_event_type', '')}" for e in evs),
+            "review_usd_signal": any(_truthy_flag(e, "usd_signal") for e in evs),
+            "review_latam_signal": any(_truthy_flag(e, "latam_signal") for e in evs),
+            "review_remote_signal": any(_truthy_flag(e, "remote_signal") for e in evs),
+            "review_conversation_id_hash": key,
+        })
+        rows.append(row)
+    rows.sort(key=lambda r: (r["review_latest_signal_date"], STATUS_ORDER[r["review_suggested_status"]]), reverse=True)
+    return rows
 
 
 def build_conversion_funnel(pipeline_df: pd.DataFrame | None, opportunity_history_data: dict | None) -> dict:
@@ -1147,7 +1246,7 @@ def build_conversion_funnel(pipeline_df: pd.DataFrame | None, opportunity_histor
         return len({e.get("conversation_id_hash") for e in events
                     if e.get("conversation_id_hash") and pred(e)})
 
-    t = lambda e, k: str(e.get(k, "")).strip().lower() in ("true", "1", "yes")
+    t = _truthy_flag
     etype = lambda e: e.get("opportunity_event_type", "")
     stages = [
         ("Contact",           _confirmed_at_least("OUTREACH_SENT"),
@@ -1159,15 +1258,20 @@ def build_conversion_funnel(pipeline_df: pd.DataFrame | None, opportunity_histor
                    or etype(e) in ("Inbound Opportunity", "Recruiter Outreach"))),
         ("CV",                _confirmed_at_least("CV_REQUESTED"),
          _inferred(lambda e: t(e, "cv_requested"))),
+        # Sending a CV can't be told apart from messages reliably.
+        ("CV Submitted",      _confirmed_at_least("CV_SENT"), None),
         ("Call",              _confirmed_at_least("RECRUITER_CALL_SCHEDULED"),
          _inferred(lambda e: t(e, "interview_or_call_requested"))),
         ("Interview",         _confirmed_at_least("TECHNICAL_INTERVIEW_SCHEDULED"),
          _inferred(lambda e: t(e, "technical_interview_signal")
                    or etype(e) in ("Interview Process", "Technical Interview"))),
+        ("Interview Completed", _confirmed_at_least("TECHNICAL_INTERVIEW_DONE"), None),
         ("Client Submission", _confirmed_at_least("SUBMITTED_TO_CLIENT"),
          _inferred(lambda e: t(e, "client_submission_signal"))),
         ("Offer",             _confirmed_at_least("OFFER"), None),
         ("Contract",          (int((statuses == "CLOSED_WON").sum()) if confirmed_measured else None), None),
+        ("Rejected / Closed", (int(statuses.isin(CLOSED_NEGATIVE_STATUSES).sum()) if confirmed_measured else None),
+         _inferred(lambda e: t(e, "rejected_or_closed"))),
     ]
     return {
         "available": True,
