@@ -1,6 +1,6 @@
 {
   "meta": {
-    "report_date": "2026-11-09",
+    "report_date": "2026-11-08",
     "total_connections": 14034,
     "production_url": "https://mauricio1806.github.io/Conections-map/",
     "messages_freshness": {
@@ -273,7 +273,7 @@
     }
   },
   "build": {
-    "generated_at": "2026-11-09T13:19:22",
+    "generated_at": "2026-11-09T13:28:59",
     "schema": "split-v1"
   }
 }

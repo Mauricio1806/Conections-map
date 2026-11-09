@@ -1640,7 +1640,9 @@ def export_public_dashboard_data(
 
     payload = {
         "meta": {
-            "report_date":      str(date.today()),
+            # The snapshot's date, not the wall-clock run date (the pipeline
+            # often runs a day after the export).
+            "report_date":      snapshot_date_str,
             "total_connections": kpis.get("total_connections", len(df)),
             "production_url":   "https://mauricio1806.github.io/Conections-map/",
             # Partial weekly refresh support (messages.csv can arrive in a
