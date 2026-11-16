@@ -7,7 +7,7 @@
 +Talent,LATAM_USD_CONFIRMED,0.85,+talent
 -,LOW_VALUE_UNRESOLVED,0.1,
 10Folders,GLOBAL_OPPORTUNITY,0.55,10folders
-10Pearls,GLOBAL_OPPORTUNITY,0.55,10pearls
+10Pearls,GLOBAL_OPPORTUNITY,0.72,10pearls
 10Pearls LATAM,LATAM_USD_CONFIRMED,0.85,10pearls
 11x,LOW_VALUE_UNRESOLVED,0.1,11x
 12Build,GLOBAL_OPPORTUNITY,0.55,12build
@@ -118,12 +118,14 @@ AI CONSULT,BRAZIL_CONFIRMED,0.85,ai consult
 AI Futures,GLOBAL_TECH,0.75,ai futures
 AI Spaces LLC,GLOBAL_OPPORTUNITY,0.55,ai spaces
 AI Talent,GLOBAL_TECH,0.75,ai talent
+AI Virtual,GLOBAL_OPPORTUNITY,0.55,ai virtual
 AI/R,GLOBAL_OPPORTUNITY,0.55,ai/r
 AI/R Everymind,GLOBAL_TECH,0.75,ai/r everymind
 AI/R Invillia,GLOBAL_TECH,0.75,ai/r invillia
 AI71,GLOBAL_TECH,0.75,ai71
 AILY LABS,GLOBAL_OPPORTUNITY,0.55,aily labs
 AIMS International,GLOBAL_OPPORTUNITY,0.55,aims international
+AIMS International Ukraine,EUROPE_CONFIRMED,0.85,aims international ukraine
 AIMZ,GLOBAL_TECH,0.75,aimz
 AION IT - Inteligência Tecnológica,GLOBAL_TECH,0.75,aion it - inteligência tecnológica
 AIPERIA,GLOBAL_TECH,0.75,aiperia
@@ -141,7 +143,6 @@ ALOIA AEROSPACE INC,NEEDS_COMPANY_MAPPING,0.4,aloia aerospace
 ALOIS Solutions,GLOBAL_OPPORTUNITY,0.55,alois
 ALTAVE,LATAM_USD_CONFIRMED,0.85,altave
 ALTEN,GLOBAL_OPPORTUNITY,0.55,alten
-ALTEN Spain,SPAIN_EU_CONFIRMED,0.85,alten spain
 ALTO TOSTADO COFFEE ROASTERS,LATAM_USD_CONFIRMED,0.85,alto tostado coffee roasters
 AM BI Análises Inteligentes,GLOBAL_OPPORTUNITY,0.55,am bi análises inteligentes
 AM Gestão de Talentos,GLOBAL_OPPORTUNITY,0.55,am gestão de talentos
@@ -155,7 +156,7 @@ AML Reputacional,LANGUAGE_PORTUGUESE_MARKET,0.65,aml reputacional
 AMM Enterprise GmbH,GLOBAL_OPPORTUNITY,0.55,amm enterprise
 AMM Group,GLOBAL_OPPORTUNITY,0.55,amm
 AMP Digital Performance,GLOBAL_TECH,0.75,amp performance
-AMS,LOW_VALUE_UNRESOLVED,0.1,ams
+AMS,GLOBAL_OPPORTUNITY,0.55,ams
 AMVA GLOBAL TECHNOLOGIES PVT LTD,GLOBAL_TECH,0.75,amva pvt
 AMX CONTENIDO / CMI,NEEDS_COMPANY_MAPPING,0.4,amx contenido / cmi
 ANBIMA,BRAZIL_CONFIRMED,0.85,anbima
@@ -175,7 +176,7 @@ APPLICA CORP,GLOBAL_OPPORTUNITY,0.72,applica
 APRIORI - business solutions AG,GLOBAL_OPPORTUNITY,0.55,apriori - business
 APSCo,NEEDS_COMPANY_MAPPING,0.4,apsco
 "AQUA Information Systems, Inc",NEEDS_COMPANY_MAPPING,0.4,aqua information systems
-AR Consultores,GLOBAL_OPPORTUNITY,0.55,ar consultores
+AR IT Services,GLOBAL_CONSULTING,0.9,ar it
 ARAXÁ SOLAR,LANGUAGE_PORTUGUESE_MARKET,0.65,araxá solar
 ARC2Digital,GLOBAL_TECH,0.75,arc2digital
 ARCA Mobility as a Service,NEEDS_COMPANY_MAPPING,0.4,arca mobility as a
@@ -192,6 +193,7 @@ ART IT Intelligent Technology,GLOBAL_OPPORTUNITY,0.55,art it intelligent
 ARTEMIS Augenkliniken und med. Versorgungszentren,NEEDS_COMPANY_MAPPING,0.4,artemis augenkliniken und med. versorgungszentren
 ARTES Recruitment®,GLOBAL_OPPORTUNITY,0.55,artes recruitment®
 ARTIFICX,GLOBAL_OPPORTUNITY,0.55,artificx
+ARWA Personaldienstleistungen,NEEDS_COMPANY_MAPPING,0.4,arwa personaldienstleistungen
 AS Carreira & Currículos,GLOBAL_OPPORTUNITY,0.55,as carreira & currículos
 AS Intelligence & Insights,GLOBAL_OPPORTUNITY,0.55,as intelligence & insights
 AS White Global,GLOBAL_OPPORTUNITY,0.55,as white
@@ -243,7 +245,7 @@ Aafje,GLOBAL_OPPORTUNITY,0.55,aafje
 Aarin,NEEDS_COMPANY_MAPPING,0.4,aarin
 Aays,NEEDS_COMPANY_MAPPING,0.4,aays
 Abalia,GLOBAL_OPPORTUNITY,0.55,abalia
-Abbott,NEEDS_COMPANY_MAPPING,0.4,abbott
+Abbott,GLOBAL_OPPORTUNITY,0.55,abbott
 Abc Technology Group,BRAZIL_CONFIRMED,0.85,abc
 Abelha Rainha Cosméticos,GLOBAL_TECH,0.75,abelha rainha cosméticos
 Abercrombie & Fitch Co,NEEDS_COMPANY_MAPPING,0.4,abercrombie & fitch co
@@ -281,7 +283,7 @@ Accord Innovations,GLOBAL_OPPORTUNITY,0.55,accord innovations
 Accorp Partners CPA LLC,GLOBAL_OPPORTUNITY,0.55,accorp partners cpa
 Acelen,BRAZIL_CONFIRMED,0.85,acelen
 Acelera RH,LATAM_USD_CONFIRMED,0.85,acelera rh
-Acentecom,GLOBAL_OPPORTUNITY,0.55,acentecom
+Acento Real Estate Partners,NEEDS_COMPANY_MAPPING,0.4,acento real estate partners
 Acerto,LANGUAGE_PORTUGUESE_MARKET,0.65,acerto
 Acher,LANGUAGE_PORTUGUESE_MARKET,0.65,acher
 Achmea Impact Ventures,GLOBAL_OPPORTUNITY,0.55,achmea impact
@@ -356,6 +358,7 @@ Agile Inc,NEEDS_COMPANY_MAPPING,0.4,agile
 Agile Lab,NEEDS_COMPANY_MAPPING,0.4,agile lab
 AgileEngine,LATAM_USD_CONFIRMED,0.95,agileengine
 AgileOne,GLOBAL_OPPORTUNITY,0.55,agileone
+AgileThought,GLOBAL_OPPORTUNITY,0.55,agilethought
 Agir,NEEDS_COMPANY_MAPPING,0.4,agir
 Agriness,LANGUAGE_PORTUGUESE_MARKET,0.65,agriness
 AgroHunters Latam,LATAM_USD_CONFIRMED,0.85,agrohunters
@@ -399,6 +402,7 @@ Akzio,GLOBAL_OPPORTUNITY,0.55,akzio
 AkzoNobel,NEEDS_COMPANY_MAPPING,0.4,akzonobel
 Al-Ateeq Software,GLOBAL_TECH,0.75,al-ateeq software
 Alabama Solutions,GLOBAL_OPPORTUNITY,0.55,alabama
+Alamo Direct: Wire and Cable Solutions,GLOBAL_OPPORTUNITY,0.55,alamo direct: wire and cable
 Alapai Global Holdings LLC,US_CANADA_CONFIRMED,0.85,alapai
 Albano Cozzuol S.A,LANGUAGE_PORTUGUESE_MARKET,0.65,albano cozzuol
 Albert Heijn,NEEDS_COMPANY_MAPPING,0.4,albert heijn
@@ -424,6 +428,8 @@ Algoworks,NEEDS_COMPANY_MAPPING,0.4,algoworks
 Alianzo,BRAZIL_CONFIRMED,0.85,alianzo
 Aliança Metalurgica S/A,GLOBAL_TECH,0.9,aliança metalurgica
 Aliare,LANGUAGE_PORTUGUESE_MARKET,0.65,aliare
+Aliaxis,GLOBAL_OPPORTUNITY,0.55,aliaxis
+Aliaxis Latam,LATAM_USD_CONFIRMED,0.85,aliaxis
 Alicorp,LATAM_USD_LIKELY,0.66,alicorp
 Alimentos Bloxom,NEEDS_COMPANY_MAPPING,0.4,alimentos bloxom
 "Alimentos Gourmet, S.A",LANGUAGE_PORTUGUESE_MARKET,0.65,alimentos gourmet
@@ -435,7 +441,6 @@ AllCloud,GLOBAL_OPPORTUNITY,0.55,allcloud
 AllPeople,GLOBAL_OPPORTUNITY,0.55,allpeople
 Allen Control Systems,GLOBAL_OPPORTUNITY,0.55,allen control systems
 Allgemeine Rentenanstalt Pensionskasse,NEEDS_COMPANY_MAPPING,0.4,allgemeine rentenanstalt pensionskasse
-AlliTY,LANGUAGE_PORTUGUESE_MARKET,0.65,allity
 Alliance Instalaciones y Mantenimientos,NEEDS_COMPANY_MAPPING,0.4,alliance instalaciones y mantenimientos
 AllianceIT Inc,LATAM_USD_CONFIRMED,0.85,allianceit
 Alliant Insurance Services,NEEDS_COMPANY_MAPPING,0.4,alliant insurance
@@ -449,8 +454,10 @@ Allo Bank,NEEDS_COMPANY_MAPPING,0.4,allo bank
 Allshore Talent,LATAM_USD_LIKELY,0.68,allshore talent
 Allstate,NEEDS_COMPANY_MAPPING,0.4,allstate
 Alltech,BRAZIL_CONFIRMED,0.85,alltech
+"Almacenes Vidri, S.A. de C.V",GLOBAL_OPPORTUNITY,0.55,"almacenes vidri, . de c.v"
 AlmapBBDO,NEEDS_COMPANY_MAPPING,0.4,almapbbdo
 Almaviva Solutions,LANGUAGE_PORTUGUESE_MARKET,0.65,almaviva
+Almeida Junior Shopping Centers,NEEDS_COMPANY_MAPPING,0.4,almeida junior shopping centers
 Almeida Mercados,LANGUAGE_PORTUGUESE_MARKET,0.65,almeida mercados
 Almirall,GLOBAL_OPPORTUNITY,0.55,almirall
 Aloft Hotels,NEEDS_COMPANY_MAPPING,0.4,aloft hotels
@@ -470,6 +477,7 @@ Alsea,LATAM_USD_CONFIRMED,0.85,alsea
 Alstom,NEEDS_COMPANY_MAPPING,0.4,alstom
 Altare Servicios Profesionales,NEEDS_COMPANY_MAPPING,0.4,altare servicios profesionales
 Altimetrik,GLOBAL_OPPORTUNITY,0.55,altimetrik
+Altimetrik México,GLOBAL_OPPORTUNITY,0.55,altimetrik méxico
 AltoQi,LANGUAGE_PORTUGUESE_MARKET,0.65,altoqi
 AltoQi Tecnologia,GLOBAL_OPPORTUNITY,0.55,altoqi tecnologia
 Altus Engineering,NEEDS_COMPANY_MAPPING,0.4,altus engineering
@@ -491,11 +499,3 @@ Amara NZero,NEEDS_COMPANY_MAPPING,0.4,amara nzero
 Amara NZero Brasil,BRAZIL_CONFIRMED,0.85,amara nzero
 Amaris Consulting,GLOBAL_CONSULTING,0.9,amaris
 Amaris Consulting | Part of Mantu,GLOBAL_CONSULTING,0.9,amaris | part of mantu
-Amazon,US_CANADA_CONFIRMED,0.95,amazon
-Amazon Seller (EUA),GLOBAL_TECH,0.9,amazon seller (eua)
-Amazon Web Services (AWS),GLOBAL_TECH,0.9,amazon web services
-Ambassador Cruise Line,BRAZIL_CONFIRMED,0.85,ambassador cruise line
-Ambev,BRAZIL_CONFIRMED,0.9,ambev
-Ambev Global Tech,BRAZIL_CONFIRMED,0.9,ambev
-Ambev Tech,BRAZIL_CONFIRMED,0.9,ambev
-Ambientare - Soluções em Meio Ambiente,LANGUAGE_PORTUGUESE_MARKET,0.65,ambientare - soluções em meio ambiente

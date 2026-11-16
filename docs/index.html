@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css?v=1794241737">
+  <link rel="stylesheet" href="./assets/style.css?v=1794871848">
 </head>
 <body>
 
@@ -41,6 +41,11 @@
         <div class="brand-title">Network Intel</div>
         <div class="brand-sub">LinkedIn Connections</div>
       </div>
+    </div>
+
+    <div class="nav-group-label">Today</div>
+    <div class="nav-item" data-page="daily">
+      <span class="nav-icon">&#9728;&#65039;</span> Daily Outreach
     </div>
 
     <div class="nav-group-label">Analysis</div>
@@ -92,6 +97,89 @@
 
   <!-- Main -->
   <main class="main">
+
+    <!-- PAGE: Daily Outreach Command Center -->
+    <div class="page" id="page-daily">
+      <div class="page-header">
+        <h2>Daily Outreach Command Center</h2>
+        <p>Who to contact today, why, what to say, and when to follow up — consolidated from Lead Reactivation, Untapped Network V10, USD Contract CRM, Monthly Executive Queue and Opportunity History. Focus: remote USD / LATAM / U.S. nearshore.</p>
+      </div>
+
+      <div id="do-no-data" style="display:none">
+        <div class="alert alert-info"><span class="alert-icon">&#9728;&#65039;</span>
+          <span><strong>No Daily Outreach data in this build.</strong> Run the pipeline with messages.csv present.</span></div>
+      </div>
+
+      <div id="do-main">
+        <div class="alert alert-info" style="margin-bottom:0.8rem">
+          <span class="alert-icon">&#8505;&#65039;</span>
+          <span id="do-note"></span>
+        </div>
+
+        <div class="section-label">Executive Daily Summary</div>
+        <div class="metrics-grid" id="do-summary"></div>
+
+        <div class="section-label">Action KPIs <span class="do-hint">— click a card to list its exact contacts</span></div>
+        <div class="metrics-grid" id="do-kpis"></div>
+
+        <div class="section-label">Today's Suggested Workload <span class="do-hint">— proposed targets, not completed activity</span></div>
+        <div class="do-plan" id="do-plan"></div>
+
+        <div class="section-label">Today's Top 15 Actions</div>
+        <div class="table-wrap">
+          <table id="do-top-table" class="do-table">
+            <thead><tr>
+              <th>#</th><th>Contact</th><th>Persona / Market</th><th>Status</th><th>Action</th>
+              <th>Priority</th><th>Why it matters</th><th>Last interaction</th><th>Follow-up</th><th>Message</th>
+            </tr></thead>
+            <tbody id="do-top-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-label" id="do-queues-anchor">Daily Queues</div>
+        <div class="do-queue-tabs" id="do-queue-tabs" role="tablist"></div>
+        <div class="filters-bar" style="flex-wrap:wrap;gap:0.5rem;margin-top:0.6rem">
+          <div class="filter-group"><label for="do-persona">Persona</label>
+            <select id="do-persona" onchange="doApplyFilters()"><option value="">All</option></select></div>
+          <div class="filter-group"><label for="do-market">Market</label>
+            <select id="do-market" onchange="doApplyFilters()"><option value="">All</option></select></div>
+          <div class="filter-group"><label for="do-lang">Message language</label>
+            <select id="do-lang" onchange="doApplyFilters()"><option value="">All</option><option value="en">English</option><option value="es">Spanish</option></select></div>
+          <div class="filter-group"><label for="do-due">Timing</label>
+            <select id="do-due" onchange="doApplyFilters()"><option value="">Any</option><option value="due">Due today / overdue</option><option value="overdue">Overdue only</option></select></div>
+          <div class="filter-group"><label for="do-sort">Sort</label>
+            <select id="do-sort" onchange="doApplyFilters()"><option value="score">Priority</option><option value="fu">Follow-up date</option><option value="name">Name</option><option value="days">Longest connected</option></select></div>
+          <div class="filter-group" style="flex:1;min-width:160px"><label for="do-search">Search</label>
+            <input id="do-search" type="search" placeholder="Name, company, role" oninput="doApplyFilters()"></div>
+          <div class="filter-group"><label>&nbsp;</label>
+            <button class="btn-ghost" onclick="doResetFilters()">Reset</button></div>
+        </div>
+        <div class="table-stats" id="do-stats"></div>
+        <div class="table-wrap">
+          <table id="do-table" class="do-table">
+            <thead><tr>
+              <th>Done?</th><th>Contact</th><th>Persona / Market</th><th>Status</th><th>Action</th>
+              <th>Priority</th><th>Why it matters</th><th>Last interaction</th><th>Follow-up</th><th>Message</th>
+            </tr></thead>
+            <tbody id="do-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="do-pagination"></div>
+
+        <div class="section-label">Manual Activity Tracking</div>
+        <div class="card do-tracking" id="do-tracking"></div>
+
+        <div class="section-label">Weekly Outreach Performance</div>
+        <p class="do-hint" style="margin:-0.3rem 0 0.6rem">Manual metrics come only from the private log; weeks before the first logged entry show <em>Not measured</em>. Inferred metrics are message signals, not proof of a vacancy or stage.</p>
+        <div class="table-wrap">
+          <table id="do-perf-table">
+            <thead id="do-perf-thead"></thead>
+            <tbody id="do-perf-tbody"></tbody>
+          </table>
+        </div>
+        <div class="metrics-grid" id="do-rates" style="margin-top:0.8rem"></div>
+      </div>
+    </div>
 
     <!-- PAGE: Executive Overview -->
     <div class="page active" id="page-overview">
@@ -1899,6 +1987,6 @@ python src/validate_static_dashboard_runtime.py</pre>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="./assets/app.js?v=1794241737"></script>
+<script src="./assets/app.js?v=1794871848"></script>
 </body>
 </html>

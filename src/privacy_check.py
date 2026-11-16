@@ -18,9 +18,12 @@ import subprocess
 import sys
 from pathlib import Path
 
-if hasattr(sys.stdout, "buffer"):
-    import io
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+def _utf8_stdout() -> None:
+    # Applied only when run as a script — rewrapping sys.stdout at import
+    # time breaks callers that capture stdout (e.g. pytest importing check_json).
+    if hasattr(sys.stdout, "buffer"):
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 ROOT        = Path(__file__).resolve().parent.parent
 JSON_PATH   = ROOT / "docs" / "assets" / "dashboard_data.json"
@@ -117,6 +120,9 @@ FORBIDDEN_PATTERNS = [
     (r'"content"\s*:',                "CONTENT key found in JSON"),
     (r'"attachments"\s*:',            "ATTACHMENTS key found in JSON"),
 ]
+
+# Daily Outreach rows must never carry private manual-log text.
+DAILY_OUTREACH_FORBIDDEN_FIELDS = {"notes", "notes_private", "private_notes", "note_private", "raw_notes"}
 
 # Raw message content field names that must NOT appear in top_contacts
 FORBIDDEN_RAW_FIELDS = {"content", "attachments", "raw_content", "raw_message", "notes_private"}
@@ -287,6 +293,16 @@ def check_json(path: Path) -> list[str]:
     )
     mw = data.get("company_mapping_workbench", {}) or {}
     mapping_workbench_records = list(mw.get("companies", []) or [])
+    # Daily Outreach Command Center — compact derived rows. Any private
+    # manual-log note field ("notes", "notes_private", "private_notes") is
+    # forbidden here, on top of the global FORBIDDEN_FIELDS scan.
+    do = data.get("daily_outreach", {}) or {}
+    daily_outreach_records = list(do.get("rows", []) or [])
+    daily_outreach_records += [r.get("manual") for r in daily_outreach_records if isinstance(r.get("manual"), dict)]
+    for i, rec in enumerate(daily_outreach_records):
+        for field in rec:
+            if field.lower() in DAILY_OUTREACH_FORBIDDEN_FIELDS:
+                violations.append(f"Daily_outreach #{i+1}: private field '{field}' must not be in public JSON")
     all_records = [(i, c, "contact") for i, c in enumerate(contacts)] + \
                   [(i, c, "lead") for i, c in enumerate(leads)] + \
                   [(i, c, "untapped") for i, c in enumerate(untapped)] + \
@@ -298,7 +314,7 @@ def check_json(path: Path) -> list[str]:
                   [(i, c, "opportunity_history") for i, c in enumerate(opportunity_history_records)] + \
                   [(i, c, "monthly_queue") for i, c in enumerate(monthly_queue_records)] + \
                   [(i, c, "company_follow") for i, c in enumerate(company_follow_records)] + \
-                  [(i, c, "mapping_workbench") for i, c in enumerate(mapping_workbench_records)]
+                  [(i, c, "mapping_workbench") for i, c in enumerate(mapping_workbench_records)] +                   [(i, c, "daily_outreach") for i, c in enumerate(daily_outreach_records)]
 
     for i, record, record_type in all_records:
         for field in record:
@@ -483,4 +499,5 @@ def main():
 
 
 if __name__ == "__main__":
+    _utf8_stdout()
     main()

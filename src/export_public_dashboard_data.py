@@ -1206,6 +1206,10 @@ PAGE_DATA_MAP = {
     "leads": ["lead_reactivation"],
     "untapped": ["untapped_network"],
     "usdcrm": ["usd_contract_crm"],
+    # Daily Outreach Command Center — compact derived rows only (built by
+    # src/daily_outreach.py from the already-sanitized payload); the large
+    # source arrays stay in their own page files.
+    "daily": ["daily_outreach"],
     "quality": [
         "opportunity_market_v5", "opportunity_market_v5_summary",
         "company_resolution_v6", "company_resolution_v7",
@@ -1226,6 +1230,7 @@ PAGE_FILE_NAME = {
     "leads":     "lead_reactivation.json",
     "untapped":  "untapped_network.json",
     "usdcrm":    "usd_contract_crm.json",
+    "daily":     "daily_outreach.json",
     "quality":   "data_quality.json",
 }
 

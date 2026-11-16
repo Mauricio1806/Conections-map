@@ -272,3 +272,46 @@ def test_real_cv_request_after_old_promo_still_confirmed():
     ], has_cv=False)
     assert state["reply_obligation"] == "CONFIRMED"
     assert state["process_state"] == "CV_REQUESTED"
+
+
+# ── Reactivation dates are anchored to the last message (2026-11-15 fix) ─────
+# A window (soft close 75d, warm relationship 30d, ...) counts from the LAST
+# MESSAGE, so the date no longer moves forward on every weekly refresh.
+_SOFT_CLOSE = ("Thank you for your interest. At the moment there are no open positions that match "
+               "your profile, but we will keep you in mind for future opportunities.")
+_INTRO = "Hi, I am a Senior Data Engineer interested in remote data engineering roles with your team."
+
+
+def test_soft_close_reactivation_window_anchored_to_last_message():
+    from datetime import date as _date, timedelta as _td
+    state = _run([("me", _INTRO, 72), ("other", _SOFT_CLOSE, 70)])
+    assert state["process_state"] == "SOFT_CLOSED_KEEP_WARM"
+    assert state["reactivation_window_days"] == 75
+    assert str(state["next_action_date"]) == str(_date.today() + _td(days=5))   # 75 - 70, not +75
+
+
+def test_recent_soft_close_still_waits_out_the_window():
+    from datetime import date as _date, timedelta as _td
+    state = _run([("me", _INTRO, 6), ("other", _SOFT_CLOSE, 4)])
+    assert state["process_state"] == "SOFT_CLOSED_KEEP_WARM"
+    assert str(state["next_action_date"]) == str(_date.today() + _td(days=71))
+def test_window_already_passed_is_due_today_not_in_the_future():
+    from datetime import date as _date
+    state = _run([("me", "Hi Ana, I am a Senior Data Engineer open to remote USD contracts. Any roles?", 40)])
+    assert state["process_state"] == "WARM_RELATIONSHIP_NO_ACTIVE_ROLE"
+    assert str(state["next_action_date"]) == str(_date.today())   # 30-day window elapsed 10 days ago
+
+
+def test_unknown_last_message_keeps_conservative_window():
+    from datetime import date as _date, timedelta as _td
+    state = _run([("me", _INTRO, 72), ("other", _SOFT_CLOSE, 70)], days_since_last=9999)
+    if state["process_state"] == "SOFT_CLOSED_KEEP_WARM":
+        assert str(state["next_action_date"]) == str(_date.today() + _td(days=75))
+
+
+def test_old_soft_close_beyond_eligible_band_is_not_due_today():
+    from datetime import date as _date, timedelta as _td
+    state = _run([("me", _INTRO, 402), ("other", _SOFT_CLOSE, 400)])
+    assert state["process_state"] == "SOFT_CLOSED_KEEP_WARM"
+    # REACTIVATE_IF_STRATEGIC: optional, so not forced into today's due list.
+    assert str(state["next_action_date"]) == str(_date.today() + _td(days=75))

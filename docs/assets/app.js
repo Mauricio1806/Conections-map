@@ -171,7 +171,7 @@ function safeRender(name, fn) {
 // into the same global D object every render function already reads from —
 // render functions themselves are unchanged, they just see D populated
 // incrementally instead of all at once.
-const BUILD_TS = '1785796188';
+const BUILD_TS = '1794871848';
 
 function _dataPathVariants(relPath) {
   return [
@@ -220,6 +220,7 @@ const PAGE_REGISTRY = {
   leads:     { renderFns: [renderLeads] },
   untapped:  { renderFns: [renderUntapped] },
   usdcrm:    { renderFns: [renderUsdCrm, renderOpportunityHistory, renderMonthlyExecutiveQueue] },
+  daily:     { renderFns: [renderDailyOutreach] },
   quality:   { renderFns: [renderQuality] },
 };
 
@@ -345,6 +346,11 @@ window.addEventListener('DOMContentLoaded', () => {
       initNav();
       // Render only the initially-active nav page (Executive Overview by
       // default) — every other page loads+renders on first visit/click.
+      // Deep link: ...#daily opens the Daily Outreach page directly (morning bookmark).
+      const hashPage = (location.hash || '').replace('#', '');
+      if (hashPage && PAGE_REGISTRY[hashPage] && document.getElementById('page-' + hashPage)) {
+        activatePageUI(hashPage);
+      }
       const initialNav = document.querySelector('.nav-item.active');
       const initialPageId = (initialNav && initialNav.dataset.page) || 'overview';
       ensurePageRendered(initialPageId);
@@ -5709,3 +5715,416 @@ window.applyMeqKpiFilter = function(key) {
   const target = targetId && document.getElementById(targetId);
   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
+
+// ══════════════════════════════════════════════════════════════════════════
+// Daily Outreach Command Center
+// Data: D.daily_outreach (docs/assets/data/daily_outreach.json), built by
+// src/daily_outreach.py from the already-sanitized payload. Every KPI card's
+// number is computed with the SAME predicate that filters the table, so a
+// card count always equals the rows it lists. Nothing here sends LinkedIn
+// messages, and nothing is shown as completed unless it is in the private
+// manual log ("Logged") — local "Done?" ticks are an unsaved draft you can
+// download as CSV rows for data/manual/recruiter_outreach_log.csv.
+// ══════════════════════════════════════════════════════════════════════════
+const DO_PAGE_SIZE = 50;
+const DO_DRAFT_KEY = 'daily_outreach_draft_v1';
+let doState = { kpi: null, queue: 'REPLY_NOW', page: 1 };
+let doFiltered = [];
+let doById = {};
+let doDraft = {};
+
+function doEsc(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function doIso(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function doToday() { return doIso(new Date()); }
+function doIsDue(r) { return !!r.fu && r.fu <= doToday(); }
+function doIsOverdue(r) { return !!r.fu && r.fu < doToday(); }
+function doHasTag(r, t) { return (r.tags || []).indexOf(t) >= 0; }
+function doInQueue(r, q) { return (r.q || []).indexOf(q) >= 0; }
+
+// Single source of truth for card counts AND table filters.
+const DO_KPI_FILTERS = {
+  urgent:           { label: 'Urgent Replies', sub: 'Recent conversations where I owe a reply', match: r => doHasTag(r, 'urgent') && doInQueue(r, 'REPLY_NOW') },
+  interview:        { label: 'Active Interview Actions', sub: 'Interview steps in recent conversations', match: r => doHasTag(r, 'interview') },
+  cv_salary_call:   { label: 'CV / Salary / Call Requests', sub: 'Recent CV, availability, salary or call asks', match: r => doHasTag(r, 'cv_salary_call') },
+  followup_due:     { label: 'High-Value Follow-ups Due', sub: 'USD-fit recruiter follow-ups due today or overdue', match: r => doInQueue(r, 'USD_FOLLOWUP') && doIsDue(r) },
+  nc_recruiter:     { label: 'Never-Contacted Recruiters', sub: 'Same population as Untapped Network', match: r => doHasTag(r, 'nc_recruiter') },
+  nc_ta:            { label: 'Never-Contacted Talent Acquisition', sub: 'Same population as Untapped Network', match: r => doHasTag(r, 'nc_ta') },
+  high_fit_usd:     { label: 'High-Fit USD Leads (actionable)', sub: '', match: r => doHasTag(r, 'high_fit_usd') && (r.q || []).length > 0 },
+  long_connected:   { label: 'Long-Connected Untapped Recruiters', sub: 'Recruiter/TA/Sourcer, connected 180+ days, never messaged', match: r => doHasTag(r, 'long_connected') },
+  reactivation_due: { label: 'Reactivation Due', sub: 'High-value past conversations due now', match: r => doInQueue(r, 'REACTIVATION') && doIsDue(r) },
+  confirmed:        { label: 'Confirmed Active Opportunities', sub: '', match: r => doHasTag(r, 'confirmed') },
+};
+
+const DO_CAT_STYLE = {
+  REPLY_NOW:      { label: 'Reply now',      color: '#f85149' },
+  ACTIVE_PROCESS: { label: 'Active process', color: '#d29922' },
+  USD_FOLLOWUP:   { label: 'USD follow-up',  color: '#2f81f7' },
+  FIRST_OUTREACH: { label: 'First outreach', color: '#3fb950' },
+  LONG_CONNECTED: { label: 'Long-connected', color: '#a371f7' },
+  REACTIVATION:   { label: 'Reactivation',   color: '#58a6ff' },
+  SPAIN_EU:       { label: 'Spain/EU',       color: '#8b949e' },
+};
+
+function doLoadDraft() {
+  try { return JSON.parse(localStorage.getItem(DO_DRAFT_KEY) || '{}') || {}; } catch (_) { return {}; }
+}
+function doSaveDraft(d) {
+  try { localStorage.setItem(DO_DRAFT_KEY, JSON.stringify(d)); } catch (_) { /* private mode: draft stays in memory only */ }
+}
+
+function doCatBadge(cat) {
+  const st = DO_CAT_STYLE[cat] || { label: cat, color: '#8b949e' };
+  return '<span class="do-badge" style="border-color:' + st.color + ';color:' + st.color + '">' + st.label + '</span>';
+}
+
+function doEvidenceBadge(r) {
+  if (r.manual) {
+    return '<span class="do-ev do-ev-manual" title="From the private manual log">Logged: ' + doEsc(r.manual.label) + ' ' + doEsc(r.manual.date || '') + '</span>';
+  }
+  if (doDraft[r.id]) {
+    return '<span class="do-ev do-ev-draft" title="Ticked in this browser only — download and add to the manual log to record it">Draft (not saved): ' + doEsc(doDraft[r.id].type_label) + '</span>';
+  }
+  return '<span class="do-ev do-ev-inferred" title="Recommendation inferred from exports — not a completed action">Recommended</span>';
+}
+
+function doFollowUpCell(r) {
+  if (!r.fu) return '<span class="do-muted">' + doEsc(r.fu_rule || '—') + '</span>';
+  const t = doToday();
+  let cls = '', lab = '';
+  if (r.fu < t) { cls = 'do-overdue'; lab = ' (overdue)'; }
+  else if (r.fu === t) { cls = 'do-due'; lab = ' (today)'; }
+  return '<span class="' + cls + '">' + doEsc(r.fu) + lab + '</span>';
+}
+
+function doScoreCell(r) {
+  const s = r.score || 0;
+  const color = s >= 85 ? '#f85149' : s >= 70 ? '#d29922' : s >= 50 ? '#2f81f7' : '#8b949e';
+  return '<span class="do-score" style="color:' + color + '">' + s + '</span>';
+}
+
+function doRowHtml(r, firstCellHtml) {
+  const link = r.url
+    ? '<a href="' + doEsc(r.url) + '" target="_blank" rel="noopener">' + doEsc(r.name) + '</a>'
+    : doEsc(r.name);
+  const msgBtn = r.msg
+    ? '<button class="btn-ghost do-copy" data-id="' + doEsc(r.id) + '" onclick="doCopyMessage(this)" title="' + doEsc(r.msg) + '">Copy ' + (r.lang === 'es' ? 'ES' : 'EN') + '</button>'
+    : '<span class="do-muted">—</span>';
+  const src = (r.src || []).map(s => '<span class="signal-chip">' + doEsc(s) + '</span>').join('');
+  return '<tr>'
+    + '<td>' + firstCellHtml + '</td>'
+    + '<td class="do-contact">' + link + '<div class="do-sub">' + doEsc(r.company || '') + (r.role ? ' · ' + doEsc(r.role) : '') + '</div></td>'
+    + '<td>' + doEsc(r.persona) + '<div class="do-sub">' + doEsc(r.market) + (r.usd ? ' · <span class="do-usd">USD fit</span>' : '') + '</div></td>'
+    + '<td>' + doCatBadge(r.cat) + '<div class="do-sub">' + doEsc(r.status) + '</div>' + doEvidenceBadge(r) + '</td>'
+    + '<td class="do-next">' + doEsc(r.next) + '</td>'
+    + '<td>' + doScoreCell(r) + '</td>'
+    + '<td class="do-why">' + doEsc(r.why) + '<div>' + src + '</div></td>'
+    + '<td style="white-space:nowrap">' + doEsc(r.last || '—') + '<div class="do-sub">' + doEsc(r.last_label || '') + '</div></td>'
+    + '<td style="white-space:nowrap">' + doFollowUpCell(r) + '</td>'
+    + '<td>' + msgBtn + '</td>'
+    + '</tr>';
+}
+
+window.doCopyMessage = function(btn) {
+  const r = doById[btn.getAttribute('data-id')];
+  if (!r || !r.msg) return;
+  const done = () => { const o = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = o; }, 1200); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(r.msg).then(done, () => { _fallbackCopyText(r.msg); done(); });
+  } else { _fallbackCopyText(r.msg); done(); }
+};
+
+function doDefaultActionType(r) {
+  if (r.cat === 'FIRST_OUTREACH' || r.cat === 'LONG_CONNECTED' || r.cat === 'SPAIN_EU') return ['FIRST_MESSAGE', 'First message sent'];
+  return ['FOLLOW_UP', 'Follow-up sent'];
+}
+
+window.doToggleDone = function(id, checked) {
+  const r = doById[id];
+  if (!r) return;
+  if (checked) {
+    const t = doDefaultActionType(r);
+    doDraft[id] = { type: t[0], type_label: t[1], date: doToday() };
+  } else {
+    delete doDraft[id];
+  }
+  doSaveDraft(doDraft);
+  doRenderTracking();
+  doRenderTable();
+  doRenderTop();
+};
+
+function doCsvCell(v) {
+  const s = String(v == null ? '' : v);
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+
+window.doDownloadDraft = function() {
+  const cols = ['date', 'contact_name', 'profile_url', 'company', 'source', 'opportunity_bucket', 'message_type',
+                'status', 'last_reply_date', 'next_action', 'next_action_date', 'usd_signal', 'latam_signal',
+                'timezone_signal', 'notes_private'];
+  const lines = [cols.join(',')];
+  Object.keys(doDraft).forEach(id => {
+    const r = doById[id]; const d = doDraft[id];
+    if (!r) return;
+    const next = new Date(d.date + 'T00:00:00');
+    next.setDate(next.getDate() + (d.type === 'FIRST_MESSAGE' ? 7 : 5));
+    lines.push([d.date, r.name, r.url || '', r.company || '', 'daily_outreach', r.market || '', d.type, 'SENT', '',
+                'Follow up if no reply', doIso(next), r.usd ? 'TRUE' : '', '', '', ''].map(doCsvCell).join(','));
+  });
+  const blob = new Blob(['﻿' + lines.join('\n') + '\n'], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'recruiter_outreach_log_rows_' + doToday() + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+};
+
+window.doClearDraft = function() {
+  doDraft = {}; doSaveDraft(doDraft);
+  doRenderTracking(); doRenderTable(); doRenderTop();
+};
+
+function doRenderTracking() {
+  const el = document.getElementById('do-tracking');
+  const X = D.daily_outreach || {};
+  if (!el) return;
+  const s = X.summary || {};
+  const ml = X.manual_log || {};
+  const nDraft = Object.keys(doDraft).length;
+  const types = Object.entries(ml.action_types || {}).map(kv => '<code>' + doEsc(kv[0]) + '</code> ' + doEsc(kv[1])).join(' · ');
+  el.innerHTML =
+    '<div class="do-track-grid">'
+    + '<div><div class="card-title">Private manual log</div><div class="card-value">' + fmt(s.manual_log_rows || 0) + ' rows</div>'
+    + '<div class="card-sub">' + doEsc(ml.file || '') + '</div></div>'
+    + '<div><div class="card-title">Completed this week (logged)</div><div class="card-value">' + (s.completed_this_week == null ? 'Not recorded' : fmt(s.completed_this_week)) + '</div>'
+    + '<div class="card-sub">Only actions in the manual log count as completed.</div></div>'
+    + '<div><div class="card-title">Unsaved draft in this browser</div><div class="card-value">' + nDraft + '</div>'
+    + '<div class="card-sub">Ticks in the “Done?” column. Not saved anywhere until you add them to the log.</div></div>'
+    + '</div>'
+    + '<div class="do-track-actions">'
+    + '<button class="btn-ghost" onclick="doDownloadDraft()"' + (nDraft ? '' : ' disabled') + '>Download draft as CSV rows</button> '
+    + '<button class="btn-ghost" onclick="doClearDraft()"' + (nDraft ? '' : ' disabled') + '>Clear draft</button>'
+    + '</div>'
+    + '<p class="do-hint" style="margin-top:0.6rem">Workflow: send messages yourself on LinkedIn &rarr; tick “Done?” &rarr; download the CSV rows &rarr; append them to <code>data/manual/recruiter_outreach_log.csv</code> (add private notes there; they are never published) &rarr; rerun the pipeline. '
+    + 'This page is static (GitHub Pages) and cannot save CRM actions by itself.</p>'
+    + '<p class="do-hint"><strong>message_type values:</strong> ' + types + '</p>'
+    + '<p class="do-hint">Legend: <span class="do-ev do-ev-manual">Logged</span> from the manual log · <span class="do-ev do-ev-draft">Draft (not saved)</span> ticked here only · <span class="do-ev do-ev-inferred">Recommended</span> inferred suggestion, not done.</p>';
+}
+
+function doRenderSummary() {
+  const X = D.daily_outreach || {};
+  const s = X.summary || {};
+  const rows = X.rows || [];
+  const plan = X.daily_plan || {};
+  const dueNow = rows.filter(doIsDue).length;
+  const overdue = rows.filter(doIsOverdue).length;
+  const hp = rows.filter(r => (r.score || 0) >= 70).length;
+  document.getElementById('do-summary').innerHTML =
+      makeCard('Total Actionable Contacts', rows.length, 'Deduplicated by contact identity')
+    + makeCard("Today's Recommended Actions", plan.total_target || 0, plan.heavy_day ? 'Heavy day — replies & process steps first' : 'Sustainable daily mix', plan.heavy_day ? 'warn' : '')
+    + makeCard('High-Priority Actions', hp, 'Priority score ≥ 70')
+    + makeCard('Due Today / Overdue', dueNow, overdue + ' overdue', overdue ? 'warn' : '')
+    + makeCard('Actions Completed (logged)', s.completed_today == null ? 'Not recorded' : s.completed_today,
+               s.completed_today == null ? 'No rows in the private manual log' : 'Today, from the manual log');
+}
+
+function doRenderKpis() {
+  const X = D.daily_outreach || {};
+  const rows = X.rows || [];
+  const ctx = X.context || {};
+  const k = X.kpis || {};
+  document.getElementById('do-kpis').innerHTML = Object.keys(DO_KPI_FILTERS).map(code => {
+    const def = DO_KPI_FILTERS[code];
+    const n = rows.filter(def.match).length;
+    let sub = def.sub;
+    if (code === 'high_fit_usd') sub = 'Actionable subset of the CRM’s ' + fmt(ctx.crm_high_fit_usd_remote_leads) + ' high-fit leads';
+    if (code === 'confirmed') sub = (k.confirmed && k.confirmed.note) ? k.confirmed.note : (n ? 'From the manual log' : 'None logged yet — confirm in the manual log / usd_pipeline.csv');
+    return makeKpiCard(code, def.label, n, sub, (code === 'urgent' && n) ? 'bad' : '', 'doApplyKpi');
+  }).join('');
+}
+
+function doRenderPlan() {
+  const plan = (D.daily_outreach || {}).daily_plan || {};
+  document.getElementById('do-plan').innerHTML = (plan.items || []).map(i =>
+    '<div class="do-plan-item"><div class="do-plan-target">' + fmt(i.target) + '</div>'
+    + '<div><div class="do-plan-label">' + doEsc(i.label) + '</div><div class="do-sub">' + doEsc(i.why) + '</div></div></div>'
+  ).join('') + '<div class="do-hint" style="grid-column:1/-1">' + doEsc(plan.note || '') + '</div>';
+}
+
+function doRenderTop() {
+  const ids = (D.daily_outreach || {}).top15_ids || [];
+  const tb = document.getElementById('do-top-tbody');
+  if (!tb) return;
+  if (!ids.length) { tb.innerHTML = '<tr><td colspan="10" class="do-muted" style="text-align:center">No actions today.</td></tr>'; return; }
+  tb.innerHTML = ids.map((id, i) => doById[id] ? doRowHtml(doById[id], '<strong>' + (i + 1) + '</strong>') : '').join('');
+}
+
+function doRenderQueueTabs() {
+  const X = D.daily_outreach || {};
+  const rows = X.rows || [];
+  const qs = X.queues || {};
+  document.getElementById('do-queue-tabs').innerHTML = (X.queue_order || []).map(q => {
+    const n = rows.filter(r => doInQueue(r, q)).length;
+    const active = (!doState.kpi && doState.queue === q) ? ' active' : '';
+    return '<button class="tab-btn do-qtab' + active + '" role="tab" data-queue="' + q + '" onclick="doSelectQueue(this.getAttribute(\'data-queue\'))">'
+      + doEsc((qs[q] || {}).label || q) + ' <span class="do-qcount">' + fmt(n) + '</span></button>';
+  }).join('');
+}
+
+function doFillSelect(id, values) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const cur = el.value;
+  el.innerHTML = '<option value="">All</option>' + values.map(v => '<option value="' + doEsc(v) + '">' + doEsc(v) + '</option>').join('');
+  if (values.indexOf(cur) >= 0) el.value = cur;
+}
+
+function doBasePopulation() {
+  const X = D.daily_outreach || {};
+  const rows = X.rows || [];
+  if (doState.kpi) {
+    const def = DO_KPI_FILTERS[doState.kpi];
+    return { rows: rows.filter(def.match), label: def.label };
+  }
+  const q = doState.queue;
+  return { rows: rows.filter(r => doInQueue(r, q)), label: ((X.queues || {})[q] || {}).label || q };
+}
+
+window.doApplyFilters = function() {
+  const base = doBasePopulation();
+  const val = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  const persona = val('do-persona'), market = val('do-market'), lang = val('do-lang'), due = val('do-due'), sort = val('do-sort') || 'score';
+  const q = (val('do-search') || '').trim().toLowerCase();
+  const out = base.rows.filter(r =>
+    (!persona || r.persona === persona) &&
+    (!market || r.market === market) &&
+    (!lang || (r.lang || 'en') === lang) &&
+    (!due || (due === 'due' ? doIsDue(r) : doIsOverdue(r))) &&
+    (!q || ((r.name || '') + ' ' + (r.company || '') + ' ' + (r.role || '')).toLowerCase().indexOf(q) >= 0)
+  );
+  if (sort === 'fu') out.sort((a, b) => ((a.fu || '9999') < (b.fu || '9999') ? -1 : (a.fu || '9999') > (b.fu || '9999') ? 1 : b.score - a.score));
+  else if (sort === 'name') out.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  else if (sort === 'days') out.sort((a, b) => (b.days_conn || 0) - (a.days_conn || 0) || b.score - a.score);
+  // 'score' keeps the server's ranking order (priority, queue, tie-breakers)
+  doFiltered = out;
+  doState.page = 1;
+  const narrowed = out.length !== base.rows.length;
+  document.getElementById('do-stats').textContent = 'Showing ' + fmt(out.length) + ' of ' + fmt(base.rows.length)
+    + ' — ' + base.label + (narrowed ? ' (with filters)' : '');
+  doRenderTable();
+};
+
+function doRenderTable() {
+  const tb = document.getElementById('do-tbody');
+  if (!tb) return;
+  const start = (doState.page - 1) * DO_PAGE_SIZE;
+  const slice = doFiltered.slice(start, start + DO_PAGE_SIZE);
+  if (!slice.length) {
+    tb.innerHTML = '<tr><td colspan="10" class="do-muted" style="text-align:center">No contacts match the current filter.</td></tr>';
+  } else {
+    tb.innerHTML = slice.map(r => {
+      const checked = doDraft[r.id] ? ' checked' : '';
+      const box = r.manual ? '<span class="do-muted" title="Already in the manual log">&#10003;</span>'
+        : '<input type="checkbox" aria-label="Mark as done (draft)" data-id="' + doEsc(r.id) + '"' + checked + ' onchange="doToggleDone(this.getAttribute(\'data-id\'), this.checked)">';
+      return doRowHtml(r, box);
+    }).join('');
+  }
+  const total = Math.ceil(doFiltered.length / DO_PAGE_SIZE);
+  const pg = document.getElementById('do-pagination');
+  if (!pg) return;
+  let html = '';
+  const from = Math.max(1, Math.min(doState.page - 3, total - 7));
+  for (let i = from; i <= Math.min(total, from + 7); i++) {
+    html += '<button class="pg-btn' + (i === doState.page ? ' active' : '') + '" onclick="doGoPage(' + i + ')">' + i + '</button>';
+  }
+  if (total > 8) html += '<span class="do-muted" style="font-size:0.8rem"> … ' + total + ' pages</span>';
+  pg.innerHTML = total > 1 ? html : '';
+}
+
+window.doGoPage = function(n) { doState.page = n; doRenderTable(); };
+
+function doUpdateKpiActive() {
+  document.querySelectorAll('#do-kpis .kpi-card').forEach(el => {
+    const on = el.getAttribute('data-kpi') === doState.kpi;
+    el.classList.toggle('active', on);
+    el.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+}
+
+window.doApplyKpi = function(code) {
+  if (!DO_KPI_FILTERS[code]) return;
+  doState.kpi = (doState.kpi === code) ? null : code;
+  doUpdateKpiActive();
+  doRenderQueueTabs();
+  doApplyFilters();
+  const a = document.getElementById('do-queues-anchor');
+  if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+window.doSelectQueue = function(q) {
+  doState.kpi = null;
+  doState.queue = q;
+  doUpdateKpiActive();
+  doRenderQueueTabs();
+  doApplyFilters();
+};
+
+window.doResetFilters = function() {
+  ['do-persona', 'do-market', 'do-lang', 'do-due'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('do-sort').value = 'score';
+  document.getElementById('do-search').value = '';
+  doApplyFilters();
+};
+
+function doRenderPerformance() {
+  const P = (D.daily_outreach || {}).performance || {};
+  const weeks = P.weeks || [];
+  document.getElementById('do-perf-thead').innerHTML = '<tr><th>Metric</th><th>Source</th>'
+    + weeks.map(w => '<th style="white-space:nowrap">Wk ' + doEsc(w.slice(5)) + '</th>').join('') + '</tr>';
+  const cell = v => v == null ? '<td class="do-muted">Not measured</td>' : '<td>' + fmt(v) + '</td>';
+  const sec = title => '<tr class="do-perf-sec"><td colspan="' + (weeks.length + 2) + '">' + title + '</td></tr>';
+  document.getElementById('do-perf-tbody').innerHTML =
+      sec('Manual (private log)' + (P.manual_measured ? ' — measured from ' + doEsc(P.measured_from) : ' — no activity logged yet'))
+    + (P.manual || []).map(m => '<tr><td>' + doEsc(m.metric) + '</td><td><span class="do-ev do-ev-manual">Logged</span></td>' + m.values.map(cell).join('') + '</tr>').join('')
+    + sec('Inferred from LinkedIn exports')
+    + (P.inferred || []).map(m => '<tr><td>' + doEsc(m.metric) + '</td><td><span class="do-ev do-ev-inferred">Inferred</span></td>' + m.values.map(cell).join('') + '</tr>').join('');
+  document.getElementById('do-rates').innerHTML = (P.rates || []).map(r =>
+    makeCard(r.metric, r.value == null ? 'Not measured' : r.value + '%', r.value == null ? r.note : (r.numerator + ' / ' + r.denominator))
+  ).join('');
+}
+
+function renderDailyOutreach() {
+  const X = D.daily_outreach || {};
+  const noData = document.getElementById('do-no-data');
+  const main = document.getElementById('do-main');
+  if (!X.available) { noData.style.display = ''; main.style.display = 'none'; return; }
+  noData.style.display = 'none'; main.style.display = '';
+  doDraft = doLoadDraft();
+  doById = {};
+  (X.rows || []).forEach(r => { doById[r.id] = r; });
+  // Drop draft ticks for contacts no longer in any queue.
+  Object.keys(doDraft).forEach(id => { if (!doById[id]) delete doDraft[id]; });
+
+  document.getElementById('do-note').innerHTML =
+    'Data as of the <strong>' + doEsc(X.report_date || X.as_of_date) + '</strong> snapshot (built ' + doEsc(X.as_of_date) + '). '
+    + 'Due/overdue dates are evaluated against today’s date in your browser (' + doToday() + '). '
+    + doEsc(X.note || '');
+
+  const rows = X.rows || [];
+  doFillSelect('do-persona', Array.from(new Set(rows.map(r => r.persona))).sort());
+  doFillSelect('do-market', Array.from(new Set(rows.map(r => r.market))).sort());
+
+  doRenderSummary();
+  doRenderKpis();
+  doRenderPlan();
+  doRenderTop();
+  doRenderQueueTabs();
+  doApplyFilters();
+  doRenderTracking();
+  doRenderPerformance();
+}

@@ -35,6 +35,7 @@ sys.path.insert(0, str(ROOT))
 from src.export_public_dashboard_data import (  # noqa: E402
     write_split_dashboard_data, PAGE_DATA_MAP, PAGE_FILE_NAME, load_page_with_parts,
 )
+from src.daily_outreach import add_daily_outreach_to_payload  # noqa: E402
 
 OUTPUTS_DIR = ROOT / "outputs"
 DOCS_DIR    = ROOT / "docs"
@@ -123,6 +124,11 @@ def _inject_cache_bust(build_ts: str) -> None:
     # app.js: replace sentinel in DATA_PATHS
     app_text = APP_JS.read_text(encoding="utf-8")
     app_text = app_text.replace("'__BUILD_TS__'", "'" + build_ts + "'")
+    # The sentinel is gone after the first build (app.js is committed), so
+    # also re-stamp an existing numeric BUILD_TS — otherwise lazy-loaded page
+    # JSON keeps a stale ?v= and browsers may serve a cached older week.
+    import re as _re
+    app_text = _re.sub(r"const BUILD_TS = '\d+';", "const BUILD_TS = '" + build_ts + "';", app_text)
     APP_JS.write_text(app_text, encoding="utf-8")
 
     # index.html: stamp ?v=<ts> onto style.css and app.js references
@@ -158,6 +164,22 @@ def main():
 
     with open(SRC_JSON, encoding="utf-8") as f:
         full_payload = json.load(f)
+
+    # Step 1a: Daily Outreach Command Center — derived from the final,
+    # sanitized payload (+ the private manual outreach log, aggregate/latest
+    # action only — notes are never read). Written back to SRC_JSON so the
+    # local compatibility artifact mirrors exactly what is published.
+    try:
+        do = add_daily_outreach_to_payload(full_payload)
+        if do.get("available"):
+            ds = do["summary"]
+            logger.info(f"  Daily Outreach: actionable={ds['total_actionable']} top={ds['top_ready']} "
+                        f"urgent={do['kpis']['urgent']['count']} high_priority={ds['high_priority']}")
+        with open(SRC_JSON, "w", encoding="utf-8") as f:
+            json.dump(full_payload, f, ensure_ascii=False, default=str, indent=2)
+    except Exception as e:  # fail loudly — never publish a silently-empty page
+        logger.error(f"  Daily Outreach build failed: {e}")
+        raise
     size_report = write_split_dashboard_data(full_payload)
     logger.info(f"  Manifest: {DST_JSON.name} ({size_report['manifest_kb']}KB)")
     logger.info(f"  Page files written: {len(size_report['pages'])} (total {size_report['total_data_kb']}KB) → docs/assets/data/")

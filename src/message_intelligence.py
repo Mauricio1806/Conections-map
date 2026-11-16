@@ -886,25 +886,44 @@ def _analyze_conversation_state(
     )
 
     # ── Part 13 — next_action_date / reactivation_window_days ────────────────
+    # Windows are measured from the LAST MESSAGE, not from the pipeline run
+    # date: a soft close 70 days ago with a 75-day window is due in 5 days,
+    # not in 75 (the old today+window behaviour pushed every reactivation
+    # date forward on each weekly refresh, so "Reactivate This Month"
+    # contacts showed next_action_date months away). Unknown last-message
+    # date keeps the conservative today+window fallback.
     today = date.today()
+
+    def _due_after_last(window: int) -> date:
+        if isinstance(days_since_last, int) and 0 <= days_since_last < 9999:
+            return today + timedelta(days=max(0, window - days_since_last))
+        return today + timedelta(days=window)
+
     if reply_obligation in ("CONFIRMED",) or process_state in ("INTERVIEW_PIPELINE", "CV_REQUESTED"):
         next_action_date = today
         reactivation_window_days = 0
     elif process_state == "ACTIVE_OPPORTUNITY":
         # Recent positive-keyword mention but no specific active step detected —
         # warm, not "today"-urgent.
-        next_action_date = today + timedelta(days=7)
+        next_action_date = _due_after_last(7)
         reactivation_window_days = 7
     elif process_state == "AWAITING_RECRUITER_UPDATE":
-        next_action_date = today + timedelta(days=6)
+        next_action_date = _due_after_last(6)
         reactivation_window_days = 6
     elif process_state in _REACTIVATION_WINDOW_DAYS:
         win = _REACTIVATION_WINDOW_DAYS[process_state]
-        next_action_date = today + timedelta(days=win)
         reactivation_window_days = win
+        if (process_state in ("REJECTED_CLOSED", "SOFT_CLOSED_KEEP_WARM")
+                and isinstance(days_since_last, int) and 90 < days_since_last < 9999):
+            # Past the 60-90 day eligible band (cooldown = REACTIVATE_IF_STRATEGIC):
+            # optional, unscheduled reactivation — never "due today" just
+            # because an old closure's window elapsed long ago.
+            next_action_date = today + timedelta(days=win)
+        else:
+            next_action_date = _due_after_last(win)
     elif process_state == "NO_RESPONSE":
         reactivation_window_days = 14
-        next_action_date = today + timedelta(days=14)
+        next_action_date = _due_after_last(14)
     else:
         reactivation_window_days = 0
         next_action_date = today

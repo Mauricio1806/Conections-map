@@ -1,5 +1,5 @@
 # 🎯 Strategic Gap Report
-> Generated: **November 09, 2026**
+> Generated: **November 16, 2026**
 
 This report compares your current LinkedIn network against your strategic targets.
 
@@ -21,21 +21,21 @@ This report compares your current LinkedIn network against your strategic target
 | LATAM_USD | Head of Data | 1 | 30 | **29** | 50 | 49 | **CRITICAL** |
 | US_CANADA_NEARSHORE | Head of Data | 2 | 30 | **28** | 50 | 48 | **CRITICAL** |
 | SPAIN_EU | Hiring Manager | 1 | 15 | **14** | 60 | 59 | **CRITICAL** |
-| US_CANADA_NEARSHORE | Hiring Manager | 5 | 50 | **45** | 70 | 65 | **CRITICAL** |
+| US_CANADA_NEARSHORE | Hiring Manager | 6 | 50 | **44** | 70 | 64 | **CRITICAL** |
 | BRAZIL | Data Engineering Manager | 4 | 20 | **16** | 20 | 16 | **CRITICAL** |
 | EUROPE | Data Engineering Manager | 1 | 5 | **4** | 30 | 29 | **CRITICAL** |
-| US_CANADA_NEARSHORE | Talent Acquisition | 21 | 60 | **39** | 80 | 59 | **HIGH** |
 | US_CANADA_NEARSHORE | Director | 9 | 25 | **16** | 40 | 31 | **HIGH** |
 | BRAZIL | Head of Data | 11 | 30 | **19** | 30 | 19 | **HIGH** |
+| US_CANADA_NEARSHORE | Talent Acquisition | 23 | 60 | **37** | 80 | 57 | **HIGH** |
 | US_CANADA_NEARSHORE | Recruiter | 37 | 80 | **43** | 100 | 63 | **HIGH** |
 | SPAIN_EU | Recruiter | 10 | 20 | **10** | 80 | 70 | **HIGH** |
 | SPAIN_EU | Director | 7 | 10 | **3** | 40 | 33 | **MEDIUM** |
 | EUROPE | Head of Data | 4 | 5 | **1** | 40 | 36 | **MEDIUM** |
 | LATAM_USD | Recruiter | 72 | 80 | **8** | 100 | 28 | **LOW** |
-| LATAM_USD | Talent Acquisition | 137 | 60 | **0** | 80 | 0 | **LOW** |
+| LATAM_USD | Talent Acquisition | 138 | 60 | **0** | 80 | 0 | **LOW** |
 | LATAM_USD | Director | 39 | 20 | **0** | 40 | 1 | **LOW** |
-| SPAIN_EU | Talent Acquisition | 41 | 15 | **0** | 60 | 19 | **LOW** |
-| EUROPE | Recruiter | 33 | 10 | **0** | 60 | 27 | **LOW** |
+| SPAIN_EU | Talent Acquisition | 39 | 15 | **0** | 60 | 21 | **LOW** |
+| EUROPE | Recruiter | 32 | 10 | **0** | 60 | 28 | **LOW** |
 | EUROPE | Talent Acquisition | 35 | 10 | **0** | 50 | 15 | **LOW** |
 | EUROPE | Director | 29 | 5 | **0** | 30 | 1 | **LOW** |
 | BRAZIL | Recruiter | 51 | 50 | **0** | 50 | 0 | **LOW** |
